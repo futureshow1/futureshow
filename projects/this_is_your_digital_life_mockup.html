@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This Is Your Digital Life - App Mockup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Helvetica+Neue:wght@400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: #e9ebee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ===== TOP CONTEXT BANNER ===== */
+  .context-banner {
+    width: 100%;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
+  }
+
+  .context-banner strong {
+    color: #f472b6;
+  }
+
+  .context-banner .warning {
+    display: inline-block;
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-left: 6px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ===== FACEBOOK-STYLE NAVBAR (2013 ERA) ===== */
+  .fb-navbar {
+    width: 100%;
+    background: #3b5998;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .fb-logo {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white;
+    letter-spacing: -1px;
+  }
+
+  .fb-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .fb-nav-right .nav-link {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .fb-search {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 5px 12px;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.8rem;
+    width: 180px;
+    outline: none;
+  }
+
+  .fb-search::placeholder { color: rgba(255,255,255,0.5); }
+
+  /* ===== APP PAGE CONTAINER ===== */
+  .app-page {
+    max-width: 820px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* ===== PERMISSION DIALOG ===== */
+  .permission-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .permission-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .permission-dialog {
+    background: white;
+    border-radius: 4px;
+    width: 520px;
+    max-width: 95vw;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+
+  .perm-header {
+    background: #3b5998;
+    color: white;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .perm-close {
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    font-weight: bold;
+  }
+
+  .perm-body {
+    padding: 20px;
+  }
+
+  .perm-app-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .perm-app-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #4a90d9, #2d6db5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .perm-app-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1c1e21;
+  }
+
+  .perm-app-by {
+    font-size: 0.8rem;
+    color: #90949c;
+    margin-top: 2px;
+  }
+
+  .perm-wants {
+    font-size: 0.85rem;
+    color: #1c1e21;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .perm-list {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  .perm-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    color: #4b4f56;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .perm-list li:last-child { border-bottom: none; }
+
+  .perm-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b5998;
+    font-size: 0.9rem;
+  }
+
+  .perm-list .highlight {
+    color: #e74c3c;
+    font-weight: 500;
+  }
+
+  .perm-note {
+    font-size: 0.75rem;
+    color: #90949c;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    padding: 10px;
+    background: #f7f7f7;
+    border-radius: 4px;
+  }
+
+  .perm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .perm-btn {
+    padding: 7px 20px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .perm-btn.cancel {
+    background: #e4e6eb;
+    color: #4b4f56;
+  }
+
+  .perm-btn.allow {
+    background: #3b5998;
+    color: white;
+  }
+
+  .perm-btn.allow:hover {
+    background: #2d4a86;
+  }
+
+  /* red annotation overlay */
+  .annotation-arrow {
+    position: absolute;
+    z-index: 300;
+  }
+
+  .perm-annotation {
+    position: absolute;
+    background: rgba(220, 38, 38, 0.95);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    z-index: 301;
+    line-height: 1.4;
+    max-width: 220px;
+    pointer-events: none;
+  }
+
+  /* ===== APP HEADER SECTION ===== */
+  .app-header-card {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .app-cover {
+    height: 200px;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d6db5 40%, #4a90d9 70%, #87bfff 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .app-cover::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 30%, rgba(255,255,255,0.05) 0%, transparent 40%);
+  }
+
+  .app-cover-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .app-cover-content .globe {
+    font-size: 4rem;
+    margin-bottom: 8px;
+    opacity: 0.9;
+  }
+
+  .app-cover-content h1 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    letter-spacing: -0.5px;
+  }
+
+  .app-cover-content .tagline {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.9rem;
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  /* floating nodes decoration */
+  .node {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .node.n1 { width: 60px; height: 60px; top: 20px; left: 15%; }
+  .node.n2 { width: 35px; height: 35px; top: 60px; right: 20%; }
+  .node.n3 { width: 45px; height: 45px; bottom: 25px; left: 30%; }
+  .node.n4 { width: 25px; height: 25px; top: 40px; left: 55%; }
+  .node.n5 { width: 50px; height: 50px; bottom: 15px; right: 12%; }
+
+  .line-deco {
+    position: absolute;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    transform-origin: left center;
+  }
+
+  .line-deco.l1 { width: 120px; top: 50px; left: 18%; transform: rotate(25deg); }
+  .line-deco.l2 { width: 90px; top: 80px; right: 22%; transform: rotate(-15deg); }
+  .line-deco.l3 { width: 150px; bottom: 45px; left: 35%; transform: rotate(10deg); }
+
+  .app-info-bar {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .app-info-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .app-icon-large {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #4a90d9, #2d6db5);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+
+  .app-meta h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1c1e21;
+  }
+
+  .app-meta .developer {
+    font-size: 0.8rem;
+    color: #90949c;
+    margin-top: 2px;
+  }
+
+  .app-meta .category {
+    font-size: 0.75rem;
+    color: #3b5998;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .app-stats {
+    display: flex;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .app-stat-num {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1c1e21;
+  }
+
+  .app-stat-label {
+    font-size: 0.7rem;
+    color: #90949c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .use-app-btn {
+    background: #42b72a;
+    color: white;
+    border: none;
+    padding: 9px 24px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .use-app-btn:hover {
+    background: #36a420;
+  }
+
+  /* ===== QUIZ SECTION ===== */
+  .quiz-card {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .quiz-card-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid #e9ebee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .quiz-card-header h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1c1e21;
+  }
+
+  .quiz-step {
+    font-size: 0.75rem;
+    color: #90949c;
+    font-weight: 500;
+  }
+
+  .quiz-body {
+    padding: 24px 20px;
+  }
+
+  .quiz-progress {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .quiz-progress .bar {
+    flex: 1;
+    height: 4px;
+    background: #e4e6eb;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .quiz-progress .bar.filled {
+    background: #3b5998;
+  }
+
+  .quiz-progress .bar.current {
+    background: linear-gradient(90deg, #3b5998 60%, #e4e6eb 60%);
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1c1e21;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .quiz-desc {
+    font-size: 0.8rem;
+    color: #90949c;
+    margin-bottom: 20px;
+  }
+
+  .likert-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .likert-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #e4e6eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .likert-option:hover {
+    border-color: #3b5998;
+    background: rgba(59, 89, 152, 0.03);
+  }
+
+  .likert-option.selected {
+    border-color: #3b5998;
+    background: rgba(59, 89, 152, 0.08);
+  }
+
+  .likert-radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccd0d5;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+  }
+
+  .likert-option.selected .likert-radio {
+    border-color: #3b5998;
+  }
+
+  .likert-option.selected .likert-radio::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3b5998;
+  }
+
+  .likert-label {
+    font-size: 0.9rem;
+    color: #4b4f56;
+  }
+
+  .quiz-footer {
+    padding: 14px 20px;
+    border-top: 1px solid #e9ebee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .quiz-nav-btn {
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+  }
+
+  .quiz-nav-btn.back {
+    background: none;
+    color: #3b5998;
+  }
+
+  .quiz-nav-btn.next {
+    background: #3b5998;
+    color: white;
+  }
+
+  /* ===== PERSONALITY RESULTS ===== */
+  .results-card {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .results-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e9ebee;
+  }
+
+  .results-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1c1e21;
+  }
+
+  .results-body {
+    padding: 20px;
+  }
+
+  .ocean-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ocean-trait {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .trait-label {
+    width: 130px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .trait-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1c1e21;
+  }
+
+  .trait-sub {
+    font-size: 0.65rem;
+    color: #90949c;
+  }
+
+  .trait-bar-container {
+    flex: 1;
+    height: 24px;
+    background: #f0f2f5;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .trait-bar {
+    height: 100%;
+    border-radius: 12px;
+    transition: width 1s ease;
+  }
+
+  .trait-value {
+    width: 40px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1c1e21;
+  }
+
+  .trait-o .trait-bar { background: linear-gradient(90deg, #6366f1, #818cf8); }
+  .trait-c .trait-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .trait-e .trait-bar { background: linear-gradient(90deg, #10b981, #34d399); }
+  .trait-a .trait-bar { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .trait-n .trait-bar { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+  .results-share {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e9ebee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .share-text {
+    font-size: 0.85rem;
+    color: #4b4f56;
+  }
+
+  .share-btn {
+    background: #3b5998;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ===== DATA COLLECTION PANEL (the reveal) ===== */
+  .data-reveal {
+    background: #1a1a2e;
+    border-radius: 8px;
+    margin: 24px 0;
+    overflow: hidden;
+    border: 2px solid #dc2626;
+    position: relative;
+  }
+
+  .data-reveal-header {
+    background: linear-gradient(135deg, #7f1d1d, #991b1b);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .data-reveal-header h3 {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .data-reveal-header .skull {
+    font-size: 1.3rem;
+  }
+
+  .data-reveal-body {
+    padding: 20px;
+  }
+
+  .data-reveal-body p {
+    color: #d1d5db;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .data-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .data-flow-step {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .flow-connector {
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .flow-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .flow-line {
+    width: 2px;
+    flex: 1;
+    min-height: 8px;
+  }
+
+  .flow-content {
+    flex: 1;
+    padding: 8px 16px 20px;
+  }
+
+  .flow-content h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .flow-content p {
+    font-size: 0.78rem;
+    margin-bottom: 0;
+    line-height: 1.5;
+  }
+
+  .step-user .flow-dot { background: #3b82f6; box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+  .step-user .flow-line { background: linear-gradient(180deg, #3b82f6, #8b5cf6); }
+  .step-user h4 { color: #60a5fa; }
+  .step-user p { color: #9ca3af; }
+
+  .step-friends .flow-dot { background: #8b5cf6; box-shadow: 0 0 8px rgba(139,92,246,0.5); }
+  .step-friends .flow-line { background: linear-gradient(180deg, #8b5cf6, #ec4899); }
+  .step-friends h4 { color: #a78bfa; }
+  .step-friends p { color: #9ca3af; }
+
+  .step-harvest .flow-dot { background: #ec4899; box-shadow: 0 0 8px rgba(236,72,153,0.5); }
+  .step-harvest .flow-line { background: linear-gradient(180deg, #ec4899, #f97316); }
+  .step-harvest h4 { color: #f472b6; }
+  .step-harvest p { color: #9ca3af; }
+
+  .step-profile .flow-dot { background: #f97316; box-shadow: 0 0 8px rgba(249,115,22,0.5); }
+  .step-profile .flow-line { background: linear-gradient(180deg, #f97316, #ef4444); }
+  .step-profile h4 { color: #fb923c; }
+  .step-profile p { color: #9ca3af; }
+
+  .step-weapon .flow-dot { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.5); }
+  .step-weapon .flow-line { background: transparent; }
+  .step-weapon h4 { color: #f87171; }
+  .step-weapon p { color: #9ca3af; }
+
+  .data-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .data-num-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .data-num-card .num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #f87171;
+  }
+
+  .data-num-card .lbl {
+    font-size: 0.7rem;
+    color: #6b7280;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== FOOTER ===== */
+  .page-footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #90949c;
+    font-size: 0.75rem;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  /* ===== SCREENS NAVIGATION ===== */
+  .screen-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+  }
+
+  .screen-tab {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid #e4e6eb;
+    background: white;
+    color: #4b4f56;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .screen-tab.active {
+    background: #3b5998;
+    color: white;
+    border-color: #3b5998;
+  }
+
+  .screen-tab:hover:not(.active) {
+    background: #f0f2f5;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ===== TERMS / FINE PRINT ===== */
+  .fine-print-card {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    padding: 16px 20px;
+  }
+
+  .fine-print-card h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1c1e21;
+    margin-bottom: 10px;
+  }
+
+  .fine-print-card p {
+    font-size: 0.75rem;
+    color: #90949c;
+    line-height: 1.7;
+  }
+
+  .fine-print-card .redacted {
+    background: #1c1e21;
+    color: #1c1e21;
+    padding: 0 4px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+  }
+
+  .fine-print-card .redacted.revealed {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+  }
+
+  @media (max-width: 600px) {
+    .app-info-bar { flex-direction: column; align-items: flex-start; }
+    .app-stats { width: 100%; justify-content: space-around; }
+    .data-numbers { grid-template-columns: 1fr; }
+    .trait-label { width: 90px; }
+    .perm-dialog { margin: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="context-banner">
+  <strong>MOCKUP RECONSTRUCTION</strong> of the Facebook app used by Cambridge Analytica to harvest data from 87 million users.
+  <span class="warning">Not a real app</span>
+  <br>Based on evidence from Christopher Wylie's <em>Mindf*ck</em> (2019)
+</div>
+
+<!-- Facebook 2013-era navbar -->
+<div class="fb-navbar">
+  <div class="fb-logo">facebook</div>
+  <input class="fb-search" type="text" placeholder="Search Facebook" disabled>
+  <div class="fb-nav-right">
+    <span class="nav-link">John</span>
+    <span class="nav-link">Home</span>
+  </div>
+</div>
+
+<!-- Permission Dialog -->
+<div class="permission-overlay" id="permOverlay">
+  <div class="permission-dialog">
+    <div class="perm-header">
+      <span>Log in with Facebook</span>
+      <button class="perm-close" onclick="closePermission()">&times;</button>
+    </div>
+    <div class="perm-body">
+      <div class="perm-app-info">
+        <div class="perm-app-icon">DL</div>
+        <div>
+          <div class="perm-app-name">This Is Your Digital Life</div>
+          <div class="perm-app-by">by Global Science Research (GSR)</div>
+        </div>
+      </div>
+      <div class="perm-wants">This app would like to:</div>
+      <ul class="perm-list">
+        <li>
+          <span class="perm-icon">&#128100;</span>
+          <span>Access your <strong>public profile</strong> (name, profile picture, age range, gender, language, country)</span>
+        </li>
+        <li>
+          <span class="perm-icon">&#128231;</span>
+          <span>Access your <strong>email address</strong></span>
+        </li>
+        <li>
+          <span class="perm-icon">&#128206;</span>
+          <span>Access your <strong>likes, interests, and pages</strong></span>
+        </li>
+        <li>
+          <span class="perm-icon">&#127968;</span>
+          <span>Access your <strong>location, hometown, and current city</strong></span>
+        </li>
+        <li>
+          <span class="perm-icon">&#128101;</span>
+          <span class="highlight">Access your <strong>friends list</strong> and their public profiles, likes, birthdays, and locations</span>
+        </li>
+        <li>
+          <span class="perm-icon">&#128196;</span>
+          <span>Access your <strong>status updates, photos, and posts</strong></span>
+        </li>
+      </ul>
+      <div class="perm-note">
+        By clicking "Okay" you allow this app to use your information in accordance with their terms of service and privacy policy. The app has indicated the data will be used for <strong>academic research purposes</strong>.
+      </div>
+      <div class="perm-actions">
+        <button class="perm-btn cancel" onclick="closePermission()">Cancel</button>
+        <button class="perm-btn allow" onclick="closePermission()">Okay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-page">
+
+  <!-- App Header -->
+  <div class="app-header-card">
+    <div class="app-cover">
+      <div class="node n1"></div>
+      <div class="node n2"></div>
+      <div class="node n3"></div>
+      <div class="node n4"></div>
+      <div class="node n5"></div>
+      <div class="line-deco l1"></div>
+      <div class="line-deco l2"></div>
+      <div class="line-deco l3"></div>
+      <div class="app-cover-content">
+        <div class="globe">&#127760;</div>
+        <h1>This Is Your Digital Life</h1>
+        <div class="tagline">Discover your personality through science</div>
+      </div>
+    </div>
+    <div class="app-info-bar">
+      <div class="app-info-left">
+        <div class="app-icon-large">DL</div>
+        <div class="app-meta">
+          <h2>This Is Your Digital Life</h2>
+          <div class="developer">Global Science Research (GSR) &middot; Dr. Aleksandr Kogan</div>
+          <div class="category">Education &middot; Research</div>
+        </div>
+      </div>
+      <div class="app-stats">
+        <div>
+          <div class="app-stat-num">~270K</div>
+          <div class="app-stat-label">Users</div>
+        </div>
+      </div>
+      <button class="use-app-btn" onclick="showPermission()">Use App</button>
+    </div>
+  </div>
+
+  <!-- Screen Navigation -->
+  <div class="screen-nav">
+    <button class="screen-tab active" onclick="switchScreen('quiz')">Quiz Interface</button>
+    <button class="screen-tab" onclick="switchScreen('results')">Results</button>
+    <button class="screen-tab" onclick="switchScreen('fine-print')">Fine Print</button>
+    <button class="screen-tab" onclick="switchScreen('reality')">What Really Happened</button>
+  </div>
+
+  <!-- SCREEN: Quiz -->
+  <div class="screen active" id="screen-quiz">
+    <div class="quiz-card">
+      <div class="quiz-card-header">
+        <h3>Personality Assessment</h3>
+        <span class="quiz-step">Question 7 of 120</span>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-progress">
+          <div class="bar filled"></div>
+          <div class="bar filled"></div>
+          <div class="bar current"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <div class="quiz-question">I see myself as someone who is talkative.</div>
+        <div class="quiz-desc">Rate how strongly you agree or disagree with this statement about yourself.</div>
+        <div class="likert-scale">
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Strongly Disagree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Disagree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Neither Agree nor Disagree</span>
+          </div>
+          <div class="likert-option selected" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Agree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Strongly Agree</span>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-footer">
+        <button class="quiz-nav-btn back">&#8592; Back</button>
+        <button class="quiz-nav-btn next">Next &#8594;</button>
+      </div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-card-header">
+        <h3>Life Satisfaction Survey</h3>
+        <span class="quiz-step">Part 2 of 3</span>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-question">In most ways my life is close to ideal.</div>
+        <div class="quiz-desc">Part of the Satisfaction With Life Scale (Diener et al., 1985)</div>
+        <div class="likert-scale">
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Strongly Disagree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Disagree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Slightly Disagree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Neutral</span>
+          </div>
+          <div class="likert-option selected" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Slightly Agree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Agree</span>
+          </div>
+          <div class="likert-option" onclick="selectOption(this)">
+            <div class="likert-radio"></div>
+            <span class="likert-label">Strongly Agree</span>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-footer">
+        <button class="quiz-nav-btn back">&#8592; Back</button>
+        <button class="quiz-nav-btn next">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Results -->
+  <div class="screen" id="screen-results">
+    <div class="results-card">
+      <div class="results-header">
+        <h3>Your OCEAN Personality Profile</h3>
+      </div>
+      <div class="results-body">
+        <div class="ocean-chart">
+          <div class="ocean-trait trait-o">
+            <div class="trait-label">
+              <div class="trait-name">Openness</div>
+              <div class="trait-sub">to experience</div>
+            </div>
+            <div class="trait-bar-container">
+              <div class="trait-bar" style="width: 82%"></div>
+            </div>
+            <div class="trait-value">82</div>
+          </div>
+          <div class="ocean-trait trait-c">
+            <div class="trait-label">
+              <div class="trait-name">Conscientiousness</div>
+              <div class="trait-sub">organized & dependable</div>
+            </div>
+            <div class="trait-bar-container">
+              <div class="trait-bar" style="width: 65%"></div>
+            </div>
+            <div class="trait-value">65</div>
+          </div>
+          <div class="ocean-trait trait-e">
+            <div class="trait-label">
+              <div class="trait-name">Extraversion</div>
+              <div class="trait-sub">outgoing & energetic</div>
+            </div>
+            <div class="trait-bar-container">
+              <div class="trait-bar" style="width: 73%"></div>
+            </div>
+            <div class="trait-value">73</div>
+          </div>
+          <div class="ocean-trait trait-a">
+            <div class="trait-label">
+              <div class="trait-name">Agreeableness</div>
+              <div class="trait-sub">friendly & compassionate</div>
+            </div>
+            <div class="trait-bar-container">
+              <div class="trait-bar" style="width: 58%"></div>
+            </div>
+            <div class="trait-value">58</div>
+          </div>
+          <div class="ocean-trait trait-n">
+            <div class="trait-label">
+              <div class="trait-name">Neuroticism</div>
+              <div class="trait-sub">sensitive & nervous</div>
+            </div>
+            <div class="trait-bar-container">
+              <div class="trait-bar" style="width: 41%"></div>
+            </div>
+            <div class="trait-value">41</div>
+          </div>
+        </div>
+        <div class="results-share">
+          <span class="share-text">Compare your results with friends!</span>
+          <button class="share-btn">&#128172; Share on Facebook</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Fine Print -->
+  <div class="screen" id="screen-fine-print">
+    <div class="fine-print-card">
+      <h4>Terms of Service & Data Use Policy</h4>
+      <p>
+        By using this application, you consent to the collection and processing of your Facebook profile data, including but not limited to: your public profile, email address, friend list, likes, locations, status updates, and photos. This data will be used for
+        <span class="redacted" onclick="this.classList.toggle('revealed')">academic research at Cambridge University</span>
+        and may be
+        <span class="redacted" onclick="this.classList.toggle('revealed')">shared with affiliated third parties including SCL Group and Cambridge Analytica for commercial and political purposes</span>.
+      </p>
+      <p style="margin-top: 12px;">
+        You also consent to the collection of data from your Facebook friends' profiles, including their
+        <span class="redacted" onclick="this.classList.toggle('revealed')">names, likes, locations, birthdays, and other personal information, without requiring their individual consent</span>.
+        Data retention period:
+        <span class="redacted" onclick="this.classList.toggle('revealed')">indefinite &mdash; data will not be deleted even if requested by Facebook or users</span>.
+      </p>
+      <p style="margin-top: 12px;">
+        The research data may be used to
+        <span class="redacted" onclick="this.classList.toggle('revealed')">build psychographic voter profiles for political advertising campaigns in US elections, UK referendums, and elections in developing nations</span>.
+        Global Science Research operates under the supervision of
+        <span class="redacted" onclick="this.classList.toggle('revealed')">Dr. Aleksandr Kogan, who maintains a parallel appointment at St. Petersburg State University in Russia</span>.
+      </p>
+      <p style="margin-top: 16px; font-style: italic; color: #b0b3b8;">
+        Click the blacked-out sections above to reveal what was actually happening behind the scenes.
+      </p>
+    </div>
+  </div>
+
+  <!-- SCREEN: What Really Happened -->
+  <div class="screen" id="screen-reality">
+    <div class="data-reveal">
+      <div class="data-reveal-header">
+        <span class="skull">&#9888;</span>
+        <h3>What This App Actually Did</h3>
+      </div>
+      <div class="data-reveal-body">
+        <p>
+          While users thought they were taking an innocent personality quiz for academic research, the app was executing
+          one of the largest unauthorized data harvesting operations in history. Here's what happened behind the
+          friendly interface:
+        </p>
+
+        <div class="data-flow">
+          <div class="data-flow-step step-user">
+            <div class="flow-connector">
+              <div class="flow-dot"></div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-content">
+              <h4>Step 1: User Takes Quiz</h4>
+              <p>~270,000 users were paid $1&ndash;$2 via Amazon Mechanical Turk to install the app and complete the personality questionnaire. They clicked "Okay" on the permissions dialog.</p>
+            </div>
+          </div>
+
+          <div class="data-flow-step step-friends">
+            <div class="flow-connector">
+              <div class="flow-dot"></div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-content">
+              <h4>Step 2: Friends' Data Harvested</h4>
+              <p>For each user, the app silently accessed the profiles of all their Facebook friends &mdash; an average of ~300 friends each. These friends never installed the app and never gave consent.</p>
+            </div>
+          </div>
+
+          <div class="data-flow-step step-harvest">
+            <div class="flow-connector">
+              <div class="flow-dot"></div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-content">
+              <h4>Step 3: 87 Million Profiles Collected</h4>
+              <p>Names, locations, likes, friend networks, birthdays, photos, status updates &mdash; all funneled to Global Science Research's servers. The dataset was then sold to Cambridge Analytica, violating Facebook's terms.</p>
+            </div>
+          </div>
+
+          <div class="data-flow-step step-profile">
+            <div class="flow-connector">
+              <div class="flow-dot"></div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-content">
+              <h4>Step 4: Psychographic Profiles Built</h4>
+              <p>Using the OCEAN personality model, CA built detailed psychological profiles predicting political views, fears, persuadability, and emotional triggers for each of the 87 million people.</p>
+            </div>
+          </div>
+
+          <div class="data-flow-step step-weapon">
+            <div class="flow-connector">
+              <div class="flow-dot"></div>
+              <div class="flow-line"></div>
+            </div>
+            <div class="flow-content">
+              <h4>Step 5: Weaponized for Elections</h4>
+              <p>The profiles were used to micro-target voters with personalized political ads designed to exploit their psychological vulnerabilities &mdash; deployed in the 2016 Trump campaign, Brexit referendum, and elections across Africa.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="data-numbers">
+          <div class="data-num-card">
+            <div class="num">~270K</div>
+            <div class="lbl">Direct app users</div>
+          </div>
+          <div class="data-num-card">
+            <div class="num">87M</div>
+            <div class="lbl">Profiles harvested</div>
+          </div>
+          <div class="data-num-card">
+            <div class="num">~320x</div>
+            <div class="lbl">Data amplification</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  This is a historical reconstruction/mockup of the "This Is Your Digital Life" Facebook application
+  created by Dr. Aleksandr Kogan's Global Science Research in 2013. This is not a functional app.
+  Created based on evidence documented in Christopher Wylie's <em>Mindf*ck</em> (2019),
+  Congressional testimony, and investigative journalism by The Guardian and The New York Times.
+</div>
+
+<script>
+  function showPermission() {
+    document.getElementById('permOverlay').classList.add('active');
+  }
+
+  function closePermission() {
+    document.getElementById('permOverlay').classList.remove('active');
+  }
+
+  function selectOption(el) {
+    const parent = el.closest('.likert-scale');
+    parent.querySelectorAll('.likert-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function switchScreen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

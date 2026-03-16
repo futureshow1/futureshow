@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jan Lubicz Przyluski</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__name">Jan Lubicz Przyluski</a>
+    <ul class="nav__links">
+      <li><a href="index.html">Projects</a></li>
+      <li><a href="teksty.html">Texts</a></li>
+      <li><a href="bio.html">About / CV</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav__hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Hero with local video background -->
+  <section class="hero">
+    <div class="hero__video-bg">
+      <video id="heroVideo" autoplay muted loop playsinline>
+        <source src="assets/hero-bg.mp4" type="video/mp4">
+      </video>
+    </div>
+    <button class="hero__sound-toggle" id="soundToggle" aria-label="Toggle sound">
+      <svg class="icon-muted" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+      <svg class="icon-unmuted" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      </svg>
+    </button>
+    <div class="hero__text">
+      <p>In film, Jan is directing, postdirecting and professionally editing movies and video art (ex. "Glass Trap" - European Film Awards Nominee for Best Short Documentary, or "Minstrel Show" produced by Foksal Foundation). He made a number of documentaries (ex. "The Differences", "Symposion of Reality" with Rafal Leszczynski, "Pollywood" and "Infinite Movement" with Pawel Ferdek, "Stone and Fish" with Mateusz Skalski) and a lot of short experimental films. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="films.html">SHOW FILMS &rarr;</a></p>
+    </div>
+    <div class="hero__scroll">or SCROLL DOWN &darr; for more!</div>
+  </section>
+
+  <!-- Project Grid -->
+  <section class="project-grid">
+    <a href="films.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/1280/q/94/i/73f290330a750dc6651be8c97598a8c93aa4b38c1e29f9a67f6a4cd28d85ff03/Follow-The-White-Rabbit-2.jpeg" alt="Films">
+      <div class="project-grid__label">Films</div>
+    </a>
+    <a href="theater.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/924/q/94/i/b1648cd8e81a0f28e92d4e1efcbd8f2b544dfd641633694e36664b6365a62122/Persona-Marylin-2.jpg" alt="Theater">
+      <div class="project-grid__label">Theater</div>
+    </a>
+    <a href="performance.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/1500/q/75/i/dc39df0cab80864cd1197abeb6805400bd42a64a9657518d9edbb57821082c8f/einstein-na-plazy.jpg" alt="Performance">
+      <div class="project-grid__label">Performance</div>
+    </a>
+    <a href="video-art.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/604/q/94/i/4d1066c480b1fa6c9dc11c7be8df7cd320057915db4654f129f9c1d2ebb02676/1909809_1165851059249_7675422_n.jpg" alt="Video art">
+      <div class="project-grid__label">Video art</div>
+    </a>
+    <a href="../../index.html" class="project-grid__item">
+      <img src="https://i.vimeocdn.com/video/1959813829-98741be53ad8ff91883169167b9a78b343955979cd4efbbed60f4eaad262617c-d_1280x720" alt="Future Show — AI-Powered Interactive Experiences">
+      <div class="project-grid__label">Nowe technologie / AI+</div>
+    </a>
+    <a href="teksty.html" class="project-grid__item">
+      <img src="assets/book-open-swidzinski.jpeg" alt="Texts">
+      <div class="project-grid__label">Texts</div>
+    </a>
+    <a href="publications.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/702/q/94/i/4d40c2fc55373ef297cb446c6a62025a6217aa6a573beedcfa33f8a3cbeb2317/droga-performera-1.jpg" alt="Publications">
+      <div class="project-grid__label">Publications</div>
+    </a>
+    <a href="archives.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/1193/q/94/i/5ae6e24f5213e24a30a52ec2df99ce6c1bd180e0b88307df953487f6f81358e4/aleister2.png" alt="Art of Action Archives">
+      <div class="project-grid__label">Art of Action Archives</div>
+    </a>
+    <a href="bio.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/1500/q/75/i/67056510b1acb7a1658b2fec2e28f2244280fdc73f7cd15eed6bd4e39b7763db/jan-duchamp-copy.jpg" alt="Bio / CV / Awards">
+      <div class="project-grid__label">Bio / CV / Awards</div>
+    </a>
+    <a href="contact.html" class="project-grid__item">
+      <img src="https://freight.cargo.site/w/1500/q/75/i/687c0d98572c88e7ba4f4f1f33b889f3769f76f097355798e68f07e6d39d1dbb/1956896_10202426309151841_8419737285003265511_o.jpg" alt="Contact">
+      <div class="project-grid__label">Contact</div>
+    </a>
+  </section>
+
+  <footer class="footer">
+    Copyright &reg; by Art of Action Archives and Jan Lubicz - 2026
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

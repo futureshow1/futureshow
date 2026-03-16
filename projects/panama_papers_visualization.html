@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Panama Papers - Interactive Investigation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg-dark: #0a0e17;
+    --bg-card: #111827;
+    --bg-card-hover: #1a2332;
+    --border: rgba(255,255,255,0.06);
+    --text: #e5e7eb;
+    --text-dim: #6b7280;
+    --text-muted: #4b5563;
+    --accent-gold: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-blue: #3b82f6;
+    --accent-green: #10b981;
+    --accent-purple: #8b5cf6;
+    --accent-cyan: #06b6d4;
+    --accent-pink: #ec4899;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 30% 50%, rgba(245,158,11,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(59,130,246,0.06) 0%, transparent 50%),
+                var(--bg-dark);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 50px,
+      rgba(255,255,255,0.01) 50px, rgba(255,255,255,0.01) 51px
+    ),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 50px,
+      rgba(255,255,255,0.01) 50px, rgba(255,255,255,0.01) 51px
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    padding: 40px 20px;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 30%, #ffffff 60%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+  }
+
+  .hero-stat .lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(180deg, var(--text-muted), transparent);
+    margin: 8px auto 0;
+  }
+
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+
+  .section-desc {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  /* ===== HOW IT WORKED ===== */
+  .mechanism-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .mechanism-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mechanism-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(245,158,11,0.2);
+    transform: translateY(-2px);
+  }
+
+  .mechanism-card .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent-gold);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+
+  .mechanism-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .mechanism-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .mechanism-card .icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    opacity: 0.15;
+  }
+
+  .mechanism-wide {
+    grid-column: 1 / -1;
+  }
+
+  /* ===== SHELL COMPANY DIAGRAM ===== */
+  .shell-diagram {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    margin-top: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shell-diagram h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--accent-gold);
+  }
+
+  .shell-layers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .shell-layer {
+    text-align: center;
+    padding: 20px 16px;
+    position: relative;
+    flex: 0 0 auto;
+    min-width: 140px;
+  }
+
+  .shell-node {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 1.5rem;
+    position: relative;
+  }
+
+  .shell-layer .name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .shell-layer .detail {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  .shell-arrow {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    padding: 0 4px;
+  }
+
+  .sn-client { background: rgba(239,68,68,0.15); border: 2px solid rgba(239,68,68,0.3); }
+  .sn-bank { background: rgba(59,130,246,0.15); border: 2px solid rgba(59,130,246,0.3); }
+  .sn-mf { background: rgba(245,158,11,0.15); border: 2px solid rgba(245,158,11,0.3); }
+  .sn-shell { background: rgba(139,92,246,0.15); border: 2px solid rgba(139,92,246,0.3); }
+  .sn-haven { background: rgba(16,185,129,0.15); border: 2px solid rgba(16,185,129,0.3); }
+  .sn-asset { background: rgba(236,72,153,0.15); border: 2px solid rgba(236,72,153,0.3); }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg,
+      var(--accent-gold) 0%,
+      var(--accent-red) 25%,
+      var(--accent-purple) 50%,
+      var(--accent-blue) 75%,
+      var(--accent-green) 100%
+    );
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 36px;
+    padding-left: 36px;
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -33px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid;
+    background: var(--bg-dark);
+  }
+
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .tl-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 700px;
+  }
+
+  .tl-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+  }
+
+  .tag-leak { background: rgba(245,158,11,0.15); color: var(--accent-gold); }
+  .tag-fallout { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+  .tag-legal { background: rgba(139,92,246,0.15); color: var(--accent-purple); }
+  .tag-reform { background: rgba(16,185,129,0.15); color: var(--accent-green); }
+  .tag-tragedy { background: rgba(236,72,153,0.15); color: var(--accent-pink); }
+
+  .tl-leak .tl-dot { border-color: var(--accent-gold); }
+  .tl-leak .tl-date { color: var(--accent-gold); }
+  .tl-fallout .tl-dot { border-color: var(--accent-red); }
+  .tl-fallout .tl-date { color: var(--accent-red); }
+  .tl-legal .tl-dot { border-color: var(--accent-purple); }
+  .tl-legal .tl-date { color: var(--accent-purple); }
+  .tl-reform .tl-dot { border-color: var(--accent-green); }
+  .tl-reform .tl-date { color: var(--accent-green); }
+  .tl-tragedy .tl-dot { border-color: var(--accent-pink); }
+  .tl-tragedy .tl-date { color: var(--accent-pink); }
+
+  /* ===== KEY PLAYERS ===== */
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .player-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .player-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .player-card .flag {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .player-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .player-card .role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .player-card .reveal-text {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding-top 0.4s;
+    padding-top: 0;
+  }
+
+  .player-card.expanded .reveal-text {
+    max-height: 300px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .player-card .consequence {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .con-resigned { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+  .con-removed { background: rgba(245,158,11,0.15); color: var(--accent-gold); }
+  .con-exposed { background: rgba(139,92,246,0.15); color: var(--accent-purple); }
+  .con-investigated { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+
+  /* ===== BANKS CHART ===== */
+  .banks-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 800px;
+  }
+
+  .bank-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .bank-name {
+    width: 160px;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .bank-bar-wrap {
+    flex: 1;
+    height: 28px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bank-bar {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: white;
+    transition: width 1.5s ease;
+  }
+
+  .bank-bar.b1 { background: linear-gradient(90deg, #ef4444, #f87171); }
+  .bank-bar.b2 { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .bank-bar.b3 { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .bank-bar.b4 { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .bank-bar.b5 { background: linear-gradient(90deg, #10b981, #34d399); }
+  .bank-bar.b6 { background: linear-gradient(90deg, #ec4899, #f472b6); }
+
+  /* ===== HAVENS MAP ===== */
+  .havens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .haven-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .haven-card:hover {
+    border-color: rgba(16,185,129,0.3);
+    transform: translateY(-2px);
+  }
+
+  .haven-card .h-flag { font-size: 2rem; margin-bottom: 8px; }
+  .haven-card .h-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+  .haven-card .h-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--accent-green);
+  }
+  .haven-card .h-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ===== CONSEQUENCES ===== */
+  .consequences-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  .consequence-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s;
+  }
+
+  .consequence-card:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .consequence-card .c-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+  }
+
+  .consequence-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .consequence-card .c-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .consequence-card p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .c-red .c-stat { color: var(--accent-red); }
+  .c-gold .c-stat { color: var(--accent-gold); }
+  .c-green .c-stat { color: var(--accent-green); }
+  .c-blue .c-stat { color: var(--accent-blue); }
+  .c-purple .c-stat { color: var(--accent-purple); }
+  .c-pink .c-stat { color: var(--accent-pink); }
+
+  /* ===== JOURNALIST SECTION ===== */
+  .journalist-box {
+    background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(59,130,246,0.15);
+    border-radius: 16px;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .journalist-box h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .journalist-box p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+
+  .journalist-box .quote {
+    font-style: italic;
+    color: var(--accent-gold);
+    border-left: 3px solid var(--accent-gold);
+    padding-left: 16px;
+    margin: 20px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .journalist-box .quote .attr {
+    display: block;
+    font-style: normal;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: 8px;
+  }
+
+  .j-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .j-stat-card {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .j-stat-card .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-blue);
+  }
+
+  .j-stat-card .lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  /* ===== MEMORIAL ===== */
+  .memorial {
+    background: linear-gradient(135deg, rgba(236,72,153,0.06), rgba(239,68,68,0.06));
+    border: 1px solid rgba(236,72,153,0.15);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .memorial .candle { font-size: 3rem; margin-bottom: 16px; }
+  .memorial h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+  .memorial .dates { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; }
+  .memorial p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.8; max-width: 550px; margin: 0 auto; }
+
+  /* ===== FOOTER ===== */
+  .page-footer {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  .page-footer a { color: var(--accent-gold); text-decoration: none; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .mechanism-grid { grid-template-columns: 1fr; }
+    .journalist-box { grid-template-columns: 1fr; }
+    .shell-layers { flex-direction: column; }
+    .shell-arrow { transform: rotate(90deg); }
+    .hero-stats { gap: 20px; }
+    .bank-name { width: 100px; font-size: 0.75rem; }
+    .players-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== NAV ===== */
+  .sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10,14,23,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    transform: translateY(-100%);
+    transition: transform 0.3s;
+  }
+
+  .sticky-nav.visible { transform: translateY(0); }
+
+  .sticky-nav .nav-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-right: 32px;
+    white-space: nowrap;
+  }
+
+  .sticky-nav .nav-links {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+  }
+
+  .sticky-nav .nav-link {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .sticky-nav .nav-link:hover { color: var(--text); }
+
+  /* ===== MONEY FLOW SANKEY-STYLE ===== */
+  .money-flow {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 32px;
+  }
+
+  .money-flow h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--accent-gold);
+  }
+
+  .money-flow .subtitle {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .flow-label {
+    width: 120px;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .flow-bar-wrap {
+    flex: 1;
+    display: flex;
+    gap: 3px;
+    height: 24px;
+  }
+
+  .flow-segment {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: white;
+    min-width: 30px;
+    transition: opacity 0.2s;
+    cursor: default;
+    position: relative;
+  }
+
+  .flow-segment:hover { opacity: 0.8; }
+
+  .fs-tax { background: var(--accent-red); }
+  .fs-launder { background: var(--accent-purple); }
+  .fs-sanctions { background: var(--accent-gold); }
+  .fs-corruption { background: var(--accent-blue); }
+  .fs-hide { background: var(--accent-pink); }
+  .fs-legit { background: var(--accent-green); }
+
+  .flow-legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .flow-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+
+  .flow-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Sticky Nav -->
+<nav class="sticky-nav" id="stickyNav">
+  <span class="nav-title">Panama Papers</span>
+  <div class="nav-links">
+    <a class="nav-link" onclick="scrollToSection('mechanism')">How It Worked</a>
+    <a class="nav-link" onclick="scrollToSection('timeline')">Timeline</a>
+    <a class="nav-link" onclick="scrollToSection('players')">Key Players</a>
+    <a class="nav-link" onclick="scrollToSection('banks')">Banks</a>
+    <a class="nav-link" onclick="scrollToSection('havens')">Tax Havens</a>
+    <a class="nav-link" onclick="scrollToSection('consequences')">Consequences</a>
+    <a class="nav-link" onclick="scrollToSection('journalists')">Journalists</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">An Interactive Investigation</div>
+    <h1>The Panama Papers</h1>
+    <p class="hero-subtitle">
+      The largest data leak in history exposed how the world's wealthy and powerful
+      hide billions through a shadow financial system of shell companies and offshore accounts.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">11.5M</div>
+        <div class="lbl">Documents Leaked</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">2.6 TB</div>
+        <div class="lbl">of Data</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">214,488</div>
+        <div class="lbl">Offshore Entities</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">200+</div>
+        <div class="lbl">Countries Linked</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">$1.36B+</div>
+        <div class="lbl">Taxes Recovered</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKED -->
+<section class="section" id="mechanism">
+  <div class="section-header">
+    <div class="section-label">The System</div>
+    <h2 class="section-title">How Offshore Secrecy Works</h2>
+    <p class="section-desc">Mossack Fonseca, the world's fourth-largest offshore law firm, created a shadow financial infrastructure used to hide wealth, evade taxes, and launder money.</p>
+  </div>
+
+  <div class="mechanism-grid">
+    <div class="mechanism-card">
+      <div class="step-num">STEP 01</div>
+      <div class="icon">&#128100;</div>
+      <h3>Client Approaches via Intermediary</h3>
+      <p>Wealthy individuals, politicians, or criminals approach through a bank, law firm, or financial adviser &mdash; never directly. Over 500 banks and 14,000 intermediaries fed clients to Mossack Fonseca.</p>
+    </div>
+    <div class="mechanism-card">
+      <div class="step-num">STEP 02</div>
+      <div class="icon">&#127970;</div>
+      <h3>Shell Company Created</h3>
+      <p>A paper-only company is registered in a secrecy jurisdiction (BVI, Panama, Seychelles). It has no employees, no office, no operations &mdash; it exists only to hold assets and move money.</p>
+    </div>
+    <div class="mechanism-card">
+      <div class="step-num">STEP 03</div>
+      <div class="icon">&#128123;</div>
+      <h3>Nominee Directors Appointed</h3>
+      <p>Paid stand-ins ("nominees") are listed as directors and shareholders so the real owner &mdash; the "beneficial owner" &mdash; stays hidden. MF employees served as nominees for thousands of companies.</p>
+    </div>
+    <div class="mechanism-card">
+      <div class="step-num">STEP 04</div>
+      <div class="icon">&#127758;</div>
+      <h3>Assets Hidden, Money Moved</h3>
+      <p>The shell opens bank accounts in financial centers, buys real estate, yachts, or art, shifts profits across borders &mdash; all without the true owner's name appearing anywhere public.</p>
+    </div>
+    <div class="mechanism-card mechanism-wide">
+      <div class="step-num">LAYERING</div>
+      <div class="icon">&#127890;</div>
+      <h3>"Russian Doll" Structures</h3>
+      <p>Multiple shells are nested: Company A (BVI) owns Company B (Panama), which owns Company C (Seychelles), which holds the bank account. Bearer shares, foundations, and trusts in places like the Cook Islands add further opacity. Each layer makes tracing the true owner exponentially harder.</p>
+    </div>
+  </div>
+
+  <!-- Shell Diagram -->
+  <div class="shell-diagram">
+    <h3>The Flow: From Client to Hidden Assets</h3>
+    <div class="shell-layers">
+      <div class="shell-layer">
+        <div class="shell-node sn-client">&#128100;</div>
+        <div class="name">Wealthy Client</div>
+        <div class="detail">Politician, oligarch, celebrity</div>
+      </div>
+      <div class="shell-arrow">&#8594;</div>
+      <div class="shell-layer">
+        <div class="shell-node sn-bank">&#127974;</div>
+        <div class="name">Intermediary Bank</div>
+        <div class="detail">HSBC, UBS, Credit Suisse</div>
+      </div>
+      <div class="shell-arrow">&#8594;</div>
+      <div class="shell-layer">
+        <div class="shell-node sn-mf">&#9878;</div>
+        <div class="name">Mossack Fonseca</div>
+        <div class="detail">Creates the structure</div>
+      </div>
+      <div class="shell-arrow">&#8594;</div>
+      <div class="shell-layer">
+        <div class="shell-node sn-shell">&#127970;</div>
+        <div class="name">Shell Company</div>
+        <div class="detail">Nominee directors, no staff</div>
+      </div>
+      <div class="shell-arrow">&#8594;</div>
+      <div class="shell-layer">
+        <div class="shell-node sn-haven">&#127965;</div>
+        <div class="name">Tax Haven</div>
+        <div class="detail">BVI, Panama, Seychelles</div>
+      </div>
+      <div class="shell-arrow">&#8594;</div>
+      <div class="shell-layer">
+        <div class="shell-node sn-asset">&#127968;</div>
+        <div class="name">Hidden Assets</div>
+        <div class="detail">Property, yachts, accounts</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What it was used for -->
+  <div class="money-flow">
+    <h3>What Offshore Structures Were Used For</h3>
+    <div class="subtitle">Estimated breakdown of illicit vs. legitimate use based on ICIJ analysis</div>
+
+    <div class="flow-row">
+      <div class="flow-label">Tax Evasion</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-segment fs-tax" style="width:100%">Largest category</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label">Money Laundering</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-segment fs-launder" style="width:70%">Proceeds of crime</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label">Political Corruption</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-segment fs-corruption" style="width:55%">Bribes & kickbacks</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label">Sanctions Evasion</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-segment fs-sanctions" style="width:35%">Syria, N. Korea, Iran</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label">Hidden Assets</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-segment fs-hide" style="width:50%">Divorce, creditors, courts</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-label">Legitimate Use</div>
+      <div class="flow-bar-wrap">
+        <div class="flow-segment fs-legit" style="width:25%">Legal tax planning</div>
+      </div>
+    </div>
+
+    <div class="flow-legend">
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--accent-red)"></div>Tax Evasion</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--accent-purple)"></div>Money Laundering</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--accent-blue)"></div>Corruption</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--accent-gold)"></div>Sanctions Evasion</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--accent-pink)"></div>Hidden Assets</div>
+      <div class="flow-legend-item"><div class="flow-legend-dot" style="background:var(--accent-green)"></div>Legitimate</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section class="section" id="timeline">
+  <div class="section-header">
+    <div class="section-label">Chronology</div>
+    <h2 class="section-title">Timeline of Events</h2>
+    <p class="section-desc">From the founding of a law firm to the largest leak in history and its global shockwaves.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item tl-leak">
+      <div class="tl-dot"></div>
+      <div class="tl-date">1977 &ndash; 1986</div>
+      <div class="tl-title">Mossack Fonseca Founded</div>
+      <div class="tl-desc">Jurgen Mossack founds the firm in Panama (1977). Ramon Fonseca joins in 1986. It grows into the world's 4th-largest offshore law firm, operating in 40+ countries.</div>
+      <span class="tl-tag tag-leak">Origin</span>
+    </div>
+
+    <div class="tl-item tl-leak">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Early 2015</div>
+      <div class="tl-title">"John Doe" Contacts S&uuml;ddeutsche Zeitung</div>
+      <div class="tl-desc">An anonymous whistleblower begins transmitting 11.5 million documents via encrypted channels to journalists Bastian Obermayer and Frederik Obermaier. Motivation: "I want to make these crimes public."</div>
+      <span class="tl-tag tag-leak">The Leak</span>
+    </div>
+
+    <div class="tl-item tl-leak">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Mid 2015</div>
+      <div class="tl-title">ICIJ Takes Over Coordination</div>
+      <div class="tl-desc">Realizing the scale is too vast for one newsroom, SZ shares data with the International Consortium of Investigative Journalists. 370+ journalists from 100+ media outlets in 80+ countries begin a year-long secret investigation.</div>
+      <span class="tl-tag tag-leak">Investigation</span>
+    </div>
+
+    <div class="tl-item tl-fallout">
+      <div class="tl-dot"></div>
+      <div class="tl-date">April 3, 2016</div>
+      <div class="tl-title">The Papers Go Public</div>
+      <div class="tl-desc">Stories are published simultaneously worldwide. The impact is immediate and seismic. Within 24 hours, governments across the globe are scrambling to respond.</div>
+      <span class="tl-tag tag-fallout">Publication</span>
+    </div>
+
+    <div class="tl-item tl-fallout">
+      <div class="tl-dot"></div>
+      <div class="tl-date">April 4&ndash;5, 2016</div>
+      <div class="tl-title">Iceland's PM Resigns</div>
+      <div class="tl-desc">Sigmundur David Gunnlaugsson faces protests from ~10% of Iceland's population after his hidden offshore company Wintris Inc. is exposed. He becomes the first leader to fall.</div>
+      <span class="tl-tag tag-fallout">Resignation</span>
+    </div>
+
+    <div class="tl-item tl-fallout">
+      <div class="tl-dot"></div>
+      <div class="tl-date">April 7, 2016</div>
+      <div class="tl-title">David Cameron Admits Offshore Profits</div>
+      <div class="tl-desc">The UK PM admits he profited from his father Ian Cameron's Blairmore Holdings Inc., registered in Panama, which had never paid UK tax. He releases his tax returns under public pressure.</div>
+      <span class="tl-tag tag-fallout">Exposed</span>
+    </div>
+
+    <div class="tl-item tl-legal">
+      <div class="tl-dot"></div>
+      <div class="tl-date">May 9, 2016</div>
+      <div class="tl-title">ICIJ Releases Searchable Database</div>
+      <div class="tl-desc">More than 200,000 offshore entities are made publicly searchable, empowering citizens, journalists, and authorities worldwide to continue investigating.</div>
+      <span class="tl-tag tag-reform">Transparency</span>
+    </div>
+
+    <div class="tl-item tl-legal">
+      <div class="tl-dot"></div>
+      <div class="tl-date">July 28, 2017</div>
+      <div class="tl-title">Pakistan PM Nawaz Sharif Disqualified</div>
+      <div class="tl-desc">Pakistan's Supreme Court removes Sharif from office for failing to declare assets linked to his children's London properties held through BVI shell companies.</div>
+      <span class="tl-tag tag-legal">Removed from Office</span>
+    </div>
+
+    <div class="tl-item tl-tragedy">
+      <div class="tl-dot"></div>
+      <div class="tl-date">October 16, 2017</div>
+      <div class="tl-title">Daphne Caruana Galizia Assassinated</div>
+      <div class="tl-desc">The Maltese journalist who used Panama Papers data to expose corruption by her country's politicians is killed by a car bomb. Three men were convicted of the murder.</div>
+      <span class="tl-tag tag-tragedy">Assassination</span>
+    </div>
+
+    <div class="tl-item tl-reform">
+      <div class="tl-dot"></div>
+      <div class="tl-date">March 14, 2018</div>
+      <div class="tl-title">Mossack Fonseca Closes Forever</div>
+      <div class="tl-desc">The firm shuts down permanently, citing "irreparable damage" to its reputation and business. 40 years of enabling offshore secrecy come to an end.</div>
+      <span class="tl-tag tag-legal">Closure</span>
+    </div>
+
+    <div class="tl-item tl-reform">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2018</div>
+      <div class="tl-title">EU Anti-Money Laundering Directive</div>
+      <div class="tl-desc">The EU passes the 5th Anti-Money Laundering Directive requiring public registers of beneficial ownership. The UK passes the Sanctions and Anti-Money Laundering Act.</div>
+      <span class="tl-tag tag-reform">Legislation</span>
+    </div>
+
+    <div class="tl-item tl-legal">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2020</div>
+      <div class="tl-title">Founders Arrested</div>
+      <div class="tl-desc">German authorities arrest Jurgen Mossack. Ramon Fonseca is arrested in Panama. Both face charges related to facilitating tax evasion and money laundering.</div>
+      <span class="tl-tag tag-legal">Arrests</span>
+    </div>
+
+    <div class="tl-item tl-legal">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2024</div>
+      <div class="tl-title">Panama Court Acquits All Defendants</div>
+      <div class="tl-desc">A Panama court acquits all 28 defendants, including Mossack and Fonseca, in a ruling that draws international criticism. Prosecutors appeal the decision.</div>
+      <span class="tl-tag tag-legal">Trial</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- KEY PLAYERS -->
+<section class="section" id="players">
+  <div class="section-header">
+    <div class="section-label">Exposed</div>
+    <h2 class="section-title">Key Figures Implicated</h2>
+    <p class="section-desc">12 current or former heads of state, 140+ politicians, and 29 billionaires were linked to offshore holdings. Click any card to reveal details.</p>
+  </div>
+
+  <div class="players-grid">
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127470;&#127480;</div>
+      <h4>Sigmundur D. Gunnlaugsson</h4>
+      <div class="role">Prime Minister of Iceland</div>
+      <span class="consequence con-resigned">Resigned</span>
+      <div class="reveal-text">He and his wife owned Wintris Inc. (registered in BVI) which held millions in bonds in Iceland's failed banks &mdash; a direct conflict of interest as he was negotiating creditor claims. ~10% of Iceland took to the streets in protest.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127479;&#127482;</div>
+      <h4>Vladimir Putin (associates)</h4>
+      <div class="role">President of Russia</div>
+      <span class="consequence con-exposed">Exposed</span>
+      <div class="reveal-text">Putin's name didn't appear directly, but his close friend, cellist Sergei Roldugin, was linked to a network channeling ~$2 billion through offshore companies and banks. Roldugin is also godfather to Putin's daughter.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127477;&#127472;</div>
+      <h4>Nawaz Sharif</h4>
+      <div class="role">Prime Minister of Pakistan</div>
+      <span class="consequence con-removed">Removed from Office</span>
+      <div class="reveal-text">His children (Maryam, Hassan, Hussain) owned London properties worth ~&pound;13.5 million through BVI companies. Sharif denied knowledge but was disqualified by the Supreme Court in July 2017.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127468;&#127463;</div>
+      <h4>David Cameron (via father)</h4>
+      <div class="role">Prime Minister of United Kingdom</div>
+      <span class="consequence con-exposed">Exposed</span>
+      <div class="reveal-text">His father Ian Cameron ran Blairmore Holdings Inc., registered in Panama, which employed Bahamas residents to sign paperwork to avoid UK tax residency. David held shares and sold them before becoming PM.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127482;&#127462;</div>
+      <h4>Petro Poroshenko</h4>
+      <div class="role">President of Ukraine</div>
+      <span class="consequence con-exposed">Exposed</span>
+      <div class="reveal-text">Set up an offshore company in BVI while war raged in eastern Ukraine &mdash; at a time when he pledged to sell his assets to avoid conflicts of interest.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127462;&#127479;</div>
+      <h4>Mauricio Macri</h4>
+      <div class="role">President of Argentina</div>
+      <span class="consequence con-investigated">Investigated</span>
+      <div class="reveal-text">Named as director of Fleg Trading Ltd in the Bahamas, which he had not declared as required. The revelation was particularly embarrassing as he had campaigned on an anti-corruption platform.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127480;&#127462;</div>
+      <h4>King Salman</h4>
+      <div class="role">King of Saudi Arabia</div>
+      <span class="consequence con-exposed">Exposed</span>
+      <div class="reveal-text">Linked to offshore companies used to acquire luxury yachts and prime real estate. The revelations highlighted the vast private wealth of the Saudi royal family.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127462;&#127487;</div>
+      <h4>Ilham Aliyev's Family</h4>
+      <div class="role">President of Azerbaijan</div>
+      <span class="consequence con-exposed">Exposed</span>
+      <div class="reveal-text">His children &mdash; aged 11 and 17 at the time &mdash; held shares in gold mines and prime London real estate through elaborate offshore structures.</div>
+    </div>
+
+    <div class="player-card" onclick="this.classList.toggle('expanded')">
+      <div class="flag">&#127464;&#127475;</div>
+      <h4>Xi Jinping (relatives)</h4>
+      <div class="role">President of China</div>
+      <span class="consequence con-exposed">Exposed</span>
+      <div class="reveal-text">Relatives of senior Communist Party leaders, including Xi Jinping's brother-in-law, were linked to offshore companies. China's censorship apparatus immediately suppressed all mention of the Papers.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BANKS -->
+<section class="section" id="banks">
+  <div class="section-header">
+    <div class="section-label">Enablers</div>
+    <h2 class="section-title">The Banks Behind the Shells</h2>
+    <p class="section-desc">More than 500 banks registered nearly 15,600 shell companies through Mossack Fonseca. These are the top intermediaries.</p>
+  </div>
+
+  <div class="banks-chart">
+    <div class="bank-row">
+      <div class="bank-name">HSBC</div>
+      <div class="bank-bar-wrap">
+        <div class="bank-bar b1" style="width: 100%">~2,300 shells</div>
+      </div>
+    </div>
+    <div class="bank-row">
+      <div class="bank-name">UBS</div>
+      <div class="bank-bar-wrap">
+        <div class="bank-bar b2" style="width: 48%">~1,100 shells</div>
+      </div>
+    </div>
+    <div class="bank-row">
+      <div class="bank-name">Soci&eacute;t&eacute; G&eacute;n&eacute;rale</div>
+      <div class="bank-bar-wrap">
+        <div class="bank-bar b3" style="width: 43%">~979 shells</div>
+      </div>
+    </div>
+    <div class="bank-row">
+      <div class="bank-name">Credit Suisse</div>
+      <div class="bank-bar-wrap">
+        <div class="bank-bar b4" style="width: 37%">~850+ shells</div>
+      </div>
+    </div>
+    <div class="bank-row">
+      <div class="bank-name">Deutsche Bank</div>
+      <div class="bank-bar-wrap">
+        <div class="bank-bar b5" style="width: 30%">~700+ shells</div>
+      </div>
+    </div>
+    <div class="bank-row">
+      <div class="bank-name">Commerzbank</div>
+      <div class="bank-bar-wrap">
+        <div class="bank-bar b6" style="width: 22%">~500+ shells</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TAX HAVENS -->
+<section class="section" id="havens">
+  <div class="section-header">
+    <div class="section-label">Destinations</div>
+    <h2 class="section-title">Top Secrecy Jurisdictions</h2>
+    <p class="section-desc">Where the 214,488 shell companies were registered. The British Virgin Islands alone accounted for more than half.</p>
+  </div>
+
+  <div class="havens-grid">
+    <div class="haven-card">
+      <div class="h-flag">&#127468;&#127463;</div>
+      <div class="h-name">British Virgin Islands</div>
+      <div class="h-count">~113,000</div>
+      <div class="h-label">Entities (53%)</div>
+    </div>
+    <div class="haven-card">
+      <div class="h-flag">&#127477;&#127462;</div>
+      <div class="h-name">Panama</div>
+      <div class="h-count">~48,000</div>
+      <div class="h-label">Entities (22%)</div>
+    </div>
+    <div class="haven-card">
+      <div class="h-flag">&#127463;&#127480;</div>
+      <div class="h-name">Bahamas</div>
+      <div class="h-count">~15,000</div>
+      <div class="h-label">Entities (7%)</div>
+    </div>
+    <div class="haven-card">
+      <div class="h-flag">&#127480;&#127464;</div>
+      <div class="h-name">Seychelles</div>
+      <div class="h-count">~9,000</div>
+      <div class="h-label">Entities (4%)</div>
+    </div>
+    <div class="haven-card">
+      <div class="h-flag">&#127475;&#127482;</div>
+      <div class="h-name">Niue</div>
+      <div class="h-count">~5,000</div>
+      <div class="h-label">Entities</div>
+    </div>
+    <div class="haven-card">
+      <div class="h-flag">&#127484;&#127480;</div>
+      <div class="h-name">Samoa</div>
+      <div class="h-count">~3,500</div>
+      <div class="h-label">Entities</div>
+    </div>
+    <div class="haven-card">
+      <div class="h-flag">&#127469;&#127472;</div>
+      <div class="h-name">Hong Kong</div>
+      <div class="h-count">~2,200</div>
+      <div class="h-label">Entities</div>
+    </div>
+    <div class="haven-card">
+      <div class="h-flag">&#127482;&#127480;</div>
+      <div class="h-name">Nevada / Wyoming, USA</div>
+      <div class="h-count">~1,000+</div>
+      <div class="h-label">Entities</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONSEQUENCES -->
+<section class="section" id="consequences">
+  <div class="section-header">
+    <div class="section-label">Impact</div>
+    <h2 class="section-title">Global Consequences</h2>
+    <p class="section-desc">The Panama Papers triggered the largest cross-border response to financial secrecy in history.</p>
+  </div>
+
+  <div class="consequences-grid">
+    <div class="consequence-card c-red">
+      <div class="c-icon">&#128178;</div>
+      <h4>Taxes Recovered</h4>
+      <div class="c-stat">$1.36B+</div>
+      <p>Governments worldwide recovered over $1.36 billion in back taxes and penalties by 2021, with more cases ongoing.</p>
+    </div>
+    <div class="consequence-card c-gold">
+      <div class="c-icon">&#128270;</div>
+      <h4>Investigations Opened</h4>
+      <div class="c-stat">150+</div>
+      <p>At least 150 inquiries, audits, or criminal investigations launched across 79 countries.</p>
+    </div>
+    <div class="consequence-card c-purple">
+      <div class="c-icon">&#128081;</div>
+      <h4>Leaders Toppled</h4>
+      <div class="c-stat">2</div>
+      <p>Iceland's PM resigned within days. Pakistan's PM was disqualified by the Supreme Court. Ministers fell in Spain, Chile, and beyond.</p>
+    </div>
+    <div class="consequence-card c-blue">
+      <div class="c-icon">&#128220;</div>
+      <h4>Laws Changed</h4>
+      <div class="c-stat">20+</div>
+      <p>EU Anti-Money Laundering Directive, UK beneficial ownership registers, and dozens of national reforms on transparency.</p>
+    </div>
+    <div class="consequence-card c-green">
+      <div class="c-icon">&#127942;</div>
+      <h4>Awards Won</h4>
+      <div class="c-stat">Pulitzer</div>
+      <p>The investigation won the Pulitzer Prize for Explanatory Reporting (2017), plus the George Polk Award and IRE Medal.</p>
+    </div>
+    <div class="consequence-card c-pink">
+      <div class="c-icon">&#128683;</div>
+      <h4>Firm Destroyed</h4>
+      <div class="c-stat">Closed</div>
+      <p>Mossack Fonseca shut down permanently in March 2018 after 40 years of operations, citing "irreparable damage."</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- JOURNALISTS -->
+<section class="section" id="journalists">
+  <div class="section-header">
+    <div class="section-label">The Investigation</div>
+    <h2 class="section-title">How 370+ Journalists Kept a Secret</h2>
+    <p class="section-desc">The largest collaborative journalism project in history was coordinated in total secrecy for over a year.</p>
+  </div>
+
+  <div class="journalist-box">
+    <div>
+      <h3>The Source &amp; The Process</h3>
+      <p>An anonymous whistleblower known only as <strong>"John Doe"</strong> contacted S&uuml;ddeutsche Zeitung via encrypted channels, transmitting 2.6 terabytes of documents over months.</p>
+      <p>When the newspaper realized the scale, they partnered with the <strong>ICIJ</strong> (International Consortium of Investigative Journalists). The team used encrypted messaging, Apache Solr for document search, Neo4j graph databases to map networks, and Linkurious for visualization.</p>
+      <p>Every claim was cross-checked against public records, corporate registries, and court filings in multiple countries. Subjects were contacted for comment before publication.</p>
+
+      <div class="quote">
+        "I want to make these crimes public. Income inequality is one of the defining issues of our time."
+        <span class="attr">&mdash; "John Doe," the anonymous source</span>
+      </div>
+    </div>
+    <div>
+      <div class="j-stats">
+        <div class="j-stat-card">
+          <div class="num">370+</div>
+          <div class="lbl">Journalists</div>
+        </div>
+        <div class="j-stat-card">
+          <div class="num">100+</div>
+          <div class="lbl">Media Outlets</div>
+        </div>
+        <div class="j-stat-card">
+          <div class="num">80+</div>
+          <div class="lbl">Countries</div>
+        </div>
+        <div class="j-stat-card">
+          <div class="num">~1 year</div>
+          <div class="lbl">Secret Investigation</div>
+        </div>
+      </div>
+      <div style="margin-top: 20px; font-size: 0.8rem; color: var(--text-dim); line-height: 1.7;">
+        <strong style="color: var(--text);">Key media partners:</strong> The Guardian (UK), BBC, Le Monde (France), La Nacion (Argentina), Indian Express, Asahi Shimbun (Japan), NDR/WDR (Germany), SVT (Sweden), and many more across all continents.
+      </div>
+    </div>
+  </div>
+
+  <!-- Memorial -->
+  <div style="margin-top: 48px;">
+    <div class="memorial">
+      <div class="candle">&#128367;</div>
+      <h3>Daphne Caruana Galizia</h3>
+      <div class="dates">1964 &ndash; 2017</div>
+      <p>Maltese investigative journalist who used Panama Papers data to expose corruption in Malta's government. She was assassinated by car bomb on October 16, 2017. Three men were convicted of carrying out the murder; businessman Yorgen Fenech was convicted of commissioning it in 2023.</p>
+      <p style="margin-top: 16px; font-style: italic; color: var(--text-muted);">"There are crooks everywhere you look. The situation is desperate."<br>&mdash; Her last blog post, published 30 minutes before her death</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BIGGER PICTURE -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-label">The Bigger Picture</div>
+    <h2 class="section-title">The Global Scale of Offshore Wealth</h2>
+    <p class="section-desc">The Panama Papers revealed only a fraction of the estimated hidden wealth worldwide.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+    <div class="consequence-card c-gold">
+      <div class="c-icon">&#127758;</div>
+      <h4>Estimated Global Offshore Wealth</h4>
+      <div class="c-stat">$21&ndash;32T</div>
+      <p>The Tax Justice Network estimates between $21 and $32 trillion is held in offshore accounts globally. The Panama Papers revealed only one firm's records.</p>
+    </div>
+    <div class="consequence-card c-blue">
+      <div class="c-icon">&#128196;</div>
+      <h4>Just One Law Firm</h4>
+      <div class="c-stat">4th Largest</div>
+      <p>Mossack Fonseca was only the world's 4th-largest offshore law firm. At least three larger firms continue to operate, and the overall industry remains vast.</p>
+    </div>
+    <div class="consequence-card c-purple">
+      <div class="c-icon">&#128279;</div>
+      <h4>Followed by More Leaks</h4>
+      <div class="c-stat">Paradise &amp; Pandora</div>
+      <p>The Paradise Papers (2017, 13.4M docs) and Pandora Papers (2021, 11.9M docs) revealed even more about the global offshore system &mdash; proving the problem remains systemic.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <p>This visualization is based on reporting by the <a href="https://www.icij.org/investigations/panama-papers/" target="_blank">ICIJ</a>,
+  The Guardian, S&uuml;ddeutsche Zeitung, and other member organizations of the Panama Papers investigation.</p>
+  <p style="margin-top: 12px;">Data and statistics sourced from ICIJ's published findings, the Offshore Leaks Database, and publicly available court records.</p>
+</footer>
+
+<script>
+  // Sticky nav visibility
+  const nav = document.getElementById('stickyNav');
+  const hero = document.querySelector('.hero');
+  const observer = new IntersectionObserver(([entry]) => {
+    nav.classList.toggle('visible', !entry.isIntersecting);
+  }, { threshold: 0 });
+  observer.observe(hero);
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Animate bars on scroll
+  const animateOnScroll = () => {
+    document.querySelectorAll('.bank-bar, .trait-bar').forEach(bar => {
+      const rect = bar.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9) {
+        bar.style.width = bar.style.width; // trigger reflow
+      }
+    });
+  };
+  window.addEventListener('scroll', animateOnScroll);
+</script>
+
+</body>
+</html>

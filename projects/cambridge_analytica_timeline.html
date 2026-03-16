@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindf*ck - Cambridge Analytica Timeline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0f;
+    color: #e0e0e0;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 80px 20px 60px;
+    background: linear-gradient(180deg, #1a0a2e 0%, #0a0a0f 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  }
+
+  .header h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #a78bfa, #f472b6, #fb923c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .header .subtitle {
+    font-size: 1.15rem;
+    color: #9ca3af;
+    max-width: 700px;
+    margin: 0 auto 8px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .header .author {
+    font-size: 0.9rem;
+    color: #6b7280;
+    position: relative;
+  }
+
+  /* KEY PLAYERS BAR */
+  .players {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 30px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .player-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 150px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .player-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(167, 139, 250, 0.4);
+  }
+
+  .player-card .name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #e5e7eb;
+  }
+
+  .player-card .role {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 4px;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 30px 20px 50px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat .number {
+    font-size: 2.4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f472b6, #fb923c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat .label {
+    font-size: 0.8rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* TIMELINE */
+  .timeline-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+  }
+
+  .timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #7c3aed, #ec4899, #f97316, #10b981);
+    transform: translateX(-50%);
+    border-radius: 3px;
+  }
+
+  .year-marker {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    margin: 50px 0 30px;
+  }
+
+  .year-marker span {
+    display: inline-block;
+    background: #1e1b4b;
+    border: 2px solid #7c3aed;
+    color: #a78bfa;
+    font-weight: 700;
+    font-size: 1.3rem;
+    padding: 8px 28px;
+    border-radius: 30px;
+    letter-spacing: 1px;
+  }
+
+  .event {
+    position: relative;
+    width: 45%;
+    padding: 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    margin-bottom: 30px;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+
+  .event:hover {
+    transform: translateY(-4px);
+    border-color: rgba(167, 139, 250, 0.4);
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.15);
+  }
+
+  .event.left {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .event.right {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  /* Connector dots */
+  .event::after {
+    content: '';
+    position: absolute;
+    top: 32px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid;
+    z-index: 3;
+  }
+
+  .event.left::after {
+    right: -42px;
+  }
+
+  .event.right::after {
+    left: -42px;
+  }
+
+  /* Connector lines */
+  .event::before {
+    content: '';
+    position: absolute;
+    top: 37px;
+    height: 2px;
+    width: 28px;
+    z-index: 1;
+  }
+
+  .event.left::before {
+    right: -28px;
+  }
+
+  .event.right::before {
+    left: -28px;
+  }
+
+  /* Category colors */
+  .event.foundation::after { border-color: #7c3aed; background: #1e1b4b; }
+  .event.foundation::before { background: #7c3aed; }
+  .event.foundation .tag { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+
+  .event.data::after { border-color: #ec4899; background: #1a0a1e; }
+  .event.data::before { background: #ec4899; }
+  .event.data .tag { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
+
+  .event.political::after { border-color: #f97316; background: #1a120a; }
+  .event.political::before { background: #f97316; }
+  .event.political .tag { background: rgba(249, 115, 22, 0.2); color: #fb923c; }
+
+  .event.exposure::after { border-color: #10b981; background: #0a1a14; }
+  .event.exposure::before { background: #10b981; }
+  .event.exposure .tag { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+  .event.aftermath::after { border-color: #3b82f6; background: #0a1428; }
+  .event.aftermath::before { background: #3b82f6; }
+  .event.aftermath .tag { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+  .event .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .event .date {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .event h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+
+  .event p {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+
+  .event .evidence {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid rgba(167, 139, 250, 0.4);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.8rem;
+    color: #a78bfa;
+    line-height: 1.5;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #9ca3af;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #4b5563;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 2.2rem; }
+    .timeline-container::before { left: 20px; }
+    .event { width: calc(100% - 50px); margin-left: 50px !important; }
+    .event.left::after, .event.right::after { left: -42px; right: auto; }
+    .event.left::before, .event.right::before { left: -28px; right: auto; }
+    .year-marker { text-align: left; padding-left: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>MINDF*CK</h1>
+  <p class="subtitle">Cambridge Analytica and the Plot to Break America<br>A timeline of evidence from Christopher Wylie's whistleblower account</p>
+  <p class="author">Based on the book by Christopher Wylie (2019)</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="number">87M</div>
+    <div class="label">Facebook profiles harvested</div>
+  </div>
+  <div class="stat">
+    <div class="number">20+</div>
+    <div class="label">Countries investigated</div>
+  </div>
+  <div class="stat">
+    <div class="number">44</div>
+    <div class="label">US races targeted (2014)</div>
+  </div>
+  <div class="stat">
+    <div class="number">$725M</div>
+    <div class="label">Facebook settlement</div>
+  </div>
+</div>
+
+<div class="players">
+  <div class="player-card">
+    <div class="name">Christopher Wylie</div>
+    <div class="role">Whistleblower / Fmr. Research Dir.</div>
+  </div>
+  <div class="player-card">
+    <div class="name">Alexander Nix</div>
+    <div class="role">CEO, Cambridge Analytica</div>
+  </div>
+  <div class="player-card">
+    <div class="name">Steve Bannon</div>
+    <div class="role">VP, Cambridge Analytica</div>
+  </div>
+  <div class="player-card">
+    <div class="name">Robert Mercer</div>
+    <div class="role">Billionaire Funder</div>
+  </div>
+  <div class="player-card">
+    <div class="name">Aleksandr Kogan</div>
+    <div class="role">Data Scientist / App Creator</div>
+  </div>
+  <div class="player-card">
+    <div class="name">Mark Zuckerberg</div>
+    <div class="role">CEO, Facebook</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div> Foundation</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ec4899"></div> Data Harvesting</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div> Political Operations</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div> Exposure & Investigation</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div> Aftermath</div>
+</div>
+
+<div class="timeline-container">
+
+  <!-- 2010 -->
+  <div class="year-marker"><span>2010</span></div>
+
+  <div class="event left foundation">
+    <span class="tag">Foundation</span>
+    <div class="date">April 2010</div>
+    <h3>Facebook Launches Open Graph Platform</h3>
+    <p>Facebook opens its platform to third-party apps, allowing developers to request access to users' personal data &mdash; and crucially, to the data of their Facebook friends without those friends' consent.</p>
+    <div class="evidence">Evidence: This API design flaw became the central mechanism through which Cambridge Analytica would later harvest data on 87 million users from only ~300,000 app installs.</div>
+  </div>
+
+  <div class="event right foundation">
+    <span class="tag">Foundation</span>
+    <div class="date">2010</div>
+    <h3>FTC Consent Decree with Facebook</h3>
+    <p>The US Federal Trade Commission and Facebook sign a consent decree in which Facebook promises it will not share users' data without their explicit permission.</p>
+    <div class="evidence">Evidence: This agreement was later used as the legal basis for the FTC's $5 billion fine against Facebook in 2019.</div>
+  </div>
+
+  <!-- 2013 -->
+  <div class="year-marker"><span>2013</span></div>
+
+  <div class="event left foundation">
+    <span class="tag">Foundation</span>
+    <div class="date">Autumn 2013</div>
+    <h3>Christopher Wylie Joins SCL Group</h3>
+    <p>24-year-old Canadian data scientist Christopher Wylie takes a job at SCL Group in London, a firm supplying the UK Ministry of Defence and NATO with information operations expertise. He is tasked with building a team to combat extremism online.</p>
+    <div class="evidence">Evidence: Wylie's testimony and book detail how military-grade psychological warfare tools were repurposed for political manipulation.</div>
+  </div>
+
+  <div class="event right foundation">
+    <span class="tag">Foundation</span>
+    <div class="date">2013</div>
+    <h3>Cambridge Analytica is Founded</h3>
+    <p>Cambridge Analytica is established as a subsidiary of SCL Group by Nigel Oakes and Alexander Nix (CEO). The project is acquired by billionaire Robert Mercer and shaped by Steve Bannon's vision to build a far-right insurgency in America.</p>
+    <div class="evidence">Evidence: Corporate registration documents and financial records link Mercer's funding to CA's creation through SCL.</div>
+  </div>
+
+  <div class="event left data">
+    <span class="tag">Data Harvesting</span>
+    <div class="date">2013</div>
+    <h3>"This Is Your Digital Life" App Created</h3>
+    <p>Data scientist Aleksandr Kogan and his company Global Science Research develop a personality quiz app on Facebook. Approximately 300,000 users are paid to take the test &mdash; but the app harvests data from all their Facebook friends too.</p>
+    <div class="evidence">Evidence: Kogan's app exploited Facebook's Open Graph API to collect data on up to 87 million profiles from just 300,000 direct users.</div>
+  </div>
+
+  <!-- 2014 -->
+  <div class="year-marker"><span>2014</span></div>
+
+  <div class="event right data">
+    <span class="tag">Data Harvesting</span>
+    <div class="date">Early 2014</div>
+    <h3>Mass Data Harvesting Begins</h3>
+    <p>Cambridge Analytica begins actively harvesting Facebook user data at scale. Wylie had commissioned a mass data-scraping exercise to build psychological and personality profiles, enabling prediction of political behavior and targeted content delivery.</p>
+    <div class="evidence">Evidence: Wylie's whistleblower testimony confirmed the scale: 87 million profiles harvested without informed consent.</div>
+  </div>
+
+  <div class="event left political">
+    <span class="tag">Political Operations</span>
+    <div class="date">2014</div>
+    <h3>First Global South Operations</h3>
+    <p>CA deploys its psychological profiling tools in elections across the developing world &mdash; including Trinidad, Nigeria, and other countries &mdash; before bringing these methods to Western democracies. Wylie describes this as "digital colonialism."</p>
+    <div class="evidence">Evidence: Wylie's book details operations where propaganda videos featuring real torture and murder were used to sway elections in Africa.</div>
+  </div>
+
+  <div class="event right political">
+    <span class="tag">Political Operations</span>
+    <div class="date">2014</div>
+    <h3>44 US Races Targeted in Midterms</h3>
+    <p>Cambridge Analytica is involved in 44 US congressional, Senate, and state-level elections. The company works with the John Bolton Super PAC on digital and TV campaigns in Arkansas, North Carolina, and New Hampshire.</p>
+    <div class="evidence">Evidence: FEC filings and campaign finance records document CA's involvement in these races.</div>
+  </div>
+
+  <div class="event left foundation">
+    <span class="tag">Foundation</span>
+    <div class="date">Mid 2014</div>
+    <h3>Facebook Tightens API Access (Too Late)</h3>
+    <p>Facebook updates its rules to limit developers' access to friends' data. However, the changes are not retroactively enforced &mdash; Kogan does not delete the improperly acquired data.</p>
+    <div class="evidence">Evidence: Facebook's own internal review later confirmed that Kogan retained the data despite the policy change.</div>
+  </div>
+
+  <div class="event right exposure">
+    <span class="tag">Exposure</span>
+    <div class="date">July 2014</div>
+    <h3>Wylie Departs Cambridge Analytica</h3>
+    <p>Increasingly disturbed by what he and his colleagues are building, 24-year-old Research Director Christopher Wylie leaves the company. Much of CA's most damaging US election work is still ahead.</p>
+  </div>
+
+  <!-- 2015 -->
+  <div class="year-marker"><span>2015</span></div>
+
+  <div class="event left political">
+    <span class="tag">Political Operations</span>
+    <div class="date">Early 2015</div>
+    <h3>Ted Cruz Hires Cambridge Analytica</h3>
+    <p>Senator Ted Cruz's presidential campaign engages CA during the early days of his Republican primary bid, using psychographic profiling to micro-target voters.</p>
+    <div class="evidence">Evidence: The Guardian reported in Dec 2015 that Cruz's campaign was driven by CA's data-derived psychological profiles.</div>
+  </div>
+
+  <div class="event right data">
+    <span class="tag">Data Harvesting</span>
+    <div class="date">2015</div>
+    <h3>Facebook Discovers Data Breach &mdash; Stays Quiet</h3>
+    <p>Through a Guardian inquiry, Facebook learns Kogan sold his "research" dataset to SCL/Cambridge Analytica. Facebook verifies the breach but does not publicly acknowledge it. It pressures CA to certify they deleted the data &mdash; they claim they did.</p>
+    <div class="evidence">Evidence: Legal correspondence between Facebook and CA showed CA certified data deletion in writing &mdash; a claim later proven false.</div>
+  </div>
+
+  <div class="event left political">
+    <span class="tag">Political Operations</span>
+    <div class="date">November 2015</div>
+    <h3>Leave.EU Hires Cambridge Analytica</h3>
+    <p>The pro-Brexit campaign group Leave.EU, headed by Nigel Farage, hires CA. Alexander Nix and Farage are personal friends; the work is done pro bono.</p>
+    <div class="evidence">Evidence: Bloomberg reporting and UK Electoral Commission investigation documents confirmed the relationship.</div>
+  </div>
+
+  <div class="event right exposure">
+    <span class="tag">Exposure</span>
+    <div class="date">December 11, 2015</div>
+    <h3>First Media Exposure (The Guardian)</h3>
+    <p>The Guardian publishes the first major article on Cambridge Analytica and its methods, revealing how Ted Cruz's campaign was powered by CA's data-driven psychological profiling.</p>
+  </div>
+
+  <!-- 2016 -->
+  <div class="year-marker"><span>2016</span></div>
+
+  <div class="event left political">
+    <span class="tag">Political Operations</span>
+    <div class="date">Mid 2016</div>
+    <h3>Trump Campaign Hires Cambridge Analytica</h3>
+    <p>After the Cruz campaign folds, Cambridge Analytica is hired by Donald Trump's presidential campaign. The same psychographic tools and harvested Facebook data are deployed for micro-targeted digital advertising.</p>
+    <div class="evidence">Evidence: Wylie's book reveals that Trump and Brexit campaigns deployed the same strategies, powered by the same technologies, directed by many of the same people.</div>
+  </div>
+
+  <div class="event right political">
+    <span class="tag">Political Operations</span>
+    <div class="date">June 23, 2016</div>
+    <h3>Brexit Referendum: UK Votes to Leave EU</h3>
+    <p>Britain shocks the world by voting to leave the European Union. Wylie later states this was the moment he realized it was time to expose his former associates and the tools they had built.</p>
+    <div class="evidence">Evidence: The UK Electoral Commission and Information Commissioner's Office later found multiple violations in Brexit campaign data practices.</div>
+  </div>
+
+  <div class="event left political">
+    <span class="tag">Political Operations</span>
+    <div class="date">November 8, 2016</div>
+    <h3>Donald Trump Wins US Presidential Election</h3>
+    <p>Cambridge Analytica's data-driven micro-targeting is deployed at scale. Racially stereotyped slogans, images and videos are targeted at specific voter segments. Facebook ads mean the evidence of this deception is largely invisible and ephemeral.</p>
+    <div class="evidence">Evidence: Post-election analysis revealed CA's targeted advertising reached millions of persuadable voters in key swing states.</div>
+  </div>
+
+  <!-- 2017 -->
+  <div class="year-marker"><span>2017</span></div>
+
+  <div class="event right foundation">
+    <span class="tag">Foundation</span>
+    <div class="date">August 2017</div>
+    <h3>Emerdata Founded (Successor Company)</h3>
+    <p>Emerdata, the functional successor to SCL and Cambridge Analytica, is founded. Registration documents list several people associated with SCL and CA, suggesting the operation is being restructured rather than shut down.</p>
+    <div class="evidence">Evidence: UK Companies House registration documents directly linked Emerdata to SCL/CA personnel and the Mercer family.</div>
+  </div>
+
+  <!-- 2018 -->
+  <div class="year-marker"><span>2018</span></div>
+
+  <div class="event left exposure">
+    <span class="tag">Exposure</span>
+    <div class="date">March 17, 2018</div>
+    <h3>The Story Breaks: Wylie Goes Public</h3>
+    <p>The Guardian and New York Times simultaneously publish explosive reports based on Wylie's whistleblowing. Initially reporting 50 million profiles compromised (later revised to 87 million), the stories reveal the full scope of CA's data harvesting and political manipulation.</p>
+    <div class="evidence">Evidence: Wylie provided journalists with internal documents, emails, and invoices proving CA's data practices and political operations.</div>
+  </div>
+
+  <div class="event right exposure">
+    <span class="tag">Exposure</span>
+    <div class="date">March 2018</div>
+    <h3>Channel 4 Undercover Investigation</h3>
+    <p>CA executives, including CEO Alexander Nix, are caught on hidden camera boasting about using honey traps, bribery, and other illegal practices to influence elections in multiple countries.</p>
+    <div class="evidence">Evidence: Video footage showed Nix offering to use Ukrainian sex workers and ex-spies to entrap political opponents.</div>
+  </div>
+
+  <div class="event left exposure">
+    <span class="tag">Exposure</span>
+    <div class="date">March 2018</div>
+    <h3>Facebook Suspends Cambridge Analytica</h3>
+    <p>Facebook attempts to pre-empt the press reports by announcing it has suspended CA and the SCL Group from its platform. The company faces intense scrutiny over its failure to act when it first learned of the data breach in 2015.</p>
+  </div>
+
+  <div class="event right aftermath">
+    <span class="tag">Aftermath</span>
+    <div class="date">April 10, 2018</div>
+    <h3>Zuckerberg Testifies Before Congress</h3>
+    <p>Mark Zuckerberg appears before the US Senate and House in a two-day hearing, calling it "my mistake" that he didn't do enough to prevent Facebook from being used for harm. He faces five hours of questioning.</p>
+    <div class="evidence">Evidence: Congressional testimony transcripts documented Zuckerberg's admissions about inadequate data protection.</div>
+  </div>
+
+  <div class="event left aftermath">
+    <span class="tag">Aftermath</span>
+    <div class="date">May 1, 2018</div>
+    <h3>SCL Group Dissolved / CA Shuts Down</h3>
+    <p>The SCL Group is officially dissolved. Cambridge Analytica ceases operations due to the mounting scandal. However, successor entities and related firms continue to exist.</p>
+  </div>
+
+  <div class="event right exposure">
+    <span class="tag">Exposure</span>
+    <div class="date">May 16, 2018</div>
+    <h3>Wylie Testifies to US Senate</h3>
+    <p>Christopher Wylie testifies before the US Senate Judiciary Committee, presenting evidence of a complex web connecting Facebook, Russia, WikiLeaks, the Trump campaign, and the Brexit referendum.</p>
+    <div class="evidence">Evidence: Wylie's testimony triggered investigations by the FBI, DOJ, SEC, FTC, UK National Crime Agency, MI5, and the Metropolitan Police.</div>
+  </div>
+
+  <div class="event left aftermath">
+    <span class="tag">Aftermath</span>
+    <div class="date">2018</div>
+    <h3>Global Investigations Launched</h3>
+    <p>The European Union and more than 20 countries open inquiries into Facebook, social media, and disinformation. In the UK: National Crime Agency, MI5, ICO, Electoral Commission, and Metropolitan Police investigate. In the US: FBI, DOJ, SEC, and FTC launch probes.</p>
+    <div class="evidence">Evidence: The largest data-crime investigation in history, spanning multiple agencies across two continents.</div>
+  </div>
+
+  <!-- 2019 -->
+  <div class="year-marker"><span>2019</span></div>
+
+  <div class="event right aftermath">
+    <span class="tag">Aftermath</span>
+    <div class="date">July 2019</div>
+    <h3>FTC Fines Facebook $5 Billion</h3>
+    <p>The Federal Trade Commission imposes a record $5 billion fine on Facebook for violating the 2010 consent decree by failing to protect user data. It remains one of the largest penalties ever imposed for a data privacy violation.</p>
+    <div class="evidence">Evidence: The fine directly referenced the 2010 consent decree Facebook signed promising to protect user data.</div>
+  </div>
+
+  <div class="event left exposure">
+    <span class="tag">Exposure</span>
+    <div class="date">October 8, 2019</div>
+    <h3>Mindf*ck Published</h3>
+    <p>Christopher Wylie publishes his full account: <em>Mindf*ck: Cambridge Analytica and the Plot to Break America</em>. The book reveals the inside story of how military-grade psychological warfare tools were weaponized against democratic populations.</p>
+  </div>
+
+  <!-- 2020+ -->
+  <div class="year-marker"><span>2020+</span></div>
+
+  <div class="event right aftermath">
+    <span class="tag">Aftermath</span>
+    <div class="date">2020</div>
+    <h3>Platform Policy Changes</h3>
+    <p>In response to the scandal: Twitter bans political ads entirely. Google reduces targeting options for political advertising. Facebook gives users the ability to opt out of political ads. The EU passes the Digital Services Act and Digital Markets Act.</p>
+  </div>
+
+  <div class="event left aftermath">
+    <span class="tag">Aftermath</span>
+    <div class="date">2022</div>
+    <h3>Facebook Settles for $725 Million</h3>
+    <p>Facebook (now Meta) agrees to pay $725 million to settle a class-action lawsuit brought by users whose data was improperly shared with Cambridge Analytica &mdash; one of the largest data privacy settlements in history.</p>
+    <div class="evidence">Evidence: Court documents from In re Facebook Inc. Consumer Privacy User Profile Litigation confirmed the settlement terms.</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Timeline based on <em>Mindf*ck</em> by Christopher Wylie (2019) and public records</p>
+  <p style="margin-top: 8px;">"The greatest trick Cambridge Analytica ever pulled was making you think they didn't exist."</p>
+</div>
+
+<script>
+  // Animate timeline events on scroll
+  const events = document.querySelectorAll('.event, .year-marker');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = entry.target.classList.contains('left')
+          ? 'translateX(0)' : 'translateX(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  events.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    if (el.classList.contains('left')) {
+      el.style.transform = 'translateX(-30px)';
+    } else if (el.classList.contains('right')) {
+      el.style.transform = 'translateX(30px)';
+    } else {
+      el.style.transform = 'translateY(20px)';
+    }
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
