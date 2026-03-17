@@ -673,16 +673,20 @@
       .nav__links {
         display: none;
         position: fixed;
-        inset: 0;
-        background: rgba(6,8,13,0.97);
+        top: 0; left: 0; right: 0; bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--bg);
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 24px;
-        z-index: 99;
+        gap: 32px;
+        z-index: 100;
+        list-style: none;
       }
       .nav__links.open { display: flex; }
-      .nav__links.open a { font-size: 1.2rem; color: var(--text); }
+      .nav__links.open a { font-size: 1.4rem; color: var(--text); letter-spacing: 0.05em; }
+      .nav__links.open li { text-align: center; }
       .nav__hamburger { display: flex; z-index: 101; }
       .hero { padding: 0 24px; min-height: 90vh; }
       .hero h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }

@@ -233,8 +233,10 @@ TEMPLATE_CSS = """
   .page-footer a:hover { color: var(--text); }
 
   @media (max-width: 700px) {
-    .topbar { padding: 0.8rem 1.2rem; }
-    .topbar-nav { gap: 1rem; }
+    .topbar { padding: 0.7rem 1rem; }
+    .topbar-brand { font-size: 0.6rem; letter-spacing: 0.1em; }
+    .topbar-nav { gap: 0.8rem; }
+    .topbar-nav a { font-size: 0.55rem; letter-spacing: 0.08em; }
     .page-container { padding: 2rem 1.2rem 3rem; }
     .page-title { font-size: 1.5rem; }
   }
