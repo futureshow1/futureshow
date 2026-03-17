@@ -1,0 +1,487 @@
+.paragraph_style {
+    color: #75d8a5;
+    font-family: 'HelveticaNeue-Bold', 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 29px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 10px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: uppercase;
+}
+.style {
+    color: #736f6d;
+    font-family: 'HelveticaNeue', 'Helvetica Neue', 'Arial', sans-serif;
+    font-weight: normal;
+    opacity: 1.00;
+}
+.paragraph_style_1 {
+    color: #404040;
+    font-family: 'HelveticaNeue', 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 14px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: justify;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
+}
+.style_1 {
+    font-family: 'HelveticaNeue-Bold', 'Helvetica Neue', 'Arial', sans-serif;
+    font-weight: bold;
+}
+.style_SkipStroke_1 {
+    background: transparent;
+    opacity: 1.00;
+}
+.paragraph_style_2 {
+    color: #404040;
+    font-family: 'HelveticaNeue', 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 14px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
+}
+.style_SkipStroke {
+    background: transparent;
+    opacity: 1.00;
+}
+.paragraph_style_3 {
+    color: #404040;
+    font-family: 'HelveticaNeue', 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 14px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
+}
+.style_2 {
+    font-size: 10px;
+    line-height: 12px;
+}
+.Free_Form {
+    color: #404040;
+    font-family: 'HelveticaNeue', 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 14px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: none;
+}
+.Title {
+    color: #404040;
+    font-family: 'HelveticaNeue-Light', 'Helvetica Neue', 'Helvetica Neue Light', 'Arial', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 17px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    opacity: 1.00;
+    padding-bottom: 10px;
+    padding-top: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0px;
+    text-transform: uppercase;
+}
+.graphic_image_style_default_SkipStroke {
+    background: transparent;
+    opacity: 1.00;
+}
+.graphic_textbox_layout_style_default {
+    padding: 4px;
+}
+.graphic_textbox_layout_style_default_External_482_23 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_310_66 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_465_23 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_182_224 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_538_37 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_322_36 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_533_37 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_539_37 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_430_37 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_508_51 {
+    position: relative;
+}
+.graphic_textbox_layout_style_default_External_562_54 {
+    position: relative;
+}
+.graphic_textbox_style_default_SkipStroke {
+    background: transparent;
+    opacity: 1.00;
+}
+a {
+    color: #a6a2a4;
+    text-decoration: none;
+}
+a:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class1 {
+    color: #504d4f;
+}
+a.class1:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class1:hover {
+    color: #43d692;
+}
+a.class10 {
+    color: #504d4f;
+}
+a.class10:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class10:hover {
+    color: #43d692;
+}
+a.class11 {
+    color: #504d4f;
+}
+a.class11:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class11:hover {
+    color: #43d692;
+}
+a.class12 {
+    color: #504d4f;
+}
+a.class12:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class12:hover {
+    color: #43d692;
+}
+a.class13 {
+    color: #504d4f;
+}
+a.class13:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class13:hover {
+    color: #43d692;
+}
+a.class14 {
+    color: #504d4f;
+}
+a.class14:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class14:hover {
+    color: #43d692;
+}
+a.class15 {
+    color: #504d4f;
+}
+a.class15:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class15:hover {
+    color: #43d692;
+}
+a.class16 {
+    color: #504d4f;
+}
+a.class16:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class16:hover {
+    color: #43d692;
+}
+a.class17 {
+    color: #504d4f;
+}
+a.class17:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class17:hover {
+    color: #43d692;
+}
+a.class18 {
+    color: #504d4f;
+}
+a.class18:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class18:hover {
+    color: #43d692;
+}
+a.class19 {
+    color: #504d4f;
+}
+a.class19:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class19:hover {
+    color: #43d692;
+}
+a.class2 {
+    color: #504d4f;
+}
+a.class2:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class2:hover {
+    color: #43d692;
+}
+a.class20 {
+    color: #504d4f;
+}
+a.class20:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class20:hover {
+    color: #43d692;
+}
+a.class21 {
+    color: #504d4f;
+}
+a.class21:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class21:hover {
+    color: #43d692;
+}
+a.class22 {
+    color: #504d4f;
+}
+a.class22:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class22:hover {
+    color: #43d692;
+}
+a.class23 {
+    color: #504d4f;
+}
+a.class23:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class23:hover {
+    color: #43d692;
+}
+a.class3 {
+    color: #504d4f;
+}
+a.class3:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class3:hover {
+    color: #43d692;
+}
+a.class4 {
+    color: #666666;
+}
+a.class4:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class4:hover {
+    color: #ff0080;
+}
+a.class5 {
+    color: #504d4f;
+}
+a.class5:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class5:hover {
+    color: #43d692;
+}
+a.class6 {
+    color: #504d4f;
+}
+a.class6:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class6:hover {
+    color: #43d692;
+}
+a.class7 {
+    color: #504d4f;
+}
+a.class7:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class7:hover {
+    color: #43d692;
+}
+a.class8 {
+    color: #504d4f;
+}
+a.class8:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class8:hover {
+    color: #43d692;
+}
+a.class9 {
+    color: #504d4f;
+}
+a.class9:visited {
+    color: #333333;
+    text-decoration: none;
+}
+a.class9:hover {
+    color: #43d692;
+}
+a:hover {
+    color: #5bd662;
+    text-decoration: underline;
+}
+ol  { 
+      padding:0;
+      margin:0;
+      text-indent:0;
+      list-style-type:none ;
+      list-style-image:none
+    }
+.Bullet { 
+          text-decoration:none ;
+          text-transform:none ;
+          border: none;          
+        }
+.bumper {
+    font-size: 1px;
+    line-height: 1px;
+}
+.spacer {
+    font-size: 1px;
+    line-height: 1px;
+}
+body { 
+    -webkit-text-size-adjust: none;
+}
+div { 
+    overflow: visible; 
+}
+img { 
+    border: none; 
+}
+.InlineBlock { 
+    display: inline; 
+}
+.InlineBlock { 
+    display: inline-block; 
+}
+.inline-block {
+    display: inline-block;
+    vertical-align: baseline;
+    margin-bottom:0.3em;
+}
+.vertical-align-middle-middlebox {
+    display: table;
+}
+.vertical-align-middle-innerbox {
+    display: table-cell;
+    vertical-align: middle;
+}
+div.paragraph {
+    position: relative;
+}
+li.full-width {
+    width: 100;
+}

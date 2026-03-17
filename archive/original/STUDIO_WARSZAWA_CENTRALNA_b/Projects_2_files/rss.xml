@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:iphoto="urn:iphoto:property" xmlns:iweb="http://www.apple.com/iweb" version="2.0">
+  <channel>
+    <title>Butoh</title>
+    <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2.html</link>
+    <description>Daisuke Yoshimoto ukończył kierunek sztuki na Wydziale Teatru Uniwersytetu Nippon w 1967 roku. Od pierwszych lat swej scenicznej aktywności współpracował z największymi twórcami butoh, m.in. z Kazuo Ohno, Hisayo Iwaki i Yukihiko Sakai. W latach dziewięćdziesiątych wielokrotnie gościł w Polsce, prezentując cykl spektakli podejmujących temat śmierci. Był gościem Centrum Sztuki Japońskiej Manggha w Krakowie, Centrum Sztuki Współczesnej w Warszawie, Centrum Sztuki Studio, Teatru Kana w Szczecinie, Stowarzyszenia Tratwa w Olsztynie, Teatru ósmego Dnia w Poznaniu oraz - kilkakrotnie - Ośrodka Grotowskiego we Wrocławiu. W 1997 roku Ośrodek zorganizował festiwal tańca butoh, którego konsultantem programowym był właśnie Daisuke Yoshimoto. Obecnie wraz z grupą teatralną ZAR z Wrocławia jest współtwórcą projektu &quot;Łazarz&quot; rozpoczętego w 2002 roku. W roku 2005 roku Daisuke Yoshimoto przedstawiał w Polsce swoją pracę pt. „Eros i Thanatos&quot;. W maju 2005 w Warszawie dzięki uprzejmości dyrekcji Centrum Sztuki Studio odbyły się dwa pokazy na Małej Scenie Teatru Studio. Olbrzymim zainteresowaniem cieszył się pięciodniowy warsztat w Centrum Sztuki Współczesnej. W październiku 2005 był jednym z gości New York Butoh Festiwal. Dzieki wysiłkom Marka Żerańskiego Daisuke Yoshimoto podczas jesiennej wizyty w 2006 roku prowadził w CSW w Warszawie warsztaty. Poniżej fragmenty spektaklu „Eros i Thanatos&quot;.</description>
+    <item>
+      <title>eros/thanatos1</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh2/butoh2.mov</link>
+      <guid isPermaLink="false">13938a12-324d-44a0-b389-cf9d5afeb782</guid>
+      <enclosure url="file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh2/butoh2.mov" length="0" type="video/quicktime"/>
+      <iphoto:thumbnail>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh2/thumb.jpg</iphoto:thumbnail>
+      <iweb:richTitle>&lt;div style=&quot;padding: 0px; &quot; class=&quot;image_cluster_layout_style_default_External_0_0&quot;&gt;&lt;div class=&quot;image_cluster_layout_style_default&quot;&gt;&lt;p style=&quot;padding-bottom: 0pt; padding-top: 0pt; &quot; class=&quot;Caption&quot;&gt;eros/thanatos1&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</iweb:richTitle>
+      <iweb:movieParams>{&quot;moviePoster&quot;: 0, &quot;movieStartTime&quot;: 0, &quot;movieShowController&quot;: true, &quot;movieEndPoster&quot;: 1, &quot;movieAutoPlay&quot;: false, &quot;movieEndTime&quot;: 1, &quot;movieSoundVolume&quot;: 1, &quot;movieDuration&quot;: 41.32, &quot;movieLoop&quot;: &quot;SFDMovieNoLoop&quot;}</iweb:movieParams>
+    </item>
+    <item>
+      <title>eros/thanatos2</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh3/butoh3.m4v</link>
+      <guid isPermaLink="false">10023ea5-39a0-416a-89e5-e0dbd9df3556</guid>
+      <enclosure url="file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh3/butoh3.m4v" length="0" type="video/x-m4v"/>
+      <iphoto:thumbnail>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh3/thumb.jpg</iphoto:thumbnail>
+      <iweb:richTitle>&lt;div style=&quot;padding: 0px; &quot; class=&quot;image_cluster_layout_style_default_External_0_0&quot;&gt;&lt;div class=&quot;image_cluster_layout_style_default&quot;&gt;&lt;p style=&quot;padding-bottom: 0pt; padding-top: 0pt; &quot; class=&quot;Caption&quot;&gt;eros/thanatos2&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</iweb:richTitle>
+      <iweb:movieParams>{&quot;moviePoster&quot;: 0, &quot;movieStartTime&quot;: 0, &quot;movieShowController&quot;: true, &quot;movieEndPoster&quot;: 1, &quot;movieAutoPlay&quot;: false, &quot;movieEndTime&quot;: 1, &quot;movieSoundVolume&quot;: 1, &quot;movieDuration&quot;: 12.04, &quot;movieLoop&quot;: &quot;SFDMovieNoLoop&quot;}</iweb:movieParams>
+    </item>
+    <item>
+      <title>butoh4</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh4/butoh4.m4v</link>
+      <guid isPermaLink="false">f4fb0162-8bf7-496c-a4f9-c9317871d19e</guid>
+      <enclosure url="file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh4/butoh4.m4v" length="0" type="video/x-m4v"/>
+      <iphoto:thumbnail>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projects_2_files/Media/butoh4/thumb.jpg</iphoto:thumbnail>
+      <iweb:richTitle>&lt;div style=&quot;padding: 0px; &quot; class=&quot;image_cluster_layout_style_default_External_0_0&quot;&gt;&lt;div class=&quot;image_cluster_layout_style_default&quot;&gt;&lt;p style=&quot;padding-bottom: 0pt; padding-top: 0pt; &quot; class=&quot;Caption&quot;&gt;butoh4&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</iweb:richTitle>
+      <iweb:movieParams>{&quot;moviePoster&quot;: 0, &quot;movieStartTime&quot;: 0, &quot;movieShowController&quot;: true, &quot;movieEndPoster&quot;: 1, &quot;movieAutoPlay&quot;: false, &quot;movieEndTime&quot;: 1, &quot;movieSoundVolume&quot;: 1, &quot;movieDuration&quot;: 14.2, &quot;movieLoop&quot;: &quot;SFDMovieNoLoop&quot;}</iweb:movieParams>
+    </item>
+  </channel>
+</rss>

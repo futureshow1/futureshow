@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<rss xmlns:iweb="http://www.apple.com/iweb" version="2.0">
+  <channel>
+    <title>Blog</title>
+    <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog</link>
+    <description></description>
+    <item>
+      <title>Chaosmos.pl</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/7/8_Chaosmos.pl.html</link>
+      <guid isPermaLink="false">37c4e6d1-ac0e-46fb-8146-2b5b26f0e058</guid>
+      <pubDate>Wed, 8 Jul 2009 23:05:14 +0200</pubDate>
+      <iweb:comment enabled="0" count="0" link="file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/7/8_Chaosmos.pl.html#comment_layer"></iweb:comment>
+    </item>
+    <item>
+      <title>&#x201C;Okno&#x201D;- Krzysztof Lewandowski</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/6/19_%E2%80%9COkno%E2%80%9D-_Krzysztof_Lewandowski.html</link>
+      <guid isPermaLink="false">5acf985f-ba29-4a31-a4f3-ded4aa0ab646</guid>
+      <pubDate>Fri, 19 Jun 2009 15:01:31 +0200</pubDate>
+      <iweb:comment enabled="0" count="0" link="file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/6/19_%E2%80%9COkno%E2%80%9D-_Krzysztof_Lewandowski.html#comment_layer"></iweb:comment>
+    </item>
+    <item>
+      <title>Zjazd za&#x142;o&#x17C;ycieli&#13;buddyzmu w Polsce</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/6/3_Zjazd_za%C5%82o%C5%BCycielibuddyzmu_w_Polsce.html</link>
+      <guid isPermaLink="false">856669fb-cfe0-4418-9062-b0bbc0e9fd98</guid>
+      <pubDate>Wed, 3 Jun 2009 21:07:00 +0200</pubDate>
+      <iweb:comment enabled="0" count="0" link="file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/6/3_Zjazd_za%C5%82o%C5%BCycielibuddyzmu_w_Polsce.html#comment_layer"></iweb:comment>
+    </item>
+    <item>
+      <title>List Otwarty</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/5/13_List_Otwarty.html</link>
+      <guid isPermaLink="false">63608118-7258-4878-be22-fedeb3341b47</guid>
+      <pubDate>Wed, 13 May 2009 19:33:04 +0200</pubDate>
+      <iweb:comment enabled="0" count="0" link="file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/5/13_List_Otwarty.html#comment_layer"></iweb:comment>
+    </item>
+    <item>
+      <title>107 Urodziny &#13;Hansa Bellmera</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/3/13_107_Urodziny_Hansa_Bellmera.html</link>
+      <guid isPermaLink="false">f617c8a6-139a-4354-9a4f-f32d9682760f</guid>
+      <pubDate>Fri, 13 Mar 2009 15:32:34 +0100</pubDate>
+      <iweb:comment enabled="0" count="0" link="file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/3/13_107_Urodziny_Hansa_Bellmera.html#comment_layer"></iweb:comment>
+    </item>
+    <item>
+      <title>Psychodelia &#x2018;60</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/2/27_Psychodelia_%E2%80%9860.html</link>
+      <guid isPermaLink="false">9328721c-a785-4da6-8e84-aec4f02258a7</guid>
+      <pubDate>Fri, 27 Feb 2009 13:38:29 +0100</pubDate>
+      <iweb:comment enabled="0" count="0" link="file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog/Entries/2009/2/27_Psychodelia_%E2%80%9860.html#comment_layer"></iweb:comment>
+    </item>
+    <iweb:dateFormat>EEEE, d MMMM yyyy</iweb:dateFormat>
+    <iweb:baseURL>file://localhost/Users/janjan/Desktop/WWW/new%2013/Towarzystwo_B/Blog</iweb:baseURL>
+    <iweb:maximumSummaryItems>10</iweb:maximumSummaryItems>
+  </channel>
+</rss>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:iphoto="urn:iphoto:property" xmlns:iweb="http://www.apple.com/iweb" version="2.0">
+  <channel>
+    <title>Galerie</title>
+    <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Aktualnosci/Galerie/Galerie.html</link>
+    <description>Galerie</description>
+    <item>
+      <title>Bellmer</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/Aktualnosci/Galerie/Pages/Bellmer.html</link>
+      <guid isPermaLink="false">96ca3d6b-fb30-4bf3-b098-02d8caab959d</guid>
+    </item>
+  </channel>
+</rss>

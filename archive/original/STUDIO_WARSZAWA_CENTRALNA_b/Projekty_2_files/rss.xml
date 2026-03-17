@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:iphoto="urn:iphoto:property" xmlns:iweb="http://www.apple.com/iweb" version="2.0">
+  <channel>
+    <title>Festiwal “Różnice”</title>
+    <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2.html</link>
+    <description>
+Z &quot;Manifestu sztuki jako sztuki kontekstualnej&quot; Jana Świdzińskiego
+“Świat współczesny nie tworzy obrazu rzeczywistości, który mógłby być przez wszystkich akceptowany. Sens sztuki jest związany z sensem, jaki nadajemy rzeczywistości, w której żyjemy. Ponieważ obraz rzeczywistości utracił swą jednoznaczność więc i obraz, który tworzy sztuka przestał być jednoznaczny. 
+  więcej</description>
+    <item>
+      <title>ROZNICEwolniejsza</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEwolniejsza/ROZNICEwolniejsza.m4v</link>
+      <guid isPermaLink="false">dcf298dc-1f0e-49e4-9c18-9194f39423e2</guid>
+      <enclosure url="file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEwolniejsza/ROZNICEwolniejsza.m4v" length="0" type="video/x-m4v"/>
+      <iphoto:thumbnail>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEwolniejsza/thumb.jpg</iphoto:thumbnail>
+      <iweb:richTitle>&lt;div style=&quot;padding: 0px; &quot; class=&quot;image_cluster_layout_style_default_External_0_0&quot;&gt;&lt;div class=&quot;image_cluster_layout_style_default&quot;&gt;&lt;p style=&quot;padding-bottom: 0pt; padding-top: 0pt; &quot; class=&quot;Caption&quot;&gt;ROZNICEwolniejsza&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</iweb:richTitle>
+      <iweb:movieParams>{&quot;moviePoster&quot;: 0, &quot;movieStartTime&quot;: 0, &quot;movieShowController&quot;: true, &quot;movieEndPoster&quot;: 1, &quot;movieAutoPlay&quot;: false, &quot;movieEndTime&quot;: 1, &quot;movieSoundVolume&quot;: 1, &quot;movieDuration&quot;: 30, &quot;movieLoop&quot;: &quot;SFDMovieNoLoop&quot;}</iweb:movieParams>
+    </item>
+    <item>
+      <title>ROZNICEszybka</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEszybka/ROZNICEszybka.m4v</link>
+      <guid isPermaLink="false">1c4c118c-9f75-41a6-a697-10929dc2aa06</guid>
+      <enclosure url="file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEszybka/ROZNICEszybka.m4v" length="0" type="video/x-m4v"/>
+      <iphoto:thumbnail>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEszybka/thumb.jpg</iphoto:thumbnail>
+      <iweb:richTitle>&lt;div style=&quot;padding: 0px; &quot; class=&quot;image_cluster_layout_style_default_External_0_0&quot;&gt;&lt;div class=&quot;image_cluster_layout_style_default&quot;&gt;&lt;p style=&quot;padding-bottom: 0pt; padding-top: 0pt; &quot; class=&quot;Caption&quot;&gt;ROZNICEszybka&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</iweb:richTitle>
+      <iweb:movieParams>{&quot;moviePoster&quot;: 0, &quot;movieStartTime&quot;: 0, &quot;movieShowController&quot;: true, &quot;movieEndPoster&quot;: 1, &quot;movieAutoPlay&quot;: false, &quot;movieEndTime&quot;: 1, &quot;movieSoundVolume&quot;: 1, &quot;movieDuration&quot;: 30, &quot;movieLoop&quot;: &quot;SFDMovieNoLoop&quot;}</iweb:movieParams>
+    </item>
+    <item>
+      <title>ROZNICEinna</title>
+      <link>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEinna/ROZNICEinna.m4v</link>
+      <guid isPermaLink="false">dceffb6a-4bdc-4313-b12a-21eed647a509</guid>
+      <enclosure url="file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEinna/ROZNICEinna.m4v" length="0" type="video/x-m4v"/>
+      <iphoto:thumbnail>file://localhost/Users/janjan/Desktop/WWW/new%2013/STUDIO_WARSZAWA_CENTRALNA_b/Projekty_2_files/Media/ROZNICEinna/thumb.jpg</iphoto:thumbnail>
+      <iweb:richTitle>&lt;div style=&quot;padding: 0px; &quot; class=&quot;image_cluster_layout_style_default_External_0_0&quot;&gt;&lt;div class=&quot;image_cluster_layout_style_default&quot;&gt;&lt;p style=&quot;padding-bottom: 0pt; padding-top: 0pt; &quot; class=&quot;Caption&quot;&gt;ROZNICEinna&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</iweb:richTitle>
+      <iweb:movieParams>{&quot;moviePoster&quot;: 0, &quot;movieStartTime&quot;: 0, &quot;movieShowController&quot;: true, &quot;movieEndPoster&quot;: 1, &quot;movieAutoPlay&quot;: false, &quot;movieEndTime&quot;: 1, &quot;movieSoundVolume&quot;: 1, &quot;movieDuration&quot;: 30, &quot;movieLoop&quot;: &quot;SFDMovieNoLoop&quot;}</iweb:movieParams>
+    </item>
+  </channel>
+</rss>
