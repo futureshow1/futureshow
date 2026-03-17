@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poliamory Script — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Poliamory Script</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Poliamory_Script_files/53b86c0f186de7554ba5227070a1288b.png" alt="Poliamory Script" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Poliamory_Script_files/10295444_647743385300636_4269956361758170604_o.jpg" alt="Poliamory Script" loading="lazy"></div>
+      <p>1. Narrative structure (1st turning point, 2st turning point, conflict, exposition of main char + background ­ queer + diy: dev smth new, support w existing mdls of myth&amp;story­telling, metamorphosis of the hero) 2. char building 3. going deeper into</p>
+      <h3>transgression</h3>
+      <p>queer aesthetics – creative power of chaos, transgressing already existing models/programs what’s the differenece between ex­ing programmed and transgressed model? karakteri ID, creating other char­s how to develop experiences into chars, creating IDs</p>
+      <p>what kind of love story is the best for our subject?</p>
+      <p>2. Concept</p>
+      <p>apply / to explore: letting go of ownership, jealousy; understanding more complicated social structures; eliminating or widening categories)</p>
+      <p>­ Polyamory as a possibility of transgression, from old system to new. (Emotions / social situations that</p>
+      <p>Themes</p>
+      <p>affect­concept­percept in art).</p>
+      <p>Technical device: Polyamory as a non­linear model of narrative in film. Situations, dialogue</p>
+      <p>­ Polyamory Love story as model for developing non­linear narrative structure</p>
+      <p>3. empathy, social and personal enlightenment, perfect verbal communication, perfect non­verbal</p>
+      <p>communication, the struggle of letting go of jealousy, different sexualities etc</p>
+      <p>polyamory (in contrast to fir ex. polygamy) is not a (or not only) social model of relations, but a much more</p>
+      <p>complicated fusion of practices: from corporal/sexual, through linguistic to political, but always with affect as</p>
+      <p>a major theme. That's why I think it's so interesting for film workshops (question: how to transform</p>
+      <p>keeping it a bit narrower than just &quot;queer experience&quot;, but still including variations on human communication in the term,</p>
+      <p>The Polyamorous Experience: Film Script Writing Workshop</p>
+      <p>­ In writing this sort of script multiple and hybrid identities can be a point of departure for character building</p>
+      <p>and creating relations between characters in the film</p>
+      <p>­ Intimate and personal experience would be a ground for queer experience encoded later in the script. This</p>
+      <p>work involves analysis of structural elements of the story: characters as well as actions.</p>
+      <p>­ Searching for visual form which is the most interesting for pictorial space in the queer movie making, we</p>
+      <p>will consider this problem at the very primal stage of script writing</p>
+      <p>­ From concept to scenario: creative process and working with singularity, collecting and crystalizing the</p>
+      <p>materials for the script</p>
+      <p>­ Imagining the space: ...</p>
+      <p>I would like to keep the exercises and practices of the workshop itself quite simple to not overwhelm the</p>
+      <p>participants with theory. So hopefully we can derivate these ideas into simple tasks &amp; questions. But these</p>
+      <p>details don't have to be in the concept, we can work on them later.</p>
+      <p>­ Queer dialogs: ...is about different voices that the writer has to hear when creating this kind of script. (this</p>
+      <p>is also a matter of transgression, but in this case transgressing one's identity phantasms. Anyway, we'll see</p>
+      <p>how this concepts work in practice during the workshop. And first in the scenario of the workshops we want</p>
+      <p>to design.)</p>
+      <p><a href="http://entzaubert.blogsport.de/program-2014/the-polyamorous-experience-film-script-writing-workshop/" style="line-height: 29px; ">THE POLYAMOROUS EXPERIENCE: FILM SCRIPT WRITING WORKSHOP</a></p>
+      <p>The Polyamorous Experience: Film Script Writing Workshop3 day workshop à 3 hours:thursday 3. Julyfriday 4. Julysaturday 5. July12 – 15:00Studio space, Karpfenteichstrasse</p>
+      <p>*workshop will be in english language*Limited participants. Please register by sending an email to:<a href="mailto:piret.karro@gmail.com" style="line-height: 21px; ">piret.karro@gmail.com</a></p>
+      <p>Workshop facilitators: Piret Karro and Jan Lubicz Przyłuski</p>
+      <p>During the 3-day workshop, we’ll be exploring the phenomenon of polyamory through the means of film script writing. We’ll be looking into the many folds of polyamory by working with phases of film script development through a 3-hour session each day. Anyone can join, regardless of having any experience with polyamory or writing a film script.</p>
+      <p>Day 1: The concept of polyamoryWe’ll be discussing Polyamory as a personal experience that asks the subject to let go of conservative moral principles and adjust to a more dynamic and complex system of personal relationships. The possible topics to explore are unconventional love, religious taboos, different sexualities, letting go of ownership and jealousy, partnership, loneliness, revolting the system, the representation of polyamory in a monogamy-dominated culture.</p>
+      <p>Day 2: NarrativeThe subthemes of polyamory are explored through techniques of writing a film script. A polyamorous love story can function as a model for developing non-linear narrative structure, analysing different possibilities of story-telling while depicting different relationships within one polyamorous group of people in the story. The narratives can be created by deconstructing existing narrative models and re-creating them in the queer context or by creating a story from scratch, using personal experience as inspiration.</p>
+      <p>Day 3: CharactersIn the last session, we’ll develop characters for our story, mixing fantasies with actual experiences. We’ll work on completing the script by creating concrete personas and setting them in certain situations. This will give us a chance to study the metamorphosis of one’s identity through the development of the story and try out the mechanisms of enclosing polyamorous experience into a character. On the last day, we’ll focus on the technical details of script writing: creating dialogue, space description, camera perspective, non-verbal actions.</p>
+      <p>The workshop held by:Jan Lubicz Przyłuski. Experimental film director, anthropologist and intermedia artist. Educated in the fields of performance art, theater anthropology. Jan is an author of several documentaries about art,editor and co-director of many other film forms. Worked with many important figures of contemporary culture, such as: Jan Swidzinski, the creator of contextual art, world renowned theater director Krystian Lupa, as well as with Andrzej Urbanowicz in Bellmer Society or Adina Bar-On, pioneer of live art in Israel. Lives and works in Warsaw.</p>
+      <p>Piret Karro. Semiotician, cultural organizer and performance artist. Has written a thesis on Gender Fluidity in Semiotics and Cultural Theory. In performance art, Piret is mostly interested in human interaction, endurance, and situation dynamics. Has organized several seminar series, an international art symposium, an animation film festival, miscellaneous performances. Occasionally publishes art criticism. Has years of experience in autoetnography on polyamory. Piret is based in Tartu, Estonia.</p>
+      <p>&quot;Polyamory Script&quot;</p>
+      <p>by Jan Lubicz Przyluski (Warsaw, Poland) and Piret Karo (Tartu, Estonia)</p>
+      <p>Workshops</p>
+      <p>12 hours over 3 days</p>
+      <p>max 12 people</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Poliamory_Script.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>svankmajer — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">svankmajer</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/svankmajer_files/protectedimage.php-filtered.jpg" alt="svankmajer" loading="lazy"></div>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/svankmajer_files/svankmajer-1-1.jpg" alt="svankmajer" loading="lazy"></div>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/svankmajer_files/Jan%20Svankmajer%20-%20alchemist%20of%20the%20imagination.jpg" alt="svankmajer" loading="lazy"></div>
+      <p>Jan i Ewa Svankmajer</p>
+      <p>Dlaczego Svankmajer?</p>
+      <p>Wieczór czeskiego surrealisty i wielkiego mistrza filmu, Jana Svankmajera to dla nas pretekst omówienia aktualności pewnych podstaw myślenia, które stały się inspiracją dla surrealizmu (mam tu na myśli przede wszystkim rolę wyobraźni).</p>
+      <p>Svankmajer – jak sam o sobie mówi – to surrealista walczący – i chciałbym zachęcić do zastanowienia dlaczego, jakie okoliczności sprawiły, że ten twórca musiał się w taki sposób nastawić. Czy to aby nie deprecjonowanie roli wyobraźni we współczesnej kulturze? Być może tak naprawdę nie odrobiliśmy lekcji surrealizmu? A może w końcu, tak ekstremalnie aktywne, energetyczne, walczące podejście ma jedynie szansę powodzenia, tak przecież przebijał się surrealizm w pierwszym okresie, zwanym przez Bretona rewolucją surrealistyczną. Niektórzy twierdzą, że na Zachodzie surrealizm przeszedł płynnie w pop i nie poszedł w subwersję, nie wykorzystał wielu swoich potencjalnych sił. Trudno powiedzieć jak w istocie się stało. Chciałbym korzystając z okazji podkreślić, że podobnie jak rewolucja seksualna, przemiana surrealistyczna nie jest wcale „za“ nami. Jest jeszcze przed nami.</p>
+      <p>Po drugie, przypadek Jana Svankmajera wydaje mi sie stanowić rzadki przykład twórcy-alchemika, który oficjalnie będąc animatorem, jak mówią wtajemniczeni, tak naprawdę zajmuje się czym innym: magią, a kino traktuje raczej jak szaman niż reżyser. Odwiedzając galerię Svankmajera za Hradczanami w Pradze już po samych zalegających w każdym koncie wydawnictwach można przekonać się, że odwołania do źródeł okultystycznych są bardziej niż zasadne.</p>
+      <p>Co może znaczyć dla niego tradycja alchemiczna? Czescy przyjaciele stworzyli obraz Svankmajera – „alchemika animacji“, który nie tylko wprost odwołuje się do czasów cesarza Rudolfa II, ale także dedykuje mu – jako mecenasowi antydogmatycznych badań magicznych – jeden ze swoich najważniejszych filmów. W dokumencie biograficznym Svankmajer komentuje to zagadnienie bezpośrednio: „Dla mnie film animowany to magia. Mnie film animowany jako całość nie interesuje. Mnie zajmuje wyłącznie techniczny aspekt rzemiosła, w relacji do tego, co chcę przedstawić“.</p>
+      <p>Wraz z niedawno zmarłą żoną Evą Svankmajerową, w artystycznym twórczym duecie,  tworzył ponad 50 lat. Urodził się 4 września 1934 roku w Pradze. Zaczynał od rzeźby, potem poszedł w teatr – najpierw Teatr Czarny, potem Teatr Laterna Magica. Od lat 60 tych związał się z tak zwanym Czeskim Ruchem Surrealistycznym, któremu przewodził teoretyk Vratislaw Effenberger. Wstrzymywany przez cenzurę nie mógł Svankamajer pokazywać swoich filmów publicznie, zamknął się więc w pracowni i poświęcił pracy studyjnej, idealnej dla spokojnego rytmu tworzenia żmudnej poklatkowej animacji. W efekcie prac nad techniką i zrealizowane zostały 32 filmy, w tym 6 pełnometrażowych: “Coś z Alicji” (na podstawie Carrola Lewisa), “Lekcja Fausta”, “Spiskowcy Rozkoszy”, “Mały Otik”, a w 2005 “Szaleni”.</p>
+      <p>Dopiero w ostatnim czasie Svankmajer jest obecny na przekrojowych wystawach sztuki surrealistycznej i w omówieniach historii surealizmu. Powołują się na niego bracia Quay, Tim Barton, Terry Gilliam, twierdząc, że Svankmajerowi zawdzięczają bardzo wiele, jeśli nie wszystko.</p>
+      <p>Svankmajer od wielu lat otwarcie narzeka, że surrealizm jest dla większości jednym z wielu kierunków w sztuce awangardowej, jakim jest na przykład kubizm czy impresjonizm, i przestają się nim interesować.</p>
+      <p>W rzeczywistości jest to oczywista bzdura. Surrealizm to nie kierunek w sztuce, i to chciałbym korzystając z okazji podkreślić. „Surrealizm to nie estetyka, to filozofia“ – mówi Svankmajer. Jego filmy pokazują, że surrealizm jest także pewnym rodzajem wrażliwości. W tym sensie Svankmajer nie jest, jak piszą niektórzy, „ostatnim surrealistą“ ani „surrealistą po surrealizmie“.</p>
+      <p>Takie fakty historyczne jak klasyczna sztuka surrealistyczna, w tym filmy Jana Svankmajera, ale także istnienie Biura Poszukiwań Surrealistycznych Antonina Artaud czy obok surrealizmu – surracjonalizm, idea opisana przez Gastona Bachelarda, bez której nie ma wielkich szans na rozwój nauki – to wszystko może stanowić ożywcze źródło naszych działań twórczych, do czego wszystkich zachęcam.</p>
+      <p>Jan Przyłuski</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/TOWARZYSTWO_BELLMER/svankmajer.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

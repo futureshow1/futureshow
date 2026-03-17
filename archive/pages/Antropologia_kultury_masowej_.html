@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antropologia kultury masowej — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Antropologia kultury masowej</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>ANTROPOLOGIA KULTURY MASOWEJ</p>
+      <p>(Fenomeny kultury audiowizualnej)</p>
+      <p>Jan Lubicz Przyłuski</p>
+      <p>Motto:“ Niech nikt nie mówi, że nie powiedziałem nic nowego: rozmieszczenie treści jest nowe. Kiedy się gra w piłkę, obaj gracze tą samą piłką, ale jeden mierzy nią lepiej”. B. Pascal, Pensées, no 65</p>
+      <p>1. Przeciętny Europejczyk spędza codziennie przed telewizorem od pięciu do sześciu godzin. Ile przy tym rozumie - to  całkiem inna rzecz, ile natomiast zapamiętuje - to już historia całkiem odmienna. Badania przeprowadzone na widzach “Wiadomości” wykazały, że tylko jedna czwarta rozumie tekst czytany przez prezentera lub też puszczany z off-u (spoza kadru) gdy informacja posiada ilustrację filmową. Kto mógł przypuszczać, że tylko jedna dziesiąta oglądających będzie w stanie na koniec programu wymienić pięć wiadomości które zapamiętali. Fakty te, choć dopiero niedawno zostały udokumentawane danymi wyprowadzonymi z badań niezależnych ośrodków statystycznych, od lat znane są ekspertom pracującym dla stacji telewizyjnych. To na nich opiera się cały program emisji i dzięki poznaniu tych faktów dawna  telewizja ewoluowała do stadium obecnego - czyli ( jak nazwał ten fenomen Umberto Eco) Neotelewizji. Twór ten to dziecko lat osiemdziesiątych. Jaka jest jego specyfika ?</p>
+      <p>2. Otóż neotelewizja nie mówi o świecie zewnętrznym, pozamedialnym (jak to robiła dawna TV), teraz działa na dwa nowoczesne sposoby tj. albo kreuje sytuacje które potem przedstawia nam jako niezależne i “podpatrzone” choć w większym lub mniejszym stopniu zostały wyreżyserowane, albo też zaczyna mówić sama o sobie, nie o tym co dzieje się w rzeczywistości lecz o swoich relacjach z tą rzeczywistością. Wstępuje przy tym na poziomy meta do n-tej prezentując programy o innych programach, które z kolei mówią o innych programach i tak ad mortum defecantum. Bez względu na to czy oglądamy programy lokalne z delty Mississipi, z zagłębia Ruhry czy WOT to mamy wrażenie, pomijając (ma się rozumieć) względy językowe, że to jeden i ten sam kanał. Co do kreowania świata pod dyktando kamery telewizyjnej, to najlepiej zilustruje je przykład jaki przytaczam za Eco. Choć nie jest to sprawa najświeższa to warto ją sparafrazować, chodzi mianowicie o ślub pary książęcej Wielkiej Brytanii tj. Karola i Diany. Ceremonia ślubna to przykład idealnej wprost reżyserii. Stroje przyszłych małżonków, dworu i wszystkich gości zostały odpowiednio dobrane. Królowały telegeniczne kolory pastelowe. Wszystkie miejsca odpowiednio przygotowano, ustalając przy tym dokładnie w których stanąć ma młoda para, tak żeby uchwycony został ten właśnie a nie przeciwny profil księcia. Wydano setki funtów na tony makijażu dla wszystkich, kobiet i mężczyzn dworu, tak by telewidzowie nie mogli zobaczyć ani jednego świecącego się nosa. Nie zapomniano o niczym. Spece od oświetlenia ustawili dodatkowe reflektory (ślub miał miejsce w dzień) gdyby jakaś niezaplanowana chmura przysłoniła słońce. Udekorowano karety, wywoskowano każdą klamkę. Problem pojawił się gdy realizatorzy uświadomili sobie, że przy każdej arystokratycznej ceremonii gentlemani i ich damy muszą z godnością stąpać wśród wysp końskiego łajna. Co więc poczyniono? Ano, proszę się nie uśmiać, bo stawka była wielka, a na cały rytuał miały czekać przed telewizorami miliony zaopatrzonych w popcorn widzów, - przez dwa tygodnie poprzedzające transmisję podawano królewskim wierzchowcom specyfik, po którym gówno było doskonale telegeniczne. Mniej lub bardziej ekstremalne przykłady okiełznania przypadku przez media można by mnożyć, lecz nie tu na to miejsce. Niemniej jednak świadomość istnienia tego zjawiska może być wielce pomocna.</p>
+      <p>3. Nie sposób wyliczyć pojawiających się ostatnio artykułów krzyczących, a czasem niestety bełkoczących o poszerzającym się wpływie mediów na nasze postrzeganie świata. Katastroficzne wizje końca kultury w sposób niezwykle sugestywny prezentują obraz upadku postmodernistycznego świata zalanego potopem informacyjnym. Temat staje się coraz bardziej popularny. Warto uświadomić sobie, że wszystkie te publikacje to żadna nowość. Era Informacyjna, jak niekiedy nazywany jest wiek XX, wydała już na świat tabuny katastrofistów u samego swego zarania. Oswald Spengler, Ortega y Gasset, czy nasi Schulz i Witkacy, rozpisywali się o zgubnych konsekwencjach powstania Człowieka Masowego. Canetti za swoją “ Masę i władzę” dostał Nobla, a Sedlmayr za sprawą katastroficznych bestsellerów stał się człowiekiem całkiem bogatym. Warto również wiedzieć, że Stanisław Lem już w sześćdziesiątym trzecim roku (Summa technologiae) podjął kwestię, czy wytworzone przez homo sapiens technologie istotnie pozostają pod ludzką kontrolą, czy też na odwrót, teraz one sterują naszym życiem. On również jako jeden z pierwszych dostrzegł przerażające zjawisko szarańczy informacyjnej tj. takiej współczesnej wieży Babel, w której ogrom wiedzy podawanej przez media ( jak i tej w ogóle) dawno przerósł już możliwości jakiejkolwiek jednostki, a na skutek niemożliwości istnienia uniwersalistów i braku “interystów” (interdyscyplinarnych łącznościowców) skazani jesteśmy na utonięcie w morzu informacji, bo nie będziemy w stanie odróżnić wiadomości ważnych i wartościowych od nonsensownej papki. Ogólnie mówiąc, świat będzie można porównać do mojej osobistej skrzynki pocztowej, z której niemożliwością jest znalezienie listu od przyjaciela w gąszczu plików z ofertami sprzedaży szamponów. Jeśli do Lema dodać Eco, który ze swą intelektualną powściągliwością ale bez ogródek pisze o wzrastającej liczbie ludzi, którzy nie potrafią odróżnić świata zewnętrznego od tego w ekranie telewizyjnym, to już robi mi zimno, a po plecach przechodzą ciarki. A przecież obaj panowie nie uznają się za żadnych katastrofistów, bo gdyby przebrnąć przez wysublimowane wywody Sedlmayra to, Proszę Państwa, strach się bać.</p>
+      <p>4. Proszę sobie wyobrazić następującą sytuację: sędziwy jogin po dziesiątkach lat ascezy ląduje nagle w Europie, gdzie na zaproszenie grupy newage’owców ma prowadzić zajęcia z ćwiczeń oddechowych. Jego oddech jest idealnie równy, tętno spokojne, chód lekki. Pierwszy dzień spędza na oglądzie miejscowej kultury, hufiec młodych odjazdowców ciąga go po mieście. Muzea, galeria municypalna, spacer po Old Town, nawet trochę telewizji dla lepszej aklimatyzacji. Zmęczony dniem guru odprowadzony zostaje do hotelowego pokoju gdzie wyciszony zasypia. Ku jego zdziwieniu teraz dopiero zaczyna się jatka: we śnie dopadają go obrazy jakich zdawałoby się nigdy nie widział. Przed oczami staje raj prosto z Bounty, uśmiechnięta dziewczyna Palmersa gładzi mu czoło, kowboj Marlboro podaje czerwone metalowe naczynie z dużym białym napisem: Coca-Cola. Zaraz potem ukazują się szampony, za nimi mydła i proszki. “A to co?” - dziwi się po przebudzeniu. A to z tego, drogi guru, wyjaśnić mu można, że nasza technika nic sobie nie robi z wieloletnich medytacji. Nie trzeba “widzieć” reklamy, wystarczy na nią popatrzeć choćby na ułamek sekundy. Ona “nie działa na ludzi w sferze świadomie wyznawanych opinii czy pojęć, lecz po prostu wytrwale nie napotykając na najmniejszy opór, zmienia współzależność między zmysłami I wzory percepcji świata”. Jeśli tak podziałała ona na jogina, to co z przeciętnym telewidzem spędzającym przed ekranem 5-6 godzin dziennie? Jakie wzory percepcji nam proponuje, lub jeśli wyrażać się jaśniej, czym nas indoktrynuje piorąc mózgi w sieciach niepublicznych co 10-15 minut?</p>
+      <p>5.  Już od Rewolucji Graficznej przekaz reklamowy nastawił się nie na gust indywidualny, lecz na obrazy funkcjonujące w świadomości grupowej. By sprzedać produkt schlebiał gustom mas, by następnie “ukazując towar jako integralną część szerszych procesów I dążeń społecznych” przekształcić paleoreklamę w nowoczesną ikonę. Co roku wielkie koncerny reklamowe wydają miliony dolarów na badania rynku i nowych technik sprzedaży. Nie znaczy to wcale, by stare metody zawodziły. Nic bardziej mylnego. Dostatecznie często powtarzane hasło po jakimś czasie uznane będzie za prawdę. Nauka przez wpajanie jest najskuteczniejsza. Najbardziej bezbronne są dzieci i ich trzeba by w tej dziedzinie edukować, żeby mogły stawić czoła atakom na podświadomość.  McLuhan pisze: “ Bezkarnie stawić czoła technice reklamy może jedynie poważny artysta, którego zajęcie czyni go ekspertem w pełni świadomym zmian w percepcji zmysłowej”. Czy aby na pewno? Czy nie warto pomyśleć o czymś w rodzaju edukacji medialnej, bo zdaje mi się, tylko świadomy odbiór reklamy może uchronić nasze zdrowie psychiczne. Moi siostrzeńcy wraz ze swoimi kolegami śpiewają w przedszkolu piosenki ze spota soku Fortuna i, choć nie mają o tym pojęcia, bardzo często po prostu mówią sloganami reklamowymi. Prawidłowy metabolizm informacyjny ( termin profesora Kępińskiego) to priorytetowy warunek tego, by funkcjonować w świecie - o tym wie każdy psychiatra. Wszystko wskazuje na to, że współczesny człowiek ma  z przetrawieniem takich mas informacyjnych coraz większe kłopoty. Nie chodzi mi już o wcześniej wspomniane ekstremalne jednostki nie odróżniające fikcji telewizyjnej od realiów (to takie Madame Bovary ery cybernetycznej, ludzie żyjący jednak nie lekturą a głównie mydlanymi operami) tylko o przeciętnego szaraka.</p>
+      <p>6.  Trzeba tu jeszcze wspomnieć o innym, nie całkiem wesołym, zjawisku: degradacji Słowa jakie ma miejsce w reklamie. Widziałem swojego czasu spektakl jednego z młodych warszawskich reżyserów pt. “Ketchup Schroedera” , który tak świetnie to ilustruje, że szkoda by się silić na oryginalność. Fabuła jest prosta: główny bohater jest zdolnym młodym człowiekiem, który, by zarobić na  chleb i czegoś do tego, wciągnięty zostaje w młyn wielkiej agencji reklamowej. Pnie się po drabinie kariery zawodowej startując od płatków kukurydzianych, przez serki, samochody, prezydentów, mydła, aż na sam szczyt czyli do proszków ( nietrudno się było domyśleć, wiedząc jak często ten produkt jest reklamowany). Fantastycznie wyczuwa zapotrzebowania targetu (odbiorców-konsumentów), jest pracowity itd., gdy nagle z zupełnie niezależnych powodów dopada go chandra, depresja, spleen. Momentalnie spada w hierarchii na łeb na szyję i zostałby wyrzucony ( w takich firmach długo nie trzyma się nierobów) , lecz ze względu na osobiste sympatie szef daje mu zlecenie napisania hasła do tytułowego ketchupu Schroedera. Po bezsennej nocy nasz bohater, jak to zwykł czynić, zjawia się w biurze z listą sloganów. Główne to “ Twój ketchup - Twoje szczęście” czy coś w ten deseń. Szef podnosi wzrok znad listy, marszczy złowrogo brwi. Mówi: “ Co to ma być? Kompletnie ześwirowałeś? Przecież ‘szczęście’ to Audi”- leci dalej spisie- “‘Miłość’ to szampon, ‘przyjaźń’ to chipsy, ‘raj’ to batony...” i tak wymieniania nie słychać końca. Dalej streszczać przedstawienia nie będę, bo warto je zobaczyć, ale ta scena idealnie pasuje mi tu do ilustracji Kompromitacji Słowa we współczesnym świecie. Co na to powiecie?</p>
+      <p>7. Poza kształtowaniem się przerażających asocjacji między słowami a obrazami reklamowymi (jeśli Czytelnik kiedyś ugryzł się w język, żeby przy znajomych nie palnąć czegoś w rodzaju: Odkryjmy lepszy świat, to wie o co mi chodzi) doszło w naszej ponowoczesnej kulturze do innego zaskakującego wprost zjawiska, które pozwolę sobie ochrzcić Fobią Zgaszonego Telewizora. Zauważyłem bowiem, że w większości domów telewizji praktycznie się nie wyłącza. Parę lat temu dzień zaczynał się programem “Kawa czy herbata”, kończył się zaś listą pozycji na dzień następny, dziś za to, gdy wraz z siecią kablową można oglądać programy emitowane nonstop, ruch palca wyciskającego na pilocie przycisk ‘power’ przed zaśnięciem poprzedza tylko ruchy zamykających się powiek i naciągnięcia kołdry na głowę. Mało tego, kiedy wchodzi się do domu jedną z pierwszych czynności jest właśnie włączenie odbiornika. Osobną sprawą jest przestrzeń umeblowanego standardowo ‘living roomu’ skierowana na telewizor - współczesny axis mundi. Proksemika najlepiej wyjaśni nam to, dlaczego przebywając w tak zaplanowanym pomieszczeniu po kilku minutach mimowolnym ruchem (a w zasadzie odruchem) powołujemy znów do życia nasze promieniejące pudło i zaczynamy się w nie wpatrywać. A oglądamy wszystko jak leci: mydlane opery, seriale kryminalne, katastroficzne, szpiegowskie, sądowe, kino familijne, serwisy informacyjne, talk-show’y, kreskówki etc .etc. Od paru lat na jednej z zagranicznych sieci komercyjnych pojawił się, bardzo charakterystyczny, typowy wręcz dla zjawiska Fobii Zgaszonego Telewizora, program dla tych, którzy dość mają spania. Otóż przez pół nocy można się wpatrywać w rozpalony na ekranie kominek (inna wersja to akwarium z pływającymi rybkami ) i dowartościowywać się posiadaniem wyżej wymienionego w swoim prywatnym mieszkaniu (stereotyp uznaje to za niemały luksus). Ogień w kominku co prawda nie grzeje, ale można rozkoszować się ciepłem bombardowanego elektronami kineskopu.</p>
+      <p>8.    Specjaliści od masowego przekazu dawno już rozpracowali z jaką częstotliwością mają dostarczać nam odpowiednią dozę krwi lub seksu (albo obu naraz) tak, żebyśmy nie mogli oderwać wzroku od ekranu. Do tego jeszcze wespół z ekspertami od reklamy świetnie wyliczają momenty kulminacyjne każdego filmu, by z dokładnością do ułamka sekundy przerwać na chwilę emisję porcją reklam. Niedoświadczony telewidz jest wtedy na skraju załamania nerwowego, ale to nie przeszkadza temu, by po reklamach wcisnąć jeszcze następną minutę zapowiedzi dalszego repertuaru lub przynajmniej tak zwanych Hitów Miesiąca. Kiedy przerwa się kończy, przeciętny telewidz nie pamięta już nawet co oglądał. Channel-surfing na nic się nie zda, bo jak już zostało powiedziane, ciężko odróżnić telewizyjny obraz z Hawajów od tego z Tajwanu. Homogenizacja (o tym zjawisku przeczytacie u Barbera, polecam) dawno już nastąpiła.</p>
+      <p>9. Wróćmy na chwilę do sprawy metabolizmu informacyjnego. Wpływ telewizji na postrzeganie świata jest niezaprzeczalny. Jak zatem chronić się przed praniem mózgów, albo jak rozróżnić telewizyjne simulacurum od rzeczywistości? Jak bezboleśnie dla naszego umysłu strawić tony informacji docierającej do nas tak, by wybrać wiadomości istotne, “pożywne” dla intelektu, z lekkostrawnej wprawdzie ale jakże nasyconej papki medialnej. Sprawa nie jest prosta. Jeśli ktoś zaśmiał się pogardliwie na wieść o tych nieszczęśnikach co nie są w stanie dokonać dyferencjacji między tele-fikcją a światem zewnętrznym, to, proszę mi wierzyć, nie dostrzega on ogromu problemu. Faktem jest, że kolosalna liczba gospodyń domowych  naprawdę wierzy w to, że (jak to można zobaczyć w co drugiej reklamie) cząsteczki proszku bombardują cząsteczki brudu I tak właśnie otrzymuje się “prawdziwą biel”. Znajomy lekarz wyznał mi ostatnio, że zgłosiła się do niego pacjentka z żądaniem badania, cytuję, “ Takiego jak w reklamie Maloxa” gdzie aktor, wchodząc za jakąś przedziwną szybę, ukazuje nam swoje narządy wewnętrzne i lek drążący mu żołądek i przeczyszczający jelita. Na próżno  tłumaczył kobiecinie, że to tylko w telewizji tak działa. Po tygodniu przyszła inna z tą samą prośbą.  Albo , ilu telewidzów wie, że pH (ze spotów gum do żucia) to ujemny logarytm ze stężenia jonów wodorowych? Przecież twórcy tych reklam wiedzieli, że na chemii kwasów teleszarak się nie zna, ale wiedzieli również jak mogą wykorzystać bliskość brzmieniową między pH i pechem (niefartem). A każdy chce mieć “ujemny współczynnik pecha”, więc kupi i będzie żuć. Ja osobiście jestem zwolennikiem tezy, która głosi, że tylko świadomy (trzeźwo oceniający) odbiór massmediów może ochronić homo sapiens przed kompletnym zidioceniem I wariactwem. Tyczy się to nie tylko tego, ale również ogólniejszej kwestii postrzegania rzeczywistości w każdych jej przejawach i szczerze wierzę, że jest to wykonalne. Im większa część wrażeń będzie odbierana świadomie, to znaczy nie pozostanie tylko na płaszczyźnie biernej percepcji, ale przez intelekt przetworzona będzie w pojęcia, przez rozum zaś w ogólniejsze jeszcze idee, tym mniej spośród nich (bodźców jakie płyną ze świata, w tym sensie, że spoza podmiotu) wchłoniętych zostanie bez refleksyjnie i mniej wniknie do nadświadomych struktur naszej osobowości. Z psychologii głębi wiemy, że z takimi treściami latentnymi ( utajonymi ) nic już samotnie zrobić się nie da.</p>
+      <p>10.  Na koniec trochę optymizmu,  bo zdaje mi się, że mój „dyskurs” prezentuje się niemal jak katastroficzny. Opublikowano niedawno (nie pamiętam dokładnie gdzie) badania stwierdzające ciekawą zależność. Otóż okazuje się, że wzrost liczby reklam środków czyszczących w tv łączy się ściśle z podwyższeniem się poziomu higieny przeciętnego Polaka. A więc, jeśli wierzyć liczbom, kosztem nerwowej gorączki, gdy musimy oglądać proszki ,mydła i szampony zamiast dowiedzieć się natychmiast “kto zabił”, jesteśmy mówiąc krótko czyściejsi. Hip, hip hurra, higiena na sto dwa. Jak tak dalej pójdzie, to może naprawdę nie będzie śmierdzieć w autobusach. Chwała reklamie!</p>
+      <p>Lecz, żeby ktoś z radości nie wyskoczył przez okno z okrzykiem “Vizir” albo “Omo” na ustach przypomnę tylko, że istnieje jeszcze inna korelacja: wraz ze wzrostem liczby odbiorników satelitarnych zanotowano spadek poczucia rzeczywistości całych społeczeństw. Co będzie, gdy do domów wkroczy nam cyberspace czyli rzeczywistość wirtualna (po polsku  fantomatyka)? Nie mam pojęcia. Zastanawiam się tylko, czy homo sapiens, jedyna ocalała gałąź hominidów, po to przeszedł tę całą ewolucję, by teraz dać się podporządkować technice przez siebie samego stworzonej. Czy o potopie informacyjnym w istocie piszą tylko katastrofiści, czy też może niebawem czeka nas śmierć pod wpływem nadmiaru informacji - Wielka Infomortacja.</p>
+      <p>Niech nie zmyli nas taka psudo-katastroficzna wizja. To, co fascynuje w opisywanych przez Benjamina pasażach to to że istnieją nadal w innej, dzisiejszej formie. Dość odrzucania tej myśli w zapalczywej krytyce kapitalizmu, który po prostu jest, to znaczy jest faktem. Psioczenie na konsumpcjonizm bardzo łatwo staje się napadem na samą konsumpcję, a tej nie sposób jest zanegować jeśli nie chce się negować życia. Konsumpcja jest normalna, i powinna pozostać normalna. Nie może być przegięciem, szałem. Jest ogólnie mwiąc spoko. Trudność w sensownej krytyce zbytniej konsumpcji, przecież całkowicie zrozumiała, to albo narzucanie innym norm, zwyczajne ograniczenie, albo niechęć do instytucji pieniądza zwykle podszyta religijnym uprzedzeniem o backgroundzie chrześcijańskim. Moge przy tym zrozumieć anarchistów czy nawet środowiska w rodzaju Krytyki Politycznej, które mówią o samoorganizacji, i przcciwstawiają się totalnemu zidioceniu którego efektem są przypadki setkilogramowych grubasów. Ale tylko do pewnego stopnia. Jest w tym jednocześnie antyamerykańska fobia niektórych lewicowych społeczników. Od strony antropologicznej jest to jak najbardziej zrozumiałe.</p>
+      <p>U. Eco “ Semiologia życia codziennego”</p>
+      <p>S. Lem “Sex Wars”</p>
+      <p>G. Elgozy “ Paradoksy reklamy”</p>
+      <p>M. McLuhan “ Wybór pism”</p>
+      <p>Sedlmayr “ Verlust der Mitte”</p>
+      <p>Z. Bauman “ Etyka ponowoczesna”</p>
+      <p>A. Kępiński “ Schizofrenia”</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Antropologia_kultury_masowej_.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

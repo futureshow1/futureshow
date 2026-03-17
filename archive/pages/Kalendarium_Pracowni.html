@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalendarium Pracowni — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Kalendarium Pracowni</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>KALENDARIUM</p>
+      <p>1960</p>
+      <p>Z początkiem roku, po adaptacji strychu, Urszula Broll i Andrzej Urbanowicz wprowadzają się do pracowni na Piastowskiej 1 w Katowicach.</p>
+      <p>1965</p>
+      <p>Początki działalności informacyjnej w obszarze kultury i religii. Książki, które nie mogły liczyć na oficjalne wydanie tłumaczono, przepisywano na maszynie w sześciu egzemplarzach i udostępniano zainteresowanym. Jung, Eliade, D. T. Suzuki, G. R. Hocke, Sutra Szóstego Patriarchy, Bardo Thödol, Tao Te King, Anagarika Govinda to niektóre pozycje. Ten okres trwał do roku 1973.</p>
+      <p>1965</p>
+      <p>Na jesieni powstaje film „Chryzopea”. Halor, Stuchlik, Urbanowicz.</p>
+      <p>1967</p>
+      <p>Zaczyna działać Galeria Śląska, później przemianowana na Galerię</p>
+      <p>Katowice. Sala ekspozycyjna jest na Warszawskiej 37 lecz „biuro” mieści się na Piastowskiej.</p>
+      <p>1967</p>
+      <p>W grudniu piątka artystów: Broll, Halor, Stuchlik, Waniek i Urbanowicz rozpoczyna wspólny projekt zwany Leksykonem lub Czarnymi Kartami.</p>
+      <p>1969</p>
+      <p>Rozpoczynają  się jeszcze mało formalne siedzenia zazen, na które przychodzą nieliczni zainteresowani.</p>
+      <p>1969</p>
+      <p>10 października. Pierwszy pokaz Czarnych Kart na strychu, określany przez A. Wojciechowskiego jako swoista „czarna msza”.</p>
+      <p>1969</p>
+      <p>Waniek i Urbanowicz rozpoczynają wydawanie Nowego Bezpretensjonalnego Pisma Świętego. Dwa egzemplarze przekazywane korespondencyjnie, szesnaście edycji w ciągu trzech lat.</p>
+      <p>1971</p>
+      <p>Doświadczenia LSD.</p>
+      <p>Rozpoczęcie cotygodniowych formalnych spotkań Zen.</p>
+      <p>1973-74</p>
+      <p>Rozpoczyna działalność pierwsza w PRL-u niezależna oficyna wydawnicza. Orientacja buddyjska. Druk ofsetowy, nakłady od kilkuset do ponad tysiąca egzemplarzy. Zerwanie z bezpieczną anonimowością. Na każdym druku podane są nazwiska wydawców i tłumaczy oraz adres Piastowska 1. Ta działalność trwa do 1978 roku.</p>
+      <p>1974</p>
+      <p>Od jesieni formuje się grupa buddyjska przygotowująca przyjazd pana Kaplean nauczającego Zen w USA i Europie. Co miesiąc odbywają się warsztaty Zen, na które zjeżdżają się ludzie z  całego kraju, również z Czech i NRD. Odwiedziny buddystów angielskich. Pracownia na Piastowskiej zaczyna funkcjonować jako pierwszy ośrodek Zen.</p>
+      <p>197525 sierpnia. W pracowni zbiera się ponad setka osób z całego kraju. Philip Kaplean prowadzi pierwszy warsztat zen a kilka dni później pierwszy sessin Zen, w którym bierze udział ponad dwadzieścia osób.</p>
+      <p>1978Do połowy roku pracownia funkcjonuje właściwie wyłącznie jako centralny ośrodek Zen w Polsce. Po odejściu Urbanowicza z funkcji prowadzącego i przeniesieniu centrali do Warszawy staje się ośrodkiem lokalnym, kierowanym przez Urszulę Broll do czasu jej przeprowadzki do Przesieki w 1982 roku.</p>
+      <p>1978</p>
+      <p>Grudzień. Urbanowicz odpływa do USA.</p>
+      <p>1982-91</p>
+      <p>Z pracowni korzystają dwie grupy buddyjskie.</p>
+      <p>1991</p>
+      <p>Jesień. Do pracowni wraca Urbanowicz po trzynastu latach pobytu w Nowym Jorku.</p>
+      <p>1992</p>
+      <p>Próby spektaklu „Więzy”, Oneiron 2.</p>
+      <p>1993</p>
+      <p>Październik. Gościem jest Allen Ginsberg.</p>
+      <p>1994</p>
+      <p>Spotkania Klubu Hermaion na Piastowskiej.</p>
+      <p>2000</p>
+      <p>Powstaje stowarzyszenie TOWARZYSTWO BELLMER.</p>
+      <p>2003</p>
+      <p>Próby OFFICINA FERRARIA ALBO…? misterium teatralno-muzyczne według Walentego Rozdzieńskiego, w którym bierze udział około dwudziestu osób.</p>
+      <p>2005</p>
+      <p>Ukazuje się publikacja „Katowicki Underground artystyczny po roku 1953”, w której wiele miejsca poświęcono pracowni.</p>
+      <p>2006</p>
+      <p>ONEIRON. Wydawnictwo poświęcone kręgowi, którego działalność w poważnym stopniu ogniskowała się na Piastowskiej.</p>
+      <p>2007</p>
+      <p>Urbanowicz rozpoczyna nowy cykl malarski „Listy do Eris”.Wraz z Małgorzatą Borowską - praca nad projektem „Schody dwunastu szuflad”.</p>
+      <p>2008  i dalej          - patrz:  <a href="../TOWARZYSTWO_BELLMER/DZIA%C5%81ANIA.html">DZIAŁANIA</a> Towarzystwa Bellmer.</p>
+      <p>Wiadomości o pracowni można znaleźć szczególnie w dwóch publikacjach.</p>
+      <p>•Katowicki Underground Artystyczny po roku 1953”, BWA Katowice, 2004.</p>
+      <p>Zob. strony: 172; 173 i n.; 189; 213; 214 i n., a szczególnie: 244 i n.; 254 i n.; 262 i n. (tytuł eseju „Podziemne poddasze” odnosi się do Piastowskiej 1); 280-1, również „Serpentyny”; s.303 i n.</p>
+      <p>•ONEIRON, wydawnictwo Kos, Katowice Ratingen, 2006.</p>
+      <p>Poświęcone kręgowi Oneiron, którego działalność w poważnym stopniu ogniskowała się na Piastowskiej. Obszerne kalendarium ukazujące rozmaite aspekty tego miejsca.</p>
+      <p>Pracownia Piastowska 1</p>
+      <p>1960 - dzisiaj</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/BELLMER_SOCIETY/Kalendarium_Pracowni.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

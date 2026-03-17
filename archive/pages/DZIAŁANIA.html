@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DZIAŁANIA — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">DZIAŁANIA</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>13 marca. Obchodzone na Piastowskiej <a href="107_urodziny_Bellmera.html">107 urodziny Hansa Bellmera</a> zebrały kilkudziesięciu miłośników artysty z całego kraju. Współuczestniczyli oni w tworzeniu instalacji „ Ołtarz Bellmera”.  Pod tym samym tytułem Małgorzata Borowska i Andrzej Urbanowicz przedstawili performens inspirowany jego sztuką. Surrealistycznemu spektaklowi towarzyszyła muzyka Johna Zorna (Naked City).</p>
+      <p>21 września. Pokaz reprodukcji prac Hansa Bellmera z zasobów stowarzyszenia z okazji <a href="premiera_bellmera.html">premiery spektaklu</a> „Świat jest skandalem”, foyer Sceny Kameralnej Teatru Śląskiego.</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/DZIA%C5%81ANIA_files/BELLMER_LOGOblack1czyszczone.png" alt="DZIAŁANIA" loading="lazy"></div>
+      <p>Działania Towarzystwa Bellmer</p>
+      <p>2001-2003</p>
+      <p>Towarzystwo jest producentem widowiska teatralno-muzycznego OFFICINA FERRARIA ABO…? nawiązującego do poematu Walentego Roździeńskiego.</p>
+      <p>2001</p>
+      <p>Towarzystwo proklamuje rok 2002 „Rokiem Hansa Bellmera w Katowicach“, ponieważ 13 marca przypada 100 lat urodzin artysty.</p>
+      <p>2002</p>
+      <p>Towarzystwo wydaje okolicznościowy czterojęzyczny plakat (jeszcze do nabycia w siedzibie stowarzyszenia. Format 100x70 cm).</p>
+      <p>14-15 marzec. Odbyła się sesja „Wokół Hansa Bellmera. Życie i twórczość” przy współpracy Górnośląskiego Centrum Kultury i Biura Wystaw Artystycznych. Wzięli  w niej udział tacy autorzy jak Henryk Waniek, Krzysztof Jurecki, Andrzej Przywara, Andrzej Kostołowski, Tadeusz Komendant, Agnieszka Maria Wasieczko, Marek Zieliński, Michał Sporoń, Tadeusz Sławek. Kuratorem sesji był Andrzej Urbanowicz. W dwudniowych zajęciach sesyjnych uczestniczyło ponad 150 osób. Obradom towarzyszyły pokazy reprodukcji prac Bellmera. Sesja cieszyła się dużym zainteresowaniem mediów.</p>
+      <p>16 listopad. W Muzeum Śląskim w Katowicach rocznicowa wystawa prac Hansa Bellmera zorganizowana przez Ars Cameralis, przy współpracy Towarzystwa Bellmer. Zaprezentowano 34 grafiki i fotografie z kolekcji spadkobierców Bellmera, Państwa Jean-Marie i Doriane Bihl-Bellmer. Byli oni obecni podczas otwarcia wystawy, w której wzięli udział także Adam Boxer z Nowego Jorku i Eric Berinson z Berlina, marszandzi Galerii Ubu. Na krótkiej sesji po otwarciu wystawy (na Dużej Scenie Teatru Śląskiego w Katowicach) wystąpili Krzysztof Jurecki, Michał Sporoń i Marek Zieliński. Ta wystawa również cieszyła się wielkim zainteresowaniem mediów i nieznacznym ze strony zakłopotanych instytucji oficjalnych. W przygotowaniu materiały z sesji i wystawy wraz  z dodatkowymi tekstami źródłowymi (traktat Hansa Bellmera).</p>
+      <p>2003</p>
+      <p>11 maj. OFFICINA FERRARIA ABO…? Misterium teatralno-muzyczne, w formie pokazu prac nad spektaklem zostaje zaprezentowane w Górnośląskim Centrum Kultury. W pracach nad tym widowiskiem uczestniczyli: Ewa i Paweł Ambroziakowie, Anna Duda-Niedziela, Antoni Gryzik, Magdalena Kozłowska, Saba Zuzanna Krasoczko, Agata Krupa, Łukasz Krzywoń, Jacek Leginowicz, Mieczysław Eligiusz Litwiński, Mirosław Misiura, Bożena Pędziwiatr, Mariola Poddemska, Marek Przybyła, Leszek Ptaszyński, Zenon Rochowski, Iwona Sitko-Urbanowicz, Anna Skomra, Anna Stefanik, Agata Słowik, Andrzej Urbanowicz, Aldo Vargas-Tetmajer, Iza Walborczyk, Henryk Waniek, Andrzej Witkowski.</p>
+      <p>Listopad-grudzień. W BWA w Katowicach wystawa wystawa “Katowicki underground artystyczny po 1953 roku”. Kilka lat trwały przygotowania do wystawy, której pomysłodawcami byli Andrzej Urbanowicz i Henryk Waniek, a kuratorem prof. Janusz Zagrodzki. Współpraca Towarzystwa Bellmer. Pokaz był przeglądem katowickiej sceny niezależnej w tytułowym pięćdziesięcioleciu.</p>
+      <p>2004</p>
+      <p>28 kwiecień. Od tej daty, na ogół w środy - także w latach następnych - w Bellmer Cafe (mieszczącej się w podziemiu sceny kameralnej Teatru Śląskiego) odbywały się organizowane przez Towarzystwo spotkania poświęcone: antropologii kultury, mitologii, magii, sztukom hermetycznym i zagadnieniom pokrewnym. Castaneda, Crowley, czarostwo, modyfikatory świadomości, astrologia, Kabała, tarot, I Ching, Sheldrake, szamanizm, Templariusze, Illuminaci, synchroniczność, Tantra, Runy, holografia mózgowa - to tematy pojawiające się najczęściej. Wśród prowadzących spotkania byli: Jerzy Prokopiuk, Henryk Waniek, Adam Sikora, Mieczysław Litwiński, Bogdan Mizerski, Łukasz Krzywoń, Paweł Graja, Marek Górny, Konrad Staszewski, Marek Przybyła, Andrzej Urbanowicz i inni.</p>
+      <p>2005</p>
+      <p>“Gazeta Wyborcza” omawia publikację “Katowicki underground artystyczny po 1953 roku”, która ukazała się kilka tygodni wcześniej. Autorem recenzji był Łukasz Kałębasiak:</p>
+      <p>“Dawno żadna książka poświęcona sztuce nie wpłynęła na mnie tak mocno, jak to wydawnictwo katowickiej galerii BWA. Jest tam coś dla każdego: smakowite anegdoty i poważne rozważania teoretyczne. Nieznane, choć może istotne dla historii sztuki szczegóły z życia śląskich artystów i poważne biogramy. Całość jest więc dość nietypowa. Ale też sztuka i zajmujący się nią artyści byli nietuzinkowi. Chodzi przecież o twórczość uprawianą w podziemiu przez prawdziwą bohemę, bez zgody cenzorów, a często pod obserwacją Służby Bezpieczeństwa. Z pozoru o bohaterach tej publikacji: grupie ST-53, Oneironie czy artystach grupy Arkat wiemy już sporo. Jednak teraz do swoich tajemnic dopuszczają nas uczestnicy i najbliżsi świadkowie podziemnego życia artystycznego Śląska. Choćby Jerzy Illg, obecny redaktor naczelny wydawnictwa Znak, który na przełomie lat 60. i 70. studiował w Katowicach i związał się ze środowiskiem skupionym wokół pracowni Andrzeja Urbanowicza i Urszuli Broll. To katowickie poddasze przy ulicy Piastowskiej było wtedy miejscem niezwykłym. Przyciągało młodych, długowłosych buntowników, żeby wymienić tylko Illga, Tadeusza Sławka czy Andrzeja Szewczyka”.</p>
+      <p>Publikacja powyższa jest drugą częścią projektu wystawy o tym samym tytule. Ta monumentalna monografia (jeszcze dostępna w BWA w Katowicach) omawia i dokumentuje działalności grup ST-53, Arkat, Oneiron, i innych działań kultury niezależnej na Śląsku. Redakcja: Janusz Zagrodzki. Opracowanie: Stanisław Ruksza. 480 stron.</p>
+      <p>2005-2006</p>
+      <p>Pomiędzy Towarzystwem Bellmer a Landesmuseum w Ratingen, Nadrenia-Westfalia, zostaje nawiązana współpraca w celu stworzenia wystawy i monografii kręgu Oneiron. W wyniku tych prac powstaje w 2006 roku wystawa prezentowana w Ratingen, Jeleniej Górze, Bielsku Białej i Katowicach. Towarzyszy jej pierwsza monografia Kręgu.</p>
+      <p>Ta bogato ilustrowana i fascynująca publikacja przybliża dzieje katowickiego undergroundu, a jednocześnie ukazuje Piastowską 1 i wczesne aktywności Towarzystwa Bellmer. Katowicki krąg <a href="oneiron.html">ONEIRON</a> nie był w istocie grupą, raczej szeroką formacją artystyczną, w której splatały się doświadczenia neoawangardy z tendencjami surrealistycznymi i ezoterycznymi. Zainteresowanie buddyzmem i taoizmem zaowocowało w połowie lat 70. powstaniem pierwszej wspólnoty buddyjskiej w Polsce.</p>
+      <p>Esej Henryka Wańka wprowadza w „Mistyczną aurę Śląska“, jak głosi jego tytuł. Monograficzny artykuł Petera Mrassa omawia legendarny projekt Czarnych Kart zrealizowany przez piątkę artystów: Urszula Broll, Antoni Halor, Zygmunt Stuchlik, Andrzej Urbanowicz, Henryk Waniek. Większą część książki zajmuje autorskie kalendarium sporządzone przez Andrzeja Urbanowicza rozpoczynające się w czasach mitycznych, jak w fotoplastikonie pokazuje wybrane zagadnienia ostatniego półwiecza. Książka towarzyszyła wystawie kręgu ONEIRON zorganizowanej w koprodukcji Oberschlesischen Landesmuseum w Ratingen i Towarzystwa Bellmer w Katowicach, które są również jej wydawcami. Książka (po wcześniejszym zamówieniu jest dostępna w sieci Empik).</p>
+      <p>2006</p>
+      <p>31 pażdziernik. Na Piastowskiej - pierwsza parada Halloween. Towarzyszy jej motto Witolda Gombrowicza wyjęte z “Dzienników”: “Nic głupszego nie mogłoby się nam zdarzeć niż dalsze pielęgnowanie wstydliwości, która nie dopuszcza do obnażenia. Polska i Polacy - to musi zostać rozebrane do naga, przynajmniej w sztuce”.</p>
+      <p>2007</p>
+      <p>W drugiej połowie roku, dzięki stypendium Urzędu Marszałkowskiego Województwa Śląskiego, realizowany jest przez Andrzeja Urbanowicza we współpracy z Małgorzatą Borowską projekt “Schody dwunastu szuflad” i inne działania performerskie.</p>
+      <p>2008</p>
+      <p>26 września. W siedzibie Towarzystwa przedpremierowy pokaz dokumentu PIASTOWSKA 1. Interesujący wizualnie film jest opowieścią o miejscu a jednocześnie notatką spotkań, jakie odbyły się 20 i 21 czerwca 2008 pod tymże adresem. Był to inicjalny – po trzydziestu latach – zjazd pierwszej grupy buddyjskiej w Polsce, powstałej właśnie tutaj.</p>
+      <p>Z okazji siedemdziesięciolecia Urbanowicza Duet Sol et Luna (Mieczysław i Saba Litwińscy) odegrał koncert, który wzbudził entuzjazm przybyłych. Poza tym tego wieczoru (20 czerwca) Pracownia gościła także kilkunastu młodych artystów zaproszonych przez Galerię Kronika, prowadzoną wówczas przez Sebastiana Cichockiego. Na kanwie wypowiedzi osób wtedy obecnych powstał obraz w reżyserii Macieja Muzyczuka.</p>
+      <p>13 październik. Współorganizowany przez Towarzystwo Bellmer <a href="piastowska.html">premierowy pokaz filmu “PIASTOWSKA 1” w katowickim kinie Światowid</a>. Oprócz projekcji i spotkania z twórcami i producentem filmu, zaprezentowano zdumionym widzom pokaz tańca orientalnego w wykonaniu  Surayi oraz humorystyczny show funeralno-erotyczny.</p>
+      <p>31 październik. Na Piastowskiej miała miejsce organizowana przez stowarzyszenie Doroczna Maskarada <a href="halloween.html">Halloween</a>, której celem jest rozwijanie twórczej inwencji. Punktem wyjścia była swobodna adaptacja fragmentu powieści Michała Bułhakowa „Mistrz i Małgorzata”. Powstały interesujące zapisy wideo i fotograficzne z tego spotkania, na które przybyło wiele osób z poza Katowic.</p>
+      <p>29 listopad. „<a href="svankmajer.html">Spotkanie z czeskim surrealizmem – Svankmajer</a>”.  Omówienie twórczości i filmy czeskiego artysty przedstawił Jan Przyłuski.</p>
+      <p>2009</p>
+      <p>Styczeń. Od początku roku do czerwca 2009, dwa razy w miesiącu, w Górnośląskim Centrum Kultury w Katowicach, odbyło się <a href="Wyklady.html">dwanaście wykładów/spotkań prowadzonych przez Andrzeja Urbanowicza</a>, podczas których artysta prezentował swoje, niekiedy kontrowersyjne wizje związane ze sztuką i kulturą. Towarzystwo Bellmer brało udział w aranżacji i przygotowaniu medialnych projekcji związanych z tymi wykładami.</p>
+      <p>28 luty. W siedzibie stowarzyszenia odbyło się <a href="LSD.html">spotkanie z Krzysztofem Lewandowskim</a> z Warszawy, tłumaczem i wydawcą. Spotkaniu towarzyszyły projekcje materiałów filmowych związanych z przemianami świadomości.</p>
+      <p>Jan Przyłuski roztoczył przed uczestnikami panoramę „Hans Bellmer we współczesnej kulturze”, ilustrowaną przeźroczami oraz fragmentami filmów i gier komputerowych.</p>
+      <p>21 marca. W Dzień Wiosny miała miejsce zorganizowana przez Małgorzatę Borowską spektakularna akcja miejska „<a href="happening.html">Follow the White Rabbit</a>”.</p>
+      <p>12 czerwca. <a href="bud_1.html">Drugi Zjazd pierwszej grupy buddyjskiej</a>  -  z udziałem zainteresowanych obserwatorów. Szereg interesujących wypowiedzi: Adam Sobota „Prace nad przekładami Zen”; Krzysztof Kosior „Zen a sprawa polska”; O. Jan Mirosław Bereza OSB; Lesław Kulmatycki “Od elitarnego do popularnego wymiary Zen”; Kanzen Maślankowski „Wpływ Piastowskiej na rozwój buddyzmu w Polsce”; Jan Sar „Historia Kamieńczyka”; Krzysztof Lewandowski „<a href="../Towarzystwo_B/Blog/Entries/2009/6/19_%E2%80%9COkno%E2%80%9D-_Krzysztof_Lewandowski.html">Okno</a>”; Janusz Korbel; Antoni Szoska; Zbigniew Miłuński „Doświadczenie Zen z perspektywy lat”; Jarosław Markiewicz „Percepcja Zen w Polsce w latach 70”; Bolesław Rok „Wolność w systemie zniewolenia. Rozmowy o polskiej kontrkulturze”.</p>
+      <p>Teksty te znajdą się w przygotowywanej publikacji o początkach buddyzmu w Polsce.</p>
+      <p>17 września. „<a href="../JAN_LUBICZ/index_main.html">Wokół Bellmera</a>” – współorganizowane przez Towarzystwo Bellmer w Teatrze Śląskim spotkanie poprzedzające mającą nastąpić za tydzień premierę „Świat jest skandalem” Tomasza Mana. W panelowej rozmowie o miejscu Bellmera w Katowicach wzięli udział Andrzej Urbanowicz, Marek Zieliński i autor a jednocześnie reżyser spektaklu.</p>
+      <p>23 września. „Przekraczając neurozę”, spotkanie i warsztat prowadzone przez <a href="karelis.html">Billa Karelisa</a>, czasowo przebywającego w Polsce ucznia Chogyama Trungpy, powszechnie znanego pioniera odkrywania Zachodowi tradycji Tybetu. Bill Karelis urodził się w Bostonie a mieszka w Kolorado. Od 1974 roku praktykuje medytację. Problemy koncentracji przybliża pracownikom i opiekunom społecznym w więziennictwie, również polskim. Prowadzi grupy praktykujących w 80 więzieniach na świecie.</p>
+      <p>Dalsze informacje na stronie: <a href="NEWS.html">NEWS</a></p>
+      <p>-----------------------Copyright Bellmer Society --------------------------------</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/TOWARZYSTWO_BELLMER/DZIAŁANIA.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

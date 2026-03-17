@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERFORMANCE + — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">PERFORMANCE +</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/22384288_1419205448198012_1810793650217191482_o.jpg" alt="PERFORMANCE +" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/DSC_9069.jpg" alt="PERFORMANCE +" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/62cf0d31eabb9359f25e7cdab47493e5.jpg" alt="PERFORMANCE +" loading="lazy"></div>
+      <p>PERFORMANCE (+ happeningi, akcje)</p>
+      <p>2017 - <a href="Protestaniec.html">Protestaniec. Butoh</a>     &gt;&gt; zobacz także: <a href="Bakteria_zwana_Butoh.html">Bakteria zwana Butoh</a></p>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/14205928_1251122018252553_7107389192105140474_o.jpg" alt="" loading="lazy"></div>
+      <p>2016 - <a href="Dynamika_Chaosu.html">Dynamika Chaosu</a> (2016), performance - udział w akcjach “291. Dynamika Chaosu”</p>
+      <p><a href="Kino_Relativo_1997-1999_.html">Kino Relativo</a> 1997-1999 - w ramach kolektywu <a href="RELATIVO.html">Relativo</a> (JLPrzyłuski, Ł. Gutt, A. Nykowski, D.Bauman:</p>
+      <p>2016 - <a href="14._Leave_Everything.html">14. Leave Everything</a> - w ramach projektu Dynamika Chaosu, Berlin-Warszawa. Teatr Academia</p>
+      <p>2015 - <a href="Przeistaczanie.html">Przeistaczanie</a> - performance w spektaklu-eksperymencie, Kino TrzyRzecze</p>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/Screen%20shot%202018-05-11%20at%2016.27.04.png" alt="" loading="lazy"></div>
+      <p>2013 - <a href="Aktualnosc_surreal.html">Aktualność surrealizmu</a> - Teatr Narodowy, performance</p>
+      <p>2013 - <a href="Einstein_i_inni.html">Einstein i inni</a>, performance w spektaklu, Komuna Warszawa, w ramach projektu Re-Mix</p>
+      <p>2013 <a href="Co_Warto_to_Warto.html">Co Warto, to Warto</a> - mini-performance, Grób Nieznanego Żołnierza, <a href="https://www.facebook.com/events/420644758040874/" >fcbk</a></p>
+      <p>2010 - <a href="Duchamp_Mini_Library.html">DUCHAMP MINI LIBRARY</a>, w ramach The Knot - Mobile Unit, Bukareszt, akcja</p>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/jan_in_Knot%20copy.jpg" alt="" loading="lazy"></div>
+      <p>2010 - <a href="Bellmer_hermetic.html">Bellmer hermetyczny</a>, jako Hans Solo, performance, Towarzystwo Bellmer, Katowice</p>
+      <p><a href="walizka.html">Walizka</a></p>
+      <p><a href="galeria_%28Abstrakty_z_telewizorem%29.html">Abstrakty z tv</a></p>
+      <p><a href="Dziady.html">Dziady</a></p>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/einstein%20-%20rys%20e%20kropki.jpg" alt="" loading="lazy"></div>
+      <p><a href="kup_se_obraz_zmien_przerzutke_.html">kup se obraz/zmień przerzutke</a></p>
+      <p><a href="Dr_Bourbon_.html">Dr Bourbon</a></p>
+      <p><a href="taniec_z_lamp%C4%85_.html">taniec z lampą</a></p>
+      <p><a href="granie_.html">Granie</a></p>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/_JAW7861.jpg" alt="" loading="lazy"></div>
+      <p><a href="malowania_.html">Malowania</a></p>
+      <p><a href="Mistrz_w%C3%B3zek.html">Mistrz / wózek</a></p>
+      <p><a href="Mister_Mister.html">Mister Mister</a></p>
+      <h3>w przygotowaniu</h3>
+      <p>Pudło</p>
+      <p><a href="%E2%80%9CRozmowy_na_koniec_wieku%E2%80%9D_.html">Rozmowy na koniec wieku</a></p>
+      <p><a href="Alter_ego_czyli_film_japo%C5%84ski.html">Alter Ego (film japoński)</a></p>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/IMG_0231.jpg" alt="" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/IMG_0230.jpg" alt="" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/PERFORMANCE_+_files/12418954_990514627673409_1145062791265983170_o.jpg" alt="" loading="lazy"></div>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/PERFORMANCE_+.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

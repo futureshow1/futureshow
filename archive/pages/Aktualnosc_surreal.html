@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aktualnosc surreal — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Aktualnosc surreal</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Aktualnosc_surreal_files/Picture%209.png" alt="Aktualnosc surreal" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Aktualnosc_surreal_files/Picture%207.png" alt="Aktualnosc surreal" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Aktualnosc_surreal_files/Picture%205.png" alt="Aktualnosc surreal" loading="lazy"></div>
+      <p>Aktualność surrealizmu</p>
+      <p>2013</p>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Aktualnosc_surreal_files/Picture%201.png" alt="" loading="lazy"></div>
+      <p>Teatr Narodowy, performance.</p>
+      <p>Interwencja podczas wykładu Agaty Bielik-Robson (ABR). W znaczącym momencie wydarzenia performer położył żywą rybę na papierach z teoretycznymi notatkami prelegentki. (zapis tekstowy, w formie komentowanego skrótu transkryptu poniżej dokumentacji foto).</p>
+      <p>(Nie!) Aktualność surrealizmu</p>
+      <p>9 listopada 2013</p>
+      <p>Wykład ABR z dnia dziewiątego listopada 2013 roku na scenia Teatru Narodowego przy ulicy Wierzbowej &quot;Nieaktualność surrealizmu&quot;,</p>
+      <p>(na zaproszenie Tomasza Kubikowskiego)</p>
+      <p>[kilka dni wcześniej, 6 listopada ABR miała w MSNie wykład Marks jako poeta współczesności]</p>
+      <p>[była już prawie rok od wydania Errosa</p>
+      <p>Agata Bielik-Robson w pierwszych zdaniach wytłumaczyła, że po chwili zastanowienia postanowiła dopisać do tytułu znak zapytania. Tytuł powstał nim jeszcze zaczęła się przygotowywać do wykładu. Zapowiedziała, że intersuje ją surrealizm poetycki i literacki, a inne, być może bardziej znane oblicza surrealizmu jak kino (Pies Andaluzyjski) czy dzieła malarskie (Dali), znacznie mniej. &quot;Kiedy zaczęłam przeglądać poezję i literaturę TEGO OKRESU w zasadzie utrwaliło mnie to w przeświadczeniu, że właściwie dzisiaj nie da się tego por prostu czytać&quot;. Ani poezji Bretona, ani Eluarda czy Aragona pochodząca z tego najbardziej klasycznego okresu pisma automatycznego nic nam już dzisiaj nie mówi, &quot; jest rzeczywiście zupełnie pustym dźwiękiem&quot;.</p>
+      <h3>Na próbę wyciągnąłem zbiór Ważyka, i sprawdzam</h3>
+      <p>[Uczucia są bezinteresowne</p>
+      <p>Ślad zapach siarki</p>
+      <p>Błoto zdrowia psychicznego</p>
+      <p>Czerwień zbrodniczych warg</p>
+      <p>Marsz dwa takty kapuśniak</p>
+      <p>Małpi figiel</p>
+      <p>{Zegar kolor dzienny}] z: Pola magnetyczne, 1919.</p>
+      <p>Zrobiłem ruch dada</p>
+      <p>Mówił dadaista</p>
+      <p>Zrobiłem ruch dada</p>
+      <p>I rzeczywiście zrobił</p>
+      <p>[Aragon]</p>
+      <p>I rzeczywiście położyłem Agacie tę rybę (docfish) na papierach.</p>
+      <p>[koniecznie powinienem zaprosić ją na obiad rybny]</p>
+      <h3>ABR</h3>
+      <p>Zresztą za chwilę przytoczę fragment z najbardziej klasycznego pisma automatycznego, żeby mogli sie Państwo przekonać, czy jeszcze robi na kimkolwiek wrażenie. Ale czytając po latach Manifesty surrealistyczne Bretona, zwłaszcza pierwszy z 1924 roku, miałam wrażenie, że są to teksty powtarzające na sposób świecki, bardzo ziemski, bardzo materialistyczny, którymi ja się zajmuje na codzień studiując z pozoru zupełnie inną dziedzinę, coś co można by nazwać kryptoteologicznymi obrzeżami filozofii, zwłaszcza dokumentami gnozy mesjańskiej. Chrześcijańskiej, żydowskiej i filozoficznej (bo do gnozy mesjańskiej można zaliczyć dużą część idealizmu niemieckiego czyli choćby Hegla). I podobieństwo do manifestów gnostyckich z czasów gnozy aleksandryjskiej czyli II wieku naszej ery, potem manifestów trubadurów związanych głęboko z gnozą katarską, a następnie z pewnych manifestów wiecznego szabatu, wizji wiecznej szczęśliwości, którą znalazła u swoich ulubionych żydowskich mesjanistów, takich jak Watler Benjamin czy Jacob Taubes. Miałam wrażenie, że wszystkie te teksty stanowią jedną rodzinę</p>
+      <p>[nieprawdziwa harmonizacja?]</p>
+      <p>I niektóre fragmenty Manifestu brzmią &quot;nad wyraz aktualnie. Można by powiedzieć - wieczyście aktualnie&quot;. Jak te wspomniane dokumenty gnozy mesjańskiej.</p>
+      <p>Nieporządek</p>
+      <p>surrealizm szczycił się tym nieporządkiem, w tym bałaganie te perełki, iskierki ponadwiekowej mądrości nie uleciały</p>
+      <p>[kompromitacja]</p>
+      <h3>ABR zapowiada plan wykladu</h3>
+      <p>czytanie fragmenty z Pierwszego Manifestu, następnie wymieni podstawowe cechy surrealizmu,</p>
+      <p>specyfika pisma automatycznego wynika ze specyficznej wykładni Freudowskiej psychoanalizy jaką stworzył Breton</p>
+      <p>potem teologiczna analiza surrealizmu (Benjamin, Taubes), surrealizm nazwany przez nich &quot;świeckim objawieniem&quot;</p>
+      <p>fragm. : stan &quot;po przejściu&quot;, nowe dzieciństwo, &quot;możliwość prowadzenia wielokrotnego życia równocześnie&quot;, &quot;przywiązuje się do tej iluzji&quot;, &quot;chce, aby każda rzecz była z miejsca dostępna&quot;</p>
+      <p>&quot;Lasy sa czarne albo białe i nigdy sen nas nie zmorzy&quot;</p>
+      <p>Szczeście = &quot;poczucie najgłębszej sprawiedliwości, jakiej szukamy w głębi siebie&quot;</p>
+      <p>tylko wyobraźnia</p>
+      <p>&quot;Gdzie wyobraźnia staje sie niegodziwa, i gdie kończy się duchowe bezpieczeństwo?</p>
+      <p>korzystne zbłądzenie</p>
+      <p>obłęd i szaleńcy, ofiry wyobraźni, lekceważący reguły właśnie w impulsu wyobraźni</p>
+      <p>nawet  doświadczenie nie jest już kryterium prawdziwości, jest bowiem pod władzą użyteczności i kuratelą zdrowego rozsądku</p>
+      <p>zakończono poszukiwania prawdy niezgodne z przyjęta normą</p>
+      <p>człowiek jako badacz (pod wpływem Freuda nowe odkrycia, dotąd ignorowane, siły pod powierzchnią logiki, poza kontrolą umysłu)</p>
+      <p>&quot;Zanosi sie na to, że wyobraźnia odzyska swoje prawa&quot;.</p>
+      <p>Marzenia senne, (Freud) pokaźna część ludzkiej aktywności psychicznej dotąd zwracały na siebie tak mało uwagi</p>
+      <p>Towarzystwo, Breton wymienia całą grupę poetów, &quot;Marcel Duchamp, którego nikt nie znał&quot;. &quot;Picasso poluje w okolicy&quot; i od razu passus o duchu zamku i zdemoralizowaniu, o byciu panami dla bogaczy, panami siebie i panami pięknych kobiet.</p>
+      <p>Co człowiek zdecyduje, to zrobi. Od niego tylko zależy to, by z każdym dniem utrzymywał w stanie anarchii coraz groźniejszą zgraję swoich pożądań. Poezja tego uczy.&quot; O zwycięstwo poezji.</p>
+      <p>Tak się kończy - mówi ABR. W rzeczywistości kończy się oczywiście inaczej.</p>
+      <p>Zarzuca, że tekst Pól magnetycznych nie jest tak najprawdę w pełn automatyczny.</p>
+      <h3>Główne cechy tego ruchu zwanego surrealizmem</h3>
+      <p>to, co już było powiedziane w Manifeście: przede wszystkim walka z zasadą rzeczywistości w imię prawa do wyobraźni, prawa do dzikiego nieokiełznanego pragnienia, które jest wyrazem absolutnej wolności. Wolności jaką człowiek może zarzywać tylko i wyłącznie w snach. Sen jest tu zaprojektowany jako pewna utopia, w której wszytsko jest możliwe, wszytsko wydarzea się z absolutna łatwoscią i w której nie działa żadna konieczność, ani żadne prawo. Rzeczy łączą się ze sobą spontanicznie, łagodnie i naturalnie. Nasuwa się tu spojarzenie z rajskim obrazem absolutnej łatwości, gdzie łania może spać obok wilka, a wszystkie rzeczy mogą przepływać w siebie na zasadzie spontanicznego strumienia. Ta utopijna rzeczywistość jest przeciwstawiona zasadzie rzeczywistości, jest kraina cudowności. Tym co zajmuje surrealistów jest to, co za chwilę Benjamin nazwie &quot;świecim odpowiednikiem cudu&quot; w zwykłym świecie. Świeckim odpowiednikiem objawienia, objawieniem sprofanowanym, ale absolutnie w pozytywnym sensie tego słowa. Nie sprofanowanym jako rzuconym w błoto, ale sprofanowanym jako ściągniętym na ziemię gdzie właściwie od początku ono powinno się znajdować. Surrealiści powołują się na Baudelaire'owski obraz aureoli w błocie, świecącej na ulicy, profanacji pozytywnej, afirmatywnej. POdobnie jak surrealiści rozumie to dziś Giorgio Agamben u którego akt profanacji pozytywnego otwarcia do tej pory zamkniętych, zwartych w sobie treści religijnych dzięki temu żywemu zetknięciu z otaczająca nas codziennoscią zyskują dodatkową wartość.</p>
+      <p>Wiara w ogromne siły nieświadomej psychiki, niewiadomych potęg, raju energetycznego, który tkwi w nieświadomych pokładach ludzkiej psychiki. Obraz żelaznej klatki, ludzkich energii, popędowych energii złapanych w żelazną klatkę - metafora Maxa Webera dla opisu naszej pragmatycznej mieszczańskiej obecności. Ale jest to metafora z tradycji gnostyckiej, mówili o żelaznej klatce w ten sposób nazywając świat żelaznych prawd hermeimene (czyli stoickiej konieczności losu, który stawiał bariery, a którym w imię wolności stawiali swoje wyzwanie). Oczywiści te prawa mogą ujawniać się tylko w nocy. Noc jest ulubionym żywiołem surealistów, jest to noc orficka.</p>
+      <p>Kolejna cecha to oczywiście powrót do dzieciństwa, wszystko sie tu ze sobą wiąże. Noc ma tu swój wymiar - można by powiedzieć - genealogiczny. To jest sam początek ludzkiego życia. To jest ta swoboda, witalność doświadczeń jakie surrealizm przypisuje dzieciństwu, zwłaszcza zdolności do zachwytu jakie cechuje każde dziecko. Ujęcie dzieciństwa w surrealizmie łączy się z inspiracjami freudowskimi.</p>
+      <p>Hasło  &quot;Changer la vie&quot; - wyjście poza, &quot;życie powiększone&quot; w tradycji mesjańskiej, &quot;życie siebie&quot; nie odcinając żadnych swoich możliwości, realizując wszytsko to, co potencjalne w niezwykle intensywnej, witalnej aktualności. Trzeba pomiętać, że ten manifest poetycki jest równei dobrze manifestem egzystencjalnym. prowadzacy ku zdecydowanym rewolucyjnym przesłaniom.</p>
+      <p>To widać gdy Breton opisuje ten wyimaginowany a jakże reakny zamek w którym pomieszkują wszyscy jego przyjaciele współtworzący ruch surrealistyczny. Nie przez przypadek przypominać on ma średniowieczny prowansalski zamek w których panowała ta jaśniejsza strona gnozy katarskiej czyli wieczna radość, równość, wspólnota rozkoszy, wolne krążenie kobiet, wino, poezja i śpiew. Czyli absolutnie rajski obraz mesjańskiej wspólnoty żyjącej w stanie wiecznego szabatu, a więc czasu ktry wedle tradycji mesjańskiej zawiesza wszelkie konieczności, przymusy, w którym zanika konieczność pracy, mozolenia się, jakiejkolwiek konfrontacji z wrogim i nieprzyjemnym wszechświatem. Wieczny sabat jest właśnie wyobrażeniem tego miejsca i czasu w k†órym człowiek  może w całości objawic i zrealizować to, czym naprawde jest, czego ekspresja jest zawsze powstrzymywana przez tą &quot;żelazną klatkę&quot; zasady rzeczywistości, która nakazuje żyć na ćwierć gwizdka, na 3 procent tego, na co popędowo go stać. To właśnie ważne, że chodzi tu o popęd, te energetyczne pokłady i siły. [Nie o wyzwalanie intelektu tu chodzi, a raczej o swobodę popędową.]</p>
+      <p>Tym podstawowym hasłem którym kieruje sie wyznający zasadę &quot;changer la vie&quot; jest przede wszystkim rewolucja w popędzie, uzyskanie dostępu do pełni naszej energii, a więc to, co Breton nazywa &quot;wspaniałością naszych popędów&quot;, niczym już nie skrywaną, nie deformowaną, nie represjonowaną, poczucie energetycznego raju.</p>
+      <p>I wreszcie &quot;to słowo&quot;: nadrealizm (surrealizm). Czyli coś, co należy tłumaczyć jako &quot;poza rzeczywistością&quot;, poza, ponad, jakoś tam sugerujący pewien rejon transcendencji. Transcendencji o której dotąd roiła tylko wyobraźnia religijna, o której Breton mówi z pełną afirmacją o &quot;starym fanatyzmie&quot;, a który surrealiści chcieliby zrealizować w życiu powiększonym czyli zaktualizowanym, tu i teraz.</p>
+      <p>Czyli w tak rozumienym surrealizmie transcendencja lokuje się po stronie fantazji. Ale fantazja ta wypowiada wojnę rzeczywistości, czyli koniecznościom i ograniczeniom. W tym sensie surrealizm nie jest myslą wywodzącą się znikąd, ale jest nowoczesną, późnonowoczesną inkarnacją pewnej tendencji która od zawsze towarzyszy człowiekowi zachodu, przynajmniej od 2000 lat, a czego ostatnią manifestacją w europejskiej kulturze jest romantyzm. Ten radykalny romantyzm, zwłaszcza wczesny spod znaku uwolnienia fantazji, uwolnieniu popędu i też rojący o małych ludzkich mesjańskich wspólnotach w których będzie panowała w pełni pozytywna anarchia miłości (przy czym nie należy tego kojarzyć wyłącznie z seksualnością; to jest w pewnym sensie drugorzędne i dla romantyków i dla surrealistów). Ta miłość przybiera postać uwolnionego energetycznego popędu. I w pewnym sensie surrealizm jest doktryną uwalniania popędu, ta rewolucja ma na tym popędu, na wyrywaniu libido z okowów represji. Nie literalnie, zbyt literalnie pojmowanej wolnej miłości jak w komunach hipisowskich, tylko coś, co surrealiści za romantykami nazywają popędem poetyckim. Właśnie popęd poetycki okazuje się najbardziej uprzywilejowaną pstacią tego uwolnionego libido, wyzwolonego popędu. To oczywiście od razu bardzo pomocna okaże się psychoanaliza, ale rozumiana na sposób rewolucyjny wbrew intencjom samego Freuda. Jak Państwo pewnie wiedzą, Freud zalecał raczej artystom, mając w pamięci wiecznotrwały aerchetyp artysty doskonałego czyli Leonarda da Vinci, żeby uciekali się do zabiegu sublimacji. Tym co zdaniem Freuda może zrodzić nową sztukę nie jest regresywne cofanie się do nieświadomości, nie jest próba odzyskania libido w jego nieskrępowanej pierwotnej formie (bo ta jego zdaniem jest zawsze destrukcyjna) a tylko wytężona praca sublimacji która sprawia, że te energie która w nas tkwią zaostaną zaprzęgnięte do pewnych kulturowo wyznaczonych celów i w ten sposób będą sprzyjać cywilizacji. Leonardo da Vinci jako wielki artysta ale również odkrywca, naukowiec, konstruktor, jest dla Freuda takim przypadkiem sublimacji doskonałej. Dość powiedzieć, że jest to bardzo konserwatywne wykorzystanie pomysłów psychoanalizy, ale Freud był konserwatystą i dlatego zalecał artystom tą bardzo zachowawczą i ostrożna technikę czyli sublimację. Trzeba powiedzieć, że choć surrealiści korzystają z Freuda to tutaj przeciwstawiają mu się bardzo stanowczo. Żadnej sublimacji, żadnych substytutów, żadnych dróg zastępczych. I jeśli dzieło sztuki ma być realizacją mojej popędowej wolności to musi wynikać z niej całkowicie bezpośrednio. Musi być wolnym wypływem inaczej wogóle nie zaistnieje. Stąd właśnie inwestycja w to pismo automatyczne, choć sami twórcy prekursorzy surrealizmu późnej trochę się z tej techniki wycofywali, sami nie byli do końca zadowoleni z jego poetyckich rezultatów. Ale surrealistom, wzłaszcza w tym późnym konserwatywnym okresie [???], towarzyszy przekonanie, że to wycofanie się do nieskończonych źródeł energii jakie tkwią w naszym niezrepresjonowanym libido nie jest w żadnym sensie niebezpieczne, że te dzikie pożądania mogą ujawnić bez tego niepokojącego rewersu w postaci destrukcji. Że - i to jest kolejne przeświadczenie surrealisów - ich naturalnym odsłonieciem jest nie jest promiskuityczna, destruktywna, wszystko pochłaniająca seksualność, tylko właśnie popęd poetycki. A teraz pytanie: skąd bierze sie to przeświadczenie, że ludzkie libido w tym swoim najbardziej...</p>
+      <p>Tu inspiracją znów jest Freud, ale nie z Interpretacji marzen sennych do których surrealiści odwołują się często i explicite, ale z rozprawy którą on sam traktował jako esej eksperymentalny i z którego twierdzeń potem sam się wycofał czyli z Trzech esejów z teorii seksualnej z 1095 roku. Otóż tam właśnie Freud po raz pierwszy ale też nietsety ostatni (bo jak mówiłam później porzucił te  pomysły zupełnie) formuuje koncepcję ludzkiego libido - wciąż jeszcze nazywając to &quot;ludzką seksualnością&quot; jako w gruncie rzeczy libido całkowicie oderwanego od obiektów, wolnego, lotnego,  w tym sensie jeszcze nie sekualnego, bo nie zaprzęgniętego do żadnego systemu życia (możnaby powiedzieć). Ani do celów samozachowania, ani do celów seksualnej propagacji. Czyli można powiezieć libido potencjalnie nieskończone, mające postać czystej energii wyzutej z jakiejkolwiek jakości (Freud mówi: &quot;nieokreślone&quot;), całkowicie niezdeterminowane ze względu na cel, i dopiero jakby gotowe do wybierania swoich obiektów. (Ale bez żadnego z góry przypisanego mu obiektu).</p>
+      <p>Freud potem zrezygnuje z tej zupełnie lotnej, wolnej i swobodnej koncepcji libido, ponieważ nie będzie rozmontowywał tego systemu psychoanalizy, w którym każdemu pragnieniu musi odpowiadać obiekt, i w którym każde pragnienie musi być od razu zneutralizowane poprzez zwiazanie się ze swoim przedmiotem (przez tak zwaną kateksję). Nazywa to wręcz w tej rozprawie &quot;transcendentalnym x&quot; odwołując się do tradycji kantowskiej, w ktorej jeśli o czymś nie można mówić wprost (parafrazując Wittgensteina) to nie milczy się o tym, tylko nazywa się to &quot;transcendentalnym x&quot;. Czyli czymś, co wymyka się całkowicie poza ramy naszej codziennej pojeciowości, ale co jednak jakoś dopuszczamy jako hipotezę konieczną, aby wyjaśnić to, co potem w ramach tej pojęciowości się dzieje. W tej rozprawie, która jest szalenie spekulatywnym gestem Freuda pojawia się to libidi nieskończone, nieokreślone, alsolotnie lotne, jako źródło czystej energii jeszcze z niczym nie związanej, można powiedzieć - zsublimowanej od samego zarania. Nie potrzebującej żadnej sublimacji. Dopiero poźniej wybiera przedmioty, podlega kateksji, czyli można by powiedzieć po gnostycku: upada w świat. Ale zanim upadnie w świat to jest taką właśnie czystą pneumą, ogniem, czystą energią, która nie posiada A seksualnośc taka jaką już namy z naszego poźnego, dorosłego rozwoju jest tylko kolejnym stopniem i to bardzo odległym już transformacji tego libido dokonującym sie w ramach &quot;upadku&quot;, czyli już pogłębiającej się jego kateksji, nabierania w siebie materiału, świadomosci i świata, i to wszystko kończy się czymś, co Freud nazywa fazą genitalną, czyli tym etapem seksualności, w  który poped znajduje zaspokojenie tylko i wyłącznie w ograzmie zaznawanym w stosunku genitalnym.</p>
+      <p>Rozprawę tę można czytać na dwa sposoby. Freud napisał ją [prawdopodobnie] z taka intencją, że libido, to trancendentalne x, na początku jest szalenie niebezpieczne, jest jak ogień, jak iskra od której wszystko może się zapalić. Jakiekolwiek ujawnienie się tego libido w ludzkiej psyche może wywołac wyłącznie destrukcję, śmierć, absolutne zaburzenie. Później echem tej właśnie koncepcji libido bedzie lacanowska teoria jouissance. Jouissance w odróżnieniu do zwykłej przyjemnościjest tym typem rozkoszy zwiazanym z libido wolnym, uwolnionym od wszelkich kateksji, tym typem rozkoszy, który po prostu zabija. I Freud chciałby aby to libido włączyło sie w materialną postać, żeby nabrało w siebie materialności świata, żeby sie przyłączyło do obiektu, żeby się obciążyło tymi kateksjami, żeby zaczęło służyć w ramach materialnego procesu życia. Powinno obsłużyć nasze potrezby samozachowawcze, ale i użyteczne potrzeby seksuane, które powinny zakończyć się reprodukcją. Dla Freuda u którego tendencja konserwatywna przeważa, to właśnie zniewalanie i represjonowanie libido jest pozytywnym procesem rozwojowym, który kończy się jego zdaniem zdrową postracią pragnienia całkowicie uwiązanego, które już wie czego chce i które realizuje się już w ramach dostępnych mu w świecie obiektów. I które całkowicie utraciło tę źródłową lotność.</p>
+      <p>A teraz jak wrócimy do surrealistów z ich bardzo rewolucyjnym podejściem do teorii popędów, to okaże się że im ten popęd lotny, nieobliczalnych, niespodziewanych rozkoszy musiałby jak najbardziej odpowiadać. To jest właśnie ten rodzaj popędu, który surrealiści chcieliby uwolnić. A który w pełni może się zamanifestować w jedynej formie jaką tu na ziemi daje nam poezja. Jako język poetycki. Bo tylko język poezji jest ich zdaniem - podobnie jak twierdzili romantyci - dostatecznie wolny.</p>
+      <p>[dr Freud=Joy]</p>
+      <p>Chciałabym jeszcze dodać, że dalekim echem tej rewolucyjnej psychoanalizy z której surrealiści czerpią wbrew intencjom samego Freuda, ale może nie całkiem dalekim od tej surrealistycznej koncepcji popędu jako popędu poetyckiego Herbert Marcuse, główny ideolog, myśliciel filozof rewolucji roku 1968, zupełnie niesłusznie kojarzony z ideologią wolnego seksu szerzącego się komunach hipisowskich, poniewaz akurat o seksie w jego najsłynniejszej książce czyli Eros i cywilizacja, zapowiadającej powstanie nowej rewolucyjnej podmiotowości, nie ma ani słowa. Natomiast okazuje się, że uprzywilejowanym wcieleniem tej podmiotowości, w której dojdzie do uwolnienia lotnego popedu, tego dziwnego, ludzkiego Erosa, ktory pierwotnie nie jest z tego świata, nie związany z obiektami, jest nie kto inny tylko Orfeusz. I tu znów wraca wątek nocy orfickiej. Orfeusz, który był patronem tak poetów romantycznych jak surrealistycznych. Według Marcusego to Orfeusz obok Narcyza będa tymi postaciami, w których to libio już nie represjonowane ujawni się najwyraźniej. Czyli eros poetycki. Nie dosłownie seksualny, tylko poetycki.</p>
+      <p>I wreszcie to ostatnie skojarzenie poza psychoanalizą czyli surrealizm a teologia mesjańska. To właśnie osadzenie manifesti w kontekście mesjańskich rozważań, ale też świeckiego objawienia, oraz tej surrealistycznej utopi cudownego współżycia wolnej poezji i wolnej miłości właśnie zatrącała o tą klasyczna koncepcje wiecznego szabatu. I chciałabym się tu skupić na dwóch tekstach</p>
+      <p>jeden zostal napisany przez Waltera Benjamina pod tytułem Surrealizm w roku 1929. Benjamin był wielkim wielbicielem surrealistów i wręcz uważał się za część tego ruchu właśnie jako żydowski mesjanista. I w tymże eseju B. definiuje surrealizm - w sposób bardzo słynny - jako &quot;miejsce świeckiego objawienia&quot;. &quot;Tu w profanicznym objawieniu [in eine profane Erluechtung] dokonuje się prawdziwe przezwyciężenie objawienia religijnego&quot;. I chwali surrealizm za &quot;dopuszczenie tej sciśle materialistycznej i antropologicznej inspiracji jaką jest idea wolności absolutnej, w tym także wolności popędowej&quot;, czyli jak to mówi Benjamin &quot;wolnej miłości&quot;. Benjamin chce zbliżenia poezji i praktyki, tak życiowej jak rewolucyjnej, marząc - jak mówi - wykorzystanie potęgi rauchu dla rewolucji. Tu poezja sama niesiona przez surrealistyczne doświadczenie ma być nośnikiem cennej intuicji au dela, czyli czegos poza w imanentnym i wewnętrznym świecie. Podkreśla: &quot;podobnie czynili prowansalscy trubadurzy, których uznaje wprost za prekursorów surrealizmu&quot;. Ale podkreśla, że &quot;odstepowali oni od dosłownej praktyki miłosnej po to, by ocalić ducha wolnej miłości tam, gdzie był on naprawdę możliwy czyli w języku poetyckim. &quot;W miłości ezoterycznej dama jest czymś najmniej ważnym&quot;. Co oznacza, że ta wolna miłość to w istocie to freudowskie libido bez obiektu oddające się radosnej autocelebracji, a jego mejscem objawienia jest język, język uwolniony tak od sensu jak od ja. To jest definicja Benjamina. &quot;Język ma pierwszeństwo&quot;. Przed znaczeniem, ale też przed każdym obiektem. Czy będzie nim ego, jakikolwiek przedmiot z denotacją znaczenia, czy dama. Kwestia języka jest jedną z podstawowych kwestii mesjanizmu. Rewolucja dokonująca się w ludzkiej psyche ni emoże stać się pełną rewolucją, jesli nie zaowocuje także przewrotem w naszych relacjach z językiem. Problemowi temu poświęcone sa manifesty surrealistów, ale także całe dzieło Benjamina, a także teoria poetyckiego agonu o któ®ym mówi słyny esej Taubesa o poezji surrealistów. I teraz jak streściłam Benjamina chciałaby odwołać sę to tego późnego Taubesa z lat 50 &quot;Notatki o surrealizmie&quot; Tematem tego tekstu jest rola poezji w nowoczesności, a ściślej relacja języka poetyckiego do języka naukowego, a także języka poetyckiego do tak zwanego języka upadłego, zwykłego, jakim posługujemy się na codzień. Relacja sensus figuralis do sensus literalis czyli znaczenia dosłownego. Już za chwilę jednak okazuje się, że temat tej pracy uderza w samo sedno mesjańskich rozważań o błogosławionym życiu, która także zajmowała surrealistów.</p>
+      <p>Pytanie jest jak przejść od życia, które nie żyje przez nadmiar ograniczeń i restrykcji do większego i w pełni wolnego życia bez reszty. To pierwsze życie ograniczone znajduje swój wyraz w sferze językowej opisującej nowoczesny świat odczarowany, który Taubes za Weberem oczywiście nazywa &quot;zaciskająca się na podmiotowości żelarną klatką&quot;. To drugie natomiast &quot;życie bez reszty&quot; buntujące się przeciwko temu pierwszemu zwłaszcza od czasów romantyzmu, których tendencje emancypacyjne kulminują w surrealistycznej pochwale fantazji. Taubes podkreśla, że poezja surrealistów i romantyków niczego nie zaświadcza i niczego nie ocala. asemantycznej wspaniałości dzieł surrealistów, nie zbawia świata i nie służy produkcji symbolicznych sensów, sama w sobie jest manifestacją czystej, witalnej, swobodnej i radosnej energii. Objawieniem życia, które żyje na przekór urzeczawiających relacji świata, gdzie - jak powiedział Adorno - &quot;życie nie żyje&quot;. Ta popędowa pleroma - swobodnie na tu użyć tego gnostyckiego terminu - urzeczywistnia się, mówi Taubes, w języku z bogatej figuratywności swobodnego popędu poetyckiego, podczas gdy świat na zewnątrz pozostaje tylko kenomią, zespołem niezbawialnych obiektów, od których pragnienie odrywa się w swobodnym wzlocie fantazji. Wolna produkcja sensus literalis rozluźnia związek sensu ze światem dążąc do asemantycznej i czysto energetycznej samowsobności. Podczas gdy świat upada coraz głębiej stając sie tylko składem obiektów, czyli jakby powiedział T.S. Eliot, &quot;a heap of broken images&quot;, stertą złamanych obrazów, opisywanych jedynie przez sensus literalis, czyli najbardziej upadłą, całkowicie wyzutą z wyobraźni postać języka. Żeby zinterpretować popęd poetycki o jakim mówi Taubes w terminach psychoanalitycznych możnaby postawić tezę, że jego tendencja do asemantyczności, do odchylenia od znaczeń dosłownych najmocniej przywiązanych do swych obiektów stanowi językowy wyraz owego uwalniającego zerwania, w który popęd uwalnia się od swych fiksacji by uzyskać na powrót utraconą bezobiektową postać czystej energii. Dlatego Taubes nie waha się użyć do określania popędu poetyckiego słowa, którego używali romantycy a i surrealiści, terminu wprost z tradycji gnostyckiej czyli słowa pneuma. gdzie oznacza on nie mniej nie wiecej jak właśnie ducha. Co jak juz mówiłam nie obce było samym surrealistom czerpiącym inspiracje z poezji prowansalskiej przepojonej duchem katarskiej gnozy i jej nauki o czystym duchu, nieskarzonym wpływem materii. Dla Taubesa nie ulega wątpliwosci, że poezja to uprzywilejowana postać języka, która przechowuje iskrę, pneumę objawienia. Jest obecnościa transcendencji w świecie be ranscendencji. (Tu oczywiście echem odbija się znów Benjaminowskie świeckie objawienie). Nasze rozważania krążą tu wokół prefiksu sur- w słowie surrealizm. Jakie znaczenie może mieć ten przedrostek w kontekście czysto profanicznego, immanentnego i materialistycznego doświadczenia. Jedynym znaczeniem słowa poza jest że jesteś w poezji. Surrealizm choć zawiera swoje sur- to jednocześnie nie inwokuje żadnej zewnętrzności w sensie miejsca zadnej bezpiecznej przystani transcendencji. Ale to właśnie czyni go uczciwym w prawdziwie nowoczesnym sensie. Taubes: &quot;Rewolta surrealistyczna odbywa się przeciw nieskończonemu światu ustanowionemu przez naukę i technologię, który odczuwanuy jest jako system panowania i przymusu. Jednak w swojej ucieczce z tego domniemanego systemu dominacji surrealizm nie może powołać się na gwarancje Boga spoza tego świata. Wie, że jest zakorzeniony w nowoczesnym jednorodnym wszechświecie, który nie posiada żadnego &quot;poza&quot;. Dlatego ateizm i materializm stanowią jego probierz uczciwości. Zasadniczą strategią przywracania elementu transcendentnego w świecie bez transcendencji jest parafraza gnostyckiego modelu Boga nieobecnego. Modelem dla tej transformacji jest kabała luriańska, która oznacza porzucenie statycznej wizji neoplatońskiej na rzecz metafizyki rozgrywającej się w czasie w wielkim historycznym scenariuszu. Bóg, który stworzył świat jest już zawsze tylko zaprzeszły, w teraźniejszości zaś manifestuje się wyłącznie w postaci śladu. Bóg po stworzeniu świata istnieje tylko w formie rozproszonej, jego zewnętrzność utrzymuje się jedynie w wewnętrzności pneumy. Model ten w filozofii po raz pierwszy w pełni wykorzystał Hegel. Ale nie jest to jedyny możliwy wariant. Innym, równie aktywnym w nowoczesności sposobem jego jest poezja romantyczna, inwestująca w opozycję fantazja-rzeczywistość, fantazja-legalność, ktorej ostatnim dzieckiem jest właśnie surrealizm. Podczas gdy fantazja odrzywiona i wzmocniona jako przejaw żywej pneumy legalistyczna konieczność cechująca odczarowany świat blakowiego Urizena Newtona świadczy tylko o jego odbóstwieniu i martwocie. Znów Taubes: &quot;Waloryzacja fantazji jako właściwego medium poezji charakterystyczna od czasów romantyzmu wydarza się za cenę utraty świata w jego uprzedniej bogatej symboliczności. Ta utrata dochodzi do głosu zwłaszcza w lekkiej i niezobowiązującej manierze z jaką romantycy tworzą swoje alegorie&quot;. Z pozoru tylko Taues brzmi tu jak typowy krytyk romantyzmu który zarzuca poezji romantycznej (i surrealistycznej, którą uważał za całkowicie ciągną z tym zjawiskiem), że raz wyrwana z tak zwanego analogicznego łańcucha bytów i wrzucona w świat, gdzie tylko sens dosłowny ma prawo do prawdy pada ona łupem czegoś co Coleridge nazwał &quot;sheer fancy&quot; a Ruskin zaś &quot;patetic fallacy&quot;. Czyli czytym fantazjowaniem, które pozostaje nawet dla samego siebie bezsilną projekcją znaczeń, narzucanych na obojętny i zimny universe of death.</p>
+      <p>Tymczasem Taubes idąc wyraźnie drogą Benjamina i jego namysłu nad rolą alegorii w współczesności daleki jest od lamentowania nad utraconą wiezią ze światem powodów by opłakiwać odrywanie się popedu poetyckiego od światowych obiektów które oznaczać może dlań tylko pożądanie emancypacji. Ten nihilizm, radosny nihilizm odtrącający świat oznacza psychoanalitycznie rzecz biorąc wielką dekateksję libido, jego uwolnienie, które nie chce już inwestować w obiekty i woli wrócić do swojej energetyczno-pneumatycznej postaci obiektowej. (Czyli to co Freud nazywał najbardziej pierwotną zródłową ale i najwspanialszą postacią ludzkiego libido.) Taubes: &quot;nihilistyczna utrata świata która zachodzi w doświadczeniu surrealistycznym, a przedtem romantycznym, powtarza w nowoczesności gnostycką utratę świata jaka nastąpiła w późnym antyku. Utrata świata sygnalizowana już przez Williama Blake'a, który nazywał zimną domenę Urizena &quot;światem nie do życia&quot; to oczywiście kolejna ... gnozy, powtarzająca gnostycki moment alienacji w stosunku do stoickiego modelu kosmosu zarządzanego przez żelazną hermeimene czyli prawo losu. &quot;Nawet w języku gnostyckim - mówi Taubes - kosmos znaczy przede wszystkim prawo i porządek tyle że z odwróconym znakiem wartościującym&quot;. I chwilę dalej: &quot;Gnostycka doktryna zbawienia to protest przeciw światu zarządzanemu przez fatum czyli nomos. I jako taka właśnie zostaje przechwycona przez romantyków, kótrzy to samo zagrożenie dostrzegli w świecie nowoczesnego naukowo-technicznego determinizmu. Wyrastająca z romantycznych źródeł poezja surrealistów staje się wówczas ostatnim gestem mesjańskiego protestu przeciw domykającemu się światu nowoczesnego odczarowania. Definicja alogona całkowicie zmienia status tak transcendencji jak poezji nadając zupełnie nowe znaczenie popędowi poetyckiemu. Teraz nie chodzi już o to by słowami Novalisa &quot;zromantyzować świat&quot;, który pozostaje trwale odczarowany i zdemistyfikowany, ale o to by zamanifestować energetyczną obecność pozaświatowej pneumy w samym poetyckim języku. Akt poetycki, samo słowo ma wyrażać tą transcendentną obecność, ślad tego innego, wyższego życia, ktore same w sobie pozostaje czystą energią i czystą radością. Jak mawiał Blake w swoim słynnym aforyzmie: &quot;Energy is Ethernal Delight&quot;. &quot;Słowo samo staje się wymiarem, 'poza' nie świadczy niczemu transcendentnemu, ono samo jest transcendentne.</p>
+      <p>Innym uczestnikiem tego kolokwium, które odbywa się na temat surrealizmu jest niejaki Wolfgang Preizetanz [?], znawca niemieckiego romantyzmu, zwłaszcza dzieł Heinego. Chciałabym przytoczyć jego kapitalny komentarz do jego mesjańskiej interpretacji popędu poetyckiego jakiej dokonuje Taubes. Otóż wskazując na geneze pojęcia poetische drang ... (...) w pismach Hoffmana i  Adama Solgera , późnych niemieckich romantyków z początku całkowicie potwierdza on diagnozę Taubesa: &quot;Istotnie u Hoffmana i Songera egzystencja poetycka oferuje jedyne &quot;poza&quot;, jest jego jedyną formą. Tylko popęd poetycki bowiem może potrzymać radykalną opozycję wobec wszystkiego co już ustanowione, co już istnieje. Zdaniem Solgera tylko w formie tego popędu może się objawić w nowoczesności element pozaludzki, boski, absolutny, wieczny, pozaświatowy i nieskończony. To, co boskie przenosi się całkowicie do wewnętrzności tego popędu i objawia tylko w autonomicznych przejawach fantazji. Popęd poetycki nie odnosi się już do transcendencji, raczej sam staje się transcendencją. Problem jednak pojawia się, gdy ta pneumatyczna iskra działająca w wewnetrzności poetyckiego popędu zetknie się mimo wszystko z martwą materią języka. (Preizetanz kontunuuje) Problem sprowadza się do jednego: język z jednej strony zamierzony jako medium trascendencji, z drugiej pozostaje całkowicie zdeterminowany przez struktury tego świata. To dlatego popęd poetycki, gdy tylko zetknie sie z jałowością światowego języka ulega najpierw dezorientacji, a nastepnie destrukcji.</p>
+      <p>Widzicie Państwo, jest to dokładne powtórzenie tego obrazu Freuda i Lacana: jeśli tylko czyste libido przez chwilę wyrwie się z tego systemu, które go więzi, wiąże, ale też nadaje mu formę, prowadzi natychmiast do dezorientacji, do destrukcji. W ten sposób Preizegantz [?] odsłania największe niebezpieczeństwo jakie czyha na surrealistów i które w istocie zadecydowało - jak sądzę - o klęsce ich twórczego projektu. Nawet bowiem jak wydestyluje się ów transcendentny popęd, czystą energię kreatywną, to i tak koniec końców musi się ona zderzyć z językiem jako strukturą, mechanizmem, anonimowym systemem pojęć i znaczeń. I albo przekształca go od wewnętrz, albo musi polec jako na zawsze wyobcowana iskra. W konkluzji - oczywiście jest to tylko moje zdanie i nie wszyscy muszą się z tym zgodzić (na przykład nie zgodzi się z tym na pewno pani Agnieszka Taborska, obecna tutaj na sali, która wspaniale kontynuuje w swojej twórczości działania surrealistyczne), ale ja jednak powiem ze swojej strony, że (wydaje mi się, że) surrealizm przetrwał wyłącznie jako manifest, natomiast nie jako poezja, nie jako praktyka artystyczna. Przetrwał jako manifest fancynujący z perspektywy takich teorii jakie tutaj wymieniłam, psychoanaliza i teologia mesjańska, podobnie jak romantyzm niosący za sobą przekaz &quot;świeckiej transcendencji&quot;. Tego &quot;poza&quot; w świecie, który nie oferuje juz łatwych wyjść &quot;poza&quot;.</p>
+      <p>Ale jednocześnie surrealizm okazał się projektem zbyt anielskim w dziedzinie samej praktyki, gdzie mimo wszystko, czy chcemy tego czy nie, działa zasada rzeczywistości, czyli zasada ograniczeń. Dlatego też sądzę, że rewolucja surrealistyczna podzieliła los wszystkich tych ruchów radykalnych, które nigdy nie podjeły żadnej negocjacji ze światem. Począwszy od wspólnot katarskich, z ktrych wywodzili się prowansalscy trubadurzy (stąd natchnienie Bretona) aż po paryski maj '68, którego komunizm natchniony już przez samych surrealistów trwał zaledwie kilkanaście dni. Dziękuję.</p>
+      <p>Agnieszka Taborska: Czy mogę? Pewnie nie będę polemizować z Panią, ale chciałabym dodać coś. Ja spóźniłam się, więc może mówiłaś o tym na początku, i byłam gdy omawiałaś Pierwszy Manifest. Drugi jest napisany i wydany pięc lat później. Jest równie ważny, niestety na polski prócz maleńkiego fragmentu nie przetłumaczony. A ten Drugi tą &quot;anielskość&quot; (jak to nazywasz) Pierwszego Manifestu podważa. Druga rzecz: zresztą piszę o tym w omówieniu tego przekładu fragmentu przekładu &quot;Pól magnetycznych&quot; i chciałam tu trochę zrobić prawdomówności autora ...</p>
+      <p>ABR: Zresztą z ciebie to wzięłam.</p>
+      <p>faksymile, które się ukazały we Francji kilkanaście lat temu o dziwo potwierdza to, co oni twierdzili, czyli że ten tekst rzeczywiście był nie zmieniany. Są fragmenty pisane pismem Bretona,  Soupault, i jakby to jakby przeważa szalę. No i tzrecia rzecz: amour fou, ta miłość szalona. Ja nie całkiem zgadzam się z tym bezpośrednim porównaniem z rolą miłości w romantyzmie, bo jednak u surrealistów miłość, miłość szalona, ma znaczenie ogromne. Breton pisze, że to jest jedyne uczucie z którego rezygnacja jest największym gwałtem, jaki jednostka może na sobie dokonać. To jest jedyna rzecz, zdaniem Bretona - która jest w stanie stawić czoła temu strasznemu wrogowi - rodziny, społeczeństwa i kościoła. Jest to jedyne uczucie które pozwala właśnie changer la vie, zmieniać życie, zmieniać świat. Tak że myślę, że przynajmniej w teorii miłość ma dla surrealizmu znaczenie nieporównywalne do ... [nieczytelne]</p>
+      <p>ABR: Ja się całkowicie z Tobą zgadzam. Bardzo Ci dziękuję za te ujaśnienia. Zresztą jak pewnie się zorientowałaś korzystałam bezpośrednio też z twojego tekstu o surrealizmie, który ukazał się w &quot;Medium doskonałe&quot;, to jest pismo piśmie poświęcone Festiwalowi Conrada. gdzie właśnie pani Agnieszka Taborska pisze o surrealistycznych. Rzeczywiście skupiłam sie na manifeście, Pierwszym Manifeście, mówię o samym początku pierwszego w tłumaczeniu Ważyka między innymi z tego powodu który wymieniłaś, to znaczy że Drugi Manifest jest znacznie mniej znany. I też kiedy Benjamin pisze swój esej o surrealizmie, a Taubes swoje notatki o surrealizmie, czyli te dwa teksty, które chciałam przedstawić, odwołują się wyłącznie do Pierwszego Manifestu, wogóle nie biorąc pod uwagę tego co pisze Breton w tym późniejszym tekście, gdzie ... albsolutnie masz rację...</p>
+      <p>AT: Bo Benjamin ze względu na rok.</p>
+      <p>ABR: To ze względu na rok. To jest rok 29. Natomiast Taubes dlatego, że to go nie interesuje. Dlatego, że Taubesa...Taubesa, który nie był teoretykiem literatury nie interesowało to jak zmienia się praktyka artystyczna surrealistów tylko w jaki sposób pojmują oni tą cudowność, objawienie, i w jaki sposób to może stanowić parafrazę tradycyjnych treści teologicznych. Zwłaszcza o tym mesjańskim charakterze.</p>
+      <p>[wejście JLP]</p>
+      <p>ABR: Proszę, [z uśmiechem] tu mamy praktykę surrealistyczną właśnie.</p>
+      <p>AT: To jest scena jak ze “Spiskowców rozkoszy”.</p>
+      <p>ABR: Tylko że wiesz, ta ryba teraz potwornie cierpi. Ta ryba cierpi. Ta ryba bardzo nie lubi kiedy się ją dotyka, bo nie wiem czy Państwo wiecie, że ryby mają tak wrażliwą skórę jak człowiek gałkę oczną. Więc dokonałam teraz bardzo nieprzyjemnego dla tego stworzenia aktu, które wogóle jest w stanie szoku. Ja bym proponowała Jasiu żebyś wyniósł to gdzieś...</p>
+      <p>JLP: To jest dla ciebie. Proszę.</p>
+      <p>ABR: Nie! Ale ją po prostu trzeba dotlenić.</p>
+      <p>JLP: To jest dla ciebie ryba.</p>
+      <p>ABR: Ale ja nie moge zrobić tego. Dlatego, że ja ...</p>
+      <p>Głos z sali: [z oburzeniem] To sam się tak połóż.</p>
+      <p>ABR: Ja nie mam słomki. Czy ktoś z Państwa ma słomkę na sali? [uśmiechając się z żartobliwego stwierdzenia]</p>
+      <p>JLP: To jest ryba do spożycia. Tak mi powiedziano.</p>
+      <p>ABR: Ale ja nie chcę spożywać, nie chcę jej zabijać.</p>
+      <p>JLP: Można ją włożyć z powrotem do rzeki, jeśli masz taką fantazję.</p>
+      <p>ABR: Tak, zdecydowanie mam taką fantazję. Tylko najpierw chciałabym ją ożywić.</p>
+      <p>JLP: Ale ona JEST żywa.</p>
+      <p>ABR: Ledwo.</p>
+      <p>Głos z sali: Czy wszyscy, którzy się zajmowali surrealizmem byli tak niewrażliwi na cierpeinie innej istoty?</p>
+      <p>JLP: Przepraszam, czy Pani je mięso?</p>
+      <p>Głos z sali: Słucham? [zbita z tropu]</p>
+      <p>Śmiechy na sali.</p>
+      <p>ABR: No myślę, że Nie. Myślę, że to właśnie o czym powiedziała pani Agnieszka, że ta szalona miłość miała tak niezwykle istotną rolę [patrzy po sobie, zaczyna porządkowac mokre kartki na stole] w surrealizmie. Także to przekładało się na wszelkie formy miłości. Tu bym sie akurat o tyle nie zgadzała, że wydaje mi się że romantycy - tu mówimy o niektórych radykalnych odmianach romantyków - ale dokładnie tak samo inwestowali tę miłość, którą rozumieli bardzo szeroko, jako bardzo swobodną i szeroko zakrojoną paletę afektywną. Chodziło o to, ażeby te afekty były możliwie wolne, możliwie wyzwolone. No właśnie, od namiętnej erotycznej pasji po akty miłości bliźniego, które były niewymuszone, o których tak ładnie pisze Breton: &quot;bramy naszego zamku zawsze stoją otworem&quot;, że żadnego bliźniego nie odprawiamy z kwitkiem. To też jest tej miłości, ona nie musi być najbardziej szalona od razu. Natomiast jej szaleństwo polega na tym, że ona chce być spontaniczna, to znaczy, ona rzeczywiście nie chce przechodzic przez cały system represji, a który właśnie wywodzi się ... a który Freud afirmuje, z tym formowaniem, wychowaniem, kształtowaniem popedu, a co w rezultacie ma się skończyć absolutnym triumfem popędu czyli z jednej strony ukształtowaniem sie erosa autoreprodukcyjnego, a z drugiej sublimacji. To idzie dokładnie w przeciwnym kierunku w stronę tych dzikich spontaniczności, których oni nie chcą w ten sposób kiełznać, ale którym też nieskończenie ufają. I to też jest pytanie: czy temu rzeczywiście można do końca i bezwarunkowo ufać?</p>
+      <p>AT: Czy jeszcze można? Do pytania pani, a  propos surrealizmu i zwierząt. Jedna z bardzo wybitnych przedstawicielek surrealizmu czyli Eleonora Carrington dużo pisała i w swoim malarstwie też wyznawała tą wiarę nawiązującą do wierzeń indiańskich na temat duszy ludzkiej, która jest zawsze częściowo ludzką częściowo zwierzęcą. Tak że myślę, że przyniesienie żywej ryby ma bardzo niewiele wspólnego z ... ze zrozumieniem surrealizmu. Ale na pewno odwołuje się do takich bardzo potocznych ...</p>
+      <p>JLP: Surrealizm nie jest sprawą rozumienia. Surrealizm nie jest sprawą rozumienia.</p>
+      <p>popędu poetyckiego, natomiast...</p>
+      <p>ABR: Trzebaby autora zapytać po prostu co miał na myśli.</p>
+      <p>Głos z sali [prawdopodobnie dyrektor sceny na Wierzbowej]: Ponieważ ja myślę że jednak spotykamy się z Agatą Bielik, ja rozumiem że pan bardzo by chciał żeby to było spotkanie z panem, ale może skupmy się na wykładzie a nie na tym panu.</p>
+      <p>Głos z sali: Jak bym chciała takie batrdziej merytoryczne pytanie niż emocjonalne: pani wspominała, że w Drugim Manifeście została podważona ta &quot;anielskość&quot;. Ja przyznam szczerze, że nie mam zielonego pojęcia co znajduje się w Drugim Manifeście i chciałabym w związku z tym zapytać, czy ona została zastąpiona czymś?</p>
+      <p>JLP: Mhm.</p>
+      <p>Czym? Ewentualnie, czy ktoś by się mógł podzielić czym?</p>
+      <p>[konsternacja na sali cisza]</p>
+      <p>ABR: No... [wskazując na AT] Chciałabyś odpowiedzieć na to pytanie? Jak ty to rozumiesz, bo ty w pewnym sensie uprawiasz taką praktyke artystyczną w duchu Drugiego Manifestu, prawda?</p>
+      <p>AT: Nie. No nie. Drugi manifest był przede wszystkim potwornie polityczny. Breton go napisał w momencie, kiedy się bardzo zbliżył do partii komunistycznej. Był ogromnie rozżalony z powodów tez prywatnych związków, ze swoimi kłopotami miłosnymi, zawiedziony wobec większości tych właśnie mieszkańców zamku, jak Agata mówiła. Więc właściwie odrzucił tych protoplastów tych manifestu pierwszego z wyjątkiem... wszystkich odrzucił wszystkich praojców z wyjątkiem... z wyjątkiem jednej.. jednej kobiety, zresztą poetki. Więc protoplastów odrzucił, jak pisał, byli &quot;kompromitującymi elementami wytwórczości&quot; Że np. Poe stworzył postać policjanta, który był ciekawą postacią. Że Baudelaire dał podstawy do wstępu napisanego przez konserwatywnego Claudela itd itd. Drugi Manifest jest ogromnie owocem jego zbliżenia właśnie do partii komunistycznej. Też to się łączy z wielkimi czystkami w których Breton zaczął ze swojej grupy surrealistycznej wielu tych właśnie człowków zamku z Pierwszego Manifestu. Także zastąpił to komunizmem. Zminił nazwępisma &quot;Rwolcja surrealistyczna&quot; na &quot;W służbie rewolucji&quot;, już same tytuły wiele mówią.</p>
+      <p>ABR: No tak. Można powiedzieć, że wtedy ta praktyka artystyczna też na tym nie koniecznie zyskuje, prawda? Bo z absolutnie wolnej staje się w pewnym sensie użytkową.</p>
+      <p>AT: (niewyrażnie)</p>
+      <p>ABR: Oczywiście anielskość oczywiście się kończy, ale właśnie w takiej niedialektyczny sposób. To znaczy, utopia wolnego bractwa okazała się tylko i wyłącznie utopią i przyjmujemy ją z jej podstawowymi restrykcjami, tak? To znaczy podobnie postąpił przecież Benjamin, który jeszcze w 29 roku zachwycony tą wspólnotą surrealistów w latach 30tych w trakcie zbliżenia przecież z Bertoldem Brechtem też postanowił uprościć swój idiom na użytek rewolucji. Więc tutaj ta tendencja niestety występuje. Na pewno jeśli chodzi o to w jaki sposób można przełamywać tę anielskość w przypadku tak - można powiedzieć - gnostycko nakreślonej tematyki literackiej, to ja z kolei uważam, że najlepiej to rozwiązuje... O Jezus! Słuchajcie, bardzo was prosze, żeby ktoś zabrał tą rybę i ją poratował. Bo po prostu ona się męczy, mnie chlapie. Trzebaby japo prostu wlać do zbiornika, który ma... i dolać więcej świeżej wody, która ma trochę tlenu. No. Będę niestety śmierdzieć rybą. Do końca dzisiejszego dnia. Uważam, że autorem który to rozwiązuje najlepiej jest Harold Bloom, który rzeczywiście wyrasta z tej tradycji. Sam właśnie pisał o anielskości surrealistów, jednocześnie nie odmawiając im tego właśnie geniuszu w sensie wogóle rozumienia czym może być poezja i właśnie tego manifestu poetyckiego. No ale tak, jesli właśnie chodzi o to zderzenie pneumy czyli czystego popędu poetyckiego z zastanym językiem, to tutaj właśnie sami surrealiście nie udzielają moim zdaniem zadawalającej odpowiedzi.</p>
+      <p>Z sali: Ja mam pytanie ... surrealizmu i czy technologia teraz właśnie go nie uaktualnia, nie czyni możliwym. Świat wirtualny. W Manifeście Breton pisze o dziwnych światach, które są zagadkowe, niesamowite. Czy może zdarzenia wirtualnych światów to są nierzeczywiste inercje. I teraz to czego nie dało się zrobić za pomoca dawnych mediów, teraz jest możliwe.</p>
+      <p>ABR: Tak, tylko że oni sobie wymarzyli jako realną inwazję snu w rzeczywistość.</p>
+      <p>Głos z sali: Tak.</p>
+      <p>ABR: No tak, ale czy świat wirtualny realnie jest światem rzeczywistym przekształconym? Jednak ciągle pozostaje to słuszne i złe sumienie, że to sie dzieje tylko i wyłącznie na niby.</p>
+      <p>Gzs: Zależy w jakim stopniu technologia ..według ciała, czy mamy na przykład te nowe okulary 3D, które nie pokazują nam innego świata i działają z naszą głową, to gdzie jesteśmy? Im więcej zmysłów oszukamy technologią, im bardziej dane bodźce realne, to znaczy wirtualnie realne, tym bardziej będziemy w świecie surrealistycznym. Czyli przenikniemy tak jak oni chcieli. Czy teraz to...</p>
+      <p>ABR: Mogli byśmy oczywiście tego dokonać, natomiast czy rasowy surrealista byłby z tego powodu zadowolony nie wiem. Bo wydaje mi się, że wtedy ten agoniczny wymiar, [broni swojego głosu] agoniczny wymiar relacji między fantazją a rzeczywistością całkowicie znika. Ustępując raczej wymiarowi eskapistycznemu. Surrealizm nie miał być espapizmem, czyli uciekaniem od rzeczywistości w wyśnione światy, nawet hiperrealne jak w przypadku takiej aparatury, tylko miał być realnym agonem. To znaczy miał być rzeczywiście wyzwaniem rzuconym materialnemu światu ze wszystkimi jego ograniczeniami. Myślę, że to byłoby bardzo zwodnicze podobieństwo. To nie byłaby żadna rewolucja po prostu. To nie byłaby rewolucja. Eskapizm jest - można powiedzieć - raczej cześcią konserwatywnej palety reakcji.</p>
+      <p>Gzs: Ale świat wirtualny wpływa na świat realny, na przykład przez ekonomie światów wirtualnych wpływamy na światy rzeczywiste, co się dzieje już teraz. Tak, że chińscy niewolnicy grają w &quot;Lord of Warcraft&quot;.</p>
+      <p>ABR: Tak [smieje się], ale to jest za daleko idąca analogia. Choćby dlatego, że w idealnym świecie surrealistów nie ma ekonomii, nie ma waluty i nie ma praw natury gospodarczej. Wszystko to zostało zniesione.</p>
+      <p>Głos z sali (młody, kobiecy): A czy jest w takim razie jakiś współczesny ruch, który pełni podobna rolę?</p>
+      <p>ABR: Znowu pytanie do pani Agnieszki.</p>
+      <p>AT: Nie wiem.</p>
+      <p>ABR: Czy sądzisz, że istnieje taki? Bo ja na przykład bym ciebie zaliczyła do takiego murtu.</p>
+      <p>AT: No ale kto jeszcze?</p>
+      <p>ABR: No właśnie nie wiem. Znaczy w Polsce nie, bo zastanawiałam się nad tym czy na przykłąd poezję lingwistyczną możnaby uznać. Ale nie. Ona wyrasta z zupełnie innych źródeł. Czy na przykład liberatura, która niby z pozoru wykorzystuje techniki dadaistyczne, blisko z surrealizmem powiązane? Nie. Oni się wogóle na surrealizm nie powołują, wyłącznie na Jamesa Joyce'a. Tak? Więc właściwie bardzo trudno mi jest wskazać jakiś ruch, który robiłby to całkowicie świadomie powołując jakos do życia ta aktualność surrealizmu. Oprócz w... [urwane nagranie]</p>
+      <p>[...]</p>
+      <p>AT: [wspominała coś o popkulturze] (...) agresywnie reagując na pytania. Tak właśnie jest z manifestami Bretona. No bo oni przejęli głównie to co przyjmuje reklama, co przyjmuje ten świat komercyjny, który niestety surrealizm używa naukowo.</p>
+      <p>ABR: No ale używa zupełnie nie do tych celów co... surrealizm wywindykował wolne skojarzenia, tak? Przeciez nie chodziło o to, żeby wytwarzać atrakcyjne obrazki komercyjne. A oczywiście marzenia senne sa w reklamie wykorzystywane powszechnie.</p>
+      <p>Gzs: Wytwarza pragnienia. Chce być kreatywny, chce być super cool.</p>
+      <p>ABR: Jest różnica między byciem kreatywnym a super cool. Prawda? Powiedział pan to na jednym oddechu, a to [ze śmiechem] nie jest to samo.</p>
+      <p>Gzs: No jest to samo.</p>
+      <p>ABR: Ja myślę, że to jest ta subtelna różnica między prawdziwym surrealizmem, jeśli tak poważnie potraktować ten cały manifest, a takim surrealizmem użytkowym, którego oczywiście elementy widać i w dzsiejszej sztuce. Gdzie właśnie produkuje się przede wszystkim pragnienia super cool. No.</p>
+      <p>[cisza]</p>
+      <p>Prosze Państwa jeśli nie mamy więcej pytan .. dziekujemy</p>
+      <p>[ludzie wstają, &quot;dyrektor' podchodzi do Agaty]</p>
+      <p>ABR: Nie, nic nie szkodzi. Tylko tyle, że niestety będę śmierdzieć rybą.</p>
+      <p>JU: [nieczytelne]</p>
+      <p>JLP: Nie mam nic do powiedzenia. Przyniosłem rybę.</p>
+      <p>ABR: Kompletnie nie wiem o co chodziło.</p>
+      <p>Ciąg dalszy w domu, JLP i JU.</p>
+      <p>JU: [patrząc na kadr wideo JLP na kanapie] Kurcze, wiesz co, nie podoba mi się to.</p>
+      <p>No dobrze. To może po prostu..</p>
+      <p>JLP: No nie wiem, czy bedzie zadawać mi pytania?</p>
+      <p>JU: Chyba chyba nie. Ale mogę spytać..  no właśnie, wyjaśnij, wyjaśnij mi swoje intencje tej...</p>
+      <p>JLP: Moje intencje są ciemne, więc jak mam je wyjaśniać? Jest tak jak ci mówiłem w drodze tutaj, że jest bzdura mówienie że w Drugim Manifeście akcent jest na polityczne, komunistyczne zaangażowanie. Przede wszystkim jest na okultację surrealizmu. Czyli że - i to jest pewa naprawde sensowna propozycja, która wysunął tutaj Breton - surrealizm to NIE jest (to już jest jasne od początku, ale teraz bardzo jasne i wypowiedziane bezpośrednio) surrealizm nie jest estetyką, nie jest nurtem poetyckim. Nie jest jakimś nurtem estetycznym, nie jest jakaś grupą artystyczną. Surrealizm JEST - tak jak on go zdefiniował w Drugim Manifeście - jest częścią całego dużego prądu myślowo-duchowego na Zachodzie, który on wiąże z tradycją okultystyczną, hermetyczną, i tak dalej. I mówi o tym wprost: wszytskie te metody, automatyczna poezja, automatyzm, służą temu odblokowaniu, dotarciu do tej iskry, do tego obiektu x (bez względu na to jak będie to nazywał Freud, Lacan, czy sam Breton), dotarciu do tego punktu, gdzie ten poziom logiczny jest przekroczony. I słowo zapisywane pochodzi z ponadracjonalneh sfery, z nadrealnej sfery krótko mówiąc. W związku z tym to byly praktyki takie jak wcześniej dziewiętnastowieczny mediumizm. Artysta jest tylko medium, jak potem mówi o tym Duchamp. To znaczy, że świadomość ma być tak oczyszczona żeby cos w nią wpływało takiego, żeby to nie ego pisało. Nie poeta o swoim życiu, które jest takie... wiesz.. że tu jest brudna sofa... wiesz... że sie głos załamuje i tak dalej. Bo jakieś emocje nastąpiły teraz, przed chwilą, teraz jest ślad i tak dalej, niejednostkowy taki jakiś ślad, tylko coś, co przekracza tą jednostkowość. W tym sensie to jest bliskie objawieniu poetyckiemu, i Benjamin to świetnie czyta i Agata o tym mówi. Więc to jest bardzo wartościowe. To co ona zauważyła, ten kontekst, jest bardzo mocne, bardzo wartościowe. Bo to jest właśnie ten czas, 29 rok kiedy Breton pisze o okultacji surrealizmu, o tym, że jest związany z okultyzmem, z tym, co zakryte, co jest niezanwane, co jest milczące. I co wogóle w jakiś sposób pozaludzki ma wpływać do człowieka i w tym samym czasie też Bataille o tym mówił, że to jest właśnie gnoza, coś co przekracza wiedzę, nie można się tego nauczyć, do czego można mieć dostęp po prostu. I dostęp do słów. Dostęp do mowy. Dlatego o tym mówiłem, bo to że tam bym komunizm w to zamieszany to dlatego, że Breton był zaangażowany w marksizm, w materializm dialektyczny. Rewolucja nie może być tym, że wszyscy dalej siedzą na swoich grzędach ułożonych przez tych, którzy mają kapitał czy są w hiararchii królewskiej czy arystokratycznej. Nie to jest istotne. Ta przemiana musi nastąpić realnie.</p>
+      <p>[Art. spożywcze - napis na koszulce Adama Lipszyca podczas &quot;drugiego&quot; seminarium 11.03.2014, po pierwszym na zadane mi przez Adama pytanie czym się zajmuję, odpowiedziałem że sztuką]</p>
+      <h3>Refleksje poniewczasie</h3>
+      <p>testowanie strategii surrealstycznych okazało się fiaskiem.</p>
+      <p>aftermath: towarzyszące performerowi po zakończeniu akcji poczucie żenady udowodniło wyłącznie konceptualny charakter surrealistycznej metody, ujawniły się wątpliwości co do agresywnego, szowinistycznego i dominacyjnego jądra praktyki surrealistycznej z okresu rewolucyjnego (być może wyłącznie Bellmer / może Ernst / mogą coś jeszcze z tej strony zaproponować; i oczywiście surrealistki, z odmiennym, pełniejszym i otwartym na współodczuwanie podejściem).</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Aktualnosc_surreal.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

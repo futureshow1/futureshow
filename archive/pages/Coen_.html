@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coen — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Coen</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Coen__files/readpic.php.jpg" alt="Coen" loading="lazy"></div>
+      <p>Im bardziej się przyglądasz, tym mniej widzisz</p>
+      <p>Jan Przyłuski</p>
+      <p>22-01-2002</p>
+      <p>Coenowie znów zabawiają się filmem noir. Przynajmniej tak się wydaje na pierwszy rzut oka. Przekonują do tego mocne gradienty, wyrazistość czerni i bieli w świetnych zdjęciach Deakinsa; ich chciałoby się powiedzieć ikoniczność rodem z klasycznych obrazów tego gatunku. Niewzruszona twarz Billy’ego Boba Thorntona wdziera się w pamięć prawie tak mocno jak filmowe oblicze Humphreya Bogarta. Obaj też palą podobnie. Ale Człowiek, którego nie było nie jest po prostu kolejnym hołdem złożonym czarnemu kinu gangsterskiemu, jakim była Ścieżka strachu (1990). Ed Crane to nie gangster z Chicago (obojętnie czy to z czasów prohibicji czy ulubionego przez Coenów okresu lat czterdziestych i pięćdziesiątych), który zakłada własny gang, żeby się wyrwać z nizin. Historia małomównego fryzjera z jakiejś amerykańskiej dziury pod Sacramento, który szantażuje Wielkiego Dave’a, właściciela sieci sklepów i kochanka swojej żony, żeby zdobyć szmal, dokładnie 10.000 $, na niepewny interes pralni chemicznych, czy tego chcemy czy nie, oddala nas od porównań z Sokołem maltańskim Hustona. Oj, braciszkowie Coen naprawdę lubią pastisze - tego już dowiedli. Co w takim razie, poza charakterystycznym coenowskim humorem i misterną siatką zdarzeń (stąd Glob za scenariusz) wyróżnia najnowszy ich obraz?</p>
+      <p>Człowiek, którego nie było to przede wszystkim film postaci. W tej zaskakującej historii anty-bohatera Eda - co doskonale uwidacznia praca operatorska Rogera Deakinsa - celowo kreowane jest spojrzenie od wewnątrz. To on, Deakins, człowiek który pracuje z braćmi od lat i robił zdjęcia do Bartona Finka, Fargo, Big Lebowskiego, zdecydował się zarzucić efektowny szeroki ekran (tj. w proporcjach 2.4:1) i przejść na Super 35, po to żeby obrazy postaci w przestrzeni zachowały atmosferę bliskości. Aby nie oddalić widza od tytułowego człowieka, konieczne i znacznie lepsze okazało się takie właśnie spojrzenie niż anamorficzne efekciarstwo, które znacznie spłaszczyłoby obraz. W takich warunkach minimalistyczna w swej formie gra aktorska Thorntona stała się sugestywną kreacją, w której każdy gest, każde spojrzenie czy pociągnięcie papierosa nie pozostaje obojętne.</p>
+      <p>Ed Crane to szczególny charakter. Jest człowiekiem, który się nie objawia, nie uczestniczy, niewiele mówi. Prawie nie istnieje. A jednak to on jest tu najważniejszy. O ile w klasycznym czarnym kinie gangsterskim bohater i jego czyny obudowane były kontekstem społecznym, o tyle w Człowieku najistotniejszy wydaje się być ten właśnie przypadek i to konkretne morderstwo, morderstwo &quot;domowe&quot;. Listonosz zawsze dzwoni dwa razy to oczywista inspiracja. Twórczość Jamesa M. Caina, która była jednym ze źródeł pierwszego filmu Coenów, debiutanckiego Śmiertelnie prostego, po raz kolejny staje się trampoliną dla ich wyobraźni. Historia bohatera, który morduje, a następnego dnia jakby nigdy nic wychodzi do pracy zyskuje tu nowy wymiar. Bo przecież Listonosz zawsze dzwoni dwa razy czyli zabijanie między drugim daniem a podwieczorkiem to nie to samo co przypadek Crane’a, o którym plakaty reklamujące film mówią, że &quot;morderstwo nie było w jego stylu.&quot; Jak widać bracia nie pozwalają nam myśleć schematami. Nie lubią by ich szufladkować i pewnie stąd tak chłodny odbiór filmu w kręgu pozaartystycznym (bo przecież w Cannes zdobył Złota Palmę za reżyserię). Jak pisze Andrew Sarnis z New York Observer: &quot;W Człowieku, którego nie było jest wszystko czego potrzeba, w artystycznym sensie, ale niech nigdy nie pretenduje on do bycia miłym filmem rozrywkowym.&quot; I jeśli spojrzeć na treści jakie Coenowie przeszmuglowali do filmu i stan energetyczny widowni po seansie, wszystko wskazuje na to, że to prawda.</p>
+      <p>Film noir przedstawiał problem bezsensownego okrucieństwa przez symptomatyczny dialog z filmu Mordercy Siodmaka, w którym świadek masakry na pytanie &quot;O co tutaj chodzi?&quot;, dostaje odpowiedź - &quot;O nic.&quot; Coenowie stawiają tu inne pytania. &quot;What kind of man are you? (Jakiego rodzaju człowiekiem ty jesteś?)&quot; - wykrzykuje szwagier, gdy dowiaduje się kto zabił, a tekst ten powtarza się jeszcze parę razy. Odpowiedź nie pada, a widz też nie ma tu nic na talerzu. Filmowy adwokat między wierszami daje nam coenowski wykład o poznaniu: &quot;Im bardziej się przyglądasz, tym mniej widzisz.&quot;</p>
+      <p>Pomysł na film o fryzjerze, jak mówi Joel Coen, wziął się z plakatu ich filmu z 1984 roku tj., z Hudsucker Proxy, na którym widniała głowa z typową dla lat 50-tych &quot;wylizaną&quot; fryzurą. To był pretekst. Powstał film, którego jeszcze nie było, po którym widz na pewno nie jest człowiekiem, który wiedział za dużo.</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Coen_.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pracownia 2 — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Pracownia 2</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/BELLMER_SOCIETY/Pracownia_2_files/pracownia1.jpg" alt="Pracownia 2" loading="lazy"></div>
+      <div class="img-block"><img src="../original/BELLMER_SOCIETY/Pracownia_2_files/page-0001_21.jpg" alt="Pracownia 2" loading="lazy"></div>
+      <div class="img-block"><img src="../original/BELLMER_SOCIETY/Pracownia_2_files/page-0001_21_2.jpg" alt="Pracownia 2" loading="lazy"></div>
+      <p>Borowska/Urbanowicz, Schody Dwunastu Szuflad, fot. jp</p>
+      <p>PRACOWNIA artystyczna Urszuli Broll i Andrzeja Urbanowicza na strychu w śródmieściu Katowic od blisko pół wieku jest zjawiskiem intrygującym na tle nie tylko regionalnej kultury.</p>
+      <p>Prócz tego, że jest przestrzenią działań dla gospodarzy, od początku była miejscem undergroundowych spotkań, miejscem, w którym rodziły się pomysły, projekty, zamierzenia i działania obejmujące szeroki krąg osób.</p>
+      <p>Oboje artystów chętnie otwierało swoją prywatność dla spotkań i przedsięwzięć wszelkiej alternatywy. Zrazu w wydaniu awangardowym, później hipisowsko psychodelicznym, aby w latach siedemdziesiątych doprowadzić do zaistnienia pierwszej w PRL-u niezależnej oficyny wydawniczej (1974-79) i działającego przez wiele lat ośrodka buddyjskiego.</p>
+      <p>Lata osiemdziesiąte nie zapisały się w historii miejsca czymś szczególnym. Urbanowicz po rozwodzie wyjechał na 13 lat do USA a Broll w roku 1982 przeprowadziła się do Przesieki, gdzie do dzisiaj mieszka. Zachowała jednak pracownię, z której okresowo korzystały dwie grupy buddyjskie.</p>
+      <p>Powrót Urbanowicza w 1991 roku sprawił, że na nowo legendarna pracownia stała się miejscem spotkań, działań parateatralnych, dyskusji, pokazów i warsztatów. Obecna orientacja gospodarza oscyluje wokół artystycznych badań związanych z magią, erotyzmem, spontanicznością, sztuką gestu i talizmanu, co stwarza dodatkowe aspekty dla historii tego znaczącego na kulturalnej mapie Katowic miejsca. Pracownia Piastowska 1 jest siedzibą Towarzystwa Bellmer.</p>
+      <p>Pracownia</p>
+      <p>Piastowska 1</p>
+      <p>w Katowicach</p>
+      <p>HISTORIA PRACOWNI</p>
+      <p>(kalendarium)</p>
+      <p>Jest to dzisiaj już miejsce historyczne, które „pamięta” tak niezwykłe osobowości kultury, jak:</p>
+      <p>Julian Przyboś i Allen Ginsberg,</p>
+      <p>Tadeusz Brzozowski i Zdzisław Beksiński,</p>
+      <p>Henryk M. Górecki i Jerzy Lewczyński,</p>
+      <p>Izabela Filipiak i Doriane Bihl-Bellmer,</p>
+      <p>Tadeusz Sławek i Jerzy Illq,</p>
+      <p>Henryk Waniek i Mariusz Tchorek,</p>
+      <p>Zofia Rydet i Anna Keyha,</p>
+      <p>Ryszard Krynicki i Jarosław Markiewicz,</p>
+      <p>Aduś Szewczyk i Jacek Gulla,</p>
+      <p>Kora i Kamil Sipowicz,</p>
+      <p>Jacek Ostaszewski i Mieczysław Litwiński,</p>
+      <p>Zygmunt Stuchlik i Antoni Halor,</p>
+      <p>Marian Bogusz i Zdzisław Stanek,</p>
+      <p>Hilary Krzysztofiak i Maria Obremba,</p>
+      <p>Jan Kott i Stefan Morawski,</p>
+      <p>Jacek Woźniakowski i Andrzej Kostołowski,</p>
+      <p>Stanisław Fijałkowski i Jacek Malicki,</p>
+      <p>Janusz Bogucki i Anastazy Wiśniewski,</p>
+      <p>Jerzy Prokopiuk i Andrzej D. Dürer,</p>
+      <p>Wojciech Eichelberger i Philip Kapleau,</p>
+      <p>Erwin Sówka i Darek Misiuna,</p>
+      <p>Urszula M. Benka i Janusz Styczeń,</p>
+      <p>Villmar Villquist i Stanley Ścierski,</p>
+      <p>Bolesław Rok i Krzysztof Lewandowski,</p>
+      <p>Andrzej Chojecki i Stanisław Rosiek,</p>
+      <p>aby wymienić przynajmniej niektórych.</p>
+      <p>Magiczna atmosfera i wizualna uroda pracowni jest dobrym tłem dla pokazania jej niezwykłych dziejów. Do pokazania złożonych procesów kultury poprzez metaforę miejsca.</p>
+      <p>Allen Ginserg, Andrzej Urbanowicz i Tadeusz Sławek w Pracowni Piastowska 1</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/BELLMER_SOCIETY/Pracownia_2.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

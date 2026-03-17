@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Święty idiota. Dostojewski/Wodziński — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Święty idiota. Dostojewski/Wodziński</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>Cezary Wodziński</p>
+      <p>Św. Idiota. Projekt antropologii apofatycznej.</p>
+      <p>słowo/obraz terytoria, 2000</p>
+      <p>Dziedzina: filozofia</p>
+      <p>Numer Latarnika: 2001/18</p>
+      <p>Oprawa: miękka</p>
+      <p>Recenzuje: Jan Przyłuski</p>
+      <p>Książka Wodzińskiego jest jeszcze jednym wyrazem odwiecznego pragnienia opisania nieopisywalnego. Próbą odnalezienia takiego dyskursu filozofii, który czerpiąc z języka apofatyki, przekształcałby jego obszar znaczeń; nie dotykał spraw boskich, lecz ludzkich. Analogicznie do metody teologii negatywnej, autor przez opis jurodstwa, rozumianego tu jako zaprzeczenie kulturowego wymiaru człowieczeństwa, usiłuje zrozumieć istotę człowieka.</p>
+      <p>Jurodstwo, zwane szaleństwem chrystusowym, odnajduje swoje etymologiczne korzenie w I liście św. Pawła do Koryntian. Słowa apostoła zdają się łączyć jeśli nie zupełnie sprzeczne to przynajmniej dywergentne pojęcia. &quot;My głupi dla Chrystusa&quot;- stwierdzenie to, figura bliska oksymoronowi, stało się ochroną i uprawomocnieniem ekstremalnej formy ruchu pustelniczego, który niczym epidemia wybuchł w obliczu ustanowienia chrześcijaństwa religią państwową.</p>
+      <p>&quot;Zniecierpliwiony światem zorganizowanym przez ówczesne władze państwowe; zaniepokojony sytuacją w ówczesnym Kościele, który rychło zgodził się pełnić funkcję narzędzia politycznego, udręczony zrutynizowanym życiem w rodzinie, które ogłupiało go jałowością codziennego kieratu, ówczesny chrześcijanin, zagubiony pośród ruchliwego świata, siebie i swoją własną istotę usiłował odnaleźć w samotności&quot; - pisze o Ojcach Pustyni Ryszard Przybylski.</p>
+      <p>Ale poza ruchem mędrców i pustelników powstałym z tęsknoty za indywidualnym oświeceniem w czwartym stuleciu po Chrystusie rodzi się - skrajniejsze od surowego ascetyzmu anachoretów - nowe posłannictwo. Kiedy w poszukiwaniu duchowej odnowy zakłada się nowe eremy dla niechętnych cywilizacji ascetów, pierwsza jurodiwa św. Izydora opuszcza kontemplacyjny zakon w Górnym Egipcie, i udaje się do miasta, w samo serce grzesznej rzeczywistości. Dokonuje tym samym egzystencjalnie radykalnej decyzji. Porzuciwszy wcześniej &quot;mądrość ludzką&quot; dla objawionej Prawdy, nie może już &quot;po prostu&quot; wrócić do ludzi. Jej wiedza o sprawach boskich czyni z niej &quot;nawiedzoną&quot;, szaloną, obłąkaną. Powrót do świata i odnalezienie wspólnego języka z ludźmi są niemożliwe. Znajdując się niejako &quot;po drugiej stronie&quot;, obcując z absolutnym Sacrum, Izydora jednocześnie poświęca siebie dla bliźnich i powszechnego, nie zaś osobistego zbawienia. Ten akt miłosierdzia dokonuje się przez paradoksalne, by posłużyć się określeniem Wodzińskiego, złączenie &quot;śmierci dla świata&quot; i &quot;rzucenia się w ten świat&quot;. Obłąkana i święta zarazem swoją obecnością mąci spokój i drażni sumienia zwykłych ludzi. Jej istnienie wypełnione bezlitosnym umartwianiem ciała, bełkotliwą, pełną zagadek mową wzbudza w ludziach jednocześnie nienawiść i respekt, pogardę i szacunek..</p>
+      <p>Jurodiwy, jak pisze autor św. Idioty, za życia nie ujawniał swojej świętości. Lżony jak pies, bity i poniżany nie przerywał błazeńskiego widowiska, lecz jak św. Symeon ze zdwojoną mocą urągał światu, wyśmiewał go, by swoimi ekscesami zdemaskować jego wady. Protestował przeciw obłudzie i fałszowi, w samotnym tańcu nie szczędził obelg nawet samemu carowi.</p>
+      <p>Podania hagiograficzne pełne są anegdot o &quot;cudacznej mowie&quot; i absurdalnych przepowiedniach jurodiwych, które wymykają się językowi zdrowego rozsądku. Dlatego jurodiwy pozostaje tematem karkołomnie trudnym do udźwignięcia przez słowo, zjawiskiem znikającym już przy pierwszych próbach opisu. Świadom tego autor przyznaje na początku swojej pracy: &quot;Wobec jurodiwego zawodzi wszelka ontologia fundamentalistyczna, która rości sobie pretensje do przypisywania, konstruowania i fundowania mocnych - sc. substancjalnych- charakterystyk ontologicznych&quot;. A mimo to filozof nie daje za wygraną.</p>
+      <p>Jurodiwy Wodzińskiego to żywe wcielenie coincidentia oppositorum. Bo jak inaczej ująć jeden z tych fenomenów, które ze swej natury druzgoczą jednoznaczne kategorie, ścierając w proch najtwardsze ostrza racjonalnej nauki?</p>
+      <p>Hermeneutyczna metoda pisarska autora, i tak już balansująca między &quot;dialektycznymi&quot; figurami, ustępuje miejsca językowi apofatyki, stworzonemu przez teologię prawosławną. Hermeneutyka, która w doświadczeniach Wodzińskiego z Szestowem i Heideggerem stanowiła niejako podstawę epistemologiczną, tworząc narzędzia opisu, teraz gdy autor ponownie zwraca się ku pograniczom racjonalizmu i irracjonalizmu zdaje się funkcjonować jedynie jako indywidualna strategia lekturowa.</p>
+      <p>Podtytuł, Projekt antropologii apofatycznej, sugeruje jakoby filozof czynił z wschodniej teologii negatywnej propozycję dla świeckiego języka dyskursywnego. A wszystko nie tylko po to, by ofiarować nam jedyną w polskiej humanistyce pracę historyczną w całości poświęconą jurodstwu ale i rzeczony &quot;projekt antropologiczny&quot;, w którym &quot;święta dialektyka&quot; stałaby się metodą poznawczą i deskrypcyjną.Św. Idiotabyłby wtedy nie tylko dziełem syntetyzującym źródła i wszelkie dostępne na ten temat opracowania, ale przede wszystkim pierwszą próbą realizacji tej przewrotnej metody.</p>
+      <p>Czy jest ona uniwersalna? Czy jest w ogóle przedsięwzięciem sensownym, by na gruncie zachodniej myśli filozoficznej posiłkować się językiem zrodzonym z kontemplacji mistycznej? I wreszcie, czy można opisać to, co ze swej istoty nie jest inteligibilne?</p>
+      <p>Pośrednio odpowiedź na to pytanie daje nam Fiodor Dostojewski. Kiedy młody literat planujący napisać powieść o świętym szaleńcu zwrócił się z prośbą o radę do mistrza, który jakoby miał w tej kwestii wprawę po Idiocie i Braciach Karamazow, ten w odpowiedzi zrugał go:&quot;Książka o jurodiwym byłaby zuchwałością i zmyśleniem. A może i świętokradztwem, jeśli był to prawdziwy święty. I tego jednak nikt nie może być pewien.&quot;</p>
+      <p>Sam Dostojewski wycofał się z &quot;tego niedorzecznego pomysłu&quot;. Wodziński natomiast wcielił się w niepokornego pisarza i jakby na dowód świadomości ryzyka (a może i brawury) otworzył książkę wspomnianym listem. Kolejne wyzwanie jakie rozum stawia Tajemnicy.</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Święty_idiota._Dostojewski_Wodziński_.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

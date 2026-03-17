@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O kiczu — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">O kiczu</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>A jak to jest z innymi sztukami? Jeśli chodzi o kicz malarski, to powiedziano o tym już zbyt wiele i kolejna analiza obrazów Caspara Davida Friedricha, romantycznych landszaftów i „jeleni na rykowisku” pewnie nic by nam nie dopowiedziała. Poszukiwania kiczu w muzyce to sprawa dyskusyjna, bo choć od razu słyszymy dźwięki oper Wagnera, to trzeba przyjąć argument Adorna, który twierdzi, że jest to sztuka zbyt abstrakcyjna, by mogła popaść w kicz.</p>
+      <p>O KICZU</p>
+      <p>Jan Lubicz Przyłuski</p>
+      <p>Wstęp</p>
+      <p>Pisanie o kiczu to przedsięwzięcie zuchwałe i ryzykowne. Łatwo jest popaść w iluzję, że znajdujemy się w wygodnej pozycji, z której bez niczyich sprzeciwów można rozdawać cenzurki „dobrej” i „złej sztuki”. „Kicz jest pojęciem idiosynkratycznym - pisał w Teorii estetycznej Theodor Adorno - w tej samej mierze wiążącym, co nie dającym się zdefiniować”. Ale jak nie pokusić się na zbyt proste oceny,  nie wartościować kiczem i nie wartościować kiczu? Celem poniższej pracy jest ujęcie teoretyczno-kulturowe, odległe od literaturocentrycznej perspektywy tak bliskiej polskiej historii kultury. Jest to, jak mi się zdaje, strategia odpowiednia również ze względu na fakt, iż pojecie kiczu genealogicznie bliższe jest wizualności niż słowu, a szerszy kontekst antropologiczno- estetyczny i filozoficzny komentarz pozwolą, mam nadzieję, na powolne wyłanianie się w toku wywodu istoty tego fenomenu oraz jego miejsca w rzeczywistości kulturowej.</p>
+      <p>Dzisiaj o kiczu pisać nie można bez odwołania się do klasycznych już tekstów, podejmujących problem postępującej estetyzacji życia, wciąż żywy dla nas na początku nowego stulecia. Jednocześnie pokazują one, że jak bardzo, kiedy mówi się o kiczu, trzeba mieć na uwadze niebezpieczeństwo rozmycia się tego pojęcia, o  jakie łatwo, gdy przekracza się  ramy estetyki.</p>
+      <p>Choć w tekście tym nie roszczę sobie praw do przenikliwości czy oryginalności, to daleki jestem zarówno od artystycznej, „awangardowej” krytyki kiczu, jak jego usilnych rehabilitacji przez profesorską postmodernę, bo rehabilitacja ta, często pozbawiona wyraźnego stanowiska krytycznego, albo jest dla mnie zbyt mglista treściowo, albo poprzestaje na zadawaniu pytań straszących swą naiwnością przez kontrast do olbrzymiej wiedzy szacownych autorów.</p>
+      <p>Wrażliwość i architektura</p>
+      <p>Związek między romantyzmem i kiczem pierwszy dostrzegł i opisał Hermann Broch w swoim słynnym odczycie z 1950 roku. Pierwszy również zwrócił uwagę , iż o zjawisku sztuki łatwej, pretensjonalnej, banalnej czy wręcz kłamliwej, należy mówić nie jako o kategorii wyłącznie estetyczno- socjologicznej, zewnętrznej, ale „o pewnej postawie życiowej” jej odbiorców, których wrażliwość - a więc coś wewnętrznego, duchowego - sztuka ta odzwierciedla. (podobnie Susan Sontag zaczyna w swoich Notatkach opis kampu).</p>
+      <p>Choć jak wiadomo pojęcie kiczu pojawiło się dopiero w latach siedemdziesiątych XIX wieku w monachijskim handlu obrazami jako równoważnik taniego towaru (proszę więc taniość dołączyć do wymienionych już cech  łatwości, pretensjonalności i  banalności, które w toku wywodu składać się nam będą na opis „pałacu kultury” kiczu), Broch wywodzi kicz w prostej linii z romantycznej architektury, a więc tej gałęzi sztuk, która ze swej natury stanowi tło dla pozostałych, malarstwa, rzeźby, wreszcie literatury. Idąc za tą myślą należy zrozumieć, że architektura, jak zauważyli semiotycy inspirowani psychoanalizą, oddziałuje na odbiorców w warstwie nieświadomej. Jest zarówno przekazem estetycznym jak pozaestetycznym, gdyż określa fundamentalne dla ludzkiej egzystencji relacje przestrzenne. Zarówno estetyczne, jak proksemiczne znaczenie sztuki architektonicznej czynią z niej argument przeciw tezom znajdującym w sztuce prefigurację rzeczywistości. Określa ona wyłącznie ramy ludzkiego świata, dzieli go i porządkuje, podobnie jak język czyni z myśleniem.</p>
+      <p>Romantyzm w przeciwieństwie do poprzednich epok - pisze autor Lunatyków - nie stworzył własnego stylu architektonicznego i poza klasycystyczno-biedermeierowskimi fasadami poprzestał na eklektyzmie i dekoracyjnej, kiczowatej jałowości. Przyczyną stał się romantyczny „brak wartości pośrednich”. Olbrzymie aspiracje artystyczne zrodzone z buntu i chęci przewyższenia za wszelką cenę poprzedników, zrodziły niebywałe zadęcie, które z kolei dało początek zarówno dziełom genialnym, jak nieskończonej wielości lepszych i gorszych czułostkowych kiczyków.</p>
+      <p>Zadęcie</p>
+      <p>Nie trzeba daleko szukać, bo doskonałym przykładem ilustrującym zjawisko kiczu w całej rozciągłości może być choćby zespół rezydencjalny w Krzeszowicach, XIX - wieczna siedziba trzech pokoleń Potockich. Interesujące są plany budowy i ich niesłychana realizacja. Plany tego gigantycznego przedsięwzięcia to dzieło kilkudziesięciu stale zmieniających się architektów. Powstały zlepek wszystkich możliwych stylów epoki, jest chyba przede wszystkim pomnikiem zadęcia, a zarazem swego rodzaju farsą kompromisu; świadectwem historii obniżania poprzeczki - od planów „królewskiego” pałacu coraz niżej, by en fin  przypominać raczej podmiejską willę, przez następne pięćdziesiąt lat usilnie „upałacowianą”. Maczali w tym palce napoleońscy architekci Karol Percier i Piotr Franciszek Leonard Fontaine, artyści rokoka „dla których architektura i dekoracja stały się synonimami” (nie trzeba rozwijać tego, jak ważny dla kiczu jest przepych baroku i rokoka), po nich zaś, wspominany przez Brocha, sam Karol Fryderyk Schlinkel. Kiedy w 1820 Artur Potocki zmuszony do kompromisu z finansami zrezygnował z Francuzów, przyjaciel zaproponował mu kontakt ze sławnym Niemcem. Współpraca ta była prawdziwym kiczogennym kompromisem. Schinkel zgodził się pracować nad projektem, ale za oferowane mu pieniądze wyłącznie przez pośrednika, czyli de facto korespondencyjnie (sic!).</p>
+      <p>Po twórcy Bauakademie w Berlinie było jeszcze wielu architektów . Krzeszowicka siedziba Potockich stała się więc nie tylko budowlą eklektyczną przez złączenie popularnych stylów i  obiegowych środków - melanż neogotyku z attykami na bazie renesansowych brył architektonicznych - ale również przez pracę wielu twórców o kompletnie innych gustach i umiejętnościach. Zgodnie z estetyką Hegla piękno rodzi się nie z harmonii lecz z napięcia, jednak w tym przypadku bezguście i zadęcie sprawiły, że „przepiękniono” . Kicz zatriumfował.</p>
+      <p>Kicz i idee</p>
+      <p>Co się tyczy eklektyzmu estetycznego, istotnej cech romantycznej sztuki, którą Broch czyni punktem wyjścia swych uwag o kiczu, jest on związany z kluczowym dla nas zagadnieniem -stosunku do historii i tradycji. Kicz i czułostkowość idą ze sobą w parze, kolejnym źródłem kiczu jest więc sentymentalizm, jednak nie w tym znaczeniu, jakie nadał temu pojęciu Schiller, nazywając siebie poetą „sentymentalnym”, Goethego zaś „naiwnym”. Opisując bezpowrotnie utraconą przeszłość schillerowski poeta coraz bardziej się od niej oddala, a stale rosnący dystans wzmaga poczucie niemożności jej pochwycenia.</p>
+      <p>Będąc nieodłączną częścią postawy „człowieka kiczowego” stosunek do historii przypomina raczej relację między pasożytem a jego żywicielem, niż nostalgię za odchodzącą przeszłością. Sentymentalizm „człowieka kiczowego” jest zawłaszczaniem tradycji. (W taki, odmienny niż w óświeceniu i romantyzmie sposób, rozumiał to pojęcie Ortega y Gasset.)</p>
+      <p>Oprócz refleksji o „braku wartości pośrednich” w estetyce romantycznej,  należy zastanowić się nad konsekwencjami idealistycznych podstaw światopoglądu artystów tej epoki.  Mam na myśli  heglowską utopię sztuki. Utopia ta (wizja bezwzględnego piękna, czyli tzw. „sztuka przez duże S”,) stała się matką kiczu. „Hegel zdradził utopię, konstruując to, co istniejące, jak gdyby było ono utopią, czystą ideą. Wbrew doktrynie Hegla, zgodnie z którą duch świata opuścił  już postać sztuki, utwierdza się inna teoria, podporządkowująca sztukę egzystencji pełnej sprzeczności, która utrzymuję się wbrew wszelkiej afirmatywnej filozofii. Uderzająco sprawdza się to na przykładzie architektury: gdyby chciała ona, zbrzydziwszy sobie formy celowe i totalne dopasowanie do realności oddać się nieokiełznanej fantazji, natychmiast popadłaby w kicz.”</p>
+      <p>I tak też się stało. Warto zauważyć, że znowu mowa o architekturze. Oczywiście kicz nie jest kategorią właściwą jedynie dla tej dziedziny sztuki. Co wydaje mi się ważne to, że jeśli istotnie kicz to „pewna postawa życiowa” ( przyjmijmy to ujęcie za podstawowe dla tych rozważań, gdyż interesuje nas człowiek, a nie puste formy), jest on ściśle związany z napięciem miedzy zewnętrznością a wnętrzem, które w języku architektury uwidacznia się wyraziście w problematyce fasady.</p>
+      <p>Gdzie tkwi istota?</p>
+      <p>Wydaje się, że związek kiczu z operą jest oczywisty. Widziałbym go jednak raczej w warstwie audiowizualnej i widowiskowej, w sztuczności głosu i nadestetyzacji teatralnej formy. Sztuczność opery (już samo słowo sztuczność od sztuki przecież pochodzące wprowadza nowe treści) jest właśnie tym, co rodzi kicz i przyciąga współczesne środowisko kampowe. Ponadto sugeruje nam, że kicz jest nieodłącznym składnikiem sztuki. Jeśli więc ponownie przypomnieć heglowską definicje piękna, można przytoczyć słowa Adorna przewrotnie to dopowiadające. „W historii sztuki dialektyka brzydoty wchłania w siebie również kategorię piękna; kicz, z tego punktu widzenia, jest pięknem jako brzydotą, naznaczonym tabu w imię tego samego piękna, którym niegdyś było i któremu teraz oponuje tylko z powodu absencji swego przeciwnika”. Ta absencja to nic innego jak próba całkowitej eliminacji brzydoty; w „przepięknieniu” upatrywałbym kiczowatości operowego staccatta.</p>
+      <p>Jeśli poza tym szukać kiczu  w operze, to raczej nie w partyturze, tylko w libretcie wagnerowskich oper. Próby te wydają mi się jednak bardzo ryzykowne. Dlaczego?</p>
+      <p>Jak już zostało powiedziane na wstępie, związek między kiczem a Słowem jest co najmniej niebezpośredni. Kategoria kiczu weszła do literatury stosunkowo późno. Rzetelna egzemplifikacja kiczu w literaturze to zajęcie karkołomne, a sam Hermann Broch zrobił to, jak mi się zdaje, trochę niefortunnie. Przytacza on „Pejzaż wieczorny” Eichendorffa:</p>
+      <p>„Pastuszek gra swą piosenkę,</p>
+      <p>Z oddali słychać strzał,</p>
+      <p>Cichutko szumią lasy,</p>
+      <p>I potok w głębi gór.</p>
+      <p>Tylko za tamtym wzgórzem</p>
+      <p>Igra wciąż zorzy blask”</p>
+      <p>„ O gdybym, gdybym skrzydła miał,</p>
+      <p>Aby polecieć tam!”</p>
+      <p>Wiersz ten, szczególnie zaś dwa końcowe wersy, to zdaniem autora eseju przykładowe „sentymentalno-bzdurne naśladownictwo piosenki ludowej” i „zjazd z poziomu kosmicznego geniuszu prościótko w kicz”. Choć może w tym przekładzie  kontrast między poetyckością początku a góralskim prawie przytupem końcówki może nie być tak przejrzysty, to w nieodpowiedniości jaką tu dostrzega Broch odnaleźć można echa myślenia o zgodnościach formalnych bliskiego klasycznej zasadzie decorum.</p>
+      <p>Samo życie</p>
+      <p>„Ześlizgnięcia ze szczebla geniuszu”, „popadanie w kicz” są przede wszystkim efektami braku opanowania czyli znamiennej dla romantyzmu egzaltacji. Nie chciałbym kiczem „załatwiać” największych poetów, a jak naucza Ryszard Przybylski,  nie warto zajmować się mierną literaturą gdy nie jest to konieczne. Gdyby znajdować upodobanie w szukaniu „chwil słabości”, to okazałoby się, że „ześlizgnięciami” zgrzeszyli i Mickiewicz i Słowacki, a więc nie tylko pisarze drugo- i trzeciorzędni  jak Ujejski, Faleński czy Chęciński.</p>
+      <p>Spójrzmy więc na geniusza i kicz właśnie od strony „postawy”, czy może lepiej w tym wypadku powiedzieć „pozy”. Zejdźmy na ziemię, do ludzi, w świat romantycznych mód i kwitnącego dandyzmu. Dandyzm to kreowanie siebie w oczach innych. Gra. Pozór. Kostium - „ludzka fasada”. Moda. Romantyczny artysta, by zamanifestować swoją odrębność duchową, sięgał po środki najprostsze, zewnętrzne - szokował estetycznie ubiorem. Była to „reakcja na pęd do egalitaryzmu estetycznego, który pojawił się wraz ze zwycięstwem stanu trzeciego”.</p>
+      <p>„Miałem płócienną blousę, haftowaną zielonym jedwabiem czy też włóczką, pas czarny skórzany, białe szarawary, kapelusz ze słomy białej i czarnej pleciony, dość niski, z ogromnymi skrzydłami i opasany purpurową wstążką - do tego na grubej podeszwie trzewiki - i kij wyższe ode mnie, biały z żelaznym kolcem, jakiego zazwyczaj górale używają” - tak opisuje swój strój Juliusz Słowacki w liście do matki z 21 sierpnia 1834 roku. Ponieważ jak pisał Chateaubriand w „Pamiętniku zza grobu”: „w roku 1792 świat nagle zrobił się szary” od rozprzestrzeniania się stylu (lub raczej braku stylu) pospólstwa, nie dziwne, że czterdzieści lat później elita artystyczna znacznie wyraziściej musiała demonstrować swoją inność wobec tłumu. Strój stał się podstawową, jak to nazywa Bourdier, dystynkcją. Wcielano byronowskie wzory. Dandy stał się symbolem okresu.</p>
+      <p>W postawie tej najistotniejszy był natychmiastowy efekt. „Prawdziwy romantyk jest przede wszystkim aktorem. Udawanie, przesada (czyli udawanie uzyskane przez natężenie wyrazu), łatwizna, w jaką popadają ci, którzy chcą natychmiast wywołać wrażenie, są grzechami tego okresu” - pisał Paul Valery. Kiedy w lipcu 1832 roku Słowacki przyodziany w damską prawie, kwiecistą kamizelkę przechadzał się po ogrodzie Tuilleries, by od zszokowanych widzów usłyszeć choćby „Quel fat insupportable!...”, to pewne jest, że był to właśnie romantyczny teatr uliczny, który stał się jednym z podstawowych źródeł kiczu. Epitet „le fat” w odróżnieniu od „le dandy” kładzie nacisk na trywialność tej gry pozorów.</p>
+      <p>„Podczas gdy kicz jak kobold wymyka się wszelkiej definicji, również historycznej, jednym z jego najbardziej uporczywych znamion jest udawanie, a tym samym neutralizowanie , nie istniejących uczuć”. Aby dobrze to rozgrywać, Słowacki-prowokator szczególnie upodobał sobie niezmienną, chłodną „minę angielską” i ekscentryczny strój. Kiedy po całym dniu ascetycznego, pełnego pracy literackiej odosobnienia wychodził wieczorem „na paryskie salony”, za każdym razem wyglądał inaczej, by swą pretensjonalną pstrokacizną przykuwać uwagę , przeważnie zresztą młodych panien. „Ni to pastuszek, ni to arlekin” - tak Przybylski komentuje wspominaną kreację z laską. Chciałoby się powiedzieć: „kicz uosobiony”.</p>
+      <p>Zresztą gdyby z bliska przyjrzeć się pozom mickiewiczowskim, okaże się, że nie ustępują one ani trochę autorowi Balladyny. Kicz mickiewiczowski bierze się nie z kostiumu, lecz właśnie z pewnej postawy ciała. W opisie odeskiej improwizacji Franciszek Kowalski maluje przed nami taki obraz wieszcza: „Uważałem, że nasz Adam, śpiewając improwizacją z powolnym i łagodnym fortepianu towarzyszeniem, siedział oparty nieco plecami na krześle; miał oczy wprost siebie zwrócone, ręce założone w krzyż na piersiach, a nogi trochę w przód wysunięte i często jedną stopę zakładał na drugą. W tym położeniu nieruchomy całą pieśń śpiewał, a przy końcu głowę i oczy schylał na piersi”. Czyż to nie wspaniałe? Rymkiewicz pyta nawet, czy Mickiewicz, improwizując, unosił się w powietrzu?</p>
+      <p>Złoty wiek złej sztuki</p>
+      <p>Wiek XIX to przede wszystkim triumf dwóch postaw, odmiennych i podobnych zarazem. Postaw, przypomnijmy raz jeszcze, nastawionych na natychmiastowy efekt, pełnych zadęcia, próżności i pretensjonalności. Postaw kiczowatych.</p>
+      <p>Z jednej strony mamy twórców, przeestetyzowanych, dandysowatych strojnisiów, manifestujących nieustannie swą odrębność, którzy przez egzaltację ulegali kiczowi bądź się w niego „ześlizgiwali”, z drugiej, masowego, mieszczańskiego odbiorcę, ówczesnego konsumenta, który w swym filisterskim poczuciu wyższości nad historią i tradycją je zawłaszcza. Bezmyślnie „wykupuje historię” i wiesza ją sobie na ścianie w formie oleodruku. Jeśli zrozumiemy wzajemną zależność tych postaw, dostrzeżemy ten dynamiczny splot zachowań, słowa Brocha nazywającego wiek XIX „wiekiem kiczu”, tylko po części wydawać się będą paradoksalne.</p>
+      <p>Przypomnijmy, że już Baudelaire zauważył jak w cywilizacji konsumpcyjnej moderna staje się  towarem, a klasyczność sentymentalistyczna spełnia funkcję „towaru - reprezentatywnego kiczu”.</p>
+      <p>Romantyczny kicz powstał dlatego, że żądaniem konsumenta było otrzymać produkt doskonały, absolutnie czysty i jednorodny. W przypadku sztuki zaś miało to być dzieło „piękne” -  „piękno” to można było produkować i reprodukować w dowolnej ilości czerpiąc motywy z kultury wysokiej i kumulując je do woli. Im więcej ich było, tym lepiej „dzieło” się sprzedawało. Związek kiczu z romantyzmem to relacja ściśle powiązana z problematyką społeczno-ekonomiczną, rozpoczętym przez Wielką Rewolucję Francuską triumfalnym pochodem mieszczaństwa w kierunku demokracji. A demokracja w sztuce to nic innego jak kicz. „Kicz jest wcieleniem stereotypów”. Nie można o nim mówić, abstrahując od wymiaru psycho-społecznego. Komercjalizacja sztuki i początki  masowej produkcji dzieł mają przecież swoje konsekwencje w świadomości i nieświadomości zbiorowej.</p>
+      <p>Romantyczny artysta zmieniał wciąż swą zewnętrzność, żonglował kostiumami, by zakomunikować światu żywotność swej ekstraordynaryjnej duszy. Mieszczanin zaś z naśladownictwem pustym i tandetnym gonił wymyślne kreacje niedoścignionego wzoru, łudząc się, że kostium geniusza czy arystokraty da mu chociaż na chwilę zmienić się w geniusza i arystokratę. Miraż ten stał się przyczyną nieustającego zawłaszczania przez tłum coraz to nowych dystynkcji elitarności. Analogia do potwora współczesnej kultury masowej pożerającego nawet niechętne jej wytwory kontrkultur jest tu bardzo na miejscu.</p>
+      <h3>Bibliografia</h3>
+      <p>·Hermann Broch,  „Kilka uwag o kiczu i inne eseje”, Warszawa 1998</p>
+      <p>·„Dzieła czy kicze” pod red. Elżbiety Grabskiej i Tadeusza Jaroszewskiego, Warszawa 1981</p>
+      <p>·Theodor Adorno, „Teoria estetyczna”, Warszawa 1994</p>
+      <p>·Maria Poprzęcka „O złej sztuce”, Warszawa 1998</p>
+      <p>·Ryszard Przybylski, „Strój arystokraty ducha” , Zeszyty Literackie nr 32, jesień 1990 oraz w książce tegoż autora „Cień jaskółki. Esej o myślach Chopina”, Warszawa 1996</p>
+      <p>·„Romantyzm. Janion. Fantazmaty”, pod red. Doroty Siwickiej i Marka Bieńczyka, Warszawa 1996</p>
+      <p>·Radosław Okulicz- Kozaryn, „Mała historia dandyzmu”, Poznań 1995</p>
+      <p>·„Teoretycy, artyści i krytycy o sztuce. 1700-1870”, wybór i opracowanie Elżbieta Grabska i Maria Poprzęcka, Warszawa 1989</p>
+      <p>·Paweł Beylin „Autentyczność i kicze”, Warszawa 1975</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/O_kiczu.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

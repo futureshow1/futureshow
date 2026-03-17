@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>yotsuya simon japan — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">yotsuya simon japan</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>Na wystawie przygotowanej przez Instytucję Kultury Ars Cameralis zaprezentowana zostanie twórczość i sylwetka artysty, który ów trend zainicjował.</p>
+      <p>Instytucja Kultury Ars Cameralis</p>
+      <p>Ars Cameralis Silesiae Superioris</p>
+      <p>Górnośląski Festiwal Sztuki Kameralnej</p>
+      <p><a href="http://www.cameralis.art.pl/">www.cameralis.art.pl</a></p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/yotsuya_simon_japan_files/mail.jpg" alt="yotsuya simon japan" loading="lazy"></div>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/yotsuya_simon_japan_files/1__$%21%40%21__mail.jpg" alt="yotsuya simon japan" loading="lazy"></div>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/yotsuya_simon_japan_files/2__$%21%40%21__mail.jpg" alt="yotsuya simon japan" loading="lazy"></div>
+      <p>Wystawa w CSW Kronika i Muzeum Śląskim</p>
+      <p>“Simon Yotsuya i przyjaciele, czyli Bellmer w Japonii”</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/yotsuya_simon_japan_files/BELLMER_LOGOok1%20copy.png" alt="" loading="lazy"></div>
+      <p>1 - 31 października 2010 roku</p>
+      <p>ZAPRASZAMY WSZYSTKICH CZŁONKÓW I SYMPATYKÓW TOWARZYSTWA BELLMER NA SPECJALNE WYDARZENIE:</p>
+      <p>Wystawa Simona Yotsuyi na Śląsku ma w jego karierze charakter wyjątkowy i symboliczny. Artysta traktuje ją jako swego rodzaju pielgrzymkę do miasta Mistrza – Sensei. W Muzeum Śląskim i CSW Kronika w Bytomiu można będzie zobaczyć: oryginalne lalki Simona i jego uczniów, materiały ilustrujące drogę artysty do lalki Hansa Bellmera, a także znakomite fotografie autorstwa legendarnych Eikoh Hosoe i Kishina Shinoyamy.</p>
+      <p>==============</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/yotsuya_simon_japan_files/1__$%21%40%21__mail_1.jpg" alt="" loading="lazy"></div>
+      <p>Na Śląsku od lat dużo się mówi o Hansie Bellmerze, a wciąż nie wiadomo zbyt wiele o twórczym poruszeniu, które wywołał ów artysta w Japonii. To właśnie tam, w kraju zwanym czasem – ze względu na swoją wielowiekową lalkarską tradycję – krainą lalek (land of the dolls), bellmerowska estetyka zainspirowała kilka pokoleń artystów.</p>
+      <p>21-letni wówczas Simon Yotsuya spotkał się z twórczością Bellmera w 1965 roku za pośrednictwem Tatsuhiko Shibusawy, zafascynowanego surrealizmem tłumacza literatury francuskiej. Prace „budowniczego lalki” towarzyszą Simonowi do dziś. Artysta jest przy tym postacią niezwykle barwną i charyzmatyczną – jako członek grupy awangardowego Jokyo Gekijo (Situation Theater) zgromadził wokół siebie najświetniejsze postacie japońskiej kultury tamtych czasów, np. malarza-designera Kuniyoshi Kaneko, fotografów Eikoh Hosoe i Kishina Shinoyamę. Najważniejszym dokonaniem Hosoe pozostaje – obok Barakei, portretów Yukio Mishimy i cyklu Kamaitachi – cykl portretów pt. Simon.</p>
+      <p>Niezwykłość dzieła Yotsuyi polega na niepowtarzalnej atmosferze, która wypływa z ręcznie kreowanych lalek, stając się inspiracją dla innych artystów, pisarzy, jak również przedmiotem pożądania kolekcjonerów z całego świata. Jeżeli nawet uznamy, że mamy do czynienia z lalkami tylko jako pewnego rodzaju przedmiotami, to i tak nie wyzwolimy ich z piętna seksualności, dojrzałości czy perwersyjności.</p>
+      <p>Simon Yotsuya jest wciąż aktywny artystycznie, a ponadto prowadzi słynną Ecole de Simon, szkołę, w której młodzi tokijscy artyści – coraz mocniej uwikłani we wszechobecną w Japonii kulturę masową – spotykają się, by kontynuować tradycję zapoczątkowaną przez Simona.</p>
+      <p>Hans Bellmer urodził się w Katowicach w 1902 roku. Osoby surowego ojca oraz łagodnej matki miały utrwalić w świadomości młodego Hansa podział świata na sferę męską i kobiecą. Katowice pozostały dla Bellmera, jednego z najważniejszych artystów surrealizmu, ważnym składnikiem biografii kulturowej i osobistej.</p>
+      <p>Eikoh Hosoe (ur. 1933) – artysta fotografik, uznany i ceniony na całym świecie, w opinii krytyków  artysta o trwałym miejscu w historii fotografii japońskiej. Swą wyjątkową pozycję zaznaczył już w latach 60. ubiegłego wieku, tworząc cykle Barakei oraz Kamaitachi. Pierwszy powstał w 1963 roku, we współpracy z Yukio Mishimą. Drugi – z 1969 roku – zrealizował wspólnie z Tatsumi Hijikatą, twórcą butoh. Artyści stworzyli improwizowany dokument wspólnie z mieszkańcami wioski na północy Japonii. Cykl inspirowany był legendą kamaitachi, czyli legendą o demonie o wyglądzie łasicy, niszczącym pola ryżowe.</p>
+      <p>W 1971 roku Eikoh Hosoe podjął współpracę z Simonem Yotsuyą, czego efektem był cykl fotograficzny The Prelude of Yotsuya Simon. Projekt nawiązuje do Kamaitachi, gdyż tematem jest ciało, jednak tłem jest Tokio oraz jego mieszkańcy. Równocześnie ciało inaczej potraktowano niż w Kamaitachi, gdyż celem artysty było zburzenie starego i jednostajnego rytmu starego miasta. Z drugiej strony, ciało Simona, bohatera fotografii, jest niezwykle delikatne, plastyczne, wpisane w pejzaż miasta.</p>
+      <p>Eikoh Hosoe: Tatsuhiko Shibusawa, Writer (1965)</p>
+      <p>Kishin Shinoyama (ur. 1930) – japoński fotograf, w którego twórczości – od ponad 40 lat –  fundamentalne są zagadnienia przemiany czasu.  Z drugiej strony czerpie energię z obserwacji rytmu życia stolicy Japonii, Tokio. Pod koniec lat 60. ubiegłego wieku tworzy czarno-białe cykle zdjęć: The Birth, Twin oraz Death Valley, dzięki którym zaliczony zostaje do najważniejszych artystów w kraju Kwitnącej Wiśni. W latach 80. tworzy cykl skandalizujących aktów wpisanych w urbanistyczny pejzaż Tokio. Równolegle podejmuje pracę nad projektem, umownie zwanym Shinorama, mającym być panoramiczną odbitką przestrzeni stolicy Japonii oraz życia jej mieszkańców. W 1985  roku, w wyniku współpracy z Simonem Yotsuyą,  powstaje album  zatytułowany Pygmalionisme. Shinoyama jest autorem licznych zdjęć, które stały się ikonami światowej kultury, <a href="http://m.in/">m.in</a>. uwiecznił pocałunek Johna Lennona z Yoko Ono (fotografię zamieszczono w albumie Double Fantasy), a jego książka Water Fruits to najlepiej sprzedający się album fotograficzny w Japonii.</p>
+      <p>Kishin Shinoyama: Mechanical Girl 1 (1983)</p>
+      <p>Honorowy patronat</p>
+      <p>Ambasada Japonii w Polsce</p>
+      <p>Marszałek Województwa Śląskiego</p>
+      <p>Organizator</p>
+      <p>Współorganizatorzy</p>
+      <p>CSW Kronika w Bytomiu</p>
+      <p>Ecole de Simon w Tokio</p>
+      <p>Kamada Soy Sauce Inc.</p>
+      <p>Muzeum Sztuki w Oita</p>
+      <p>Muzeum Sztuki Współczesnej w Sapporo</p>
+      <p>Muzeum Śląskie w Katowicach</p>
+      <p>Kuratorzy</p>
+      <p>Sławomir Rumiak / Takio Sugawara</p>
+      <p>Projekt dofinansowany ze środków</p>
+      <p>Miasta Bytomia</p>
+      <p>Miasta Katowic</p>
+      <p>Patronat medialny</p>
+      <p>„Gazeta Wyborcza”</p>
+      <p>Polskie Radio Katowice</p>
+      <p>„arteon”</p>
+      <p>„Ultramaryna”</p>
+      <p>Instytucja Kultury</p>
+      <p>ul. Ligonia 7 40-036 Katowice</p>
+      <p>tel.: 32 257 06 01</p>
+      <p>tel/fax: 32 251 86 48</p>
+      <p><a href="mailto:arscacm@interia.pl">arscacm@interia.pl</a></p>
+      <p>polecamy WYDARZENIE !!!</p>
+      <h3>Wernisaż 1 października</h3>
+      <p>godz. 17.00 / Muzeum Śląskie w Katowicach</p>
+      <p>/ al. Wojciecha Korfantego 3;</p>
+      <p>godz. 19.00 / CSW Kronika w Bytomiu</p>
+      <p>/ Rynek 26</p>
+      <p>Podczas wernisażu w CSW Kronika spotkanie z Simonem Yotsuyą i kuratorami</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/TOWARZYSTWO_BELLMER/yotsuya_simon_japan.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

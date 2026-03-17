@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ladislav Klima — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Ladislav Klima</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>O Klimie.</p>
+      <p>Wokół Ciepień księcia Sternenhocha.</p>
+      <p>Jan Lubicz Przyłuski</p>
+      <p>„Fragmentaryczny sposób myślenia, dorywczy i przypadkowy sposób czytania, wreszcie – aforystyczny sposób pisania – te są jedynie zdrowe. Głębokie myśli są z istoty swojej suwerenne – są – noli nos tangere; poświęcanie uwagi formie (choćby i artystycznej) wyrazu myśli, czy to w głowie, czy na papierze, jest zajęciem dobrym dla tego co myśli nie ma.” (L.K.: Świat jako świadomość i nic)</p>
+      <p>„Wir wieczności, to znaczy: niczego – pomyślał i stracił przytomność.” (z opowiadania Sen)</p>
+      <p>I. Pierwsze spotkanie z Cierpieniami Ladislava Klimy może, ale nie musi być objawieniem. Znacznie częściej wiąże się z uczuciem odrazy i zgorszenia. Mogę sobie wyobrazić dwie możliwe sytuacje zderzenia z tym tekstem. W pierwszej, czytelnik może poczuć niesmak wobec patologicznej dokładności opisu, cudzego przecież, doświadczenia wewnętrznego. To byłoby, choć pruderyjne i krótkowzroczne, to jednak zrozumiałe. Znudzi się on niezrozumiałą barokowością tekstu, zdegustuje perwersyjną szczerością tego wyznania przebranego w szaty jakiegoś wybryku. Jest za to wysoce wątpliwe, żeby przerażająca atmosfera tej narracji, mimo używania przez Klimę technik rodem z opowieści grozy, mogła kogokolwiek wystraszyć, skoro co krok ośmieszana jest przez samego narratora. Może się też zdarzyć inne spotkanie z Klimą i jego Cierpieniami. Przypuśćmy zatem, że istnieje czytelnik, który rzeczywiście wciągnie się (posiada podobne do Klimy poczucie humoru?) i, choćby przez zamiłowanie do absurdalnych żartów czy klimatu groteskowej grozy rodem z opowiadań niesamowitych, podejmie próbę towarzyszenia fabule. Zacznie ją śledzić, gubić się z nią w labiryncie sensów, którego sam jest w połowie konstruktorem. Jeśli tylko go coś zaniepokoi, jeśli przynajmniej to, co zdaje się kryć za warstwą „fantastyczności” i mroku rozdrażni go, zirytuje lub opęta dziwnym i niewyjaśnionym smutkiem, to będzie to już pierwszy krok do zrozumienia tego hermetycznego przekazu.</p>
+      <p>II. Choć na pierwszy rzut oka można mieć wrażenie, że świat stworzony przez Klimę jest absurdalny, to nie jest on ani o stopień bardziej absurdalny niż życie. To enigmatyczne dzieło, największy pozateoretyczny tekst przygotowany do druku przez samego autora, zdaje się być całkowicie niedostępny. „Nie łatwo jest cudzą krew zrozumieć”. Jeśli jednak uznamy, że jest to tylko jeden wielki wybryk, paradoks, pomyłka i nonsens, to w niczym się nie pomylimy.</p>
+      <p>Łącząc się z narratorem w żalu, w - jak to pretensjonalnie określił Jacek Baluch - „światopostawie” i pełnej dezynwoltury strategii pisarskiej, przytoczmy słowa Klimy z przedmowy do tego groteskowego romanetta. Pyta on tak i sam sobie odpowiada: „Jakie znaczenie może mieć tych kilka wybryków, paradoksów, pomyłek i nonsensów? Świat sam to jeden wybryk i paradoks, i pomyłka, i nonsens.” Gdy dobrze pojmiemy sens tego stwierdzenia, ukaże nam się prawda cierpień zarówno księcia Sternenhocha, Klimy jak i nas samych. „En bref, un livre pour Maldoror !” – napisał o tym tekście jego francuski recenzent Claude Michel Cluny.</p>
+      <p>III. Nie łudząc się ani na chwilę, że o dziele Klimy można wypowiadać się w sposób sensowny (hi, hi, hi!) czy systematyczny - on sam był wrogiem każdego systemu, czego wyraz daje wielokrotnie w swych pismach - przedstawiam tu, nazwijmy to - fragmenty klimowskie. O każdej bowiem rzeczy należy pisać tak, jak ona sama tego wymaga, to jest z użyciem formy, na jaką zasługuje. By oddać myśli rodzące się w mej głowie z sadzonek przez Klimę zaszczepionych, sięgnąłem po szaty, które i jemu nie były obce, i zagłębiłem się w poetykę aforyzmu. Tak więc tym, co niniejszym przedstawiam łaskawemu czytelnikowi, są inspirowane jedyną dostępną po polsku częścią Jego twórczości miniatury interpretacyjne, które powstały na bazie Cierpień księcia Sternenhocha oraz paru opowiadań publikowanych w naszym kraju chaotycznie, a rozsianych po kilku antologiach czeskich opowiadań grozy. Ponieważ na dobra sprawę lepiej czytać Klimę, niż cokolwiek, co o nim i jego twórczości zostało napisane, niniejsze fragmenty stanowią jedynie obudowę do zdań wyjętych z jego pism. podkolorowaną moja interpretacją. Czy powiedzą one cokolwiek nowego? Co przemilczą, a co przekłamią? Nie martwi mnie nic z tych rzeczy. „Strach autora przed potknięciem jest tym samym, co obawa kogoś, kto wpadł jak długi do gnojówki, żeby się nie pobabrać”. Można też dodać: „Niech nikt nie mówi, że nie powiedziałem nic nowego: rozmieszczenie treści jest nowe. Kiedy się gra w piłkę, obaj gracze grają tą samą piłką, ale jeden mierzy nią lepiej”. (B. Pascal, Myśli, 65)</p>
+      <p>I jeszcze jedno: wartość tych fragmentów jest może miejscami odległa od akademickich standardów, jednak ich autentyczność i psychologiczna prawda nie powinny być poddawane w wątpliwość. Dlaczego? – zapyta niedowiarek. Już odpowiadam: kiedy duch dusi się w formie, zmienia ją albo zdycha. Mój duch jest wobec Klimy niespokojny i radosny zarazem. Pozwoliłem, by sam wskazał formę i oto rezultaty tego eksperymentu. Postanowiłem w dość radykalny sposób ulec (a ta „radykalna uległość” nie jest tu żadnym paradoksem) stylowi i charakterowi pism tego niezwykłego autora, opisać go niejako „od wewnątrz”. Wszelkie służalstwo martwemu ze swej natury tekstowi jest przeciwieństwem tego, czego życzyłby sobie ten czeski geniusz. Należy trupa natchnąć życiem, by można z nim zatańczyć. Taniec to właściwa interpretacja. Jak więc niewolnik mógłby starać się o próbę zrozumienia swego pana, którego rozległa przestrzeń świadomości jest dla niego bezkresną Otchłanią?</p>
+      <p>Wszelkie próby streszczenia Cierpień księcia Sternenhocha będą tylko śmieszne, a tego kto ofiaruje siebie podczas lektury (a tylko taki kontakt z Klimą, jak z jego mistrzem Nietzschem, może być płodny), pójdzie dalej, poza wszystkie świadome bariery tekstu i tępe odruchy czytacza,  wniknie w cudzą, odległą subiektywność, tego może owo streszczenie tylko wprowadzić we wściekłość lub co najmniej w niemiłą konsternację czy zażenowanie. Tu „ważna jest każda linijka, nic nie można wyrzucić”, pisał o Klimie Ottokar Brzezina i dodawał, że „z jednego zdania Klimy ktoś inny zrobiłby książkę”, tak nasycone jest ono treścią. A historia księcia Sternenhocha jest niewątpliwie dziełem radykalniejszym od wszystkiego o czym wiadomo, że wyszło spod pióra Klimy - to najśmielszy wyraz jego ducha. Dzieło w którym ten czeski geniusz, ten metafizyk par exellence, sam się ofiarowuje, odkrywa (tak jak potrafi odkrywać maska) to, co najsubtelniejsze i najbardziej przerażające w jego „krwi”.</p>
+      <p>Gra o wszystko</p>
+      <p>Niewyczerpanym źródłem tego pisarstwa jest doświadczenie wewnętrzne. Jako jedyny autorytet i najwyższa instancja czuwa ono nad prawdą dzieła.  Nie pozwoli jej zdeformować. I tak powstaje pisarstwo szczere aż do bólu, utwory o charakterze wyznania. Przy czym, by nie razić - jak mówił Witkacy - „flakowatością”, okryte jest ono jednak szatą określonego gatunku literackiego. Ale i w tym Klima jest sobą. Nie daje się zniewolić formie. Romanetto, coś między nowelą a powieścią, o fantastycznej, tajemniczej fabule, która na koniec zostaje, ku zaskoczeniu czytelnika, w racjonalny sposób wyjaśniona, jest dla niego tylko pretekstem. Forma, w której funkcjonowało ono zarówno dla autora nazwy gatunku, Jana Nerudy, słynnego ze swoich Opowieści Starej Pragi, jak dla jego twórcy Jakuba Arbesa, dla Klimy stanowi tylko materiał do gry, staje się poligonem eksperymentów metafizycznych. W Cierpieniach rozgrywa się niezwykła gra z romanettem. Gra o wszystko, hazard w prawdziwie klimowskim, ludibrionistycznym stylu. To, co dotychczas służyło Arbesowi czy Josefowi Kolarowi za błahe ćwiczenie literackie musi unieść ciężar rozważań o sprawach najistotniejszych – życiu, miłości, śmierci i nienawiści. Musi podporządkować się enigmatycznemu wyznaniu i pomieścić w sobie egzystencjalistyczne i metafizyczne wywody, które nie liczą się z regułami gatunku. To właśnie owa „suwerenność głębokich myśli”. Zakończenie Cierpień mimo swej pozornej bezpośredniości tylko komplikuje sprawę i mnoży wątpliwości czytelnika zagubionego miedzy snem, jawą a delirium zrozpaczonego księcia. Ale czy tam, gdzie nie ma jasnej odpowiedzi, nie ma jej wcale? Przejść obok tego dzieła obojętnie, to jakby zlekceważyć głos tego, kto jednocześnie żartuje i pod pozorem fikcji spowiada się nam. Jak w Bajce Iredyńskiego. Jak u Hrabala.</p>
+      <p>Jedno jest życie ducha</p>
+      <p>„Nie krępując się, wstawiam w sam środek wzruszającego fragmentu najbardziej abstrakcyjne sformułowania, jeżeli tylko wyraża ono daną myśl zwięźlej niż zdanie ubrane w oficjalną literacką szatę i nie obchodzi mnie, że to nieładnie wygląda.” Wszystko podporządkowane jest „prawdzie” doświadczenia wewnętrznego. W rezultacie zarówno opowiadania Klimy (Jak będzie po śmierci i najsłynniejszy zbiór czyli Slavna Nemezis ), jak jego powieści (Czeska powieść, Wielka powieść, Marsz ślepej żmii ku prawdzie oraz Cierpienia księcia Sternenhocha) uzyskują formę nieraz naprawdę zaskakującą. Mówi się, że myśl i poetyka Klimy plasuje jego pisma między Rękopisem znalezionym w Saragossie a 120 dniami Sodomy lub że jego książki czyta się jakby napisał je Poe, gdyby studiował Nietzschego. Będąc psychologiem i fizjologiem prawdy w sensie nietzscheańskim,  Klima istotnie wykorzystuje tradycyjne techniki rodem z fantastyki i powieści grozy: sobowtór, lustro, zbrodnia, terror, lecz „radykalizuje tę estetykę włączając ją w swoją wizję rzeczywistości”. Na pytanie dlaczego to robi, odpowiedzi udziela nam sam pisząc o jedności życia duchowego, o tym że nie ma żadnych przegródek i że nie ma zamiaru go kastrować.</p>
+      <p>W posłowiu powieści polski tłumacz Cierpień Jacek Baluch umieszcza znamienną wypowiedź filozofa podkreślając przy tym, że pochodzi ona z 1910 roku: „Uprawiam w beletrystyce styl możliwie najswobodniejszy. (...) Dotychczasowa forma powieści jest ciasna. Stworzenie bezwzględnie wolnej, pozwalającej sobie na wszystko jej formy, ponad którą brzmiałby wszędzie ironiczny śmiech suwerennego, boskiego sceptycyzmu, jest tylko &lt;kwestią czasu&gt;”. Eksperymenty dada, powieść surrealistyczna czy joyce’owski strumień świadomości miały to tylko potwierdzić.</p>
+      <p>Maska i pustka</p>
+      <p>Maska to spadek jaki Klima otrzymał po Nietzschem, który uczynił z niej nie tarczę i nie kamuflaż, a jedyny i niezastąpiony oręż przyszłej filozofii. Po mistrzu, po Zaratustrze i Dionizosie nazbyt szybko dających się, jak się zdawało w czasach Klimy, „z-modernizować”, zdeformować w fin-de-siecle’owej interpretacji w egzaltowany, niedorozwinięty i obojętny symbol poetycki, konieczna była nowa, żywa forma, nowy wehikuł myśli. Patos potrzebował rozluźnienia go groteską, wyostrzenia śmiechem. Maska nowego nietzscheanizmu, maska śmiechu i grozy, wydała się Klimie oczywista.  To charakterystyczna dla Klimy „technika”. O Sławnej Nemezis pisano, że jest ciągiem nieustannie mnożących się masek i pozorów splecionych tak, by zdezorientować. Jak tam, także tu Klima chce, by czytelnika się zgubił, by utracił on grunt pod nogami, bez względu na to, czy jest nim płaszczyzna fabularna czy też symboliczne przyporządkowanie charakterów wykreowanych postaci. Nie istnieje obiektywny punkt odniesienia, a czytający sam go kreuje. Żeby zrozumieć i pojąć wszechwładzę Fikcji, musi choćby na chwile stracić ten zewnętrzny punkt oparcia, zawisnąć w powietrzu czystej duchowości, unieść się w Pustce.</p>
+      <p>Filozofia niczego</p>
+      <p>Droga do poznania jest negatywna – mówi nam Klima swym dziełem. I nic nie byłoby w tym nowego, gdyby jego filozofia wieczysta tak nie różniła się w formie od mistycyzmu skrywającego się na obrzeżach religii lub filozoficznej intelektualnej subtelności panteistów. Jego droga jest inna. Skrajny subiektywizm, sceptycyzm, ironia. Każda, w dowolnym miejscu otwarta, książka Klimy ukazuje nam jego bezkompromisową walkę z martwymi, krępującymi życie wartościami, które neguje, wyśmiewa i wyzywa w imię wyższej afirmacji. Podważanie pozycji  zewnętrznych autorytetów - państwa, kościoła, nauki – to jedyny kierunek ku wyzwoleniu. Klima jest filozofem przemiany, a w niej jedynie destrukcja prowadzi do całkowitej odnowy. Aby uzyskać absolutną pewność, o ile jest to w ogóle możliwe, wszystko musi być poddane w wątpliwość. Z niczego wszystko powstaje.</p>
+      <p>Wielokrotnie zarzucano mu nihilizm, który gdy się bliżej przyjrzeć miał być jednak środkiem, a nie celem tej postnietzscheańskiej filozofii. Począwszy od pierwszego wydanego pisma filozoficznego, młodzieńczej próbie odpowiedzi Schopenhauerowi w Świecie jako świadomości i niczym, konsekwentnie idzie swoja ścieżką. Fascynował go La Rochefoucauld, Lichtenberg, Sade, potem Schopenhauer i wreszcie najbliższy mu - Nietzsche . Jego mistrz. Kochał go, i nie sposób naprawdę stwierdzić, jak wiele mu zawdzięczał. Ale źródeł inspiracji miał znacznie więcej. Filozofia boga-człowieka bliska jest Sołowiowiowi i Dostojewskiemu z Biesów, klimowski egosolizm, w którym „ja” jest omfalosem i prawodawcą, to zradykalizowany solipsyzm Berkeleya, jednocześnie pokrewny idei „ostatniego człowieka” z Tako rzecze Zaratustra. W tej księdze wyczytał moc i sens swoich działań, lecz musiał iść jeszcze dalej. Uznał się za następcę Nietzschego. I jak on postulował całkowity zwrot etyczny, przewartościowanie wszystkich wartości, z jedną, podstawową różnicą. Nie wierzył, że można tego dokonać retoryką i patosem nauk proroka, a tylko jego dionizyjskim śmiechem i grozą, jaką budzi bezkompromisowość przemiany form.</p>
+      <p>Literatura jako maska filozofii</p>
+      <p>Spośród wielu autorów opowiadań grozy niezwykle rzadko zdarza się, że są one dziełem umysłu tak wielkiego i są wyrazem wizji świata tak spójnej teoretycznie i sugestywnej. Wysuwa się nawet hipotezę, że o ile w pisma ściśle filozoficzne czynił Klima przestrzenią walki z martwymi wartościami, demaskatorstwem i sugerował tylko swój filozoficzny pogląd, o tyle w fikcji, na polu literatury, jego myśl mogła być realizowana z maksymalną konsekwencją. „Literatura filozoficzna nie zna nic oczywistszego, nic bardziej konkretnego czy przystępniej przedstawionego niż moje pisma”- pisał przekornie Klima w 1927, przy okazji wydania ostatniego z jego traktatów. O powieściach i opowiadaniach nie mógłby nic takiego powiedzieć. Bo, o ile literatura filozoficzna Klimy musiała iść na kompromisy ze światem, to - jak zauważył Igor Fic – mógł być on w wyrażaniu swego światopoglądu maksymalnie konsekwentny. Były dla niego tym, czym Kaprysy dla Goi – przestrzenią intymną, gdzie mógł odmalować najbardziej krytyczne spostrzeżenia, miejscem duchowych eksperymentów, gdzie wszystko było dopuszczalne. Tu powstawała prywatna mitologia twórcy, choć - w odróżnieniu od Nietzschego - należałoby nazwać ją raczej osobistym bestiarium komicznym. Tu żadna żywa myśl nie była cenzurowana nawet przez autorytet rozumu, który przez swą językową naturę, logos, musi liczyć się z zewnętrznym, społecznym porządkiem. I tak w Cierpieniach księcia Sternenhocha formą rządzi skrajny solipsyzm i nie sposób stwierdzić, co jest a co nie jest snem, obłędem, deliryczną wizją. Surrealistyczna ambiwalencja opozycji jawa-sen jest dla tego dzieła, tego dramatu chorego „ja” najzupełniej konstytutywna.</p>
+      <p>Coincidentia oppositorum</p>
+      <p>Poza snem i jawą splatają się w dziele Klimy wszystkie prawie najważniejsze pary przeciwieństw. Sacrum łączy się z profanum, styl wysoki z niskim, miłość z nienawiścią, wstręt z pożądaniem. Przeciwieństwa rodzą się nawzajem. Nieustające kontrasty zapowiada już przedmowa deklarując, że oddaje nam w ręce jedną z najkoszmarniejszych a jednocześnie najkomiczniejszych historii. Od pierwszych stron poetyka sprzeczności, jakie w wirze życia łączą się w potworne nieraz konfiguracje, zostaje podniesiona do potęgi. To ona kieruje tokiem narracji, stanowi oś dzieła, co widać w tej, która stała się impulsem wszystkich zdarzeń – w kobiecie. Kiedy poznajemy Helgę, wybrankę księcia, przyczynę tak cierpienia, jak końcowej trupiej radości odmalowanej na obliczu bohatera, książę zdaje relacje ze swoich do niej uczuć. „Pierwszym moim wrażeniem było, że to dziewczyna wręcz paskudna. (...) A pomimo to – czy uwierzycie? – musiałem na nią wciąż od nowa spozierać... A kiedy raz, tańcząc tuż obok mnie, podniosła przypadkiem oczy, nawet na mnie nie patrząc, jakby mnie poraziła ładunkiem elektrycznym...” „Nie kochałem jej, jeśli miłość jest czymś pięknym i słodkim. Z pewnością jednak, jeśli w moich odczuciach było coś z tego uczucia, mój wstręt do niej był dziesięciokroć silniejszy. (...) A przecież coś mnie ku niej popychało, coś ciemnego, przedziwnego, szatańskiego...” Cioran powiedział podobno, że chciałby być hagiografem Klimy.</p>
+      <p>Groza, piękno i perwersja</p>
+      <p>Bezkompromisowość i amorficzność doświadczenia wewnętrznego każe mi twierdzić, że te sprzeczności nie są w istocie sprzeczne, łączą się w byt wyższy. Nie może dziwić szyderstwo czy poetyka grozy, fantastyki i ironii. „To, co tłum uważa za cnotę, dla mocnego człowieka jest występkiem - i na odwrót. Dla człowieka o wybitnym umyśle zainteresowanie, poetyczność, a moim zdanie i Groza, po prostu wartość – zaczyna się tam właśnie, gdzie pospolite granice ludzkie stawiają tamę biegowi i perspektywom subtelnych różnorodności. Tylko śmiałość i ekscentryczność są cnotą. Każda pozorność pachnie trupim odorem ...” - powiada Klima ustami bohatera opowiadania Setki kobiet, niejakiego Hrabiego Cortini. Łączy się to wprost ze sformułowaną w innym opowiadaniu, a jakże znamienną dla całej twórczości i ważką dla Cierpień, definicją piękna. „Wszelkie piękno polega na nieskończonej cudowności, czarze Bytu. Jak to dobrze jednak, iż nędzny duch ludzki nie przenika tych głębi, że w istocie swej duszy, swojego jestestwa widzi perwersyjność. Gdyby człowiek wiedział, że jego dusza, dzięki której widzi i pojmuje, jest na wskroś perwersyjna i że tylko to, co kryje się pod nią, co napełnia go przerażeniem, przed czym przez całe życie kurczowo zamyka oczy, jest tym jedynym...”</p>
+      <p>Doświadczenie wewnętrzne nie cofa się, o czym zaświadczają sceny romanetta, nawet przed perwersją czy makabrą. Przemieniająca się Helga zabija swoje nowonarodzone dziecko roztrzaskując jego główkę o czerep przerażonego Sternenhocha. Następnie ta demoniczna kobieta uprawia miłość sadystyczną, masochistyczną i zoofilię. Całość zaś kończy się, czego nie trzeba przypominać, nekrofilią – stosunkiem z rozkładającymi się szczątkami znienawidzonej-ukochanej. Wywody powracającej z piekieł Helgi, jak ten o morderstwie, opierają się na logice rodem z Sade’a. Nie znają barier. Przywodzą na myśl wykłady Dolmance’go o zwyrodniałych gustach z Filozofii w buduarze. „Destrukcja jest jednym z najważniejszych praw Natury, a zabijanie nie może być zbrodnią” – pisał markiz. U Klimy jasno widać, że apologia występku dotyczą świata wewnętrznego, jest koniecznością przemiany ducha. „Bagatelles!” – wykrzykuje Helga –„Mordowanie to tyle co rodzenie. Zabić człowieka to tyle, co zabić myśl. Zabić myśl mogę tylko w ten sposób, że inna, silniejszą, to jest wyższą, postawię na jej miejscu. Czym jest poznanie? Zabijaniem in rebus psychicis. Podobnie, jeśli zabijam żywa istotę, eo ipso umożliwiam życie innej: zwalniam miejsce, gdzie rozwój prze z tą samą koniecznością, a jaką powietrze napełnia próżnię. &lt;Morderstwo&gt;: co za idiotyczny, tchórzliwy przesąd społeczny”. Tak odsłania się przed nami filozoficzne dno eksperymentu dokonanym na czystym  subiektywizmie i wyżynach rozumu, które od Parmenidesa, przez Berkeleya do Hegla, mówią nam, że byt i myśl jest jednym i tym samym. Tyle, że Klima chce sprawdzić granice teorii nie licząc się z żadną normą. Jest panpsychistą, a przy tym jest bezkompromisowy. „Otóż w świecie, który nie dostrzega już pozytywnego sensu sacrum, czy profanacja nie jest tym prawie, co można by nazwać transgresją?”</p>
+      <p>Zło</p>
+      <p>„Literatura jest czymś istotnym, albo jest niczym. Zło – ostra forma Zła – którego wyrazem jest literatura, ma dla nas, moim zdaniem, wartość suwerenną. Koncepcja ta nie domaga się jednak braku moralności, domaga się ona &lt;hipermoralności&gt;.” Te słowa George’a Bataille’a w pełni zgodne są z podejściem Klimy, a jego dzieło pozwalają dołączyć go do grona tych wielkich, którzy zdaniem Bataille’a spojrzeli w oczy Złemu: Emily Brontë, Baudelaire’a, Micheleta, Blake’a, Sade’a, Prousta, Kafkę i Geneta. W kategoriach francuskiego „nawiedzonego egzystencjalisty” dzieło Klimy to bezsprzecznie „literatura, która przyznaje się do winy”.</p>
+      <p>Szczęście w nieszcześciu</p>
+      <p>Do wyznaczonego celu zmierza się przez jego przeciwieństwo. To oczywiste. Jak w przewartościowaniu wszystkich wartości. Symboliczny obraz tej logiki ukazuje się nam w Cierpieniach wielokrotnie. Kiedy w relacji z 25 czerwca pojawia się próba opisu snów, jakie nawiedziły księcia podczas delirium, czytamy, że w sennym marzeniu On, demoniczny kochanek Helgi, ten tajemniczy Arcymężczyzna, nadbohater, z którym zdradza ona księcia, rzuca Helgę siłą w kałużę odchodów krzycząc: „Natychmiast to wszystko wypijesz – kazał. &lt;Mężu mój, czy człowiek to zniesie?&gt; – &lt;Nie, ale bóg tak. Jeśli to wypijesz, umrzesz, jeśli umrzesz, żyć będziesz, bogiem będziesz!&gt;” Droga do nieba prowadzi przez piekło. Zejście do podziemi. „Bez wypicia gnojówki wszystko jest niepełne. W wino przemieni się każda gnojówka”. Tylko cierpienie prowadzi do szczęścia. Stoickie „szczęście w nieszczęściu”. Tak wiele razy powtarza to czeski mistrz: „Zwycięstwo składa się tylko i wyłącznie z bicia.”</p>
+      <p>Hrabal kiedyś to zdanie uczynił mottem swojej Lekcji tańca dla starszych i zawansowanych, strumienia świadomości, powstałego w 1946 rok z inspiracji Ladislavem Klimą, kiedy to Hrabal postanowił spisać pewne opowiadanie stryja Pepina, w formie rozbujanego, szaleńczego prawie monologu. Poprzedził je jeszcze jednym, kluczowym zdaniem: „Nie dość, że wyższe powstaje z niższego, ale – jako że świat pełen jest biegunowych przeciwieństw i paradoksów – powstaje ze swojego zaprzeczenia: dzień z nocy, słabość z siły, ohyda z piękna, szczęście z nieszczęścia.” Czy nie słyszymy tu Heraklita?</p>
+      <p>Inne tropy</p>
+      <p>Pod wpływem Klimy - jak pisze biografka Hrabala Monika Zgustova - „z jego autoafirmacją, deoesencją, suisplendorem i absolutnie rozkazującą wolą”, przerabiał tekst Lekcji wiele razy, na koniec zaś opatrzył go dwoma mottami z autora Cierpień księcia Sternenhocha. Kluczy zdaje się być znacznie więcej, bowiem jak wiadomo, początkowo Hrabal nazwał tę książkę Cierpieniami starego Wertera. Można więc szukać u Goethego, co jest w pełni uzasadnione, jeśli tylko przypomnimy sobie, jak wiele wziął Klima z kultury niemieckiej.</p>
+      <p>„Kiedy Klima pisze persyflaż, to robi to w sposób doskonały, zawsze też pisał raczej dla siebie i dla przyjaciół – i dlatego właśnie jest poeta przeklętym, który strawił życie na pisaniu i piciu. Pisanie było jego samorealizacją, są całe paki, całe stosy jego rękopisów, których nigdy nie opublikowano – nie dlatego, że nie było można, po prostu nie było chętnego wydawnictwa. Te pisma były już nazbyt ludibrionistyczne, nazbyt solipsystyczne, Klima wciąż w nich podkreśla, że jest bogiem, a skoro tak, to wiele mu wolno, choć nie wszystko od razu”. Z tych powodów wielu reaguje na Klimę niesłychanie krytycznie i to nie tylko forma ich odrzuca. „Nie jest to bowiem książka niewinna. – pisze inny Francuz, wspomniany już recenzent Cierpień, Claude Michel Cluny. „Zbyt jest najeżona pewnym rodzajem nienawiści, autonienawiścią. Na wszystkim odciska się piętno negatywizmu i szyderczej złośliwości.”</p>
+      <p>Śmiech</p>
+      <p>Cierpienia księcia Sternenhocha łączą horror i grozę z groteską. Dlaczego? Perwersja i okrucieństwo okraszone są żartem, czy humorem słownym. Zbrodnia i komizm idą w parze. Cierpienia nie są jednak eksperymentem językowym w stylu Vladislava Vancury czy satyrą na świadomość społeczną jak jego Gardłowa sprawa. Śmiech jest tu, jak o nim pisał Bergson po to, „by przezwyciężyć mechaniczną bezwładność i sztywność umysłu”. Poza tym bez śmiechu nie moglibyśmy udźwignąć tego ciężaru goryczy, smutku i obsesji przemijania, któremu można przeciwstawić się tylko umierając dla świata. Umierając z uśmiechem na ustach. Wyraża się wprost w zakończeniu powieści oraz w słowach Helgi skierowanych przeciw wszelkiej nauce niszczącej żywioł życia: „Precz z nauką, głupcze! Jest jeszcze głupsza niż ty. Twój mózg gnije, a przecież myślisz, co prawda, zgnile. Wszystkie mózgi wszystkich ludzi gniją i wszystkie myśli ludzkiej kultury są tylko produktem najbardziej śmierdzącej zgnilizny: tę wielka prawdę przynoszę zza groby!”</p>
+      <p>Humor Cierpień nie jest śmieszny, ale nie jest to jego wada. „Śmiech, który jest śmieszny, to klęska.” - pisał o tym Milan Kundera. Inny jest cel niż tylko rozśmieszyć czytającego. W 120 dniach Sodomy humor podobnie banalny pokazuje jak przez tą banalność może być makabrycznie trafny. Oto w rozmowie oprawców, którzy dopiero co gwałcili, zabijali i okaleczali, pojawia się taki na przykład dialog podczas przejażdżki :</p>
+      <p>„ - Wiedzą Panowie jaka jest różnica między myszą, łosiem i rodziną?</p>
+      <p>Ależ proszę nam powiedzieć, Ekscelencjo.</p>
+      <p>No właśnie. Łosia nie można zabić myszą, ale mysz można za to zabić łosiem.</p>
+      <p>A rodzina?</p>
+      <p>Dziękuje, wszyscy zdrowi.”</p>
+      <p>Czy śmiech Klimy to oryginalny śmiech diabła czy anielska imitacja, jak je rozróżnia Kundera? Można zapytać, czy nie wiedział on, że na dnie piekieł śmiech bywa jedyną ulgą?  Jest zbawiennym oderwaniem się, dystansem, wolnością jaką daje ironia. Gorzej z tymi, co tego poczucia humoru nie maja. Lub nie umieją się nim posługiwać. Odracają go przeciw innym. Čapek pisał, że  „ironia jest zawsze przejawem pewnej przewagi; ironizujemy na temat tego, co mniejsze, słabsze, naiwniejsze niż my...” Ponieważ wrażliwością Klima zbliża się do swego ulubionego Lichtenberga, interesuje go śmiech z samego siebie, z ludzkich słabości w sobie, należy przyznać, że jest z Klimą tak, jak z wielkim Niemcem -  gdzie żartował tam krył się naprawdę istotny problem.</p>
+      <p>Ironia</p>
+      <p>Ironia, zdaniem Hegla to „nieskończenie absolutna negatywność”. Jak wiemy od Kierkegaarda, jest celem sama dla siebie, jest autotelliczna, „umacnia pyszałka w jego próżności, szaleńca w jego szaleństwie”. Jeśli spojrzymy na tę kwestię z tej perspektywy, zaraz , natychmiast stajemy przed paradoksem sceptyka: wątpieniu nie na końca, jak wierzyć sobie samemu? A może nie należy. Drogą test przekraczanie siebie, transgresja, w innym wypadku będzie ona tylko samoutwierdzaniem się w pesymizmie i największą klęską. „Ironista nieustannie chce udawać kogoś innego, niż jest, ukrywając żart w powadze, a powagę w żarcie”, ale ta maska okrywa jego prawdziwe oblicze.</p>
+      <p>Życie i fikcja</p>
+      <p>Historia izmów filozoficznych pamięta Klimie jego wielki wkład w filozofie życia, pozycję prekursorską na przykład dla francuskiego egzystencjalizmu, gdyż jego podejście do filozofowania zwał sam egzystencyzmem. Interesowało go życie, a jednak paradoksalnie związki między życiem, codziennym doświadczeniem, a tekstami Klimy pozostają kwestią domysłów. Owiewa go mgła legendy i mroki przemilczeń.</p>
+      <p>Wiadomo niewiele. Już jako dziecko chciał zrelatywizować wszystkie obowiązujące wartości. Pozbawiony możliwości nauki we wszystkich prowincjach Austro-Węgier, za nazwanie Habsburgów „świńską dynastią” w szkolnym ćwiczeniu stylistycznym, musiał kończyć edukację w Zagrzebiu. Po tym, jak otrzymuje spadek po ojcu, zaczyna włóczęgi: Pilzn, Zurych, Praga, Tyrol. Podróże kończą się jednak szybko ze względu na tempo wydawania pieniędzy. Jeszcze przed dwudziestką cały majątek przepił. Mówi się, że tropem może być alkohol. „Mysticum Klimy brzmi: ALKOHOL.”- pisał Jiri Olic. To jego podróż do piekieł, „lata niesłychanego gwałcenia procesów myślowych”, konwulsje z których jak twierdzi ratuje go tylko spirytus i rum. „Druga połowa 1912 i 1913 rok nie widziały mnie trzeźwym ani na minutę.” W tych latach przecież umiejscowiona zostaje akcja Cierpień księcia Sternenhocha.</p>
+      <p>„Po raz pierwszy ujrzałem Helgę na balu; ja miałem 33, ona 17 lat.” Tymi słowami zaczyna się część pierwsza relacji księcia Sternenhocha ze swojej drogi cierpienia. Jest, jak się dalej dowiadujemy, rok 1912. Urodzony w 1879 Klima miał wtedy dokładnie tyle lat, co jego bohater. Obecność w powieści generałów von Moltke (junior, a wiec ten spod Warny) i Eulenburg wyraźnie wskazuje na ten związek. Wilhelm II Pruski z Hohenzollernów był od dzieciństwa „ulubioną” postacią Klimy, kiedy to młody demistyfikator i skandalista napisał swój szkolny pamflet.</p>
+      <p>Historyczną postacią jest też treser i właściciel menażerii cyrkowych Hagenbeck od którego Helmuth planuje dokupić zwierzęta do istniejącego już bestiarium. Po I wojnie światowej Klima przyznaje, że jedyną wartość miały dla niego dwa źródła inspiracji: Bhagawadgita i Lao-tsy. Był to dla mnie niesłychanie ważne. Nie bez kozery francuskie wydawnictwo „La Differance”  włącza dzieła filozoficzne Klimy do jednej serii z Shobodogenzo Dogena, Ibn al.-Faridem czy Swedenborgiem.</p>
+      <p>Kim jest Helga? Pytanie to brzmi jak spędzająca sen z oczu nietzschanistom kwestia: „kim jest Ariadna”. Ta jak pytanie o to, co zdarzyło się 19 sierpnia 1912 roku, lub co tak naprawdę zdarzyło się na Mulholland Drive?</p>
+      <p>Kobieta</p>
+      <p>Zejście do piekieł dokonuje się u Klimy za pośrednictwem kobiety. To ona łączy go z nieświadomością, z zaświatami, tak jak jej imię, wiąże się z imieniem księcia w piekielnym pokrewieństwie. Helgę i Helmuta łączy piekło (niem. Höle), z którego jednak opowieść należy do niej. Kobieta występuje tu jako medium, posłaniec, a jednocześnie demon i mścicielka.</p>
+      <p>„- Ach, jakże ułudne jest wszystko! Natura, tak jak kobieta! Natura jest kobietą, albowiem kobieta jest tylko symbolem, teraz to pojmuję! Jak ułudne i kłamliwe jest wszystko! Jakże straszne! I ułudne jest wszystko tylko dlatego, by mogło objawić swoja niszczycielską moc! Wszędzie otwiera się przepaść, w niej zaś czyha nieprzeczuwalna udręka! Wszystko uderza i dusi! O naturo, o świecie – jesteście niczym moja ukochana Eterno. Ach,  jakże się to skończy? Obojętne! O Boże, Boże, wszystko sprawia mi ból i budzi wstręt – pragnę tylko spokoju, spokoju, tylko spokoju!”</p>
+      <p>Tak myśli, po przekroczeniu granic czasu, bohater opowiadania Sen, Odon, po tym jak w opuszczonym zamku stoczył walkę z diabelską postacią kobiecą, Eterną, a następnie przebudził się i zamyślił nad istnieniem. Motywy poważają się w wielu dziełach Klimy, należy więc sporządzić ich listę. To samo pragnienie spokoju na przykład znajduje swój wyraz w krzyku dręczonego lękiem Sternenhocha. „Ach, ach -  pragnę spokoju - spokoju  - - wiecznego spokoju”. Dajmy więc mu na razie spokój.</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Ladislav_Klima.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

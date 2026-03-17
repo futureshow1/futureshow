@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sen. Widowisko wewnętrzne — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Sen. Widowisko wewnętrzne</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>Miejsce, czas, dramatis personae czyli początek snu który przyporządkowuje marzeniu sennemu miejsce, czas i występujące osoby;</p>
+      <p>Widowisko wewnętrzne</p>
+      <p>–</p>
+      <p>sen</p>
+      <p>Zacznijmy ab iobe principium. Doświadczenie wewnętrzne przybiera różne postacie, o odrębnym przebiegu, dynamice i charakterze. Obraz, słowo, dźwięk – z tych wszystkich składników, z tych zmysłowych danych, w umyśle powstaje myśl (aby wyjaśnić to uproszczenie: myśl jest tu zdarzeniem w którym dochodzi do konfrontacji świadomości z fenomenem) Ciągi czystych obrazów myślowych, liniowe wyobrażenia słowne czy skomplikowane kompilacje wszystkich produktów postrzegania, wszystkie one wyodrębnione przez jaźń tworzą rozmaite większe całości strukturalne. Najlepiej uświadamiane są  elementy myśli dyskursywnej, te liniowe formy, zwykle zakończone konkluzją. Tak doświadczamy sensu na przykład podczas racjonalizacji czy, inaczej mówiąc, próby ogarnięcia przedmiotu myśli drogą wewnętrznej werbalizacji. Spośród wszystkich form wyobrażeń, które za podstawę mają bazę zmysłową, wyłącznie racjonalizacja zdaje się być uprzywilejowana w procesie zapamiętywania, co stanowi jednak zupełnie odrębną kwestię.</p>
+      <p>Ogólnie mówiąc, formy doświadczenia wewnętrznego (jego kształty, czas, barwy, dźwięki, całe obrazy i ich ruch) są analogiczne do tych jakimi dane nam było przeżywać świat wokół nas. Człowiek od swoich narodzin pozbawiony wzroku nie potrafi myśleć obrazem. Jeśliby jednak utracił wzrok po tym jak nauczył się tworzyć wyobrażenia wizualne umiejętność tę zachowałby pomimo straty (jak głuchy Beethoven, który nadal komponował). Obrazy, słowa, dzwięki (niekiedy doznania zapachowe, smakowe czy nawet dotykowe) tworzą dynamiczny strumień wyobrażeń, wytworów umysłu, nieustannie płynący przez naszą świadomość. Uwarunkowania nabyte, czyli to, w jaki sposób przyzwyczajamy się do poszczególnych struktur myślowych często narzuconych przez kulturę i jej paradygmaty zatrzymują nurt opływający jaźń i sprawiają, że człowiek zatraca czystą świadomość, definiuje siebie i świat początkując tym nieodwracalny drogą rozumową podział na przedmiot i podmiot. Bardzo prawdopodobne jest, że to jedyny sposób na egzystencję w świecie faktów i konkretów oraz w rzeczywistości społecznej, nie powinniśmy jednak nie zauważać i lekceważyć procesów jakie zachodzą w samej świadomości choć sposoby ich opisu dalekie są od dualistycznej leibnizowskiej zasady tożsamości rządzącej dyskursem zachodnim.</p>
+      <p>Symfonia wrażeń do jakiej dochodzi w umyśle świadomym często w wyniku przyzwyczajenia do błyskawicznej racjonalizacji zostaje rozbita na strzępy, poszatkowana przez uwarunkowaną dualistyczną świadomość, i pozostałe z niej wyłącznie fragmenty bezzwłocznie włączone w statyczną spekulację na usługach tejże świadomości. Rozum i myśl dyskursywna mechanizuje, pozbawia życiowości, istoty, pełni. Jedyną możliwością najpełniejszego doświadczenia tego wewnętrznego widowiska jest śnienie. Sen nie jest uwikłany w konsekwencje logiczne ani ograniczenia formalne. „Tylko sen daje człowiekowi wszystkie uprawnienia wolności.”</p>
+      <p>Status snu w kulturze Zachodu</p>
+      <p>Scjentyzm w sferze języka i umiłowanie minimalizmu w systemach naukowych i filozoficznych niczym paradygmat wyznacza granice stanu wiedzy intelektualistów cywilizacji zachodniej ostatniego stulecia. Ucierpiało i nadal cierpi z tego powodu wiele koncepcji (co wydaje się nieuniknione), ale również skutkiem tego odgórnego niepisanego wzoru jest niedosyt jaki odczuwamy przy zetknięciu  z nieporadnymi próbami opisu zjawisk z natury swojej wymykających się wszechwładnej ratiokracji. Sen został ponownie zepchnięty na pozycję deprecjonowaną, nie rzadko nawet wyśmiewaną. Przede wszystkim jednak uznany został za stan wtórny wobec czuwania. Opinia powszechna, czy raczej stereotyp, głosi jakoby sen miał być wyłącznie odbiciem przeżyć dnia codziennego, niezrealizowanych pragnień i popędów. Większość psychologów i socjologów (niestety również antropologów) twierdzi, że wyłącznie jawa (rzeczywistość) warunkuje sen (wyobrażenie nierzeczywiste, wtórne). Na tym fundamencie opiera się zachodnie spojrzenie na wszystkie doświadczenia wewnętrzne, choć marzenie senne w szczególności, uznając je za zjawiska nieciągłe i mgliste, a więc nie warte rzetelnych badań. Jest rok 2000, a na IV Zjeździe Polskiego Towarzystwa Badań nad Snem kluczowe zagadnienie podejmuje się wyłącznie z perspektywy somatycznej, w najlepszym razie biocybernetycznej. W psychologii dwudziestowiecznej nawet Zygmunt Freud którego wkład w poszerzenie zainteresowania snem i jego interpretacją trudno przecenić przypisywał mu wyłącznie funkcje ochrony przed obudzeniem i działania jako zawór bezpieczeństwa dla nieakceptowanych pragnień. Od Traumdetung wydanej przez Freuda w roku 1900 do ostatnich, najnowszych pism Rosalindy Carthwright czy Clary Hill te dwie funkcje wymienia się jako podstawowe.</p>
+      <p>Gdy jednak opuścimy naukę na rzecz sztuki ukaże nam się parę wyjątków z rodzimej kultury, zestaw teorii o innych podstawach ontologicznych i epistemologicznych odrzucających wtórny byt marzenia sennego, a co za tym idzie otwartość na to doświadczenie wewnętrzne i jego widowiskowe cechy.</p>
+      <p>Surrealiści walczyli o uznanie pełnoprawnego istnienia marzenia sennego i innych zjawisk psychicznych o niedualnym, prelogicznym charakterze. André Breton napisał: „Wierzę w to, że te dwa na pozór tak przeciwstawne sobie stany, jak sen i jawa, w przyszłości stopią się w pewnego rodzaju rzeczywistość absolutną, w  n a d r e a l n o ś ć, jeśli to można tak nazwać” i przytacza dalej piękną i prawdziwą anegdotę o tym, jak Saint-Paul-Roux, zanim położył się spać, zwykł był wieszać na drzwiach tabliczkę z napisem: Poeta pracuje. Głównie w swoim francuskim, bohaterskim okresie ruch akcentował wagę snu, a nawet jego prymat nad pisaną zwykle w cudzysłowie „rzeczywistością” dnia. Zebrano nieprzebrane ilości relacji marzeń sennych nie próbując uogólniać ich teoretycznie, lecz na bieżąco włączać w sztukę. W tej metodzie oniryzmu tkwią na przykład korzenie późniejszej koncepcji teatralnych Antonina Artaud. Na polu działalności intelektualnej sen stał się drogą rozumienia samego siebie, oczyszczenia przez interpretację nielogiczną, absurdalną, po prostu surrealistyczną.</p>
+      <p>Wyrywki z innych kultur</p>
+      <p>Kultury pozaeuropejskie dostarczają nam wielu istotnych informacji o fenomenie snu i pozwalają odrzucić (choćby na chwilę) etnocentryczną perspektywę naszej nauki. W wielu z nich sen zajmuje bardzo istotne miejsce w kształtowaniu światopoglądu bądź nawet jest punktem wyjścia do bardziej zaawansowanych praktyk duchowych. Tybetańska tradycja bon, prebuddyska nauka Wschodu, naucza, że sen jest odmiennym stanem bytu. Na ścieżce oświecenia sen jest stanem nad którym można zapanować i osiągając odpowiedni stopień praktyki oderwać go od samsarycznego koła uwarunkowań. Pod umysłem konceptualnym istnieje niedualny umysł (tyb.rigpa), świadomość czysta i wolna. Tożsama jest ona ze świadomością podczas snu. Istnieją jednak trzy rodzaje snów, które jak pisze Tenzin Wangyal Rinpocze „związane są z postępem w praktyce jogi śnienia”. Joga snu i śnienia to tybetańska praktyka duchowa w której wykorzystuje się te zjawiska czy stany w doskonaleniu siebie. Sen jest stanem którego praktykujący używają by, chociaż to może się zdawać paradoksalne, wyzwolić się z iluzji codziennego życia. Nie jest to sposób na contemptus mundi tylko na nieustanną i trudną pracę. Marzenie senne postrzegane jest jako przekaz.</p>
+      <p>Pierwszym rodzajem są sny samsaryczne, które można by porównać do snów freudowskich, uwikłanych w pragnienia ze stanu czuwania, drugi to sny przejrzyste – pośrednie, trzecie zaś to tzw. sny przejrzystego światła. Zwyczajny sen samsaryczny jest uwarunkowany, zależny od dążeń ego i śladów karmicznych tj. śladów w strumieniu umysłu pozostawione przez każde działania – fizyczne, werbalne lub mentalne jeśli było zamierzone lub najbardziej nawet subtelnie zabarwione niechęcią lub pożądaniem. Na wyższym poziomie wtajemniczenia pojawiają się sny przejrzyste, wychodzące poza poziom osobisty. Jakby były wyrazem nieświadomości zbiorowej. Oba te rodzaje mogą być śnione świadomie lub nieświadomie. Sny przejrzystego światła są zawsze świadome a ich istotą jest niedualność. Według bon są one poza podziałem na podmiot i przedmiot, widza i aktora. Te sny osiągnąć można dopiero po wieloletniej praktyce, mistrzowie nie przeczą jednak, że zdarzają się one zwykłym śmiertelnikom. ubolewając, że tak często są ignorowane. Okazuje się więc, że sen w całym swoim bogactwie nie jest utorżsamiany z iluzją. Figura retoryczna przebudzenia (słowo pochodzi z praindoeuropejskiego,  sansk. budda – przebudzony i pol. budzić mają ten sam źródłosłów) jest wyłącznie formą konieczną do komunikacji, a nie prawdą absolutną.</p>
+      <p>Oświeceni lamowie wcale nie przestają śnić, lecz sen ich odmienny jest od naszego. Mamy tu do czynienia z zupełnie innym statusem snu w tej kulturze. Widowiskowy charakter snów przejrzystego światła trudno jest przeoczyć. Zwiększona intensywność przeżyć, bogactwo ruchu i kolorów, to właśnie wspomniana Symfonia Wrażeń.</p>
+      <p>Mistrzowie tej tradycji nieraz używają zaczerpniętego z teatru określenia „kurtyna snu”. Na ścieżce ku wyzwoleniu najpierw ”ja” jest aktorem widowiska sennego, potem tak jakby reżyserem gdy kieruje marzeniem, kiedy zaś osiągnie odpowiedni poziom praktyki ego znika zupełnie i rozpływa się w doświadczeniu czysty umysł jest widzem, nieoceniającym i otwartym obserwatorem. We śnie może zdarzyć się wszystko jak w Teatrze Magicznym Harry’ego Hallera. Bogactwo środków jest nieskończenie wielkie. Droga zrozumienia doświadczenia wewnętrznego ale tak samo społecznych form widowiskowych może opierać się nie na racjonalizacji (sny przejrzystego światła straciły swą wartość, podobnie jak wyłącznie rozumowe tłumaczenie teatru No), lecz metodą intuicyjną której podstaw należy szukać w archetypicznej naturze symbolu sennego i ego relacji z symbolami kulturowymi. Joga snu proponuje technikę polegającą na nieutożsamianiu się z tworami naszego uwarunkowanego umysłu, obranie należytego dystansu. Stanie się wyłącznie widzem. Symultanicznie należy stopić się z „ja” aktorem. Poznać „rolę”, formę, granicę, wejść w nią i działać. Stać się widzem, biernym obserwatorem i nie działać. Być jednym i drugim i żadnym z nich. Działać nie działając.</p>
+      <p>Sen zataja i jednocześnie odsłania. Jak dramat sceniczny posługuje się symbolem i zniekształceniem. Interpretacja i snu i sztuki powinna polegać na zniesieniu tych zniekształceń i odsłonięciu zatajonych treści.</p>
+      <p>„ Sen, twórca przedstawień</p>
+      <p>W swoim teatrze, opartym na wietrze</p>
+      <p>W przepiękne stroje przywykł zdobić cienie”</p>
+      <p>Niebywale inspirująca w kwestii snu jest etnografia kontynentu australijskiego. Totemiczne klany aborygeńskie swą wiarą zdają się rzucać nowe światło na problematykę marzenia sennego. „Rzeczywistość snu” jest u wielu plemion równoległą rzeczywistością i to tą  prawdziwszą właśnie. Dla rdzennych Australijczyków alczeringa  to jednocześnie mityczny praczas, w którym odbywały się mitologiczne zdarzenia, jak marzenie senne przez które tubylcy obcują z rzeczywistością duchów. Sen jest mostem łączącym z prawdziwym, świętym światem przeszłości. Jest teofanią możliwą każdej nocy, doświadczeniem żywego mitu z Epoki Snów(Dreamtime, Spirit Time). Świat jawy jest iluzją.</p>
+      <p>Przodkowie totemiczni w czasie długich wędrówek pozostawili na ziemi w określonych miejscach ślady swojej bytności, święte przedmioty, czuringa czyli znaki łączące Epokę Snów z iluzją codzienną. Tak popularna dziś na zachodzie sztuka aborygenów to przede wszystkim tzw. dreamingi, mapy prawdziwego świata zwykle (przynajmniej do niedawna) malowane przez artystów zaraz po obudzeniu. Złożone z geometrycznych motywów, okręgów, fal, punktów, obrazy na świętych kamieniach naznaczają miejsca przejścia do Rzeczywistości poza Iluzją. Tubylcy niechętnie o tym mówią, lecz istnieją podstawy by sądzić, że jest to wiara która potrafi oprzeć się ostrzu europeizacji przez swą tajemniczą stronę oniryczną właśnie.</p>
+      <p>Wyjątkowo interesujące jest to, że wydaje się jakoby szczególne znaczenie przywiązywano do tych snów w których pojawił się motyw obrzędowy tj. do tych które po części choćby przejawiały cechy podobne do rytuału. Taniec z totemicznym psem dingo, pielgrzymka grupowa do miejsc narodzin ptaków czyli do świętych miejsc plemienia Wikmunkan czy pojawienie się we śnie jaszczurki bezpośrednio kojarzonej z inicjacjami seksualnymi wskazują na to, iż w świadomości tubylców istnieje bezpośrednie połączenie między snem a rytuałem. Podobno dość często zdarzało się, że określone ceremonie odbywały się według „scenariusza” wyśnionego przez czarownika. Sen dostarczył motywu i wyznaczył przebieg widowiska społecznego.</p>
+      <p>Wyjątki z tradycji</p>
+      <p>Wydaje się, że inne kultury są jakby dowodami na to, że sądy europejskiej nauki są naprawdę nieantropologiczne, a więc nie ogólnoludzkie. Czy jednak podejście do snu w naszej kulturze zawsze było tak jednotorowe?</p>
+      <p>Otóż okazuje się, że w religijności starożytnych Greków sen stanowił bardzo ważne zjawisko. Dla przykładu, w świątyni Asklepiosa w Epiduarus wierni zbierali się parę razy do roku, by po odbyciu skomplikowanego rytuału spędzić noc w świątyni w oczekiwaniu na sny. Nazajutrz wszyscy opowiadali sobie nawzajem swoje sny. Grecy, podobnie jak mieszkańcy starożytnej Mezopotamii i Egiptu, postrzegali sen jako przekaz od bogów lub nawet wizytę boga w umyśle śniącego.</p>
+      <p>W tradycji żydowskiej wzmianki o marzeniach sennych można znaleźć nawet w najpoważniejszych dziełach religijnych. Talmud babiloński nawiązuje do snów aż 270 razy. Rabbi Hisda mówi: „Niezinterpretowany sen jest jak nieprzeczytany list”, a rabbi Jonatan dodaje „Sen ukazuje myśli i duszę człowieka”. Prawdopodobnie takie myślenie plus twierdzenia Arystotelesa, iż marzenia senne są wynikiem zaburzeń somatycznych i wrażeń zmysłowych, doprowadziły do ustalenia się obowiązującego statusu snu w zachodniej kulturze. Lecz jeszcze w roku 100 n.e., w Oneirocritice (Interpretacji snów), pierwowzorze senników europejskich, pióra Artemidosa z Daldis nie stawia się zagadnienia pochodzenia snów tak jasno.</p>
+      <p>Sen i śmierć</p>
+      <p>W mitologii greckiej Nyks (Noc) miał dwóch synów Tanatosa (Śmierć) i Hypnosa (Sen). Mityczne połączenie tych dwóch elementów obecne jest również w omawianej wcześniej tybetańskiej tradycji bon i buddyzmie tantrycznym. Sen porównywany jest do śmierci i odwrotnie, przy czym oba te stany uznawane są za formy pośrednie w nieustającej metempsychozie. Poetyka „Tybetańskiej Księgi Umarłych” używa ich wymiennie, „snu” do opisu śmierci, „śmierci” dla objaśnienia snu, wskazując jednak na to, że tylko umysł czysty doświadczać może snu przejrzystego światła, a osiągając ten etap oprzeć się śmierci i ponownym narodzinom. Zarówno sen jak i śmierć są stanami bytu których świadomość, jeśli jest wolna od uwarunkowań, może oglądać cudowne widowisko prawdy. „Dzięki marzeniom sennym sens śmierci przestaje być niejasny, a sens życia staje się obojętny”.</p>
+      <p>Struktura</p>
+      <p>Gdy kładziemy się spać i zaczynamy śnić odsłania się kurtyna kryjąca naszą nieświadomość. Zaczyna się spektakl.</p>
+      <p>Carl Gustav Jung napisał, że większość marzeń sennych wykazuje podobieństwo struktury. W wyniku wieloletnich badań nad interpretacją i oraz nieustannego zbierania relacji snów tysięcy pacjentów i spisywania swoich przedstawił wyniki swojej pracy nad swoistym językiem snów i anatomią tego widowiska wewnętrznego.</p>
+      <p>Do budowy snu lub ciągu snów podszedł  jak do pewnej „całości”, przedstawiającej określoną akcję dramatyczną, której najważniejsze elementy można ułożyć według schematu klasycznego dramatu.</p>
+      <h3>Schemat jest następujący</h3>
+      <p>Ekspozycja czyli zarysowanie się tematu (problemu) snu który drąży nieświadomość nastawioną na rozwiązanie;</p>
+      <p>Perypetie, a więc treść marzenia sennego, jego szkielet czy raczej kręgosłup, od zawiązania akcji do punktu kulminacyjnego;</p>
+      <p>Lysis czyli rozwiązanie, rezultat, wniosek, który jest wskazówką o charakterze kompensacyjnym do problemu świadomego, tego z okresu czuwania;</p>
+      <p>Jak widać schemat ten jest oparty na modelu arystotelesowskim. Poszczególne etapy snu zostały wyodrębnione na wzór widowiska scenicznego. Akcja, rozumiana tu jako działanie, jest jednak drugorzędna. Prymarny staje się dramat. To on stanowi klucz do poszukiwań języka snów. Idea ta towarzyszyła Jungowi przez całe życie, łączyła się z usystematyzowaniem wiedzy o nieświadomości i stworzenia jej „mapy” przy użyciu symboli i archetypów.</p>
+      <p>Odkrycie struktury snów rzuciło nowe światło na relację między dramatem wewnętrznym a dramatem scenicznym. Ogólnie to ujmując: między doświadczeniem wewnętrznym a sztuką. Po drugie, powyższy schemat włącza się w nurt rozważań o śnie i jawie jako stanach wzajemnej, obustronnej zależności.</p>
+      <p>Być może metody interpretacji marzenia sennego staną się użyteczne w analizie i egzegezie sztuki współczesnej, w szczególności zaś twórczości teatralnej i widowiskowej. Jest być może za wcześnie na poważniejsze konkluzje, lecz mimo to zaryzykowałbym na koniec przedstawienie innego diagramu zależności, naturalnie w charakterze hipotezy, której postawienie konieczne jest do wypełnienia sensu tej pracy.</p>
+      <p>Dostrzegłem mianowicie w opisywanej przez amerykańską antropologię teatru, dokładniej zaś przez Victora Turnera i Richarda Schechnera, teorii o wzajemnej zależności dramatu społecznego z dramatem scenicznym analogię do opisanej wyżej jungowskiej tezy o dramatycznym schemacie konstrukcji snu. Wydaje się więc, że jeśli włączyć widowisko wewnętrzne w model amerykański wyglądałoby to następująco:</p>
+      <p>dramat społecznydramat sceniczny</p>
+      <p>dramat wewnętrzny</p>
+      <p>, gdzie w bardzo dużym uproszczeniu dramat społeczny rozumiany jest jako zdarzenie historyczne, międzyludzkie, liminalne, dramat sceniczny to fenomen świata sztuki. O obustronnej zależności życia i sztuki pisze Turner, jeśli więc udałoby się włączyć w to dramat wewnętrzny i zjawiska psychiczne ( ze snem włącznie ) objęłoby to swym zakresem cały świat człowieka. Korelacje między dramatem scenicznym a wewnętrznym wskazuje Jung, zajmując się jednak, a za nim moja skromna osoba, snem czyli czymś indywidualnym.</p>
+      <p>Być może polem działania dla ewentualnych przyszłych odkrywców więzów łączących dramat społeczny z psychicznym będzie również jungowska nauka o nieświadomości zbiorowej?</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Sen._Widowisko_wewnętrzne.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

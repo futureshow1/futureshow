@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>index main — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">index main</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p><a href="MONTA%C5%BB_film.html">SZTUKA MONTAŻU</a></p>
+      <p>2016 - <a href="14._Leave_Everything.html">14. Leave Everything</a> - w ramach projektu Dynamika Chaosu, Berlin-Warszawa. reżyseria, performance</p>
+      <p><a href="MONTAZ_found_footage+.html">Montaż video jako kolaż (found footage + play corpo):</a></p>
+      <p>2017 - <a href="Personal_Stone.html">Personal Stone. Rytka</a>, scenariusz i reżyseria, dok. 26 min.</p>
+      <p>2013 - <a href="Przysmak_Kr%C3%B3lowej.html">Przysmak Królowej</a>, reż. (z P. Ferdek), montaż, 13 min.</p>
+      <p><a href="Kamien_i_ryba.html">2009 - Kamień i ryba, reżyseria (z M. Skalski),  + montaż, produkcja SFP, 18 min.</a></p>
+      <p>2005 - <a href="Biegacz.html">Biegacz</a> - postdirected, montaż, 5 min.</p>
+      <p>2003 - <a href="Arcymistrz.html">Arcymistrz</a> - postdirected, montaż, 5 min.</p>
+      <p>2010 - <a href="Work_in_Progress.html">Work in Progress</a>, Katowice, w ramach festiwalu Ars Cameralis, kurator: Marek Zieliński, pokazywane 2 instalacje video: “Loop 2. Marylin” i “<a href="https://vimeo.com/256408970">Loop 1</a>” (zob. video).</p>
+      <p>SZTUKA MONTAŻU</p>
+      <p>- o sztuce montażu (w przygotowaniu)</p>
+      <p><a href="MONTA%C5%BB_film.html">Montaż w filmie</a> (wybrane):</p>
+      <p>2009 - <a href="Apollonia.html">Apollonia</a>, reż. K. Warlikowski, prod. Nowy Teatr, Camera Obscura, 220 min.</p>
+      <p>[2008 - <a href="Diversidad.html">Diversidad</a>, zdjęcia, reż. L. Reno, prod. European Music Council, 22 min.]</p>
+      <div class="vimeo-embed"><iframe src="https://player.vimeo.com/video/255555699" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="vimeo-embed"><iframe src="https://player.vimeo.com/video/256408970" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+      <p><a href="PERFORMANCE_+.html">PERFORMANCE</a></p>
+      <p><a href="SZTUKA_VIDEO.html">VIDEOART</a></p>
+      <p><a href="WYSTAWY.html">WYSTAWY</a></p>
+      <p><a href="FILMY.html">FILMY</a></p>
+      <p><a href="TEKSTY.html">TEKSTY</a></p>
+      <p><a href="ARCHIWUM_SZTUKI_AKCJI_%28ASA%29.html">ASA</a></p>
+      <p><a href="FOTOGRAFIA_+.html">FOTOGRAFIA</a></p>
+      <p><a href="RYSUNEK_+.html">RYSUNEK</a></p>
+      <p><a href="MALARSTWO.html">MALARSTWO</a></p>
+      <p><a href="INTERNET.html">INTERNET</a></p>
+      <h3>inne</h3>
+      <p>(site in construction)</p>
+      <p><a href="WYK%C5%81ADY.html">WYKŁADY</a></p>
+      <p><a href="Teatr_-_video.html">TEATR</a></p>
+      <p><a href="WARSZTATY.html">WARSZTATY</a></p>
+      <hr class="separator">
+      <h3>PERFORMANCE (+ happeningi, akcje)</h3>
+      <p>2017 - <a href="Protestaniec.html">Protestaniec. Butoh</a> - performance - protest artystyczny pod Ministerstwem Środowiska</p>
+      <p>2016 - <a href="Dynamika_Chaosu.html">Dynamika Chaosu</a> (2016), performance - udział w akcjach DC</p>
+      <p>2015 - <a href="Przeistaczanie.html">Przeistaczanie</a> - performance w spektaklu-eksperymencie</p>
+      <p>2013 - <a href="Aktualnosc_surreal.html">Aktualność surrealizmu</a> - Teatr Narodowy, performance</p>
+      <p>2013 - <a href="Einstein_i_inni.html">Einstein i inni</a>, performance w spektaklu, Komuna Warszawa, w ramach projektu Re-Mix</p>
+      <p>2013 <a href="Co_Warto_to_Warto.html">Co Warto, to Warto</a> - mini-performance, <a href="https://www.facebook.com/events/420644758040874/" >fcbk</a></p>
+      <p>2010 - <a href="Duchamp_Mini_Library.html">DUCHAMP MINI LIBRARY</a>, w ramach The Knot - Mobile Unit, Bukareszt, akcja</p>
+      <p>2010 - <a href="Bellmer_hermetic.html">Bellmer hermetyczny</a>, jako Hans Solo, performance</p>
+      <p>2006 - <a href="https://www.youtube.com/watch?v=3meRpWaRZeU" >Spacer</a></p>
+      <p><a href="Kino_Relativo_1997-1999_.html">Kino Relativo</a> 1997-1999 - w ramach kolektywu <a href="RELATIVO.html">Relativo</a> (JLPrzyłuski, Ł. Gutt, A. Nykowski, D.Bauman: - video / fotosy</p>
+      <p><a href="walizka.html">Walizka</a></p>
+      <p><a href="galeria_%28Abstrakty_z_telewizorem%29.html">Abstrakty z tv</a></p>
+      <p><a href="Dziady.html">Dziady</a></p>
+      <p><a href="kup_se_obraz_zmien_przerzutke_.html">kup se obraz/zmień przerzutke</a></p>
+      <p><a href="Dr_Bourbon_.html">Dr Bourbon</a></p>
+      <p><a href="taniec_z_lamp%C4%85_.html">taniec z lampą</a></p>
+      <p><a href="granie_.html">Granie</a></p>
+      <p><a href="malowania_.html">Malowania</a></p>
+      <p><a href="Mistrz_w%C3%B3zek.html">Mistrz / wózek</a></p>
+      <p><a href="Mister_Mister.html">Mister Mister</a></p>
+      <h3>w przygotowaniu</h3>
+      <p>Pudło</p>
+      <p><a href="%E2%80%9CRozmowy_na_koniec_wieku%E2%80%9D_.html" style="line-height: 12px; ">Rozmowy na koniec wieku</a></p>
+      <p><a href="Alter_ego_czyli_film_japo%C5%84ski.html" style="line-height: 12px; ">Alter Ego (film japoński)</a></p>
+      <p>Aztecki Guru Człowiek-Pszczoła</p>
+      <h3>inne</h3>
+      <p><a href="FOTOGRAFIA_+.html">FOTOGRAFIA</a> <a href="RYSUNEK_+.html">RYSUNEK</a></p>
+      <p><a href="MALARSTWO.html">MALARSTWO</a></p>
+      <p><a href="INTERNET.html">INTERNET</a></p>
+      <hr class="separator">
+      <p>TEKSTY</p>
+      <h3>o sztuce akcji (i sztuce performance)</h3>
+      <p><a href="Sztuka_akcji.html">01 -- książka: “Sztuka akcji. Dziesięć działań w Polsce” (2007) - książka, nagroda Ministra Kultury i Dziedzictwa Narodowego</a></p>
+      <p>02 -- “The Future of the Past”: <a href="http://marijabozinovskajones.com/the-future-of-the-past/">http://marijabozinovskajones.com/the-future-of-the-past/</a></p>
+      <p>03 -- “Sympozjum Realności Poetyckich”, tekst programowy <a href="http://bgsw.pl/archiwum/sympozjum/">festiwalu</a> (2006), Bałtycka Galeria Sztuki Współczesnej</p>
+      <p>04 -- “<a href="https://www.academia.edu/33228753/Performance_historia_i_gest">Performance. Historia i gest</a>” (2001) - magazyn ASA</p>
+      <p>05 -- “<a href="https://www.academia.edu/3321567/Dada_Politics_Polityka_Dada">Polityka DADA</a>”, esej, w: Pomarańczowa Alternatywa. Happeningiem w komunizm, MCK, Kraków (2011)</p>
+      <p>06 -- <a href="https://www.academia.edu/35852880/Jan_Przy%C5%82uski_WARPECHOWSKI._DROGA_PERFORMERA.pdf" >“Warpechowski. Droga Performera” </a>(2014) - Wyd. Zachęta - tekst w katalogu</p>
+      <p>07 -- <a href="http://za.uap.edu.pl/?p=555">“Odzyskać sztukę dla rozwoju świadomości. Notatki o kontekstualizmie”</a> (2017) - Zeszyty Artystyczne, Uniwersytet Artystyczny, Poznań, w druku</p>
+      <h3>Inne teksty o sztuce i literaturze</h3>
+      <p><a href="Quay.html">Quay- W obronie sensu</a></p>
+      <p><a href="Kantor.html">Kantor. O metamorfozach</a></p>
+      <p><a href="Schechner.html">Schechner. Zabawa i rytuał</a></p>
+      <p><a href="Tao_aktora._Zeami_Motokiyo.html">Tao aktora, (Zeami Motokiyo)</a></p>
+      <p><a href="Lynch_i_psychodelia.html">Lynch i psychodelia</a></p>
+      <p><a href="Coen_.html">Bracia Coen o kinie</a></p>
+      <p><a href="Repassage.html">Anarchia Repassage</a></p>
+      <p><a href="%C5%9Awi%C4%99ty_idiota._Dostojewski_Wodzi%C5%84ski_.html">Święty idiota. Dostojewski/Wodziński</a></p>
+      <p><a href="Nowa_sztuka___Bogacka.html">Nowa sztuka (O malarstwie Agaty Bogackiej) </a></p>
+      <p><a href="Antropologia_kultury_masowej_.html">Antropologia kultury masowej</a></p>
+      <p><a href="Sen._Widowisko_wewn%C4%99trzne.html">Sen. Widowisko wewnętrzne</a></p>
+      <p>- <a href="Ladislav_Klima.html">“Wir wieczności to znaczy: niczego - pomyślał i stracił przytomność. Ladislav Klima”</a></p>
+      <p>- <a href="Suskind.html">“Literatura i uwiedzenie. Eskperymenty z Pachnidłem Suskinda”</a></p>
+      <p>- <a href="O_kiczu.html">“O kiczu. Romantyczne źródła kiczu”</a></p>
+      <p>- <a href="Ecco_labora._Metafora_%C5%9Bwiat%C5%82a.html">“Ecco labora. Metafora światła w średniowieczu”</a></p>
+      <p><a href="WYK%C5%81ADY.html">WYKŁADY</a>:</p>
+      <p><a href="Sztuka_akcji_i_film.html">Sztuka akcji i film - Przestrzeń partycypacyjna Chłodna25, Warszawa (2009) - poster</a></p>
+      <p><a href="Doing_it._Art,_magic_and_the_paradox_of_the_Real_%28CCA,_Tel_Aviv%29_.html">Doing it. Art, magic and the paradox of the Real. - Center of Contemporary Arts, Tel Aviv 2011</a></p>
+      <p><a href="TR_S%C4%85siedzi.html">Świdziński (TR WARSZAWA)</a></p>
+      <p><a href="../TOWARZYSTWO_BELLMER/svankmajer.html">Dlaczego Svankmajer (Towarzystwo Bellmer) Katowice 2010</a></p>
+      <p><a href="Polityka_DADA.html">Polityka DADA</a> - Międzynarodowe Centrum Kultury, Kraków 2011</p>
+      <h3>WARSZTATY, PROJEKTY SPOŁECZNE</h3>
+      <p>- <a href="Beyond_Action.html">Dream Reenactment</a> - Guest House, 2015, Cork - foto dokumentacja</p>
+      <p>- <a href="Poliamory_Script.html">Poliamory Scenario</a>: Entzaubert 2014 Queer DIY Film Festival, Berlin</p>
+      <p>TEATR - <a href="Teatr_-_video.html">INSTALACJE VIDEO:</a></p>
+      <p>2009 <a href="Persona._Marylin.html">“Persona. Marylin”</a> (reż. Krystian Lupa) - jako artysta video</p>
+      <p>2011 <a href="Persona._Cia%C5%82o_Simone.html">“Persona. Ciało Simone”</a> (rez. Krystian Lupa)</p>
+      <p><a href="MONTAZ_found_footage+.html"></a></p>
+      <p><a href="MONTAZ_found_footage+.html">MGM</a></p>
+      <p><a href="MONTAZ_found_footage+.html">Wojna i Pokój</a></p>
+      <h3>FILMY</h3>
+      <p>2014 - <a href="Droga_Performera.html">Droga Performera / The Way of the Performer</a>, Zachęta - Narodowa Galeria Sztuki, 182 min.</p>
+      <p>2010 - <a href="Bakteria_zwana_Butoh.html">Bakteria zwana butoh</a>, 10 min.</p>
+      <p><a href="Niesko%C5%84czony_jest_ruch.html">2010 - Nieskończony jest ruch, guerilla dokument plastelina (z P. Ferdek), dok. 22 min.</a></p>
+      <p><a href="Instytut_Przemiany.html">2009 - Instytut Przemiany Czasu w Przestrzeń, reż. zdj. mont., dok. 14 min.</a></p>
+      <p><a href="Bal_u_Urbanowicza.html">2009 - Bal u Urbanowicza, reż., zdj., montaż, 3 min</a>.</p>
+      <p><a href="Sympozjum_Realno%C5%9Bci_Poetyckich.html">2007 - Sympozjum Realności Poetyckich, (z R. Leszczynski), 22 min.</a></p>
+      <p><a href="Sztuka_akcji_.html">2006 - Sztuka Akcji / Różnice, reżyseria, zdjęcia, montaż, 55 min.</a></p>
+      <h3>SZTUKA VIDEO (+ TEATR)</h3>
+      <p>2017 - <a href="Nie_moj_ruch.html">Nie-mój ruch</a></p>
+      <p><a href="Nie_moj_ruch.html"></a></p>
+      <p>2015 - <a href="Mi%C5%82o%C5%9B%C4%87.html">Miłość</a></p>
+      <p>2014 - <a href="Pictures_from_Ukraine.html">Pictures from Ukraine</a></p>
+      <p>2014 - <a href="Motion_and_Picture.html">Training for Motion and Picture</a></p>
+      <p>2013 - <a href="Black_Sun.html">Black Sun. XVI La Maison Dieu</a>, 2 min.</p>
+      <p>2012 - <a href="Muzeum.html">Rozpoczęcie Budowy Muzeum</a>, video, 10 min.</p>
+      <p>2010 - <a href="%C5%9Awidzinski.html">Jesteśmy zaplątani - Świdziński</a>, 5 min.</p>
+      <p>2010 - <a href="Film_i_paradoks.html">Film and Paradox</a>, 2x 7’41 min.</p>
+      <p>2009 - <a href="Follow_the_White_Rabbit_2.html">Follow the White Rabbit</a> 2, real. zdj., montaż</p>
+      <p>2009 - Follow the White Rabbit (35mm) - soon</p>
+      <p>2009 - <a href="Loop_1_+_Loop_2.html">“Loop 1” i “Loop 2. Marylin”</a> videogramy / film</p>
+      <p>2002 - <a href="Fe.html">Fe</a> - 2 min.</p>
+      <p>1997-1999 - “<a href="%E2%80%9CFilmy_fenomenalne%E2%80%9D_.html">Filmy fenomenalne</a>”:</p>
+      <p>“<a href="Alter_ego_czyli_film_japo%C5%84ski.html">Alter ego czyli film japoński</a>”</p>
+      <p>“<a href="">Dziady</a>”</p>
+      <p>“<a href="Mister_Mister.html">Mister Mister</a>”</p>
+      <h3>WYSTAWY</h3>
+      <p>2019 - <a href="RELATIVO.html">Lata beztroski. Retrospektywa Grupy Relativo</a> (Ł. Gutt, A. Nykowski, D. Bauman, J. Lubicz Przyłuski) - dla Centrum Sztuki IKONA, Warszawa - w przygotowaniu</p>
+      <p><a href="WWB9-krok_do_przodu.html">2017 - Warszawa w Budowie - WWB9 “Krok do przodu” - Muzeum Sztuki Nowoczesnej w Warszawie oraz Galeria Studio, 16.09-26.11.2017, kuratorzy: Tomasz Fudala, Dorota Jarecka, Barbara Piwowarska. </a>wystawiana była praca:  “<a href="Muzeum.html">Rozpoczęcie Budowy Muzeum</a>”, video, 10 min.</p>
+      <p><a href="DEMONTAGE.html">2015 - D_E_M_O_N_TAGE - Cork Artists Collective, Irlandia - wystawa indywidualna, kurator: Patricia Klich - <span>txt, foto</span></a></p>
+      <p>2010 - <a href="The_Knot.html">The Knot - Mobile Unit </a>- Parcul Carol, Bucarest, kurator: Kuba Szreder. pokazywane były  m.in. prace: 2010 - <a href="https://vimeo.com/255555699" >Film and Paradox</a>, 2x 7’41 min.</p>
+      <p><a href="kup_se_obraz_zmien_przerzutke_.html">1997 - Wystawa bez nazwy - pokazywana praca/akcja: Kup se oraz</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">Animacja kultury:</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html"></a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">2013 - TRANS/WIZJE</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html"></a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">2013 - Aleksandra Hirszfeld</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html"></a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">2011 - Beksiński</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html"></a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">2011 - Abnormals Gallery</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html"></a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">2010 - Bellmer in Japan</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html"></a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">2009 - Interakcje</a></p>
+      <p><a href="MONTAZ_animacja_kultury.html"></a></p>
+      <p><a href="MONTAZ_animacja_kultury.html">2007 - Sektor Sztuki</a></p>
+      <h3>Montaż w sztukach wizualnych (wybrane)</h3>
+      <p>2014 - <a href="Huxley.html">Huxley</a> (Wiktor Gutt) - restricted</p>
+      <p>2010 - <a href="Minstrel_Show.html">Minstrel Show</a> (Anna Niesterowicz)</p>
+      <p>2009 - <a href="Wlosy-_Hero.html">Hero</a> (Anna Niesterowicz)</p>
+      <p>2008 - <a href="Dzikosc_dziecka.html">Dzikość dziecka</a> (Wiktor Gutt) -</p>
+      <p>2007 - <a href="DIAVOLI.html">Diavoli</a> (Wiktor Gutt)</p>
+      <p>2016 - <a href="Pollywood.html">Pollywood</a>, reż. P. Ferdek, dok. (work in progress)</p>
+      <p>2015 - <a href="Chile._Domeyko.html">Chile. Domeyko</a>,  reż. R. Leszczyński, dok. 42 min.</p>
+      <p>2013 - <a href="Przywodcy.html">Przywódcy</a>, reż. P. Ferdek, prod. Kalejdoskop, dok. 52 min.</p>
+      <p>2010 - <a href="Adama.html">Adama. Griot from Mali</a>, reż. Lubicz-Przyłuski, prod. Relativo Films, 26 min.</p>
+      <p>2009 - <a href="Limousine.html">The Limousine</a> - making of, reż. Lubicz-Przyłuski, Skalski, 22 min.</p>
+      <p>2007 - <a href="Szklana_pu%C5%82apka.html">Szklana pułapka</a>, reż. P. Ferdek, prod. SFP, Kosma Film, 14 min. - Nominacja do Europejskiej Nagrody Filmowej</p>
+      <p>2007 - <a href="INA.html">Ina</a>, real. K. Ekiert, prod. PWSFiT, 14 min.</p>
+      <p><a href="ARCHIWUM_SZTUKI_AKCJI_%28ASA%29.html">ASA - ARCHIWUM SZTUKI AKCJI - projekt ciągły (od 2002)</a></p>
+      <p><a href="ARCHIWUM_SZTUKI_AKCJI_%28ASA%29.html">Ponad 1000 obiektów. Zbiory obejmują działania najwybitniejszych artystów sztuki akcji i performance oraz działających na pograniczu sztuk (m.in): Jerzy Bereś, Zbigniew Warpechowski, Adina Bar-On, Zbigniew Libera, mistrzowie butoh Daisuke Yoshimoto, Atsushi Takenouchi, Imre Thormann, twórca kontekstualizmu Jan Świdziński, Paul Panhyusen (Fluxus / Het Apollonius), Andrzej Urbanowicz, Seiji Shimoda, Bruce Barber, Józef Robakowski, David Cerny, Oskar Dawicki, Katarzyna Kozyra, Wilhelm Sasnal i wielu innych.</a></p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/index_main.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

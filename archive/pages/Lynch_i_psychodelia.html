@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lynch i psychodelia — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Lynch i psychodelia</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>Wszystko jest nagrane</p>
+      <p>Jan Przyłuski</p>
+      <p>15-01-2002</p>
+      <p>„Kino pokazuje abstrakcje, ale to jak je interpretujesz to już inna sprawa.” - mówi David Lynch. I w tym tkwi chyba klucz do rozwiązania zagadki jego kina. Nikt, mam nadzieję, nie łudzi się, że chodzi mi tu o odpowiedź na prowokacyjnie zadane przez samego Lyncha pytanie: Co tak naprawdę stało się na Mulholland Drive? Bynajmniej. Przyjemność błądzenia należy się każdemu, a układanie klocków tych puzzli to prawdziwa rozkosz. Bez względu na to czy w ogóle istnieje rozwiązanie ( chociaż po wyjściu z kina nie sposób nie analizować kolejnych scen i obrazów), bez naiwnej łatwowierności, że u Lyncha jest jeszcze miejsce na „tak naprawdę” (chociaż w obliczu tak genialnej iluzji największy sceptyk będzie miał dreszcze), możemy stwierdzić jasno i otwarcie: oglądamy arcydzieło. A na dodatek paradoksalnie okazuje się, że ten film - najciemniejszy i najbardziej tajemniczy z lynchowskiej kolekcji, najostrzej wodzący widza za nos, obraz w którym nie widać końca niesamowitości, a kategoria snu okazuje się niewystarczająca do jego opisania - ten właśnie film to mapa, z jaką należy odkrywać Mistrza.</p>
+      <p>Można by uznać, że Lynch, jak pisze połowa światowej krytyki, tym razem przesadził. Owszem. Ale na pewno nie dlatego, że piętrzy komplikacje, sugeruje zamiast pokazywać czy niszczy własną strukturę fabularną doprowadzając przy tym leniwego oglądacza do szewskiej pasji. To przecież doświadczony prestidigitator kina, iluzjonista postmoderny, który nieraz już z nami grał kliszami popkultury (pomnijcie choćby Dzikość serca), żonglował konwencjami kina gangsterskiego melodramatu, road movie i innych gatunków, łącząc je wszystkie w halucynacyjnym półcieniu filmowego delirium. Nie dlatego też przesadził, że znów udało mu się zwizualizować wszystkie niuanse paranoi, tworząc najbardziej psychodeliczny film w historii. Reżyser przyznał sam, i to u nas na Camerimage w Łodzi, co znaczy dla niego doświadczenie z LSD (przypomina mi się „kwaśna mina” z początku kinowego Twin Peaksu, a Mulholland Drive ochrzczono w Stanach hasłem: Lynch on drugs. A skoro o tym mowa to, czy słowo „drive” nie sugeruje tu obłędu, szaleńczego napadu czy „jazdy”, jak w „to drive somebody crazy”?) Niezwykłość, niesamowitość, tajemniczość, dziwność, zagadkowość - oto co od lat charakteryzuje jego kino. A więc dlaczego tym razem przesadził?</p>
+      <p>A to dlatego, że Lynchowi udało się niemożliwe: połączył skrajne bieguny absolutnej, przerażającej i demonicznej grozy (tu Szatan po prostu jest i to widać! Bob i „mister blada twarz”, który terroryzuje w Zaginionej Autostradzie mają swe kolejne wcielenie) z rozbrajającą śmiesznością (płatny morderca - niezguła lub scena gdy Luigi Castigliani, nota bene świetnie zagrany przez kompozytora Angelo Badalamentiego, zamawia espresso). Mamy tu genialny czarny humor klasy Rolanda Topora czy Kubricka z Mechanicznej Pomarańczy i Doktora Strangelove. Ale to nie jedyna coincidentia oppositorum. Tak jak rzeczywista hollywoodzka droga pod nazwą Mulholland Dr. łączy góry Santa Monica z oceanem, tak Lynch wiąże ze sobą atmosferę sielanki i makabry. Oczywiście nic wprost. W Mulholland Drive mistrz robi to według zaleceń najlepszej szkoły: nie mówi, nie tai, a tylko daje znak. Na pierwszy rzut oka bieguny jakie Lynch zestawia są tak głęboko inne i skontrastowane ze sobą jak blondynka z brunetką (filmowa Betty, fenomenalna Naomi Watts i Rita, śliczna Laura Harring). Kto zna tę zagrywkę Mistrza (znów przed oczami staje Autostrada), ten nie da się nabrać. Bo twórca Blue Velvet na tym właśnie opiera swoje dzieło, na nieoczywistości oczywistości, zagadkowości swojskiego spostrzeżenia.</p>
+      <p>Nie raz już wprost mówił, że głównym tematem jego filmów jest to, co tak interesowało surrealizm i psychoanalizę, a co nazywa magią w życiu, procesami, których nie postrzegamy rozumowo, ale również intuicyjnie. (Ciekawe, że twórca intuicjonizmu w filozofii europejskiej, Henri Bergson, to także autor genialnego tekstu O kinematogaficznej naturze myślenia, który poraża swoja spostrzegawczością i współczesnością , mimo iż powstał w czasach Chaplina). Musimy sobie zdać sprawę - mówił Lynch w Polsce - że to co widzimy to nie jest prosta suma elementów jakie postrzegamy, lecz znacznie więcej. Film to sztuka, która może wprost przedstawić ten proces, stwarzać nadrzeczywistość.</p>
+      <p>Najistotniejsze jest jednak to,że w Mulholland Drive po raz pierwszy w swojej twórczości Lynch robi film o filmie, i przez to można zestawiać ten film nie tylko z Na skróty Altmana ale i z Osiem i pół. Nie znaczy to bynajmniej, że filmowy reżyser to sam Lynch, albo że autotematyzm kończy się tu na satyrze na mafijne układy i brudy Hollywood. Lynch buduje tu iluzję o iluzji, i przez to, jakby to dziwnie nie zabrzmiało, gra z nami w otwarte karty. Daje sygnały znacznie jaśniejsze niż w jakimkolwiek ze swoich filmów (może poza Prostą historią). Lecz ta podwójna gra jest jednocześnie halucynacją halucynacji, której magnetyczne wizje odmalowane są z właściwym tylko Lynchowi uwrażliwieniem na zmysłowość, tak erotyczną jak psychotyczną. Ten koszmar jest opowiedziany tak sugestywnie, że sam opowiadający daje się wciągnąć i przed chwila jeszcze zwyczajny sen staje się faktem. Niełatwo to interpretować, ale właśnie na tym polega wielkość i otwartość tego dzieła oraz twórczy wkład każdego widza, także intelektualny. To nieprawdopodobne, ale dwóch recenzentów filmowych największego dziennika w tym kraju udowodniło w swoich piątkowych tekstach, że zupełnie nie rozumieją nie tylko Mulholland Dr., ale chyba w ogóle nie „czują” Lyncha. Ci, których stać wyłącznie na określenia typu intrygujący, ale jałowy, lub kwitowanie filmu zdaniami: Jest to uczta dla zmysłów, lecz niespecjalna pożywka dla umysłu, naprawdę mają gorzej. Nie mogą rozkoszować sie bogactwem i precyzyjnością lynchowskiej fikcji, interpretacją klubu Silencio, sekretem tożsamości bohaterów (jednej z podstawowych osi konstrukcyjnych filmu), tajemnicą Złego, którego obliczem kończy się Mulholland Drive i całą niekończącą się listą zagadek.</p>
+      <hr class="separator">
+      <p>Opinie czytelników Latarnika</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p><a href="mailto:bobba@interia.pl">bobba</a> (Gość Latarnika)</p>
+      <p>24-01-2002 09:19:45</p>
+      <p>213.241.42.---</p>
+      <p>dla wszystkich ktorzy szukaja prawdopodobnego rozwiazania, polecam uwadze strone</p>
+      <p><a href="http://www.salon.com/ent/movies/feature/2001/10/23/mulholland_drive_analysis/print.html">http://www.salon.com/ent/movies/feature/2001/10/23/mulholland_drive_analysis/print.html</a></p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p>ja (Gość Latarnika)</p>
+      <p>22-01-2002 19:25:56</p>
+      <p>217.96.212.---</p>
+      <p>Nie widziałem jeszcze filmu. Widziałem tylko zajawkę. Wynika z niej że film jest w klimacie &quot;Zaginionej autostrady&quot; tylko że jeszcze bardziej psychodeliczny.</p>
+      <p>Cynik napisał, że klamre filmu teorzy para emerytów, widocznie Lynch lubi klamry. W autostradzie też jest klamra: &quot;Dick Laurent nieżyje&quot;.</p>
+      <p>Dla ludzi o SILNYCH umysłach (naprawde silnych) proponuje pewien maraton filmowy Lynch przeplatany Aronofskim. Schizofremia gwarantowana.</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p>ja (Gość Latarnika)</p>
+      <p>22-01-2002 19:25:47</p>
+      <p>217.96.212.---</p>
+      <p>Nie widziałem jeszcze filmu. Widziałem tylko zajawkę. Wynika z niej że film jest w klimacie &quot;Zaginionej autostrady&quot; tylko że jeszcze bardziej psychodeliczny.</p>
+      <p>Cynik napisał, że klamre filmu teorzy para emerytów, widocznie Lynch lubi klamry. W autostradzie też jest klamra: &quot;Dick Laurent nieżyje&quot;.</p>
+      <p>Dla ludzi o SILNYCH umysłach (naprawde silnych) proponuje pewien maraton filmowy Lynch przeplatany Aronofskim. Schizofremia gwarantowana.</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p><a href="mailto:m_pachucki@ksse.com.pl">sofronow</a></p>
+      <p>18-01-2002 15:25:22</p>
+      <p>195.136.113.---</p>
+      <p>Byłem na filmie, jak i na wszystkich poprzednich filmach Lyncha - oczywiście za wyjątkiem Prostej historii - i muszę powiedzieć, że widziałem film nie tyle przerażający (to też) co film zrobiony przez mojego Mistrza będącego wreszcie w formie, zagubionej jakby przy okazji Zagubionej .......</p>
+      <p>Opinie krytyki ni jak sie mają do tego co jest na ekranie - pismaki piszą tylko po to aby wypełnić szpalty (wierszówka) i po to bo nie wypada nie napisać o ważnym wydarzeniu kulturalnym. Tak to juz jest. Najważniejsza jest opinia poszczególnych widzów odwiedzających kina (jak mało to źle, a jak dużo to też źle - paranoja) i tego należy sie trzymać. O tym filmie usłyszałem wiele ciekawszych opinii w kawiarni przy kawie po projekcji niż w &quot;uczonych&quot; dysputach gazetowych i telewizyjnych &quot;dyżurnych&quot;</p>
+      <p>Co do filmu i jego interpretacji - ciągle o nim myslę i wyrabiam sobie opinię. Film Lyncha jest filmem po którym się myśli i któy sie analizuje i to jest najlepsza rekomendacja.</p>
+      <p>Mirosław Pachucki</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p>Cynik (Gość Latarnika)</p>
+      <p>17-01-2002 13:49:09</p>
+      <p>193.0.75.---</p>
+      <p>Tekst wysokoenergetyczny i wciągający (film też). Czy zauważyliście, że klamrę filmu tworzy para emerytów?</p>
+      <p>Cyniczna uwaga: moim zdaniem Lynch zrobił &quot;Mucholand&quot; w taki sposób, by podwoić wpływy z biletów, bo większość widzów zapragnie póść na to drugi raz.</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p>PiotrR (Gość Latarnika)</p>
+      <p>17-01-2002 10:53:45</p>
+      <p>62.93.64.---</p>
+      <p>Film Lyncha to rzeczywiście ARCYDZIEŁO!</p>
+      <p>A recenzenci Gazety Wyborczej (nie tylko filmowi zresztą) - załośni i natretnie domagający sie od dzieła czegoś, czym jest ono zwykle obdarzone - tylko oni nie są w stanie go dostrzec.</p>
+      <p>PiotR</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p><a href="mailto:redakcja@latarnik.pl">autor</a> (Gość Latarnika)</p>
+      <p>16-01-2002 15:17:26</p>
+      <p>212.87.3.---</p>
+      <p>W odpowiedzi na dopisek Pani Sardinii odsyłam na stronę oficjalną filmu (<a href="http://www.gutekfilm.com.pl/mulholland-drive">www.gutekfilm.com.pl/mulholland-drive</a>), gdzie w tym wydadku biało na czarnym widnieje informacja o tym, jakąpostac zagrały aktorki. (Naomi Watts - Betty Elms, Laura Haring - Rita) Rozumiem, że ta kwestia jest dyskusyjna zważywszy na zagadkę tożsamości tak istotną dla tego dzieła.</p>
+      <p>Pana Rumcajsa pragne poinformować, że o sprawę doswiadczenia psychodelicznego pytałem samego Davida Lynch na zeszłorocznym Camerimage, i nie opieram się na niepewnych danych z drugiej ręki.(choć znana mi jest i owa pozycja książkowa). Zapraszam do dalszej polemiki, kiedy zobaczy Pan film (również w sprawie &quot;żonglowania konwencjami&quot;itp.) Pozdrawiam.</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p>Sardinia (Gość Latarnika)</p>
+      <p>16-01-2002 12:03:56</p>
+      <p>212.244.51.---</p>
+      <p>chcialam tylko dodac: w filmie wystepuje Naomi Watts jako blondynka Diane i Laura Harring jako brunetka Camilla. Betty to kelnerka z baru, w ktorym Diane spotyka sie z platnym morderca.</p>
+      <p>Autor</p>
+      <p>Data</p>
+      <p>Adres</p>
+      <p><a href="mailto:deleted">rumcajs</a> (Gość Latarnika)</p>
+      <p>16-01-2002 10:33:25</p>
+      <p>194.29.130.---</p>
+      <p>Bardzo lubię Lyncha, w najblizszym czasie mam zamiar wybrać się na jego najnowszy film. Zgadzam się z autorem tekstu, ze &quot;Gazetowe&quot; określenia dzieł Lyncha typu &quot;pusta abstrakcja&quot;, czy rozważania pana Szczerby, które fragmenty &quot;zagubionej autostrady&quot; dzieją się naprawde, a które są halucynacjami, wydają się żałośnie nietrafione. Przestrzegalbym jednak przed drogami na skróty, do których niewątpliwie należą określenia typu &quot;żonglowanie konwencjami&quot;, czy &quot;postmoderna&quot; pojawiajace sie w tekście pana Przyłuskiego. Podobnie, sugerowałbym, żeby nie wgłębiać się zbytnio w pytania, w jaki sposób dzieła różnych autorów determinowane są przez to, co rzeczywiście widzieli i przeżyli, w szczególności w wyniku doświadczeń narkotycznych (Lynch, Philip Dick), wad wzroku (Caravaggio), ataków choroby psychicznej (bardzo długa lista) itd. Przypomina mi się nieudany film o malarstwie Bacona, w którym kamera nieustannie zajmuje się wyszukiwaniem różnych deformacji ludzi i przedmiotów pojawiających się na szklanych blatach knajpianych stolików, w lustrach ze skazami itd.</p>
+      <p>Nawiasem mówiąc, w książce- wywiadzie z Lynchem, która ukazała się mniej więcej rok temu, jego pierwsza żona twierdzi, że on nigdy narkotyków nie zażywał i mocno dystansował się od tej całej hippisowsko- the doors of perception-owej historii (porównaj to z &quot;Głową do wycierania&quot;). Jaka jest prawda, trudno stwierdzić. Nie jest to zresztą takie istotne dla wszystkich poza klasycznymi empirystami, którzy stanowią już chyba wymarły gatunek. Pozdrawiam,</p>
+      <p>Rumcajs</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Lynch_i_psychodelia.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

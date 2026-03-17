@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doing it. Art, magic and the paradox of the Real (CCA, Tel Aviv) — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Doing it. Art, magic and the paradox of the Real (CCA, Tel Aviv)</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Doing_it._Art,_magic_and_the_paradox_of_the_Real_%28CCA,_Tel_Aviv%29__files/Jan%20Izrael%20Doing%20it,%20Magic,%20real,%20przyluski.png" alt="Doing it. Art, magic and the paradox of the Real (CCA, Tel Aviv)" loading="lazy"></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Doing_it._Art,_magic_and_the_paradox_of_the_Real_%28CCA,_Tel_Aviv%29__files/doing_it.png" alt="Doing it. Art, magic and the paradox of the Real (CCA, Tel Aviv)" loading="lazy"></div>
+      <p>Wykład &gt;&gt;</p>
+      <p>DOING IT. ART MAGIC AND TYE PARADOX OF THE REAL</p>
+      <p>2011</p>
+      <p>Center of Contemporary Arts, Tel Aviv</p>
+      <h3>Excerpts from the lecture</h3>
+      <p>I’m happy to be here, specially on the 8th of January, because it’s 85th birthday of Gilles Deleuze, so the speech of this date could be influenced by his words and his practical theory, that is one of the well known and well recognized theories and as you probably know the deleuzian age is going to come some day as Michelle Foucault said. I would like to refer to Deleuze as a creator of notion of „rhizome“ and of the „difference and the repetition“ and that is very important for the new possibilities of creative life of all sorts. The subject of today’s meeting is „Doing it. Art, magic and the paradox of real. Reflection of the recent evolutions of art forms“. Maybe I can start with telling you that there was sort of the lapsus in the title, when I got the email form CCA, because it was in Hebrew, that is written from the other side and one of the word went to the other side [of the phrase]. So it became „It. Art, magic and the paradox of doing“. So than I thought that there is a difference and there is a connection. There’s a difference and sort of similarity parallel between one and the other. For me, as Adina introduced us, this relation between the movement and image is the centre of our interest. I would probably don’t use word film, but motion picture that combine this schizophrenical, dualistic nature of the real. Let me show you the beginning of the film that was made three years ago. It was dedicated to Jan Świdziński, a guest of CCA Tel Aviv two years ago, who brings up to theory of art and theory of practical metaphysics into news page and brings out the theory of art from the trap, so called trap of concept into something different. Into what context is. So, as Joseph Koszut was saying, that art can be anything, it can be drinking glass of water. What is Jan Świdziński saying, not in opposition, because he is never into opposition, but to add something to it, to let us move a little forward, to make the thought a real movement, not just representation or a concept is „Ok, drinking a glass of water can be art, but in certain place, certain time, with certain people et cetera“. There are all other signs that accumulate, create and gives birth to sense; as a process from nonsense to sense. So for me, when I’ve started to think about possibilities of new art theory and new life theory as philosophy was traditionally called  - as a theory of life – this problem appeared. Because the theory was very close to what concept is. So it takes a lot of time to differentiate between one theory and the other to see a system of a theory, to see the work of the theory, to see the static structure or a system and to see how the theory works. What is actually the effect of it? So it was the logic of effect that came up. And this logic of effect contents every part of being. One of these parts are structures like ego, like personas, all sorts of beings that are traditionally considered to be very static, that build our identity. So meeting with Jan Świdziński was bringing out the theory to life in a dialog, in a quarrel,  in a struggle to understand the other way of thinking. For him the philosophical theory was creating the concepts. What does it mean? Creating the concepts was like creating the poetry by theory. So that there are two or three signs put together that never correspond in everyday life. That difference makes nonsense first and than in the certain context makes sense. And the same is in art, especially in art that tries to bring the new for the being.</p>
+      <p>(...) with magic, with magical action. Almost synonymous that magic – from Durkheim, Malinowski, Mauss to Levis Strauss, up to know – is symbolic action that is effective. So it’s, as Levis Strauss writes, „symbolic effectiveness“. How it is connected with art? Is art magic? Is every art effective action? Is performance effective action? Is effective action a performance? All these questions came up to me and I tried to work with logic of effect – what it is, what difference does it make – to understand what the logic of effect is. It’s the interconnection of life, interconnection of science in life that make this effect possible. Like in Deleuze’s „rhizome“, like in the net, but net that we are already used to sounds to be a structure. „Rhizome“is live, is living creature. When you move one point it goes like a wave, than the other points are changing. So the meaning really comes from the movement of it, not from the significance or the identity of the point. This, as a proposition of a logic of effect could be illustrated with a joke that I recently heard. There’s a man walking and there’s a frog walks behind him. „It’s a frog following me“ – thinks a man. „Yes, it’s me“ – thinks the frog. This, as Deleuze called, empiricism, the logic of empiric science, of reading science empirically is our nature on one hand, but also something different. We not only accumulate science that is coming to us, but we also have to do something to transcend it. So we are in the move. And this is what Deleuze called transcendental empiricism. What is connection of transcendental empiricism with art? There are many definitions of art. It’s not popular right now to the fine art, I’m not going to do that. These times are thought to be finished, but for many they are not. If we don’t do anything about discovering what it can be, what can be a logic of effect and effective action, what can be creative action, that is traditionally connected with notion of art than what we can do? Than we are passive, we became a part of structure. Than our personas are not living personas, they become like masks, like the personas, personare from the roman theatre. The roles that we play become our second nature and become like thick skin that starts to grow on us and we cannot move freely. For some Eastern philosophies this state of not having the structure or mask on us is actually a state of being a child. It’s the base of being creative and something that is for sure kind of new strategy to propose. I wrote that we are going to analyze modern strategies of creative actions. So when I came up to look at them to make sort of typology or classification of some kind, at first I met on my way this self-building, the logic of self-creation, that accumulation of knowledge, like the logic very closed to CV self creation world. That we don’t deal with what is the real movement of the self but we deal with accumulation of science that pretends to build our person, but actually it build our image. And this two notions of movement and image started to be in the ? started to come up all the time. In film, because film is also an illusion of movement. In all the work of documenting performance art or live art I had to face the problem of how to do it. Not, as Świdziński said, to analyse one more time, but how to do it. I came up to some conclusions and one of these conclusions was that the movement and its representation always go together. When we see what Duchamp was doing – he was saying that the realism like Courbe, for him the master of realism, was one that produced the image that was only the image inside our eyes. And he was not a Cubist, he didn’t want to show the real from many perspectives to give us an illusion that we see more and this is the real – perceptivity. He was not also a Futurist that was fascinated about avantgarde movement of something that is in stages and in the speed. This was an illusion of movement for Duchamp and he started to experiment. There are some signs or traces that he left ? his painting „The players of chess“. It’s very much like in Nabokov’s „Defense of illusion“. The book telling a story of a crazy chess master that knows his techne, knows his art so well that he doesn’t look at the position of the figures, he’s looking at the game of forces. And that’s what Duchamp tried to show when he was working on this painting. „Players of chess“ seams to be a trace of ordinary quasi-cubistic painting ,but there was something that interested him mostly. And than there were other painting that were following it. At the same time very well known Muybridge’s experiment – the beginnings of film, beginnings of motion pictures. Than the first act „Going down the stairs“ where Duchamp tried to brake the thinking of phazes, that the movement  showing the phazes of movement and the movement by itself. So that positions ? image and the movement. There started to be many realisations of it, crucial thing to discover. Why am I talking about it? Because I think it’s a perfect representation of what I want to say.</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Doing_it._Art,_magic_and_the_paradox_of_the_Real_(CCA,_Tel_Aviv)_.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

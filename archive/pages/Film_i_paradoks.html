@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Film i paradoks — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Film i paradoks</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>[“Film And Paradox” is going to be a contextual work but at the same time will be a play with one-goal-focused production model. The film will be prepared in regular three step process: STEP 1. 3 days of filming, STEP 2. 2 days editing (in the place - editing work will be open for public to form an editing workshop for volunteers), STEP 3. show of a rough cut.</p>
+      <p>0. For the whole KNOT Bucarest visit: open reading room (reading table/tent) on the work of Marcel Duchamp. Basic library to take a look, seat and read for a while. There will be a moderator and a person available „to talk to“ during or after reading. „The only way to make music is to study Duchamp“ – said Cage. We will follow neodada and fluxus and we will examine the results.</p>
+      <p>Katarzyna Jaśkiewicz twórca interdyscyplinarny w dziedzinach performance, taniec, videoart, scenariusz, reżyseria, choreografia.</p>
+      <p>Kolejną interaktywną warstwą jest muzyka improwizowana podczas performance przez takich artystów i zespoły jak: T. Sudnik, W. Kiniorski, D. Makaruk, Blas!K, A.Turczynowicz, Luka Hołuj, Piotr Michałowski «WEF», Rh+, Mystic Break Masters.</p>
+      <p>The sound/music layer of the performances were created in cooperation with various bands and musicians such as Sudnik, Kiniorski, Makaruk, Blas!K, Turczynowicz, Luka Hołuj, Piotr Michałowski «WEF», Rh+, Mystic Break Masters.</p>
+      <div class="vimeo-embed"><iframe src="https://player.vimeo.com/video/255555699" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Film_i_paradoks_files/paradoks%20and%20film%20-%20cork.jpg" alt="Film i paradoks" loading="lazy"></div>
+      <p>password: paradox</p>
+      <p>PARADOKSY</p>
+      <p>Czym jest paradoks? Sztuka jest światem w którym nie można pominąć tej kwestii.  Paradoks w sztuce to sposób na spojrzenie niedualne, poza dychotomią tragizm-absurd, które są związane z wartosciowaniem. Paradoks, przeciwnie, niewartościuje i jest zaangażowany, prowokuje i wynosi poza obszary zagżenia kryzysem. Elementy taoistyczne w sztuce zachodniej (tak zwanej “zachodniej“), oraz Platon i Czuang Tsy – różnice te ujawniają wielorakość istnienia paradoksu. „Tragizm – absurd – paradoks“ – tak zatytułowany esej Hilsbechera cytuwałem już przy okazji sztuki akcji, jednak okazuje się nośny w całym jej obszarze. Odcienie jakie wnosi możliwość przemiany form myślenia za pośrednictwem znanych ale zapomnianych środków zbliżyć nas może do kultur, które nie zanegowały nigdy paradoksalnej natury rzeczywistości i na tym rozumieniu zbudowały swoją potęgę. Sztuka taoistyczna, czy wogóle sztuka chińska jest tego doskonałym przykładem. Klasyczna chińska formuła kreacji i jej elementy w sztukach innych kultur (paradoksy buddyzmu, od Nagardzuny po koany i catuṣkoṭi) przekonuje o tym dobitnie. Podobnie Zachodni hermetyzm. Jak I Ching wpłynął na rozwój myślenia paradoksalnego? Tego rodzaju pytania będziemy zadawać za kilkanaście lat, teraz zato przypatrzmy się w jakim miejscu sami się znaleźliśmy.</p>
+      <p>Malarstwo gestu, manifestacja energii życiowej jest przecież stale obecny w euroamerykańskiej historii sztuki. Film rozumiany jako ruch/obraz, albo flux/flow. To paralele do przepływu energii chi, choć jeszcze nie nauczyliśmy się tak tego postrzegać. Tai chi – ruch i medytacja – stał się jedną z tak popularnych praktyk, że są już widoczne mentalne konsekwencje tego wpływu kulturowego. Drugim będzie z pewnością myślenie paradoksalne, bo choć rewolucja kwantowa objęła wszystkie nauki ścisłe, nadal nie wpłynęła prawdziwie na zachodnią humanistykę i to jest skandal.</p>
+      <p>Tragizm – absurd – paradoks. Hilsbecher określił tę triadę i pokazał jej chronologiczne następowanie w przemiania form literackich. Tragiczna jest tragedia, absurdalny jest Beckett i jego następcy, ale już Joyce czy Borges są paradoksalni. Zainteresowaniem Hilsbechera stały się odcienie, stopnie intensywności, różne zabarwienia, od tragizmu do paradoksu. I dalej: do śmiechu, rozładowania napięcia tkwiącego w sprzeczności, do aporii, na której buduje się treść każdego przekazu. W teatrze na przykład rządzi dramatyzacja, czyli rozsunięcie tych biegunowych punktów, zmaksymalizowanie napięć, które pozwala poruszyć widza. Z drugiej strony teatr jest jakąś wielką zgodą na czas, na przemijalność czasu, na efemeryczność. I tak jest praktycznie we wszystkich sztukach performatywnych. To, co możemy nazwać strukturą obecną w teatrze to nic innego jak tylko powtórzenie. Próba po próbie, spektakl po spektaklu. Każdy inny. Różnica czyni treść. Reszta jest ulotna, często jednorazowa, i należy zgodzić się na jej niepowtarzalność. Inne sztuki łudzą jakby tym, że „mają“ mocny przedmiot, strukturę materialną, która posiada swoje trwałość. Obraz czy rzeźba udaje, że przetrwa dużo dłużej, będąc artefaktem. Wrócę do tego jeszcze przy następnej okazji.</p>
+      <p>Paradoks obecny jest we wszystkich kulturach świata – to hipoteza, której jestem w stanie bronić. Na pewno zaś w kulturach o charakterze współczesnym, posiadających rozwiniętą refleksję logiczną, czyli refleksję meta, abstrakcyjną  [i nie zaaangażowaną w tworzenie treści kulturowych pierwszego stopnia, takich jak normy społeczne]. Podobnie formułował to Timothy Leary, kiedy pisał:</p>
+      <h3>Wierzę, że nowa filozofia (...) powinna się składać z następujących elementów</h3>
+      <p>1.Być naukową w treści i fantastyczno-naukową w formie;</p>
+      <p>2.Opierać się na poszerzeniu świadomości, zrozumieniu swojego systemu nerwowego, co pozwoli osiągnąć intelektualną skuteczność i emocjonalną równowagę;</p>
+      <p>3.W polityce kłaść nacisk na indywidualizm, decentralizację władzy, tolerancję różnic zgodnie z zasadą &quot;żyj i daj żyć innym&quot;, działanie lokalne i &quot;myślenie o swoim interesie&quot;;</p>
+      <p>4.Kontynuować trend ku otwartej seksualnej ekspresji, przy realistycznym dostrzeganiu równouprawnienia i zróżnicowania płci. Religijnym symbolem mitycznym nie będzie mężczyzna na krzyżu, lecz para męsko-damska złączona w komunii wyższej miłości;</p>
+      <p>5.Poszukiwać objawienia i Wyższej Inteligencji nie w formalnych rytuałach adresowanych do antropomorficznego bóstwa, lecz w procesach naturalnych, systemie nerwowym, kodzie genetycznym, nie omieszkując prób komunikacji kosmicznej;</p>
+      <p>6.Zawierać praktyczne, techniczne procedury neurologiczno-psychologiczne dla zrozumienia i posługiwania się wiadomościami o nieśmiertelnej harmonii ukrytymi w procesie umierania;</p>
+      <p>7.Być nacechowana hedonistycznymi, estetycznymi, nieustraszonymi, optymistycznymi i miłosnymi uczuciami.</p>
+      <p>PARADOX AND FILM</p>
+      <p>What is a paradox? Art is a universe where this question cannot be excluded. Paradox in contemporary art ia a new approach towards nondual regard, not engaged in dichothomy of tragism and absurd, which both are connected with judgement. Paradox – on contrary – is not talking about values or evaluation. It is pure logic. Tragedy – absurd – paradox. This evolution of artforms is Hilsbecher’s great discovery. Tragedy is tragic (of course, even in nietzschean sense), Beckett and his followers are absurd, but Joyce or Borges are paradoxical. In focus of interest are now shades, levels of intensity, change from tragedy to paradox. Towards a different way of expressing a relation between oppositions. Now it’s a time of paradox.</p>
+      <p>Action painting, manifestation of life energy through image, is present in all Euro American art. Can film be a fusion of movement and representation  as well as flux/flow, at the same time? Moving picture and life force energy.</p>
+      <p>Paradox is present in all world cultures, I can prove this supposition. So what shall we do? So as Timothy Leary was saying:</p>
+      <p>„I believe that new philosophy should I believe that a new philosophy will have the following characteristics:</p>
+      <p>1.It will be scientific in essence and science-fiction in style.</p>
+      <p>2.It will be based on the expansion of consciousness, understanding and control of the nervous system, and will produce a quantum leap in intellectual efficiency and emotional equilibrium.</p>
+      <p>3.Politically it will stress individualism, decentralization of authority, a live-and-let-live tolerance of difference, local option and a mind-your-own- business libertarianism.</p>
+      <p>4.It will continue the trend towards open sexual expression and a more honest, realistic acceptance of both the equality of and the magnetic difference between the sexes. The mythic religious symbol will not be a man on a cross but a man-woman pair united in higher love communion.</p>
+      <p>5.It will seek revelation and Higher Intelligence not in formal rituals addressed to an anthropomorphic deity, but within natural processes, the nervous system, the genetic code, and, without, in attempts to effect extra-planetary communication.</p>
+      <p>6.It will include practical, technical neurological-psychological procedures for understanding and managing the intimations of union-immortality implicit in the dying process.</p>
+      <p>7.The emotional tone of the new philosophy will be hedonic, aesthetic, fearless, optimistic, loving“.</p>
+      <p>===========================================</p>
+      <p>Film and Paradox</p>
+      <p>Jan Przyluski, Katarzyna Jaśkiewicz</p>
+      <p>0. Meeting on “freak culture”, visionary-surreal-erotic-psychodelic-abnormal-bizarre-occult and paradoxical contemporary art. Discussion and presentation of selected recent appearances in the field.</p>
+      <p>0.New approach to contextual cinema. 10 minutes. Video.</p>
+      <p>Experimental movie with the artists invited by the Knot-Bucarest project to form a visual material on hidden, abnormal character of artists’ work. The film will be a simulation of community art films from the seventies (like Polish collective cinema [film składkowy] made during “Shared Culture” [Kultura Zrzuty]) and freak cinema. It is to correspond with the Knot as a whole.</p>
+      <p>Duchamp Mini-Library Installation</p>
+      <h3>współpraca</h3>
+      <p>Od 2005r. realizuje autorskie performance multimedialne, których bochaterem jest człowiek – świadomość rozwijająca się w kosmosie. Przedstawienia tak abstrakcyjnej i wielowymiarowej tematyki są celowo afabularne. Noszą cechy interaktywnego eksperymentu w którym uczestniczą nie tylko twórca i widzowie ale i miejsce, np. przecięcie rzeki z architekturą mostu oraz czas, koniunkcje i opozycje ciał niebieskich czy przełomy kolejnych Nieb w podświatach Kalendarza Majów. Cechy i kontekst tych eksperymentów wyświetlane są w formie videoartu, energię generuje ruch – taniec, ekspresja skupionego umysłu.</p>
+      <p>Zrealizowane performance to: «Stereometria – Impresje», «Most Skalarny – Kosmiczna Rozgrwka», «Plus contra Minus», «Alchemia Przemiany», «Słodycz Kobiecości», «Wody MostArtu», «Feszyn na Ludowo», «Galactic Devi Dancer», «Zaślubiny Ognia i Wody», «Interferencja Nas», «Zjawy», «Transparencja Pejzażu».</p>
+      <p>Jest twórcą i animatorem interdyscyplinarnego projektu artystycznego «MultiArtLab», prezentowanego cyklicznie od czerwca 2009 na Barce transFORM w ramach festiwalu «Przemiany» - ESK 2016 a od października w «Centralnym Basenie Artystycznym».</p>
+      <p>Udział w „Fortalicje – Festiwal Sztuki Intuitywnej”, „MostArt”, „Czarna OFFca”, „Rewizje”, projekty w ramach „Nocy Muzeów”,”Teatr Academia” i wiele innych.</p>
+      <p>Katarzyna uczestniczy od czasów studiów na ASP w Warszawie w projektach wielu artystów sztuki współczesnej a od 2000 roku jest aktywną uczestniczką i animatorką warszawskiego OFFu.</p>
+      <p><a href="http://www.krystallaser.eu">www.krystallaser.eu</a></p>
+      <p>---</p>
+      <h3>colaboration</h3>
+      <p>Katarzyna Jaśkiewicz is an interdisciplinary artist, performer and dancer. Also creating videoart, scenarios, directing and working on choreography. Since 2005 she makes multimedia performances in which a main figure is a Man – conciousness developing in the Universe. Performences of Katarzyna with abstract and multidimentional subjects usually demand special, non-linear plot. These experiments form an interaction of artist and audience but also a place they are taking (a river and a bridge over it) and time: conjunctions and opositions of planets, and cascades of havens in subworlds of the Maya calendar. Qualities and concept of these experiments are introduced in a form of video-art projections, while the dance is generating energy.</p>
+      <p>Selected performances of Katarzyna Jaśkiewicz: «Stereometry – Impressions», « Scalar Bridge – Cosmic Game», «Plus contra Minus», «Alchemy of Change», «The Sweetness of Feminity », «The Waters of BridgeArt», «Galactic Devi Dancer», «Sacred Marriage of Fire and Water», «Interference in Us », «Ghosts», «Transparency of Landscape».</p>
+      <p>Katarzyna is also a creator and art animator of «MultiArtLab», a cycle of interdisciplinary events presented on a transFORM ship during the Festival „Metamorphoses“. She participated in „Fortalicje – Festival of Intuitive Art”, „MostArt”, „Czarna OFFca”, „Revisions“, with Academia Theater and many others. Official web site: <a href="http://www.krystallaser.eu">www.krystallaser.eu</a></p>
+      <p>Film and Paradox</p>
+      <p>2010</p>
+      <p>Bukareszt</p>
+      <p>współpraca: Katarzyna Jaśkiewicz</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Film_i_paradoks.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

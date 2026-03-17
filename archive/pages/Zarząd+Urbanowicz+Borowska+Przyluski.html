@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zarząd+Urbanowicz+Borowska+Przyluski — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Zarząd+Urbanowicz+Borowska+Przyluski</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>Andrzej Urbanowicz</p>
+      <p>Prezes Towarzystwa Bellmer</p>
+      <p>“Andrzej Urbanowicz, jeden z najwybitniejszych przedstawicieli polskiej sztuki ezoterycznej, urodził się w 1938 roku w Wilnie, ale ostatnich pięćdziesiąt lat życia (z przerwą na pobyt w USA w latach 1978-1991) spędził na Śląsku, tworząc w pracowni przy Piastowskiej 1 w Katowicach ośrodek sztuk magicznych. W tym tętniącym życiem, psychodelią, magią i erotyką czakramie (kontr)kultury udało mu się wyczarować tymczasową strefę autonomiczną, gdzie sacrum przenika profanum, zacierając gatunkowe granice.</p>
+      <p>Urbanowicz – prekursor polskiej sztuki psychodelicznej, miłośnik chaosu, sztuki bizarre, kiczu i surrealizmu powołał tam do istnienia (wraz z Urszulą Broll, Henrykiem Wańkiem, Antonim Halorem i Zygmuntem Stuchlikiem) grupę Oneiron, która w latach 1965-1976 penetrowała okultne wymiary sztuki. Powstały wtedy liczne pokazy-misteria, happeningi o charakterze dadaistycznym oraz tzw. Czarne Karty, swoisty rodzaj artystycznej kosmogonii. Na początku lat siedemdziesiątych na Piastowskiej została założona pierwsza polska wspólnota buddyjska.</p>
+      <p>Urbanowicz odkrywa różne wymiary sztuki talizmanicznej, tworząc obrazy, kolaże, obiekty i zdarzenia magiczne. Jest także inicjatorem i prezesem Towarzystwa Bellmer, w ramach którego odbywają się performanse i misteria ku czci ekstazy i ekscesu.</p>
+      <p>Jego sztuka to pochwała chaosu jako dynamicznej macierzy/mandali życia, czemu daje wyraz pisząc: „W tym co robię jest wiele różnorodności, która czasem dziwi mnie samego. Ta zewnętrzna i wewnętrzna kalejdoskopowość wynika z chęci badania różnych i kontrowersyjnych obszarów percepcji, a również z rozmaitych możliwości przekazu tak prowokowanych. W tym polimorfizmie odnajduję i stwierdzam wspólność, niekiedy tożsamość. Lubię też czuć się jak ogrodnik, który raduje się, gdy prócz brukwi i pietruszki, konopi i powojów, ukradkiem wyrosła mu mandragora (...) Rzadko udaje mi się skupić na jednym wątku lub kanale. Jedna i bezwarunkowa racja nie zdołała mnie do końca przekonać, więc pokazuję racje warunkowe, prawdy oboczne, wątpliwości i podejrzenia.”</p>
+      <p><a href="http://www.urbanowicz.art.pl" >www.urbanowicz.art.pl </a></p>
+      <p>Małgorzata Borowska</p>
+      <p>Jan Przyłuski</p>
+      <p>Wiceprezes Towarzystwa Bellmer</p>
+      <p>Artystka wizualna, autorka happeningów, instalacji. Jej ostatnia seria malarska to wyraz niezwykle silnej energii życia skrystalizowanej w postaci geometryzujących form talizmanów. Pracuje też z fotografią i komiksem, jest inicjatorką i organizatorką wydarzeń artystycznych na Piastowskiej 1 i opiekunką tego niezwykłego miejsca.</p>
+      <p>Małgorzata Borowska to artystka magiczna, performerka, kolekcjonerka osobliwości, poszukiwaczka dziwnych zdarzeń. W aranźowanej przez siebie przestrzeni dba o to, każdy szczegół jej praktyki artystycznej łączył w sobie to, co erotyczne i ezoteryczne. Urodziała się w 1982 roku w Warszawie, lecz większość jej działań wiąże się z Towarzystwem Bellmer i pracownią “Piastowska 1” w Katowicach. Obszary na których działa to przede wszystkim sztuka i komunikacja. Zajmuje się animacją street-artu, organizuje liczne wydarzenia magiczno-artystyczne z Andrzejem Urbanowiczem, przyjmujące postać performansów, ekstatycznych obrzędów i tongów. Podczas jednego z tych wydarzeń rozpoznano ją jako nieformalną inkarnację Wadźra Warahi, głównej dakini tybetańskiego panteonu.</p>
+      <p>Skarbnik Towarzystwa Bellmer</p>
+      <p>Artysta wizualny, antropolog kultury, reżyser. Złożyciel studia filmowego Relativo / Warszawa Centralna. Urodził się w 1979 roku w Warszawie. Ukończył kulturoznastwo na Uniwersytecie Warszawskim pod opieką prof. Leszka Kolankiewicza.</p>
+      <p>Jest autorem książki “Sztuka akcji”, będącej historią i hermeneutyką sztuk peformatywnych w Polsce. Stypendysta Ministerstwa Kultury i Urzędu Marszałkowskiego Woj. Mazowieckiego. Doktorant w Instytucie Sztuki PAN, gdzie przygotowuje rozprawę naukową pod opieką prof. Wiesława Juszczaka.</p>
+      <p>Zajmuje się reżyserią, postreżyserią filmową (found footage), montażem filmowym, filmem eksperymentalnym. Zrealizował dotąd kilka filmów dokumentalnych (m.in. “The Differences”, “Sympozjum realności”, “Nieskończony jest ruch”) oraz krótkich filmów eksperymentalnych (“Fu”, “Biegacz” (z Karolem Czyżem), “Arcymistrz” (z Danielem Baumanem). Współpracuje z artystami wielu mediów: rzeźbiarzem Wiktorem Guttem (instalacje wideo “Diavoli”, Akademia Sztuk Pieknych w Warszawie i “Dzikość Dziecka”, Galeria Królikarnia), grafikiem Bartoszem Łukasiewiczem (video-performance “Black Dot”), czy operatorem filmowym Łukaszem Guttem i Anną Niesterowicz (“Big Band”, Fundacja Galerii Foksal). Jest autorem koncepcji serii dokumentalnej o sztuce naiwnej realizowanej przez Polskie Wydawnictwa Audiowizualne czy montażystą nominowanego do Europejskiej Nagrody Filmowej dokumentu Pawła Ferdka “Szklana pułapka”.</p>
+      <p>Uczył się reżyserii obserwując pracę Eugenio Barby (w International School of Theater Antropology), Roberta Wilsona, Krystiana Lupy. W ostatnim spektaklu Lupy “Persona. Tryptyk” (Teatr Dramatyczny w Warszawie) zajmuje się realizacją projekcji filmowych.</p>
+      <p><a href="http://warszawacentralna.pl" >Studio filmowe Jana Przyłuskiego</a></p>
+      <p><a href="http://knotland.net/index.php?id=101&amp;tx_ttnews%5Btt_news%5D=440&amp;cHash=4f56564320b6dbdc3c436ac3d832e354" >profil Przyłuskiego w THE KNOT</a></p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/TOWARZYSTWO_BELLMER/Zarząd+Urbanowicz+Borowska+Przyluski.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

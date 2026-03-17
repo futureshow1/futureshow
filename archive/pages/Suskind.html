@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suskind — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Suskind</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>Jan Lubicz Przyłuski</p>
+      <p>Eksperymenty z Pachnidłem</p>
+      <p>Protokół</p>
+      <p>Dekonstruować zapach</p>
+      <p>W słynnej symulacji filozoficznej zawartej w Traktacie o wrażeniach Étienne Bonnot de Condillac wyjściowym modelem swego niedorzecznego eksperymentu perswazyjnego czyni twór wewnętrznie zorganizowany na podobieństwo człowieka, lecz pozbawiony - wzorem lockowskiej “pustej tablicy” - wszelkich idei, po to, by obdarzając go następnie kolejnymi zmysłami, one at the time, dowieść prawdziwości tezy o sensualnym pochodzeniu wszelkiego poznania. Nie wiedzieć czemu, francuski empiryk tak konstruuje swój osobliwy wywód, że pierwszym zmysłem, z którym jego konstrukt intelektualny, pokazowy „model” naukowej prezentacji, zaczyna poznawać świat, jest węch, a więc od czasw Platona zmysł uznany za najniższy, najprymitywniejszy i teoretycznie podejrzany. Ale to jeszcze nie wszystko. Otóż za chwilę, dosłownie po kilku stronach, w rozdziale O ideach człowieka ograniczonego do powonienia okazuje się, że twór ten, ograniczony - jakbyśmy to chcieli powiedzieć - do wietrzenia czy niuchania, wywodzi z tego jednego epistemicznego źródła zarówno sądy i rozum, jak refleksje i pragnienia, przyjemność i cierpienie, nawet pojęcia abstrakcyjne i idee liczb. Z jedności rozwija się cała złożoność, w każdym szczególe tkwi prawda o całości - tak mogłaby wyglądać próba obrony Condillaca dziś, choć we współczesnej atmosferze intelektualnej i tak konieczna byłaby anielska cierpliwość i święta życzliwość czytelników. Cechy te niewątpliwie przydadzą się również czytelnikowi niniejszego tekstu. Szczególnie, że w trakcie pracy autor coraz to oddalał się od uprzednio przewidywanej formy w stronę bliżej nieokreśloną. Dwie przyczyny złożyły się na taki bieg wydarzeń. Z jednej strony dłuższe obcowanie z tym samym tekstem daje wrażenie odnalezienia w nim wszystkiego, całej prawie złożoności uniwersum, która jednak nie pozwala się ująć w żaden inny sposób jak przez najpodlejszą z form krytycznych czyli nadinterpretację. I tak stało się w tym wypadku. W dodatku, chyba żeby tylko wzmóc zakłopotanie, nadinterpretacji tej nie udało się nawet otrzymać formy całościowej, lecz skończyła na kulawej i  fragmentarycznej. Z drugiej strony, haniebny ten eksperyment został poprzedzony dość mętnymi uwagami ogólniejszej treści, której bezpośrednią przyczyną była przekora, z jaką powieść Süskinda opierała się interpretacji, nie dawała „prześwietlić”, oczarowywała tylko i zwiększała dystans, z którego krótkowzroczny obserwator niewiele dostrzegał. Rozmywanie się szczegółowości znaczeń tego dzieła otworzyło pole innej refleksji, dotyczącej szerokiego zagadnienia interpretacji najnowszych powieści w ogóle.</p>
+      <p>Georg Christoph Lichtenberg napisał kiedyś, że „gdy tylko zaczynamy widzieć wszystko we wszystkim, nasza mowa staje się niejasna”, „zaczynamy [bowiem] przemawiać językiem aniołw”. Choćby nasza mowa miała być diabelską, zaczynajmy!</p>
+      <p>I</p>
+      <p>Mówi się, e to dobrze, kiedy dzieło wywołuje skrajnie odmienne reakcje, nie jest zwyczajne, bezbarwne, letnie; lepiej może pasowao by tu stwierdzenie  - bezwonne. Opinii jest tyle, ilu ludzi, de gustibus non disputandum est, i tym podobne. Najgorsze, co może spotka wszelką twórczo, bez względu na form, w jak rozbłyska, to albo całkowite przemilczenie i zapomnienie, albo lakoniczne czy aforystyczne stwierdzenie, w którym jest zamykana. Tak jak gdyby sowa „błyskotliwe i przejmujące” zdolne byy ogarną wszystko, co tylko ma jakąś warto. I choć wartości nie bardzo dają się tłumaczy, w sztuce powieści  stopień ich dyskusyjności jest różny w zależności od co najmniej kilku czynnikw, związanych, by tak rzec, z tworzywem. Mowa tu o wszystkim tym, co w grze zwanej sztuk stoi po stronie dzieła – a nie są to tylko słowa – i w rękach artysty formuje przestrzenną siatkę na razie pustych znakw. Znakw, które jak niezaspokojone kochanki pragną złączenia ze swymi znaczeniami. Obecne w tekście signifiant czeka na nadanie mu signifié. Tekst przyciąga swego czytelnika. Jest to następstwo nieuniknione, konieczne i jeli posiada jakikolwiek cel, jest nim spotkanie i dialog między stronami. Todorov opisuje to zabawnym stwierdzeniem, które mówi, e tekst jest tylko piknikiem, na który pisarz przynosi sowa, czytelnicy za sens. Sugestia wspólnej konsumpcji nie przymiewa jednak walorw rendez-vous.</p>
+      <p>Zauroczenie</p>
+      <p>Ale co stanie się, gdy na pikniku dojdzie do spotkania milczącej piękności tekstowej, odzianej w jedwabie wyśmienitego sowa i spowitej w wyrafinowany szal najlepszej literatury z nieśmiałym i kochliwym młodzieńcem - interpretatorem? Młodzieńczość nie jest w tym wypadku cechą związaną z wiekiem, świadczy jedynie o stopniu uczuciowości i temperaturze przeżywania. Czy zapierający dech w piersiach czar omami modzieca tak bardzo, e w jednej chwili zapomni o całym bożym wiecie i straci wszystkie swoje możliwości krytyczne, w zauroczeniu bdc zdolnym jedynie do nieskoordynowanego komplementu? Może w obliczu porażającego, nieodpartego piękna, które swą doskonałą powierzchownością zdaje się zapowiada równie doskonałe wnętrze, zawsze będzie onieśmielony i bierny wobec konieczności okrutnej, intelektualnej wiwisekcji. Na samych westchnięciach kończą się przychylne sowa zauroczonych. W pustych recenzjach poza streszczeniami widnieją tylko zdania w stylu: „To powie, której każda stronica pachnie.” Czy nawet surowi recenzenci stali się w tej konfrontacji niczym ckliwi młodzieńcy? Czy zdołamy się dowiedzie, jak w istocie wygląda to, co skrywa się pod poziomem zdarzeniowym i językową wirtuozerią ? A jeli nie kryje się nic?</p>
+      <p>Oskarżyciel</p>
+      <p>„Efektowna bajka, ale osadzona w realistycznie szkicowanym tle i opowiadana w taki sposób, jakby bya normalną psychologiczną i realistyczną historią.” - pisze pewien zjadliwy, acz bystry anonim. (Rzadko się zdarza, żeby w jednym z typowo recenzenckich pism tekst o tak głośnej pozycji ukazywał się bezimiennie. Nie ważne.) Słuchajmy więc dalej anonimowego oskarżyciela. Czyby na niego jednego nie działał czar opowieci i językowa wirtuozeria? A może chciał więcej? Tego „więcej”, którego, jak się zdaje, my take szukamy. Ostrze anonima nie pikuje na olep, szuka serca. Kiedy pisze o Süskindzie, e ten „świadomie wprowadza zamieszanie i sugeruje fałszywe tropy”, nie sposób zaprzeczy, ale czy można wziąć to za zarzut? „Z ca powaga na przykład rozdaje oceny moralne, choć nie maj one żadnego zastosowania do wiata jego powieci, gdzie inne rządzą reguły.” Tak. „Sugeruje poważne, ambitne dzieło”... „stara się dowie swoich pomysłw i kultury literackiej.” By może. Czyby mody artysta napisał co tak dobrego jedynie po to, by dowie swego talentu? „ (...)powie łatwa,  a po lekturze skupia uwag nie tyle na sobie, co na błyskotliwości autora.” Ale czytamy o nim take, e „jest cyniczny”. I oto pojawia się jeden z głównych problemw powieci: pytanie o dystans pisarza do swego dzieła, o dystans spojrzenia powieściowego en général. Tym, co - według Manna - pozwala określi powie pod względem estetycznym jako gatunek apolliński, jest ironia wanie, która jest jego zdaniem duchem epiki. Powtarza to Kundera, powtarzaj inni, ale nikomu z nich nie udao się jasno określi, na czym polega ta cienka i niebezpieczna granica oddzielajca ironię od cynizmu.</p>
+      <p>Jest w Pachnidle wiele z zabawy, przyjemność tekstu rzadko zjawia się w tekście „zamęczonym”. Prawd jest te przedrzenianie dziejw świętych i prorokw, ale o tym pniej. Najgorsza obelga tyczy się rzekomych „celw” pisania, tematu bardzo dyskusyjnego, będącego pretekstem do szybkich ocen i klasyfikacji. Czy rzeczywiście „cele s tak naprawdę czysto komercyjne”? Cele ?!! Czy w ogóle warto o nie pytać?</p>
+      <p>Nie będzie chyba nadużyciem powiedzenie, e Süskind poza intentio operis wymiewa celowość, a robi to świetnie. Czy tym samym nie wymiewa on użycia kategorii „intencji” w odniesieniu do sztuki powieci postmodernistycznej, w której realizuje się połączenie oświeceniowych korzeni z nowoczesnym irracjonalizmem? Pachnidło sprawia wrażenie powieci, która „się pisze”, bo genialność Süskinda polega również na tym, e lekko lektury nie oznacza wcale jej powierzchniowości.</p>
+      <p>[A jednak]</p>
+      <p>A jednak nie łatwo udowodni, e jest w Pachnidle jeszcze jeden poziom znaczeń ponad tym, który uznamy za streszczenie akcji. Jaki? Co to wszystko znaczy? Czy istnieje wymiar symboliczny? Jaki nadrzędny sens czy tylko gra z form, giętko języka i wiat woni, który zaskoczy swym bogactwem każdego, kto żyje zgodnie z prymatem oka,  oszołomi go cudowną barwności olfaktorycznego królestwa dowodzącego swej wielkości tysiącami sw na określenie tysięcy zapachów? Ta obfitość sowa pachnącego lub niczym miejskie miazmaty przyprawiającego czytelnika o mdoci jest naprawdę porażająca. Podobnie jak porażające s szczegóły słynnej psychohistorycznej książki Alaina Corbina poświęconej osiemnastowiecznej sferze zapachw i ich niebagatelnemu znaczeniu w rzeczywistości społecznej. Notabene, 1986 rok czy francuską publikację Pachnidła u Fayarda (w rok po premierze w Zürichu) z wydaniem Le miasme et la jonquille. Czy na studiach w Aix Süskind słyszał co o profesorze Sorbony, który cae lata poświęcił zapachom buduarw czasw Marii Antoniny, rytuałom toaletowym, a take odorom Parya, doom kloacznym i smrodom pospólstwa? Wiele logiki jest w usytuowaniu historii Grenouille’a między 38 a 67 rokiem oświeconego wieku.</p>
+      <p>Formuła?</p>
+      <p>Niektórzy we wszelkiej literaturze chcą widzieć robotę inżynierską. Znaczyłoby to, e jej form rządzą określone reguły, e zostaa stworzona w wyniku wcześniej przemylanych i konsekwentnie zastosowanych posunięć, które z kolei opieraj się na równie jasnych i zwięzłych założeniach autora. Zadaniem interpretatora byłoby więc, jak sobie łatwo wyobrazi, drążenie dzieła, odsłanianie jego struktury i wiążących sił narracji, by dotrze (niejako cofnąć się) do poziomu samego procesu pisarskiego i mieć przed oczami, czarno na białym, wyeksplikowane „dlaczego”, „po co” i „jak”. Tego typu rozbiór literatury na czynniki pierwsze, choć pozornie traci nieco na popularności, zawsze tkwi podskórnie w każdej krytyce, która stara się dotrze do „prawdy tekstu” lub goni w kółko między intentio auctoris a intentio lectoris. Nie łatwo od tego uciec, bo pokusa odkrycia wewnętrznego trzonu, wokół którego kry cay wiat powieściowy, jest niezwykle silna, a jej sensowność porczaj największe nazwiska. Czy jednak jest to metoda uniwersalna? Ot wydaje się, e nie, ponieważ opiera się ona na jednym, nie rzucającym się w oczy, ale jednak istotnym założeniu, które mówi „każdy tekst posiada reguły nim rządzące”, a w wersji odnoszącej się do wiata przedstawionego: „każda fikcja posiada prawa, bez których nawet jako fikcja byaby niemożliwa”. Oba aksjomaty krytyczne wydaj się by czym oczywistym i banalnym do czasu, gdy zetkniemy się z literaturą postmodernistyczną, w tym z Pachnidłem. Zaznaczmy raz jeszcze, że nie chodzi tu o ten formalny poziom analizy, który zajmuje się strukturą fabularną, rozrysowuje siatkę zdarzeniową czy nazywa gry powieściowe odpowiadającymi im terminami teoretycznymi. Typowo postmodernistyczne gry z czytelnikiem nie s tu zresztą widoczne na pierwszy rzut oka. Nie ma tu cortazarowskich chwytw podwójnej możliwości lektury ani mitologiczności Bartha, ani też borgesowskiej paraboli; nic z Pynchona, Eco czy Calvino. Pozornie to jakby odwrót od nowoczesnej narracji. Pozostaje dynamika oraz temperament Pachnidła - pewna syntetyczna wypadkowa wielu elementów składająca się na drogocenność tego dzieła.</p>
+      <p>Czy istnieje formuła Pachnidła? – można by zapyta. Czy istnieją „prawa opowieci”, o jakich pisze anonimowy oskarżyciel? Zdaniem powieściowego Baldiniego, każde pachnidło winno powstawać według ściśle określonej i dającej gwarancję powtarzalnego sukcesu formuły. Czy powie take? Czy jeśli wyjdziemy od tej wewnątrzpowieściowej zasady, to dowiemy się czegoś sponad sfery sukcesów rynkowych, o których i tak jest głośno, gdyż jedną powieścią-bestsellerem Süskind dogonił w poczytności samych Manna i Grassa.</p>
+      <p>Zwodnicza zmienno nawet tak istotnych elementw kształtujących fikcję, jak choćby emocjonalna motywacja bohatera, bez której – najlepiej wiedzą to przecież scenarzyści - nie istnieje żadna fabularna całość, wszystko to każe nam odpowiedzieć przeczco i sprawia, e nie łatwo będzie nam wyodrębnić podstawowe osie dzieła. Bez ciągłości i przyczynowo-skutkowej linii psychologicznej bohatera narracja zaczyna się rozpada. W innych powieciach brak konsekwencji zwyczajnie nuży. Tu prawa opowieci s - na co zwracalimy już uwag - chwilowe niczym ulotne wonie, sprawiaj wrażenie istnienia, a potem znikaj, rozmywają się, ulatniaj. A więc jeszcze raz pada pytanie, co jest powietrzem, jakim oddycha czytelnik? Co nas tak uwodzi?</p>
+      <p>Nie sposób stwierdzi, jak to się dzieje, e sensy literatury czasem eksplicytnie czy wręcz epatujco atakuj subtelne zmysły zdegustowanego nachalnością czytelnika, czasem zaś wyłaniają się znienacka i jakby obuchem uderzaj dotychczasową powierzchowną lektur, przysparzając o chwilowe choćby, to jednak twórcze i przyjemne olśnienie, a czasem, choćbymy nie wiem jak gimnastykowali się z interpretacją, nie możemy pozbyć się nieznośnego uczucia „dorabiania” teorii do wciąż uciekającej nam istoty rzeczy. Co gorsza, jeli tylko zdarzy się nam zbyt długo stara się, śledzić domniemane ukryte wiązki znaczeń, a to wszystko bez powodzenia, nie unikniemy uczucia każącego nam zwątpić w ich istnienie i wnosimy o zakończenie tej męczącej zabawy. Przyjemność tekstu jak każda przyjemność ma swój kres. Zwątpienie chroni nas przed wystrojoną pustką literaturowego estetyzmu, dobrze zakamuflowaną acz bezwartościową szmir, przed fałszerzami arcydzieł słownej biżuterii, którzy w zgrabnej oprawie wciskaj nam matowy plastik zamiast diamentu. Nie ma recepty na to, jak się rozezna. Nikt nie może da nam gwarancji, e „co w tym jest”. Musimy polega jedynie na sobie, a kto tego próbował, wie, jak zwodnicze może się to okazać. Przyjmujemy zatem strategię którą, choć wielu spośród roztropnych przypisywało sobie, nazwiemy tu barthesowsk, a która przypomina, e „wszystko ma znaczenie”; w szczególności za radzi nam, by przy wszelkiej interpretacji mieć na uwadze t perspektyw za zasad, a wtedy żaden element zajmującego nas dzieła nie pozostanie nam obojętny, żaden nie będzie blefował, e powstał przez przypadek. A tyczy się to będzie wszystkich poziomw znaczenia, od najbardziej zewnętrznych i tak oczywistych, e niedostrzeganych, do najmniejszego zaimka i przecinka. Idc t drogą ze zdziwieniem można obserwować, jak dotąd nieuporządkowane i wolne znaki wczaj się w sieci interpretacyjne, które za sobą cigniemy, niejako z własnej woli - i nawet jeślibyśmy hodowali sceptycznym twierdzeniom ignotus et ignorabimus, to możemy mieć t słodką wiadomo, e w jednej chwili można z chaosu wyoni jego ukryty porządek, z czystej formy odczyta treści i wskazać ich wzajemną grę. Mimo to trudno o ujęcie całościowe.</p>
+      <p>Jako cao Pachnidło opiera się interpretacji symbolicznej. A mimo to chwilami nie można pozbyć się wrażenia, że określone miejsca powieści nasycone są znaczeniami odsyłającymi poza świat fikcyjnych zdarzeń. Co robi, jeli historia pewnego mordercy w niewyjaśniony sposób uniwersalizuje się w wyobraźni, a postać Grenouille’a tak silnie domaga podniesienia do rangi symbolu? Jednocześnie nie udaje się wpisanie go w jeden z istniejących już schematów, motywów czy mitów. Czyby jedynym wyjściem z błędnego koła była nadinterpretacja?</p>
+      <p>II</p>
+      <p>„...interpretacja (...) podobnie do większości innych obszarw działalności intelektualnej, jest ciekawa tylko wtedy, kiedy jest skrajna.” (Jonathan Culler)</p>
+      <p>„Od udręk naiwności znacznie lepsze są rozkosze hultajstwa.” (D.A.F. de Sade)</p>
+      <p>Historia pewnego uwiedzenia</p>
+      <p>Z miłosnego prawie odrętwienia, w jakie wprawia woń Pachnidła, otrząśnięcie przychodzi z trudem. Teraz można zapytać wprost: co na nas uwodzi w Pachnidle? Na czym opiera się ta niezwykła siła historii morderczego syna pewnej paryskiej sprzedawczyni ryb? Kiedy pada pytanie o elementy „magnetyczne” powieci, odpowiedzi mnożą się i tworzą. Punktujemy je, katalogujemy. Wybieramy parę i staramy się wejść z nimi w bliższe relacje, z których potem po wyekstrahowaniu sensu powstaje coś na kształt zdań. Pomijamy przy tej okazji kwestię językowych umiejętności samego Sskinda, które mogłyby się sta przedmiotem odrębnego studium. W zupełności wystarczą tu fragmenty o tych kilku, dających się wskazać „silnych punktach” powieściowej konstrukcji, jakie zoyy się na tak uwodzicielską cao, a których rola zdaje się być podstawowa. Być może są to oczywistości, może zaś oczywiste nadinterpretacje. Nie mają one jednego celu czy określonego sensu, a tylko stanowią pewien eksperyment, w którym poza wszystkim bada się właśnie granice interpretacji.</p>
+      <p>To, co zostanie tu powiedziane nie rości sobie żadnych praw do czegokolwiek, a niewykluczone jest, e przedstawione tu notatki po lekturze przypomina bd nieudolne oświeceniowe próby opisu i hierarchizacji ulotnych doświadczeń zapachowych i mogą wywoływać umiechy zażenowania, podobnie jak przy zetknięciu z osiemnastowiecznymi naukami o fluidach, chemii pneumatycznej czy teorii pomiaru miejskich wyzieww. Oto fragmenty zapisu pewnej męki interpretacyjnej, która w swej nieadekwatności i niedorzeczności przypomina może tylko dekonstrukcję zapachu lub, jeśli kto woli, protokół z uwiedzenia / zauroczenia.</p>
+      <p>Bajka o zbrodni (ćwiczenia z przewrotności)</p>
+      <p>Koci kał, ocet, sól, stary ser, zgniłe jajo, muszkat, rybi łój i parę innych składników. Kiedy przypomnimy ohydną bazę zapachu człowieka, zrobi się nam nie tylko niedobrze, ale i o naturze ludzkiej nie prędko wydamy sąd pełen wyrozumiałości. Zapach – lotność – powietrze – tchnienie - duch. Czy byt człowieczy, zamiast na boskiej pneumie, opiera swe istnienie na odorze? Jeśli taka byłaby podstawa ludzkiej woni, to w naszym wartościowaniu człowieczeństwa zbliżylibyśmy się raczej do Hobbesa niż bardziej nam życzliwego Jana Jakuba. Czyżby ten podstawowy zmysł, jakim jest węch, który, zdaniem Rousseau, „wzbudza psychik bardziej ni inne”, mógł wprowadzić nas w błąd w sprawie tak wielkiej wagi?</p>
+      <p>Owa miszkulancja, która posłużyć miała Grenouille’owi do stworzenia „zapachu człowieka, który pachnie”, nie bez kozery tak wiele smrodu ma za swoją zasadę. A, nie trzeba tego dowodzić - kiedy w grę wkracza kryterium zapachowe, kiedy nieunikniona jest bezpośrednia konfrontacja z fetorem, tolerancja znika. Nieczystość ludzka nie skryje się długo pod osłoną perfumy, tajony brud da znać o sobie, a czas pracuje tu tylko na jego niekorzyść.</p>
+      <p>Jeśli przyjąć założenie, że zło (choć w powieści niekoniecznie tożsame jest z odorem), wzorem niektórych przekazów o początkach ciemności, pochodzi z głębi szatańskiego anusa – a niejeden bestiariusz w tym właśnie miejscu upatruje kolebki potworów, złych duchów, powietrznych sylfus maleus – to zło najstraszniejsze i najbardziej perfidne także w olfaktorycznym świecie posiada swój pendant, swój zapachowy rodnik. Gdzie rodzi się odór, tam roi się od najgorszego elementu. Tam właśnie rodzi się bestia o żabim nazwisku i płazim usposobieniu.</p>
+      <p>Oświecenie było epoką zupełnie nowej refleksji o zmysłach. Nie można pominąć milczeniem relacji, które dowodzą, jakoby jednym z rewolucyjnych zwrotów tego czasu miała być rehabilitacja węchu. Teoretycznie uzasadnienie wartości poznania przez nos byo według Corbina jednym z filarów filozoficznego przełomu sensualistycznego. Niektóre przypadki mogłyby świadczyć o tym, że przełom ten poszedł za daleko. Rozum zagarnął terytorium zmysłów. Węch niegdyś niedowartościowany, teraz był nadmiernie uzasadniany, racjonalizowany, aż zatracił swą pierwotną sensowność. Nieprzyjemne mogło stać się przyjemnym, smród okazywał się pachnieć. Co umysł już przewartościował, tego nawet zmysłom nie dawało się ocenić jednoznacznie. Wspomnijmy choćby de Sade’a.</p>
+      <p>Perwersja rozumu wynika wprost z jego przewrotności. Jeśli więc zgodzimy się nazwać Pachnidło mianem literatury perwersyjnej, (a nie trzeba do tego wcale purytańskiej świętoszkowatości), jego źródła nie pozostaną dłużej w cieniu niedookreślenia.</p>
+      <p>Magnetyzm za jest zjawiskiem aż nadto znanym. Historia Grenouille’a także czerpie swą siłę ze smrodliwej części natury człowieczej. Fascynacja złem jest jednak tym, do czego nie lubimy się przyznawać. Wstydzimy się jej, ale nasz wstyd truje tylko powietrze, wzmaga zapach siarki, który potęguje się, w miarę jak przezwyciężamy pierwszy grymas odrazy. Tylko w kostiumie wonności zło pozostaje łatwo przyswajalne. Aż chce się je podpatrywać. A ono lubi widzów. Tłumy gawiedzi, które w osiemnastym wieku towarzyszyły każdej publicznej kaźni - te sprzed Rewolucji tylko przygotowały masy do późniejszych scen - dowodzą tego, że Zło niesie się przez wszystkie zmysły, może najsilniej przez wzrok i bezpośrednią naoczność. Również dziś postacie seryjnych zabójców mieszczą się w tabelach największej popularności. W samej powieści motywy kryminalne, takie jak wątek, w którym Antoni Richis próbuje rozgryźć i przechytrzyć grasującego po regionie potwora-mordercę, na pewno wzmacniają efekt przyciągania.</p>
+      <p>Jan Baptysta Grenouille, dwudziestosześciokrotny zabójca, z powodzeniem mógłby się znaleźć w jednym katalogu z rzeczywistymi złoczyńcami. Specjaliści zaliczyliby go pewnie do grupy seryjnych zabójców zwanych zabójcami z lubieżności (lust murderers). Jeśli węch istotnie, znów za Rousseau, jest „zmysłem wyobraźni i pożądania”, to profil psychologiczny Grenouille’a szkicowany byłby według tej kategorii. Jego scenariusz życiowy  jest całkiem podobny (patologiczne początki, trudne dzieciństwo, niezrozumienie przez rówieśników) do przypadku słynnego Edmunda Kempera, wyjątkowo brutalnego, superinteligentnego odcinacza głów (znanego jako prototyp bohatera filmu Seven) lub do „nocnego łowcy”, satanisty Richarda Ramireza.</p>
+      <p>Ten ostatni już w więzieniu wykrzykiwał (a słowa te pasowałyby też do dziewicobójcy z Grasse): „Nie zrozumiecie mnie. Nie oczekuję od was, abyście mnie zrozumieli. Nie jesteście do tego zdolni. Jestem poza waszym doświadczeniem! Jestem poza dobrem i złem!” Inspiracja ostatniego zdania jest oczywista, tak jak nie powinno budzić wątpliwości źródło słów wieńczących demoniczny ryk w Plomb du Cantal: „Tako rzecze Wielki Grenouille!”</p>
+      <p>Nie ulega kwestii, że nie ma to nic wspólnego z myl filozoficzną twórcy Wiedzy radosnej. To, co robi autor Pachnidła, to po prostu zgrabne wykorzystanie hasłowo ujętych idei czy aforystycznych sformułowań. Tylko skrajna przewrotność musiałaby uzasadnić ten kontekst. Spróbujmy!</p>
+      <p>Zważywszy na to, że nietzscheanizm dzisiejszy, ten w wersji popularnej, kieszonkowej, nie wąsko-specjalistyczno-akademickiej, pełni, jak się zdaje, funkcję zgoła inną od refleksyjnej, pytanie o to, jak to się dzieje, że to Nietzsche właśnie, nie kto inny, stał się filozoficznym „barwnikiem” Pachnidła, przestaje budzić grymasy zdziwienia. Noszony jest pod pachami (sic! miejsce to aż nadto nacechowane jest zapachowo) lub trzymany przez najnowszych czytelników-wielbicieli pod łóżkami i wyciągany, gdy konieczna jest nowa, „czysta dawka energii” dla podbudowania self-estime przed ciężką rozmową biznesową albo po to, by mogli oni, uprzednio utożsamieni z prorokiem, napawać się swoją wielkością i dłużej nie zastanawiać się, dlaczego są tacy mądrzy. Zawiadamiam z przerażeniem, że dziś nierzadko Zaratustra funkcjonuje po prostu jako energizer. I (boję się powiedzieć jak często) na tym jego rola się kończy.</p>
+      <p>Przeciwwagi nie stanowią profesorskie konferencje - wszak wyłącznie indywidualny kontakt i wewnętrzna praca z tego rodzaju pismami miałby sens naprawdę przewartościowujący - ani  idealistyczny alegoryzm wymierzony przeciwko nihilizmowi z Na marmurowych skałach Ernsta Jüngera, ani pijacki makabryczny humor czeskiego nietzscheanisty Ladislava Klimy, bo poczytność ich bliska zeru. Jak się okazuje najszerzej niesie się głos „Tako rzek Wielki Grenouille”. A nietzscheanizm pojawia się w powieści, zgodnie z logiką stymulantów, podkręcając temperaturę momentów, które byłyby sugestywne i bez niego. Naprawdę  nie sposób stwierdzi, na ile to odniesienie jest konstytutywne dla caoci powieci, a gdzie suy jedynie jako element gry czy pewnego rodzaju prowokacja. Ale idźmy dalej.</p>
+      <p>Uczynienie z Grenouille’a „nietzscheańskiego” potwora w oświeceniowym krajobrazie to zabieg arcyprzewrotny. Dołączmy do tego genialnie przeprowadzoną grę na osi „prawdopodobieństwo – nieprawdopodobieństwo”, którą manipuluje Süskind, aby stworzyć atmosferę mrożącej krew w żyłach makabry, zmieszanej z całkowitą fantazją, a w naszych oczach bohater Pachnidła to już coś więcej niż postać. To mieszanka wybuchowa, samograj i samozapłon. Prawdziwa, nie wahajmy się tego powiedzie, wyobraźniowa hybryda pisarska. Bajka, satyra, mord i Nietzsche. Dalej! Niech żyje przewrotność!</p>
+      <p>Kiedy jest chęć, dowody interpretacyjne same się znajdą. Dowody na wszystko. Na przykład: dzieciństwo Jana Baptysty można by określić jednym zdaniem. Wszystko, co go spotykao: choroby, rany, poparzenia i upokorzenia, a co niezdolne byo zabić, wzmacniao go i uodparniao. Ależ to „niczeańskie”.</p>
+      <p>Jak już ktoś słusznie zauważył, pojawia się tu również idea wiecznego powrotu. Nie mogło jej zabraknąć, bo ona wanie, figura doskonałego koła, wyznacza, o ile można tu użyć tego sformułowania, struktur opowieci, w której początek i koniec łączą się w jednym miejscu. Określa niejako charakter wszystkich zdarzeń powieści, między narodzinami a śmiercią Grenouile’a, między wykluciem się tego diabelskiego nasienia a finalną scen, gdzie w akcie najwyższego podania, zostaje rozszarpany i pożarty przez „rodzinny” plebs z okolic Cmentarza Niewiniątek, uwewnętrzniony w miłosnym, opętańczym transie kurew i nożowników.</p>
+      <p>Znane są różne opisy fenomenu ludożerstwa, tak naukowe jak wysubtelnione i poetyckie. Niektórzy je łączą. Przeczytać możemy na przykład: „Freud mówi w swojej teorii o ,kanibalizmie melancholijnym’. Poera on utracony obiekt mioci, wciela go w siebie, ale tak czynic poera on te, niczym mityczny w z własnym w paszczy ogonem, siebie; niszczy siebie kawałek po kawaku; do własnego istnienia stosuje strategie spalonej ziemi.” Tak postępuje się może w pewnej literaturze, w ściśle określonych warunkach, ale nie w süskindowskiej powieści. W Pachnidle finalny kanibalizm to bynajmniej nie objaw melancholijnego obłędu, spleenu, biernej anemicznej zapadłości, „monomanii smutnej”. To żywioł. W dodatku nieopanowany. To dziki szał zbrodniczej, irracjonalnej żądzy wchłonięcia przedmiotu, którego się pragnie. Wchłonięcia go wraz z jego siłą, jak czynili to dzicy w etnograficznych opisach Frazera.</p>
+      <p>Aby kontynuować ten seans przewrotności interpretacyjnej nie konieczne będzie nawet „uruchamianie” Baudelaire’a. Niewiele dopowiedzą nam subtelne ogniwa, jakimi łączył on piękno i zo. Grenouille nie jest szatanem i związek między nimi musi pozostać niewyjaśniony. Jego historii, mimo podobieństw, nie znajdziemy też w Złotej legendzie da Voragine’a. Należałoby więc przyjąć, że rozróżnienia z klucza etycznego należy w obliczu Pachnidła odrzucić. Etyka i motywacja głównego bohatera mogą być, jeśli pójdziemy jeszcze dalej w tym kierunku, oparte na zasadzie, którą najściślej określałaby „nietzscheańska” moralność:„poza dobrem i złem”, czego dowodzi nam Richard Ramirez.</p>
+      <p>I jeszcze o zakończeniu. Przypomnijmy, że kanibale po zakończonej konsumpcji roześmiali się z ulgą. „Byli niezwykle dumni.”- pisze Süskind, a zaraz po tym dodaje dlaczego: „Po raz pierwszy zrobili coś z miłości.”</p>
+      <p>A Nietzsche przecież napisał: „To, czego dokonywa się z mioci, dzieje się zawsze poza dobrem i zem.”</p>
+      <p>Precz z przewrotnością!</p>
+      <p>Geniusz</p>
+      <p>Kiedy w pierwszych zdaniach powieci osiemnaste stulecie nazywa się wiekiem genialnych potworw, autor daje nam sam pewne punkty odniesienia, wskazuje podobieństwa między Grenouillem a czarnymi sławami epoki. Przypomnijmy ich wraz z krótkimi charakterystykami. Po pierwsze, markiz de Sade, mistrz przewrotności, nie tylko libertyńskiej i pornograficznej. Po drugie Saint-Just, razem z Robespierrem człowiek Komitetu Ocalenia Publicznego, terroryzującego Pary. Za nim, Fouché, znany jako rzeźnik z Nantes, ultraradykalny jakobin, założyciel i szef milicji, wreszcie Bonaparte, pierwszy totalitarysta, zamordystyczny wódz, karyplowaty geniusz strategii, pięciodzielny pedantyczny omnibus logistyczny pierwszego nowożytnego imperializmu, prawodawca i bezkompromisowy realizator swoich wolnościowych haseł, choćby musiały najpierw nurza się w krwistym bagnie wyprutych flakw. Za nimi wszystkimi – on, Jan Baptysta. Łączy ich wiele. Krew, władza, ale przede wszystkim niezwykłe zdolności i talent. Wielki Deprawator to geniusz pisarski. Saint-Just miał być podobno wyjątkowym trybunem. Fouché to ówczesny rekordzista w liczbie skutecznie egzekwowanych wyroków. A o Napoleonie nie trzeba się nawet rozpisywać. Summa summarum, „dobre” towarzystwo.</p>
+      <p>Grenouille to geniusz ulotności dosłownej. To skazany na zapomnienie, choć po śmierci żyjący gdzieś po cichu w ludziach (tak jak gdyby po zjedzeniu szynki żyły w nas świnie; brzmi to niczym ekologia), potworny twór nieznanej siły. To twórca sztuki prawdziwie efemerycznej. Ale jednak działającej przez zmysł, który ponieważ, jak powiada Rousseau, „wzbudza bardziej”, to nie sposób oprzeć się jego władzy. Władzy absolutnej sztuki.</p>
+      <p>Grenuoille niesie śmierć, nawet gdy tego wcale uprzednio nie zaplanował, przez sam swoją obecność. Kolejne osoby, które mija na drodze przez całe swoje życie, padają jak muchy. Tak się składa, e wszyscy ci ludzie w wyniku dziwnych zbiegw okoliczności, niefortunnych wypadków szybko kończą żywot. Kiedy jednak pokurcz z Cmentarza Niewiniątek zabija świadomie, czyni to dla najwyższego celu, wartoci samej w sobie -  najdoskonalszego na wiecie zapachu. Czy nie jest to wcielony idea autoteliczności sztuki? A zarazem jej totalitarności? Grenouille’a nie interesuj jego ofiary, nie ogląda się za siebie po morderczych napaściach. Złodziej zapachw nie dba o zdeptane po drodze kwiatki dziewczęcych piękności, o ich powszechnie podziwiane i zapierające dech w piersiach wdzięki, blask tej piegowatej,  lolitkowatej urody, o powab ich zewnętrzności niesionej przez inne poza zapachem zmysły. Jeśli odrzucimy zło jako możliwy punkt odniesienia dla interpretacji, to co z pięknem?</p>
+      <p>Grenouille - artysta</p>
+      <p>Zapach jako tworzywo sztuki dawno już się wyemancypował, opuścił zaklęty krąg trzech największych muzeów perfumeryjnych w Grasse: Fragonarda, Gallimarda i Molinarda. Powoli zaczyna być doceniamy jako tworzywo sztuki, i to niekoniecznie tylko dezodoryzującej. Przypomnijmy, że proces ten swoje początki, jeśli nie szukać ich poza Europą, ma w czasach oświeceniowej rehabilitacji węchu. Wtedy dopiero naprawdę pojawił się temat homo ferus, a o powonieniu mówiło się też w związku z nadzwyczaj czułym węchem dobrego dzikusa Kaspara Hausera. Modne stały się elitarne wyjazdy z miasta w celu zażycia „kąpieli powietrznych w innej strefie eterycznej”. Wcześniej, w 1742 Arbuthot rozpoczął pierwsze próby pomiary wyziewów miejskich. Około 1750 miały miejsce początki teorii fluidów. W 1761 roku ukazał się pierwszy poważny traktat o pachnidłach, Le perfumeur royal. Sztuka instalacji olfaktywnych - którą dziś można podziwiać w światowych galeriach, a dwa lata temu również w warszawskiej Galerii Sztuki Współczesnej - raczkowała w atmosferze dość niezwykłej.</p>
+      <p>Absolutna wrażliwość na zapachy to coś, co Grenouille otrzymał niejako w zamian za całkowity brak moralnoci. W jego przypadku równa dystrybucja możliwości sensualnych, funkcji odczuwania wszystkich zmysłw zastąpiona zostaa hiperestezją powonienia. Ta genialna nadpobudliwość, ten „boski” arcyczuy nos odbierał sygnały wszelkiej proweniencji i rozpoznawał zapachy o najniklejszym natężeniu. Pozostałe dane zmysłowe wyzyskiwał, przekładajc je, jak to się dzieje w doświadczeniu synestezyjnym, na najważniejszy i najsilniejszy z nich. Tylko taka ekstremalna amplifikacja jednego zmysłu mogła pozwolić na stworzenie Pachnidła w miejsce tysiąca pachnideł.</p>
+      <p>Perfumiarz był geniuszem. Innym niż spotykamy w klasycznych ujęciach, co jest oczywiste przez wzgląd na pozostałe swoje cechy. Ale jednak geniuszem. W Świecie jako woli ... Schopenhauera geniusz jest, przypomnijmy, geniuszem poznania, niezależnym podmiotem kontemplacji, uwarunkowanym najsilniej sił własnej fantazji domagającej się urzeczywistnienia. To ona jest jego Konieczności, jego spiritus movens, jego rozkosz.</p>
+      <p>Potwór</p>
+      <p>„Od początku by potworem. Zdecydował się na życie z czystej przekory i czystej złośliwości.” Zawodzi nawet logika sade’owska, która nieraz już bya główna osią najskrajniejszych i najprzewrotniejszych interpretacji. Grenouille bdc pozbawionym seksualności, nie mgby zostać wzorem nawet tej „moralnoci”, choć w bluźnierstwach nie ustępuje wykwintnej zajadłości wykładów Dolmancego. Ten ostatni, nazywając Boga najohydniejszą chimerą, zachęca do sodomii, okrucieństwa, ale przede wszystkim do rozkoszy. Grenouille, owszem, nieraz klnie na Najwyższego - po wypełnieniu swojego arcyczułego nosa powietrzem kościelnym i oparem kadzidła stwierdza, że „Bóg śmierdzi”, ale nie zestawiajmy tego faktu ani z Sadem, ani z nietzscheańskim „Bóg umarł”. Interpretacyjny Grenouille na pewno by tak uczynił. Podczas swej górskiej ekstazy, w jednoczesnym zejściu do podziemi, w głąb nieświadomości i do piekieł, zanim jeszcze uknuł plan stania się „wszechmogącym Bogiem zapachu”, już czuł się Kreatorem. Tyle że „pozbawionym choćby minimum wrodzonej życzliwości”.</p>
+      <p>Grenouille stylizowany jest na wiele postaci. Ale dwie z nich tworzą skrajność, która szokuje.</p>
+      <p>Jezus i Hitler. Choćby te skojarzenia byy dla kogo nie do przyjęcia, (zestawienie poraża), to jednak trudno przypuszcza, e nie zostay zaplanowane przez Süskinda. Nie przez przypadek, pojmany dziewicobójca Grenouille miał zosta stracony na krzyżu. Instrumentarium przeznaczone w tych czasach do wykonania kary śmierci dawało autorowi prawie nieograniczone możliwości wyboru. Kierunek interpretacyjny może by jednak zrozumiały wyłącznie w kontekście końcowych wydarzeń süskindowskiej historii. Pod koniec powieci Grenouille się ofiarowuje. To końcowe auto da fé przez polanie się cudownym pachnidłem sprawia, e Grenouille zostaje zjedzony przez ogarnięty niepowstrzymanym pragnieniem plebs w dzikim szale obłędnej szatańskiej eucharystii.</p>
+      <p>Trop drugi także jest uzasadniony. Wiąże się z władzą nad ludźmi - już nie z totalitarnością sztuki, lecz wprost z totalitaryzmem. Z jego magnetyczną, magiczną mocą, narkotyzującą jak pachnidło. Można nawet powiedzieć, że diabelska charyzma Hitlera. przyciągająca i rozpalajca masy oraz siła potężnego zapachu makabrycznego specyfiku łączą się przez podobieństwo reakcji ludzkich. Podczas sceny egzekucji przemienionej pod wpływem  jakiegoś czarnego cudu olfaktorycznego w orgię, masy reagowały jak w czasie pierwszych przemówień führera Trzeciej Rzeszy. Nikt nie był w stanie mu się oprze. „W rezultacie planowana egzekucja jednego z najohydniejszych zbrodniarzy swojej epoki przerodziła się w największą orgię, jaką świat widział od czasów drugiego stulecia przed Chrystusem.” Süskind oczywiście „myli tropy”, ale historia, zwana prawdziwą, zna tego rodzaju sceny zbiorowej orgii, choć raczej morderczych niż seksualnych, które miały się odbywać w czasach tłumów i nadchodzącej Rewolucji, potem zaś w wieku dwudziestym. Niezwykły opis czkawki nazajutrz po kulminacyjnej scenie, w której lud szalał bez opamiętania pod wpływem magicznej aury Grenouille’a, ma swój odpowiednik w rzeczywistości. Następnego ranka „obywatele (...) obudzili się ze straszliwym kacem”, czytamy, a ciągnący się chwilę opis, słowo po słowie, coraz silniej sugeruje nam obraz Niemiec i stanu duchowego Niemców po II Wojnie Światowej. „Literatura to jedyna niezawodna oczyszczalnia ścieków.” – czytamy we wstępie do Literatury i zła Bataille’a.</p>
+      <p>Oko ekspertów</p>
+      <p>Oku ekspertów nie mógłby umknąć fakt, że mimo francuskiej lokalizacji wydarzeń leitmotivy historii Grenouille’a są czysto niemieckie. Mimo, że pozornie nic na to nie wskazuje – perfumy były i są francuskie, imię „Grenouille” odwołuje się do „żabojadów” - są to Niemcy Francją pisani. To prawdziwy „katalog problemów kultury niemieckiej”, choć o słuszności tego określenia można się przekonać dopiero po dłuższym obcowaniu z powieścią. Napięcie kultura – natura, temat techniki opanowującej chaos wiata, hitleryzm i „czkawka po”. Jak widać możliwości interpretacyjne dzieł wybitnych są prawie nieograniczone. Zwłaszcza gdy autor jest wyjątkowym i zamiłowanym graczem. Wymieńmy choćby wątki, które posłużyły Süskindowi do gry z modelami niemieckiej powieci. Edukacja perfumerska bohatera to oczywiście spadek po bildungs roman. Künstler roman tkwi w temacie przemian wewnętrznych i wędrówki Grenouille’a artysty. Wreszcie wzór Ich- roman, gdyż temat „ja” jest jednym z podstawowych, jakie przeplatają się, tworząc ten pachnący gobelin opowieści.</p>
+      <p>Na poznanie siebie sam potwór Grenouille poświęcił całe swoje powieściowe życie, szczególnie zaś siedem lat na biegunie samotności. Bezowocnie. A my? Łatwo powtarzać za tekstem krótkie zdania określające jak to, że był „na wskroś zły”. Ale by stworzyć z tej postaci całość nie obejdzie się bez intuicji czytelniczej. Żeby wejść w głąb motywacji psychologicznych bohatera, musimy przyjrzeć się jego losom niejako z lotu ptaka. Zobaczyć więcej ponad strukturą.</p>
+      <p>Grenouille, bohater tragiczny</p>
+      <p>Nie wiem, czy można by go nazwa galernikiem wrażliwości. Istotnie był hiperwrażliwy na zapach, lecz - co chyba najważniejsze - samemu bdc go całkowicie pozbawionym. Jest to najpotworniejsza i nad wyraz sugestywna figura największej tragedii artysty. Brak tego, czego najbardziej potrzebuje, co jest mu najbliższe, co posiada jedyną wartość, przekreśla w jego oczach wszystkie pozostałe jakości. Kompromituje wszystko to, co innym wydać się może wartościowe. Wzmaga uczucie niedosytu nawet wobec najwybitniejszego dzieła. To czczość in ultima stadio. Ciekawe czego brakowało w Pachnidle samemu Süskindowi?</p>
+      <p>„Nikt nie wie, jak wspaniałe jest naprawdę to pachnidło, myla. Nikt nie wie, jak świetnie zostao zrobione. Wszyscy ulegają tylko jego działaniu, ba - nie wiedzą nawet, e ulegają mocy i urokowi pachnidła. Ja jeden naprawdę znam cae jego piękno, bo ja sam je zrobiem. I zarazem mnie jednego nie może to pachnidło oczarować. Dla mnie jednego to pachnidło nie ma żadnego sensu.”</p>
+      <h3>Bibliografia</h3>
+      <p>Süskind, Patrick, Pachnidło. Historia pewnego mordercy, tłum. Małgorzata Łukasiewicz, Świat Książki, Warszawa 1996, i Zysk i S-ka, Poznań 1998.</p>
+      <p>Interpretacja i nadinterpretacja, Umberto Eco, Rchard Rorthy, Johnathan Culler, Christine Brooke-Rose, pkzeł. Tomasz Bieroń, Wydawnictwo Znak, Kraków 1996.</p>
+      <p>Bataille, George, Literatura a zło, przeł. Maria Wodzyńska-Walicka, przedmowa Zbigniewa Bieńkowskiego, Oficyna Literacka, Kraków 1992</p>
+      <p>Corbin, Alain, Le miasme et la jonquille. L’odorant et imaginaire social  XVIIIe- XIXe siécles, Flammarion 1986. Polskie wydanie: We wadzy wstrtu. Spoeczna historia poznania przez wch. Od odrazy do snu ekologicznego, tum. Andrzej Siemek, Oficyna Wydawnicza Volumen, Warszawa 1998.</p>
+      <p>Czerwiński, Arkadiusz, Gradoń Kacper, Seryjni modercy, Muza, Warszawa 2001.</p>
+      <p>Klima, Ladislav, Cierpienia księcia Sternenhocha, przeł. Jacek Baluch, Wydawnictwo Literackie, Kraków 1980.</p>
+      <p>Nietzsche, Friedrich, Poza dobrem i złem, prze. Stanisław Wyrzykowski,  Nakład Jakóba Mortkowicza, Warszawa 1907.</p>
+      <p>Rousseau, Jean Jaques, Emil czyli o wychowaniu, Warszawa 1930.</p>
+      <p>de Sade, D.A.F., Filozofia w buduarze, spolszczył Mateusz Fabjanowski, Wydawnictwo Łódzkie, Łódź 1989.</p>
+      <p>Stukan, Jarosław, Seryjni mordercy, Prometeusz, Kraków 2001.</p>
+      <h3>Materiały prasowe i internetowe</h3>
+      <p>„Nowe książki” nr 4, 1991.</p>
+      <p>Le Parfum.Analyse personnelle de l’œuvre par L.Lison de Loma. Collège du Gol, Saint-Louis. <a href="http://www.ac-reunion.fr/pedagogie/lettre/Le_Parfum" style="line-height: 17px; ">www.ac-reunion.fr/pedagogie/lettre/Le_Parfum</a>.</p>
+      <p>Petersen, J.H., Patrick Süskind i jego bestseller, “Odra” 1989, nr 7-8.</p>
+      <hr class="separator">
+      <p>Od autora</p>
+      <p>Obrona „Eksperymentów z Pachnidłem”</p>
+      <p>Zacznijmy ab Iove principium. Centralną i fundamentalną figurą poniższego tekstu o Pachnidle Süskinda jest porównanie - zarysowanie podobieństw dwóch niepodobnych sobie fenomenów: literatury i zapachu. Porównania pozostając tropami, podlegają dwojakiemu osądowi: wartość ich mierzy się zarówno poziomem ich komunikatywności, jak zdolnością przekraczania pewnych zastałych manier językowych, siłą otwarcia na nieznane. Tak chciałyby funkcjonować wszystkie obecne tu figury (zapach, kobieta, uwiedzenie i inne), na ile jest to możliwe. Często im odleglejsze są porównywane elementy, tym płodniejszy rezultat; dowodem poezja. Można z ich pomocą powiedzieć nieraz dużo więcej niż jest formalnie wymagane, przemycić coś en passant. Ze względu na ryzykowną subtelność tego rodzaju przedsięwzięć, autor już we wstępie czuje potrzebę wytłumaczenia się, czy pewnego koniecznego dopowiedzenia, by jednocześnie uczulić czytelnika na formę całości, możliwości, jakie otwiera (zaspokojenie chęci skomentowania znacznie szerszego tematu tj. zagadnienia literatury współczesnej i jej krytyki) i przeszkody, jakim musi sprostać (przyjęcie formy nazbyt otwartej, skłonnej do nadinterpretacji, niesłychanie twórczej, ale często wątpliwej dla wszystkich niechętnych grze czytelników). Część I poświęcona jest głównie tym właśnie zagadnieniom i proponowanym przeze mnie strategiom interpretacji „Pachnidła” jako przykładu najnowszej powieści (nowość dotyczy oczywiście formy, nie zaś daty wydania). Chciałbym tym samym dołączyć swój głos do trwającej od dawna dyskusji nad interpretacją, ożywionej przez trójcę Culler-Rorthy-Eco, wzbogaconej natomiast o nową systematykę powieści autorstwa Briana McHale’a z Tel Awiwu, redaktora „Poetics Today”, na temat postmodernistycznej powieści oraz o artykuł kanadyjskiej badaczki Lindy Hutcheon.</p>
+      <p>Interpretacja (a raczej zapis procesu już dokonanego), bliska swymi cechami dekonstrukcji zachwycającego nas, delikatnego i ulotnego zapachu, rozkładaniu woni na czynniki pierwsze (niekiedy wcale nie przyjemne dla zmysłów), posiada wiele cech wspólnych próbom opisu czy postzapisu sytuacji uwodzonego kochanka, która przez dyskurs jest niemal nietykalna. W przypadku süskindowskiego „Pachnidła”, dzieła wyjątkowego, prawdziwego majstersztyku, jest to swego rodzaju ekwilibrystyka intelektualna, sprawdzająca się jednak na polu emocji nie zaś rozumu. Dlatego przyjęto tu następującą strategię poznawczą: wyodrębnia się magnetyczne elementy „Pachnidła”, jego po eisensteinowsku rozumiane „atrakcje”, a więc „to, co nas uwodzi”, czy „wszystko, co konieczne do bestselleru” – to, co zdaje się niektórym być zabiegiem czysto formalnym, „pokazowym wywijasem” (stąd fragment zatytułowany „Oskarżyciel”), jak również to co przedstawia niewątpliwą wartość. W ocenie postępuje się trochę jak enolog pozbawiony sformalizowanych kategorii, to jest w głównej mierze w oparciu o intuicję. Szuka się nieistniejącej, hipotetycznej Formuły doskonałego (i co zaskakujące, również popularnego) dzieła. Intuicyjnie liczy się na to, iż skrajny subiektywizm w odbiorze dzieła („Co nas uwodzi?) przekładać się będzie na psychologiczną prawdę. Nadzieja ta, jak już zostało powiedziane, tkwić może nawet w nadinterpretacji (motta z Cullera i Sade’a), czego autor poniższego tekstu wcale się nie boi.</p>
+      <p>W ten sposób część I prowadzi nas do II, właściwej. Tam, jak w protokole z zauroczenia/uwiedzenia, w formie fragmentów i prób interpretacyjnych bada się te walory „Pachnidła”, które są moim zdaniem najsilniej przyciągające, są jak wabiące ku niemu fluidy. Owe elementy, poddawane testowi prawdy psychologicznej przez podniesienie ich do potęgi, odpowiadają następującym po sobie fragmentom części II („Bajka o zbrodni”, „Geniusz” itd.) i kolejno (nad)interpretują powieść Süskinda. Nazywam je ćwiczeniami z przewrotności, bowiem przewrotność ta dotyczy samej właśnie analizy, nie zaś bezpośrednio majstersztyku niemieckiego pisarza.</p>
+      <p>Nie ma tu chaosu. Otwiera „Bajka o zbrodni” poświęcona złu, pytaniu skąd ono się bierze i gdzie się czai, na czym opiera swą siłę przyciągającą (m.in. magnetyzm bohatera - seryjnego zabójcy). Mówi się o pasożytowaniu na języku Nietzschego w celu przedstawienia obrazu skrajnego, mrocznego egocentryzmu, porusza się wątek kanibalistyczny w zakończeniu powieści. Sygnalizuje się możliwe interpretacje. „Geniusz” i „Grenouille – artysta” – to inne obecne w tekście silnie przyciągające akcenty  i niewątpliwe klucze dla uważnego czytelnika. Genialne zdolności Grenouille’a i przedstawienie jego postaci jako figury artysty naprowadza nas na kolejny trop – sugerowany przez samego autora – jakoby tytułowe pachnidło miało stać się tym samym figurą Dzieła jako takiego.</p>
+      <p>Fragment „Potwór” wraca za chwilę do obszaru, gdzie centrum stanowi zło, wprowadzając kilka nowych potencjalności rozumienia jego miejsca w powieściowej grze. Odwołuje się do kart książki przywołujących na myśl historię („zalatujących” Trzecią Rzeszą) i do prowokującego obrazu Grenouille’a dziwnie podobnego Jezusowi Chrystusowi (a więc superherosowi naszej kultury). Postępujące za tym fragmentem „Oko ekspertów” daje tylko w skrócie znać o tym, jak z niewyczerpanego skarbca „Pachnidła” mogliby czerpać literaturoznawcy, gdyby tylko chcieli, a mogliby dopatrzyć się nawet (ukłon dla Pani) nawet gier z modelami powieści niemieckiej. W zakończeniu, twórca zostaje utożsamiony z bohaterem tragicznym, gdyż takim można i należy widzieć postać Grenouille’a w kontekście słów wypowiedzianych przez niego w kulminacyjnym momencie historii. Wydaje się, że słowa te (kończę nimi swój tekst) rzucają pewne światło na spekulacje co do tego, jakie stanowisko w sprawie Dzieła przyjął sam Patrick Süskind. I choćby było ono najbardziej nawet pesymistyczne, to w niczym nie umniejszy to wartości jego genialnej, tak subtelnie autokomentującej się powieści.</p>
+      <p>Mam szczerą nadzieję, że niniejszy wstęp - bliższy raczej eksplikacji niż zasygnalizowaniu ruchu myśli, jaki kierował układem poniższego tekstu - pozostawił jeszcze choć odrobinę miejsca na niedopowiedzenie i delikatną sugestię, która jest mi bliższa od naukowej dosłowności.</p>
+      <p>Interpretacja i nadinterpretacja, Umberto Eco, Rchard Rorthy, Johnathan Culler, Christine Brooke-Rose, pkzeł. Tomasz Bieroń, Kraków 1996, oraz teksty Briana McHale’a Lindy Hutcheon Postmodernizm. Antologia przedładów, wyb. i oprac. Ryszard Nycz, Kraków 1997. Istotna jest nie doniosłość czy wyjątkowość tych tekstów, a ich żywotność lub jej brak.</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Suskind.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

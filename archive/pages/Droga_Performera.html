@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Droga Performera — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Droga Performera</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>&quot;Droga performera&quot; to realizacja dokumentalna, która jest zarazem prezentacją sztuki performance jej wybitnego artysty, jak przykładem możliwości stworzenia archiwum sztuki dostępnego, poruszającego i zrozumiałego dla odbiorcy. Hermetyczność sztuki nie polega bowiem na jej elitarności. Trudna dla niektórych forma przekazu performance może zostać obnażona z przyciężkich szat teorii, i otworzyć widza na bezpośrednie doświadczenie.</p>
+      <p>Idea i realizacja: Jan Lubicz Przyłuski</p>
+      <p>zdjęcia: JLP, Justyna Łoś</p>
+      <div class="vimeo-embed"><iframe src="https://player.vimeo.com/video/105302242" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="vimeo-embed"><iframe src="https://player.vimeo.com/video/104399313" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="img-block"><img src="../original/JAN_LUBICZ/Droga_Performera_files/005795%20copy.jpg" alt="Droga Performera" loading="lazy"></div>
+      <p><a href="http://culture.pl/pl/artykul/rok-2014-najwazniejsze-ksiazki-o-sztuce">http://culture.pl/pl/artykul/rok-2014-najwazniejsze-ksiazki-o-sztuce</a></p>
+      <p>23 dokumentacje akcji</p>
+      <p>Mapa twórczości</p>
+      <p>Rozmowy z Warpechowskim</p>
+      <p>Wypowiedzi artystów (m.in. Tomasz Stańko, Oskar Dawicki, Józef Robakowski, Adina Bar-On, Alaister MacLennan, Zuzanna Janin, Boris Nieslony, Ewa Zarzycka, Grzegorz Królikiewicz)</p>
+      <p>Ponad 3 godz materiałów video.</p>
+      <p>Od 2002 roku Przyłuski prowadzi Archiwum Sztuki Akcji, niezależną inicjatywę dokumentującą wybitne działania performatywne.</p>
+      <p>W 2007 roku opublikował &quot;Sztukę akcji. Dziesięć działań w Polsce&quot;, opisującą pierwsze happeningi, antyhappeningi i performance w PRL, ich historię i kontekst.</p>
+      <p>Premiera płyty podczas otwarca wystawy &quot;Zbigniew Warpechowski. To&quot; w Zachęcie Narodowej Galerii Sztuki.</p>
+      <p>Projekt graficzny: Poważne Studio.</p>
+      <p>Wydawca: Zachęta - Narodowa Galeria Sztuki.</p>
+      <p>(z opisu wydawnictwa)</p>
+      <p>ENG.</p>
+      <p>Film-archive project about Zbigniew Warpechowski, the first Polish performance artist and one of the pioneers of this form of art in the world.</p>
+      <p>23 documentations of live actions</p>
+      <p>Map of the Artist's Oeuvre</p>
+      <p>Conversations with Warpechowski</p>
+      <p>Interviews with artists about him (i.e. Tomasz Stańko, Oskar Dawicki, Józef Robakowski, Adina Bar-On, Alaister MacLennan, Zuzanna Janin, Boris Nieslony, Ewa Zarzycka, Grzegorz Królikiewicz)</p>
+      <p>Over 3 hours of rare video footage.</p>
+      <p>&quot;The Way of the Performer&quot; is a documentary project, both a presentation of performance art created by one of the most important artists of the genre, and an example of how to make an art archive, accessible, moving and understandable for a wider audience.</p>
+      <p>For the hermetic aspect of art does not lay in its elitist character.</p>
+      <p>Performance art, sometimes difficult to understand, can be stripped bare of heavy language of theory, and open the audience to direct experience.</p>
+      <p>Since 2002 Lubicz Przyłuski runs The Art of Action Archive, an independent institution focused on documenting preeminent performative practices.</p>
+      <p>In 2007 he published &quot;The Art of Action. Ten Events in Poland&quot;, a book on first happening, anti-happening and performances in Communist Poland, their history and context.</p>
+      <p>DVD Launch will take place during the opening of the exhibition &quot;Zbigniew Warpechowski. It&quot; in Zacheta - National Gallery of Art, Warsaw.</p>
+      <p>director: Jan Lubicz Przyłuski</p>
+      <p>cinematography: JLP, Justyna Łoś</p>
+      <p>graphic design: Poważne Studio.</p>
+      <p>publisher: Zacheta - National Gallery of Art</p>
+      <p>* video below</p>
+      <p>DROGA PERFORMERA / THE WAY OF THE PERFORMER (2014)</p>
+      <p>[film, wydawnictwo multimedialne]</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Droga_Performera.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LSD — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">LSD</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/lsd_collage2.jpg" alt="LSD" loading="lazy"></div>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/hofmann.png" alt="LSD" loading="lazy"></div>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/hofmann1.png" alt="LSD" loading="lazy"></div>
+      <p>Wieczór Alberta Hofmanna, odkrywcy LSD</p>
+      <p>TAROT</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/LSD.png" alt="" loading="lazy"></div>
+      <p>FILM</p>
+      <p>107 Urodziny Hansa Bellmera w Katowicach</p>
+      <p>WYKŁADY</p>
+      <p>Podczas spotkania bez tabu i cenzury omawiano realny wpływ odkrycia Alberta Hoffmana na współczesną kulturę, konsekwencje tego wynalazku dla przemian obyczajowych i światopoglądowych, a także zagrożenia i historyczne kwasowe iluminacje. Ten niezwykły wieczór tematyczny przyciągął do Pracowni liczną grupę zainteresowanych.</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/LSDfilm.png" alt="" loading="lazy"></div>
+      <p>Spotkanie poprowadził Andrzej Urbanowicz. Gościem specjalnym był Krzysztof Lewandowski, tłumacz i wydawca książki Alberta Hoffmana “LSD. Moje trudne dziecko”, założyciel alternatywnego portalu “Święto Radości”, hipis, ekonomista, autor projektu społecznościowego Czysta Kraina - <a href="http://czystakraina.pl/" >czystakraina.pl</a> .</p>
+      <p>Albert Hofmann, fot. z filmu “Hofmann’s Potion” 2002</p>
+      <p>Kadry z filmów. Od góry: plansza z filmu “Power and Control”, Aldous Huxley, reklama firmy Sandoz - najwiekszego producenta kwasu lizergidowego, buteleczka Delysidu, Ram Dass - legenda kontrkultury, współpracownik Leary’ego, kłosy pokryte sporyszem.</p>
+      <p>W ramach pokazów filmowych przygotowanych przez Jana Przyłuskiego zaprezentowaliśmy fragmenty dokumentów o Hoffmanie i odkryciu kwasu lizergidowego.</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/RamDass.png" alt="" loading="lazy"></div>
+      <h3>W programie m.in.</h3>
+      <p>test działania LSD przeprowadzonego przez wojsko angielskie na swoich żołnierzach podczas ćwiczeń</p>
+      <p>“Beyond Within. Part 1: The Rise of LSD. Part 2. The Fall of LSD ”, prawdopodobnie najbardziej bezpośrednia wypowiedź Hofmanna i najbardziej kompetentny film z jego udziałem, a także najzabawniejszą sceną wizualizacji pierwszej, nieplanowanej “jazdy” Hoffmana, która zaczęła się podczas najsłynniejszego w historii powrotu do domu na rowerze</p>
+      <p>“Hofman’s Potion”, reż. Connie Littlefield, z udziałem Hofmanna, Aldousa Huxleya, Humphrey Osmonda - pierwszego psychiatry pracującego z LSD, Ram Dassa, czy Timothy Leary’ego.</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/sandoz.png" alt="" loading="lazy"></div>
+      <p>“Hooked. Illegal Drugs and How They Got That Way”. Odcinek 3. “LSD, Extasy and the Raves”, sensacyjny program tv przygotowany przez History Channel</p>
+      <p>“Getting High. The History of LSD”, z telewizyjnej serii “History’s Mysteries” również przygotowany przez History Channel</p>
+      <p>“Syd Barrets’s LSD Summer Trip”, wczesna filmowa impresja na temat doświadczenia psychodelicznego</p>
+      <p>“Power and Control. LSD in the Sixties”, reż. Aron Ranen; przeszukiwanie zakamarków historii poprzez spotkania z ludźmi, którzy byli najbliżej badań nad LSD w Stanach Zjednoczonych</p>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/sporysz.png" alt="" loading="lazy"></div>
+      <div class="img-block"><img src="../original/TOWARZYSTWO_BELLMER/LSD_files/huxley.png" alt="" loading="lazy"></div>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/TOWARZYSTWO_BELLMER/LSD.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>

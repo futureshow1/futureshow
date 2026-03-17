@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nowa sztuka / Bogacka — Archiwum</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f8f8;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --text: #1a1a1a;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --accent: #000000;
+    --hover: #0055ff;
+    --font: 'Helvetica Neue', 'Inter', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: #000; color: #fff; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .topbar-brand {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+  }
+  .topbar-nav { display: flex; gap: 1.8rem; }
+  .topbar-nav a {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-tertiary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: var(--text); }
+
+  .page-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .content p:empty { margin-bottom: 0.4rem; }
+
+  .content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+  }
+
+  .content a:hover {
+    color: var(--hover);
+    text-decoration-color: var(--hover);
+  }
+
+  .content .img-block {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .content .img-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content .img-caption {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-weight: 400;
+  }
+
+  .content .vimeo-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--bg-alt);
+  }
+
+  .content .vimeo-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .content ul, .content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  .content li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .content .separator {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 2rem 0;
+  }
+
+  .content h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .content h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 2rem 0 0.8rem;
+  }
+
+  .content blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .page-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-footer a:hover { color: var(--text); }
+
+  @media (max-width: 700px) {
+    .topbar { padding: 0.8rem 1.2rem; }
+    .topbar-nav { gap: 1rem; }
+    .page-container { padding: 2rem 1.2rem 3rem; }
+    .page-title { font-size: 1.5rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="../index.html" class="topbar-brand">Jan Lubicz Przyluski</a>
+  <div class="topbar-nav">
+    <a href="../index.html">Archiwum</a>
+    <a href="../../index.html">Future Show &nearr;</a>
+  </div>
+</nav>
+
+<div class="page-container">
+  <a href="../index.html" class="back-link">&larr; Archiwum</a>
+
+  <h1 class="page-title">Nowa sztuka / Bogacka</h1>
+  <div class="page-meta">Jan Lubicz Przyluski</div>
+
+  <div class="content">
+      <p>Nowa sztuka</p>
+      <p>Jan Przyłuski</p>
+      <p>13-08-2001</p>
+      <p>Nowa sztuka</p>
+      <p>Wrażliwość ponowoczesna pozostaje nieokreślona. Nie można nawet sensownie zanegować jej istnienia. A mimo to nadal jej poszukujemy choć na przeszkodzie stają wątpliwości, że &quot;wszystko już było&quot; (najpóźniej u Lukrecjusza!), &quot;dalej już nic&quot;, albo sentymentalne &quot;to se ne vrati&quot;.</p>
+      <p>Dzieci lat siedemdziesiątych nie cechuje już ani melancholiczny nihilizm ani kontrkulturowy bunt charakterystyczny dla dwóch wcześniejszych pokoleń. Bez patosu! Owszem buntujemy się, kpimy i daleko nam od jakichkolwiek stosunków wyznawczych wobec tradycji, ale ważniejsze zdaje się być to, że w naturalnym dla każdego człowieka procesie oswajania rzeczywistości nauczyliśmy się stosować cudzysłów. Cytować, a przez to &quot;odnawiać znaczenia&quot;. W dawnym arcydziele odnaleźć wzór, matrycę, archetyp nawet, choć ten kryje się tylko w arcymistrzowskich ujęciach, które przez jego obecność stają dziełami genialnymi. W nim i przez niego doświadczenia najbardziej osobiste, całe procesy psychiczne, dynamika ludzkiej duchowości stają się obrazem.</p>
+      <p>Dziś tradycja i historia &quot;zapadają się w teraźniejszości&quot;, a aktualizacja przeszłości zależy tylko i wyłącznie od nas i naszych wyborów. Jesteśmy jak dzieci, które adoptują rodziców. Korzystamy z przeszłości, eksploatujemy ją, czasem wyzyskujemy, lecz nie ma w tym nic perfidnego czy wyrachowanego, dopóki dopóty dzieje się to z miłością i szacunkiem. W dawnych przedstawieniach możemy szukać własnych emocji, mimo iż czas wybarwił je z konkretności a pozostawił formę, abstrakcję, ideę, uniwersalium. Wolno nam buszować w ikonosferze, bo jest ona poniekąd również naszą własnością. Bawić się. Przebierać swoje emocje w dawne kostiumy. Opowiadać cudzymi słowami własne historie. Można to robić na wiele sposobów.</p>
+      <p>Klasyczna kompozycja, pop-artowa technika, postacie - najbliższe artystce osoby: brat, przyjaciele. Trzy warstwy strukturalne integralnie zespolone w jedną wymowną całość. Precyzyjnie wybrane, skonstruowane niczym literatura inżynierska grupy Oulipo, są jednak, to zapewne jeden z paradoksów nowej wrażliwości, sztuką przeżytą a nie zmyśloną. Tę sztukę trzeba czytać pamiętając o tym, że gra tradycji z kulturą masową, figury-ikony w komiksowym przebraniu, które pozostawione na tym etapie byłyby odczytane jako modny pastisz, nasączono żywą codziennością, prywatnością. To intymne doświadczenie artystki odnajduje swój wyraz i emocję w oparciu o kompozycje już powstałe. Pod koniec osiemnastego i na początku dziewiętnastego wieku ustawianie i &quot;odgrywanie&quot; scen ze słynnych obrazów malarskich było jedną z zabaw wykształconej i zamożnej burżuazji. Druga połowa ubiegłego stulecia miłująca się w sięganiu w przeszłość, tworzyła ironiczne lub obrazoburcze układanki z wyświechtanych obrazów. W sztuce początku XXI- ego wieku w tego rodzaju praktykach artystycznych opozycja klasyka-kultura masowa zostaje przełamana przez intymność. Znamienna to cecha dzisiejszej twórczości, tak silnie osadzonej w sekretach bezpośredniego doświadczenia artysty, że niekiedy blisko jej do ekshibicjonizmu.</p>
+      <p>Od czasu kiedy zrozumieliśmy, że wszelka percepcja jest interpretacją, że do każdego dzieła sztuki można podejść jak do pokazu cudzej działalności percepcyjnej, sztuki wizualne stały się niejako wglądem w rzeczywistość Innego jego własnymi oczami. Sytuacja spotkania ze sztuką może więc stać się, o czym stale się mówi, szansą spotkania z Nim, jak można by przypuszczać, bez obciążeń dyskursywizacji. To jedna z możliwości docierania do źródeł dzisiejszej wrażliwości - wersja subiektywistyczna. Drugą jest zapośredniczenie przez kulturę i język - metoda społeczna i dialogowa.</p>
+      <p>Obrazy, które mają najsilniejsze pozycje w ikonosferze przestają być sytuacjami estetycznymi, stają się czymś więcej niż alegorie. To wyobrażenia, które tak głęboko osadziły się w świadomej i nieświadomej pamięci zbiorowej, że stały się tworzywem naszych myśli, klatkami naszych wewnętrznych filmów. Michał Anioł, David, Manet, Hockney. Czy kryją w sobie pierwiastek uniwersalności? O to nie trzeba pytać w momencie gdy jako elementy naszych układanek zachowają swoją wyrazistość, rozpoznawalną odrębność konstrukcyjną i informacyjną. Żywotność przedstawienia. Jego aktywność. Skuteczność - oto co jest pierwsze.</p>
+      <p>Abstrakt podszyty konkretem, historia codziennością, a idea emocją. Oba poziomy &quot;pracują&quot;. Cytat jest kamuflażem, a jednocześnie nim nie jest. Nowa twórczość to niepowtarzalna szansa do obserwacji sytuacji przekazu estetycznego w którym twórca i spektator to ludzie tego samego czasu. Ten fakt pozwala mi na te spostrzeżenia, zbyt proste, za bardzo manifestacyjne, nieznośnie osobiste.</p>
+      <p>* * * * * * * *</p>
+      <p>W całym cyklu, od obrazu na bazie Piety począwszy, a na Panu i Pani Clark i Percy Davida Hockneya kończąc, najważniejsze jest &quot;tu i teraz&quot;, moment, zatrzymanie akcji charakterystyczny dla portretu. Nie sposób oprzeć się wrażeniu, że wzrok wszystkich postaci nie drąży wcale oglądającego, spojrzenie &quot;nowej&quot; Olimpii jest puste, bez znaczenia. Oczy &quot;dzisiejszego&quot; Marata utkwione jak w ekranie włączonego telewizora. Po chwili ujawnia się przede mną dziwna zależność: czy to aby na pewno ja patrzę na obraz, czy on przygląda się mnie? Czy to suche spojrzenie to nie ja właśnie? A może gdy popatrzeć &quot;inaczej&quot; coś się wydarzy, coś zmieni, coś odkryje? Ciągle te same pytania. Patrzę i szukam nowych znaków . Może wrażliwość to pewna gotowość? A może lepiej tylko patrzeć i czekać.</p>
+  </div>
+
+  <footer class="page-footer">
+    <span>&copy; Jan Lubicz Przyluski</span>
+    <a href="../original/JAN_LUBICZ/Nowa_sztuka___Bogacka.html">Oryginal (iWeb) &nearr;</a>
+  </footer>
+</div>
+
+</body>
+</html>
