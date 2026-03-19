@@ -110,6 +110,12 @@ nav{
   letter-spacing:.02em;
 }
 .nav-logo span{color:var(--accent)}
+.nav-toggle{display:none}
+.nav-buttons{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 nav button{
   background:transparent;
   color:var(--text-sec);
@@ -697,24 +703,174 @@ p.subtitle{color:var(--text-sec);font-size:1.1rem;margin-top:8px;max-width:640px
 ::-webkit-scrollbar-thumb:hover{background:#444}
 
 /* ── responsive ── */
-@media(max-width:768px){
-  nav{padding:0 16px;gap:4px}
-  nav button{padding:6px 10px;font-size:.78rem}
-  .nav-logo{font-size:.85rem}
-  .module{padding:24px 16px 60px}
-  h1{font-size:1.8rem}
-  h2{font-size:1.4rem}
+
+/* tablet */
+@media(max-width:1024px){
+  .constellation-wrapper{flex-direction:column}
+  .graph-container{min-height:450px}
   #concept-panel{width:100%}
-  .grid-5{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
-  .welcome-hero{padding:40px 0 32px}
+  .search-input{width:100%}
+  .axis-node .node-content{max-width:100%}
+}
+
+/* mobile */
+@media(max-width:768px){
+  /* ── nav hamburger ── */
+  nav{
+    padding:0 16px;gap:0;
+    flex-wrap:wrap;
+    height:auto;
+    min-height:52px;
+    position:fixed;top:0;left:0;right:0;
+    z-index:1000;
+  }
+  .nav-logo{
+    font-size:.82rem;
+    margin-right:auto;
+    padding:14px 0;
+  }
+  .nav-toggle{
+    display:flex!important;
+    align-items:center;justify-content:center;
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--text);
+    width:38px;height:38px;
+    border-radius:8px;
+    font-size:1.3rem;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .nav-toggle:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-buttons{
+    display:none;
+    width:100%;
+    flex-direction:column;
+    gap:2px;
+    padding-bottom:10px;
+    border-top:1px solid var(--border);
+    margin-top:4px;
+  }
+  .nav-buttons.open{display:flex}
+  nav button.nav-btn{
+    padding:12px 16px;
+    font-size:.9rem;
+    text-align:left;
+    width:100%;
+    border-radius:8px;
+  }
+  nav button.nav-btn:hover,nav button.nav-btn.active{
+    background:rgba(206,234,54,.08);
+  }
+
+  /* ── general ── */
+  main{padding-top:60px}
+  .module{padding:20px 14px 60px}
+  h1{font-size:1.6rem}
+  h2{font-size:1.3rem}
+  h3{font-size:1.05rem}
+  p.subtitle{font-size:.95rem}
+
+  /* ── welcome ── */
+  .welcome-hero{padding:28px 0 24px}
+  .welcome-hero h1{font-size:1.5rem}
+  .welcome-cards{margin-top:32px}
+  .grid-5{grid-template-columns:1fr 1fr;gap:12px}
+  .grid-3{grid-template-columns:1fr;gap:14px}
+  .grid-2{grid-template-columns:1fr;gap:14px}
+  .card{padding:20px 16px}
+  .card-number{width:30px;height:30px;font-size:.85rem}
+
+  /* ── constellation ── */
+  .constellation-wrapper{flex-direction:column;min-height:auto}
+  .graph-container{min-height:350px;border-radius:8px}
+  .constellation-controls{flex-direction:column;align-items:stretch;gap:8px}
+  .search-input{width:100%;font-size:1rem;padding:12px 14px}
+  .filter-bar{gap:6px}
+  .filter-bar .btn-outline{padding:8px 12px;font-size:.8rem;flex:1;min-width:0;text-align:center}
+  #concept-panel{
+    width:100%;
+    top:0;
+    padding:24px 18px 36px;
+    border-left:none;
+    border-top:1px solid var(--border);
+  }
+  #concept-panel h2{font-size:1.2rem}
+
+  /* ── quiz ── */
+  .quiz-setup{padding:32px 0 24px}
+  .quiz-setup .subtitle{font-size:.9rem}
+  .category-buttons{gap:8px}
+  .category-buttons .btn-outline{min-width:0;flex:1;padding:10px 8px;font-size:.82rem}
+  .quiz-card{padding:24px 18px}
+  .quiz-card .question-text{font-size:1.05rem;margin-bottom:20px}
+  .quiz-option{padding:12px 16px;font-size:.9rem}
+  .quiz-explanation{padding:14px 16px;font-size:.85rem}
+  .score-big{font-size:2.6rem}
+
+  /* ── matching ── */
+  .matching-setup{padding:32px 0 24px}
+  .matching-columns{grid-template-columns:1fr;gap:16px}
+  .match-pair{grid-template-columns:1fr;gap:8px}
+  .match-connector{display:none}
+  .match-item{padding:14px 16px;font-size:.88rem}
+  .mode-cards{margin:0 auto 24px}
+  .match-mode-card{padding:20px 16px}
+
+  /* ── axis ── */
+  .axis-header{margin-bottom:32px}
+  .axis-line{left:16px}
   .axis-node:nth-child(odd),
   .axis-node:nth-child(even){
     padding:0 0 0 40px;
     flex-direction:row-reverse;
     text-align:left;
   }
-  .axis-line{left:16px}
   .axis-node .node-dot{left:16px}
+  .axis-node .node-content{
+    max-width:100%;
+    padding:18px 16px;
+  }
+  .axis-node{margin-bottom:28px}
+  .axis-book-divider{font-size:.9rem;margin:28px 0 16px}
+  .node-detail-text{font-size:.87rem;text-align:left}
+  .node-detail .axis-quote-block{padding:10px 12px;font-size:.85rem}
+
+  /* ── machines ── */
+  .machines-setup{padding:32px 0 24px}
+  .machines-columns{grid-template-columns:1fr;gap:12px}
+  .machine-col{padding:16px 12px;min-height:120px}
+  .machine-col h3{font-size:.95rem}
+  .drag-items{gap:8px}
+  .drag-item{padding:8px 14px;font-size:.85rem}
+  .machine-card{padding:22px 18px}
+  .machines-results{padding:32px 16px}
+
+  /* ── buttons ── */
+  .btn-lime{padding:11px 22px;font-size:.9rem;width:100%}
+  .btn-gold{padding:11px 24px;font-size:.9rem;width:100%}
+  .btn-outline{font-size:.85rem}
+
+  /* ── results ── */
+  .results-card{padding:32px 20px}
+  .results-card .score-big{font-size:2.8rem}
+  .match-results{padding:24px 16px}
+
+  /* ── particles ── */
+  body::before{width:180px;height:180px}
+  body::after{width:120px;height:120px}
+  .particle{display:none}
+}
+
+/* small phones */
+@media(max-width:400px){
+  .nav-logo{font-size:.75rem}
+  h1{font-size:1.35rem}
+  .grid-5{grid-template-columns:1fr}
+  .category-buttons{flex-direction:column}
+  .category-buttons .btn-outline{width:100%}
+  .quiz-card .question-text{font-size:.98rem}
+  .drag-item{font-size:.8rem;padding:7px 11px}
 }
 
 /* ── missing classes fix ── */
@@ -764,12 +920,15 @@ p.subtitle{color:var(--text-sec);font-size:1.1rem;margin-top:8px;max-width:640px
 <!-- ════════ NAV ════════ -->
 <nav>
   <div class="nav-logo"><span>Schizoanaliza</span> | Gra Edukacyjna</div>
-  <button class="nav-btn active" data-module="welcome">Start</button>
-  <button class="nav-btn" data-module="constellation">Konstelacja</button>
-  <button class="nav-btn" data-module="quiz">Quiz</button>
-  <button class="nav-btn" data-module="matching">Dopasowanie</button>
-  <button class="nav-btn" data-module="axis">Os argumentacji</button>
-  <button class="nav-btn" data-module="machines">Trzy maszyny</button>
+  <button class="nav-toggle" style="display:none" aria-label="Menu" onclick="document.querySelector('.nav-buttons').classList.toggle('open')">☰</button>
+  <div class="nav-buttons">
+    <button class="nav-btn active" data-module="welcome">Start</button>
+    <button class="nav-btn" data-module="constellation">Konstelacja</button>
+    <button class="nav-btn" data-module="quiz">Quiz</button>
+    <button class="nav-btn" data-module="matching">Dopasowanie</button>
+    <button class="nav-btn" data-module="axis">Oś argumentacji</button>
+    <button class="nav-btn" data-module="machines">Trzy maszyny</button>
+  </div>
 </nav>
 
 <!-- ════════ MAIN ════════ -->
@@ -2044,7 +2203,12 @@ function resetMachines() {
 document.addEventListener('DOMContentLoaded', () => {
   // Nav buttons
   document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => showModule(btn.dataset.module));
+    btn.addEventListener('click', () => {
+      showModule(btn.dataset.module);
+      // close mobile menu
+      const nb = document.querySelector('.nav-buttons');
+      if(nb) nb.classList.remove('open');
+    });
   });
   // Welcome cards
   document.querySelectorAll('[data-goto]').forEach(card => {
