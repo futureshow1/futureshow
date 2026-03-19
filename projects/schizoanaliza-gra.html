@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schizoanaliza Deleuze'a i Guattariego — Gra Edukacyjna</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0a0a0a;
+  --bg-card:#111;
+  --bg-container:#1a1a1a;
+  --accent:#ceea36;
+  --text:#e8e8e8;
+  --text-sec:#888;
+  --border:#222;
+  --radius:10px;
+  --transition:.3s ease;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── floating particles background ── */
+body::before,body::after{
+  content:'';
+  position:fixed;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:.06;
+  z-index:0;
+}
+body::before{
+  width:320px;height:320px;
+  background:var(--accent);
+  top:10%;left:-80px;
+  animation:float 18s ease-in-out infinite;
+}
+body::after{
+  width:220px;height:220px;
+  background:var(--accent);
+  bottom:5%;right:-60px;
+  animation:float 14s ease-in-out infinite reverse;
+}
+
+.particle{
+  position:fixed;
+  border-radius:50%;
+  background:var(--accent);
+  pointer-events:none;
+  opacity:.035;
+  z-index:0;
+}
+.particle--1{width:140px;height:140px;top:55%;left:20%;animation:float 22s ease-in-out infinite 2s}
+.particle--2{width:90px;height:90px;top:30%;right:15%;animation:float 16s ease-in-out infinite 5s}
+.particle--3{width:180px;height:180px;bottom:25%;left:55%;animation:float 20s ease-in-out infinite 1s}
+
+/* ── keyframes ── */
+@keyframes float{
+  0%,100%{transform:translateY(0) translateX(0)}
+  25%{transform:translateY(-30px) translateX(15px)}
+  50%{transform:translateY(10px) translateX(-20px)}
+  75%{transform:translateY(-15px) translateX(10px)}
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes gradientShift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* ── nav ── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:1000;
+  background:var(--bg);
+  border-bottom:2px solid var(--accent);
+  display:flex;align-items:center;
+  padding:0 32px;
+  height:60px;
+  gap:8px;
+  backdrop-filter:blur(12px);
+}
+.nav-logo{
+  font-size:1rem;
+  font-weight:700;
+  color:var(--text);
+  margin-right:auto;
+  white-space:nowrap;
+  letter-spacing:.02em;
+}
+.nav-logo span{color:var(--accent)}
+nav button{
+  background:transparent;
+  color:var(--text-sec);
+  border:1px solid transparent;
+  padding:8px 16px;
+  border-radius:var(--radius);
+  font-size:.85rem;
+  cursor:pointer;
+  transition:var(--transition);
+  white-space:nowrap;
+}
+nav button:hover,nav button.active{
+  color:var(--accent);
+  border-color:var(--accent);
+}
+
+/* ── main / modules ── */
+main{
+  position:relative;
+  z-index:1;
+  padding-top:80px;
+  min-height:100vh;
+}
+
+.module{
+  display:none;
+  max-width:1200px;
+  margin:0 auto;
+  padding:40px 32px 80px;
+  animation:fadeIn .5s ease forwards;
+}
+.module.active{display:block}
+
+/* ── typography ── */
+h1{font-size:2.8rem;font-weight:800;line-height:1.15;letter-spacing:-.02em}
+h2{font-size:1.8rem;font-weight:700;margin-bottom:12px}
+h3{font-size:1.2rem;font-weight:600;margin-bottom:8px}
+p.subtitle{color:var(--text-sec);font-size:1.1rem;margin-top:8px;max-width:640px}
+
+/* ── buttons ── */
+.btn-lime{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--accent);
+  color:var(--bg);
+  font-weight:700;
+  border:none;
+  padding:12px 28px;
+  border-radius:var(--radius);
+  font-size:.95rem;
+  cursor:pointer;
+  transition:var(--transition);
+  gap:8px;
+}
+.btn-lime:hover{
+  filter:brightness(1.1);
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(206,234,54,.25);
+}
+
+.btn-outline{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--border);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  font-size:.9rem;
+  cursor:pointer;
+  transition:var(--transition);
+  gap:6px;
+}
+.btn-outline:hover,.btn-outline.active{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+/* ── cards ── */
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px 24px;
+  transition:var(--transition);
+  cursor:pointer;
+}
+.card:hover{
+  border-color:var(--accent);
+  transform:translateY(-4px);
+  box-shadow:0 8px 32px rgba(206,234,54,.08);
+  animation:pulse .6s ease;
+}
+.card h3{color:var(--text)}
+.card p{color:var(--text-sec);font-size:.9rem;line-height:1.5}
+
+.badge{
+  display:inline-block;
+  background:rgba(206,234,54,.12);
+  color:var(--accent);
+  font-size:.75rem;
+  font-weight:600;
+  padding:4px 10px;
+  border-radius:20px;
+  margin-bottom:12px;
+  letter-spacing:.03em;
+}
+
+/* ── grids ── */
+.grid-5{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+
+.filter-bar{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:10px;margin-bottom:24px;
+}
+
+/* ══════════════════════════════════════
+   MODULE 1 — welcome
+   ══════════════════════════════════════ */
+.welcome-hero{
+  text-align:center;
+  padding:80px 0 60px;
+}
+.welcome-hero h1{
+  background:linear-gradient(135deg,var(--accent),#a8d400,var(--accent));
+  background-size:200% 200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:gradientShift 6s ease infinite;
+}
+.welcome-hero .subtitle{
+  margin:16px auto 0;
+  text-align:center;
+}
+.welcome-cards{
+  margin-top:56px;
+}
+
+/* number icon inside card */
+.card-number{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;
+  border-radius:50%;
+  background:rgba(206,234,54,.1);
+  color:var(--accent);
+  font-weight:700;font-size:.95rem;
+  margin-bottom:14px;
+}
+
+/* ══════════════════════════════════════
+   MODULE 2 — constellation
+   ══════════════════════════════════════ */
+.constellation-wrapper{
+  display:flex;
+  gap:0;
+  position:relative;
+  min-height:calc(100vh - 140px);
+}
+
+.graph-container{
+  flex:1;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  position:relative;
+  overflow:hidden;
+  min-height:600px;
+}
+#graph-svg{
+  width:100%;height:100%;
+  display:block;
+}
+
+.constellation-controls{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:10px;margin-bottom:20px;
+}
+.search-input{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:10px 16px;
+  border-radius:var(--radius);
+  font-size:.9rem;
+  width:260px;
+  transition:var(--transition);
+  outline:none;
+}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text-sec)}
+
+/* concept panel — slides from right */
+#concept-panel{
+  position:fixed;
+  top:60px;right:0;bottom:0;
+  width:540px;
+  background:var(--bg);
+  border-left:1px solid var(--border);
+  transform:translateX(100%);
+  transition:transform .35s ease;
+  z-index:900;
+  overflow-y:auto;
+  padding:32px 28px 48px;
+}
+#concept-panel.open{transform:translateX(0)}
+#concept-panel .panel-close{
+  position:absolute;top:16px;right:16px;
+  background:transparent;border:1px solid var(--border);
+  color:var(--text-sec);
+  width:36px;height:36px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;cursor:pointer;
+  transition:var(--transition);
+}
+#concept-panel .panel-close:hover{border-color:var(--accent);color:var(--accent)}
+#concept-panel h2{margin-top:8px;margin-bottom:4px}
+#concept-panel .panel-badge{margin-bottom:16px}
+#concept-panel .panel-body{color:var(--text-sec);font-size:.95rem;line-height:1.7}
+#concept-panel .panel-connections{margin-top:28px}
+#concept-panel .panel-connections h3{color:var(--text);margin-bottom:12px}
+#concept-panel .conn-tag{
+  display:inline-block;
+  background:var(--bg-container);
+  border:1px solid var(--border);
+  color:var(--text-sec);
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:.82rem;
+  margin:0 6px 8px 0;
+  cursor:pointer;
+  transition:var(--transition);
+}
+#concept-panel .conn-tag:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ══════════════════════════════════════
+   MODULE 3 — quiz
+   ══════════════════════════════════════ */
+.quiz-setup{text-align:center;padding:60px 0 40px}
+.quiz-setup h2{margin-bottom:8px}
+.quiz-setup .subtitle{margin:0 auto 36px}
+
+.category-buttons{
+  display:flex;justify-content:center;
+  gap:12px;margin-bottom:32px;flex-wrap:wrap;
+}
+.category-buttons .btn-outline{min-width:150px}
+.category-buttons .btn-outline.selected{
+  border-color:var(--accent);color:var(--accent);
+  background:rgba(206,234,54,.06);
+}
+
+.quiz-area{
+  max-width:720px;
+  margin:0 auto;
+}
+
+/* quiz card styles (used by JS) */
+.quiz-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:36px 32px;
+  margin-bottom:24px;
+  animation:fadeIn .4s ease forwards;
+}
+.quiz-card .question-counter{
+  color:var(--text-sec);font-size:.85rem;margin-bottom:16px;
+}
+.quiz-card .question-text{
+  font-size:1.15rem;font-weight:600;line-height:1.5;margin-bottom:28px;
+}
+.quiz-option{
+  display:block;width:100%;text-align:left;
+  background:var(--bg-container);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:14px 20px;
+  border-radius:8px;
+  font-size:.95rem;
+  cursor:pointer;
+  margin-bottom:10px;
+  transition:var(--transition);
+}
+.quiz-option:hover{border-color:var(--accent)}
+.quiz-option.correct{border-color:#4caf50;background:rgba(76,175,80,.1)}
+.quiz-option.incorrect{border-color:#f44336;background:rgba(244,67,54,.08)}
+
+.quiz-explanation{
+  margin-top:20px;padding:16px 20px;
+  background:rgba(206,234,54,.05);
+  border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;
+  color:var(--text-sec);font-size:.9rem;line-height:1.6;
+}
+
+.quiz-progress{
+  height:4px;background:var(--border);border-radius:2px;margin-bottom:28px;overflow:hidden;
+}
+.quiz-progress-fill{
+  height:100%;background:var(--accent);border-radius:2px;
+  transition:width .4s ease;
+}
+
+/* ══════════════════════════════════════
+   MODULE 4 — matching
+   ══════════════════════════════════════ */
+.matching-setup{text-align:center;padding:60px 0 40px}
+.matching-setup h2{margin-bottom:8px}
+.matching-setup .subtitle{margin:0 auto 40px}
+
+.mode-cards{
+  max-width:800px;
+  margin:0 auto 32px;
+}
+
+.matching-area{
+  max-width:900px;
+  margin:0 auto;
+}
+
+/* drag & match styles */
+.match-pair{
+  display:grid;grid-template-columns:1fr 40px 1fr;
+  gap:12px;align-items:center;
+  margin-bottom:16px;
+}
+.match-item{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:16px 20px;
+  font-size:.92rem;
+  transition:var(--transition);
+}
+.match-item:hover{border-color:var(--accent)}
+.match-item.dragging{opacity:.5;border-color:var(--accent)}
+.match-item.correct-match{border-color:#4caf50}
+.match-item.wrong-match{border-color:#f44336}
+.match-connector{
+  color:var(--text-sec);text-align:center;font-size:1.2rem;
+}
+
+/* ══════════════════════════════════════
+   MODULE 5 — axis (os argumentacji)
+   ══════════════════════════════════════ */
+.axis-container{
+  position:relative;
+  padding:40px 0;
+}
+.axis-header{text-align:center;margin-bottom:48px}
+.axis-header h2{margin-bottom:8px}
+.axis-header .subtitle{margin:0 auto}
+
+.axis-line{
+  position:absolute;
+  left:50%;top:160px;bottom:60px;
+  width:2px;
+  background:linear-gradient(to bottom,var(--accent),var(--border));
+  transform:translateX(-50%);
+}
+
+.axis-node{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:48px;
+  animation:fadeIn .5s ease forwards;
+}
+.axis-node:nth-child(odd){
+  flex-direction:row;
+  padding-right:calc(50% + 40px);
+  text-align:right;
+}
+.axis-node:nth-child(even){
+  flex-direction:row-reverse;
+  padding-left:calc(50% + 40px);
+  text-align:left;
+}
+.axis-node .node-dot{
+  position:absolute;
+  left:50%;top:8px;
+  width:16px;height:16px;
+  background:var(--accent);
+  border-radius:50%;
+  transform:translateX(-50%);
+  z-index:2;
+  box-shadow:0 0 12px rgba(206,234,54,.3);
+}
+.axis-node .node-content{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+  transition:var(--transition);
+  max-width:480px;
+}
+.axis-node .node-content:hover{border-color:var(--accent)}
+.axis-node .node-content h3{margin-bottom:6px}
+.axis-node .node-content p{color:var(--text-sec);font-size:.9rem}
+.axis-node .node-content .station-number{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;
+  font-size:.8rem;font-weight:700;margin-bottom:8px;
+}
+.axis-node .node-content .station-quote{
+  font-style:italic;color:var(--accent);opacity:.7;font-size:.85rem;margin-top:8px;
+  border-left:2px solid var(--accent);padding-left:10px;
+}
+.node-detail .axis-quote-block{
+  background:rgba(206,234,54,.05);
+  border-left:3px solid var(--accent);
+  padding:12px 16px;margin:12px 0;
+  border-radius:0 8px 8px 0;
+  font-style:italic;color:#c8c8d8;font-size:.9rem;line-height:1.6;
+}
+.node-detail .axis-subheading{
+  color:var(--accent);font-size:.95rem;font-weight:600;margin:16px 0 8px;
+  border-bottom:1px solid rgba(206,234,54,.15);padding-bottom:4px;
+}
+#axis-nodes{
+  position:relative;
+  padding-top:20px;
+}
+.axis-book-divider{
+  text-align:center;margin:40px 0 24px;border-bottom:2px solid;padding-bottom:12px;
+}
+.axis-node{cursor:pointer}
+.axis-node .node-detail{
+  display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);
+}
+.axis-node.expanded .node-detail{display:block}
+.axis-node.expanded .node-content{border-color:var(--accent);box-shadow:0 0 20px rgba(206,234,54,.1)}
+.node-detail-text{color:var(--text-sec);font-size:.92rem;line-height:1.75;text-align:justify}
+.node-detail-text p{margin-bottom:.8rem}
+.node-detail-text strong{color:var(--text)}
+.node-detail-text em{color:var(--accent);font-style:italic}
+.node-detail-concepts{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.concept-tag{
+  background:rgba(206,234,54,.1);color:var(--accent);padding:4px 10px;border-radius:4px;
+  font-size:.78rem;cursor:pointer;border:1px solid transparent;transition:var(--transition);
+}
+.concept-tag:hover{border-color:var(--accent);background:rgba(206,234,54,.2)}
+
+/* ══════ Panel concept detail styles ══════ */
+.source-badge{display:inline-block;padding:4px 12px;border-radius:4px;font-size:.75rem;font-weight:600;margin-bottom:12px}
+.short-def{color:var(--text-sec);font-size:.95rem;line-height:1.65}
+.quote-block{
+  background:rgba(206,234,54,.06);border-left:3px solid var(--accent);
+  padding:12px 16px;margin:16px 0;border-radius:0 8px 8px 0;
+  font-style:italic;color:var(--text-sec);font-size:.9rem;line-height:1.6;
+}
+.read-more-toggle{
+  display:inline-block;background:none;border:1px solid var(--accent);color:var(--accent);
+  padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.85rem;
+  margin:12px 0;transition:var(--transition);
+}
+.read-more-toggle:hover{background:rgba(206,234,54,.1)}
+.read-more-content{display:none;margin-top:12px}
+.read-more-content.open{display:block}
+.definition{color:var(--text-sec);font-size:.92rem;line-height:1.75;text-align:justify}
+.definition p{margin-bottom:.8rem}
+.definition strong{color:var(--text)}
+.definition em{color:var(--accent);font-style:italic}
+#panel-content .related{margin-top:20px;border-top:1px solid var(--border);padding-top:16px}
+#panel-content .related h4{color:var(--accent);font-size:.85rem;margin-bottom:8px}
+.related-tag{
+  display:inline-block;background:rgba(206,234,54,.08);color:var(--accent);
+  padding:4px 10px;border-radius:4px;font-size:.8rem;margin:3px;
+  cursor:pointer;border:1px solid transparent;transition:var(--transition);
+}
+.related-tag:hover{border-color:var(--accent);background:rgba(206,234,54,.15)}
+#panel-content h3{font-size:1.3rem;margin-bottom:8px}
+
+/* ══════════════════════════════════════
+   MODULE 6 — machines (trzy maszyny)
+   ══════════════════════════════════════ */
+.machines-setup{text-align:center;padding:60px 0 40px}
+.machines-setup h2{margin-bottom:8px}
+.machines-setup .subtitle{margin:0 auto 36px}
+
+.machines-area{
+  max-width:960px;
+  margin:0 auto;
+}
+
+.machine-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:32px 28px;
+  margin-bottom:20px;
+  transition:var(--transition);
+}
+.machine-card:hover{border-color:var(--accent)}
+
+/* machines game JS classes */
+.machines-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:24px;flex-wrap:wrap;gap:12px;
+}
+.machines-header .m-progress,.machines-header .m-score{color:var(--text-sec);font-size:.9rem}
+.machines-header .m-progress span,.machines-header .m-score span{color:var(--accent);font-weight:700}
+.current-category{text-align:center;margin-bottom:24px}
+.current-category h4{color:var(--text-sec);font-size:1rem;margin-bottom:16px}
+.drag-items{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0 28px}
+.drag-item{
+  background:rgba(206,234,54,.08);border:1px solid var(--accent);color:var(--accent);
+  padding:10px 18px;border-radius:8px;cursor:pointer;font-size:.9rem;
+  transition:var(--transition);user-select:none;
+}
+.drag-item:hover{background:rgba(206,234,54,.15);transform:scale(1.03)}
+.drag-item.placed{opacity:.25;pointer-events:none;transform:none}
+.machines-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+.machine-col{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px 16px;text-align:center;min-height:180px;cursor:pointer;transition:var(--transition);
+}
+.machine-col:hover{border-color:var(--accent);box-shadow:0 0 16px rgba(206,234,54,.08)}
+.machine-col h3{color:var(--accent);font-size:1.05rem;margin-bottom:4px}
+.col-sub{color:var(--text-sec);font-size:.8rem;margin-bottom:12px;font-style:italic}
+.dropped-item{padding:6px 12px;border-radius:6px;margin-top:6px;font-size:.85rem}
+.correct-drop{background:rgba(76,175,80,.12);color:#4caf50;border:1px solid rgba(76,175,80,.3)}
+.wrong-drop{background:rgba(244,67,54,.1);color:#f44336;border:1px solid rgba(244,67,54,.3)}
+.machines-results{text-align:center;padding:48px 24px}
+
+/* matching game JS classes */
+.matching-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:20px;flex-wrap:wrap;gap:8px;
+}
+.timer{color:var(--accent);font-size:1.2rem;font-weight:700}
+.matching-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.matching-columns h4{color:var(--accent);margin-bottom:12px;font-size:.9rem}
+.match-item{cursor:pointer;user-select:none}
+.match-item.selected{border-color:var(--accent)!important;background:rgba(206,234,54,.08);box-shadow:0 0 12px rgba(206,234,54,.15)}
+.match-item.matched{border-color:#4caf50!important;background:rgba(76,175,80,.08);color:#4caf50;pointer-events:none}
+.match-item.wrong-match{border-color:#f44336!important;background:rgba(244,67,54,.06);animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.match-results{text-align:center;padding:36px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);margin-top:20px}
+
+/* quiz results */
+.quiz-results{text-align:center;padding:48px 24px}
+.score-big{font-size:3.5rem;color:var(--accent);font-weight:700}
+.score-label{font-size:1.1rem;color:var(--text-sec);margin-bottom:16px}
+
+/* responsive additions */
+@media(max-width:768px){
+  .machines-columns{grid-template-columns:1fr}
+  .matching-columns{grid-template-columns:1fr}
+}
+.machine-card h3{margin-bottom:10px}
+.machine-card p{color:var(--text-sec);font-size:.92rem;line-height:1.6}
+.machine-card .badge{margin-bottom:14px}
+
+/* ── results / score ── */
+.results-card{
+  background:var(--bg-card);
+  border:1px solid var(--accent);
+  border-radius:var(--radius);
+  padding:48px 36px;
+  text-align:center;
+  animation:fadeIn .5s ease forwards;
+}
+.results-card .score-big{
+  font-size:3.6rem;font-weight:800;
+  color:var(--accent);margin:16px 0 8px;
+}
+.results-card p{color:var(--text-sec)}
+
+/* ── utilities ── */
+.hidden{display:none!important}
+.mt-1{margin-top:8px}.mt-2{margin-top:16px}.mt-3{margin-top:24px}.mt-4{margin-top:32px}
+.mb-2{margin-bottom:16px}.mb-3{margin-bottom:24px}
+.text-center{text-align:center}
+.text-accent{color:var(--accent)}
+.text-sec{color:var(--text-sec)}
+.flex-center{display:flex;align-items:center;justify-content:center}
+
+/* ── scrollbar ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#444}
+
+/* ── responsive ── */
+@media(max-width:768px){
+  nav{padding:0 16px;gap:4px}
+  nav button{padding:6px 10px;font-size:.78rem}
+  .nav-logo{font-size:.85rem}
+  .module{padding:24px 16px 60px}
+  h1{font-size:1.8rem}
+  h2{font-size:1.4rem}
+  #concept-panel{width:100%}
+  .grid-5{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+  .welcome-hero{padding:40px 0 32px}
+  .axis-node:nth-child(odd),
+  .axis-node:nth-child(even){
+    padding:0 0 0 40px;
+    flex-direction:row-reverse;
+    text-align:left;
+  }
+  .axis-line{left:16px}
+  .axis-node .node-dot{left:16px}
+}
+
+/* ── missing classes fix ── */
+.btn-gold{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--accent),#a8d400);
+  color:#000;
+  border:none;
+  padding:12px 32px;
+  border-radius:8px;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:var(--transition);
+  letter-spacing:.02em;
+}
+.btn-gold:hover{transform:scale(1.04);box-shadow:0 4px 20px rgba(206,234,54,.25)}
+
+.match-mode-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:28px 24px;
+  cursor:pointer;
+  transition:var(--transition);
+  text-align:center;
+}
+.match-mode-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(206,234,54,.06);
+}
+.match-mode-card h3{color:var(--accent);font-size:1.05rem;margin-bottom:6px}
+.match-mode-card p{color:var(--text-sec);font-size:.88rem}
+
+.matching-header .m-score{color:var(--text-sec);font-size:.85rem}
+.matching-header .m-score span{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- floating particles -->
+<div class="particle particle--1"></div>
+<div class="particle particle--2"></div>
+<div class="particle particle--3"></div>
+
+<!-- ════════ NAV ════════ -->
+<nav>
+  <div class="nav-logo"><span>Schizoanaliza</span> | Gra Edukacyjna</div>
+  <button class="nav-btn active" data-module="welcome">Start</button>
+  <button class="nav-btn" data-module="constellation">Konstelacja</button>
+  <button class="nav-btn" data-module="quiz">Quiz</button>
+  <button class="nav-btn" data-module="matching">Dopasowanie</button>
+  <button class="nav-btn" data-module="axis">Os argumentacji</button>
+  <button class="nav-btn" data-module="machines">Trzy maszyny</button>
+</nav>
+
+<!-- ════════ MAIN ════════ -->
+<main>
+
+<!-- ──────── MODULE 1: WELCOME ──────── -->
+<div id="welcome" class="module active">
+  <div class="welcome-hero">
+    <h1>Schizoanaliza Deleuze'a i Guattariego</h1>
+    <p class="subtitle">Interaktywna gra edukacyjna poswiecona kluczowym pojęciom Anty-Edypa i Tysiac Plateau. Eksploruj konstelacje idei, testuj wiedze i odkrywaj maszynerie pragnienia.</p>
+  </div>
+
+  <div class="welcome-cards grid-5">
+    <div class="card" data-goto="constellation">
+      <div class="card-number">1</div>
+      <h3>Konstelacja pojęć</h3>
+      <p>Interaktywny graf połączeń między kluczowymi pojęćiami obu tomow.</p>
+    </div>
+    <div class="card" data-goto="quiz">
+      <div class="card-number">2</div>
+      <h3>Quiz wiedzy</h3>
+      <p>Sprawdz swoje rozumienie schizoanalitycznych kategorii na trzech poziomach.</p>
+    </div>
+    <div class="card" data-goto="matching">
+      <div class="card-number">3</div>
+      <h3>Dopasowanie</h3>
+      <p>Połącz pojęćia z definicjami, autorami i kontekstami w roznych trybach.</p>
+    </div>
+    <div class="card" data-goto="axis">
+      <div class="card-number">4</div>
+      <h3>Os argumentacji</h3>
+      <p>Sledz linie argumentacyjna obu ksiazek — od krytyki Edypa po maszyny wojenne.</p>
+    </div>
+    <div class="card" data-goto="machines">
+      <div class="card-number">5</div>
+      <h3>Trzy maszyny</h3>
+      <p>Eksploruj trzy fundamentalne typy maszyn: pragnienia, społeczne i wojenne.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ──────── MODULE 2: CONSTELLATION ──────── -->
+<div id="constellation" class="module">
+  <h2>Konstelacja pojęć</h2>
+  <p class="subtitle mb-3">Kliknij wezel, aby odkryc szczegoly. Filtruj wedlug tomu lub szukaj po nazwie.</p>
+
+  <div class="constellation-controls">
+    <button class="btn-outline filter-btn active" data-filter="all">Wszystkie</button>
+    <button class="btn-outline filter-btn" data-filter="antyedyp">Anty-Edyp</button>
+    <button class="btn-outline filter-btn" data-filter="plateau">Tysiac Plateau</button>
+    <button class="btn-outline filter-btn" data-filter="oba">Oba tomy</button>
+    <input type="text" class="search-input" id="concept-search" placeholder="Szukaj pojęćia...">
+  </div>
+
+  <div class="constellation-wrapper">
+    <div class="graph-container">
+      <svg id="graph-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+  </div>
+
+  <!-- side panel -->
+  <div id="concept-panel">
+    <button class="panel-close" id="panel-close-btn">&times;</button>
+    <div id="panel-content"></div>
+  </div>
+</div>
+
+<!-- ──────── MODULE 3: QUIZ ──────── -->
+<div id="quiz" class="module">
+  <div class="quiz-setup" id="quiz-setup">
+    <h2>Quiz ze schizoanaliz</h2>
+    <p class="subtitle">Wybierz poziom trudnosci i sprawdz swoja wiedze o pojęćiach Deleuze'a i Guattariego.</p>
+
+    <div class="category-buttons" id="quiz-categories">
+      <button class="btn-outline" data-category="basics">Podstawy</button>
+      <button class="btn-outline" data-category="advanced">Zaawansowane</button>
+      <button class="btn-outline" data-category="expert">Ekspert</button>
+    </div>
+
+    <button class="btn-lime" id="quiz-start-btn">Rozpocznij quiz</button>
+  </div>
+
+  <div class="quiz-area" id="quiz-area"></div>
+</div>
+
+<!-- ──────── MODULE 4: MATCHING ──────── -->
+<div id="matching" class="module">
+  <div class="matching-setup" id="matching-setup">
+    <h2>Dopasowanie pojęć</h2>
+    <p class="subtitle">Wybierz tryb gry i połącz elementy schizoanalitycznego slownika.</p>
+
+    <div class="mode-cards grid-3" id="matching-modes">
+      <div class="card" data-mode="concept-definition">
+        <span class="badge">Tryb A</span>
+        <h3>Pojecie — Definicja</h3>
+        <p>Dopasuj kluczowe pojęćia do ich definicji z Anty-Edypa i Tysiac Plateau.</p>
+      </div>
+      <div class="card" data-mode="concept-author">
+        <span class="badge">Tryb B</span>
+        <h3>Pojecie — Kontekst</h3>
+        <p>Połącz pojęćia z odpowiednim kontekstem teoretycznym lub tomem.</p>
+      </div>
+      <div class="card" data-mode="quote-concept">
+        <span class="badge">Tryb C</span>
+        <h3>Cytat — Pojecie</h3>
+        <p>Przypisz fragmenty tekstu do odpowiednich kategorii schizoanalitycznych.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="matching-area" id="matching-area"></div>
+</div>
+
+<!-- ──────── MODULE 5: AXIS (os argumentacji) ──────── -->
+<div id="axis" class="module">
+  <div class="axis-container">
+    <div class="axis-header">
+      <h2>Os argumentacji</h2>
+      <p class="subtitle">Linia argumentacyjna Anty-Edypa i Tysiac Plateau — od krytyki psychoanalizy po ontologie stawania-sie.</p>
+    </div>
+    <div class="axis-line"></div>
+    <div id="axis-nodes"></div>
+  </div>
+</div>
+
+<!-- ──────── MODULE 6: MACHINES (trzy maszyny) ──────── -->
+<div id="machines" class="module">
+  <div class="machines-setup" id="machines-setup">
+    <h2>Trzy maszyny</h2>
+    <p class="subtitle">Poznaj fundamentalne typy maszyn w filozofii Deleuze'a i Guattariego — maszyny pragnienia, maszyny społeczne i maszyny wojenne.</p>
+    <button class="btn-lime" id="machines-start-btn">Rozpocznij eksploracje</button>
+  </div>
+
+  <div class="machines-area" id="machines-area"></div>
+</div>
+
+</main>
+
+<script>
+// ========== CONCEPTS DATA (1-25) ==========
+const concepts = [
+  {id:0,name:"Aksjomatyka",src:"AE+TP",
+   def:`System czysto funkcjonalnych regul operujacych na zdekodowanych przepływach za pomoca abstrakcyjnych ilosci (pieniadza). W przeciwienstwie do kodow, ktore odwoluja sie do jakosci i znaczen, aksjomatyka operuje na poziomie czysto ilosciowym.`,
+   detail:`<p>Aksjomatyka jest kluczowym pojęciem dla zrozumienia specyfiki kapitalizmu w ujuciu Deleuze'a i Guattariego. O ile społeczeństwa przedkapitalistyczne funkcjonowaly na zasadzie <em>kodowania</em> przepływow (nadawania im jakosciowego znaczenia poprzez mity, rytualy, systemy pokrewienstwa), o tyle kapitalizm dokonuje bezprecedensowej operacji: <em>dekoduje</em> przepływ za przepływem — znosiac tradycyjne kody, uwalniajac przepływ pracy od feudalnych wiezow, przepływ pieniadza od merkantylnej kontroli — ale natychmiast poddaje zdekodowane przepływ nowej formie kontroli, ktora nie jest juz kodowaniem, lecz <em>aksjomatyka</em>.</p>
+<p>Roznica między kodem a aksjomatyka jest fundamentalna. Kod jest jakosciowy — mowi, <em>co</em> dany przepływ znaczy, przypisuje mu miejsce w systemie symbolicznym. Aksjomatyka jest ilosciowa — nie pyta o znaczenie, lecz o funkcje: reguluje przepływ za pomoca abstrakcyjnych ilosci (pieniadz jako miernik uniwersalny). Kod jest terytorialny — wiaze przepływ z konkretnym terytorium, plemieniem, kasta. Aksjomatyka jest deterytorializujaca — operuje na przepływach oderwanych od wszelkiego terytorium.</p>
+<p>Ta różnica ma daleko idace konsekwencje polityczne. Kody sa sztywne, ale czytelne — podmiot wie, jakie miejsce zajmuje w systemie. Aksjomatyka jest elastyczna, ale nieprzejrzysta — jej reguly sa abstrakcyjne, a ich dzialanie wymyka sie bezposredniemu doswiadczeniu. Stad paradoks kapitalizmu: jest systemem, ktory nieustannie rewolucjonizuje wlasne warunki (dekoduje), ale jednoczesnie odtwarza stabilnosc na nowym poziomie (aksjomatyzuje). Deleuze i Guattari opisuja to jako <em>tendencje</em> i <em>kontrtendencje</em>: tendencja do absolutnej deterytorializacji (dekodowanie wszystkiego) jest nieustannie hamowana przez kontrtendencje do reterytorializacji (tworzenie sztucznych terytoriow — narod, rodzina, Edyp).</p>`,
+   quote:`"Kapitalizm nie opiera sie na kodach, lecz na aksjomatyce zdekodowanych przepływow."`,
+   quote2:`"Aksjomatyka dodaje nowe aksjomaty zamiast tworzyc nowe kody — to jest jej sila i jej granica."`},
+
+  {id:1,name:"Anomalny (Outsider)",src:"TP",
+   def:`Figura graniczna sfory lub wielośći — byt na krawedzi, z ktorym podmiot wchodzi w demoniczny sojusz stawania-sie. Nie jest ani przedstawicielem gatunku, ani przywodca sfory.`,
+   detail:`<p>Pojecie Anomalnego pojawia sie w plateau 10 (<em>Stawanie-sie</em>) i pelni kluczowa role w teorii stawan-sie. Anomalny (z duzej litery, w odroznieniu od przymiotnika "anomalny") nie jest typowym przedstawicielem grupy ani jej statystyczna srednia — jest bytem granicznym, wyjatkowym, ktory definiuje zewnetrzna granice sfory. Jest to "Outsider" w precyzyjnym sensie: nie stoi w centrum wielośći, lecz na jej peryferiach, wyznaczajac linie ujscia.</p>
+<p>Deleuze i Guattari odwoluja sie tu do Moby Dicka Melville'a: bialy wieloryb jest Anomalnym sfory wielorybow — nie jest jej przywodca, nie reprezentuje gatunku, lecz stanowi byt graniczny, z ktorym Ahab wchodzi w "demoniczny sojusz". Ten sojusz nie jest imitacja (Ahab nie staje sie wielorybem w sensie nasladorwczym) ani identyfikacja (nie "mysli, ze jest wielorybem") — jest <em>blokiem stawania-sie</em>, w ktorym Ahab i Moby Dick tworza strefie wspolistnienia, zone nieodroznialnosciproximite.</p>
+<p>Anomalny jest zatem koniecznym warunkiem kazdego stawania-sie. Stawanie-sie-zwierzeciem nie odbywa sie przez imitacje typowego przedstawiciela gatunku, lecz przez sojusz z Anomalnym — z wyjatkowym, granicznym bytem, ktory otwiera linie ujscia. Dlatego Anomalny jest zawsze figurja sojuszu (alliance), a nie filiacji (filiation) — nie chodzi o pokrewienstwo czy podobienstwo, lecz o "nienaturalne uczestnictwo", "demoniczne przymierze".</p>`,
+   quote:`"Anomalny nie jest ani jednostka, ani gatunek — jest granica sfory, a sfora jest jego tlem."`,
+   quote2:`"Stawanie-sie jest zawsze kwestia sojuszu z Anomalnym."`},
+
+  {id:2,name:"Antyprodukcja",src:"AE",
+   def:`Domena jalowej, nieproduktywnej powierzchni (CbO). Nie zaprzeczenie produkcji, lecz jej konieczny komplement — element odpoczynku i zapisu w cyklu produkcji pragnącej.`,
+   detail:`<p>Antyprodukcja nie jest przeciwienstwem produkcji, lecz trzecim terminem w serii: produkcja-zapis-konsumpcja. Jest momentem, w ktorym nieskonczona produkcja maszyn pragnących napotyka na <em>jalowa powierzchnie</em> CbO i zostaje na niej zapisana. Bez antyprodukcji produkcja rozproszylyby sie w nieskończoność, nie tworzac zadnego zapisu.</p>
+<p>Kluczowe jest to, ze antyprodukcja <em>przenika</em> produkcje — nie jest jej zewnetrznym ograniczeniem, lecz wewnetrznym momentem. Kazdy cykl produkcyjny zawiera w sobie moment zatrzymania, spoczynku, rejestracji. Analogia z marksowska teoria reprodukcji jest tu istotna: tak jak kapital wymaga momentow "nieproduktywnych" (akumulacja, zarzadzanie, reklama), tak produkcja pragnąca wymaga momentu antyprodukcji, w ktorym przepływ zostaje zatrzymany i zarejestrowany na powierzchni CbO.</p>
+<p>W wymiarze społecznym antyprodukcja pelni role szczegolnie wazna w kapitalizmie: aparat biurokratyczny, militarny i reklamowy stanowia elementy antyprodukcji, ktore sa nie tyle "zbedne", co <em>funkcjonalne</em> dla systemu — pochlandiaja nadwyzke i zapobiegaja kryzysom nadprodukcji.</p>`,
+   quote:`"Antyprodukcja przenika produkcje na wszystkich poziomach."`,
+   quote2:`"Element antyprodukcji wkracza w cale zycie społeczne i ekonomiczne."`},
+
+  {id:3,name:"Asemblaz (agencement)",src:"TP",
+   def:`Konkretny byt laczacy heterogeniczne elementy w dwoch wymiarach: maszynowy asemblaz cial (tresc) + kolektywny asemblaz wypowiadania (wyrazenie). Fundamentalna jednostka analizy w Tysiacu plateau.`,
+   detail:`<p>Asemblaz (fr. <em>agencement</em>, dosownie: "uklad", "laczenie") jest jednym z najwazniejszych pojęć <em>Tysiaca plateau</em> i stanowi transformacje pojęćia "maszyny pragnącej" z <em>Anty-Edypa</em>. O ile maszyna pragnąca akcentowala binarnosc ciecia-przepływu i byla przede wszystkim pojęciem krytycznym (wymierzonym w psychoanalityczna koncepcje pragnienia), o tyle asemblaz jest pojęciem konstruktywnym — pozwala analizowac konkretne konfiguracje sil, cial i wypowiedzen.</p>
+<p>Kazdy asemblaz ma dwa wymiary. Na <em>osi horyzontalnej</em> wyroznima dwa "glowy": <strong>maszynowy asemblaz cial</strong> (co ciala robia, jakie afekty produkuja, jakie mieszanki tworza) oraz <strong>kolektywny asemblaz wypowiadania</strong> (jakie akty mowy sa produkowane, jakie rezimy znakow sa uruchamiane). Te dwa wymiary sa nierozdzielne — nie ma ciala bez wypowiedzi, ktora mu towarzyszy, ani wypowiedzi bez ciala, na ktore oddzialuje.</p>
+<p>Na <em>osi wertykalnej</em> asemblaz oscyluje między dwoma biegunami: po jednej stronie <strong>reterytorializacja</strong> (stabilizacja, organizacja, sedymentacja), po drugiej <strong>deterytorializacja</strong> (destabilizacja, linie ujscia, otwarcie na Zewnetrze). Kazdy konkretny asemblaz — feudalny, szkolny, terapeutyczny, artystyczny — moze byc analizowany wedlug obu tych osi.</p>
+<p>Przyklad: asemblaz feudalny laczy ciala (rycerz-kon-lanca-zamek), afekty (honor, wiernosc, milosc dworska), wypowiedzi (przysiega wiernosci, piesnminnezang) i rezimy znakow (heraldyka, symbolika religijna). Deterytorializacja tego asemblazu nastepuje, gdy elementy zaczynaja "uciekac" — gdy rycerz staje sie najemnikiem, gdy pieniądz zastepuje przysiege, gdy literatura dworska staje sie ironia.</p>`,
+   quote:`"Asemblaz jest fundamentalna jednostka analizy. Nie indywiduum, nie społeczeństwo, lecz asemblaz."`,
+   quote2:`"Kazdy asemblaz jest terytorialny — ale wszelkie terytorium jest juz w trakcie deterytorializacji."`},
+
+  {id:4,name:"Biala sciana / Czarna dziura",src:"TP",
+   def:`Dwa komponenty abstrakcyjnej maszyny twarzowości. Biala sciana = powierzchnia znaczącośći (ekran projekcji sensu), czarna dziura = punkt pochłaniania podmiotowości (świadomość, refleksja).`,
+   detail:`<p>System biala sciana / czarna dziura jest rdzeniem abstrakcyjnej maszyny twarzowości opisanej w plateau 7. Twarz nie jest naturalnym wyrazem emocji ani biologiczna danoscia — jest <em>produkcja</em> specyficznej maszyny semiotycznej, ktora operuje na dwoch komponentach: bialej scianie znaczącośći (na ktora projektowane sa tresc, znaczenie, interpretacja) i czarnej dziurze podmiotowości (w ktora wpadaja świadomość, afekty, refleksja).</p>
+<p>Twarz Chrystusa stanowi historyczny standard tego systemu — <em>twarz Bialego Mezczyzny</em> jest wzorcem, od ktorego mierzone sa odchylenia. Rasizm w ujuciu Deleuze'a i Guattariego nie jest przede wszystkim kwestia biologii ani ideologii, lecz operacja maszyny twarzowości: polega na mierzeniu stopnia odchylenia od standardowej twarzy i klasyfikowaniu twarzy jako mniej lub bardziej "normalnych". Stad rasizm nie jest wytworem ignorancji, lecz efektem abstrakcyjnej maszyny, ktora produkuje twarz jako urzadzenie normatywne.</p>
+<p>Demontaz twarzy — "uwolnienie glowy od twarzy" — jest jednym z najniebezpieczniejszych, ale tez najbardziej twórczo obiecujacych gestow, jakie opisuja Deleuze i Guattari. Probe-heads (glowy-sondy) artystow takich jak Francis Bacon czy Antonin Artaud sa proba wydostania sie spod dyktatu twarzowości ku "beztwarzowym krajobrazom".</p>`,
+   quote:`"Twarz jest biala sciana z czarnymi dziurami — system, nie wyraz."`,
+   quote2:`"Rasizm mierzy odchylenia od twarzy Bialego Mezczyzny."`},
+
+  {id:5,name:"Blok stawania-sie",src:"TP",
+   def:`Strefa bliskosci lub nieodroznialnoscikosci, realny proces inwolucji twórczej. Nie imitacja, nie identyfikacja, lecz wejscie w zone wspolistnienia z innym bytem.`,
+   detail:`<p>Blok stawania-sie jest centralna kategoria plateau 10. Stawanie-sie nie jest imitacja (osa nie "udaje" orchidei), nie jest identyfikacja (schizofrenik nie "mysli, ze jest koniem"), nie jest filiacja (nie chodzi o biologiczne pokrewienstwo) — jest <em>blokiem</em>, czyli nierozkladalna jednoscia, w ktora wchodzaja dwa heterogeniczne terminy. Osa i orchidea tworza blok stawania-sie: osa staje-sie-orchidea, orchidea staje-sie-osa — ale zadne z nich nie zamienia sie w drugie. Powstaje cos trzeciego: strefa nie-odroznialnoscikosci.</p>
+<p>Seria stawan-sie ma porzadek: stawanie-sie-kobieta, stawanie-sie-zwierzeciem, stawanie-sie-molekularnym, stawanie-sie-niedostrzegalnym. To nie jest hierarchia, lecz kolejnosc deterytorializacji. Kazde kolejne stawanie-sie jest bardziej radykalnym odejsciem od molarnej tożsamośći (Bialy-Mezczyzna-Dorosly-Racjonalny jako "standard"). Stawanie-sie-niedostrzegalnym jest punktem dojscia: rozpuszczenie w plaszczyznie konsystencji, "bycie jak wszyscy" — nie w sensie konformizmu, lecz w sensie wejscia w intensywne zycie anonimowe.</p>`,
+   quote:`"Stawanie-sie jest blokiem — nie ma stawania-sie-czlowiekiem, bo czlowiek jest wiekszosc par excellence."`,
+   quote2:`"Wszelkie stawanie-sie jest mniejszosciowe."`},
+
+  {id:6,name:"Cialo bez Organow (CbO)",src:"AE+TP",
+   def:`Jalowa powierzchnia rejestracji intensywnośći, sprzeciw wobec organicznej organizacji ciala. Nie brak organow, lecz uwolnienie ciala od dyktatu organizmu. Pojecie zapozyczone od Artauda.`,
+   detail:`<p>Cialo bez Organow (CbO) jest jednym z najwazniejszych i zarazem najtrudniejszych pojęć całego projektu <em>Kapitalizmu i schizofrenii</em>. Zapozyczone od Antonina Artauda, ktory w audycji radiowej z 1947 roku postulowla cialo uwolnione od organicznej organizacji ("Skonczyc z Sadem Bozym!"), zostaje przez Deleuze'a i Guattariego przekształcone w kluczowa kategorie ontologiczna, ktorej sens ewoluuje między dwoma tomami.</p>
+<p><strong>W Anty-Edypie</strong> CbO pelni funkcje <em>powierzchni zapisu</em> produkcji pragnącej. Nie jest brakiem organow ani destrukcja ciala — jest "pelnym cialem", jalowa i nieproduktywna powierzchnia, na ktorej zapisuja sie intensywnośći wytwarzane przez maszyny pragnące. CbO jest "nieruchomym poruszycielem" pragnienia: to na nim przepływ energii przesuwaja sie w stanie swobodnym, to na nim zapisuja sie wszystkie procesy produkcji. Relacja CbO z maszynami pragnacymi oscyluje między <em>odpychaniem</em> (maszyny paranoiczne — CbO odrzuca "robactwo" organow) a <em>przyciaganiem</em> (maszyny cudowne — CbO przypisuje sobie produkcje jako quasi-przyczyna).</p>
+<p>Analogia marksowska jest tu fundamentalna: CbO jest dla produkcji pragnącej tym, czym Kapital dla produkcji społecznej — jalowa powierzchnia, ktora nie produkuje niczego sama z siebie, ale przywlaszcza sobie sily pracy, sprzawiajac wrazenie, ze to on "cudownie" wytwarza wartosc dodatkowa.</p>
+<p><strong>W Tysiacu plateau</strong> CbO staje sie pojęciem szerszym: jest <em>praktyka</em>, czymms, co sie <em>wytwarza</em>. Plateau 6 ("Jak zrobic sobie CbO?") wyroznia trzy typy CbO: <em>pelne</em> (twórcze, intensywne — CbO masochisty jako eksperyment z intensywnośćiami), <em>puste</em> (katatoniczne, nihilistyczne — narkomana, ktory "za daleko zaszedl") i <em>rakowe</em> (faszystowskie — proliferacja destrukcji, w ktorej CbO zamienia sie w maszyne smierci). Zasada ostrożnośći jest tu fundamentalna: "nie demontowac zbyt gwałtownie — nasladowac strate" — deterytorializacja musi byc stopniowa, inaczej zamiast pelnego CbO powstanie puste lub rakowe.</p>`,
+   quote:`"Skonczyc z Sadem Bozym! — Organizm nie jest cialem, lecz wiezienie narzucone cialu."`,
+   quote2:`"CbO jest jajkiem: intensywne, nie nieokreslone — osie i gradienty, a nie formy i organy."`},
+
+  {id:7,name:"Ciecie-przepływ (coupure-flux)",src:"AE",
+   def:`Elementarna operacja maszyny pragnącej: system binarny, w ktorym jedna maszyna wytwarza ciagly przepływ materialny, a podlaczona do niej druga maszyna dziala jako ciecie, pobierajac fragment tego przepływu.`,
+   detail:`<p>System ciecia-przepływu jest najbardziej bazowa operacja maszyn pragnących. Kazda maszyna jest jednoczesnie maszyna-zrodlem (wytwarza przepływ) i maszyna-ciecia (przerywa przepływ innej maszyny). Para piersi-usta jest paradygmatyczna: maszyna-piersi emituje przepływ mleka, maszyna-usta go przecina i pobiera. Ale usta sa z kolei zrodlem przepływu (sliny, slow), ktory jest przecinany przez inna maszyne (gardlo, ucho).</p>
+<p>Kluczowe jest to, ze ciecie nie sprzeciwia sie ciaglosci — jest jej <em>warunkiem</em>. Ciecie jest "cieciem-pobraniem" (prelevement), ktore jednoczesnie kontynuuje i przerywa przepływ. Maszyny pragnące funkcjonuja wylacznie w trybie binarnym: zawsze maszyna podlaczona do innej maszyny, przepływ sprzezony z cieciem. Przyklad anorektyka dobrze to ilustruje: jego usta oscyluja między byciem maszyna-jedzaca, maszyna-analna, maszyna-mowiaca i maszyna-oddychajaca — kazde ciecie otwiera nowy przepływ i nowa serie połączeń.</p>`,
+   quote:`"Kazda maszyna-organ interpretuje caly swiat z perspektywy wlasnego przepływu, wlasnego ciecia."`,
+   quote2:`"Ciecie-przepływ: ciaglosc i przerwa nie sa sobie przeciwstawne, lecz sie warunkuja."`},
+
+  {id:8,name:"Deterytorializacja",src:"AE+TP",
+   def:`Ruch opuszczania terytorium, wylamywania sie z kodow i ustalonych form. Moze byc wzgledna (przesuniecie w ramach systemu) lub absolutna (calkowite zerwanie), pozytywna (twórcza) lub negatywna (destrukcyjna).`,
+   detail:`<p>Deterytorializacja jest jednym z najczesciej przywolywanych pojęć Deleuze'a i Guattariego, ale jednoczesnie jednym z najczesciej zle rozumianych. Nie oznacza po prostu "ruchu" ani "zmiany" — jest specyficznym procesem, w ktorym cos opuszcza swoje <em>terytorium</em>, czyli utrwalona konfiguracje relacji, kodow i afektow.</p>
+<p>Deterytorializacja nigdy nie jest absolutnie autonomiczna — zawsze towarzyszy jej <em>reterytorializacja</em>. To jest zasada: "nigdy sie nie deterytorializuje samotnie — zawsze sa co najmniej dwa terminy". Osa deterytorializuje orchidee (przechwytujac jej reprodukcje), orchidea deterytorializuje ose (stajaac sie elementem jej pola percepcji). Sa to <em>podwojne chwytania</em> (double capture), ktore tworza bloki stawania-sie.</p>
+<p><strong>Cztery warianty:</strong> Deterytorializacja <em>wzgledna</em> oznacza przesuniecie w ramach istniejacego systemu (np. emigracja z jednego panstwa do drugiego). Deterytorializacja <em>absolutna</em> oznacza calkowite zerwanie z danym systemem terytorialnym (np. rewolucja, szalenstwo twórcze). Deterytorializacja <em>pozytywna</em> otwiera nowe możliwośći zycia (linia ujscia, ktora tworzy nowe terytorium). Deterytorializacja <em>negatywna</em> prowadzi do destrukcji bez tworzenia (linia ujscia, ktora zamienia sie w linie smierci — faszyzm, narkotyki, samobojstwo).</p>
+<p>W kontekscie historycznym deterytorializacja jest motorem kapitalizmu: kapital dekoduje (deterytorializuje) przepływ za przepływem — prace od ziemi, pieniadz od zlota, wiedze od tradycji — ale jednoczesnie nieustannie reterytorializuje na sztucznych terytoriach (narod, rodzina, Edyp). Stad "tendencja" i "kontrtendencja" jako fundamentalna dynamika kapitalizmu.</p>`,
+   quote:`"Deterytorializacja jest absolutna, gdy sama materia wyraza sie przez siebie."`,
+   quote2:`"Nigdy nie deterytorializuj sie gwałtownie — ostrożność jest fundamentalna zasada schizoanalizy."`},
+
+  {id:9,name:"Diagram",src:"TP",
+   def:`Niefiguratywna, niereprezentatywna funkcja maszyny abstrakcyjnej. Konstruuje rzeczywistość majaca nadejsc, zamiast przedstawiac istniejaca.`,
+   detail:`<p>Diagram jest pojęciem, ktore Deleuze rozwija również w ksiazce o Foucaulcie i w ksiazce o Baconie. W <em>Tysiacu plateau</em> diagram to maszyna abstrakcyjna w jej aspekcie <em>niefiguratywnym</em> — nie jest mapa istniejacego terytorium, lecz planem tego, co dopiero moze zaistneic. Diagram jest <em>mapa, nie kalka</em> — kalka reprodukuje to, co jest, mapa konstruuje to, co moze byc.</p>
+<p>W plateau 5 (<em>Rezimy znakow</em>) diagram wiaze sie z transformacjami semiotycznymi: jest operatorem, ktory umozliwia przejscia między rezimami znakow (ze znaczacego do post-znaczacego, z nomadycznego do despotycznego itd.). Diagram nie jest "meta-kodem" — nie stoi "nad" semiotykami, lecz jest ich <em>punktem mutacji</em>, momentem, w ktorym jeden rezim transformuje sie w inny.</p>`,
+   quote:`"Diagram jest mapa, nie kalka — konstruuje rzeczywistość, nie odwzorowuje jej."`,
+   quote2:`"Maszyna abstrakcyjna w swoim diagramatycznym aspekcie nie funkcjonuje po to, by reprezentowac — lecz by konstruowac przyszla rzeczywistość."`},
+
+  {id:10,name:"Dysjunkcja włączająca",src:"AE",
+   def:`Prawomocne uzycie syntezy rozlacznej: zamiast wykluczającego "albo/albo" (edypalnego), otwarte "albo... albo... albo...", w ktorym alternatywy współistnieją jako permutacje na CbO.`,
+   detail:`<p>Dysjunkcja włączająca jest jednym z najwazniejszych narzedzi krytycznych <em>Anty-Edypa</em>. Deleuze i Guattari wyrodzniaja <em>prawomocne</em> i <em>nieprawomocne</em> uzycia kazdej z trzech syntez nieświadomośći. Nieprawomocne (edypalne) uzycie syntezy rozlacznej polega na narzuceniu <em>wykluczajacych</em> alternatyw: "albo ojciec, albo matka", "albo mezczyzna, albo kobieta", "albo normalny, albo chory". Psychoanaliza utrwala ten wykluczajacy rezim, zmuszajac podmiot do identyfikacji z jednym terminem i wykluczenia drugiego.</p>
+<p>Prawomocne uzycie — dysjunkcja włączająca — afirmuje <em>wszystkie</em> terminy jednoczesnie: "albo... albo... albo..." staje sie formula <em>permutacji</em>, w ktorej podmiot moze przemieszczac sie między stanami bez koniecznosci stałego przypisania. Sedziowski Schreber jest "mezczyzna i kobieta i ojciec i corka" — nie w sensie psychotycznej konfuzji, lecz w sensie przechodzenia przez pasma intensywnośći na CbO, gdzie dysjunkcje sa <em>afirmatywne</em>.</p>
+<p>Ta koncepcja ma fundamentalne konsekwencje dla polityki tożsamośći: zamiast sztywnych kategorii (mezczyzna/kobieta, bialy/czarny, hetero/homo), dysjunkcja włączająca proponuje model <em>przechodzenia</em>, <em>stawania-sie</em>, <em>permutacji</em> — nie po to, by znosic różnice, lecz by afirmowac je jako współistniejące warianty na jednej powierzchni intensywnośći.</p>`,
+   quote:`"Albo... albo... albo... — wszystko naraz, dysjunkcje włączające zamiast wykluczajacych."`,
+   quote2:`"Nieprawomocna synteza rozlaczna: Edyp narzuca wylacznosc — albo ojciec, albo matka."`},
+
+  {id:11,name:"Edyp",src:"AE",
+   def:`Trojkat tata-mama-ja — nie fakt psychologiczny, lecz intymna formacja kolonialna kapitalizmu. Instrument prywatyzacji pragnienia, odcinajacy je od pola społecznego i zamykajacy w rodzinnym trójkacie.`,
+   detail:`<p>Krytyka Edypa jest centralna osia <em>Anty-Edypa</em> i jednym z najpotezniejszych gestow polemicznych całego dzieła. Deleuze i Guattari nie twierdza, ze kompleks Edypa "nie istnieje" — twierdza cos radykalniejszego: Edyp <em>istnieje</em>, ale nie jako uniwersalna struktura ludzkiej psychiki, lecz jako <em>historycznie okreslony produkt</em> kapitalistycznej organizacji społecznej. Edyp nie jest prawda pragnienia — jest instrumentem jego represji.</p>
+<p>Operacja edypalizacji polega na <em>rabattement</em> — "zlozeniu" całego pola społecznego na trojkat rodzinny. Pragnienie, ktore jest ze swej natury <em>bezposrednio społeczne</em> — inwestuje w pola ekonomiczne, polityczne, kosmiczne — zostaje odciete od tych połączeń i zamkniete w "intymnej celi rodziny": ojciec-matka-dziecko. Psychoanaliza jest maszyna, ktora dokonuje tej operacji par excellence: "opowiedz mi o swoim ojcu, o swojej matce" — kazdorazowe sprowadzenie pragnienia do familiarnych ram.</p>
+<p><strong>Trzy uzycia Edypa:</strong> (1) <em>Wyobrazone</em> — Edyp jako obraz, fantazja, sen o rodzicach; (2) <em>Strukturalne</em> — Edyp jako pozycja w strukturze symbolicznej (Lacan: Imie Ojca, Fallus, Kastracja); (3) <em>Materialne</em> (rabattement) — Edyp jako realna operacja społeczna zamykajaca pragnienie w rodzinie. Psychoanaliza popelnia <em>cztery paralogizmy</em>: ekstrapolacji (z rodziny na pole społeczne), podwojnego wiazania (bunt i poddanie = Edyp), aplikacji (z Edypa na inne kultury) i przemieszczenia (od pragnienia do braku).</p>`,
+   quote:`"Edyp jest intymna formacja kolonialna kapitalizmu — odpowiada wewnatrz tego, co kolonializm czyni na zewnatrz."`,
+   quote2:`"Psychoanaliza nie odkrywa Edypa w nieświadomośći — produkuje go tam."`},
+
+  {id:12,name:"Gladkie / Prazkowane",src:"TP",
+   def:`Dwa typy przestrzeni: gladka (nomadyczna, haptyczna, intensywna) vs. prazkowana (panstwowa, optyczna, metryczna). Zawsze istnieja w postaci mieszanin.`,
+   detail:`<p>Plateau 14 (<em>Gladkie i prazkowane</em>) jest jednym z najbardziej systematycznych rozdzialow <em>Tysiaca plateau</em>. Deleuze i Guattari analizuja opozycje gladkie/prazkowane na szesciu modelach: technologicznym (filc vs. tkactwo), muzycznym (nomadyczne vs. panstwowe), morskim (gladkie morze vs. prazkowane trasy), matematycznym (topologiczne vs. metryczne), fizycznym (intensywne vs. ekstensywne) i estetycznym (haptyczne vs. optyczne).</p>
+<p><strong>Przestrzen gladka</strong> jest typowo nomadyczna: nie posiada stalych sciezek, mierzy sie ja "od zdarzenia do zdarzenia" (a nie od punktu do punktu), jest haptyczna (dotykowa) zamiast optyczna (wizualna), intensywna zamiast ekstensywna. Pustynia, step, morze otwarte — to jej modele przyrodnicze. Ale gladkie nie jest "lepsze" od prazkowanego: obie przestrzenie nieustannie przechodzą w siebie.</p>
+<p><strong>Przestrzen prazkowana</strong> jest typowo panstwowa: podzielona na parcele, zmierzona, zmapowana. Miasto jest jej paradygmatem — regularny uklad ulic, dzielnic, stref. Ale nawet miasto moze byc gladzone (przez spacer flanera, przez graffiti, przez bezdomnosc — wszystko to sa operacje gladzendia w prązkowanej przestrzeni).</p>
+<p>Fundamentalna zasada: <em>"gladkie i prazkowane istnieja jedynie w postaci mieszanin"</em>. Gladkie nie jest "wolnoscia", a prazkowane "wiezieniem" — w gladkiej przestrzeni moze panowac terror (pustynia jako przestrzen kontroli), a w prazkowanej moga otwierac sie linie ujscia (muzyka minimalistyczna jako gladka operacja w prazkowanym systemie muzycznym).</p>`,
+   quote:`"Gladkie i prazkowane istnieja jedynie w postaci mieszanin — przechodzą w siebie."`,
+   quote2:`"Morze jest przestrzenia gladka par excellence — ale zostalo prazkowane przez nawigacje."`},
+
+  {id:13,name:"Haecceitas",src:"TP",
+   def:`Indywiduacja przez relacje prędkości i intensywne afekty, nie przez forme, substancje ani podmiot. "Piec wieczorem" lub "szesnastego stycznia" sa haecceitasami.`,
+   detail:`<p>Pojecie haecceitas (od lacinskiego <em>haec</em> — "to oto") zostaje przekształcone przez Deleuze'a i Guattariego z tradycyjnego terminu scholastycznego (Duns Szkot uzywal go na oznaczenie "tego-oto-bycia" konkretnej rzeczy) w radykalna teorie indywiduacji. Haecceitas nie jest indywiduum w zwyklym sensie — nie jest ani rzecza, ani osoba, ani podmiotem. Jest <em>wydarzeniem</em>, <em>afektem</em>, <em>intensywnośćia</em>.</p>
+<p>"Piec wieczorem" jest haecceitasem — nie chodzi o godzine piata jako punkt na zegarze, lecz o specyficzna jakosc swiatla, nastroj, intensywność, ktora definiuje to "piec wieczorem" jako wydarzenie. "Szesnastego stycznia" — nie data kalendarzowa, lecz specyficzna konstelacja zimna, swiatla, samotnosci. Haecceitas jest sposobem indywiduacji, ktory nie opiera sie na formie (czlowiek, zwierze) ani na substancji (cialo, materia), lecz na <em>relacjach prędkości i spowalniania</em> (szybkosci) oraz na <em>zdolnosciach do oddzialywania i bycia oddzialywanym</em> (afekty).</p>
+<p>Haecceitas jest scisle powiazana z koncepcja plaszczyzny konsystencji: na plaszczyznie konsystencji nie ma "rzeczy" w zwyklym sensie — sa jedynie <em>prędkości, spowalniania i afekty</em>. Klimat, wiatr, godzina dnia — to nie "tlo" dla dzialajacych podmiotow, lecz pelne indywiduacje, nie mniej realne niz "osoby" czy "rzeczy".</p>`,
+   quote:`"Haecceitas: piec wieczorem, szesnastego stycznia — to sa calkowite indywiduacje."`,
+   quote2:`"Nie pytaj, czym jestes — pytaj, z jakimi prędkościami i jakimi afektami jestes zlozony."`},
+
+  {id:14,name:"Klacze (Rhizome)",src:"TP",
+   def:`Acentryczny, nielinearny system połączeń definiowany przez 6 zasad: połączenie, heterogenicznosc, wielość, zerwanie aznaczace, kartografia, dekalkomania.`,
+   detail:`<p>Klacze jest pojęciem otwierajacym <em>Tysiac plateau</em> (Wprowadzenie) i stanowiacym zarazem <em>model</em> calej ksiazki. W przeciwienstwie do modelu drzewa (arborescencyjnego), ktory jest hierarchiczny, binarny i genetyczny (pien-galaz-lisc, rodzic-dziecko, przyczyna-skutek), klacze jest acentryczne — nie posiada korzenia, nie zaczyna sie i nie konczy, kazdy punkt moze byc połączony z kazdym innym.</p>
+<p><strong>Szesc zasad klacza:</strong></p>
+<p><em>1-2. Połączenie i heterogenicznosc:</em> Kazdy punkt klacza moze i powinien byc połączony z kazdym innym, niezaleznie od "natury" elementow. Lancuch semiotyczny laczący sie z organizmem, z formacja polityczna, z inwestycja ekonomiczna — to jest klacze.</p>
+<p><em>3. Wielosc:</em> Wielosc (multiplicite) jest tutaj <em>rzeczownikiem</em>, nie przymiotnikiem. Nie ma "wielu" elementow skladajacych sie na "jednosc" — wielość jest bytem samodzielnym, definiowanym przez linie ujscia, a nie przez punkty wewnetrzne.</p>
+<p><em>4. Zerwanie aznaczace:</em> Klacze moze byc przerwane w dowolnym miejscu, ale odradza sie na swoich liniach lub na innych liniach. Osa i orchidea tworza klacze — przerwanie jednego lancucha otwiera inny.</p>
+<p><em>5-6. Kartografia i dekalkomania:</em> Klacze nie jest "kalka" (reprodukcja istniejacego) — jest "mapa" (konstrukcja nowego). Kalka reprodukuje, mapa eksperymentuje. Ale mapa moze byc skopiowana jako kalka, a kalka nalozona na mape — stąd ciagla gra między kartografia i dekalkomania.</p>
+<p>Model drzewa odpowiada: lingwistyce generatywnej Chomskiego, klasycznej psychoanalizie (drzewo genealogiczne Edypa), biologii ewolucyjnej (drzewo gatunkow), filozofii klasycznej (drzewo Porfiriusza). Model klacza odpowiada: pragmatyce, schizoanalizie, symbiozie i epidemiom (wirusy jako operatorzy ryzomaryczni), filozofii immanencji.</p>`,
+   quote:`"Klacze nie zaczyna sie i nie konczy — jest zawsze posrodku, między rzeczami, inter-esse."`,
+   quote2:`"Zrobic mape, nie kalke! — Mapa jest otwarta, połączona we wszystkich wymiarach, odlaczalna, odwracalna."`},
+
+  {id:15,name:"Kod / Nadkodowanie / Dekodowanie",src:"AE+TP",
+   def:`Trzy operacje na przepływach definiujace trzy maszyny społeczne. Kod = terytorialne naznaczanie przepływow, nadkodowanie = despotyczne podporzadkowanie wszystkich kodow, dekodowanie = kapitalistyczne znoszenie kodow.`,
+   detail:`<p>Triada kod/nadkodowanie/dekodowanie jest fundamentem Deleuze'owsko-Guattarianskiej historii powszechnej (AE Rozdzial 3). Kazda formacja społeczna definiuje sie przez swoj stosunek do przepływow: czy je <em>koduje</em> (narzuca im jakosciowe znaczenie), <em>nadkoduje</em> (podporzadkowuje je centralnemu kodowi) czy <em>dekoduje</em> (uwalnia je od wszelkiego kodu).</p>
+<p><strong>Kodowanie</strong> jest operacja społeczeństw terytorialnych (pierwotnych). Przeplyw mleka, krwi, slow, towarow — kazdy jest naznaczony przez system mityczny, rytualny, pokrewienstwa. Dlug jest skończony i mobilny, inskrypcja odbywa sie na ciele (tatuaz, skaryfikacja — "system okrucienstwa" w sensie Nietzschego).</p>
+<p><strong>Nadkodowanie</strong> jest operacja maszyny despotycznej (imperialnej). Despota narzuca <em>jeden</em> kod ponad wszystkimi lokalnymi kodami — pismo linearne, prawo kodyfikowane, nieskończony dlug. Nadkodowanie nie niszczy kodow — podporzadkowuje je, tworzac nowa warstwe.</p>
+<p><strong>Dekodowanie</strong> jest operacja kapitalizmu. Kapitalizm nie koduje ani nie nadkoduje — <em>dekoduje</em>, tzn. uwalnia przepływ od wszelkiego jakosciowego znaczenia. Praca przestaje byc obowiazkiem lennym, staje sie abstraktyjna siła robocza. Pieniadz przestaje byc miernikiem dlugu, staje sie abstrakcyjna iloscia. Ale zdekodowane przepływ sa natychmiast poddane <em>aksjomatyce</em> — nowej formie kontroli, ktora nie jest juz kodowaniem.</p>`,
+   quote:`"Kapitalizm dekoduje przepływ za przepływem — pracy, pieniadza, towarow."`,
+   quote2:`"Kod jest jakosciowy — aksjomatyka ilosciowa. To jest fundamentalna różnica między społeczeństwami pierwotnymi a kapitalizmem."`},
+
+  {id:16,name:"Libido / Numen / Voluptas",src:"AE",
+   def:`Trzy formy energii odpowiadajace trzem syntezom pasywnym nieświadomośći. Libido = energia syntezy laczacej (produkcja). Numen = energia syntezy rozlacznej (zapis). Voluptas = energia syntezy koniunktywnej (konsumpcja-rozkosz).`,
+   detail:`<p>Triada Libido/Numen/Voluptas stanowi energetyczny rdzen teorii trzech syntez pasywnych w <em>Anty-Edypie</em>. Deleuze i Guattari nie rezygnuja calkowicie z freudowskiego pojęćia Libido, ale radykalnie je przeksztalcaja — Libido nie jest energia "seksualną" w waskim sensie, lecz energia <em>produkcji</em> w ogole, energia laczenia maszyn i przepływow.</p>
+<p><strong>Libido</strong> mobilizuje synteze laczaca ("i... a nastepnie..."): jest energia, ktora sprzega maszyny-organy z maszynami-zrodlami, ktora uruchamia ciecia-przepływ. Libido jest zatem energia produkcji pragnącej jako takiej.</p>
+<p><strong>Numen</strong> mobilizuje synteze rozlaczna ("albo... albo... albo..."): jest energia zapisu na CbO, energia dysjunkcji, ktora lokalizuje intensywnośći na powierzchni rejestracji. Termin "Numen" sugeruje energie "boska" — CbO jako quasi-boska instancja, ktora rejestruje i rozdziela.</p>
+<p><strong>Voluptas</strong> mobilizuje synteze koniunktywna ("A wiec to tak!"): jest energia konsumpcji i rozkoszy, energia, ktora ozywa podmiot resztkowy przechodzacy przez stany intensywne na CbO. Voluptas jest energia <em>jouissance</em> — rozkoszy przekraczajacej przyjemnosc.</p>`,
+   quote:`"Libido inwestuje pole społeczne — bezposrednio i w swoim wlasnym imieniu."`,
+   quote2:`"Libido, Numen, Voluptas — trzy energie trzech pasywnych syntez nieświadomośći."`},
+
+  {id:17,name:"Linia ujscia (ligne de fuite)",src:"AE+TP",
+   def:`Abstrakcyjna linia absolutnej deterytorializacji, ktora otwiera nowe możliwośći, ale moze tez zamienic sie w linie smierci. Tworcza — lecz niebezpieczna.`,
+   detail:`<p>Linia ujscia jest jednym z najwazniejszych i najtrudniejszych pojęć całego projektu. W <em>Anty-Edypie</em> pojawia sie jako ruch schizofrenicznego procesu — deterytorializacja, ktora "ucieka" spod kontroli kodow i aksjomatyki. W <em>Tysiacu plateau</em> (zwlaszcza w plateau 8 i 9) staje sie elementem systematycznej teorii trzech linii.</p>
+<p><strong>Trzy linie:</strong> (1) <em>Linia molowa</em> (twarda segmentaryzacja) — binarne opozycje, kregi koncentryczne, linearna segmentacja (dziecko-dorysly-emeryt, praca-dom-wakacje). (2) <em>Linia molekularna</em> (gietka segmentaryzacja) — mikroruchyy, przesunriecia, pekniecia, ktore nie rozbijaja systemu, ale go modyfikuja od wewnatrz. (3) <em>Linia ujscia</em> — absolutna deterytorializacja, zerwanie, otwarcie na Zewnetrze.</p>
+<p>Linia ujscia jest <em>twórcza</em>, ale moze zamienic sie w <em>linie smierci</em>. Cztery niebezpieczenstwa kazdej linii: (a) strach (przed utrata terytorium — linia molowa), (b) jasnosc (pozorna przejrzystosc mikropolityki — linia molekularna), (c) moc (przechwycenie linii ujscia przez wladze — np. rewolucja zamieniajaca sie w terror), (d) wielkie Zniechęcenie (pasja abolitionis — pragnienie wlasnego zniszczenia). Fitzgerald i jego "crack-up" sa tu paradygmatycznym przykladem: molekularne pekniecie, ktore nie przechodzi w twórcza linie ujscia, lecz w linie smierci.</p>`,
+   quote:`"Linia ujscia moze stac sie linia smierci — dlatego ostrożność jest regula immanentna."`,
+   quote2:`"Trzy linie — molowa, molekularna, ujscia — przecinaja sie w kazdym z nas."`},
+
+  {id:18,name:"Maszyna abstrakcyjna",src:"TP",
+   def:`Immanentny mechanizm operujacy na nieuformowanych materiach i nieformalnych funkcjach. Pilotuje linie ujscia asemblazy, konstruuje rzeczywistość.`,
+   detail:`<p>Maszyna abstrakcyjna jest pojęciem kluczowym dla zrozumienia "geologii moralnosci" (plateau 3) i teorii asemblazy. Nie jest to "model" ani "idea" — jest immanentnym mechanizmem, ktory operuje na poziomie <em>nieuformowanych materii</em> (matiere non formee) i <em>nieformalnych funkcji</em> (fonctions non formelles). Maszyna abstrakcyjna nie jest "abstrakcyjna" w sensie oderwana od rzeczywistośći — jest "abstrakcyjna" w sensie, ze operuje <em>przed</em> podziałem na forme i materie, tresc i wyrazenie.</p>
+<p>Maszyna abstrakcyjna moze istniec w dwoch stanach: <em>owinieta</em> (enveloppee) w stratach — wtedy dziala jako mechanizm <em>nadkodowania</em>, umacnia porządek — lub <em>rozwijeta</em> (developpee) na plaszczyznie konsystencji — wtedy dziala jako <em>diagram</em>, konstruujac nowe możliwośći. Stan owiniety to maszyna abstrakcyjna uwieziona w aparacie panstwowym; stan rozwiniety to maszyna abstrakcyjna "na wolnosci", pilotujaca linie ujscia.</p>`,
+   quote:`"Maszyna abstrakcyjna konstruuje rzeczywistość — nie przedstawia jej."`,
+   quote2:`"Maszyna abstrakcyjna nie istnieje niezaleznie od asemblazy, ktore ja wyrazaja."`},
+
+  {id:19,name:"Maszyna pragnąca",src:"AE",
+   def:`Realny system ciec i przepływow; mikrofizyczna jednostka nieświadomośći. Nie metafora, lecz literalny opis: pragnienie dziala jak maszyna — laczy, odcina, produkuje.`,
+   detail:`<p>Maszyna pragnąca (machine desirante) jest centralnym pojęciem <em>Anty-Edypa</em> i zarazem jednym z najbardziej rewolucyjnych wprowadzen pojęciowych w filozofii XX wieku. Pojecie to jest wynalazkiem Guattariego, choc Deleuze nadal mu pelna filozoficzna artykulacje.</p>
+<p>Maszyna pragnąca jest <em>literalnym</em>, a nie metaforycznym opisem sposobu, w jaki dziala pragnienie. Pragnienie nie jest brakiem (Platon, Freud), nie jest popedeem (biologistyczny Freud), nie jest fantazja (Klein, Winnicott) — jest <em>maszyna</em>, ktora laczy, odcina i produkuje. Operuje wedlug trzech syntez pasywnych: laczenie (i... a nastepnie...), rozlączanie (albo... albo... albo...), koniunkcja (a wiec to tak!).</p>
+<p><strong>Maszyna vs. mechanizm:</strong> Deleuze i Guattari odrozniaja maszyne od mechanizmu. Mechanizm jest zamknietym systemem ze z gory okreslonymi funkcjami. Maszyna jest otwartym systemem połączeń: kazda maszyna jest podlaczona do innej maszyny, kazde ciecie otwiera nowy przepływ. Maszyna nie jest tez organizmem — organizm jest narzucona <em>organizacja</em>, ktora tlumimaszynowe funkcjonowanie cial.</p>
+<p><strong>Witalizm maszynowy:</strong> Nie chodzi tu o witalizm biologiczny (mysterium sily zyciowej) ani o mechanicyzm (redukcja do praw fizyki), lecz o "witalizm maszynowy" — zycie jako maszynowe funkcjonowanie, ktore nie potrzebuje ani boskiegommyssterrium, ani mechanistycznej redukcji. Maszyna pragnąca jest <em>zywym</em> systemem połączeń, ale jej "zycie" nie jest biologiczne — jest intensywne, produkcyjne, twórcze.</p>`,
+   quote:`"Pragnienie jest maszyna, a podmiot — na krawedzi maszyny, rezyduum produkowane przez maszyny."`,
+   quote2:`"Nie ma nic metaforycznego w maszynach pragnących: one naprawde dzialaja."`},
+
+  {id:20,name:"Maszyna wojenna",src:"TP",
+   def:`Wynalazek nomadow, formacja zasadniczo zewnetrzna wobec aparatu panstwowego. Jej pierwotnym celem nie jest wojna, lecz tworzenie gladkiej przestrzeni.`,
+   detail:`<p>Plateau 12 (<em>Traktat o nomadologii</em>) jest jednym z najdluzszych i najbardziej ambitnych rozdzialow <em>Tysiaca plateau</em>. Centralna teza: maszyna wojenna jest <em>zewnetrzna</em> wobec aparatu panstwowego — nie jest jego czescia, nie jest "armia" ani "sily zbrojne" panstwa. Jest wynalazkiem nomadow, formacja, ktora ze swej natury wymyka sie logice panstwowej.</p>
+<p>Kluczowe rozróżnienie: <strong>maszyna wojenna vs. aparat panastwowy</strong>. Panstwo ma dwa bieguny (magiczny despota i prawodawczy krol — por. Dumezil), ale maszyna wojenna jest <em>trzecim</em> terminem, nieredukowalnym do zadnego z biegunow panstwa. Panstwo moze <em>przejac</em> maszyne wojenna (i wowczas powstaje armia), ale to przejecie jest zawsze aktem przemocy — maszyna wojenna "z natury" nie sluzy wojnie, lecz <em>tworzeniu gladkiej przestrzeni</em>.</p>
+<p>To prowadzi do paradoksu: maszyna wojenna nie ma wojny za swoj pierwotny cel. Jej celem jest <em>komponowanie gladkiej przestrzeni</em>, otwarcie terytorium na Zewnetrze. Wojna jest jedynie <em>suplementarnym</em> celem — pojawia sie dopiero wtedy, gdy maszyna wojenna zostaje przechwycona przez panstwo lub gdy natrafia na opowr, ktory wymaga zniszczenia. Ale gdy wojna staje sie <em>celem samym w sobie</em>, maszyna wojenna zamienia sie w maszynę zniszczenia totalnego — faszyzm jako maszyna wojenna, ktora obrocila sie przeciwko wszystkiemu, lacznie z samym panstwem.</p>`,
+   quote:`"Maszyna wojenna jest wynalazkiem nomadow — jest zasadniczo zewnetrzna wobec aparatu panstwowego."`,
+   quote2:`"Gdy panstwo przejmuje maszyne wojenna, zmienia sie jej natura — ale nigdy calkowicie."`},
+
+  {id:21,name:"Mikropolityka",src:"TP",
+   def:`Analiza molekularnych ruchow pragnienia na poziomie ponizej instytucji, klas i partii. Kluczowa teza: faszyzm jest przede wszystkim zjawiskiem molekularnym, mikrofaszyzmem.`,
+   detail:`<p>Plateau 9 (<em>Mikropolityka i segmentarność</em>) wprowadza jedno z najwazniejszych rozroznien politycznych całego <em>Tysiaca plateau</em>: między <em>makropolityka</em> (polityka duzych agregatow — panstw, klas, partii, instytucji) a <em>mikropolityka</em> (polityka molekularnych ruchow pragnienia — afektow, nawykow, mikrostrategii wladzy, codziennych zachowan).</p>
+<p>Centralna teza: <em>"Wszystko jest polityczne, ale wszelka polityka jest zarazem makropolityka i mikropolityka."</em> Panstwo nie jest tylko "wielkim" aparatem — opiera sie na milionach mikrodecyzji, mikronawykow, mikrolojalnoscikosci. Faszyzmm nie jest (jedynie) wielkim aparatem terroru — jest przede wszystkim <em>zjawiskiem molekularnym</em>, "mikrofaszyzmem", ktory przenika rodzine, szkole, biuro, zwiazek intymny.</p>
+<p>Cztery niebezpieczenstwa (za Castaneda): (1) <em>Strach</em> — trzymanie sie twardych segmentow z leku przed utrata. (2) <em>Jasnosc</em> — iluzja przejrzystosci, przekonanie, ze "wszystko widze jasno" (niebezpieczenstwo mikropolityki). (3) <em>Moc</em> — przechwycenie linii ujsci przez maszyne despotyczna. (4) <em>Wielkie Zniechęcenie</em> — pasja abolitionis, pragnienie wlasnej smierci.</p>
+<p>Konkluzja: nie ma "dobrej" mikropolityki vs. "zlej" makropolityki. Obie sa niezbedne i obie niebezpieczne. Rewolucja makropolityczna moze byc mikropolitycznie reakcyjna (ZSRR), a mikropolityczna "emancypacja" moze sluzyz makropolitycznej dominacji (neoliberalny indywidualizm).</p>`,
+   quote:`"Faszyzm jest zjawiskiem molekularnym — mikrofaszyzmy przenikaja wszystko."`,
+   quote2:`"Wszystko jest polityczne, ale wszelka polityka jest zarazem makropolityka i mikropolityka."`},
+
+  {id:22,name:"Molarne / Molekularne",src:"AE+TP",
+   def:`Dwa porzadki organizacji: molowy (zbiorowy, statystyczny, molarny — "wielkie agregaty") vs. molekularny (przedosobowy, intensywny, mikrofizyczny — "maszyny pragnące").`,
+   detail:`<p>Rozroznienie molarne/molekularne przenika caly projekt <em>Kapitalizmu i schizofrenii</em>. Nie jest to prosta opozycja "duze vs. male" ani "społeczne vs. indywidualne" — jest to rozróżnienie <em>dwoch porzadkow funkcjonowania</em>, ktore współistnieją w kazdym zjawisku.</p>
+<p><strong>Porzadek molarny:</strong> agregaty statystyczne, klasy, plcie, narody, rasy, osoby globalne (Mama, Tata, Ja). Na poziomie molarnym funkcjonuja kody społeczne, instytucje, tożsamośći. Psychoanaliza operuje na poziomie molarnym — redukuje nieświadomość do molarnych "osob" (Edyp) i molarnych "stadiow" (oralny, analny, falliczny).</p>
+<p><strong>Porzadek molekularny:</strong> mikrofizyka pragnienia, obiekty częściowe, intensywnośći, predosobowe afekty. Na poziomie molekularnym nie ma "osob" — sa przepływ, ciecia, intensywnośći, ktore nie daja sie sprowadzic do molarnych kategorii. Schizoanaliza operuje na poziomie molekularnym — bada realne funkcjonowanie maszyn pragnących pod molarnymi agregratami.</p>
+<p>Kluczowe: molarne i molekularne nie sa opozycja — sa <em>wspolzalezne</em>. Kazdy agregat molarny jest "podbudowany" molekularnymi ruchami pragnienia. Kazdy ruch molekularny ma molarny wyraz. Pytanie nie brzmi: "co jest lepsze?" — lecz: "jakie sa przejscia między nimi? jakie niebezpieczenstwa czyha na kazdym poziomie?"</p>`,
+   quote:`"Wszelka polityka jest zarazem makropolityka i mikropolityka — molarna i molekularna."`,
+   quote2:`"Molarne i molekularne nie sa opozycja — funkcjonuja jednoczesnie, przenikaja sie."`},
+
+  {id:23,name:"Obiekty częściowe",src:"AE",
+   def:`Samodzielne jednostki funkcjonalne maszyn pragnących — piersi, usta, odbyt. Nie sa fragmentami utraconej całośći (jak u Klein), lecz samodzielnymi maszynami, ktorym niczego nie brakuje.`,
+   detail:`<p>Obiekty częściowe (objets partiels) sa jednym z kluczowych "przechwycen" psychoanalitycznych, jakich dokonuja Deleuze i Guattari. W tradycji kleinowskiej obiekty częściowe (piersi, penis, kall) sa fragmentami "osoby globalnej" — niemowle postrzega najpierw czesc (piersi), pozniej integruje ja w całość (matka jako "pelna" osoba). Ta integracja jest "pozycja depresyjna" i stanowi warunek normalnego rozwoju.</p>
+<p>Deleuze i Guattari odwracaja ten schemat. Obiekty częściowe <em>nie sa</em> czesciami utraconej całośći — sa <em>samodzielnymi</em> jednostkami funkcjonalnymi, ktorym niczego nie brakuje. Piersi nie sa "czescia matki" — sa maszyna-piersia, ktora emituje przepływ mleka i jest podlaczona do maszyny-ust. Relacja obiekt częściowy / osoba globalna jest zatem nie relacja czesci do całośći, lecz relacja <em>molekularnego</em> do <em>molarnego</em>: obiekty częściowe naleza do porzadku molekularnego (realnego funkcjonowania maszyn pragnących), osoby globalne — do porzadku molarnego (społecznej organizacji pragnienia w tożsamośći).</p>
+<p>Kluczowa formuła: "Calosc obok czesci" — całość nie integruje czesci, lecz jest im <em>przylegla</em>, jak dodatkowa czesc. To jest radykalne zerwanie z logika totalizacji: nie ma utraconej jednosci do odzyskania, nie ma "braku", ktory napedza pragnienie. Pragnienie jest pelnią, nie brakiem.</p>`,
+   quote:`"Obiekty częściowe nie sa reprezentacjami — sa maszynami, samodzielnymi jednostkami produkcji."`,
+   quote2:`"Calosc obok czesci — nie całość integrujaca czesci, lecz całość przylegla, dodana jako nowa czesc."`},
+
+  {id:24,name:"Paralogizm",src:"AE",
+   def:`Systematyczny blad logiczny psychoanalizy. Deleuze i Guattari identyfikuja cztery (lub piec) paralogizmow, ktore konstytuuja edypalna "logike" psychoanalizy.`,
+   detail:`<p>Paralogizmy sa kluczowym narzedziem krytyki psychoanalizy w <em>Anty-Edypie</em> (rozdzial 2). Deleuze i Guattari nie zadowalaja sie stwierdzeniem, ze psychoanaliza "sie myli" — rekonstruuja <em>systematyczna logike</em> jej bledow, pokazujac, ze kazdy paralogizm odpowiada nieprawomocnemu uzyciu jednej z trzech syntez:</p>
+<p><strong>Paralogizm ekstrapolacji:</strong> Nieprawomocne uzycie syntezy laczacej — psychoanaliza ekstrapoluje z (rzekomej) struktury nieświadomośći na pole społeczne, albo odwrotnie: z relacji społecznych na nieświadomość. Przejście od "ojciec w rodzinie" do "Ojciec w nieświadomośći" jest ekstrapolacja, ktora zaciera fundamentalna różnice między produkcja społeczna a produkcja pragnąca.</p>
+<p><strong>Paralogizm podwojnego wiazania:</strong> Nieprawomocne uzycie syntezy rozlacznej — "albo poddajesz sie Edypowi, albo buntujesz sie, ale bunt = Edyp". Pacjent nie moze wygrac: jezeli akceptuje interpretacje edypalna, jest "uleczony"; jezeli ja odrzuca, jest "oporny" — co potwierdza Edypa.</p>
+<p><strong>Paralogizm aplikacji:</strong> Nieprawomocne uzycie syntezy koniunktywnej — stosowanie Edypa do kultur, w ktorych nie ma ani "ojca" w sensie zachodnim, ani "rodziny nuklearnej". Psychoanaliza "kolonializuje" inne kultury, narzucajac im zachodnia matryca edypalna.</p>
+<p><strong>Paralogizm przemieszczenia:</strong> Podwojny ruch represji — pierwotne wyparcie (represja pragnienia) produkuje Edypa jako "represjonowana tresc", ktora z kolei staje sie instrumentem wtornej represji. Edyp nie jest "odkryty" przez psychoanalize — jest przez nia <em>produkowany</em>.</p>`,
+   quote:`"Psychoanaliza popelnia cztery paralogizmy — po jednym na kazda synteze i jeden dodatkowy."`,
+   quote2:`"Edyp nie jest odkryty w nieświadomośći — jest tam produkowany przez psychoanalize."`}
+,
+  {id:25,name:"Phylum maszynowe",src:"TP",
+   def:`Materialnosc w ruchu — przepływ materii-energii z wlasnym nieorganicznym zyciem. Kowal podaza za phylum maszynowym metalu, zamiast narzucac mu forme.`,
+   detail:`<p>Phylum maszynowe pojawia sie w plateau 12 (<em>Traktat o nomadologii</em>) w kontekscie metalurgii i "nauki mniejszej". Metal jest materia par excellence phylum maszynowego — nie jest biernym tworzywem, ktore czeka na forme (jak w hylomorfizmie Arystotelesa), lecz <em>materia w ruchu</em>, posiadajaca wlasne tendencje, afekty, singularnosci.</p>
+<p>Kowal nie narzuca formie materii (jak czyni to "nauka wieksza" — kroleska, panstwowa, reprodukcyjina) — <em>podaza za materia</em>, wyczuwajac jej tendencje, pracujac <em>z</em> materiałem zamiast <em>przeciw</em> niemu. To jest model "nauki mniejszej" (science mineure): ambulatoryjnej, nomadycznej, podazajacej za singulanrnosciami materii zamiast podporzadkowywac je uniwersalnym prawom.</p>
+<p>Phylum maszynowe laczy metalurgie z biologia (ewolucja jako przepływ filogeneetyczny), z lingwistyka (jezyk jako ciagla wariacja), z muzyka (dzwiek jako materia w ruchu). Jest to pojęcie radykalnie anty-hylomorficzne: materia nie jest "pasywna" — posiada wlasne "zycie", ktore jest nieorganiczne (nie biologiczne), maszynowe (nie mechaniczne).</p>`,
+   quote:`"Phylum maszynowe to materialnosc w ruchu — materia-energia z wlasna dynamika."`,
+   quote2:`"Kowal podaza za metalem — nie narzuca mu formy, lecz wyczuwa singularnosci."`},
+
+  {id:26,name:"Plaszczyzna konsystencji / organizacji",src:"TP",
+   def:`Dwa fundamentalne plany: plaszczyzna konsystencji (immanencji) — bez form i podmiotow, tylko prędkości i afekty vs. plan organizacji (transcendencji) — Sad Bozy, formy, rozwoj, organizm.`,
+   detail:`<p>Rozroznienie między <em>plaszczyzna konsystencji</em> (plan de consistance) a <em>planem organizacji</em> (plan d'organisation) jest jednym z najwazniejszych rozroznien ontologicznych całego <em>Tysiaca plateau</em>.</p>
+<p><strong>Plan organizacji</strong> (= plan transcendencji, Sad Bozy) jest planem, na ktorym rzeczy sa zorganizowane wedlug <em>form</em> i <em>podmiotow</em>: organizm (forma biologiczna), znaczenie (forma semiotyczna), podmiotowość (forma psychologiczna). Jest to plan "rozwoju" — embrion rozwija sie w organizm, dziecko w doroslego, sens ukryty jest w teksccie do odkrycia. Plan organizacji zaklada <em>transcendencje</em> — cos poza planem, co go organizuje (Bog, Podmiot, Prawo).</p>
+<p><strong>Plaszczyzna konsystencji</strong> (= plaszczyzna immanencji) jest planem, na ktorym nie ma form ani podmiotow — sa jedynie <em>prędkości i spowalniania</em> (longitude) oraz <em>zdolnosci do oddzialywania i bycia oddzialywanym</em> (latitude, afekty). Na plaszczyznie konsystencji cial nie definiuja gatunki, plci czy funkcje — definiuja je "co moga": jakie prędkości osiagaja, jakie afekty produkuja, z czym sie lacza. Klacz galopujacy ma wiecej wspolnego z wolem ornym niz z koniem wyscigowym — bo ich prędkości i afekty sa blizsze.</p>
+<p>Plaszczyzna konsystencji jest <em>immanentna</em> — nie odwoluje sie do niczego poza soba. Nie jest "chaosem" — jest <em>selekcja</em>, ktora oddziela to, co "trzyma sie razem" (consiste) od tego, co rozprasza sie w chaos.</p>`,
+   quote:`"Plaszczyzna konsystencji nie zna różnic gatunkow — tylko prędkości, spowalniania i afekty."`,
+   quote2:`"Sad Bozy to plan organizacji — co odrzucamy na rzecz plaszczyzny konsystencji."`},
+
+  {id:27,name:"Podmiot nomadyczny",src:"AE",
+   def:`Podmiot bez stalej tożsamośći — rodzi sie ze stanow intensywnych na CbO jako "reszta" (residuum) procesu produkcji pragnącej. Nie jest centrum, lecz efektem ubocznym.`,
+   detail:`<p>Podmiot w ujuciu Deleuze'a i Guattariego nie jest stalą tożsamośćia, centrum świadomośći ani przyczyna pragnienia. Podmiot nomadyczny jest <em>residuum</em> — reszta pozostawiona po podzialach na powierzchni CbO. Rodzi sie z kazdego kolejnego stanu serii i odradza sie w nastepnym, konsumujac te, ktore go zrodzily.</p>
+<p>Inspiracja Klossowskiego/Nietzschego jest tu fundamentalna: podmiot nietzscheanski nie jest spojnym "Ja", lecz "seria indywidualnosci" wywolana wahaniami sil. Nietzsche w listach szalenstwa wykrzykuje: "Jestem kazdym nazwiskiem z historii!" — to nie jest "obłęd" w sensie klinicznym, lecz doświadczenie <em>przechodzenia przez intensywnośći</em>, ktore te imiona oznaczaja.</p>
+<p>Postacie Becketta — Murphy, Watt, Molloy — sluza jako modele: podmiot jest stanem przejsciowym w serii, pozbawionym stalej tożsamośći i rodziny. Jest "sierota, anarchista i ateista" — nie ma ojca (sierota), nie ma porzadku (anarchista), nie ma Boga (ateista). To jest "trzy razy wolny" podmiot schizoanalizy.</p>`,
+   quote:`"Podmiot jest wytwarzany jako reszta — residuum produkcji pragnącej."`,
+   quote2:`"Nieświadomość jest sierota, anarchistka i ateistka."`},
+
+  {id:28,name:"Produkcja pragnąca",src:"AE",
+   def:`Pragnienie jako sila wytwórcza produkujaca rzeczywistość (Realne). Nie brak, nie fantazja — realna produkcja. Trzy syntezy pasywne nieświadomośći.`,
+   detail:`<p>Produkcja pragnąca jest centralnym aksjomatem <em>Anty-Edypa</em>: "wszystko jest produkcja". Deleuze i Guattari dokonuja radykalnego zwrotu — od idealistycznej logiki pragnienia-braku (od Platona po Freuda i Lacana) do materialistycznej logiki pragnienia-produkcji. W tradycji idealistycznej pragnienie definiuje sie przez brak — pragne tego, czego nie mam, a zatem pragnienie jest <em>wtorne</em> wobec braku przedmiotu. Deleuze i Guattari odwracaja te relacje: pragnienie jest siła wytwórcza, ktora produkuje rzeczywistość, a brak jest <em>wtornym</em>, ideologicznym konstruktem narzucanym pragnieniu przez represje społeczna.</p>
+<p>Najwazniejsza teza: <em>tożsamość produkcji pragnącej i produkcji społecznej</em>. Nie istnieje rozdział między pragnieniem "indywidualnym" a produkcja "społeczna" — to ta sama produkcja, rozpatrywana w roznych skalach (molekularnej vs. molarnej). Libido bezposrednio inwestuje pole społeczne — nie "sublimuje" pragnienia seksualnego w prace czy twórczosc, lecz pragnie <em>formacji społecznych</em> bezposrednio, w ich wlasnym imieniu.</p>
+<p>Ta teza ma rewolucyjne konsekwencje: jezeli pragnienie jest bezposrednio społeczne, to pytanie Reicha — "Dlaczego ludzie pragna wlasnego ucisku?" — staje sie centralnm pytaniem filozofii politycznej. Faszyzm nie jest "falszywą świadomośćia" ani "manipulacja" — jest bezposrednim inwestowaniem pragnienia w formacje represyjna.</p>`,
+   quote:`"Pragnienie produkuje rzeczywistość — nie brakuje mu niczego, niczego nie sublimuje."`,
+   quote2:`"Tozsamosc produkcji pragnącej i produkcji społecznej — to jest podstawowa teza materialistycznej psychiatrii."`},
+
+  {id:29,name:"Refren (Rytornela)",src:"TP",
+   def:`Pryzmat czasoprzestrzeni organizujacy relacje z chaosem. Trzy momenty: (1) ustalenie centrum w chaosie, (2) zakreslenie terytorium, (3) otwarcie terytorium ku kosmosowi.`,
+   detail:`<p>Plateau 11 (<em>O refrenie</em>) jest jednym z najgesciej napisanych i zarazem najpiekniejszych rozdzialow <em>Tysiaca plateau</em>. Refren (ritournelle) jest "pryzmatem czasoprzestrzeni" — sposobem, w jaki istoty organizuja swoja relacje z chaosem.</p>
+<p><strong>Trzy momenty refrenu:</strong> (1) Dziecko w ciemnosci spieow piosenke, by uspokoic sie — <em>ustanowienie centrum</em> w chaosie (kolo ochronne, nawyk, powtorzenie jako tarcza przed nieokreslonymu). (2) Kot oznacza terytorium moczem — <em>zakreslenie terytorium</em>, odgraniczenie "domu" od "zewnatrz". Komponenty staja sie <em>ekspresyjne</em> — spiew ptaka nie jest juz "informacja", lecz <em>ekspresja</em>, akt terytorialny. (3) Artysta otwiera terytorium ku kosmosowi — <em>otwarcie</em>, linia ujscia, wielki refren kosmiczny.</p>
+<p>Refren laczy milieu (srodowiska) z terytoriami i z kosmosem. Kazde milieu jest zdefiniowane przez periodyczny powtarzajacy sie komponent (dzien/noc, oddech, puls). Terytorium powstaje, gdy komponenty milieu staja sie ekspresyjne — gdy ptak nie tylko <em>slyszy</em> dzwieki, ale <em>spiewa</em>, czyniajac dzwiek materiałem ekspresywnym. Deterytorializacja to trzeci moment — otwarcie terytorium ku "kosmicznym silom", ku chaosowi tworzaczemu.</p>
+<p>Muzyka jest tu kluczowym przykladem. Klasycyzm = terytorialny refren (motyw, rozwoj, powrot). Romantyzm = otwarcie ku kosmosowi (nieskonczona melodia Wagnera, Natura jako baza). Muzyka nowoczesna (Messiaen, Boulez, Cage) = bezposrednie zaangazowanie sil kosmicznych, "uslyszenie nieslyszalnego".</p>`,
+   quote:`"Tra la la... Dziecko w ciemnosci spiewo piosenke — refren jest kołem ochronnym w chaosie."`,
+   quote2:`"Terytorium jest aktem — powstaje, gdy komponenty staja sie ekspresyjne."`},
+
+  {id:30,name:"Represja / Wyparcie",src:"AE",
+   def:`Dwa poziomy: represja społeczna (zewnetrzna, formacje molowe) vs. wyparcie psychiczne (wewnetrzne, tłumienie pragnienia). Kluczowe: wyparcie jest <em>zalezne</em> od represji — nie odwrotnie.`,
+   detail:`<p>Rozroznienie represja/wyparcie jest jednym z najwazniejszych narzedzi analitycznych <em>Anty-Edypa</em> i sluzy do przeformulowania problemu Reicha: dlaczego ludzie pragna wlasnego ucisku? Reich postawil to pytanie, ale nie zdolal na nie odpowiedziec, poniewaz pozostal w ramach dualizmu (energia seksualna vs. formacja społeczna). Deleuze i Guattari proponuja inny model.</p>
+<p><strong>Represja społeczna</strong> (repression) jest operacja dokonywana przez formacje społeczna (socius) na przepływach pragnienia — kodowanie, nadkodowanie, aksjomatyzacja. Kazda formacja społeczna represjonuje okreslone przepływ i uwalnia inne. <strong>Wyparcie psychiczne</strong> (refoulement) jest operacja dokonywana wewnatrz nieświadomośći — tlumienie, przemieszczenie, zageszczenie (terminologia freudowska).</p>
+<p>Kluczowa teza: wyparcie jest <em>delegowane</em> (delegue) przez represje. To nie wyparcie psychiczne produkuje represje społeczna (jak sugerowali niektrzy freudomarksisci), lecz odwrotnie: represja społeczna produkuje warunki, w ktorych wyparcie staje sie "potrzebne" i "funkcjonalne". Rodzina nie jest zrodlem represji — jest jej <em>agentem</em>, delegowanym przez formacje społeczna do przeprowadzenia edypalizacji pragnienia.</p>`,
+   quote:`"Wyparcie zalezy od represji społecznej — nie odwrotnie."`,
+   quote2:`"Rodzina nie jest zrodlem represji — jest agentem delegowanym przez formacje społeczna."`},
+
+  {id:31,name:"Reterytorializacja",src:"AE+TP",
+   def:`Odtwarzanie terytorium po deterytorializacji. Moze byc twórcza (nowe terytorium) lub reakcyjna (sztuczne terytorium — narod, rodzina, Edyp). Nigdy nie odtwarza starego terytorium.`,
+   detail:`<p>Reterytorializacja jest nieodlącznym komplementem deterytorializacji. Kazda deterytorializacja pociaga za soba reterytorializacje — pytanie brzmi: <em>jaka</em> reterytorializacja? Tworcza (konstruujaca nowe możliwośći zycia) czy reakcyjna (odtwarzajaca stare formy kontroli)?</p>
+<p>W kontekscie kapitalizmu reterytorializacja jest kluczowym mechanizmem kontrtendencji. Kapitalizm deterytorializuje przepływ za przepływem (dekoduje, zwalnia z wiezow feudalnych, tradycyjnych, religijnych), ale natychmiast reterytorializuje na <em>sztucznych terytoriach</em>: panstwo narodowe, rodzina nuklearna, Edyp. Te sztuczne terytoria nie sa "naturalne" — sa <em>produkowane</em> przez kapitalizm jako instrumenty kontroli zdekodowanych przepływow.</p>
+<p>Edyp jest reterytorializacja par excellence: pragnienie, ktore zostalo zdekodowane (uwolnione z tradycyjnych kodow), zostaje zamkniete w trojkacie rodzinnym — "intymnej formacji kolonialnej", ktora odtwarza na poziomie prywatnym to, co kolonializm czyni na poziomie geopolitycznym.</p>`,
+   quote:`"Reterytorializacja nigdy nie odtwarza starego terytorium — tworzy nowe, ale moze byc reakcyjna."`,
+   quote2:`"Kapitalizm deterytorializuje jedna reka i reterytorializuje druga — to jest jego dynamika."`},
+
+  {id:32,name:"Schizoanaliza",src:"AE+TP",
+   def:`Praktyka kartograficzna pytajaca "jak to dziala?" zamiast "co to znaczy?". Program z dwoma zadaniami negatywnymi (destrukcja) i dwoma pozytywnymi (konstrulkcja).`,
+   detail:`<p>Schizoanaliza jest programem, ktory Deleuze i Guattari formuluja w rozdziale 4 <em>Anty-Edypa</em> jako alternatywe dla psychoanalizy. Nie jest to kolejna "szkola terapeutyczna", lecz praktyka analityczna o szerokim zasięgu — obejmujaca nie tylko klinike, ale wszelkie pola społeczne.</p>
+<p><strong>Dwa zadania destrukcyjne (negatywne):</strong> (1) <em>Wyskrobanie nieświadomośći</em> z edypalnych nalogow — to "curettage" nieświadomośći, oczyszczenie jej z narzuconych form (Edyp, kastracja, brak). (2) <em>Anty-teatr</em> — zniszczenie teatralnej koncepcji nieświadomośći, obalenie sceny, na ktora psychoanaliza projektuje swoje dramaty.</p>
+<p><strong>Dwa zadania konstruktywne (pozytywne):</strong> (1) <em>Odkrywanie maszyn pragnących</em> — badanie realnego funkcjonowania pragnienia: jakie maszyny pragnące dzialaja w danym przypadku? Jakie połączeńia tworza? Jakie przepływ uruchamiaja? (Regula Leclaire'a: punkt, w ktorym "dziecko z pieskiem" staje sie maszyna pragnąca, a nie edypalnym symbolem.) (2) <em>Analiza inwestycji libidinalnych pola społecznego</em> — badanie, jak pragnienie bezposrednio inwestuje w formacje społeczne. Rozroznienie między <em>grupami podmiotowymi</em> (zdolnymi do tworzenia linii ujsci) a <em>grupami ujarzmionymi</em> (reprodukujacymi hierarchie w swoim wnetrzu).</p>
+<p>Schizoanaliza nie jest "pro-schizofreniczna" w sensie gloryfikacji choroby klinicznej. Schizofrenia-proces (deterytorializacja twórcza) jest czymś radykalnie innym od schizofrenii-klinicznej (produkt represji, "autystyczny wrak"). Schizoanaliza dazy do uwolnienia procesu, nie do wytwarzania szpitalnych schizofrenikow.</p>`,
+   quote:`"Jak to dziala? — oto jedyne pytanie schizoanalizy."`,
+   quote2:`"Schizoanaliza nie stawia sobie za cel uzdrowienie — stawia za cel odkrycie maszyn pragnących."`},
+
+  {id:33,name:"Schizofrenia: proces vs. klinika",src:"AE",
+   def:`Fundamentalne rozróżnienie: schizofrenia jako <em>proces</em> = twórcza deterytorializacja, sila produkcji pragnącej. Schizofrenia kliniczna = efekt <em>przerwania</em> procesu przez represje — "autystyczny ludzki wrak".`,
+   detail:`<p>To rozróżnienie jest jednym z najwazniejszych i zarazem najczesciej zle rozumianych elementow <em>Anty-Edypa</em>. Deleuze i Guattari <em>nie gloryfikuja</em> schizofrenii klinicznej — nie twierdza, ze schizofrenik szpitalny jest "artystą" czy "rewolucjonistą". Twierdza cos innego i wazniejszego: ze istnieje <em>proces schizofreniiczny</em>, ktory jest fundamentalną matryca nieświadomośći — uniwersalnym sposobem produkcji pragnącej, deterytorializacja, ktora przybliaza podmiot do "zyjacego i gwalownego srodka materii".</p>
+<p>Schizofrenia <em>kliniczna</em> jest produktem <em>przerwania</em> tego procesu — nie jego konsekwencja, lecz efektem represji, ktora brutalnie zatrzymala maszynowe funkcjonowanie pragnienia. Choroba nie jest skutkiem procesu, lecz jego <em>uwiezienia</em> w pustce klinicznej. Schizofrenik szpitalny to "autystyczny ludzki wrak" — nie dlatego, ze "za daleko zaszedl" w procesie, lecz dlatego, ze proces zostal <em>przerwany</em>.</p>
+<p>Analogia: kapitalista "za daleko posunieta" deterytorializacja nie prowadzi do tworzeczej rewolucji — prowadzi do kryzysu (przerwanie procesu przez kontrtendencje reterytorializacji). Tak samo schizofrenia kliniczna jest "kryzysem" procesu schizofrenicznego — efektem jego represji, nie jego "sukcesu".</p>`,
+   quote:`"Schizofrenik jest na krancach kapitalizmu — jest jego tendencja, jego produkt, jego nadmiar."`,
+   quote2:`"Schizofrenia-proces to nie choroba — to fundamentalna matryca produkcji pragnącej."`},
+
+  {id:34,name:"Segmentarnosc",src:"TP",
+   def:`Dwa typy: sztywna (molowa — binarne opozycje, kregi koncentryczne) vs. gietka (molekularna — plynna, podatna na przesunięcia). Kazde społeczeństwo mieszana obu typow.`,
+   detail:`<p>Segmentarnosc jest centralna kategoria plateau 9 (<em>Mikropolityka i segmentarność</em>). Kazde społeczeństwo jest <em>zsegmentowane</em> — podzielone na segmenty wedlug roznych zasad. Rozroznienie kluczowe nie biegnie między "społeczeństwami segmentarnymi" a "społeczeństwami nie-segmentarnymi" (wszystkie społeczeństwa sa segmentarne), lecz między dwoma <em>typami</em> segmentarnośći.</p>
+<p><strong>Segmentarnosc sztywna (molowa):</strong> binarne opozycje (mezczyzna/kobieta, praca/odpoczynek, publiczne/prywatne), kregi koncentryczne (dom-dzielnica-miasto-kraj-swiat), linearne segmenty (dziecko-uczen-zolnierz-pracownik-emeryt). Panstwo produkuje sztywna segmentarność — dziala przez <em>nadkodowanie</em> i <em>rezonans</em> segmentow.</p>
+<p><strong>Segmentarnosc gietka (molekularna):</strong> plynne przejscia, przesunięcia, pekniecia, ktore nie sa jeszcze zerwaniami. Moda, plotka, mikrostrategie wladzy w biurze — to pola gietkiej segmentarnośći. Nie jest ona "lepsza" od sztywnej — ma wlasne niebezpieczenstwa (mikrofaszyzm jest zjawiskiem gietkiej segmentarnośći).</p>`,
+   quote:`"Jestesmy zsegmentowani ze wszystkich stron i we wszystkich kierunkach."`,
+   quote2:`"Segmentarnosc sztywna i gietka współistnieją — kazda ma swoje niebezpieczenstwa."`},
+
+  {id:35,name:"Socius",src:"AE",
+   def:`Cialo pelne formacji społecznej — powierzchnia, na ktora zapisywane sa przepływ. Trzy historyczne formy: Ziemia (terytorialna), Cialo Despoty (despotyczna), Kapital-Pieniadz (kapitalistyczna).`,
+   detail:`<p>Socius jest pojęciem, ktore laczy teorie produkcji pragnącej z teoria formacji społecznych. Tak jak CbO jest "cialem pelnym" produkcji pragnącej (powierzchnia zapisu intensywnośći), tak socius jest "cialem pelnym" produkcji społecznej (powierzchnia zapisu przepływow społecznych). W rozdziale 3 <em>Anty-Edypa</em> Deleuze i Guattari identyfikuja trzy historyczne formy socius:</p>
+<p><strong>Ziemia</strong> (maszyna terytorialna): cialo pelne społeczeństw pierwotnych. Przeplyw sa <em>kodowane</em> przez system pokrewienstwa, mity, rytualy. Dlug jest skończony i mobilny, inskrypcja dokonuje sie bezposrednio na ciele (tatuaz, skaryfikacja). System okrucienstwa (Nietzsche): pamiec jest wypalana na ciele, zeby czlowiek "nauczyl sie obiecywac".</p>
+<p><strong>Cialo Despoty</strong> (maszyna despotyczna): cialo pelne imperiow. Despota <em>nadkoduje</em> wszystkie lokalne kody, tworzac nowy alians (despota jako boski ojciec) i bezposrednia filiacje (poddani jako dzieci despoty). Dlug staje sie nieskończony, inskrypcja odbywa sie przez pismo linearne. System terroru.</p>
+<p><strong>Kapital-Pieniadz</strong> (maszyna kapitalistyczna): cialo pelne kapitalizmu. Kapital <em>dekoduje</em> przepływ za przepływem, ale zamiast kodowania stosuje <em>aksjomatyke</em>. Spotkanie dwoch zdekodowanych przepływow — wolnej pracy i wolnego kapitalu — jest "cudem" narodzin kapitalizmu. Dlug jest nieskończony (kredyt), inskrypcja jest abstrakcyjna (pieniadz, dane).</p>`,
+   quote:`"Socius jest cialem pelnym — nie jest nigdy cialem bez organow, lecz zapisuje na sobie."`,
+   quote2:`"Trzy formy socius: Ziemia, Cialo Despoty, Kapital — trzy sposoby zapisu przepływow."`},
+
+  {id:36,name:"Stawanie-sie (devenir)",src:"TP",
+   def:`Inwolucja twórcza, nie imitacja ani filiacja. Porzadek sojuszu (alliance), nie dziedzicznosci. Wszelkie stawanie-sie jest mniejszosciowe.`,
+   detail:`<p>Stawanie-sie (devenir) jest jednym z centralnych pojęć <em>Tysiaca plateau</em> (zwlaszcza plateau 10). Stawanie-sie <em>nie jest</em>: imitacja (osa nie "udaje" orchidei), identyfikacja ("nie wyobrazam sobie, ze jestem koniem"), transformacja (A nie zamienia sie w B), filiacja (nie chodzi o pokrewienstwo genetyczne ani o ewolucje).</p>
+<p>Stawanie-sie <em>jest</em>: blokiem, zona bliskosci, inwolucja twórcza. "Inwolucja" nie oznacza regresji — oznacza ruch, ktory nie podaza za linia filiacji (od ojca do syna, od gatunku do osobnika), lecz tworzy <em>sojusze</em> (alliances) między heterogenicznymi terminami. Osa i orchidea nie sa "spokrewnione" — tworza blok stawania-sie przez sojusz, "nienaturalne uczestnictwo".</p>
+<p><strong>Serie stawan-sie:</strong> stawanie-sie-kobieta → stawanie-sie-zwierzeciem → stawanie-sie-molekularnym → stawanie-sie-niedostrzegalnym. To nie jest hierarchia (kobieta "nizej" niz zwierze), lecz porzadek deterytorializacji: kazde kolejne stawanie-sie jest dalszym odejsciem od molarnego standardu (Bialy-Mezczyzna-Dorosly-Zachodni). Stawanie-sie-kobieta jest <em>pierwsze</em>, poniewaz Kobieta jest pierwsza "mniejszoscia" — nie ilosjciowo, lecz strukturalnie: "mezczyzna" = wiekszosc = standard, od ktorego mierzy sie odchylenia.</p>
+<p>Stawanie-sie-niedostrzegalnym jest celem koncowym: "byc jak wszyscy" — nie konformizm, lecz rozpuszczenie w plaszczyznie konsystencji, wejscie w anonimowe, intensywne zycie, ktore nie jest juz "czyjes".</p>`,
+   quote:`"Wszelkie stawanie-sie jest mniejszosciowe — nie ma stawania-sie-mezczyzna, bo mezczyzna jest wiekszoscia."`,
+   quote2:`"Stawanie-sie nie jest imitacja — to blok, zona bliskosci, inwolucja twórcza."`},
+
+  {id:37,name:"Strata / Stratyfikacja",src:"TP",
+   def:`Warstwy organizujace materie i intensywnośći wedlug podwojnej artykulacji (Hjelmslev). Trzy typy strat: fizykochemiczna, organiczna, alloplastyczna. Strata sa "Sadem Bozym".`,
+   detail:`<p>Plateau 3 (<em>Geologia moralnosci</em>) przedstawia teorie strat jako warstw organizujacych nieokreslony przepływ materii-energii w ustrukturowane formacje. Kazda strata dziala wedlug <em>podwojnej artykulacji</em> (pojęcie zapozyczone od Hjelmsleva): pierwsza artykulacja (substancja treści) wybiera i organizuje materie, druga artykulacja (forma wyrazenia) nadaje im strukture i stabilnosc.</p>
+<p><strong>Trzy typy strat:</strong> (1) <em>Fizykochemiczne</em> — krysztaly, sedymenty, formacje geologiczne. Podwojna artykulacja: sedymentacja (pierwsza) i foldowanie (druga). (2) <em>Organiczne</em> — organizmy zywe. Podwojna artykulacja: genetyczna (DNA jako liniowy kod) i fenotypowa (organizm jako trojwymiarowa realizacja). (3) <em>Alloplastyczne</em> (jezykowe/społeczne) — ludzkie formacje społeczne. Podwojna artykulacja: reka-narzedzie (tresc) i twarz-jezyk (wyrazenie).</p>
+<p>Strata sa "Sadem Bozym" — systemem organizacji, ktory narzuca materii forme, funkcje i hierarchie. Ale <em>destratyfikacja</em> — demontaz strat — jest operacja niebezpieczna: "nie demontowac zbyt gwałtownie, nie uzywac mlotka, lecz pilnika". Zbyt gwaltowna destratyfikacja prowadzi do chaosu (pustego CbO, a nie pelnego), do samozagłady zamiast do wyzwolenia.</p>`,
+   quote:`"Strata sa Sadem Bozym — narzucaja organizacje, znaczenie, podmiotowość."`,
+   quote2:`"Nasladowac strate — bardzo drobnym pilnikiem. Ostrożność jest fundamentalna zasada."`},
+
+  {id:38,name:"Trzy syntezy pasywne",src:"AE",
+   def:`Synteza laczaca ("i... a nastepnie..." — Libido), synteza rozlaczna ("albo... albo... albo..." — Numen), synteza koniunktywna ("a wiec to tak!" — Voluptas). Rdzeń aparatu pojęciowego Anty-Edypa.`,
+   detail:`<p>Trzy syntezy pasywne nieświadomośći stanowia fundament ontologiczny <em>Anty-Edypa</em>. Sa "pasywne" w sensie kantowskim — nie sa aktami swiadomego podmiotu, lecz procesami, ktore <em>wytwarzaja</em> podmiot jako swoj efekt uboczny.</p>
+<p><strong>Synteza laczaca (connective) — "produkcja produkcji":</strong> Formula "i... a nastepnie...". Sprzeganie maszyn-organow z maszynami-zrodlami: piersi-usta, usta-gardlo, gardlo-zoladek. Energia: Libido. Kazde ciecie jest jednoczesnie pobraniem i kontynuacja przepływu.</p>
+<p><strong>Synteza rozlaczna (disjunctive) — "produkcja zapisu":</strong> Formula "albo... albo... albo...". Rejestracja na powierzchni CbO. Energia: Numen. Kluczowe: uzycie prawomocne (dysjunkcja włączająca — permutacje współistnieją) vs. nieprawomocne (dysjunkcja wykluczająca — Edyp narzuca "albo ojciec, albo matka").</p>
+<p><strong>Synteza koniunktywna (conjunctive) — "produkcja konsumpcji":</strong> Formula "a wiec to tak!". Wylonienie sie podmiotu jako residuum. Energia: Voluptas. Podmiot rodzi sie jako efekt uboczny dwoch pierwszych syntez — "reszta" po podziałach na CbO.</p>`,
+   quote:`"Trzy syntezy: laczyc, odlaczac, spozywac — produkcja produkcji, zapisu i konsumpcji."`,
+   quote2:`"Kazda synteza ma uzycie prawomocne (schizofreniczne) i nieprawomocne (edypalne)."`},
+
+  {id:39,name:"Terytorium",src:"TP",
+   def:`Nie przestrzen geograficzna, lecz akt ekspresyjny — terytorium powstaje, gdy komponenty milieu staja sie ekspresyjne. Pierwszy asemblaz.`,
+   detail:`<p>Terytorium w ujęciu Deleuze'a i Guattariego nie jest po prostu "obszarem" ani "przestrzenia" — jest <em>aktem</em>. Terytorium powstaje, gdy komponenty srodowiska (milieu) staja sie <em>ekspresyjne</em>: gdy ptak nie tylko slyszy dzwieki, lecz <em>spiewa</em>, czyniąc dzwiek materialem ekspresyjnym, wyznaczajacym granice "jego" terytorium.</p>
+<p>Terytorium jest pierwszym <em>asemblazem</em> — pierwsza konfiguracja, w ktrej heterogeniczne elementy (dzwieki, zapachy, kolory, gesty) lacza sie w spojny uklad ekspresywny. Ale terytorium jest juz <em>w trakcie deterytorializacji</em> — kazde terytorium zawiera w sobie wektory ujscia, punkty, w ktorych "ucieka" ku innym konfiguracjom.</p>
+<p>Przyklad: dom jest terytorium — ale ma okna (punkty deterytorializacji), drogi (wektory ujscia), sasiadow (inne terytoria). Muzyka jest deterytorializacja terytorium — "wielki refren" otwiera terytorium ku kosmosowi.</p>`,
+   quote:`"Terytorium jest aktem — powstaje, gdy komponenty staja sie ekspresyjne."`,
+   quote2:`"Kazde terytorium jest juz w trakcie deterytorializacji — zawiera wektory ujscia."`},
+
+  {id:40,name:"Transformacje bezcielesne",src:"TP",
+   def:`Akty jezykowe natychmiastowo przypisujace cialom nowe atrybuty — wyrok sedziego zmienia "oskarzonego" w "skazanego", akt slubny zmienia "narzeczonych" w "malzonkow".`,
+   detail:`<p>Pojecie transformacji bezcielesnych pojawia sie w plateau 4 (<em>Postulaty lingwistyki</em>) i stanowi kluczowy element Deleuze'owsko-Guattarianskiej teorii jezyka. Jezyk nie jest przede wszystkim systemem <em>opisu</em> rzeczywistośći — jest systemem <em>rozkazu</em> (mot d'ordre), ktory dokonuje realnych transformacji w polu społecznym.</p>
+<p>Transformacja bezcielesna jest natychmiastowa: w momencie ogłoszenia wyroku cialo oskarzonego staje sie cialem skazanego — nie fizycznie (cialo nie zmienia sie materialnie), lecz <em>w porzadku atrybutow</em> (zmienia sie jego status prawny, społeczny, egzystencjalny). Akt slubny zmienia "narzeczonych" w "malzonkow" — transformacja jest natychmiastowa i bezcielesna (ciala nie zmieniaja sie fizycznie), ale absolutnie realna (zmienia sie cale pole społecznych relacji).</p>
+<p>Ta koncepcja jest wymierzona przeciwko czterem "postulatom lingwistyki" (Chomsky, Saussure): (1) jezyk jest <em>informacyjny</em> (nie! jest rozkazem), (2) istnieje <em>maszyna abstrakcyjna</em> jezyka (nie! maszyna jest społeczna), (3) sa <em>stale</em> jezyka (nie! sa tylko zmienne), (4) jezyk mozna badac <em>synchronicznie</em> (nie! jest zawsze w ruchu).</p>`,
+   quote:`"Cialo skazanego jest juz innym cialem — transformacja bezcielesna dokonuje sie natychmiastowo."`,
+   quote2:`"Jezyk nie jest informacja — jest rozkazem, haslem, mot d'ordre."`},
+
+  {id:41,name:"Twarzowości (visageite)",src:"TP",
+   def:`Abstrakcyjna maszyna produkujaca twarz jako system biala sciana / czarna dziura. Twarz Chrystusa jako zachodni standard. Rasizm jako mierzenie odchylen od standardu.`,
+   detail:`<p>Plateau 7 (<em>Rok zero — twarzowości</em>) jest jednym z najbardziej prowokacyjnych rozdzialow <em>Tysiaca plateau</em>. Centralna teza: twarz nie jest "naturalnym" wyrazem emocji, twarza sie nie "rodzi" — twarz jest <em>produkowana</em> przez specyficzna maszyne semiotyczna, ktora Deleuze i Guattari nazywaja <em>abstrakcyjna maszyna twarzowości</em>.</p>
+<p>Maszyna ta operuje na dwoch komponentach: <em>bialej scianie</em> (znaczącość — powierzchnia, na ktora projektowane sa sensy i interpretacje) i <em>czarnej dziurze</em> (podmiotowość — punkt pochłaniania świadomośći, refleksji, tożsamośći). Twarz jest skrzyzowaniem obu komponentow: jest ekranem, ktory jednoczesnie <em>wyraża</em> (biala sciana) i <em>pochłania</em> (czarna dziura).</p>
+<p>Historycznie twarz Chrystusa stanowi standard zachodniej twarzowości — "Bialy Mezczyzna" jako wzorzec, od ktorego mierzone sa odchylenia. Rasizm nie jest "uprzedzeniem" ani "ignorancja" — jest <em>strukturalnym efektem</em> maszyny twarzowości: polega na mierzeniu stopnia odchylenia od standardowej twarzy i klasyfikowaniu odchylen jako "dopuszczalnych" lub "nie do zaakceptowania".</p>
+<p>Demontaz twarzy (defacement) jest gestalt ryzykownym: wymaga "probe-heads" (glow-sond), ktore eksploruja nie-twarzowe możliwośći — cial bez twarzy, krajobrazow bez podmiotow, intensywnośći bez identyfikacji.</p>`,
+   quote:`"Twarz Chrystusa jest standardem twarzowości — bialy, meski, zachodni."`,
+   quote2:`"Rasizm operuje przez odchylenia: 'twoja twarz nie jest nasza' — oto formuła rasizmu."`},
+
+  {id:42,name:"Urstaat (Pra-panstwo)",src:"AE+TP",
+   def:`Pra-panstwo, odwieczny model nawracajacy w historii powszechnej. Panstwo nie powstalo ewolucyjnie — jest "jednodniowym" wynalazkiem, ktory raz wynaleziony, wraca wiecznie.`,
+   detail:`<p>Urstaat jest jednym z najbardziej prowokacyjnych pojęć <em>Anty-Edypa</em> i <em>Tysiaca plateau</em>. Wbrew ewolucjonistycznym teoriom (panstwo powstaje stopniowo z band lowieckich, przez wioski, przez wodzostwa, az po imperia), Deleuze i Guattari twierdza, ze panstwo nie ewoluuje — <em>pojawia się</em>. Jest "jednodniowym" wynalazkiem, ktory raz wynaleziony, staje sie <em>horyzontem</em> wszelkiej historii — nawraca wiecznie, nawet tam, gdzie oficjalnie "jeszcze nie istnieje".</p>
+<p>Panstwo jest zatem nie "poznym" stadium rozwoju, lecz <em>wspolczesnym</em> kazdej formacji społecznej — jako horyzont, jako możliwość, jako "to, czemu trzeba sie opierac" (społeczeństwa pierwotne sa <em>przeciw-panstwowe</em> nie dlatego, ze "nie dorosly" do panstwa, lecz dlatego, ze aktywnie odpieraja jego powstanie — por. Pierre Clastres, <em>La société contre l'État</em>).</p>
+<p>W <em>Tysiacu plateau</em> (plateau 13) Urstaat zostaje dalej rozwiniety: panstwo ma dwa "glowy" (magiczny despota i prawodawczy krol — dwa bieguny wladzy), a maszyna wojenna jest <em>trzecim</em> terminem, zewnetrznym wobec panstwa. Panstwo moze przejmowac maszyne wojenna (tworzac armie), ale to przejecie jest zawsze napiete — maszyna wojenna "z natury" wymyka sie logice panstwowej.</p>`,
+   quote:`"Urstaat jest horyzontem wszelkiej historii — nawraca wiecznie, jak koszmar."`,
+   quote2:`"Panstwo nie powstaje stopniowo — pojawia sie od razu, w calej swojej pełni."`},
+
+  {id:43,name:"Wartosc dodatkowa kodu / przepływu",src:"AE",
+   def:`Dwa typy nadwyzki: kodu = jakosciowa (prestiz, dlug, presja społeczna w społeczenstwach pierwotnych) vs. przepływu = ilosciowa (kapital-praca w kapitalizmie, Marksowska wartosc dodatkowa).`,
+   detail:`<p>Rozroznienie między wartoscia dodatkowa kodu i wartoscia dodatkowa przepływu jest kluczowym elementem Deleuze'owsko-Guattarianskiej teorii formacji społecznych (AE Rozdzial 3). Marx analizowal wartosc dodatkowa jako specyficznie kapitalistyczny mechanizm wyzysku — nadwyzke wytarzana przez robotnika ponad wartosc jego sily roboczej. Deleuze i Guattari uogolniaja ten mechanizm na wszystkie formacje społeczne.</p>
+<p><strong>Wartosc dodatkowa kodu</strong> jest specyficajna dla społeczeństw przedkapitalistycznych: jest jakosciowa, oparta na prestiżu, dlugu, zobowiazaniu. Wynika z <em>nadmiarowego odcinka</em> kodu — elementu, ktory "nie pasuje" do zadnej serii i dlatego krazy między seriami, tworzac efekt nadwyzki. To jest dokladnie "pusta przegrodka" strukturalizmu (Deleuze 1967), tu ujeta jako zrodlo wartosci dodatkowej.</p>
+<p><strong>Wartosc dodatkowa przepływu</strong> jest specyficajna dla kapitalizmu: jest ilosciowa, oparta na abstrakcyjnej różnicy między wartoscia sily roboczej a wartoscia jej produktu. To jest Marksowska wartosc dodatkowa w scislym sensie — ale Deleuze i Guattari podkreslaja, ze jest ona mozliwa tylko dlatego, ze przepływ zostaly <em>zdekodowane</em> (uwolnione od jakosciowych kodow) i poddane <em>aksjomatyce</em> (ilosciowej regulacji).</p>`,
+   quote:`"Wartosc dodatkowa kodu jest zarazem nadwyzka antyprodukcji — element, ktory 'nie pasuje'."`,
+   quote2:`"Kapitalizm zastepuje wartosc dodatkowa kodu wartoscia dodatkowa przepływu — jakosciowa ilosciowa."`},
+
+  {id:44,name:"Wielosc (multiplicite)",src:"TP",
+   def:`Rzeczownik, nie przymiotnik — wielość nie jest cecha czegosc, lecz samodzielnym bytem. Definiowana przez wymiary i linie ujscia, nie przez punkty wewnetrzne ani jednosc.`,
+   detail:`<p>Wielosc (multiplicite) jest jednym z fundamentalnych pojęć ontologii Deleuze'a, obecnym od <em>Roznicy i powtorzenia</em> (1968) przez <em>Anty-Edypa</em> az po <em>Tysiac plateau</em>. Kluczowy gest: wielość jest <em>rzeczownikiem</em>, nie przymiotnikiem. Nie mowimy "cos jest wielorakie" (przymiotnik sugeruje jednosc, ktora jest "wewnetrznie zróżnicowana") — mowimy "wielość" jako samodzielny byt, ktory nie potrzebuje jednosci jako swojego fundamentu.</p>
+<p>Wielosc definiuje sie nie przez swoje elementy wewnetrzne, lecz przez swoje <em>wymiary</em> (ile linii ja tworzy) i <em>linie ujscia</em> (jak sie transformuje, gdy zmienia sie liczba wymiarow). Wielosc nie jest "zbiorem" elementow — jest <em>siatka</em> relacji, ktora zmienia swoja nature, gdy doda sie lub odejmie linie.</p>
+<p>Dwa typy wielośći (za Bergsonem): <em>ekstensywne</em> (podzielne, metryczne, molarne — np. tłum jako "wielu ludzi") i <em>intensywne</em> (niepodzielne, ciągłe, molekularne — np. sfora jako "wielość-wilk", ktora zmienia nature przy kazdej zmianie liczebnosci). Klacze jest modelem wielośći intensywnej: "n minus 1" — wielość definiowana przez odejmowanie jednosci (nie ma "jednego" centralnego elementu).</p>`,
+   quote:`"Wielosc nie ma ani podmiotu, ani przedmiotu — jedynie okreslenia, wielkosci, wymiary."`,
+   quote2:`"n minus 1 — wielość definiuje sie odejmujac od niej jednosc."`}
+];
+
+const edges = [
+  [6,19],[6,26],[6,37],[6,2],[19,3],[19,7],[19,23],[19,28],[8,31],[8,17],[8,15],[8,39],
+  [14,44],[14,3],[22,21],[22,34],[11,24],[11,32],[11,30],[35,37],[35,15],
+  [20,12],[20,42],[36,1],[36,5],[36,13],[36,44],[29,39],[41,4],[18,9],[18,3],
+  [38,16],[38,28],[27,6],[33,32],[0,15],[25,20],[26,37],[40,3],[17,8],
+  [10,38],[11,31],[32,33],[28,22],[30,11],[43,15],[42,35],[16,6],[29,8],[34,22],
+  [5,36],[7,19],[9,18],[23,19],[24,11],[37,26],[39,29],[44,14],[21,34],[1,36],
+  [12,20],[35,0],[3,40],[4,41],[15,43]
+];
+
+// ========== ARGUMENTATIVE AXIS DATA ==========
+const axisData = [
+  {book:"AE",label:"AE Rozdz. 1",title:"Maszyny pragnące — ontologia pragnienia",
+   summary:"Pragnienie nie jest brakiem — jest maszyna produkcyjna. Trzy syntezy pasywne, CbO, podmiot nomadyczny.",
+   epigraph:"Wszystko jest produkcja: produkcja produkcji, produkcja zapisu, produkcja konsumpcji.",
+   detail:`<div class="axis-subheading">Materialistyczny zwrot: pragnienie-produkcja zamiast pragnienia-braku</div>
+<p>Centralnym aksjomatem <em>Anty-Edypa</em> jest twierdzenie, ze <strong>"wszystko jest produkcja"</strong>. Deleuze i Guattari odrzucaja tradycyjny podzial na produkcje, dystrybucje i konsumpcje jako sztuczny i właściwy jedynie kapitalistycznej ideologii. W nieświadomośći produkcja jest bezposrednio zapisem i konsumpcja — te trzy momenty nie nastepuja po sobie chronologicznie, lecz współistnieją jako aspekty jednego procesu.</p>
+<p>W tradycji idealistycznej pragnienie jest definiowane przez brak — pragne tego, czego nie mam, a zatem pragnienie jest wtorne wobec braku przedmiotu. Deleuze i Guattari <em>odwracaja</em> te relacje: pragnienie jest sila wytwórcza, ktora produkuje rzeczywistość (Realne), a brak jest wtornym, ideologicznym konstruktem narzucanym pragnieniu przez represje społeczna.</p>
+<div class="axis-quote-block">"Nie istnieje bowiem rozdzial między czlowiekiem a natura, przemyslem a natura, czy produkcja społeczna a produkcja pragnąca — tożsamość ta stanowi jedna z najwazniejszych tez całego dziela."</div>
+
+<div class="axis-subheading">Synteza laczaca (connective synthesis) — Libido: "i... a nastepnie..."</div>
+<p>Pierwsza synteza odpowiada za "produkcje produkcji" i dziala wedlug reguly asocjacyjnej wyrazonej formula <strong>"i... a nastepnie..."</strong>. Jej mechanizm polega na sprzeganiu maszyn-organow z maszynami-zrodlami w serii binarnych połączeń. Jedna maszyna wytwarza ciagly przepływ materialny (hyle), a podlaczona do niej druga maszyna dziala jako ciecie, pobierajac fragment tego przepływu.</p>
+<p>Paradygmatycznym przykladem jest para piersi-usta: maszyna-piers emituje przepływ mleka, maszyna-usta go przecina i pobiera. Seria ta jest liniowa we wszystkich kierunkach — usta z kolei podlaczone sa do maszyny-gardla, ta do maszyny-zoladka i tak dalej w nieskończoność. Energia mobilizowana przez te synteze to <strong>Libido</strong> rozumiane nie w waskim sensie freudowskim, lecz jako energia produkcji w ogole.</p>
+<div class="axis-quote-block">"Kazda maszyna-organ interpretuje caly swiat z perspektywy wlasnego przepływu."</div>
+
+<div class="axis-subheading">Synteza rozlaczna (disjunctive synthesis) — Numen: "albo... albo... albo..."</div>
+<p>Druga synteza odpowiada za "produkcje zapisu" i wyraza sie formula <strong>"albo... albo... albo..."</strong>, rozumiana jednak nie jako alternatywa wykluczająca, lecz jako system permutacji. Produkcja zostaje zapisana na powierzchni Ciala bez Organow, ktore pelni funkcje "magicznej tablicy zapisu". Energia Libido ulega częściowej transformacji w <strong>Numen</strong>.</p>
+<p>Przypadek sedziego Schrebera jest paradygmatyczny: jego "stawanie-sie-kobieta" nie jest urojeniem dotyczacym tożsamośći plciowej w sensie molowym, lecz przejsciem przez pasmo intensywnośći na CbO, w ktorym dysjunkcje plci, rasy i boskosc sa <em>włączające</em>, a nie wykluczające.</p>
+
+<div class="axis-subheading">Synteza koniunktywna (conjunctive synthesis) — Voluptas: "A wiec to tak!"</div>
+<p>Trzecia synteza odpowiada za "produkcje konsumpcji" i wyraza sie okrzykiem <strong>"A wiec to tak!"</strong> lub "A wiec to ja!". Podmiot rodzi sie jako "residuum" — reszta pozostawiona po podzialach na powierzchni zapisu. Energia resztkowa to <strong>Voluptas</strong> — rozkoszy konsumowanej przez podmiot przechodzacy przez kolejne stany intensywne na CbO.</p>
+<p>Podmiot nie jest centrum pragnienia ani jego przyczyna, lecz efektem ubocznym syntez pasywnych. Postacie Becketta — Murphy, Watt, Molloy — sluza jako modele podmiotu nomadycznego: byt bez stalej tożsamośći, stale zdecentrowany.</p>
+
+<div class="axis-subheading">Cialo bez Organow: nieruchomy poruszyciel pragnienia</div>
+<p>Pojecie CbO zapozyczone od Artauda zostaje przekształcone w kluczowa kategorie ontologiczna. CbO nie jest brakiem organow — jest <em>pelnym cialem</em>, jalowa i nieproduktywna powierzchnia, "nieruchomym poruszycielem" pragnienia. Oscyluje między <em>odpychaniem</em> maszyn pragnących (maszyny paranoiczne — maszyny pragnące jako "odrazajace robactwo") a <em>przyciaganiem</em> (maszyny cudowne — CbO przypisuje sobie moc maszyn "niczym medale na mundurze zwyciezcy").</p>
+<div class="axis-quote-block">"CbO jest dla produkcji pragnącej tym, czym Kapital dla produkcji społecznej — jalowa powierzchnia, ktora przywlaszcza sobie sily wytwórcze."</div>
+
+<div class="axis-subheading">Klossowski/Nietzsche: podmiot jako seria intensywnośći</div>
+<p>Podmiot nietzscheanski nie jest spojnym "Ja", lecz "seria indywidualnosci" wywolana przez wahania sil. Nietzsche w swoich listach obledu wykrzykuje: "Jestem kazdym nazwiskiem z historii!" — nie utoznsamia sie z Cezarem ani Dionizosem, lecz przechodzi przez pasma intensywnośći oznaczone tymi imionami. Delirium schizofreniczneego nie jest bledem co do tożsamośći — jest doświadczeniem czystych intensywnośći.</p>
+
+<div class="axis-subheading">Materialistyczna psychiatria: "Jak to dziala?"</div>
+<p>Schizofrenia jako <em>proces</em> = twórcza deterytorializacja. Schizofrenik <em>szpitalny</em> = "autystyczny ludzki wrak", produkt psychiatrii, ktora brutalnie przerwala proces. Choroba nie jest skutkiem procesu — jest wynikiem jego <em>przerwania</em>. Materialistyczna psychiatria pyta <strong>"jak to dziala?"</strong> zamiast "co to znaczy?" — fundament całego projektu.</p>
+<div class="axis-quote-block">"Spacer Lenca: nie jest juz synem ani chrzescijaninem, lecz staje sie maszyna chlorofilowa, laczac sie z gwiazdami i gorskimi krajobrazami."</div>`,
+   concepts:["Maszyna pragnąca","Cialo bez Organow (CbO)","Podmiot nomadyczny","Produkcja pragnąca","Ciecie-przepływ (coupure-flux)","Libido / Numen / Voluptas","Trzy syntezy pasywne","Obiekty częściowe","Antyprodukcja"]},
+
+  {book:"AE",label:"AE Rozdz. 2",title:"Psychoanaliza i familializm — krytyka Edypa",
+   summary:"Edyp nie jest prawda pragnienia — jest instrumentem jego represji. Piec paralogizmow psychoanalizy, prawomocne vs. nieprawomocne uzycia syntez.",
+   epigraph:"Edyp jest intymna formacja kolonialna — odpowiada wewnatrz temu, co kolonializm czyni na zewnatrz.",
+   detail:`<p><strong>Centralna teza:</strong> Psychoanaliza nie <em>odkrywa</em> Edypa w nieświadomośći — <em>produkuje</em> go tam. Edyp jest "intymna formacja kolonialna" kapitalizmu — odpowiada wewnatrz (rodzina) temu, co kolonializm czyni na zewnatrz (podbite narody).</p>
+<p><strong>Trzy kluczowe teksty Freuda:</strong> (1) <em>Przypadek Schrebera</em> — Freud redukuje schizofrenickie doświadczenie Schrebera do konfliktu homoseksualnego z ojcem, podczas gdy Schreber doswiadcza kosmicznych intensywnośći na CbO. (2) <em>"Dziecko jest bite"</em> — Freud odkrywa trzy fazy fantazji, ale odczytuje je edypalnie (ojciec bijacy = ojciec kochajacy), zamiast dostrzec maszynowe funkcjonowanie sadyzmu i masochizmu. (3) <em>"Analiza skonczona i nieskonczona"</em> — pozny Freud odkrywa "skale" pod Edypem, ale zatrzymuje sie przed konsekwencjami tego odkrycia.</p>
+<p><strong>Paralogizmy:</strong> (1) <em>Ekstrapolacja</em> — przejscie od "ojca w rodzinie" do "Ojca w nieświadomośći". (2) <em>Podwojne wiazanie</em> — "albo akceptujesz Edypa, albo buntujesz sie, ale bunt = Edyp". (3) <em>Aplikacja</em> — narzucanie Edypa innym kulturom. (4) <em>Przemieszczenie</em> — Edyp nie jest odkrywany, lecz produkowany przez represje.</p>
+<p><strong>Prawomocne vs. nieprawomocne:</strong> Kazda synteza ma dwa uzycia. Prawomocne (schizofreniczne): laczenie częściowe, dysjunkcja włączająca, koniunkcja nomadyczna. Nieprawomocne (edypalne): laczenie globalne (osoby), dysjunkcja wykluczająca (albo/albo), koniunkcja segregacyjna (rasy, klasy).</p>`,
+   concepts:["Edyp","Paralogizm","Dysjunkcja włączająca","Represja / Wyparcie","Schizofrenia: proces vs. klinika"]},
+
+  {book:"AE",label:"AE Rozdz. 3",title:"Dzicy, barbarzincy, cywilizowani — trzy maszyny społeczne",
+   summary:"Historia powszechna jako historia trzech socius: Ziemia, Despota, Kapital. Kod → nadkodowanie → dekodowanie + aksjomatyka.",
+   epigraph:"Kapitalizm dekoduje przepływ za przepływem — i reterytorializuje drugą ręką.",
+   detail:`<p><strong>Trzy maszyny społeczne:</strong> Deleuze i Guattari przedstawiaja <em>historie powszechna</em> (nie ewolucyjna, lecz strukturalna) jako nastepstwo trzech formacji społecznych, z ktorych kazda definiuje sie przez swoj stosunek do przepływow.</p>
+<p><strong>1. Maszyna terytorialna (pierwotna):</strong> Socius = Ziemia. Operacja = <em>kodowanie</em>. System = okrucienstwo (Nietzsche: pamiec wypalana na ciele). Dlug = skończony, mobilny. Inskrypcja = znaki na ciele (tatuaz, skaryfikacja). Triada: glos-grafizm-oko. Kluczowa teza Clastresa: społeczeństwa pierwotne nie sa "przed-panstwowe" — sa <em>przeciw-panstwowe</em>, aktywnie odpierajace powstanie panstwa.</p>
+<p><strong>2. Maszyna despotyczna (barbarzinska):</strong> Socius = Cialo Despoty. Operacja = <em>nadkodowanie</em>. System = terror. Dlug = nieskończony (wieczna wina). Despota tworzy "nowy alians" (z Bogiem) i "bezposrednia filiacje" (poddani jako dzieci). Powstanie pisma jako narzedzia nadkodowania. Urstaat — pra-panstwo nawracajace wiecznie.</p>
+<p><strong>3. Maszyna kapitalistyczna (cywilizowana):</strong> Socius = Kapital-Pieniadz. Operacja = <em>dekodowanie</em> + aksjomatyka. System = cynizm. "Cud" kapitalizmu: spotkanie dwoch zdekodowanych przepływow — wolnej pracy (uwolnionej od ziemi) i wolnego kapitalu (uwolnionego od skarbu). Schizofrenia jest <em>zewnetrzna granica</em> kapitalizmu — tendencja do absolutnej deterytorializacji, ktora kapital nieustannie hamuje kontrtendencjami reterytorializacji (narod, rodzina, Edyp).</p>
+<p><strong>Tendencja i kontrtendencja:</strong> Kapitalizm deterytorializuje jedna reka (dekoduje przepływ) i reterytorializuje druga (tworzy sztuczne terytoria). Ta dialektyka napedza cala dynamike systemu. Edyp jest narzedziem reterytorializacji par excellence — "prywatyzacja" pragnienia, jego zamkniecie w rodzinie.</p>`,
+   concepts:["Socius","Kod / Nadkodowanie / Dekodowanie","Aksjomatyka","Urstaat (Pra-panstwo)","Deterytorializacja","Reterytorializacja","Wartosc dodatkowa kodu / przepływu","Edyp"]},
+
+  {book:"AE",label:"AE Rozdz. 4",title:"Wprowadzenie do schizoanalizy — program",
+   summary:"Program schizoanalizy: dwa zadania destrukcyjne + dwa konstruktywne. Grupy podmiotowe vs. ujarzmione. 'Nowa ziemia'.",
+   epigraph:"Jak to dziala? — oto jedyne pytanie schizoanalizy.",
+   detail:`<p><strong>Zadania destrukcyjne:</strong> (1) <em>Wyskrobanie nieświadomośći</em> (curettage) — oczyszczenie z edypalnych nalogow, usunięcie "trójkąta tata-mama-ja" z nieświadomośći. (2) <em>Anty-teatr</em> — zniszczenie teatralnej koncepcji nieświadomośći. Nieświadomość nie jest <em>scena</em>, na ktora projektujemy familiarneematy — jest <em>fabryka</em>, ktora produkuje.</p>
+<p><strong>Pierwsze zadanie pozytywne:</strong> Odkrywanie maszyn pragnących w ich realnym funkcjonowaniu. <em>Regula Leclaire'a</em>: jest punkt, w ktorym "dziecko z pieskiem" przestaje byc edypalnym symbolem i staje sie maszyna pragnąca — punkt, w ktorym analiza przechodzi od interpretacji do funkcjonalizmu. Funkcjonalizm vs. interpretacja: zamiast pytac "co ten sen znaczy?", pytamy "jak ta maszyna działa? Jakie połączeńia tworzy? Jakie przepływ uruchamia?"</p>
+<p><strong>Drugie zadanie pozytywne:</strong> Analiza inwestycji libidinalnych pola społecznego. Kluczowe rozróżnienie: <em>grupy podmiotowe</em> (groupe-sujet) — zdolne do artykulacji wlasnego pragnienia, otwarte na linie ujsci — vs. <em>grupy ujarzmione</em> (groupe assujetti) — reprodukujace w swoim wnetrzu hierarchie otaczajacego społeczeństwa. Kazda grupa moze byc jednoczesnie podmiotowa i ujarzmiona w roznych aspektach.</p>
+<p><strong>Bilans-program:</strong> Schizoanaliza definiuje sie przez cztery tezy: (1) Kazda inwestycja libidinalna jest społeczna. (2) Istnieja dwa bieguny inwestycji: paranoiczny (reakcyjny, molowy) i schizo-rewolucyjny (tworcczy, molekularny). (3) Biegun schizo-rewolucyjny ma prymat. (4) "Nowa ziemia" — nie utopia, lecz immanentny horyzont deterytorializacji.</p>`,
+   concepts:["Schizoanaliza","Maszyna pragnąca","Produkcja pragnąca","Molarne / Molekularne","Edyp","Deterytorializacja"]},
+
+  {book:"TP",label:"TP Plateau 1",title:"Klacze — nowy model myslenia",
+   summary:"Szesc zasad klacza vs. model arborescencyjny. Ksiazka jako asemblaz. Mapa vs. kalka.",
+   epigraph:"Klacze nie zaczyna sie i nie konczy, jest zawsze w srodku, między rzeczami.",
+   detail:`<p><strong>Wprowadzenie do Tysiaca plateau</strong> ustanawia klacze jako alternatywny model myslenia wobec modelu arborescencyjnego (drzewiastego). Szesc zasad: połączenie, heterogenicznosc, wielość, zerwanie aznaczace, kartografia, dekalkomania.</p>
+<p>Trzy figury ksiazki: <em>ksiazka-korzen</em> (klasyczna, hierarchiczna — "swiat jako reprezentacja"), <em>ksiazka-korzonek</em> (pozornie pluralistyczna, ale wciaz binarna — "postmodernistyczny fragment"), <em>ksiazka-klacze</em> (acentryczna, ryzomaryczna — "mapa, nie kalka"). <em>Tysiac plateau</em> samo w sobie jest "ksiazka-klacze" — kazde plateau moze byc czytane niezaleznie, połączeńia między nimi nie sa linearne.</p>
+<p><strong>Mapa vs. kalka:</strong> Kalka reprodukuje istniejace — jest instrumentem kontroli ("tak jest"). Mapa konstruuje nowe — jest instrumentem eksperymentacji ("tak mogloby byc"). Ale mapa moze byc skopiowana jako kalka (zinstytucjonalizowana), a kalka moze byc nalozona na mape (reinterpretowana). Stad ciagla gra między kartografia a dekalkomania.</p>`,
+   concepts:["Klacze (Rhizome)","Wielosc (multiplicite)","Asemblaz (agencement)"]},
+
+  {book:"TP",label:"TP Plateau 2-3",title:"Wilki i strata — od sfory do geologii",
+   summary:"Krytyka Freuda (redukcja sfory do ojca). Geologia moralnosci — podwojna artykulacja, trzy strata, destratyfikacja.",
+   epigraph:"Nasladowac strata — bardzo drobnym pilnikiem.",
+   detail:`<p><strong>Plateau 2 (Jeden czy kilka wilkow?):</strong> Krytyka Freudowskiej analizy Czlowieka-Wilka: Freud redukuje <em>sfore</em> wilkow do <em>jednego</em> wilka (ojca), wielość do jednosci, molekularne do molarnego. Sfora nie jest "wieloma jednostkami" — jest <em>wielośćia</em> w sensie scislym: zmienia swoja nature, gdy zmienia sie jej liczebnosc. Wolif vs. pies — pies jest edypalny (zwierze domowe, oddany panu), wilk jest anty-edypalny (sfora, anomalny, stawanie-sie).</p>
+<p><strong>Plateau 3 (Geologia moralnosci):</strong> Przedstawia teorie strat — warstw organizujacych materie wedlug podwojnej artykulacji (Hjelmslev). Trzy typy strat: fizykochemiczne, organiczne, alloplastyczne. Strata sa "Sadem Bozym" — narzucają organizacje, znaczenie, podmiotowość. Destratyfikacja jest konieczna, ale niebezpieczna: "nasladowac strate, bardzo drobnym pilnikiem".</p>
+<p><strong>Połączenie:</strong> Oba plateau lacza krytyka totalizacji (Freud redukuje wielość do jednosci) z teoria organizacji materii (strata organizuja chaos). Wspsolny motyw: ostrożność wobec zbyt gwałtownej deterytorializacji — ani Freudowska redukcja, ani chaotyczna destrukcja, lecz "drobny pilnik".</p>`,
+   concepts:["Strata / Stratyfikacja","Molarne / Molekularne","Cialo bez Organow (CbO)","Plaszczyzna konsystencji / organizacji"]},
+
+  {book:"TP",label:"TP Plateau 4-5",title:"Lingwistyka i rezimy znakow",
+   summary:"Cztery postulaty lingwistyki (krytyka Chomsky'ego). Haslo (mot d'ordre). Cztery rezimy znakow: znaczący, post-znaczący, przeciw-znaczący, przed-znaczący.",
+   epigraph:"Jezyk nie informuje — rozkazuje. Kazda wypowiedz jest haslem.",
+   detail:`<p><strong>Plateau 4 (Postulaty lingwistyki):</strong> Krytyka czterech postulatow: (1) Jezyk <em>informuje</em> — nie! Jezyk jest <em>rozkazem</em> (mot d'ordre), haslem, ktore dokonuje <em>transformacji bezcielesnych</em>. Wyrok sedziego zmienia "oskarzonego" w "skazanego" — natychmiastowo. (2) Istnieje <em>abstrakcyjna maszyna</em> jezyka (Chomsky) — nie! Maszyna jest społeczna, nie formalna. (3) Sa <em>stale</em> jezyka — nie! Istnieje tylko <em>ciagla wariacja</em>. (4) Jezyk mozna badac <em>synchronicznie</em> — nie! Jezyk jest zawsze w ruchu, zawsze między jezykami.</p>
+<p><strong>Plateau 5 (Rezimy znakow):</strong> Cztery rezimy semiotyczne: (1) <em>Znaczacy</em> (despotyczny) — nieskonczona siec znaczących odwolujacych sie do siebie, paranoja interpretatora. (2) <em>Post-znaczący</em> (podmiotowy) — linia pasji, podmiot jako punkt odliczania, "koziol ofiarny". (3) <em>Przeciw-znaczący</em> (nomadyczny) — ciala, a nie znaki; numeryczny system wojennej organizacji. (4) <em>Przed-znaczący</em> (poliwokalny) — wielość heterogenicznych serii, ekspresja bezposrednia. Rezimy mieszaja sie w praktyce — nie ma "czystego" rezimu.</p>`,
+   concepts:["Transformacje bezcielesne","Asemblaz (agencement)","Maszyna abstrakcyjna","Diagram"]},
+
+  {book:"TP",label:"TP Plateau 6",title:"Jak zrobic sobie CbO? — praktyka",
+   summary:"CbO jako praktyka, nie pojęcie. Trzy typy: pelne, puste, rakowe. Zasada ostrożnośći. Masochizm, narkotyki, Tao.",
+   epigraph:"Skonczyc z Sadem Bozym — ale ostrożnie, bardzo drobnym pilnikiem.",
+   detail:`<p><strong>CbO jest czymm, co sie wytwarza</strong> — nie jest "danym", nie jest "idea", lecz <em>praktyka</em>. "Jak zrobic sobie CbO?" jest pytaniem praktycznym, nie teoretycznym. Hipochondryk, masochista, narkoman, schizofrenik — kazdy "wytwarza" swoje CbO na swoj sposob.</p>
+<p><strong>Trzy typy CbO:</strong> (1) <em>Pelne</em> — twórcze, intensywne. CbO masochisty: nie chodzi o bol ani o karę (interpretacja psychoanalityczna), lecz o <em>eksperymentowanie z intensywnośćiami</em> — masochista wytwarza CbO, na ktorym bol funkcjonuje jako intensywność, a nie jako cierpienie. (2) <em>Puste</em> — katatoniczne, nihilistyczne. CbO narkomana, ktory "za daleko zaszedl" — zamiast intensywnośći, pustka. (3) <em>Rakowe</em> — faszystowskie. Proliferacja destrukcji, "czarne dziury" pochlanijace wszystko. Faszyzm jako rakowe CbO: pragnienie wlasnej smierci narzucane calemu społeczeństwu.</p>
+<p><strong>Zasada ostrożnośći:</strong> "Nasladowac strate, bardzo drobnym pilnikiem." Nie demontowac zbyt gwałtownie — ostrożność jest <em>immanentna regula</em> schizoanalizy, a nie zewnetrznym ograniczeniem. Zbyt szybka destratyfikacja = puste lub rakowe CbO zamiast pelnego.</p>`,
+   concepts:["Cialo bez Organow (CbO)","Strata / Stratyfikacja","Deterytorializacja","Linia ujscia (ligne de fuite)"]},
+
+  {book:"TP",label:"TP Plateau 7",title:"Twarzowości — produkcja twarzy",
+   summary:"Twarz nie jest naturalnym wyrazem emocji — jest produkcja abstrakcyjnej maszyny. Biala sciana/czarna dziura. Rasizm. Demontaz twarzy.",
+   epigraph:"Twarz Chrystusa jest standardem twarzowości zachodniej.",
+   detail:`<p><strong>Twarz jest systemem, nie wyrazem.</strong> Abstrakcyjna maszyna twarzowości operuje na dwoch komponentach: bialej scianie (znaczącość — ekran projekcji) i czarnej dziurze (podmiotowość — punkt pochłaniania). Twarz nie jest biologicnym tworem — jest <em>produkowana</em> przez specyficzna maszyne semiotyczna, ktora historycznie krystalizuje sie wokol <em>twarzy Chrystusa</em> jako zachodniiego standardu.</p>
+<p><strong>Rasizm:</strong> Nie jest "uprzedzeniem" ani "ignorancja" — jest strukturalnym efektem maszyny twarzowości. Polega na mierzeniu stopnia odchylenia od standardowej twarzy (Bialego Mezczyzny) i klasyfikowaniu odchylen. Rasizm pierwszego typu: "Twoja twarz nie jest nasza" (wykluczenie). Rasizm drugiego typu: "Mozesz sie dopasowac — ale musisz upodobnic sie do standardu" (asymilacja).</p>
+<p><strong>Demontaz twarzy:</strong> "Uwolnic glowe od twarzy" — ryzykowne, ale twórczo obiecujace. Probe-heads artystow (Bacon, Artaud) eksploruja nie-twarzowe możliwośći ciala. Ale ostrożność: nie kazddy demontaz twarzy jest twórczy — moze tez prowadzic do czarnej dziury (depresja, psychoza).</p>`,
+   concepts:["Twarzowości (visageite)","Biala sciana / Czarna dziura","Maszyna abstrakcyjna","Strata / Stratyfikacja"]},
+
+  {book:"TP",label:"TP Plateau 8-9",title:"Trzy linie i mikropolityka",
+   summary:"Trzy linie (molowa, molekularna, ujscia). Cztery niebezpieczenstwa. Mikropolityka pragnienia. Faszyzm jako zjawisko molekularne.",
+   epigraph:"Wszyscy mamy w sobie malego faszystee — i to nie w sensie moralnego potepienia.",
+   detail:`<p><strong>Plateau 8 (Trzy nowele):</strong> Teoria trzech linii. Kazdy czlowiek, kazda grupa, kazde społeczeństwo sa "przeciete" przez trzy współistniejące linie: (1) <em>Molowa</em> — twarda segmentaryzacja, binarne opozycje. (2) <em>Molekularna</em> — gietkie przesunięcia, pekniecia, mikrostrategie. (3) <em>Linia ujscia</em> — absolutna deterytorializacja. Trzy typy "przerw": <em>przerwa</em> (molowa — wyrazna, widoczna), <em>pekniecie</em> (molekularne — niewidoczne, ale glebokie — Fitzgerald: "crack-up"), <em>zerwanie</em> (linia ujscia — radykalne, moze byc twórcze lub destrukcyjne).</p>
+<p><strong>Plateau 9 (Mikropolityka):</strong> Faszyzm jest przede wszystkim zjawiskiem <em>molekularnym</em> — nie zaczyna sie od wielkiej polityki, lecz od mikrofaszyzmow: w rodzinie, w szkole, w biurze, w zwiazku intymnym. "Wszyscy mamy w sobie malego faszystee" — nie w sensie moralnego potepienia, lecz w sensie analitycznym: pragnienie moze inwestowac w formacje represyjna, pragniąc wlasnego ucisku.</p>
+<p><strong>Cztery niebezpieczenstwa:</strong> (1) Strach (trzymanie sie twardych segmentow). (2) Jasnosc (iluzja przejrzystosci mikropolityki). (3) Moc (przechwycenie linii ujsci). (4) Wielkie Zniechęcenie (pasja abolitionis — pragnienie smierci). Nie ma "bezpiecznej" pozycji — kazda linia ma swoje niebezpieczenstwa.</p>`,
+   concepts:["Linia ujscia (ligne de fuite)","Mikropolityka","Segmentarnosc","Molarne / Molekularne","Deterytorializacja"]},
+
+  {book:"TP",label:"TP Plateau 10",title:"Stawanie-sie — bloki, serie, Anomalny",
+   summary:"Stawanie-sie to nie imitacja — to blok, inwolucja twórcza. Anomalny jako figura graniczna. Serie stawan-sie az do stawania-sie-niedostrzegalnym.",
+   epigraph:"Wszelkie stawanie-sie jest mniejszosciowe — odejsciem od standardu wiekszosci.",
+   detail:`<p><strong>Stawanie-sie nie jest:</strong> imitacja (osa nie udaje orchidei), identyfikacja (schizofrenik nie "mysli, ze jest koniem"), filiacja (nie chodzi o pokrewienstwo), analogia (nie chodzi o podobienstwo). Stawanie-sie <em>jest</em>: blokiem, zona bliskosci, inwolucja twórcza, sojuszem z Anomalnym.</p>
+<p><strong>Anomalny:</strong> Figura graniczna sfory — nie przedstawiciel gatunku, nie przywodca, lecz byt na krawedzi, z ktorym podmiot wchodzi w "demoniczny sojusz". Moby Dick jako Anomalny sfory wielorybow, z ktorym Ahab tworzy blok stawania-sie. Stawanie-sie odbywa sie przez <em>sojusz</em> (alliance), nie przez <em>filiacje</em> — jest "nienaturalnym uczestnictwem".</p>
+<p><strong>Serie stawan-sie:</strong> stawanie-sie-kobieta → stawanie-sie-zwierzeciem → stawanie-sie-molekularnym → stawanie-sie-niedostrzegalnym. Porzadek deterytorializacji: "mezczyzna" = standard wiekszosci, kazde stawanie-sie jest odejsciem od tego standardu. Stawanie-sie-niedostrzegalnym = rozpuszczenie w plaszczyznie konsystencji, wejscie w zycie anonimowe i intensywne.</p>
+<p><strong>Muzyka i malarstwo</strong> jako pola uprzywilejowane stawan-sie: Messiaen i ptaki, Debussy i morze, Bacon i stawanie-sie-zwierzeciem w portretach. Sztuka nie przedstawia stawan-sie — jest stawaniem-sie.</p>`,
+   concepts:["Stawanie-sie (devenir)","Anomalny (Outsider)","Blok stawania-sie","Haecceitas","Wielosc (multiplicite)"]},
+
+  {book:"TP",label:"TP Plateau 11",title:"Refren — terytorium i kosmoos",
+   summary:"Trzy momenty refrenu: centrum w chaosie, terytorium, otwarcie ku kosmosowi. Muzyka jako deterytorializacja.",
+   epigraph:"Tra la la — dziecko w ciemnosci spiewem ustanawia centrum w chaosie.",
+   detail:`<p><strong>Trzy momenty refrenu:</strong> (1) Dziecko w ciemnosci spiewa piosenke — <em>ustanowienie centrum</em> w chaosie (kolo ochronne). (2) Kot oznacza terytorium — <em>zakreslenie granic</em>, komponenty staja sie ekspresyjne. (3) Artysta otwiera terytorium — <em>deterytorializacja</em>, wielki refren kosmiczny.</p>
+<p><strong>Milieu i rytm:</strong> Kazde milieu jest zdefiniowane przez periodyczny komponent. Rytm nie jest "miarą" — jest <em>przejsciem</em> między milieu, "różnica, ktora tworzy przejscie". Terytorium powstaje, gdy komponenty milieu staja sie <em>ekspresyjne</em> — gdy ptak nie tylko slyszy, ale <em>spiewa</em>.</p>
+<p><strong>Muzyka:</strong> Klasycyzm = terytorialny refren (motyw, rozwoj, powrot). Romantyzm = otwarcie ku Naturze, nieskonczona melodia. Nowoczesnosc (Messiaen, Boulez, Cage) = bezposrednie zaangazowanie sil kosmicznych, "uslyszenie nieslyszalnego". Muzyka jest deterytorializacja <em>par excellence</em> — "kosmiczna sila bladu".</p>`,
+   concepts:["Refren (Rytornela)","Terytorium","Deterytorializacja","Maszyna abstrakcyjna"]},
+
+  {book:"TP",label:"TP Plateau 12",title:"Nomadologia — maszyna wojenna vs. panstwo",
+   summary:"Maszyna wojenna jako wynalazek nomadow, zewnetrzna wobec panstwa. Nauka wieksza vs. mniejsza. Gladka vs. prazkowana przestrzen.",
+   epigraph:"Maszyna wojenna jest wynalazkiem nomadow — jej pierwotny cel to nie wojna.",
+   detail:`<p><strong>Dwa bieguny panstwa:</strong> Magiczny despota (przechwytuje jednym gestem) i prawodawczy krol (organizuje wedlug prawa) — dwa "glowy" aparatu panstwowego. Ale maszyna wojenna jest <em>trzecim</em> terminem — <em>zewnetrznym</em> wobec panstwa.</p>
+<p><strong>Maszyna wojenna:</strong> Nie jest "armia" — jest formacja nomadyczna, ktora ze swej natury wymyka sie logice panstwowej. Jej pierwotny cel nie jest wojna — jest <em>komponowanie gladkiej przestrzeni</em>. Wojna staje sie celem dopiero wtedy, gdy panstwo przejmuje maszyne wojenna (tworzac armie) lub gdy maszyna wojenna natrafia na opor.</p>
+<p><strong>Nauka wieksza vs. mniejsza:</strong> "Nauka kroleska" (wieksza) — reprodukcyjna, narzucajaca formy materii, oparta na prawach i stalych. "Nauka nomadyczna" (mniejsza) — ambulatoryjna, podazajaca za materia, oparta na singularnosciach i zmiennych. Metalurgia jako paradygmat: kowal <em>podaza za metalem</em>, wyczuwajac jego tendencje (phylum maszynowe).</p>
+<p><strong>Przestrzen:</strong> Gladka (nomadyczna, haptyczna, intensywna) vs. prazkowana (panstwowa, optyczna, metryczna). Plus trzeci typ: "dziurawa" (holey space) — podziemna, metalurgiczna, ani gladka, ani prazkowana.</p>`,
+   concepts:["Maszyna wojenna","Urstaat (Pra-panstwo)","Gladkie / Prazkowane","Phylum maszynowe","Deterytorializacja"]},
+
+  {book:"TP",label:"TP Plateau 13-14",title:"Aparat chwytania i gladkie/prazkowane",
+   summary:"Panstwo jako aparat chwytania (renta, podatek, zysk). Szesc modeli gladkiego/prazkowanego. Mieszaniny — nie idealizacja gladkiego.",
+   epigraph:"Gladkie i prazkowane istnieja jedynie w postaci mieszanin.",
+   detail:`<p><strong>Plateau 13 (Aparat chwytania):</strong> Panstwo dziala przez trzy operacje chwytania: <em>renta</em> (przechwycenie ziemi), <em>podatek</em> (przechwycenie pracy), <em>zysk</em> (przechwycenie pieniadza). Kapitalizm nie jest po prostu "nowym stadium" — jest specyficzna konfiguracja, w ktorej aksjomatyka zastepuje kody, a aparat chwytania operuje na zdekodowanych przepływach.</p>
+<p><strong>Ujarzmianie vs. podporzadkowanie:</strong> <em>Podporzadkowanie społeczne</em> (asservissement social) = subiektywizacja, tworzenie podmiotow (np. "obywatel", "pracownik"). <em>Ujarzmianie maszynowe</em> (asservissement machinique) = desubiektywizacja, wlaczenie w maszyne jako komponent (np. czlowiek jako element maszyny cyfrowej — nie "uzywa" komputera, jest jego czescia).</p>
+<p><strong>Plateau 14 (Gladkie i prazkowane):</strong> Szesc modeli: technologiczny (filc vs. tkactwo), muzyczny, morski, matematyczny (Riemann vs. Euklides), fizyczny (intensywne vs. ekstensywne), estetyczny (haptyczne vs. optyczne). Fundamentalna zasada: gladkie i prazkowane <em>istnieja jedynie w postaci mieszanin</em>. Gladkie nie jest "wolnoscia", prazkowane nie jest "wiezieniem" — obie przestrzenie maja swoje niebezpieczenstwa i swoje potencjaly.</p>`,
+   concepts:["Gladkie / Prazkowane","Aksjomatyka","Urstaat (Pra-panstwo)","Deterytorializacja","Reterytorializacja"]},
+
+  {book:"TP",label:"TP Konkluzja",title:"Konkluzja — zasady ostrożnośći",
+   summary:"Synteza całego projektu. Maszyny abstrakcyjne i ich konkretne reguly. Ostrożność jako fundamentalna zasada schizoanalizy.",
+   epigraph:"Nigdy nie wierz, ze gladka przestrzen wystarczy, by nas uratowac.",
+   detail:`<p><strong>Konkluzja Tysiaca plateau</strong> nie jest "podsumowaniem" w tradycyjnym sensie — jest raczej <em>zestawem regul</em> dla praktyki schizoanalitycznej. Deleuze i Guattari formujaca <em>konkretne reguly</em> dla maszyn abstrakcyjnych:</p>
+<p>(1) Nigdy nie wierz, ze gladka przestrzen wystarczy, by nas uratowac — gladkie moze byc rownie niebezpieczne jak prazkowane. (2) Nie mysl, ze linia ujscia polega na ucieczce od zycia — polega na <em>sprawieniu, ze cos ucieka</em>, na otwarciu nowych możliwośći. (3) Ostrożność: "nasladowac strate, bardzo drobnym pilnikiem" — deterytorializacja musi byc stopniowa, kontrolowana, cierpliwa.</p>
+<p><strong>Ostrożność jako zasada immanentna:</strong> Nie jest to "konserwatyzm" ani "lekliwosc" — jest wewnętrzna regula procesu deterytorializacji. Zbyt szybko = puste CbO, linia smierci, faszyzm. Zbyt wolno = sztywna segmentarność, molowa stagnacja. Schizoanaliza jest sztuka <em>dosowyania</em> prędkości — ani za szybko, ani za wolno.</p>
+<p><strong>Nowa ziemia:</strong> Nie utopia, nie program polityczny — <em>immanentny horyzont</em> deterytorializacji. "Nowa ziemia" jest tym, co powstaje, gdy proces schizoanalityczny osiaga swoj punkt dojrzalosci — nie "nowy swiat" w sensie geograficznym, lecz <em>nowy sposob zamieszkiwania swiata</em>.</p>`,
+   concepts:["Schizoanaliza","Cialo bez Organow (CbO)","Linia ujscia (ligne de fuite)","Deterytorializacja","Plaszczyzna konsystencji / organizacji","Gladkie / Prazkowane"]}
+];
+
+// ========== QUIZ DATA (kept from original, already good) ==========
+const quizData = [
+  {q:"Co oznacza CbO?",o:["Cialo bez Organow","Centrum bez Odpowiedzi","Calosc bez Ontologii","Czastka bez Odniesien"],c:0,cat:"Podstawy"},
+  {q:"Kto jest autorem pojęćia 'maszyny pragnące'?",o:["Lacan","Freud","Guattari (rozwiniete z Deleuze'em)","Foucault"],c:2,cat:"Podstawy"},
+  {q:"Ktory tom ma charakter krytyczny?",o:["Tysiac plateau","Anty-Edyp","Logika sensu","Roznica i powtorzenie"],c:1,cat:"Podstawy"},
+  {q:"Co jest przeciwienstwem 'nieświadomośći-teatru'?",o:["Nieświadomość-scena","Nieświadomość-fabryka","Nieświadomość-marzenie","Nieświadomość-tekst"],c:1,cat:"Podstawy"},
+  {q:"Ile plateau zawiera 'Tysiac plateau'?",o:["Tysiac","Dwadziescia","Pietnascie","Dziesiec"],c:2,cat:"Podstawy"},
+  {q:"Co to jest klacze?",o:["Typ drzewa","Acentryczny, nielinearny system połączeń","Rodzaj korzenia","Struktura hierarchiczna"],c:1,cat:"Podstawy"},
+  {q:"Jaka jest fundamentalna zasada praktyki schizoanalitycznej?",o:["Odwaga","Destrukcja","Szybkosc","Ostrożność"],c:3,cat:"Podstawy"},
+  {q:"Co Edyp reprezentuje wedlug Deleuze'a i Guattariego?",o:["Uniwersalna strukture psychiki","Intymna formacje kolonialna kapitalizmu","Mit grecki","Kompleks matczyny"],c:1,cat:"Podstawy"},
+  {q:"Jakie pytanie zadaje schizoanaliza?",o:["Co to znaczy?","Dlaczego?","Jak to dziala?","Kim jestes?"],c:2,cat:"Podstawy"},
+  {q:"W ktorym roku ukazal sie Anty-Edyp?",o:["1968","1980","1972","1975"],c:2,cat:"Podstawy"},
+  {q:"Kim byl Felix Guattari z zawodu?",o:["Filozof akademicki","Pisarz","Psychoanalityk i psychoterapeuta","Lingwista"],c:2,cat:"Podstawy"},
+  {q:"Co oznacza deterytorializacja?",o:["Zdobywanie terytorium","Opuszczanie terytorium, wylamywanie sie z kodow","Budowanie granic","Organizowanie przestrzeni"],c:1,cat:"Podstawy"},
+  {q:"Co to jest socius?",o:["Typ przyjazni","Cialo pelne formacji społecznej","Forma społeczna","Gatunek zwierzecy"],c:1,cat:"Podstawy"},
+  {q:"Jakie wydarzenie historyczne bezposrednio poprzedzilo współpracę D&G?",o:["II wojna swiatowa","Rewolucja kubanska","Maj 1968","Upadek muru berlinskiego"],c:2,cat:"Podstawy"},
+  {q:"Jakie sa trzy energie syntez pasywnych?",o:["Id, Ego, Superego","Eros, Thanatos, Logos","Libido, Numen, Voluptas","Potentia, Potestas, Conatus"],c:2,cat:"Zaawansowane"},
+  {q:"Ktore społeczeństwo stosuje 'kodowanie' przepływow?",o:["Kapitalistyczne","Despotyczne","Terytorialne (pierwotne)","Postindustrialne"],c:2,cat:"Zaawansowane"},
+  {q:"Co to jest 'rabattement'?",o:["Typ reterytorializacji","Zwiniecie pola społecznego na trojkat rodzinny","Forma deterytorializacji","Rodzaj linii ujscia"],c:1,cat:"Zaawansowane"},
+  {q:"Czym rozni sie przestrzen gladka od prazkowanej?",o:["Gladka jest pusta","Gladka jest nomadyczna i haptyczna; prazkowana metryczna i panstwowa","Gladka jest geometryczna","Nie ma różnicy"],c:1,cat:"Zaawansowane"},
+  {q:"Co to jest 'maszyna wojenna'?",o:["Armia panstwowa","Wynalazek nomadow, zewnetrzny wobec panstwa","Fabryka broni","Aparat represji"],c:1,cat:"Zaawansowane"},
+  {q:"Ile jest zasad klacza?",o:["Cztery","Trzy","Szesc","Osiem"],c:2,cat:"Zaawansowane"},
+  {q:"Co oznacza 'dysjunkcja włączająca'?",o:["Wykluczenie alternatyw","Wspolistnienie alternatyw jako permutacje na CbO","Suma logiczna","Podwojne wiazanie"],c:1,cat:"Zaawansowane"},
+  {q:"Kim jest 'Anomalny' w kontekscie Tysiaca plateau?",o:["Pacjent psychiatryczny","Figura graniczna sfory, z ktora podmiot wchodzi w sojusz","Typ schizofrenika","Forma Edypa"],c:1,cat:"Zaawansowane"},
+  {q:"Co to jest 'haecceitas'?",o:["Esencja rzeczy","Indywiduacja przez relacje prędkości i afekty, nie przez forme","Typ substancji","Kategoria logiczna"],c:1,cat:"Zaawansowane"},
+  {q:"Jakie trzy typy CbO wyrozniaja D&G?",o:["Duze, srednie, male","Pelne, puste, rakowe","Aktywne, pasywne, neutralne","Organiczne, nieorganiczne, syntetyczne"],c:1,cat:"Zaawansowane"},
+  {q:"Co to jest 'refren' (rytornela)?",o:["Powtorzenie muzyczne","Pryzmat czasoprzestrzeni organizujacy relacje z chaosem","Typ piosenki","Echo akustyczne"],c:1,cat:"Zaawansowane"},
+  {q:"Jaka jest relacja między pragnieniem a polem społecznym?",o:["Pragnienie jest prywatne","Pragnienie jest bezposrednio społeczne","Pragnienie jest biologiczne","Pragnienie jest transcendentne"],c:1,cat:"Zaawansowane"},
+  {q:"Co oznacza 'phylum maszynowe'?",o:["Rodzaj maszyny","Materialnosc w ruchu, przepływ materii-energii z nieorganicznym zyciem","Typ organizmu","Klasyfikacja narzedzi"],c:1,cat:"Zaawansowane"},
+  {q:"Co to jest 'transformacja bezcielesna'?",o:["Zmiana fizyczna ciala","Akt jezykowy natychmiastowo przypisujacy cialom nowe atrybuty","Metamorfoza duchowa","Ewolucja gatunkowa"],c:1,cat:"Zaawansowane"},
+  {q:"Czym jest Urstaat?",o:["Nowoczesne panstwo","Pra-panstwo, odwieczny model nawracajacy w historii","Starozytny Rzym","Utopia polityczna"],c:1,cat:"Zaawansowane"},
+  {q:"Jaki jest stosunek maszyn pragnących do asemblazy?",o:["Sa tym samym","Maszyny pragnące to 'wnetrze' asemblazy; asemblaz je rozszerza","Sa przeciwstawne","Nie ma zwiazku"],c:1,cat:"Ekspert"},
+  {q:"Jak D&G interpretuja faszyzm?",o:["Jako zjawisko makropolityczne","Jako zjawisko przede wszystkim molekularne, mikrofaszyzmy","Jako produkt ideologii","Jako wynik biedy"],c:1,cat:"Ekspert"},
+  {q:"Co oznacza 'podwojna artykulacja'?",o:["Dwujezycznosc","Organizacja strat: tresc (materie) + wyrazenie (struktury)","Podwojna interpretacja","Dwa znaczenia"],c:1,cat:"Ekspert"},
+  {q:"Jakie jest kryterium piate strukturalizmu wg Deleuze'a?",o:["Podmiot","Jezyk","Pusta przegrodka (case vide)","Roznica"],c:2,cat:"Ekspert"},
+  {q:"Co laczy Marksa, Nietzschego i Freuda wg AE?",o:["Byli przyjaciolmi","Sa 'trzema odkrywcami nieświadomośći', ktorzy zdradzili swe odkrycia","Pisali po niemiecku","Byli materialistami"],c:1,cat:"Ekspert"},
+  {q:"Czym jest 'rakowe CbO'?",o:["Cialo chore na raka","Faszystowskie CbO, proliferacja destrukcji, rezonans czarnych dziur","Typ guza","Metafora medyczna"],c:1,cat:"Ekspert"},
+  {q:"Co to jest 'wartosc dodatkowa kodu'?",o:["Zysk kapitalistyczny","Jakosciowa nadwyzka oparta na prestiziu i dlugu w społeczeństwach pierwotnych","Podatek panstwowy","Typ informacji"],c:1,cat:"Ekspert"},
+  {q:"Jaka jest rola 'twarzowości' w kontekscie rasizmu?",o:["Zadna","Twarz Chrystusa jako standard; rasizm mierzy odchylenia od Bialego-Mezczyzny","Twarz wyraza emocje","Twarz jest naturalna"],c:1,cat:"Ekspert"},
+  {q:"Co oznacza 'schizofrenizacja'?",o:["Wywolywanie choroby","Rozbijanie struktur molowych dla uwolnienia molekularnych przepływow pragnienia","Leczenie schizofrenii","Diagnozowanie"],c:1,cat:"Ekspert"},
+  {q:"Ile rezimow znakow wyrozniaja D&G w plateau 5?",o:["Dwa","Trzy","Cztery","Piec"],c:2,cat:"Ekspert"},
+  {q:"Co oznacza 'stawanie-sie-niedostrzegalnym'?",o:["Niewidzialnosc","Ostateczny cel serii stawan-sie: rozpuszczenie w plaszczyznie konsystencji","Smierc","Zapomnienie"],c:1,cat:"Ekspert"},
+  {q:"Jaki jest kantowski wymiar schizoanalizy?",o:["Imperatyw kategoryczny","Krytyka transcendentalna pragnienia: badanie warunkow możliwośći","Estetyka transcendentalna","Antynomie rozumu"],c:1,cat:"Ekspert"},
+  {q:"Co to jest 'nauka mniejsza' (science mineure)?",o:["Nauka niewazna","Nomadyczna nauka ambulatoryjna, podazajaca za materia zamiast narzucac formy","Nauka dla mniejszosci","Pseudonauka"],c:1,cat:"Ekspert"},
+  {q:"Czym jest 'kolektywny asemblaz wypowiadania'?",o:["Grupa dyskusyjna","Strona wyrazeniowa asemblazu: społeczna produkcja mowy i znakow","Parlament","Chor"],c:1,cat:"Ekspert"},
+  {q:"Co laczy linie ujscia z linia smierci?",o:["Nic","Linia ujscia MOZE zamienic sie w linie smierci bez ostrożnośći","Zawsze sa toznsame","Sa przeciwstawne"],c:1,cat:"Ekspert"},
+  {q:"Jaki model ontologiczny stosuje TP?",o:["Dialektyczny","Immanentny (Spinoza): samoorganizujaca sie produkcja","Transcendentalny","Fenomenologiczny"],c:1,cat:"Ekspert"},
+  {q:"Co oznacza formula 'i...i...i...' (et...et...et...)?",o:["Dodawanie","Logika syntezy laczacej: laczenie heterogenicznych elementow","Powtorzenie","Wyliczenie"],c:1,cat:"Ekspert"},
+  {q:"Czym jest 'plan immanencji'?",o:["Mapa geograficzna","Plaszczyzna, na ktorej byt organizuje sie bez zewnetrznego principium","Plan architektoniczny","Schemat naukowy"],c:1,cat:"Ekspert"},
+  {q:"Co to jest 'segmentarność sztywna'?",o:["Elastycznosc","Molowa organizacja w binarne opozycje i koncentryczne kregi","Twardosc materialu","Typ kosci"],c:1,cat:"Ekspert"},
+  {q:"Jak D&G definiuja 'terytorium'?",o:["Jako obszar geograficzny","Jako akt ekspresji, gdy komponenty staja sie ekspresyjne","Jako własność","Jako granice panstwa"],c:1,cat:"Ekspert"},
+  {q:"Czym jest 'pusta przegrodka' w strukturalizmie wg Deleuze'a?",o:["Brak elementu","Paradoksalny element nadliczbowy w jednej serii i brakujacy w drugiej","Puste miejsce","Nic"],c:1,cat:"Ekspert"}
+];
+
+// ========== MATCHING DATA ==========
+const matchModes = [
+  {title:"Pojecie \u2194 Definicja",left:"Pojecie",right:"Definicja",pairs:[
+    ["Klacze","Acentryczny system połączeń, 6 zasad"],
+    ["CbO","Powierzchnia zapisu intensywnośći, sprzeciw wobec organizmu"],
+    ["Deterytorializacja","Opuszczanie terytorium, wylamywanie sie z kodow"],
+    ["Edyp","Intymna formacja kolonialna kapitalizmu"],
+    ["Asemblaz","Dwuglowy byt: maszynowy (ciala) + kolektywny (wypowiadanie)"],
+    ["Maszyna pragnąca","System ciec i przepływow produkujacy rzeczywistość"],
+    ["Linia ujscia","Deterytorializacja absolutna, moze zamienic sie w linie smierci"],
+    ["Stawanie-sie","Inwolucja twórcza, blok, nie imitacja"]
+  ]},
+  {title:"Pojecie \u2194 Mysliciel",left:"Pojecie",right:"Mysliciel",pairs:[
+    ["CbO","Antonin Artaud"],
+    ["Plateau","Gregory Bateson"],
+    ["Maszyna pragnąca","Felix Guattari"],
+    ["Genealogia moralnosci","Friedrich Nietzsche"],
+    ["Ontologia immanentna","Baruch Spinoza"],
+    ["Podwojna artykulacja","Louis Hjelmslev"],
+    ["Obiekty częściowe","Melanie Klein"],
+    ["Masa i wladza","Elias Canetti"]
+  ]},
+  {title:"Psychoanaliza \u2194 Schizoanaliza",left:"Psychoanaliza",right:"Schizoanaliza",pairs:[
+    ["Teatr","Fabryka"],
+    ["Co to znaczy?","Jak to dziala?"],
+    ["Edyp i kastracja","Maszyny pragnące i CbO"],
+    ["Neurotyzacja","Schizofrenizacja"],
+    ["Interpretacja","Eksperymentacja"],
+    ["Globalna osoba","Podmiot nomadyczny"],
+    ["Brak","Produkcja"],
+    ["Sublimacja","Libido bezposrednio społeczne"]
+  ]},
+  {title:"Pojecie \u2194 Cytat",left:"Pojecie",right:"Cytat z tekstu",pairs:[
+    ["Pragnienie","Istnieje tylko pragnienie i to, co społeczne"],
+    ["Nieświadomość","Jest sierota, anarchistka i ateistka"],
+    ["Edyp","Intymna formacja kolonialna kapitalizmu"],
+    ["Schizoanaliza","Jak to dziala? zamiast Co to znaczy?"],
+    ["Stawanie-sie","Wszelkie stawanie-sie jest mniejszosciowe"],
+    ["Ostrożność","Nasladowac strata, bardzo drobnym pilnikiem"],
+    ["Fabryka","Psychoanaliza transformuje fabryke w teatr"],
+    ["CbO","Skonczyc z Sadem Bozym"]
+  ]}
+];
+
+// ========== THREE MACHINES DATA ==========
+const machinesData = {
+  categories:["Socius","Operacja","System","Inskrypcja","Dlug","Filiacja","Alians","Przedstawienie","Analogia kliniczna","Stosunek do Edypa"],
+  machines:["Terytorialna","Despotyczna","Kapitalistyczna"],
+  items:{
+    "Socius":["Ziemia","Cialo Despoty","Kapital-Pieniadz"],
+    "Operacja":["Kodowanie","Nadkodowanie","Dekodowanie + aksjomatyka"],
+    "System":["Okrucienstwo","Terror","Cynizm"],
+    "Inskrypcja":["Znaki na ciele","Pismo linearne","Aksjomatyka ilosci"],
+    "Dlug":["Skonczony, mobilny","Nieskontczony (wieczna wina)","Nieskontczony (kredyt)"],
+    "Filiacja":["Administracyjna","Bezposrednia (boska)","Kapital filiacyjny (M-M')"],
+    "Alians":["Polityczno-ekonomiczny","Nowy alians z despotem","Alians bankowy"],
+    "Przedstawienie":["Triadyczne (glos-grafizm-oko)","Imperialne (znaczący)","Kapitalistyczne (symulakra)"],
+    "Analogia kliniczna":["Perwersja","Paranoja","Neuroza / schizofrenia"],
+    "Stosunek do Edypa":["Granica przesunieta (neg-Edyp)","Kazirodztwo krolewskie","Intymna formacja kolonialna"]
+  }
+};
+// ========== NAVIGATION ==========
+function showModule(id) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.querySelector(`.nav-btn[data-module="${id}"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+  if (id === 'constellation' && !graphInitialized) initGraph();
+  if (id === 'axis' && !axisInitialized) initAxis();
+  if (id === 'matching') initMatchingModes();
+  window.scrollTo(0, 0);
+}
+
+// ========== CONSTELLATION (D3 Force Graph) ==========
+let graphInitialized = false;
+let simulation, gNodes, gLinks, allNodes, allLinks, currentFilter = 'all';
+
+function getColor(src) {
+  if (src === 'AE') return '#e74c3c';
+  if (src === 'TP') return '#3498db';
+  return '#9b59b6';
+}
+
+function initGraph() {
+  graphInitialized = true;
+  const svg = d3.select('#graph-svg');
+  const container = document.getElementById('graph-svg');
+  const W = container.clientWidth;
+  const H = container.clientHeight || 600;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  allNodes = concepts.map(c => ({...c, x: W/2 + (Math.random()-0.5)*300, y: H/2 + (Math.random()-0.5)*250}));
+  allLinks = edges.map(([s,t]) => ({source: s, target: t}));
+
+  const g = svg.append('g');
+  svg.call(d3.zoom().scaleExtent([0.3, 5]).on('zoom', (e) => g.attr('transform', e.transform)));
+
+  gLinks = g.append('g').selectAll('line').data(allLinks).enter().append('line')
+    .attr('stroke', '#2a2a4a').attr('stroke-width', 1.5).attr('stroke-opacity', 0.5);
+
+  gNodes = g.append('g').selectAll('g').data(allNodes).enter().append('g')
+    .attr('cursor', 'pointer')
+    .call(d3.drag().on('start', dragStart).on('drag', dragging).on('end', dragEnd))
+    .on('click', (e, d) => openPanel(d));
+
+  gNodes.append('circle')
+    .attr('r', 16)
+    .attr('fill', d => getColor(d.src))
+    .attr('stroke', '#1a1a2e').attr('stroke-width', 2.5)
+    .attr('opacity', 0.92);
+
+  gNodes.append('text')
+    .text(d => d.name.length > 20 ? d.name.slice(0,18)+'..' : d.name)
+    .attr('x', 20).attr('y', 5)
+    .attr('fill', '#d4d4e8').attr('font-size', '12px').attr('font-weight', '500');
+
+  simulation = d3.forceSimulation(allNodes)
+    .force('link', d3.forceLink(allLinks).id(d => d.id).distance(80).strength(0.6))
+    .force('charge', d3.forceManyBody().strength(-150))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collision', d3.forceCollide().radius(30))
+    .force('x', d3.forceX(W/2).strength(0.05))
+    .force('y', d3.forceY(H/2).strength(0.05))
+    .on('tick', ticked);
+
+  function ticked() {
+    gLinks.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    gNodes.attr('transform', d => `translate(${d.x},${d.y})`);
+  }
+  function dragStart(e,d){if(!e.active)simulation.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;}
+  function dragging(e,d){d.fx=e.x;d.fy=e.y;}
+  function dragEnd(e,d){if(!e.active)simulation.alphaTarget(0);d.fx=null;d.fy=null;}
+}
+
+function openPanel(d) {
+  const panel = document.getElementById('concept-panel');
+  const related = [];
+  edges.forEach(([s,t]) => {
+    if (s === d.id) related.push(concepts[t]);
+    if (t === d.id) related.push(concepts[s]);
+  });
+  const srcLabel = d.src === 'AE' ? 'Anty-Edyp' : d.src === 'TP' ? 'Tysiac Plateau' : 'Anty-Edyp + Tysiac Plateau';
+  const srcColor = getColor(d.src);
+  let html = `<h3>${d.name}</h3>
+    <span class="source-badge" style="background:${srcColor};color:#fff;">${srcLabel}</span>
+    <div class="short-def" style="margin:0.75rem 0;color:#d4d4e8;font-size:0.95rem;">${d.def}</div>`;
+  if (d.quote) html += `<div class="quote-block">${d.quote}</div>`;
+  if (d.detail) {
+    html += `<button class="read-more-toggle" onclick="toggleReadMore(this)">Czytaj wiecej</button>
+    <div class="read-more-content"><div class="definition">${d.detail}</div></div>`;
+  }
+  if (d.quote2) html += `<div class="read-more-content"><div class="quote-block" style="margin-top:1rem">${d.quote2}</div></div>`;
+  html += `<div class="related"><h4>Powiazane pojęćia:</h4>
+    ${related.length ? related.map(r => `<span class="related-tag" onclick="findAndOpen('${r.name}')">${r.name}</span>`).join('') : '<p style="color:#a0a0b8;font-size:.85rem;">Brak bezposrednich połączeń</p>'}
+  </div>`;
+  document.getElementById('panel-content').innerHTML = html;
+  panel.classList.add('open');
+}
+
+function toggleReadMore(btn) {
+  const content = btn.nextElementSibling;
+  content.classList.toggle('open');
+  btn.textContent = content.classList.contains('open') ? 'Zwin tekst' : 'Czytaj wiecej';
+  const next2 = content.nextElementSibling;
+  if (next2 && next2.classList.contains('read-more-content')) {
+    next2.classList.toggle('open');
+  }
+}
+
+function findAndOpen(name) {
+  const c = concepts.find(x => x.name === name);
+  if (c) openPanel(c);
+}
+
+function closePanel() {
+  document.getElementById('concept-panel').classList.remove('open');
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterConcepts();
+  if (simulation) {
+    const svg = document.getElementById('graph-svg');
+    const W = svg.clientWidth;
+    const H = svg.clientHeight || 600;
+    if (f !== 'all') {
+      simulation.force('charge', d3.forceManyBody().strength(-80));
+      simulation.force('link', d3.forceLink(allLinks).id(d => d.id).distance(50).strength(0.8));
+      simulation.force('center', d3.forceCenter(W/2, H/2).strength(0.15));
+      simulation.force('x', d3.forceX(W/2).strength(0.12));
+      simulation.force('y', d3.forceY(H/2).strength(0.12));
+    } else {
+      simulation.force('charge', d3.forceManyBody().strength(-150));
+      simulation.force('link', d3.forceLink(allLinks).id(d => d.id).distance(80).strength(0.6));
+      simulation.force('center', d3.forceCenter(W/2, H/2).strength(0.05));
+      simulation.force('x', d3.forceX(W/2).strength(0.05));
+      simulation.force('y', d3.forceY(H/2).strength(0.05));
+    }
+    simulation.alpha(0.8).restart();
+  }
+}
+
+function filterConcepts() {
+  const search = document.getElementById('concept-search').value.toLowerCase();
+  gNodes.attr('display', d => {
+    const matchFilter = currentFilter === 'all' || d.src === currentFilter;
+    const matchSearch = !search || d.name.toLowerCase().includes(search);
+    return (matchFilter && matchSearch) ? null : 'none';
+  });
+  const visibleIds = new Set();
+  gNodes.each(function(d) {
+    if (d3.select(this).attr('display') !== 'none') visibleIds.add(d.id);
+  });
+  gLinks.attr('display', d => (visibleIds.has(d.source.id) && visibleIds.has(d.target.id)) ? null : 'none');
+
+  // After filtering, restart simulation with adjusted forces for visible nodes
+  if (simulation) {
+    const svg = document.getElementById('graph-svg');
+    const W = svg.clientWidth;
+    const H = svg.clientHeight || 600;
+    if (currentFilter !== 'all') {
+      simulation.force('charge', d3.forceManyBody().strength(-100));
+      simulation.force('link', d3.forceLink(allLinks).id(d => d.id).distance(60).strength(0.7));
+      simulation.force('center', d3.forceCenter(W/2, H/2));
+    } else {
+      simulation.force('charge', d3.forceManyBody().strength(-150));
+      simulation.force('link', d3.forceLink(allLinks).id(d => d.id).distance(80).strength(0.6));
+    }
+    simulation.alpha(0.4).restart();
+  }
+}
+
+// ========== QUIZ ==========
+let quizCats = ['Podstawy','Zaawansowane','Ekspert'];
+let quizQuestions = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+
+function toggleCat(btn, cat) {
+  btn.classList.toggle('selected');
+  if (quizCats.includes(cat)) quizCats = quizCats.filter(c => c !== cat);
+  else quizCats.push(cat);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz() {
+  if (!quizCats.length) return alert('Wybierz co najmniej jedna kategorie!');
+  quizQuestions = shuffle(quizData.filter(q => quizCats.includes(q.cat))).map(q => {
+    const indices = [0,1,2,3];
+    shuffle(indices);
+    const newCorrect = indices.indexOf(q.c);
+    return {...q, o: indices.map(i => q.o[i]), c: newCorrect};
+  });
+  quizIdx = 0; quizScore = 0;
+  document.getElementById('quiz-setup').classList.add('hidden');
+  document.getElementById('quiz-area').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  if (quizIdx >= quizQuestions.length) { showQuizResults(); return; }
+  quizAnswered = false;
+  const q = quizQuestions[quizIdx];
+  const pct = ((quizIdx) / quizQuestions.length * 100).toFixed(0);
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-progress"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+    <div class="quiz-card">
+      <div class="question-counter">${q.cat} | Pytanie ${quizIdx+1}/${quizQuestions.length} | Wynik: ${quizScore}</div>
+      <div class="question-text">${q.q}</div>
+      ${q.o.map((o,i) => `<button class="quiz-option" onclick="answer(${i})">${o}</button>`).join('')}
+      <div id="feedback"></div>
+    </div>`;
+}
+
+function answer(idx) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = quizQuestions[quizIdx];
+  const btns = document.querySelectorAll('.quiz-option');
+  btns.forEach(b => b.style.pointerEvents = 'none');
+  if (idx === q.c) {
+    quizScore++;
+    btns[idx].classList.add('correct');
+    document.getElementById('feedback').innerHTML = `<div class="quiz-explanation" style="border-left-color:#4caf50;">Poprawna odpowiedz!</div><button class="btn-outline" style="margin-top:16px;" onclick="nextQ()">Dalej &rarr;</button>`;
+  } else {
+    btns[idx].classList.add('incorrect');
+    btns[q.c].classList.add('correct');
+    document.getElementById('feedback').innerHTML = `<div class="quiz-explanation" style="border-left-color:#f44336;">Niepoprawnie. Poprawna: <strong>${q.o[q.c]}</strong></div><button class="btn-outline" style="margin-top:16px;" onclick="nextQ()">Dalej &rarr;</button>`;
+  }
+}
+
+function nextQ() { quizIdx++; showQuestion(); }
+
+function showQuizResults() {
+  const pct = ((quizScore / quizQuestions.length) * 100).toFixed(0);
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-results">
+      <div class="score-big">${quizScore}/${quizQuestions.length}</div>
+      <div class="score-label">${pct}% poprawnych odpowiedzi</div>
+      <p style="color:#a0a0b8;margin-bottom:1.5rem">${pct >= 80 ? 'Swietna robota!' : pct >= 50 ? 'Dobry wynik! Warto poglebic wiedze.' : 'Sprobuj jeszcze raz.'}</p>
+      <button class="btn-gold" onclick="resetQuiz()">Zagraj ponownie</button>
+    </div>`;
+}
+function resetQuiz() {
+  document.getElementById('quiz-setup').classList.remove('hidden');
+  document.getElementById('quiz-area').classList.add('hidden');
+}
+
+// ========== MATCHING ==========
+let matchMode, matchPairs, matchScore, matchMatched, selectedLeft, selectedRight, matchTimer, matchSeconds;
+
+function initMatchingModes() {
+  document.getElementById('matching-modes').innerHTML = matchModes.map((m,i) =>
+    `<div class="match-mode-card" onclick="startMatching(${i})"><h3>${m.title}</h3><p>8 par do dopasowania na czas</p></div>`
+  ).join('');
+}
+
+function startMatching(mode) {
+  matchMode = matchModes[mode];
+  matchPairs = shuffle([...matchMode.pairs]);
+  matchScore = 0; matchMatched = 0; selectedLeft = null; selectedRight = null;
+  matchSeconds = 0;
+  document.getElementById('matching-setup').classList.add('hidden');
+  document.getElementById('matching-area').classList.remove('hidden');
+  if (matchTimer) clearInterval(matchTimer);
+  matchTimer = setInterval(() => { matchSeconds++; document.getElementById('m-timer').textContent = formatTime(matchSeconds); }, 1000);
+  renderMatch();
+}
+
+function formatTime(s) { return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; }
+
+function renderMatch() {
+  const leftItems = shuffle(matchPairs.map((p,i) => ({text:p[0],idx:i})));
+  const rightItems = shuffle(matchPairs.map((p,i) => ({text:p[1],idx:i})));
+  document.getElementById('matching-area').innerHTML = `
+    <div class="matching-header">
+      <div class="timer" id="m-timer">0:00</div>
+      <div style="font-size:1rem;color:#ceea36;font-weight:700;">${matchMode.title}</div>
+      <div class="m-score">Dopasowane: <span id="m-matched">0</span>/8</div>
+    </div>
+    <div class="matching-columns">
+      <div><h4>${matchMode.left}</h4>${leftItems.map(i => `<div class="match-item" id="ml-${i.idx}" onclick="selectLeft(${i.idx})">${i.text}</div>`).join('')}</div>
+      <div><h4>${matchMode.right}</h4>${rightItems.map(i => `<div class="match-item" id="mr-${i.idx}" onclick="selectRight(${i.idx})">${i.text}</div>`).join('')}</div>
+    </div>`;
+}
+
+function selectLeft(idx) {
+  const el = document.getElementById('ml-'+idx);
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('.matching-columns > div:first-child .match-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedLeft = idx;
+  if (selectedRight !== null) checkMatch();
+}
+function selectRight(idx) {
+  const el = document.getElementById('mr-'+idx);
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('.matching-columns > div:last-child .match-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedRight = idx;
+  if (selectedLeft !== null) checkMatch();
+}
+function checkMatch() {
+  const l = document.getElementById('ml-'+selectedLeft);
+  const r = document.getElementById('mr-'+selectedRight);
+  if (selectedLeft === selectedRight) {
+    l.classList.remove('selected'); l.classList.add('matched');
+    r.classList.remove('selected'); r.classList.add('matched');
+    matchScore++; matchMatched++;
+    document.getElementById('m-matched').textContent = matchMatched;
+    if (matchMatched === 8) finishMatching();
+  } else {
+    l.classList.add('wrong-match'); r.classList.add('wrong-match');
+    setTimeout(() => { l.classList.remove('selected','wrong-match'); r.classList.remove('selected','wrong-match'); }, 500);
+  }
+  selectedLeft = null; selectedRight = null;
+}
+function finishMatching() {
+  clearInterval(matchTimer);
+  document.getElementById('matching-area').innerHTML += `
+    <div class="match-results"><h3 style="color:#ceea36;">Gratulacje!</h3>
+    <p style="color:#a0a0b8;">Czas: ${formatTime(matchSeconds)}</p>
+    <button class="btn-gold" style="margin-top:1rem" onclick="resetMatching()">Zagraj ponownie</button></div>`;
+}
+function resetMatching() {
+  clearInterval(matchTimer);
+  document.getElementById('matching-setup').classList.remove('hidden');
+  document.getElementById('matching-area').classList.add('hidden');
+}
+
+// ========== ARGUMENTATIVE AXIS ==========
+let axisInitialized = false;
+
+function initAxis() {
+  axisInitialized = true;
+  const container = document.getElementById('axis-nodes') || document.getElementById('axis-container');
+  let html = '<div class="axis-line"></div>';
+  let currentBook = '';
+  axisData.forEach((st, i) => {
+    if (st.book !== currentBook) {
+      currentBook = st.book;
+      const bookColor = st.book === 'AE' ? '#e74c3c' : '#3498db';
+      const bookLabel = st.book === 'AE' ? 'ANTY-EDYP' : 'TYSIAC PLATEAU';
+      html += `<div class="axis-book-divider" style="border-color:${bookColor};">
+        <span style="background:${bookColor};color:#fff;padding:6px 20px;border-radius:20px;font-weight:700;font-size:.85rem;letter-spacing:2px;">${bookLabel}</span>
+      </div>`;
+    }
+    html += `<div class="axis-node" onclick="toggleStation(this)" id="station-${i}">
+      <div class="node-dot" style="background:${st.book==='AE'?'#e74c3c':'#3498db'}"></div>
+      <div class="node-content">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="color:${st.book==='AE'?'#e74c3c':'#3498db'};font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;">${st.label}</span>
+        </div>
+        <h3>${st.title}</h3>
+        <p>${st.summary}</p>
+        ${st.epigraph ? `<div class="station-quote">"${st.epigraph}"</div>` : ''}
+        <div class="node-detail">
+          <div class="node-detail-text">${st.detail}</div>
+          <div class="node-detail-concepts">
+            ${st.concepts.map(c => `<span class="concept-tag" onclick="event.stopPropagation();goToConcept('${c}')">${c}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function toggleStation(el) {
+  el.classList.toggle('expanded');
+}
+
+function goToConcept(name) {
+  showModule('constellation');
+  setTimeout(() => {
+    const c = concepts.find(x => x.name === name);
+    if (c) openPanel(c);
+  }, 300);
+}
+
+// ========== THREE MACHINES ==========
+let machCatIdx = 0, machTotalScore = 0, machTotalAnswered = 0, machSelectedItem = null;
+
+function startMachines() {
+  machCatIdx = 0; machTotalScore = 0; machTotalAnswered = 0;
+  document.getElementById('machines-setup').classList.add('hidden');
+  document.getElementById('machines-area').classList.remove('hidden');
+  showMachineCategory();
+}
+
+function showMachineCategory() {
+  if (machCatIdx >= machinesData.categories.length) { showMachineResults(); return; }
+  machSelectedItem = null;
+  const cat = machinesData.categories[machCatIdx];
+  const items = shuffle([...machinesData.items[cat]]);
+  document.getElementById('machines-area').innerHTML = `
+    <div class="machines-header">
+      <div class="m-progress">Kategoria <span>${machCatIdx+1}/${machinesData.categories.length}</span></div>
+      <div style="color:#ceea36;font-weight:700;">${cat}</div>
+      <div class="m-progress">Wynik: <span>${machTotalScore}/${machTotalAnswered}</span></div>
+    </div>
+    <div class="current-category">
+      <h4>Przypisz atrybuty do wlasciwej maszyny:</h4>
+      <div class="drag-items" id="drag-items">
+        ${items.map((item, i) => `<div class="drag-item" id="di-${i}" data-text="${item}" onclick="selectDragItem(${i})">${item}</div>`).join('')}
+      </div>
+    </div>
+    <div class="machines-columns">
+      ${machinesData.machines.map((m,mi) => `
+        <div class="machine-col" id="mcol-${mi}" onclick="dropInColumn(${mi})">
+          <h3>${m}</h3>
+          <div class="col-sub">${mi===0?'Pierwotna':mi===1?'Imperialna':'Nowoczesna'}</div>
+          <div id="mcol-items-${mi}"></div>
+        </div>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:1rem;">
+      <button class="btn-outline" id="next-cat-btn" onclick="nextMachineCategory()" style="display:none;">Nastepna kategoria &rarr;</button>
+    </div>`;
+}
+
+function selectDragItem(idx) {
+  const el = document.getElementById('di-'+idx);
+  if (el.classList.contains('placed')) return;
+  document.querySelectorAll('.drag-item').forEach(e => e.style.boxShadow = 'none');
+  el.style.boxShadow = '0 0 12px #ceea36';
+  machSelectedItem = {idx, text: el.dataset.text};
+}
+
+function dropInColumn(colIdx) {
+  if (!machSelectedItem) return;
+  const cat = machinesData.categories[machCatIdx];
+  const correctIdx = machinesData.items[cat].indexOf(machSelectedItem.text);
+  const el = document.getElementById('di-'+machSelectedItem.idx);
+  el.classList.add('placed'); el.style.boxShadow = 'none';
+  const colItems = document.getElementById('mcol-items-'+colIdx);
+  const isCorrect = correctIdx === colIdx;
+  if (isCorrect) machTotalScore++;
+  machTotalAnswered++;
+  const div = document.createElement('div');
+  div.className = `dropped-item ${isCorrect ? 'correct-drop' : 'wrong-drop'}`;
+  div.textContent = machSelectedItem.text + (isCorrect ? ' \u2713' : ' \u2717');
+  colItems.appendChild(div);
+  machSelectedItem = null;
+  if (!document.querySelectorAll('.drag-item:not(.placed)').length) {
+    document.getElementById('next-cat-btn').style.display = 'inline-block';
+  }
+}
+
+function nextMachineCategory() { machCatIdx++; showMachineCategory(); }
+
+function showMachineResults() {
+  const pct = ((machTotalScore / machTotalAnswered) * 100).toFixed(0);
+  document.getElementById('machines-area').innerHTML = `
+    <div class="machines-results">
+      <div style="font-size:3rem;color:#ceea36;font-weight:700;">${machTotalScore}/${machTotalAnswered}</div>
+      <div style="font-size:1.1rem;color:#a0a0b8;margin-bottom:1rem;">${pct}% poprawnych</div>
+      <button class="btn-gold" onclick="resetMachines()">Zagraj ponownie</button>
+    </div>`;
+}
+function resetMachines() {
+  document.getElementById('machines-setup').classList.remove('hidden');
+  document.getElementById('machines-area').classList.add('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Nav buttons
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => showModule(btn.dataset.module));
+  });
+  // Welcome cards
+  document.querySelectorAll('[data-goto]').forEach(card => {
+    card.addEventListener('click', () => showModule(card.dataset.goto));
+  });
+  // Filter buttons — use setFilter which also restarts simulation forces
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      const mapped = f === 'antyedyp' ? 'AE' : f === 'plateau' ? 'TP' : f === 'oba' ? 'AE+TP' : 'all';
+      setFilter(mapped, btn);
+    });
+  });
+  // Search
+  const searchInput = document.getElementById('concept-search');
+  if (searchInput) searchInput.addEventListener('input', filterConcepts);
+  // Panel close
+  const closeBtn = document.getElementById('panel-close-btn');
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+  // Quiz start
+  const quizStartBtn = document.getElementById('quiz-start-btn');
+  if (quizStartBtn) quizStartBtn.addEventListener('click', startQuiz);
+  // Quiz categories
+  document.querySelectorAll('#quiz-categories button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('selected');
+      const cat = btn.textContent.trim();
+      if (quizCats.includes(cat)) quizCats = quizCats.filter(c => c !== cat);
+      else quizCats.push(cat);
+    });
+  });
+  // Machines start
+  const machStartBtn = document.getElementById('machines-start-btn');
+  if (machStartBtn) machStartBtn.addEventListener('click', startMachines);
+});
+</script>
+</body>
+</html>
