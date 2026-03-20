@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Show — O firmie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#06080d;
+  --bg2:#0c1018;
+  --bg3:#111827;
+  --surface:#161d2e;
+  --border:rgba(255,255,255,0.06);
+  --text:#e5e7eb;
+  --text-dim:#6b7280;
+  --text-muted:#374151;
+  --accent:#63b3ff;
+  --accent2:#a78bfa;
+  --accent3:#34d399;
+  --white:#f9fafb;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Inter',-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{color:inherit;text-decoration:none}
+
+/* ── canvas ── */
+canvas#particles{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ── nav ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:60px;
+  background:rgba(6,8,13,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav__brand{display:flex;align-items:center;gap:10px}
+.nav__logo{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.85rem;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--white);
+}
+.nav__logo span{color:var(--accent)}
+.nav__dot{
+  width:6px;height:6px;background:var(--accent);border-radius:50%;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 4px var(--accent)}50%{opacity:.4;box-shadow:0 0 8px var(--accent)}}
+
+.nav__back{
+  font-size:0.78rem;font-weight:500;color:var(--text-dim);
+  letter-spacing:0.04em;transition:color .2s;
+}
+.nav__back:hover{color:var(--accent)}
+
+/* ── hero ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 40px 80px;
+}
+
+.hero__label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem;font-weight:600;
+  letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:32px;
+}
+
+.hero h1{
+  font-size:clamp(4rem,10vw,8rem);
+  font-weight:900;
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  color:var(--white);
+  margin-bottom:8px;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));
+  background-size:200% 200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:gradShift 8s ease infinite;
+}
+@keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+.hero__tagline{
+  font-size:clamp(1rem,2vw,1.4rem);
+  color:var(--text-dim);
+  max-width:600px;
+  margin:24px auto 48px;
+  line-height:1.6;
+  font-weight:300;
+}
+
+.hero__scroll{
+  position:absolute;bottom:40px;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--text-muted);font-size:0.65rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  animation:bob 2s ease-in-out infinite;
+}
+.hero__scroll-line{width:1px;height:40px;background:linear-gradient(transparent,var(--text-muted))}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ── sections ── */
+.section{
+  position:relative;z-index:1;
+  max-width:960px;
+  margin:0 auto;
+  padding:100px 40px;
+}
+
+.section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:48px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+
+/* ── mission ── */
+.mission{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:start;
+}
+.mission__text h2{
+  font-size:2.4rem;font-weight:800;
+  line-height:1.15;letter-spacing:-0.03em;
+  color:var(--white);margin-bottom:20px;
+}
+.mission__text h2 .highlight{color:var(--accent)}
+.mission__text p{
+  color:var(--text-dim);font-size:1rem;line-height:1.8;
+  margin-bottom:16px;
+}
+.mission__values{
+  display:flex;flex-direction:column;gap:24px;
+  padding-top:8px;
+}
+.value{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:28px;
+  transition:all .3s;
+}
+.value:hover{
+  border-color:rgba(99,179,255,.2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+.value__icon{
+  width:40px;height:40px;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:14px;
+}
+.value h3{
+  font-size:1rem;font-weight:700;
+  color:var(--white);margin-bottom:6px;
+}
+.value p{
+  color:var(--text-dim);font-size:0.88rem;line-height:1.6;
+}
+
+/* ── what we do ── */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.service{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:36px 28px;
+  transition:all .3s;
+  position:relative;
+  overflow:hidden;
+}
+.service::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.service:hover{
+  border-color:rgba(99,179,255,.15);
+  transform:translateY(-3px);
+}
+.service:hover::before{opacity:1}
+.service__icon{
+  font-size:2rem;margin-bottom:20px;
+  filter:grayscale(0.3);
+}
+.service h3{
+  font-size:1.05rem;font-weight:700;
+  color:var(--white);margin-bottom:8px;
+}
+.service p{
+  color:var(--text-dim);font-size:0.88rem;line-height:1.6;
+}
+
+/* ── approach ── */
+.approach{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:56px 48px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:center;
+}
+.approach h2{
+  font-size:2rem;font-weight:800;
+  line-height:1.2;letter-spacing:-0.02em;
+  color:var(--white);margin-bottom:16px;
+}
+.approach h2 .highlight{color:var(--accent2)}
+.approach p{
+  color:var(--text-dim);font-size:0.95rem;line-height:1.8;
+  margin-bottom:12px;
+}
+.approach__steps{
+  display:flex;flex-direction:column;gap:20px;
+}
+.step{
+  display:flex;gap:16px;align-items:flex-start;
+}
+.step__num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem;font-weight:700;
+  color:var(--accent);
+  min-width:32px;height:32px;
+  border:1px solid rgba(99,179,255,.2);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+}
+.step__text h4{
+  font-size:0.9rem;font-weight:600;
+  color:var(--white);margin-bottom:4px;
+}
+.step__text p{
+  color:var(--text-dim);font-size:0.85rem;line-height:1.5;
+  margin:0;
+}
+
+/* ── tech stack ── */
+.tech-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:16px;
+}
+.tech{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:24px;
+  text-align:center;
+  transition:all .3s;
+}
+.tech:hover{border-color:rgba(99,179,255,.15)}
+.tech__name{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.8rem;font-weight:600;
+  color:var(--white);margin-bottom:4px;
+}
+.tech__desc{
+  font-size:0.75rem;color:var(--text-dim);
+}
+
+/* ── contact CTA ── */
+.cta-section{
+  text-align:center;
+  padding:120px 40px;
+  position:relative;z-index:1;
+}
+.cta-section h2{
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:900;line-height:1.1;
+  letter-spacing:-0.03em;
+  color:var(--white);margin-bottom:16px;
+}
+.cta-section p{
+  color:var(--text-dim);font-size:1.05rem;
+  max-width:500px;margin:0 auto 36px;
+}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#000;font-weight:700;
+  padding:14px 36px;border-radius:10px;
+  font-size:0.95rem;
+  border:none;cursor:pointer;
+  transition:all .3s;
+  text-decoration:none;
+}
+.cta-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(99,179,255,.25);
+}
+
+/* ── footer ── */
+.footer{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:40px;
+  border-top:1px solid var(--border);
+}
+.footer p{
+  font-size:0.75rem;color:var(--text-muted);
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.04em;
+}
+
+/* ── responsive ── */
+@media(max-width:900px){
+  .mission{grid-template-columns:1fr;gap:40px}
+  .services-grid{grid-template-columns:1fr}
+  .approach{grid-template-columns:1fr;padding:36px 28px}
+}
+
+@media(max-width:600px){
+  .nav{padding:0 20px}
+  .hero{padding:100px 24px 80px}
+  .hero h1{font-size:clamp(3rem,12vw,5rem)}
+  .section{padding:60px 20px}
+  .approach{padding:28px 20px}
+  .cta-section{padding:80px 24px}
+  .tech-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- nav -->
+<nav class="nav">
+  <a href="index.html" class="nav__brand">
+    <div class="nav__logo">Future<span>Show</span></div>
+    <div class="nav__dot"></div>
+  </a>
+  <a href="index.html" class="nav__back">← Strona główna</a>
+</nav>
+
+<!-- hero -->
+<section class="hero">
+  <div class="hero__label">O firmie</div>
+  <h1><span class="grad">Future</span>Show</h1>
+  <p class="hero__tagline">Tworzymy interaktywne doświadczenia na styku technologii AI, edukacji i narracji. Każdy projekt zaczyna się od ludzkiej idei — AI pomaga ją zrealizować.</p>
+  <div class="hero__scroll">
+    <span>Więcej</span>
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<!-- mission -->
+<section class="section">
+  <div class="section-label">Misja</div>
+  <div class="mission">
+    <div class="mission__text">
+      <h2>Pokazujemy <span class="highlight">przyszłość</span> interakcji z wiedzą</h2>
+      <p>FutureShow powstało z przekonania, że AI fundamentalnie zmienia sposób, w jaki ludzie mogą wchodzić w interakcję z informacją. Nie zastępujemy ludzkiej kreatywności — wzmacniamy ją.</p>
+      <p>Każdy nasz projekt to eksperyment: co się stanie, gdy weźmiesz złożoną dziedzinę wiedzy (filozofię, socjologię, dziennikarstwo śledcze) i zamienisz ją w coś, z czym ludzie chcą się angażować?</p>
+    </div>
+    <div class="mission__values">
+      <div class="value">
+        <div class="value__icon" style="background:rgba(99,179,255,.1);color:var(--accent)">💡</div>
+        <h3>100% ludzka idea</h3>
+        <p>AI jest narzędziem, nie autorem. Wizja, koncepcja i kształt każdego projektu powstaje w ludzkiej głowie. AI wykonuje architekturę i kod.</p>
+      </div>
+      <div class="value">
+        <div class="value__icon" style="background:rgba(167,139,250,.1);color:var(--accent2)">🔬</div>
+        <h3>Głębokość, nie powierzchowność</h3>
+        <p>Nie upraszczamy — pokazujemy złożoność w przystępny sposób. 30 000 słów filozoficznego tekstu może stać się grą, w którą chcesz grać.</p>
+      </div>
+      <div class="value">
+        <div class="value__icon" style="background:rgba(52,211,153,.1);color:var(--accent3)">⚡</div>
+        <h3>Zero zależności</h3>
+        <p>Każdy projekt to samodzielny plik HTML. Bez frameworków, bez serwera, bez buildów. Otwierasz w przeglądarce i działa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- what we do -->
+<section class="section">
+  <div class="section-label">Co robimy</div>
+  <div class="services-grid">
+    <div class="service">
+      <div class="service__icon">🎮</div>
+      <h3>Gry edukacyjne</h3>
+      <p>Interaktywne aplikacje zamieniające akademickie teksty w wciągające doświadczenia — quizy, konstelacje pojęć, mechaniki drag &amp; drop.</p>
+    </div>
+    <div class="service">
+      <div class="service__icon">📊</div>
+      <h3>Dziennikarstwo danych</h3>
+      <p>Wizualizacje i interaktywne raporty, które pozwalają eksplorować złożone zbiory danych w sposób intuicyjny.</p>
+    </div>
+    <div class="service">
+      <div class="service__icon">🎬</div>
+      <h3>Generatywne filmy AI</h3>
+      <p>Twórcze wykorzystanie narzędzi generatywnego wideo — od koncepcji do postprodukcji z AI.</p>
+    </div>
+    <div class="service">
+      <div class="service__icon">🔍</div>
+      <h3>Narzędzia śledcze</h3>
+      <p>Aplikacje do analizy danych publicznych — jawność, transparentność, dostęp do informacji.</p>
+    </div>
+    <div class="service">
+      <div class="service__icon">📖</div>
+      <h3>Publikacje online</h3>
+      <p>Raporty akademickie i kompendja wiedzy w przystępnej, czytelnej formie webowej z nawigacją i wyszukiwaniem.</p>
+    </div>
+    <div class="service">
+      <div class="service__icon">🤖</div>
+      <h3>Prototypy AI</h3>
+      <p>Eksperymentalne projekty testujące możliwości najnowszych modeli AI — od analizy tekstu po tworzenie treści multimedialnych.</p>
+    </div>
+  </div>
+</section>
+
+<!-- approach -->
+<section class="section">
+  <div class="section-label">Jak pracujemy</div>
+  <div class="approach">
+    <div>
+      <h2>Człowiek + <span class="highlight">AI</span> = nowa jakość</h2>
+      <p>Nasz model pracy łączy ludzką kreatywność z możliwościami najnowszych modeli AI. To nie jest "AI robi wszystko" — to partnerstwo, w którym każda strona wnosi to, w czym jest najlepsza.</p>
+      <p>Używamy głównie Claude (Anthropic) — jednego z najbardziej zaawansowanych asystentów AI na świecie.</p>
+    </div>
+    <div class="approach__steps">
+      <div class="step">
+        <div class="step__num">01</div>
+        <div class="step__text">
+          <h4>Ludzka wizja</h4>
+          <p>Koncepcja, cel, odbiorca — to zawsze zaczyna się od człowieka.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <div class="step__text">
+          <h4>Analiza z AI</h4>
+          <p>AI przetwarza źródła, ekstrahuje dane, buduje struktury pojęciowe.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <div class="step__text">
+          <h4>Projektowanie</h4>
+          <p>Wspólne iteracje nad architekturą, designem i mechanikami interakcji.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">04</div>
+        <div class="step__text">
+          <h4>Implementacja</h4>
+          <p>AI generuje kod, człowiek testuje, koryguje, decyduje o kierunku.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">05</div>
+        <div class="step__text">
+          <h4>Deploy</h4>
+          <p>Gotowy projekt ląduje na GitHub Pages — dostępny dla wszystkich, bez barier.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- tech stack -->
+<section class="section">
+  <div class="section-label">Narzędzia</div>
+  <div class="tech-grid">
+    <div class="tech">
+      <div class="tech__name">Claude Code</div>
+      <div class="tech__desc">Asystent AI do programowania</div>
+    </div>
+    <div class="tech">
+      <div class="tech__name">Claude API</div>
+      <div class="tech__desc">Przetwarzanie tekstu i analiza</div>
+    </div>
+    <div class="tech">
+      <div class="tech__name">NotebookLM</div>
+      <div class="tech__desc">Ekstrakcja wiedzy ze źródeł</div>
+    </div>
+    <div class="tech">
+      <div class="tech__name">D3.js</div>
+      <div class="tech__desc">Wizualizacje i grafy interaktywne</div>
+    </div>
+    <div class="tech">
+      <div class="tech__name">GitHub Pages</div>
+      <div class="tech__desc">Hosting i deploy</div>
+    </div>
+    <div class="tech">
+      <div class="tech__name">Vanilla JS</div>
+      <div class="tech__desc">Zero frameworków, pełna kontrola</div>
+    </div>
+    <div class="tech">
+      <div class="tech__name">Sora / Runway</div>
+      <div class="tech__desc">Generatywne wideo AI</div>
+    </div>
+    <div class="tech">
+      <div class="tech__name">Pandoc</div>
+      <div class="tech__desc">Konwersja dokumentów</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Masz pomysł na projekt?</h2>
+  <p>Szukamy ciekawych wyzwań na styku edukacji, danych i technologii AI.</p>
+  <a href="mailto:futureshow@proton.me" class="cta-btn">
+    Napisz do nas
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</section>
+
+<!-- footer -->
+<footer class="footer">
+  <p>&copy; 2024–2026 FutureShow · AI-Powered Interactive Experiences</p>
+</footer>
+
+<script>
+// ── particles ──
+(function(){
+  const c=document.getElementById('particles'),x=c.getContext('2d');
+  let w,h,pts=[];
+  function resize(){w=c.width=window.innerWidth;h=c.height=window.innerHeight;}
+  window.addEventListener('resize',resize);resize();
+  for(let i=0;i<60;i++) pts.push({
+    x:Math.random()*w,y:Math.random()*h,
+    vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,
+    r:Math.random()*1.5+.5
+  });
+  function draw(){
+    x.clearRect(0,0,w,h);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=w;if(p.x>w)p.x=0;
+      if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+      x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);
+      x.fillStyle='rgba(99,179,255,0.15)';x.fill();
+    });
+    // lines
+    for(let i=0;i<pts.length;i++)
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,
+              d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          x.beginPath();x.moveTo(pts[i].x,pts[i].y);x.lineTo(pts[j].x,pts[j].y);
+          x.strokeStyle=`rgba(99,179,255,${.06*(1-d/120)})`;
+          x.lineWidth=.5;x.stroke();
+        }
+      }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
