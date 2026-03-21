@@ -961,35 +961,41 @@ p.subtitle{color:var(--text-sec);font-size:1.1rem;margin-top:8px;max-width:640px
   .nav-toggle{
     display:flex!important;
     align-items:center;justify-content:center;
-    background:transparent;
-    border:1px solid var(--border);
-    color:var(--text);
-    width:38px;height:38px;
+    background:rgba(206,234,54,.08);
+    border:1px solid var(--accent);
+    color:var(--accent);
+    width:40px;height:40px;
     border-radius:8px;
-    font-size:1.3rem;
+    font-size:1.4rem;
     cursor:pointer;
     flex-shrink:0;
   }
-  .nav-toggle:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-toggle:hover{background:rgba(206,234,54,.15)}
   .nav-buttons{
     display:none;
     width:100%;
     flex-direction:column;
-    gap:2px;
-    padding-bottom:10px;
+    gap:0;
+    padding:8px 0 12px;
     border-top:1px solid var(--border);
     margin-top:4px;
+    background:rgba(10,10,10,.98);
   }
   .nav-buttons.open{display:flex}
   nav button.nav-btn{
-    padding:12px 16px;
-    font-size:.9rem;
+    padding:14px 18px;
+    font-size:1rem;
     text-align:left;
     width:100%;
-    border-radius:8px;
+    border-radius:0;
+    color:var(--text);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    letter-spacing:.02em;
   }
+  nav button.nav-btn:last-child{border-bottom:none}
   nav button.nav-btn:hover,nav button.nav-btn.active{
-    background:rgba(206,234,54,.08);
+    background:rgba(206,234,54,.12);
+    color:var(--accent);
   }
 
   /* ── general ── */
@@ -1007,6 +1013,8 @@ p.subtitle{color:var(--text-sec);font-size:1.1rem;margin-top:8px;max-width:640px
   .welcome-hero h1{font-size:1.5rem}
   .welcome-cards{margin-top:32px}
   .rhizome-section{height:100svh}
+  .rhizome-section canvas{touch-action:pan-y}
+  .rhizome-hint{font-size:10px;bottom:16px}
   .grid-5{grid-template-columns:1fr 1fr;gap:12px}
   .grid-3{grid-template-columns:1fr;gap:14px}
   .grid-2{grid-template-columns:1fr;gap:14px}
@@ -1017,15 +1025,19 @@ p.subtitle{color:var(--text-sec);font-size:1.1rem;margin-top:8px;max-width:640px
   .constellation-wrapper{flex-direction:column;min-height:auto}
   .graph-container{min-height:350px;border-radius:8px}
   .constellation-controls{flex-direction:column;align-items:stretch;gap:8px}
+  .constellation-controls .btn-outline.filter-btn{font-size:.85rem;padding:10px 12px}
   .search-input{width:100%;font-size:1rem;padding:12px 14px}
   .filter-bar{gap:6px}
   .filter-bar .btn-outline{padding:8px 12px;font-size:.8rem;flex:1;min-width:0;text-align:center}
   #concept-panel{
+    position:fixed;
+    top:52px;left:0;right:0;bottom:0;
     width:100%;
-    top:0;
     padding:24px 18px 36px;
     border-left:none;
-    border-top:1px solid var(--border);
+    border-top:2px solid var(--accent);
+    z-index:950;
+    background:var(--bg);
   }
   #concept-panel h2{font-size:1.2rem}
 
@@ -2991,26 +3003,24 @@ function initRhizome() {
     if (!rSelectedNode) rHideTip();
   });
 
-  // Touch
+  // Touch — allow scroll-through, only preventDefault when dragging a node
   rc.addEventListener('touchstart', e => {
-    e.preventDefault();
     const touch = e.touches[0], sr = section.getBoundingClientRect();
     rMouseX = touch.clientX; rMouseY = touch.clientY;
     const lx = touch.clientX - sr.left, ly = touch.clientY - sr.top;
     if (!rGrowthComplete) { rSpeedMul = Math.min(rSpeedMul+0.5, 4); setTimeout(()=>{rSpeedMul=Math.max(rSpeedMul-0.5,1);}, 3000); return; }
     const node = rGetNode(lx, ly);
-    if (node) { rDraggedNode = node; rSelectedNode = node; rShowTip(node); }
-    else { rSelectedNode = null; rHideTip(); }
+    if (node) { rDraggedNode = node; rSelectedNode = node; rShowTip(node); e.preventDefault(); }
+    else { rSelectedNode = null; rHideTip(); rDraggedNode = null; }
   }, { passive: false });
 
   rc.addEventListener('touchmove', e => {
+    if (!rDraggedNode) return; // allow page scroll
     e.preventDefault();
     const touch = e.touches[0], sr = section.getBoundingClientRect();
     rMouseX = touch.clientX; rMouseY = touch.clientY;
-    if (rDraggedNode) {
-      rDraggedNode.x = touch.clientX - sr.left; rDraggedNode.y = touch.clientY - sr.top;
-      rDraggedNode.vx = 0; rDraggedNode.vy = 0; rPosTip();
-    }
+    rDraggedNode.x = touch.clientX - sr.left; rDraggedNode.y = touch.clientY - sr.top;
+    rDraggedNode.vx = 0; rDraggedNode.vy = 0; rPosTip();
   }, { passive: false });
 
   rc.addEventListener('touchend', () => { rDraggedNode = null; });
