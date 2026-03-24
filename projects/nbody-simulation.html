@@ -11,10 +11,38 @@
 body { background: #000; overflow: hidden; font-family: 'Space Grotesk', sans-serif; color: #fff; }
 canvas { display: block; position: absolute; top: 0; left: 0; }
 
+/* ── Back button ── */
+#back-btn {
+  position: fixed; top: 16px; left: 16px; z-index: 40;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  padding: 7px 14px 7px 10px;
+  color: rgba(255,255,255,.5);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#back-btn:hover {
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.85);
+  border-color: rgba(255,255,255,.25);
+}
+#back-btn svg {
+  width: 14px; height: 14px;
+  stroke: currentColor; stroke-width: 2;
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+
 /* ── HUD top-left ── */
 #hud {
   position: fixed; top: 0; left: 0; z-index: 20;
-  padding: 20px 24px;
+  padding: 52px 24px 0;
   pointer-events: none;
 }
 #hud-title {
@@ -287,6 +315,12 @@ canvas { display: block; position: absolute; top: 0; left: 0; }
 
 <canvas id="trail"></canvas>
 <canvas id="main"></canvas>
+
+<!-- Back to home -->
+<a id="back-btn" href="../index.html">
+  <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  FutureShow
+</a>
 
 <!-- HUD -->
 <div id="hud">
