@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N-Body Gravitational Simulation — Barnes-Hut</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #000; overflow: hidden; font-family: 'Space Grotesk', sans-serif; color: #fff; }
+canvas { display: block; position: absolute; top: 0; left: 0; }
+
+/* ── HUD top-left ── */
+#hud {
+  position: fixed; top: 0; left: 0; z-index: 20;
+  padding: 20px 24px;
+  pointer-events: none;
+}
+#hud-title {
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(255,255,255,.35); margin-bottom: 12px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.hud-row {
+  display: flex; align-items: baseline; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; line-height: 2;
+  color: rgba(255,255,255,.4);
+}
+.hud-row .hud-val {
+  color: rgba(255,255,255,.75);
+  font-weight: 500;
+}
+
+/* ── Scenario panel ── */
+#scenario-panel {
+  position: fixed; right: 0; top: 0; bottom: 0;
+  width: 340px; z-index: 30;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 20%, rgba(0,0,0,.85) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 28px 24px 28px 40px;
+  display: flex; flex-direction: column;
+  transform: translateX(0);
+  transition: transform .4s cubic-bezier(.22,1,.36,1);
+  overflow-y: auto;
+}
+#scenario-panel.collapsed {
+  transform: translateX(calc(100% - 48px));
+}
+#panel-toggle {
+  position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 72px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  color: rgba(255,255,255,.5);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+#panel-toggle:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+#panel-header {
+  margin-bottom: 20px;
+}
+#panel-header h2 {
+  font-size: 15px; font-weight: 600;
+  letter-spacing: .5px;
+  color: rgba(255,255,255,.9);
+  margin-bottom: 4px;
+}
+#panel-header p {
+  font-size: 11px;
+  color: rgba(255,255,255,.35);
+  letter-spacing: .3px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.scenario-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.scenario-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--sc-color);
+  border-radius: 3px 0 0 3px;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.scenario-card:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+  transform: translateX(-3px);
+}
+.scenario-card:hover::before { opacity: 1; }
+.scenario-card.active {
+  background: rgba(255,255,255,.1);
+  border-color: var(--sc-color);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--sc-color) 15%, transparent);
+}
+.scenario-card.active::before { opacity: 1; }
+.sc-top {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 6px;
+}
+.sc-key {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.6);
+  flex-shrink: 0;
+}
+.scenario-card.active .sc-key {
+  background: var(--sc-color);
+  border-color: var(--sc-color);
+  color: #000;
+  font-weight: 700;
+}
+.sc-name {
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,.85);
+  letter-spacing: .2px;
+}
+.scenario-card.active .sc-name { color: #fff; }
+.sc-desc {
+  font-size: 11.5px; line-height: 1.55;
+  color: rgba(255,255,255,.4);
+  padding-left: 32px;
+}
+.scenario-card.active .sc-desc { color: rgba(255,255,255,.6); }
+.sc-meta {
+  display: flex; gap: 12px;
+  padding-left: 32px;
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: rgba(255,255,255,.25);
+}
+.sc-meta span { color: rgba(255,255,255,.4); }
+
+/* ── Controls bar bottom ── */
+#controls-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 20;
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px;
+  padding: 14px 24px;
+  background: linear-gradient(0deg, rgba(0,0,0,.6) 0%, transparent 100%);
+  pointer-events: none;
+}
+.ctrl-chip {
+  pointer-events: all;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: rgba(255,255,255,.5);
+  cursor: pointer;
+  transition: all .2s;
+  user-select: none;
+}
+.ctrl-chip:hover {
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.8);
+  border-color: rgba(255,255,255,.2);
+}
+.ctrl-chip.active-toggle {
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.25);
+  color: rgba(255,255,255,.8);
+}
+.ctrl-chip kbd {
+  font-family: inherit;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 9.5px;
+  color: rgba(255,255,255,.6);
+}
+.ctrl-sep {
+  width: 1px; height: 20px;
+  background: rgba(255,255,255,.1);
+  margin: 0 6px;
+}
+
+/* ── Active scenario name overlay ── */
+#scene-overlay {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 25;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+#scene-overlay.show { opacity: 1; }
+#scene-overlay h1 {
+  font-size: 42px; font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(255,255,255,.3);
+  margin-bottom: 8px;
+}
+#scene-overlay p {
+  font-size: 14px;
+  color: rgba(255,255,255,.5);
+  letter-spacing: 1px;
+  font-weight: 300;
+}
+
+/* ── Pause overlay ── */
+#pause-overlay {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 25;
+  font-size: 14px; letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s;
+}
+#pause-overlay.show { opacity: 1; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  #scenario-panel {
+    width: 100%; height: auto;
+    top: auto; bottom: 0; right: 0;
+    max-height: 45vh;
+    transform: translateY(calc(100% - 52px));
+    padding: 14px 16px;
+    border-radius: 16px 16px 0 0;
+    background: rgba(0,0,0,.92);
+    flex-direction: column;
+    transition: transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  #scenario-panel.expanded { transform: translateY(0); }
+  #scenario-panel.collapsed { transform: translateY(calc(100% - 52px)); }
+  #panel-toggle { display: none; }
+  #mobile-handle {
+    display: block;
+    width: 40px; height: 4px;
+    background: rgba(255,255,255,.2);
+    border-radius: 2px;
+    margin: 0 auto 12px;
+    cursor: pointer;
+  }
+  .scenario-card { padding: 10px 12px; margin-bottom: 6px; }
+  .sc-desc { display: none; }
+  .sc-meta { display: none; }
+  #controls-bar { display: none; }
+  #hud { padding: 12px 14px; }
+  .hud-row { font-size: 10px; }
+  #scene-overlay h1 { font-size: 24px; }
+  #scene-overlay p { font-size: 11px; }
+}
+@media (min-width: 769px) {
+  #mobile-handle { display: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="trail"></canvas>
+<canvas id="main"></canvas>
+
+<!-- HUD -->
+<div id="hud">
+  <div id="hud-title">N-Body Simulation</div>
+  <div class="hud-row">Particles <span class="hud-val" id="pCount">0</span></div>
+  <div class="hud-row">FPS <span class="hud-val" id="fps">0</span></div>
+  <div class="hud-row">Energy <span class="hud-val" id="energy">0</span></div>
+  <div class="hud-row">Time <span class="hud-val" id="simTime">0.0s</span></div>
+</div>
+
+<!-- Scene overlay -->
+<div id="scene-overlay">
+  <h1 id="sceneTitle"></h1>
+  <p id="sceneSubtitle"></p>
+</div>
+
+<!-- Pause -->
+<div id="pause-overlay">Paused</div>
+
+<!-- Scenario panel -->
+<div id="scenario-panel">
+  <div id="mobile-handle"></div>
+  <button id="panel-toggle">◀</button>
+  <div id="panel-header">
+    <h2>Scenarios</h2>
+    <p>Barnes-Hut O(n log n) algorithm</p>
+  </div>
+  <div id="scenario-list"></div>
+</div>
+
+<!-- Controls -->
+<div id="controls-bar">
+  <div class="ctrl-chip" onclick="togglePause()"><kbd>Space</kbd> Pause</div>
+  <div class="ctrl-chip" onclick="resetScene()"><kbd>R</kbd> Reset</div>
+  <div class="ctrl-sep"></div>
+  <div class="ctrl-chip" id="bloomChip" onclick="toggleBloom()"><kbd>B</kbd> Bloom</div>
+  <div class="ctrl-chip" id="trailChip" onclick="toggleTrails()"><kbd>T</kbd> Trails</div>
+  <div class="ctrl-sep"></div>
+  <div class="ctrl-chip" style="cursor:default;pointer-events:none"><kbd>Click</kbd> Add attractor</div>
+  <div class="ctrl-chip" style="cursor:default;pointer-events:none"><kbd>Scroll</kbd> Zoom</div>
+  <div class="ctrl-chip" style="cursor:default;pointer-events:none"><kbd>Drag</kbd> Pan</div>
+</div>
+
+<script>
+// ================================================================
+//  N-BODY GRAVITATIONAL PARTICLE SIMULATION
+//  Barnes-Hut O(n log n) | Offscreen bloom | Dual-canvas trails
+// ================================================================
+
+const mainCanvas = document.getElementById('main');
+const trailCanvas = document.getElementById('trail');
+const ctx = mainCanvas.getContext('2d');
+const tctx = trailCanvas.getContext('2d');
+
+let W, H;
+function resize() {
+  W = window.innerWidth; H = window.innerHeight;
+  mainCanvas.width = trailCanvas.width = W;
+  mainCanvas.height = trailCanvas.height = H;
+}
+window.addEventListener('resize', resize);
+resize();
+
+const MAX_P = 30000;
+let N = 20000;
+let G = 0.5, SOFT = 4, DAMP = 0.9997, DT = 0.02;
+let paused = false, bloomOn = true, trailsOn = true;
+let zoom = 1, panX = 0, panY = 0;
+let dragging = false, dragSX, dragSY, panSX, panSY;
+let simTime = 0, scenario = 0;
+
+let px = new Float32Array(MAX_P);
+let py = new Float32Array(MAX_P);
+let vx = new Float32Array(MAX_P);
+let vy = new Float32Array(MAX_P);
+let m  = new Float32Array(MAX_P);
+let hu = new Float32Array(MAX_P);
+let attractors = [];
+
+function grand() {
+  let u = 0, v = 0;
+  while (!u) u = Math.random();
+  while (!v) v = Math.random();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+function galaxy(cx, cy, rad, count, start, spin, col) {
+  for (let i = 0; i < count; i++) {
+    const idx = start + i;
+    const a = Math.random() * Math.PI * 2;
+    const r = Math.abs(grand()) * rad * 0.4 + Math.random() * rad * 0.1;
+    px[idx] = cx + Math.cos(a) * r;
+    py[idx] = cy + Math.sin(a) * r;
+    const spd = spin * Math.sqrt(G * count * 0.2 / (r + 8));
+    vx[idx] = -Math.sin(a) * spd + grand() * 1.5;
+    vy[idx] = Math.cos(a) * spd + grand() * 1.5;
+    m[idx] = 0.5 + Math.random() * 1.5;
+    hu[idx] = col + (r / rad) * 40 + grand() * 10;
+  }
+}
+
+const scenarioData = [
+  {
+    name: "Galaxy Collision",
+    key: "1",
+    color: "#e8a0ff",
+    desc: "Two spiral galaxies pulled toward each other by gravity, tidal tails forming as stars are flung outward during the merger.",
+    particles: "20,000",
+    gravity: "0.5",
+    init() {
+      N = 20000; G = 0.5; SOFT = 4; DAMP = 0.9998; attractors = [];
+      galaxy(-250, -80, 220, N/2|0, 0, 1, 200);
+      galaxy(250, 80, 180, N/2|0, N/2|0, -1, 30);
+      for (let i = 0; i < N/2; i++) { vx[i] += 12; vy[i] += 4; }
+      for (let i = N/2|0; i < N; i++) { vx[i] -= 12; vy[i] -= 4; }
+    }
+  },
+  {
+    name: "Dark Matter Halo",
+    key: "2",
+    color: "#80d0ff",
+    desc: "Visible matter orbiting an invisible central mass — a model of how dark matter halos shape galaxy rotation curves.",
+    particles: "25,000",
+    gravity: "1.0",
+    init() {
+      N = 25000; G = 1.0; SOFT = 5; DAMP = 0.9999;
+      attractors = [{ x:0, y:0, mass:40000, r:200 }];
+      for (let i = 0; i < N; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const r = 25 + Math.abs(grand()) * 300;
+        px[i] = Math.cos(a) * r; py[i] = Math.sin(a) * r;
+        const spd = Math.sqrt(G * 40000 / (r + 25)) * (0.85 + Math.random() * 0.3);
+        vx[i] = -Math.sin(a) * spd + grand() * 2;
+        vy[i] = Math.cos(a) * spd + grand() * 2;
+        m[i] = 0.3 + Math.random();
+        hu[i] = 180 + r * 0.15 + grand() * 12;
+      }
+    }
+  },
+  {
+    name: "Supernova",
+    key: "3",
+    color: "#ffb060",
+    desc: "An exploding star hurling matter outward in a shockwave — fast inner ejecta glow hot white, outer shells cool to red.",
+    particles: "25,000",
+    gravity: "0.2",
+    init() {
+      N = 25000; G = 0.2; SOFT = 3; DAMP = 0.9994; attractors = [];
+      for (let i = 0; i < N; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const spd = 15 + Math.pow(Math.random(), 0.5) * 350;
+        px[i] = Math.cos(a) * Math.random() * 3;
+        py[i] = Math.sin(a) * Math.random() * 3;
+        vx[i] = Math.cos(a) * spd + grand() * 15;
+        vy[i] = Math.sin(a) * spd + grand() * 15;
+        m[i] = 0.5 + Math.random() * 2;
+        const t = spd / 365;
+        hu[i] = t < 0.3 ? 50 - t * 80 : t < 0.6 ? 20 + t * 180 : 200 + t * 60;
+      }
+    }
+  },
+  {
+    name: "Protoplanetary Disk",
+    key: "4",
+    color: "#90ff90",
+    desc: "Concentric rings of gas and dust orbiting a young star — gaps form where proto-planets sweep their orbits clean.",
+    particles: "22,000",
+    gravity: "0.8",
+    init() {
+      N = 22000; G = 0.8; SOFT = 3; DAMP = 0.99988;
+      attractors = [{ x:0, y:0, mass:25000, r:15 }];
+      for (let i = 0; i < N; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const band = Math.floor(Math.random() * 5);
+        const r = 50 + band * 60 + grand() * 12;
+        px[i] = Math.cos(a) * r; py[i] = Math.sin(a) * r;
+        const spd = Math.sqrt(G * 25000 / (r + 8));
+        vx[i] = -Math.sin(a) * spd + grand() * 1;
+        vy[i] = Math.cos(a) * spd + grand() * 1;
+        m[i] = 0.3 + Math.random() * (band === 2 ? 3 : 1);
+        hu[i] = 15 + band * 45 + grand() * 8;
+      }
+    }
+  },
+  {
+    name: "Cosmic Web",
+    key: "5",
+    color: "#a0a0ff",
+    desc: "Random matter condensing under gravity into filaments and voids — the large-scale structure of the universe emerging from chaos.",
+    particles: "28,000",
+    gravity: "0.12",
+    init() {
+      N = 28000; G = 0.12; SOFT = 8; DAMP = 0.9992; attractors = [];
+      for (let i = 0; i < N; i++) {
+        px[i] = (Math.random() - 0.5) * 1100;
+        py[i] = (Math.random() - 0.5) * 1100;
+        vx[i] = grand() * 3; vy[i] = grand() * 3;
+        m[i] = 0.2 + Math.pow(Math.random(), 3) * 6;
+        hu[i] = 200 + Math.random() * 60;
+      }
+    }
+  },
+  {
+    name: "Triple System",
+    key: "6",
+    color: "#ff8080",
+    desc: "Three star clusters in chaotic gravitational dance — the classic three-body problem writ large, with no stable solution.",
+    particles: "18,000",
+    gravity: "0.6",
+    init() {
+      N = 18000; G = 0.6; SOFT = 4; DAMP = 0.9997; attractors = [];
+      const cs = [
+        {x:-220,y:0,vx:0,vy:-18,c:0},
+        {x:110,y:190,vx:16,vy:9,c:120},
+        {x:110,y:-190,vx:-16,vy:9,c:240}
+      ];
+      const pg = Math.floor(N / 3);
+      cs.forEach((c, gi) => {
+        for (let i = 0; i < pg; i++) {
+          const idx = gi * pg + i;
+          const a = Math.random() * Math.PI * 2;
+          const r = Math.abs(grand()) * 80;
+          px[idx] = c.x + Math.cos(a) * r;
+          py[idx] = c.y + Math.sin(a) * r;
+          const spd = Math.sqrt(G * pg * 0.12 / (r + 4));
+          vx[idx] = c.vx - Math.sin(a) * spd + grand() * 1.5;
+          vy[idx] = c.vy + Math.cos(a) * spd + grand() * 1.5;
+          m[idx] = 0.5 + Math.random();
+          hu[idx] = c.c + grand() * 12 + r * 0.15;
+        }
+      });
+      N = pg * 3;
+    }
+  }
+];
+
+// --- Build scenario cards ---
+const listEl = document.getElementById('scenario-list');
+scenarioData.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'scenario-card' + (i === 0 ? ' active' : '');
+  card.style.setProperty('--sc-color', s.color);
+  card.innerHTML = `
+    <div class="sc-top">
+      <div class="sc-key">${s.key}</div>
+      <div class="sc-name">${s.name}</div>
+    </div>
+    <div class="sc-desc">${s.desc}</div>
+    <div class="sc-meta">
+      <div>N <span>${s.particles}</span></div>
+      <div>G <span>${s.gravity}</span></div>
+    </div>
+  `;
+  card.addEventListener('click', () => {
+    loadScenario(i);
+    zoom = 1; panX = panY = 0;
+  });
+  listEl.appendChild(card);
+});
+
+function loadScenario(i) {
+  scenario = i;
+  simTime = 0;
+  scenarioData[i].init();
+  tctx.clearRect(0, 0, W, H);
+
+  // Update cards
+  document.querySelectorAll('.scenario-card').forEach((c, ci) => {
+    c.classList.toggle('active', ci === i);
+  });
+
+  // Show overlay
+  const ol = document.getElementById('scene-overlay');
+  document.getElementById('sceneTitle').textContent = scenarioData[i].name;
+  document.getElementById('sceneSubtitle').textContent = scenarioData[i].desc.split('—')[0].trim();
+  ol.classList.add('show');
+  setTimeout(() => ol.classList.remove('show'), 2200);
+}
+
+// --- Panel toggle ---
+const panel = document.getElementById('scenario-panel');
+document.getElementById('panel-toggle').addEventListener('click', () => {
+  panel.classList.toggle('collapsed');
+  const btn = document.getElementById('panel-toggle');
+  btn.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
+});
+// Mobile handle
+document.getElementById('mobile-handle').addEventListener('click', () => {
+  panel.classList.toggle('expanded');
+  panel.classList.toggle('collapsed');
+});
+
+// --- Controls ---
+function togglePause() { paused = !paused; document.getElementById('pause-overlay').classList.toggle('show', paused); }
+function resetScene() { loadScenario(scenario); zoom = 1; panX = panY = 0; }
+function toggleBloom() { bloomOn = !bloomOn; document.getElementById('bloomChip').classList.toggle('active-toggle', bloomOn); }
+function toggleTrails() { trailsOn = !trailsOn; document.getElementById('trailChip').classList.toggle('active-toggle', trailsOn); }
+
+// Init chip states
+document.getElementById('bloomChip').classList.add('active-toggle');
+document.getElementById('trailChip').classList.add('active-toggle');
+
+// --- Barnes-Hut Quadtree ---
+const POOL_SIZE = MAX_P * 4;
+const nd_x = new Float64Array(POOL_SIZE);
+const nd_y = new Float64Array(POOL_SIZE);
+const nd_sz = new Float64Array(POOL_SIZE);
+const nd_tm = new Float64Array(POOL_SIZE);
+const nd_cx = new Float64Array(POOL_SIZE);
+const nd_cy = new Float64Array(POOL_SIZE);
+const nd_cnt = new Int32Array(POOL_SIZE);
+const nd_pidx = new Int32Array(POOL_SIZE);
+const nd_ch = new Int32Array(POOL_SIZE * 4);
+let nodeCount = 0;
+
+function newNode(x, y, sz) {
+  const id = nodeCount++;
+  nd_x[id] = x; nd_y[id] = y; nd_sz[id] = sz;
+  nd_tm[id] = 0; nd_cx[id] = 0; nd_cy[id] = 0;
+  nd_cnt[id] = 0; nd_pidx[id] = -1;
+  nd_ch[id*4] = nd_ch[id*4+1] = nd_ch[id*4+2] = nd_ch[id*4+3] = -1;
+  return id;
+}
+
+function subdivide(id) {
+  const hs = nd_sz[id] / 2;
+  const x = nd_x[id], y = nd_y[id];
+  nd_ch[id*4]   = newNode(x, y, hs);
+  nd_ch[id*4+1] = newNode(x+hs, y, hs);
+  nd_ch[id*4+2] = newNode(x, y+hs, hs);
+  nd_ch[id*4+3] = newNode(x+hs, y+hs, hs);
+}
+
+function childIdx(id, ppx, ppy) {
+  const mx = nd_x[id] + nd_sz[id] / 2;
+  const my = nd_y[id] + nd_sz[id] / 2;
+  return (ppx < mx ? 0 : 1) + (ppy < my ? 0 : 2);
+}
+
+function insert(id, pi, ppx, ppy, pm) {
+  if (nd_sz[id] < 0.1) return;
+  if (nd_cnt[id] === 0) {
+    nd_pidx[id] = pi; nd_tm[id] = pm;
+    nd_cx[id] = ppx; nd_cy[id] = ppy;
+    nd_cnt[id] = 1; return;
+  }
+  if (nd_ch[id*4] === -1) {
+    subdivide(id);
+    if (nd_pidx[id] >= 0) {
+      const oi = nd_pidx[id]; nd_pidx[id] = -1;
+      const ci = childIdx(id, px[oi], py[oi]);
+      insert(nd_ch[id*4+ci], oi, px[oi], py[oi], m[oi]);
+    }
+  }
+  const ci = childIdx(id, ppx, ppy);
+  insert(nd_ch[id*4+ci], pi, ppx, ppy, pm);
+  const tm = nd_tm[id] + pm;
+  nd_cx[id] = (nd_cx[id] * nd_tm[id] + ppx * pm) / tm;
+  nd_cy[id] = (nd_cy[id] * nd_tm[id] + ppy * pm) / tm;
+  nd_tm[id] = tm; nd_cnt[id]++;
+}
+
+let fx = 0, fy = 0;
+function calcForce(id, ppx, ppy, theta) {
+  if (nd_cnt[id] === 0) return;
+  const dx = nd_cx[id] - ppx;
+  const dy = nd_cy[id] - ppy;
+  const dSq = dx * dx + dy * dy + SOFT * SOFT;
+  const d = Math.sqrt(dSq);
+  if (nd_cnt[id] === 1 && d < 0.01) return;
+  if (nd_cnt[id] === 1 || nd_sz[id] / d < theta) {
+    const f = G * nd_tm[id] / (dSq * d);
+    fx += f * dx; fy += f * dy; return;
+  }
+  for (let c = 0; c < 4; c++) {
+    const ch = nd_ch[id*4+c];
+    if (ch >= 0 && nd_cnt[ch] > 0) calcForce(ch, ppx, ppy, theta);
+  }
+}
+
+function physics() {
+  let minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9;
+  for (let i = 0; i < N; i++) {
+    if (px[i] < minX) minX = px[i]; if (py[i] < minY) minY = py[i];
+    if (px[i] > maxX) maxX = px[i]; if (py[i] > maxY) maxY = py[i];
+  }
+  const sz = Math.max(maxX - minX, maxY - minY) + 2;
+  nodeCount = 0;
+  const root = newNode(minX - 1, minY - 1, sz);
+  for (let i = 0; i < N; i++) insert(root, i, px[i], py[i], m[i]);
+
+  const theta = 0.75;
+  for (let i = 0; i < N; i++) {
+    fx = 0; fy = 0;
+    calcForce(root, px[i], py[i], theta);
+    for (let a = 0; a < attractors.length; a++) {
+      const at = attractors[a];
+      const dx = at.x - px[i], dy = at.y - py[i];
+      const dSq = dx*dx + dy*dy + at.r*at.r;
+      const d = Math.sqrt(dSq);
+      const f = G * at.mass / (dSq * d);
+      fx += f * dx; fy += f * dy;
+    }
+    vx[i] = (vx[i] + fx * DT) * DAMP;
+    vy[i] = (vy[i] + fy * DT) * DAMP;
+    px[i] += vx[i] * DT;
+    py[i] += vy[i] * DT;
+  }
+}
+
+function hsl(h, s, l) {
+  h = ((h % 360) + 360) % 360;
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1-l);
+  const f = n => { const k = (n + h/30) % 12; return l - a * Math.max(-1, Math.min(k-3, 9-k, 1)); };
+  return [f(0)*255|0, f(8)*255|0, f(4)*255|0];
+}
+
+let bloomCanvas, bctx;
+function initBloom() {
+  bloomCanvas = document.createElement('canvas');
+  bloomCanvas.width = Math.floor(W / 4);
+  bloomCanvas.height = Math.floor(H / 4);
+  bctx = bloomCanvas.getContext('2d');
+}
+initBloom();
+window.addEventListener('resize', initBloom);
+
+let imgData, imgBuf, img32;
+function initImg() {
+  imgData = ctx.createImageData(W, H);
+  imgBuf = imgData.data;
+  img32 = new Uint32Array(imgBuf.buffer);
+}
+initImg();
+window.addEventListener('resize', initImg);
+
+let frameCount = 0, lastFT = performance.now(), curFps = 0;
+
+function render() {
+  if (!paused) { physics(); simTime += DT; }
+
+  const cx = W / 2, cy = H / 2;
+
+  if (trailsOn) {
+    tctx.fillStyle = 'rgba(0,0,4,0.06)';
+    tctx.fillRect(0, 0, W, H);
+  } else {
+    tctx.clearRect(0, 0, W, H);
+  }
+
+  img32.fill(0);
+
+  for (let i = 0; i < N; i++) {
+    const sx = (px[i] + panX) * zoom + cx;
+    const sy = -(py[i] + panY) * zoom + cy;
+    const ix = sx | 0, iy = sy | 0;
+    if (ix < 0 || ix >= W || iy < 0 || iy >= H) continue;
+
+    const speed = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+    const sn = Math.min(speed / 150, 1);
+    const lightness = 40 + sn * 35;
+    const sat = 65 + sn * 35;
+    const [r, g, b] = hsl(hu[i], sat, lightness);
+    const alpha = Math.min(255, (80 + sn * 175 + m[i] * 20) | 0);
+
+    const pidx = iy * W + ix;
+    const existing = img32[pidx];
+    const er = existing & 0xFF;
+    const eg = (existing >> 8) & 0xFF;
+    const eb = (existing >> 16) & 0xFF;
+    const ea = (existing >> 24) & 0xFF;
+    img32[pidx] = (Math.min(255, er + r) |
+                   (Math.min(255, eg + g) << 8) |
+                   (Math.min(255, eb + b) << 16) |
+                   (Math.min(255, ea + alpha) << 24)) >>> 0;
+
+    if (m[i] > 1.0 || sn > 0.5) {
+      const a2 = alpha >> 1;
+      const r2 = r >> 1, g2 = g >> 1, b2 = b >> 1;
+      const offsets = [-1, 1, -W, W];
+      for (let o = 0; o < 4; o++) {
+        const ni = pidx + offsets[o];
+        if (ni >= 0 && ni < W * H) {
+          const e2 = img32[ni];
+          img32[ni] = (Math.min(255, (e2 & 0xFF) + r2) |
+                       (Math.min(255, ((e2 >> 8) & 0xFF) + g2) << 8) |
+                       (Math.min(255, ((e2 >> 16) & 0xFF) + b2) << 16) |
+                       (Math.min(255, ((e2 >> 24) & 0xFF) + a2) << 24)) >>> 0;
+        }
+      }
+    }
+  }
+
+  for (const at of attractors) {
+    const sx = (at.x + panX) * zoom + cx;
+    const sy = -(at.y + panY) * zoom + cy;
+    const ix = sx | 0, iy = sy | 0;
+    const rad = Math.max(3, (at.r * zoom * 0.1) | 0);
+    for (let dy = -rad; dy <= rad; dy++) {
+      for (let dx = -rad; dx <= rad; dx++) {
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d > rad) continue;
+        const px2 = ix + dx, py2 = iy + dy;
+        if (px2 < 0 || px2 >= W || py2 < 0 || py2 >= H) continue;
+        const ring = (d > rad * 0.7 && d < rad * 0.95) ? 1 : 0;
+        const glow = Math.exp(-d / rad * 3) * 0.4;
+        const alpha = Math.min(255, ((ring * 0.8 + glow) * 255) | 0);
+        const ni = py2 * W + px2;
+        const e2 = img32[ni];
+        img32[ni] = (Math.min(255, (e2 & 0xFF) + 100) |
+                     (Math.min(255, ((e2 >> 8) & 0xFF) + 150) << 8) |
+                     (Math.min(255, ((e2 >> 16) & 0xFF) + 255) << 16) |
+                     (Math.min(255, ((e2 >> 24) & 0xFF) + alpha) << 24)) >>> 0;
+      }
+    }
+  }
+
+  ctx.putImageData(imgData, 0, 0);
+
+  if (trailsOn) {
+    tctx.globalCompositeOperation = 'lighter';
+    tctx.globalAlpha = 0.4;
+    tctx.drawImage(mainCanvas, 0, 0);
+    tctx.globalAlpha = 1.0;
+    tctx.globalCompositeOperation = 'source-over';
+  }
+
+  if (bloomOn) {
+    bctx.clearRect(0, 0, bloomCanvas.width, bloomCanvas.height);
+    bctx.drawImage(mainCanvas, 0, 0, bloomCanvas.width, bloomCanvas.height);
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = 0.3;
+    ctx.filter = 'blur(8px)';
+    ctx.drawImage(bloomCanvas, 0, 0, W, H);
+    ctx.globalAlpha = 0.15;
+    ctx.filter = 'blur(20px)';
+    ctx.drawImage(bloomCanvas, 0, 0, W, H);
+    ctx.restore();
+  }
+
+  if (trailsOn) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.drawImage(trailCanvas, 0, 0);
+    ctx.restore();
+  }
+
+  const grad = ctx.createRadialGradient(cx, cy, H * 0.3, cx, cy, H * 0.9);
+  grad.addColorStop(0, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.6)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  frameCount++;
+  const now = performance.now();
+  if (now - lastFT > 500) {
+    curFps = Math.round(frameCount * 1000 / (now - lastFT));
+    frameCount = 0; lastFT = now;
+  }
+  document.getElementById('fps').textContent = curFps;
+  document.getElementById('pCount').textContent = N.toLocaleString();
+  document.getElementById('simTime').textContent = simTime.toFixed(1) + 's';
+
+  let ke = 0;
+  for (let i = 0; i < Math.min(N, 3000); i++) {
+    ke += 0.5 * m[i] * (vx[i]*vx[i] + vy[i]*vy[i]);
+  }
+  ke = (ke / Math.min(N, 3000)) * N;
+  document.getElementById('energy').textContent =
+    ke > 1e6 ? (ke/1e6).toFixed(1)+'M' : ke > 1e3 ? (ke/1e3).toFixed(1)+'K' : ke.toFixed(0);
+
+  requestAnimationFrame(render);
+}
+
+// --- Input ---
+window.addEventListener('keydown', e => {
+  if (e.key >= '1' && e.key <= '6') { loadScenario(+e.key - 1); zoom = 1; panX = panY = 0; }
+  else if (e.key === ' ') { togglePause(); e.preventDefault(); }
+  else if (e.key === 'r' || e.key === 'R') resetScene();
+  else if (e.key === 'b' || e.key === 'B') toggleBloom();
+  else if (e.key === 't' || e.key === 'T') toggleTrails();
+});
+
+mainCanvas.addEventListener('wheel', e => {
+  zoom *= e.deltaY > 0 ? 0.9 : 1.1;
+  zoom = Math.max(0.1, Math.min(10, zoom));
+  e.preventDefault();
+}, { passive: false });
+
+mainCanvas.addEventListener('mousedown', e => {
+  dragging = true;
+  dragSX = e.clientX; dragSY = e.clientY;
+  panSX = panX; panSY = panY;
+});
+mainCanvas.addEventListener('mousemove', e => {
+  if (dragging) {
+    panX = panSX + (e.clientX - dragSX) / zoom;
+    panY = panSY - (e.clientY - dragSY) / zoom;
+  }
+});
+mainCanvas.addEventListener('mouseup', e => {
+  if (dragging && Math.abs(e.clientX - dragSX) < 4 && Math.abs(e.clientY - dragSY) < 4) {
+    const wx = (e.clientX - W/2) / zoom - panX;
+    const wy = -(e.clientY - H/2) / zoom - panY;
+    const at = { x: wx, y: wy, mass: 12000, r: 40 };
+    attractors.push(at);
+    setTimeout(() => {
+      const fade = setInterval(() => {
+        at.mass *= 0.94;
+        if (at.mass < 80) { attractors.splice(attractors.indexOf(at), 1); clearInterval(fade); }
+      }, 80);
+    }, 6000);
+  }
+  dragging = false;
+});
+mainCanvas.addEventListener('contextmenu', e => e.preventDefault());
+
+// Touch support
+let touchStartX, touchStartY;
+mainCanvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    const t = e.touches[0];
+    dragging = true;
+    dragSX = touchStartX = t.clientX;
+    dragSY = touchStartY = t.clientY;
+    panSX = panX; panSY = panY;
+  }
+}, { passive: true });
+mainCanvas.addEventListener('touchmove', e => {
+  if (dragging && e.touches.length === 1) {
+    const t = e.touches[0];
+    panX = panSX + (t.clientX - dragSX) / zoom;
+    panY = panSY - (t.clientY - dragSY) / zoom;
+    e.preventDefault();
+  }
+}, { passive: false });
+mainCanvas.addEventListener('touchend', () => { dragging = false; });
+
+// --- GO ---
+loadScenario(0);
+render();
+</script>
+</body>
+</html>
