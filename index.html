@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Future Show — AI-Powered Interactive Experiences</title>
+  <!-- OG Meta -->
+  <meta property="og:title" content="FutureShow — Interactive Data Experiences">
+  <meta property="og:description" content="AI-powered interactive investigations, educational games, data visualizations and generative films. For museums, media, education and NGOs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://futureshow1.github.io/futureshow/">
+  <meta name="description" content="FutureShow creates AI-powered interactive investigations, educational games, data visualizations and generative films for museums, media, education and NGOs.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -649,6 +655,308 @@
     }
 
     /* ============================================
+       Services
+       ============================================ */
+    .services {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+    }
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .service-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-3px);
+    }
+    .service-card__icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+    }
+    .service-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .service-card p {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+    @media (max-width: 900px) {
+      .services__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .services { padding: 0 20px 80px; }
+      .services__grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================
+       For whom (audience)
+       ============================================ */
+    .audience {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+    }
+    .audience__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .audience-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .audience-card:hover {
+      border-color: var(--border-glow);
+    }
+    .audience-card__icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+    .audience-card h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .audience-card p {
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+    @media (max-width: 900px) {
+      .audience__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .audience { padding: 0 20px 80px; }
+      .audience__grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    }
+
+    /* ============================================
+       CTA
+       ============================================ */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+      text-align: center;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(99,179,255,0.08) 0%, rgba(167,139,250,0.08) 100%);
+      border: 1px solid rgba(99,179,255,0.15);
+      border-radius: 16px;
+      padding: 60px 40px;
+    }
+    .cta-box h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .cta-box p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .cta-btn:hover {
+      background: #8ac7ff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(99,179,255,0.25);
+    }
+    .cta-btn svg {
+      width: 16px; height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+    .cta-links {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+    }
+    .cta-links a {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cta-links a:hover { color: var(--accent); }
+    .cta-links svg {
+      width: 14px; height: 14px;
+      fill: currentColor;
+    }
+    @media (max-width: 600px) {
+      .cta-section { padding: 0 20px 80px; }
+      .cta-box { padding: 40px 20px; }
+      .cta-box h2 { font-size: 1.4rem; }
+    }
+
+    /* ============================================
+       About / Bio
+       ============================================ */
+    .bio {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+    }
+    .bio__layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .bio__sidebar {
+      position: sticky;
+      top: 80px;
+    }
+    .bio__name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .bio__role {
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+    .bio__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+    .bio__tag {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .bio__links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .bio__link {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bio__link:hover { color: var(--accent); }
+    .bio__link svg {
+      width: 14px; height: 14px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+    .bio__main h3 {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      margin-top: 32px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .bio__main h3:first-child { margin-top: 0; }
+    .bio__text {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text-dim);
+    }
+    .bio__highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .bio__highlight {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .bio__highlight-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .bio__highlight-desc {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    @media (max-width: 900px) {
+      .bio__layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .bio__sidebar { position: static; }
+      .bio__highlights { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .bio { padding: 0 20px 80px; }
+    }
+
+    /* ============================================
        Responsive
        ============================================ */
     @media (max-width: 900px) {
@@ -728,21 +1036,25 @@
     </div>
     <div class="nav__right">
       <ul class="nav__links">
+        <li><a href="#services">
+          <span data-lang="en">Services</span>
+          <span data-lang="pl">Usługi</span>
+        </a></li>
         <li><a href="#projects">
           <span data-lang="en">Projects</span>
           <span data-lang="pl">Projekty</span>
-        </a></li>
-        <li><a href="#process">
-          <span data-lang="en">Process</span>
-          <span data-lang="pl">Proces</span>
         </a></li>
         <li><a href="#films">
           <span data-lang="en">Films</span>
           <span data-lang="pl">Filmy</span>
         </a></li>
-        <li><a href="projects/jan-lubicz-website/index.html">
+        <li><a href="#about">
           <span data-lang="en">About</span>
           <span data-lang="pl">O mnie</span>
+        </a></li>
+        <li><a href="#contact">
+          <span data-lang="en">Contact</span>
+          <span data-lang="pl">Kontakt</span>
         </a></li>
       </ul>
       <button class="nav__lang" onclick="toggleLang()" id="langToggle">PL</button>
@@ -756,35 +1068,35 @@
   <section class="hero">
     <div class="hero__inner">
       <div data-lang="en">
-        <div class="hero__badge">AI-Powered Experiences &middot; 2025-2026</div>
-        <h1>Data stories<br>that <span class="gradient">hit&nbsp;different.</span></h1>
-        <p class="hero__sub">Interactive investigations, educational games, and data visualizations — built with AI as creative partner. Each project turns complex information into something you can explore, play, and understand.</p>
+        <div class="hero__badge">For museums, media, education &amp; NGOs &middot; 2025-2026</div>
+        <h1>Complex ideas,<br><span class="gradient">made&nbsp;interactive.</span></h1>
+        <p class="hero__sub">I turn complex data and ideas into interactive experiences — investigations, educational games, simulations, and AI films. Built with AI as creative partner, deployed as zero-dependency web apps.</p>
       </div>
       <div data-lang="pl">
-        <div class="hero__badge">Doświadczenia z AI &middot; 2025-2026</div>
-        <h1>Dane, które<br><span class="gradient">opowiadają.</span></h1>
-        <p class="hero__sub">Interaktywne śledztwa, gry edukacyjne i wizualizacje danych — stworzone z AI jako kreatywnym partnerem. Każdy projekt zamienia złożone informacje w coś, co możesz eksplorować, grać i zrozumieć.</p>
+        <div class="hero__badge">Dla muzeów, mediów, edukacji i NGO &middot; 2025-2026</div>
+        <h1>Złożone idee,<br><span class="gradient">interaktywnie.</span></h1>
+        <p class="hero__sub">Zamieniam złożone dane i idee w interaktywne doświadczenia — śledztwa, gry edukacyjne, symulacje i filmy AI. Tworzone z AI jako partnerem kreatywnym, wdrażane jako aplikacje bez zależności.</p>
       </div>
       <div class="hero__stats">
         <div class="hero__stat">
-          <div class="hero__stat-num">4 new</div>
+          <div class="hero__stat-num">23</div>
           <div class="hero__stat-label">
-            <span data-lang="en">Projects</span>
-            <span data-lang="pl">Projekty</span>
+            <span data-lang="en">Shipped projects</span>
+            <span data-lang="pl">Zrealizowanych projektów</span>
           </div>
         </div>
         <div class="hero__stat">
-          <div class="hero__stat-num">11.5M+</div>
+          <div class="hero__stat-num">10</div>
           <div class="hero__stat-label">
-            <span data-lang="en">Data points</span>
-            <span data-lang="pl">Punktów danych</span>
+            <span data-lang="en">AI films</span>
+            <span data-lang="pl">Filmów AI</span>
           </div>
         </div>
         <div class="hero__stat">
-          <div class="hero__stat-num">100%</div>
+          <div class="hero__stat-num">0</div>
           <div class="hero__stat-label">
-            <span data-lang="en">AI-Assisted</span>
-            <span data-lang="pl">Z pomocą AI</span>
+            <span data-lang="en">Dependencies</span>
+            <span data-lang="pl">Zależności</span>
           </div>
         </div>
       </div>
@@ -805,7 +1117,7 @@
 
     <div class="projects__grid">
 
-      <!-- 1. Cambridge Analytica (with Digital Life sub-link) -->
+      <!-- Cambridge Analytica -->
       <div class="case">
         <div class="case__visual">
           <div class="case__bg" style="background:linear-gradient(135deg, #1a0a2e, #0a0a0f);overflow:hidden;">
@@ -865,7 +1177,7 @@
         </div>
       </div>
 
-      <!-- 2. 40 Afer -->
+      <!-- 40 Afer -->
       <div class="case">
         <div class="case__visual">
           <div class="case__bg" style="background:linear-gradient(135deg, #0a0e17, #1a1028, #0a0e17);overflow:hidden;">
@@ -928,7 +1240,7 @@
         </div>
       </div>
 
-      <!-- 3. Panama Papers -->
+      <!-- Panama Papers -->
       <div class="case">
         <div class="case__visual">
           <div class="case__bg" style="background:linear-gradient(160deg, #0a0e17, #0d1a28);overflow:hidden;">
@@ -985,7 +1297,7 @@
         </div>
       </div>
 
-      <!-- 4. Habermas -->
+      <!-- Habermas -->
       <div class="case">
         <div class="case__visual">
           <div class="case__bg" style="background:linear-gradient(160deg, #0a0a12, #13131a, #1a1028);overflow:hidden;">
@@ -1040,7 +1352,6 @@
           </div>
         </div>
       </div>
-
 
       <!-- Schizoanaliza -->
       <div class="case">
@@ -1115,14 +1426,12 @@
         <div class="case__visual">
           <div style="width:100%;height:100%;background:radial-gradient(ellipse at 40% 45%, rgba(160,80,255,0.2) 0%, transparent 50%), radial-gradient(ellipse at 65% 55%, rgba(255,120,60,0.15) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(100,160,255,0.1) 0%, transparent 60%), #050510;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <svg viewBox="0 0 100 80" style="position:absolute;width:100%;height:100%;opacity:0.7;">
-              <!-- Stars/particles -->
               <circle cx="20" cy="25" r="1" fill="#e8a0ff" opacity="0.8"/><circle cx="35" cy="18" r="0.7" fill="#e8a0ff" opacity="0.5"/>
               <circle cx="50" cy="40" r="1.5" fill="#ffb060" opacity="0.7"/><circle cx="65" cy="30" r="0.8" fill="#80d0ff" opacity="0.6"/>
               <circle cx="30" cy="50" r="0.9" fill="#90ff90" opacity="0.5"/><circle cx="75" cy="55" r="1.2" fill="#a0a0ff" opacity="0.6"/>
               <circle cx="45" cy="60" r="0.7" fill="#ff8080" opacity="0.5"/><circle cx="58" cy="22" r="0.8" fill="#e8a0ff" opacity="0.4"/>
               <circle cx="22" cy="65" r="1" fill="#80d0ff" opacity="0.4"/><circle cx="80" cy="40" r="0.9" fill="#ffb060" opacity="0.5"/>
               <circle cx="40" cy="35" r="1.3" fill="#fff" opacity="0.3"/><circle cx="60" cy="50" r="0.6" fill="#90ff90" opacity="0.4"/>
-              <!-- Glow rings -->
               <circle cx="50" cy="40" r="12" fill="none" stroke="rgba(232,160,255,0.15)" stroke-width="0.3"/>
               <circle cx="50" cy="40" r="20" fill="none" stroke="rgba(128,208,255,0.1)" stroke-width="0.2"/>
               <circle cx="50" cy="40" r="28" fill="none" stroke="rgba(160,160,255,0.06)" stroke-width="0.2"/>
@@ -1140,11 +1449,11 @@
           </div>
           <div data-lang="en">
             <div class="case__title">N-Body Gravitational Simulation</div>
-            <div class="case__desc">Real-time Barnes-Hut gravitational simulation running up to 28,000 particles. Six cosmic scenarios: galaxy collisions, dark matter halos, supernovae, protoplanetary disks, cosmic web formation, and chaotic triple systems. Click to create attractors, zoom and pan through space.</div>
+            <div class="case__desc">Real-time Barnes-Hut gravitational simulation running up to 28,000 particles. Six cosmic scenarios: galaxy collisions, dark matter halos, supernovae, protoplanetary disks, cosmic web formation, and chaotic triple systems.</div>
           </div>
           <div data-lang="pl">
             <div class="case__title">Symulacja grawitacyjna N-Ciał</div>
-            <div class="case__desc">Symulacja grawitacyjna Barnes-Hut w czasie rzeczywistym z 28 000 cząsteczek. Sześć scenariuszy kosmicznych: zderzenia galaktyk, halo ciemnej materii, supernowe, dyski protoplanetarne, kosmiczna sieć i chaotyczny układ potrójny. Kliknij, by tworzyć atraktory, zoomuj i przesuwaj widok.</div>
+            <div class="case__desc">Symulacja grawitacyjna Barnes-Hut w czasie rzeczywistym z 28 000 cząsteczek. Sześć scenariuszy kosmicznych: zderzenia galaktyk, halo ciemnej materii, supernowe, dyski protoplanetarne, kosmiczna sieć i chaotyczny układ potrójny.</div>
           </div>
           <div class="case__metrics">
             <div class="case__metric">
@@ -1178,44 +1487,153 @@
     </div>
   </section>
 
-  <!-- Process -->
+  
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="section-label">
+      <span data-lang="en">What I Build</span>
+      <span data-lang="pl">Co tworzę</span>
+    </div>
+    <div class="services__grid">
+      <div class="service-card">
+        <div class="service-card__icon" style="background:rgba(99,179,255,0.1);color:var(--accent);">&#127891;</div>
+        <div data-lang="en">
+          <h3>Educational Games</h3>
+          <p>Turn academic content into explorable, testable, playable experiences. Concept maps, quizzes, matching games, argument axes.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>Gry edukacyjne</h3>
+          <p>Zamieniam treści akademickie w eksplorowane, testowalne, grywalne doświadczenia. Mapy pojęć, quizy, dopasowania, osie argumentacji.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon" style="background:rgba(167,139,250,0.1);color:var(--accent2);">&#128269;</div>
+        <div data-lang="en">
+          <h3>Data Investigations</h3>
+          <p>Interactive timelines, network maps, and visualizations that reveal hidden patterns in large datasets. OSINT-grade research turned visual.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>Śledztwa danych</h3>
+          <p>Interaktywne osie czasu, mapy sieci i wizualizacje ujawniające ukryte wzorce w dużych zbiorach danych. Badania klasy OSINT w formie wizualnej.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon" style="background:rgba(52,211,153,0.1);color:var(--accent3);">&#9881;</div>
+        <div data-lang="en">
+          <h3>Simulations & Visualizations</h3>
+          <p>Real-time physics, algorithmic art, and data-driven animations. Complex systems made tangible and explorable in the browser.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>Symulacje i wizualizacje</h3>
+          <p>Fizyka czasu rzeczywistego, sztuka algorytmiczna i animacje oparte na danych. Złożone systemy namacalne i eksplorowalne w przeglądarce.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card__icon" style="background:rgba(255,179,96,0.1);color:#ffb060;">&#127909;</div>
+        <div data-lang="en">
+          <h3>Generative AI Films</h3>
+          <p>Short films, music videos, and visual essays created with Sora, Runway, and other AI video tools. Concept to final cut.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>Filmy generatywne AI</h3>
+          <p>Krótkie filmy, teledyski i eseje wizualne tworzone z Sora, Runway i innymi narzędziami AI video. Od konceptu do finalnego montażu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Whom -->
+  <section class="audience" id="audience">
+    <div class="section-label">
+      <span data-lang="en">Built For</span>
+      <span data-lang="pl">Dla kogo</span>
+    </div>
+    <div class="audience__grid">
+      <div class="audience-card">
+        <div class="audience-card__icon">&#127963;</div>
+        <div data-lang="en">
+          <h3>Museums & Culture</h3>
+          <p>Interactive exhibits, digital companions to physical exhibitions, exploratory installations.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>Muzea i kultura</h3>
+          <p>Interaktywne eksponaty, cyfrowe uzupełnienia wystaw, instalacje eksploracyjne.</p>
+        </div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-card__icon">&#128240;</div>
+        <div data-lang="en">
+          <h3>Media & Journalism</h3>
+          <p>Data-driven investigations, interactive reports, visual storytelling for editorial teams.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>Media i dziennikarstwo</h3>
+          <p>Śledztwa oparte na danych, interaktywne raporty, wizualne narracje dla redakcji.</p>
+        </div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-card__icon">&#127979;</div>
+        <div data-lang="en">
+          <h3>Education</h3>
+          <p>Universities, e-learning platforms, publishers — turning curricula into explorable experiences.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>Edukacja</h3>
+          <p>Uczelnie, platformy e-learningowe, wydawnictwa — zamiana programów nauczania w eksplorowalne doświadczenia.</p>
+        </div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-card__icon">&#127760;</div>
+        <div data-lang="en">
+          <h3>NGOs & Think Tanks</h3>
+          <p>Impact visualizations, campaign tools, public data transparency projects.</p>
+        </div>
+        <div data-lang="pl">
+          <h3>NGO i think-tanki</h3>
+          <p>Wizualizacje wpływu, narzędzia kampanijne, projekty transparentności danych publicznych.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process (compact) -->
   <section class="about" id="process">
     <div class="section-label">
-      <span data-lang="en">Process</span>
-      <span data-lang="pl">Proces</span>
+      <span data-lang="en">How It Works</span>
+      <span data-lang="pl">Jak pracuję</span>
     </div>
     <div class="about__grid">
       <div class="about__card">
-        <div class="about__icon" style="background:rgba(99,179,255,0.1);color:var(--accent);">&#9881;</div>
+        <div class="about__icon" style="background:rgba(99,179,255,0.1);color:var(--accent);">1</div>
         <div data-lang="en">
-          <h3>AI-First Development</h3>
-          <p>Every project is built on a 100% human idea, developed in collaboration with new AI tools from Claude (Anthropic). AI handles architecture, code generation, and data processing — human brings the vision.</p>
+          <h3>Your idea, my execution</h3>
+          <p>You bring the subject, audience, and goals. I handle research, architecture, design and development — using Claude AI as my development partner.</p>
         </div>
         <div data-lang="pl">
-          <h3>Rozwój z AI</h3>
-          <p>Każdy projekt opiera się na 100% ludzkiej idei, rozwijanej we współpracy z nowymi narzędziami AI od Claude (Anthropic). AI odpowiada za architekturę, generowanie kodu i przetwarzanie danych — człowiek za wizję.</p>
+          <h3>Twój pomysł, moja realizacja</h3>
+          <p>Dostarczasz temat, grupę docelową i cele. Ja zajmuję się badaniem, architekturą, designem i programowaniem — z Claude AI jako partnerem deweloperskim.</p>
         </div>
       </div>
       <div class="about__card">
-        <div class="about__icon" style="background:rgba(167,139,250,0.1);color:var(--accent2);">&#9670;</div>
+        <div class="about__icon" style="background:rgba(167,139,250,0.1);color:var(--accent2);">2</div>
         <div data-lang="en">
-          <h3>Self-Contained Apps</h3>
-          <p>Pure HTML/CSS/JS — no frameworks, no build steps, no dependencies. Each project is a single deployable artifact that runs anywhere.</p>
+          <h3>Zero dependencies</h3>
+          <p>Pure HTML/CSS/JS. No frameworks, no servers, no maintenance costs. One file that runs forever on any hosting — including free GitHub Pages.</p>
         </div>
         <div data-lang="pl">
-          <h3>Samodzielne aplikacje</h3>
-          <p>Czysty HTML/CSS/JS — bez frameworków, bez budowania, bez zależności. Każdy projekt to pojedynczy artefakt, który działa wszędzie.</p>
+          <h3>Zero zależności</h3>
+          <p>Czysty HTML/CSS/JS. Bez frameworków, bez serwerów, bez kosztów utrzymania. Jeden plik, który działa wiecznie na dowolnym hostingu — w tym darmowym GitHub Pages.</p>
         </div>
       </div>
       <div class="about__card">
-        <div class="about__icon" style="background:rgba(52,211,153,0.1);color:var(--accent3);">&#43;</div>
+        <div class="about__icon" style="background:rgba(52,211,153,0.1);color:var(--accent3);">3</div>
         <div data-lang="en">
-          <h3>Growing Collection</h3>
-          <p>New projects are added regularly. Each one explores a different domain — data journalism, education, investigative tools, interactive storytelling.</p>
+          <h3>Fast delivery</h3>
+          <p>AI-augmented workflow means complex projects ship in days, not months. From brief to deployed product — radically faster than traditional development.</p>
         </div>
         <div data-lang="pl">
-          <h3>Rosnąca kolekcja</h3>
-          <p>Nowe projekty dodawane regularnie. Każdy eksploruje inną dziedzinę — dziennikarstwo danych, edukację, narzędzia śledcze, interaktywne opowiadanie historii.</p>
+          <h3>Szybka realizacja</h3>
+          <p>Workflow z AI oznacza, że złożone projekty dostarczam w dniach, nie miesiącach. Od briefu do wdrożonego produktu — radykalnie szybciej niż tradycyjny rozwój.</p>
         </div>
       </div>
     </div>
@@ -1228,109 +1646,284 @@
       <span data-lang="pl">Generatywne filmy AI</span>
     </div>
 
-    <!-- Featured reel -->
+    <!-- Featured: Gniew -->
     <div class="films__featured">
-      <iframe src="https://player.vimeo.com/video/1030326189?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <iframe src="https://player.vimeo.com/video/1155023846?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       <div class="films__featured-caption">
-        <div data-lang="en">Creative use of AI video generation and its evolution (2023-2024) — a showcase reel documenting the rapid progress of generative AI filmmaking tools, from early experiments to cinematic results.</div>
-        <div data-lang="pl">Kreatywne wykorzystanie generowania wideo przez AI i jego ewolucja (2023-2024) — reel pokazujący szybki postęp narzędzi AI do tworzenia filmów, od wczesnych eksperymentów po efekty kinowe.</div>
+        <div data-lang="en"><strong>Gniew (Iliada)</strong> &middot; 2025 &middot; Various AI tools — Homer's Iliad reimagined as AI-generated hip-hop. Both the music and visuals are fully synthesized.</div>
+        <div data-lang="pl"><strong>Gniew (Iliada)</strong> &middot; 2025 &middot; Various AI tools — Iliada Homera jako hip-hop generowany przez AI. Muzyka i wizualia w pełni syntetyczne.</div>
       </div>
     </div>
 
-    <!-- Individual films (newest first) -->
+    <!-- Films grid -->
     <div class="films__grid">
 
+      <!-- Row 1: Heret, World, Witness -->
       <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1155024443?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <iframe src="https://player.vimeo.com/video/1175558144?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="film-card__info">
-          <div class="film-card__date">2025</div>
-          <div class="film-card__title">Occult PRL</div>
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
+          <div class="film-card__title">Heret. The Story</div>
           <div class="film-card__tag">AI Short</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">A narrative of heresy and otherness, told through AI-generated dreamscapes.</span>
+            <span data-lang="pl">Narracja o herezji i inności, opowiedziana przez generowane przez AI krajobrazy senne.</span>
+          </div>
         </div>
       </div>
 
       <div class="film-card">
         <iframe src="https://player.vimeo.com/video/1175558401?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="film-card__info">
-          <div class="film-card__date">2025</div>
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
           <div class="film-card__title">World is like an onion...</div>
           <div class="film-card__tag">AI Film</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Layers of reality peeled back in a surreal visual meditation on perception.</span>
+            <span data-lang="pl">Warstwy rzeczywistości odkrywane w surrealistycznej medytacji wizualnej o percepcji.</span>
+          </div>
         </div>
       </div>
 
       <div class="film-card">
         <iframe src="https://player.vimeo.com/video/1175558320?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="film-card__info">
-          <div class="film-card__date">2025</div>
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
           <div class="film-card__title">Witness</div>
           <div class="film-card__tag">AI Short</div>
-          <div class="film-card__lock" style="font-size:0.65rem;color:var(--text-dim);margin-top:0.3rem;">🔒 <span data-lang="en">Contact for access</span><span data-lang="pl">Proszę o kontakt w sprawie dostępu</span></div>
+          <div class="film-card__lock" style="font-size:0.65rem;color:var(--text-dim);margin-top:0.3rem;">&#128274; <span data-lang="en">Festival submission — contact for access</span><span data-lang="pl">Zgłoszenie festiwalowe — proszę o kontakt</span></div>
         </div>
       </div>
 
+      <!-- Row 2: Occult PRL, Mediation, Emfazy -->
       <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1175558144?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <iframe src="https://player.vimeo.com/video/1155024443?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="film-card__info">
-          <div class="film-card__date">2025</div>
-          <div class="film-card__title">Heret. The Story</div>
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
+          <div class="film-card__title">Occult PRL</div>
           <div class="film-card__tag">AI Short</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Esoteric undercurrents of communist-era Poland, reimagined through AI-generated imagery.</span>
+            <span data-lang="pl">Ezoteryczne prądy PRL-u, przetworzone przez generatywną wyobraźnię AI.</span>
+          </div>
         </div>
       </div>
 
       <div class="film-card">
         <iframe src="https://player.vimeo.com/video/1175558057?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="film-card__info">
-          <div class="film-card__date">2025</div>
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
           <div class="film-card__title">Cross-Culture Mediation: Art of Finding Peace</div>
           <div class="film-card__tag">AI Short</div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1155023846?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2025</div>
-          <div class="film-card__title">Gniew (Iliada) — hiphopai</div>
-          <div class="film-card__tag">AI Music Video</div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1029420139?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2024</div>
-          <div class="film-card__title">One Over Many_</div>
-          <div class="film-card__tag">AI Film</div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1029420078?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2024</div>
-          <div class="film-card__title">The Dolls</div>
-          <div class="film-card__tag">AI Film</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Visual essay on intercultural dialogue and conflict resolution.</span>
+            <span data-lang="pl">Esej wizualny o dialogu międzykulturowym i rozwiązywaniu konfliktów.</span>
+          </div>
         </div>
       </div>
 
       <div class="film-card">
         <iframe src="https://player.vimeo.com/video/994981682?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="film-card__info">
-          <div class="film-card__date">2024</div>
+          <div class="film-card__date">2024 &middot; Runway</div>
           <div class="film-card__title">Emfazy i psychotronika za żelazną kurtyną</div>
           <div class="film-card__tag">AI Impression</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Cold War parapsychology and emphasis poetry — a retro-futuristic AI impression.</span>
+            <span data-lang="pl">Parapsychologia zimnej wojny i poezja emfatyczna — retro-futurystyczna impresja AI.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Creative Use reel, Dolls, Legenda -->
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1030326189?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2024 &middot; Compilation</div>
+          <div class="film-card__title">Creative Use of AI Video Generation</div>
+          <div class="film-card__tag">Showcase Reel</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Evolution of AI filmmaking tools (2023-2024) — from early experiments to cinematic results.</span>
+            <span data-lang="pl">Ewolucja narzędzi AI do filmów (2023-2024) — od wczesnych eksperymentów po efekty kinowe.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1029420078?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2024 &middot; Stable Diffusion</div>
+          <div class="film-card__title">The Dolls</div>
+          <div class="film-card__tag">AI Film</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Uncanny valley explored — when the artificial becomes disturbingly alive.</span>
+            <span data-lang="pl">Dolina niesamowitości — kiedy sztuczność staje się niepokojąco żywa.</span>
+          </div>
         </div>
       </div>
 
       <div class="film-card">
         <iframe src="https://player.vimeo.com/video/902923528?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <div class="film-card__info">
-          <div class="film-card__date">2023</div>
+          <div class="film-card__date">2023 &middot; Runway Gen-2</div>
           <div class="film-card__title">Legenda Czarnego Dzika z lasów pod miastem Dobre</div>
           <div class="film-card__tag">AI Animation</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Polish folk legend of the Black Boar, one of the earliest experiments with AI animation.</span>
+            <span data-lang="pl">Polska legenda ludowa o Czarnym Dziku — jeden z najwcześniejszych eksperymentów z animacją AI.</span>
+          </div>
         </div>
       </div>
 
+      <!-- Last -->
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1029420139?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2023 &middot; Runway</div>
+          <div class="film-card__title">One Over Many_</div>
+          <div class="film-card__tag">AI Film</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">An experiment between ritual and music video — AI-generated visuals as a bridge between the sacred and the pop.</span>
+            <span data-lang="pl">Eksperyment między rytuałem a wideoklipem — wizualia generowane przez AI jako pomost między sacrum a popem.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="bio" id="about">
+    <div class="section-label">
+      <span data-lang="en">About</span>
+      <span data-lang="pl">O mnie</span>
+    </div>
+    <div class="bio__layout">
+      <div class="bio__sidebar">
+        <div class="bio__name">Jan Lubicz Przyluski</div>
+        <div class="bio__role">
+          <span data-lang="en">Director / Developer / AI Creative</span>
+          <span data-lang="pl">Reżyser / Developer / AI Creative</span>
+        </div>
+        <div class="bio__tags">
+          <span class="bio__tag">Film</span>
+          <span class="bio__tag">AI Video</span>
+          <span class="bio__tag">Data Viz</span>
+          <span class="bio__tag">EdTech</span>
+          <span class="bio__tag">Theater</span>
+          <span class="bio__tag">OSINT</span>
+        </div>
+        <div class="bio__links">
+          <a href="https://www.linkedin.com/in/jan-lubicz-przyluski-10460580/" target="_blank" class="bio__link">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/futureshow1" target="_blank" class="bio__link">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://vimeo.com/janjan" target="_blank" class="bio__link">
+            <svg viewBox="0 0 24 24"><path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197a315.065 315.065 0 003.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797l-.013.01z"/></svg>
+            Vimeo
+          </a>
+          <a href="projects/jan-lubicz-website/index.html" target="_blank" class="bio__link">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            <span data-lang="en">Full portfolio &amp; CV</span>
+            <span data-lang="pl">Pełne portfolio i CV</span>
+          </a>
+        </div>
+      </div>
+      <div class="bio__main">
+        <div data-lang="en">
+          <h3>Background</h3>
+          <p class="bio__text">Visual artist, film director, and cultural anthropologist. 25+ years in experimental film, theater, and digital media — from video projections for Krystian Lupa's international productions to European Film Award nominations.</p>
+
+          <h3>AI revolution — since day one</h3>
+          <p class="bio__text">Participating in the generative AI revolution since 2023. Studied CS50 at Harvard for technical foundations. Continuously tracking the landscape — Matt Wolfe, Curious Refuge, Theoretically Media, and dozens of creators pushing boundaries daily.</p>
+          <p class="bio__text">My approach: <strong>AI curating</strong> — selecting, combining, and orchestrating the right tools for each project. Claude Code, LTX, Runway, Stable Diffusion, Flux, Suno, Udio, ElevenLabs, DaVinci Resolve, ComfyUI — and whatever appears tomorrow. The skill is knowing which combination solves each creative problem, and directing the collaboration between human vision and machine capability.</p>
+
+          <h3>Selected credentials</h3>
+          <div class="bio__highlights">
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">European Film Award Nominee</div>
+              <div class="bio__highlight-desc">Editor of "Glass Trap" — Best Short Documentary nomination, 2009</div>
+            </div>
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">Krystian Lupa's "Persona"</div>
+              <div class="bio__highlight-desc">Video projections for internationally touring theater productions (Beijing, Hong Kong, Reims)</div>
+            </div>
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">Ministry of Culture Award</div>
+              <div class="bio__highlight-desc">For "The Art of Action" — history and hermeneutics of Polish performance art, 2007</div>
+            </div>
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">University Lecturer</div>
+              <div class="bio__highlight-desc">Charles University Prague, Bezalel Academy Tel Aviv, CCA Tel Aviv, ICC Krakow</div>
+            </div>
+          </div>
+        </div>
+        <div data-lang="pl">
+          <h3>Doświadczenie</h3>
+          <p class="bio__text">Artysta wizualny, reżyser filmowy i antropolog kultury. 25+ lat w filmie eksperymentalnym, teatrze i mediach cyfrowych — od projekcji wideo do międzynarodowych spektakli Krystiana Lupy po nominacje do Europejskich Nagród Filmowych.</p>
+
+          <h3>Rewolucja AI — od pierwszego dnia</h3>
+          <p class="bio__text">Uczestniczę w rewolucji generatywnego AI od 2023 roku. Studiowałem CS50 na Harvardzie dla fundamentów technicznych. Nieustannie śledzę krajobraz — Matt Wolfe, Curious Refuge, Theoretically Media i dziesiątki twórców przesuwających granice każdego dnia.</p>
+          <p class="bio__text">Moje podejście: <strong>kuratorowanie AI</strong> — dobieranie, łączenie i orkiestrowanie właściwych narzędzi do każdego projektu. Claude Code, LTX, Runway, Stable Diffusion, Flux, Suno, Udio, ElevenLabs, DaVinci Resolve, ComfyUI — i cokolwiek pojawi się jutro. Umiejętność polega na wiedzy, która kombinacja rozwiązuje dany problem kreatywny, i na dyrygowaniu współpracą między ludzką wizją a maszynowymi możliwościami.</p>
+
+          <h3>Wybrane osiągnięcia</h3>
+          <div class="bio__highlights">
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">Nominacja do Europejskiej Nagrody Filmowej</div>
+              <div class="bio__highlight-desc">Montażysta filmu "Glass Trap" — nominacja w kategorii Najlepszy Krótki Dokument, 2009</div>
+            </div>
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">"Persona" Krystiana Lupy</div>
+              <div class="bio__highlight-desc">Projekcje wideo do międzynarodowo prezentowanych spektakli (Pekin, Hong Kong, Reims)</div>
+            </div>
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">Nagroda Ministra Kultury</div>
+              <div class="bio__highlight-desc">Za "Sztukę Akcji" — historię i hermeneutykę polskiego performansu, 2007</div>
+            </div>
+            <div class="bio__highlight">
+              <div class="bio__highlight-title">Wykładowca akademicki</div>
+              <div class="bio__highlight-desc">Uniwersytet Karola w Pradze, Bezalel w Tel Awiwie, CCA Tel Awiw, MCK Kraków</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="cta-box">
+      <div data-lang="en">
+        <h2>Have an idea for a project?</h2>
+        <p>Whether it's an interactive exhibit, a data investigation, an educational game, or an AI film — let's talk about how to bring it to life.</p>
+      </div>
+      <div data-lang="pl">
+        <h2>Masz pomysł na projekt?</h2>
+        <p>Niezależnie czy to interaktywna wystawa, śledztwo danych, gra edukacyjna, czy film AI — porozmawiajmy o tym, jak go zrealizować.</p>
+      </div>
+      <a href="mailto:futureshow@proton.me" class="cta-btn">
+        <span data-lang="en">Let's talk</span>
+        <span data-lang="pl">Porozmawiajmy</span>
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="cta-links">
+        <a href="https://github.com/futureshow1" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/jan-lubicz-przyluski-10460580/" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://vimeo.com/janjan" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197a315.065 315.065 0 003.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797l-.013.01z"/></svg>
+          Vimeo
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1340,11 +1933,12 @@
       &copy; 2026 Future<span style="color:var(--accent)">Show</span>
     </div>
     <div class="footer__right">
-      <a href="archive/index.html" style="margin-right: 1.5rem;">
+      <a href="mailto:futureshow@proton.me">futureshow@proton.me</a>
+      <a href="archive/index.html">
         <span data-lang="en">Archive</span>
         <span data-lang="pl">Archiwum</span>
       </a>
-      <a href="projects/jan-lubicz-website/index.html">
+      <a href="projects/jan-lubicz-website/index.html" target="_blank">
         <span data-lang="en">Personal Site</span>
         <span data-lang="pl">Strona osobista</span>
       </a>
