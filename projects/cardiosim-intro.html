@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardioSim Pro v2 — Advanced Cardiovascular Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050a12;
+  --bg2: #0a1020;
+  --border: rgba(60,100,160,0.15);
+  --text: #e0eaf4;
+  --dim: #6a8aaa;
+  --muted: #3a5570;
+  --green: #00e676;
+  --red: #ff1744;
+  --blue: #2979ff;
+  --cyan: #00e5ff;
+  --purple: #d500f9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:52px;background:rgba(5,10,18,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)}
+.nav-brand svg{width:14px;height:14px;stroke:var(--dim);fill:none;stroke-width:2}
+.nav-brand:hover{color:var(--cyan)}
+.nav-brand:hover svg{stroke:var(--cyan)}
+.nav-lang{font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;cursor:pointer;color:var(--dim);background:transparent;border:1px solid var(--border);padding:4px 10px;border-radius:4px;transition:all .2s}
+.nav-lang:hover{color:var(--cyan);border-color:var(--cyan)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(0,229,255,0.04) 0%,transparent 60%),radial-gradient(ellipse at 30% 70%,rgba(255,23,68,0.03) 0%,transparent 50%)}
+.hero-inner{position:relative;max-width:720px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);border:1px solid rgba(0,230,118,0.2);background:rgba(0,230,118,0.05);padding:5px 14px;border-radius:16px;margin-bottom:28px}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 4px var(--green)}50%{opacity:.4;box-shadow:0 0 10px var(--green)}}
+h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:20px}
+h1 .grad{background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--dim);max-width:540px;margin:0 auto 36px;line-height:1.7}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#050a12;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:10px;transition:all .2s;letter-spacing:0.02em}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,255,0.3)}
+.cta-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
+.hero-hint{margin-top:16px;font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* ECG decoration */
+.ecg-line{position:absolute;bottom:60px;left:0;right:0;height:80px;opacity:0.08;pointer-events:none}
+
+/* Stats */
+.stats{display:flex;justify-content:center;gap:48px;margin-top:48px}
+.stat-num{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:800;color:var(--text)}
+.stat-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em}
+
+/* Features */
+.features{max-width:1000px;margin:0 auto;padding:0 32px 100px}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:36px;display:flex;align-items:center;gap:12px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.feat-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:24px;transition:border-color .3s}
+.feat-card:hover{border-color:rgba(0,229,255,0.2)}
+.feat-icon{font-size:1.2rem;margin-bottom:10px}
+.feat-card h3{font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.feat-card p{font-size:0.78rem;color:var(--dim);line-height:1.6}
+
+/* Scenarios */
+.scenarios{max-width:1000px;margin:0 auto;padding:0 32px 100px}
+.sc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sc-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;transition:all .3s}
+.sc-card:hover{border-color:rgba(0,229,255,0.2);transform:translateY(-2px)}
+.sc-card .sc-icon{font-size:1.4rem;margin-bottom:8px}
+.sc-card h4{font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:4px}
+.sc-card p{font-size:0.68rem;color:var(--dim);line-height:1.5}
+
+/* How to use */
+.howto{max-width:1000px;margin:0 auto;padding:0 32px 100px}
+.howto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.howto-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center}
+.howto-num{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:800;color:var(--cyan);margin-bottom:8px}
+.howto-card h3{font-size:0.88rem;font-weight:700;margin-bottom:6px}
+.howto-card p{font-size:0.76rem;color:var(--dim);line-height:1.6}
+
+/* Bottom CTA */
+.bottom-cta{text-align:center;padding:60px 32px 100px}
+.bottom-cta .cta-btn{font-size:1.1rem;padding:18px 44px}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:24px 32px;text-align:center;font-size:0.68rem;color:var(--muted)}
+.footer a{color:var(--dim);transition:color .2s}
+.footer a:hover{color:var(--cyan)}
+
+/* Lang */
+[data-lang="pl"]{display:none}
+html[lang="pl"] [data-lang="pl"]{display:block}
+html[lang="pl"] [data-lang="en"]{display:none}
+span[data-lang="pl"]{display:none}
+html[lang="pl"] span[data-lang="pl"]{display:inline}
+html[lang="pl"] span[data-lang="en"]{display:none}
+
+/* Responsive */
+@media(max-width:768px){
+  .feat-grid{grid-template-columns:1fr}
+  .sc-grid{grid-template-columns:repeat(2,1fr)}
+  .howto-grid{grid-template-columns:1fr}
+  .stats{gap:24px;flex-wrap:wrap}
+  .hero{padding:80px 20px 40px}
+  .features,.scenarios,.howto{padding-left:20px;padding-right:20px}
+}
+@media(max-width:480px){
+  .sc-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    FutureShow
+  </a>
+  <button class="nav-lang" onclick="toggleLang()" id="langBtn">PL</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span data-lang="en">Real-time cardiovascular simulation</span>
+      <span data-lang="pl">Symulacja kardiologiczna w czasie rzeczywistym</span>
+    </div>
+
+    <div data-lang="en">
+      <h1>CardioSim <span class="grad">Pro v2</span></h1>
+      <p class="hero-sub">A 4-chamber heart model with hemodynamic engine, blood flow particles, ECG/SpO2/ABP monitors, pressure-volume loops, and 8 clinical scenarios. Zero dependencies. One HTML file. Runs in any browser.</p>
+    </div>
+    <div data-lang="pl">
+      <h1>CardioSim <span class="grad">Pro v2</span></h1>
+      <p class="hero-sub">Model 4-jamowego serca z silnikiem hemodynamicznym, cząsteczkami przepływu krwi, monitorami EKG/SpO2/ABP, pętlami ciśnienie-objętość i 8 scenariuszami klinicznymi. Zero zależności. Jeden plik HTML. Działa w każdej przeglądarce.</p>
+    </div>
+
+    <a href="cardiosim.html" class="cta-btn">
+      <span data-lang="en">Launch simulation</span>
+      <span data-lang="pl">Uruchom symulację</span>
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div class="hero-hint">
+      <span data-lang="en">Desktop recommended for full experience</span>
+      <span data-lang="pl">Zalecany desktop dla pełnego doświadczenia</span>
+    </div>
+
+    <div class="stats">
+      <div><div class="stat-num">800</div><div class="stat-label"><span data-lang="en">Blood particles</span><span data-lang="pl">Cząsteczek krwi</span></div></div>
+      <div><div class="stat-num">8</div><div class="stat-label"><span data-lang="en">Clinical scenarios</span><span data-lang="pl">Scenariuszy klinicznych</span></div></div>
+      <div><div class="stat-num">4</div><div class="stat-label"><span data-lang="en">View modes</span><span data-lang="pl">Trybów widoku</span></div></div>
+      <div><div class="stat-num">~25KB</div><div class="stat-label"><span data-lang="en">Total size</span><span data-lang="pl">Rozmiar</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-label">
+    <span data-lang="en">What's inside</span>
+    <span data-lang="pl">Co zawiera</span>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon" style="color:var(--red)">&#10084;</div>
+      <div data-lang="en">
+        <h3>4-Chamber Heart Model</h3>
+        <p>Anatomically oriented heart with atria, ventricles, great vessels (aorta with arch, SVC/IVC, pulmonary arteries/veins), coronary arteries (LAD, LCx, RCA), and valves with open/close animation.</p>
+      </div>
+      <div data-lang="pl">
+        <h3>Model serca 4-jamowego</h3>
+        <p>Anatomicznie zorientowane serce z przedsionkami, komorami, wielkimi naczyniami (aorta z łukiem, SVC/IVC, tętnice/żyły płucne), tętnicami wieńcowymi (LAD, LCx, RCA) i zastawkami z animacją.</p>
+      </div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="color:var(--cyan)">&#9738;</div>
+      <div data-lang="en">
+        <h3>Hemodynamic Engine</h3>
+        <p>Frank-Starling mechanics compute stroke volume, cardiac output, ejection fraction, BP, MAP, SpO2, CVP, PCWP, and PA pressures — all from adjustable parameters.</p>
+      </div>
+      <div data-lang="pl">
+        <h3>Silnik hemodynamiczny</h3>
+        <p>Mechanika Franka-Starlinga oblicza objętość wyrzutową, rzut serca, frakcję wyrzutową, BP, MAP, SpO2, CVP, PCWP i ciśnienia PA — z regulowanych parametrów.</p>
+      </div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="color:var(--green)">&#9621;</div>
+      <div data-lang="en">
+        <h3>3-Channel Monitor</h3>
+        <p>Lead II ECG, SpO2 plethysmography, and arterial line with phosphor-decay CRT effect, sweep line, and glowing trace heads. Pulse oximeter beep with pitch proportional to SpO2.</p>
+      </div>
+      <div data-lang="pl">
+        <h3>3-kanałowy monitor</h3>
+        <p>EKG odprowadzenie II, pletyzmografia SpO2 i linia tętnicza z efektem poświaty CRT, linią przemiatania i świecącymi punktami. Sygnał pulsoksymetru z tonem proporcjonalnym do SpO2.</p>
+      </div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="color:var(--purple)">&#10227;</div>
+      <div data-lang="en">
+        <h3>PV Loops & Wiggers</h3>
+        <p>Real-time pressure-volume diagram with ESPVR line and moving cursor. Synchronized Wiggers diagram with LV pressure, aortic pressure, LA pressure, and LV volume.</p>
+      </div>
+      <div data-lang="pl">
+        <h3>Pętle PV i Wiggers</h3>
+        <p>Diagram ciśnienie-objętość z linią ESPVR i ruchomym kursorem. Zsynchronizowany diagram Wiggersa z ciśnieniami LV, aortą, LA i objętością LV.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scenarios">
+  <div class="section-label">
+    <span data-lang="en">Clinical Scenarios</span>
+    <span data-lang="pl">Scenariusze kliniczne</span>
+  </div>
+  <div class="sc-grid">
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--green)">&#9829;</div>
+      <div data-lang="en"><h4>Normal Sinus</h4><p>Healthy heart rhythm, baseline hemodynamics</p></div>
+      <div data-lang="pl"><h4>Rytm zatokowy</h4><p>Zdrowy rytm serca, wyjściowa hemodynamika</p></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--red)">&#9889;</div>
+      <div data-lang="en"><h4>STEMI</h4><p>ST-elevation MI with visible ischemic zone</p></div>
+      <div data-lang="pl"><h4>STEMI</h4><p>Zawał z uniesieniem ST i widoczną strefą niedokrwienia</p></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--purple)">&#10038;</div>
+      <div data-lang="en"><h4>Atrial Fibrillation</h4><p>Irregular rhythm, variable ventricular response</p></div>
+      <div data-lang="pl"><h4>Migotanie przedsionków</h4><p>Nieregularny rytm, zmienna odpowiedź komór</p></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--red)">&#9760;</div>
+      <div data-lang="en"><h4>Ventricular Tachycardia</h4><p>Wide-complex tachycardia, compromised output</p></div>
+      <div data-lang="pl"><h4>Częstoskurcz komorowy</h4><p>Tachykardia szerokozespołowa, obniżony rzut</p></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--red)">&#128167;</div>
+      <div data-lang="en"><h4>Hemorrhagic Shock</h4><p>Massive volume loss, compensatory tachycardia</p></div>
+      <div data-lang="pl"><h4>Wstrząs krwotoczny</h4><p>Masywna utrata objętości, kompensacyjna tachykardia</p></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--blue)">&#128293;</div>
+      <div data-lang="en"><h4>Cardiac Tamponade</h4><p>Pericardial effusion compressing the heart</p></div>
+      <div data-lang="pl"><h4>Tamponada serca</h4><p>Wysięk osierdziowy uciskający serce</p></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--cyan)">&#9729;</div>
+      <div data-lang="en"><h4>Pulmonary Embolism</h4><p>Clot in pulmonary vasculature, RV strain</p></div>
+      <div data-lang="pl"><h4>Zatorowość płucna</h4><p>Zakrzep w naczyniach płucnych, obciążenie RV</p></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-icon" style="color:var(--purple)">&#128148;</div>
+      <div data-lang="en"><h4>Heart Failure (HFrEF)</h4><p>Reduced ejection fraction, fluid overload</p></div>
+      <div data-lang="pl"><h4>Niewydolność (HFrEF)</h4><p>Obniżona frakcja wyrzutowa, przewodnienie</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="howto">
+  <div class="section-label">
+    <span data-lang="en">How to use</span>
+    <span data-lang="pl">Jak używać</span>
+  </div>
+  <div class="howto-grid">
+    <div class="howto-card">
+      <div class="howto-num">1</div>
+      <div data-lang="en"><h3>Adjust parameters</h3><p>Use the left panel sliders: heart rate, contractility, blood volume (preload), SVR (afterload). Watch the heart and vitals respond in real time.</p></div>
+      <div data-lang="pl"><h3>Reguluj parametry</h3><p>Użyj suwaków w lewym panelu: częstość akcji serca, kurczliwość, objętość krwi (preload), SVR (afterload). Obserwuj reakcję serca i parametrów.</p></div>
+    </div>
+    <div class="howto-card">
+      <div class="howto-num">2</div>
+      <div data-lang="en"><h3>Switch views</h3><p>Toggle between Anatomy, Blood Flow, Pressure Gradient, and Electrical Conduction. Each reveals a different layer of cardiac physiology.</p></div>
+      <div data-lang="pl"><h3>Zmieniaj widoki</h3><p>Przełączaj między Anatomią, Przepływem krwi, Gradientem ciśnienia i Przewodzeniem elektrycznym. Każdy ujawnia inną warstwę fizjologii.</p></div>
+    </div>
+    <div class="howto-card">
+      <div class="howto-num">3</div>
+      <div data-lang="en"><h3>Load a scenario</h3><p>Select a clinical pathology to see its hemodynamic signature: altered waveforms, changed vitals, visible anatomical changes.</p></div>
+      <div data-lang="pl"><h3>Załaduj scenariusz</h3><p>Wybierz patologię kliniczną, by zobaczyć jej sygnaturę hemodynamiczną: zmienione przebiegi, parametry i widoczne zmiany anatomiczne.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bottom-cta">
+  <a href="cardiosim.html" class="cta-btn">
+    <span data-lang="en">Launch CardioSim Pro</span>
+    <span data-lang="pl">Uruchom CardioSim Pro</span>
+    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+<footer class="footer">
+  <span data-lang="en">Built with Claude Code. Pure HTML/CSS/Canvas. ~25KB. Zero dependencies.</span>
+  <span data-lang="pl">Zbudowane z Claude Code. Czysty HTML/CSS/Canvas. ~25KB. Zero zależności.</span>
+  <br><a href="../index.html">FutureShow</a>
+</footer>
+
+<script>
+function toggleLang(){
+  const h=document.documentElement,b=document.getElementById('langBtn');
+  if(h.lang==='en'){h.lang='pl';b.textContent='EN';localStorage.setItem('cardiosim-lang','pl')}
+  else{h.lang='en';b.textContent='PL';localStorage.setItem('cardiosim-lang','en')}
+}
+const s=localStorage.getItem('cardiosim-lang');
+if(s==='pl'){document.documentElement.lang='pl';document.getElementById('langBtn').textContent='EN'}
+</script>
+</body>
+</html>
