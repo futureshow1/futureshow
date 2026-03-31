@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardioSim Pro v2 - Advanced Cardiovascular Simulation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root {
+  --bg-primary: #050a12;
+  --bg-secondary: #0a1020;
+  --bg-card: rgba(12, 20, 40, 0.85);
+  --border: rgba(60, 100, 160, 0.15);
+  --border-glow: rgba(80, 160, 255, 0.25);
+  --text-primary: #e0eaf4;
+  --text-secondary: #6a8aaa;
+  --green: #00e676;
+  --red: #ff1744;
+  --blue: #2979ff;
+  --cyan: #00e5ff;
+  --yellow: #ffd600;
+  --purple: #d500f9;
+  --orange: #ff9100;
+  --pink: #ff4081;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+#app {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 280px;
+  grid-template-rows: 52px 1fr 200px;
+  height: 100vh;
+  gap: 1px;
+  background: rgba(20, 40, 80, 0.1);
+}
+/* Header */
+header {
+  grid-column: 1 / -1;
+  background: linear-gradient(90deg, rgba(5,10,18,0.95), rgba(10,16,30,0.95));
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-icon {
+  width: 28px; height: 28px;
+  background: conic-gradient(var(--red), var(--purple), var(--blue), var(--cyan), var(--green), var(--yellow), var(--red));
+  border-radius: 6px;
+  animation: logo-spin 8s linear infinite;
+  opacity: 0.8;
+}
+@keyframes logo-spin { to { filter: hue-rotate(360deg); } }
+.logo h1 {
+  font-size: 15px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.logo sub { font-size: 9px; color: var(--text-secondary); letter-spacing: 1px; margin-left: 6px; -webkit-text-fill-color: initial; }
+.header-right { display: flex; align-items: center; gap: 16px; font-size: 11px; }
+.badge {
+  padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+}
+.badge-live { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.25); animation: pulse-badge 2s ease infinite; }
+@keyframes pulse-badge { 0%,100%{box-shadow:0 0 4px rgba(0,230,118,0.2)} 50%{box-shadow:0 0 12px rgba(0,230,118,0.4)} }
+.badge-fps { background: rgba(41,121,255,0.1); color: var(--blue); border: 1px solid rgba(41,121,255,0.2); font-family: 'JetBrains Mono', monospace; }
+.clock { font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); font-size: 12px; }
+
+/* Panels */
+.panel {
+  background: var(--bg-secondary);
+  padding: 14px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+}
+.panel::-webkit-scrollbar { width: 3px; }
+.panel::-webkit-scrollbar-thumb { background: rgba(60,100,160,0.3); border-radius: 2px; }
+.section-title {
+  font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary);
+  margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 6px;
+}
+.section-title::before { content:''; width: 3px; height: 10px; border-radius: 1px; }
+.st-controls::before { background: var(--cyan); }
+.st-scenarios::before { background: var(--orange); }
+.st-legend::before { background: var(--purple); }
+.st-vitals::before { background: var(--green); }
+.st-hemo::before { background: var(--yellow); }
+
+/* Left panel */
+.left-panel { grid-row: 2 / 4; }
+.control-group { margin-bottom: 14px; }
+.control-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 5px;
+}
+.control-label { font-size: 10px; color: var(--text-secondary); letter-spacing: 0.5px; }
+.control-value { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--cyan); }
+input[type="range"] {
+  -webkit-appearance: none; width: 100%; height: 3px;
+  background: linear-gradient(90deg, rgba(0,229,255,0.15), rgba(41,121,255,0.15));
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 12px;
+  background: radial-gradient(circle, var(--cyan), var(--blue));
+  border-radius: 50%; cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,229,255,0.5), 0 0 20px rgba(0,229,255,0.15);
+  transition: box-shadow 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 12px rgba(0,229,255,0.8), 0 0 30px rgba(0,229,255,0.3);
+}
+.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.btn {
+  padding: 7px 8px; font-size: 9px; font-weight: 600;
+  border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--text-secondary); border-radius: 5px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.8px; transition: all 0.25s;
+  font-family: 'Inter', sans-serif; text-align: center;
+}
+.btn:hover { background: rgba(20, 40, 70, 0.8); border-color: var(--border-glow); color: var(--text-primary); }
+.btn.active { background: rgba(0,229,255,0.08); border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 12px rgba(0,229,255,0.1); }
+.btn.danger { border-color: rgba(255,23,68,0.2); color: rgba(255,100,120,0.7); }
+.btn.danger:hover { border-color: var(--red); color: var(--red); background: rgba(255,23,68,0.06); }
+.btn.danger.active { border-color: var(--red); color: var(--red); background: rgba(255,23,68,0.1); box-shadow: 0 0 12px rgba(255,23,68,0.15); }
+.btn.full { grid-column: 1 / -1; }
+.sep { height: 1px; background: var(--border); margin: 14px 0; }
+.legend-item { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; font-size: 10px; color: var(--text-secondary); }
+.legend-dot { width: 6px; height: 6px; border-radius: 50%; box-shadow: 0 0 6px currentColor; }
+.info-box {
+  background: rgba(0,229,255,0.03); border-left: 2px solid rgba(0,229,255,0.3);
+  padding: 8px 10px; font-size: 10px; line-height: 1.6; color: var(--text-secondary);
+  margin-top: 10px; border-radius: 0 5px 5px 0;
+}
+
+/* Main canvases */
+.main-view {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 45%, rgba(15,25,45,1) 0%, rgba(5,10,18,1) 100%);
+  overflow: hidden;
+}
+.main-view canvas { width: 100%; height: 100%; display: block; }
+.view-label {
+  position: absolute; top: 10px; left: 12px;
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(100,150,200,0.4); pointer-events: none;
+}
+.view-corner-tl, .view-corner-tr, .view-corner-bl, .view-corner-br {
+  position: absolute; width: 16px; height: 16px; pointer-events: none;
+}
+.view-corner-tl { top: 6px; left: 6px; border-top: 1px solid rgba(0,229,255,0.2); border-left: 1px solid rgba(0,229,255,0.2); }
+.view-corner-tr { top: 6px; right: 6px; border-top: 1px solid rgba(0,229,255,0.2); border-right: 1px solid rgba(0,229,255,0.2); }
+.view-corner-bl { bottom: 6px; left: 6px; border-bottom: 1px solid rgba(0,229,255,0.2); border-left: 1px solid rgba(0,229,255,0.2); }
+.view-corner-br { bottom: 6px; right: 6px; border-bottom: 1px solid rgba(0,229,255,0.2); border-right: 1px solid rgba(0,229,255,0.2); }
+
+/* Right panel */
+.right-panel { grid-row: 2 / 4; border-left: 1px solid var(--border); border-right: none; }
+.vital-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 10px 12px; margin-bottom: 6px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative; overflow: hidden;
+}
+.vital-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+  border-radius: 3px 0 0 3px;
+}
+.vital-card:hover { border-color: var(--border-glow); }
+.vital-card .vital-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 2px; padding-left: 6px; }
+.vital-card .vital-row { display: flex; align-items: baseline; gap: 4px; padding-left: 6px; }
+.vital-card .vital-value { font-size: 26px; font-weight: 700; font-family: 'JetBrains Mono', monospace; line-height: 1.1; }
+.vital-card .vital-unit { font-size: 10px; color: var(--text-secondary); }
+.vital-card .vital-sub { font-size: 9px; color: var(--text-secondary); margin-top: 1px; padding-left: 6px; }
+.vital-card .vital-sparkline { height: 18px; margin-top: 4px; }
+.vital-card .vital-sparkline canvas { width: 100%; height: 100%; }
+.vc-hr::before { background: var(--green); }
+.vc-bp::before { background: var(--red); }
+.vc-spo2::before { background: var(--cyan); }
+.vc-co::before { background: var(--yellow); }
+.vc-sv::before { background: var(--purple); }
+.vc-rr::before { background: var(--orange); }
+.vc-temp::before { background: var(--pink); }
+
+/* Bottom waveform strips */
+.bottom-strip {
+  grid-column: 2 / 4;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+}
+.strip-channel {
+  background: rgba(5, 8, 16, 0.95);
+  position: relative; overflow: hidden;
+}
+.strip-channel canvas { width: 100%; height: 100%; display: block; }
+.strip-label {
+  position: absolute; top: 5px; left: 8px;
+  font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  z-index: 2; text-shadow: 0 0 8px currentColor;
+}
+.strip-value {
+  position: absolute; top: 4px; right: 8px;
+  font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  z-index: 2; text-shadow: 0 0 10px currentColor;
+}
+.strip-value .su { font-size: 9px; font-weight: 400; }
+.sc-ecg .strip-label, .sc-ecg .strip-value { color: var(--green); }
+.sc-spo2 .strip-label, .sc-spo2 .strip-value { color: var(--cyan); }
+.sc-abp .strip-label, .sc-abp .strip-value { color: var(--red); }
+.strip-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(40,80,120,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40,80,120,0.06) 1px, transparent 1px),
+    linear-gradient(rgba(40,80,120,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40,80,120,0.12) 1px, transparent 1px);
+  background-size: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+}
+
+/* PV Loop / Circulatory diagram canvas */
+.secondary-view {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 50%, rgba(12,20,38,1) 0%, rgba(5,10,18,1) 100%);
+  overflow: hidden;
+}
+.secondary-view canvas { width: 100%; height: 100%; display: block; }
+.pv-label {
+  position: absolute; bottom: 8px; left: 10px;
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(100,150,200,0.35); pointer-events: none;
+}
+
+/* Alarm flash overlay */
+.alarm-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 100;
+  border: 3px solid var(--red);
+  animation: alarm-flash 0.5s ease infinite;
+}
+@keyframes alarm-flash { 0%,100%{opacity:0} 50%{opacity:0.7} }
+.alarm-overlay.active { display: block; }
+
+/* Tooltip */
+.tooltip {
+  display: none; position: absolute;
+  background: rgba(10,20,40,0.95); border: 1px solid var(--border-glow);
+  border-radius: 6px; padding: 8px 12px; font-size: 11px; color: var(--text-primary);
+  pointer-events: none; z-index: 50; backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  max-width: 200px;
+}
+#back-btn{position:fixed;top:8px;left:8px;z-index:9999;display:flex;align-items:center;gap:5px;background:rgba(10,16,30,.85);border:1px solid rgba(60,100,160,.25);border-radius:6px;padding:5px 12px 5px 8px;color:rgba(200,220,255,.5);font-family:'JetBrains Mono',monospace;font-size:10px;text-decoration:none;cursor:pointer;transition:all .2s;backdrop-filter:blur(8px)}#back-btn:hover{background:rgba(20,40,80,.9);color:rgba(200,220,255,.85);border-color:rgba(80,160,255,.4)}#back-btn svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none}
+</style>
+</head>
+<body>
+<a id="back-btn" href="../index.html"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>FutureShow</a>
+<div id="app">
+  <header>
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <h1>CardioSim Pro<sub>v2.0</sub></h1>
+    </div>
+    <div class="header-right">
+      <span class="badge badge-live">LIVE</span>
+      <span class="badge badge-fps" id="fps-badge">60 FPS</span>
+      <span class="clock" id="sim-clock">T+ 00:00:00</span>
+    </div>
+  </header>
+
+  <!-- LEFT PANEL: Controls -->
+  <div class="panel left-panel">
+    <div class="section-title st-controls">Parameters</div>
+    <div class="control-group">
+      <div class="control-header"><span class="control-label">Heart Rate</span><span class="control-value" id="hr-val">72 bpm</span></div>
+      <input type="range" id="hr-slider" min="20" max="220" value="72">
+    </div>
+    <div class="control-group">
+      <div class="control-header"><span class="control-label">Contractility (LVEF)</span><span class="control-value" id="contr-val">100%</span></div>
+      <input type="range" id="contr-slider" min="10" max="160" value="100">
+    </div>
+    <div class="control-group">
+      <div class="control-header"><span class="control-label">Preload (Blood Vol)</span><span class="control-value" id="bv-val">5.0 L</span></div>
+      <input type="range" id="bv-slider" min="15" max="85" value="50">
+    </div>
+    <div class="control-group">
+      <div class="control-header"><span class="control-label">SVR (Afterload)</span><span class="control-value" id="pr-val">100%</span></div>
+      <input type="range" id="pr-slider" min="25" max="220" value="100">
+    </div>
+    <div class="control-group">
+      <div class="control-header"><span class="control-label">Resp. Rate</span><span class="control-value" id="rr-val">16 /min</span></div>
+      <input type="range" id="rr-slider" min="4" max="44" value="16">
+    </div>
+
+    <div class="sep"></div>
+    <div class="section-title st-controls">View Mode</div>
+    <div class="btn-grid">
+      <button class="btn active" data-view="anatomy">Anatomy</button>
+      <button class="btn" data-view="flow">Flow Map</button>
+      <button class="btn" data-view="pressure">Pressure</button>
+      <button class="btn" data-view="electrical">Conduction</button>
+    </div>
+
+    <div class="sep"></div>
+    <div class="section-title st-scenarios">Clinical Scenarios</div>
+    <div class="btn-grid">
+      <button class="btn full active" data-scenario="normal">Normal Sinus</button>
+      <button class="btn danger" data-scenario="mi">STEMI</button>
+      <button class="btn danger" data-scenario="afib">A-Fib</button>
+      <button class="btn danger" data-scenario="vtach">V-Tach</button>
+      <button class="btn danger" data-scenario="hypovolemia">Hemorrhagic Shock</button>
+      <button class="btn danger" data-scenario="tamponade">Tamponade</button>
+      <button class="btn danger" data-scenario="pe">Pulmonary Embolism</button>
+      <button class="btn danger" data-scenario="chf">Heart Failure</button>
+    </div>
+
+    <div class="sep"></div>
+    <div class="section-title st-legend">Legend</div>
+    <div class="legend-item"><div class="legend-dot" style="color:var(--red)"></div>Oxygenated Blood (Arterial)</div>
+    <div class="legend-item"><div class="legend-dot" style="color:var(--blue)"></div>Deoxygenated Blood (Venous)</div>
+    <div class="legend-item"><div class="legend-dot" style="color:var(--yellow)"></div>SA / AV Node Impulse</div>
+    <div class="legend-item"><div class="legend-dot" style="color:var(--purple)"></div>His-Purkinje System</div>
+    <div class="legend-item"><div class="legend-dot" style="color:var(--orange)"></div>Coronary Circulation</div>
+
+    <div class="info-box" id="info-box">
+      Real-time hemodynamic simulation with Frank-Starling mechanics. Adjust parameters or select a clinical scenario to observe physiological changes.
+    </div>
+  </div>
+
+  <!-- MAIN HEART VIEW -->
+  <div class="main-view" id="heart-view">
+    <canvas id="heart-canvas"></canvas>
+    <div class="view-label" id="view-label">4-Chamber Anterior View</div>
+    <div class="view-corner-tl"></div><div class="view-corner-tr"></div>
+    <div class="view-corner-bl"></div><div class="view-corner-br"></div>
+  </div>
+
+  <!-- SECONDARY VIEW: PV Loop + Circulatory -->
+  <div class="secondary-view" id="pv-view">
+    <canvas id="pv-canvas"></canvas>
+    <div class="pv-label" id="pv-label">Pressure-Volume Loop &bull; Wiggers Diagram</div>
+  </div>
+
+  <!-- RIGHT PANEL: Vitals -->
+  <div class="panel right-panel">
+    <div class="section-title st-vitals">Vital Signs</div>
+    <div class="vital-card vc-hr">
+      <div class="vital-label">Heart Rate</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--green)" id="v-hr">72</span><span class="vital-unit">bpm</span></div>
+      <div class="vital-sub" id="v-rhythm">Sinus Rhythm</div>
+      <div class="vital-sparkline"><canvas id="spark-hr"></canvas></div>
+    </div>
+    <div class="vital-card vc-bp">
+      <div class="vital-label">Arterial Blood Pressure</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--red)" id="v-bp">120/80</span><span class="vital-unit">mmHg</span></div>
+      <div class="vital-sub" id="v-map">MAP 93</div>
+      <div class="vital-sparkline"><canvas id="spark-bp"></canvas></div>
+    </div>
+    <div class="vital-card vc-spo2">
+      <div class="vital-label">Oxygen Saturation</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--cyan)" id="v-spo2">98</span><span class="vital-unit">%</span></div>
+      <div class="vital-sub" id="v-spo2-status">Normal</div>
+      <div class="vital-sparkline"><canvas id="spark-spo2"></canvas></div>
+    </div>
+    <div class="vital-card vc-co">
+      <div class="vital-label">Cardiac Output</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--yellow)" id="v-co">5.0</span><span class="vital-unit">L/min</span></div>
+      <div class="vital-sub" id="v-ci">CI 2.6 L/min/m&sup2;</div>
+    </div>
+    <div class="vital-card vc-sv">
+      <div class="vital-label">Stroke Volume</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--purple)" id="v-sv">70</span><span class="vital-unit">mL</span></div>
+      <div class="vital-sub" id="v-ef">EF 62%</div>
+    </div>
+    <div class="vital-card vc-rr">
+      <div class="vital-label">Respiratory Rate</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--orange)" id="v-rr">16</span><span class="vital-unit">/min</span></div>
+      <div class="vital-sub">Eupnea</div>
+    </div>
+    <div class="vital-card vc-temp">
+      <div class="vital-label">Core Temperature</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--pink)" id="v-temp">37.0</span><span class="vital-unit">&deg;C</span></div>
+      <div class="vital-sub">Normothermia</div>
+    </div>
+
+    <div class="sep"></div>
+    <div class="section-title st-hemo">Hemodynamics</div>
+    <div class="vital-card vc-sv">
+      <div class="vital-label">CVP / RAP</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--blue);font-size:20px" id="v-cvp">6</span><span class="vital-unit">mmHg</span></div>
+    </div>
+    <div class="vital-card vc-co">
+      <div class="vital-label">PCWP (Wedge)</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--orange);font-size:20px" id="v-pcwp">10</span><span class="vital-unit">mmHg</span></div>
+    </div>
+    <div class="vital-card vc-hr">
+      <div class="vital-label">PA Pressure</div>
+      <div class="vital-row"><span class="vital-value" style="color:var(--cyan);font-size:20px" id="v-pap">25/10</span><span class="vital-unit">mmHg</span></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM: Waveform Strips -->
+  <div class="bottom-strip">
+    <div class="strip-channel sc-ecg">
+      <div class="strip-grid"></div>
+      <canvas id="ecg-canvas"></canvas>
+      <div class="strip-label">II ECG</div>
+      <div class="strip-value" id="ecg-val">72 <span class="su">bpm</span></div>
+    </div>
+    <div class="strip-channel sc-spo2">
+      <div class="strip-grid"></div>
+      <canvas id="spo2-canvas"></canvas>
+      <div class="strip-label">PLETH SpO&sub2;</div>
+      <div class="strip-value" id="spo2-val">98 <span class="su">%</span></div>
+    </div>
+    <div class="strip-channel sc-abp">
+      <div class="strip-grid"></div>
+      <canvas id="abp-canvas"></canvas>
+      <div class="strip-label">ART LINE</div>
+      <div class="strip-value" id="abp-val">120/80</div>
+    </div>
+  </div>
+</div>
+
+<div class="alarm-overlay" id="alarm-overlay"></div>
+
+<script>
+// ================================================================
+// SIMULATION STATE
+// ================================================================
+const S = {
+  hr: 72, contractility: 1.0, bloodVolume: 5.0, svr: 1.0, rr: 16,
+  scenario: 'normal', viewMode: 'anatomy',
+  // Derived
+  systolic: 120, diastolic: 80, map: 93, spo2: 98, co: 5.0, sv: 70,
+  ef: 62, ci: 2.6, cvp: 6, pcwp: 10, pap_s: 25, pap_d: 10,
+  // Cycle
+  phase: 0, time: 0, dt: 0, frameCount: 0, fpsTime: 0, fps: 60,
+  miZone: false, tamponade: false, peBlock: false,
+  // Audio
+  audioOn: false,
+};
+
+// ================================================================
+// CANVAS REFERENCES
+// ================================================================
+const heartCanvas = document.getElementById('heart-canvas');
+const heartCtx = heartCanvas.getContext('2d');
+const pvCanvas = document.getElementById('pv-canvas');
+const pvCtx = pvCanvas.getContext('2d');
+const ecgCanvas = document.getElementById('ecg-canvas');
+const ecgCtx = ecgCanvas.getContext('2d');
+const spo2Canvas = document.getElementById('spo2-canvas');
+const spo2Ctx = spo2Canvas.getContext('2d');
+const abpCanvas = document.getElementById('abp-canvas');
+const abpCtx = abpCanvas.getContext('2d');
+const sparkCanvases = ['spark-hr','spark-bp','spark-spo2'].map(id => {
+  const c = document.getElementById(id);
+  return { canvas: c, ctx: c.getContext('2d') };
+});
+
+function resizeAll() {
+  const dpr = window.devicePixelRatio || 1;
+  [heartCanvas, pvCanvas, ecgCanvas, spo2Canvas, abpCanvas,
+   ...sparkCanvases.map(s=>s.canvas)].forEach(c => {
+    const r = c.getBoundingClientRect();
+    c.width = r.width * dpr;
+    c.height = r.height * dpr;
+    c.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+    c._w = r.width; c._h = r.height;
+  });
+}
+window.addEventListener('resize', resizeAll);
+resizeAll();
+
+// ================================================================
+// WAVEFORM BUFFERS with phosphor decay
+// ================================================================
+const BUF = 600;
+const ecgBuf = new Float32Array(BUF);
+const spo2Buf = new Float32Array(BUF);
+const abpBuf = new Float32Array(BUF);
+let wIdx = 0;
+// Sparkline history
+const sparkHR = [], sparkBP = [], sparkSPO2 = [];
+const SPARK_LEN = 60;
+
+// ================================================================
+// PARTICLES
+// ================================================================
+const particles = [];
+const TRAIL_LEN = 6;
+
+class Particle {
+  constructor(type) {
+    this.type = type;
+    this.progress = Math.random();
+    this.speed = 0.15 + Math.random() * 0.25;
+    this.size = 1.2 + Math.random() * 1.8;
+    this.x = 0; this.y = 0; this.alpha = 0;
+    this.trail = [];
+    this.wobble = Math.random() * Math.PI * 2;
+    this.wobbleAmp = 1 + Math.random() * 3;
+  }
+}
+
+function initParticles() {
+  for (let i = 0; i < 800; i++) {
+    particles.push(new Particle(i < 400 ? 'oxy' : 'deoxy'));
+  }
+}
+initParticles();
+
+// Flow path (returns {x, y, alpha} in normalized 0-1 coords)
+function flowPos(p, type, w, h) {
+  const cx = 0.5 * w, cy = 0.47 * h, s = Math.min(w, h) * 0.36;
+  const t = ((p % 1) + 1) % 1;
+
+  let x, y, a;
+  if (type === 'oxy') {
+    if (t < 0.12) { const u = t/0.12; x = cx+s*(0.48-u*0.13); y = cy-s*(0.62-u*0.44); a = 0.6+u*0.4; }
+    else if (t < 0.30) { const u = (t-0.12)/0.18; x = cx+s*(0.35-u*0.13); y = cy+s*(-0.18+u*0.4); a = 1; }
+    else if (t < 0.48) { const u = (t-0.30)/0.18; x = cx+s*(0.22-u*0.07); y = cy+s*(0.22-u*0.62); a = 1; }
+    else if (t < 0.70) { const u = (t-0.48)/0.22; const ang = -1.5+u*2.8; x = cx+Math.cos(ang)*s*0.45; y = cy-s*0.62+Math.sin(ang)*s*0.18; a = 0.7; }
+    else { const u = (t-0.70)/0.30; x = cx-s*(0.25+u*0.2); y = cy+s*(-0.5+u*1.0); a = 0.4+0.3*(1-u); }
+  } else {
+    if (t < 0.12) { const u = t/0.12; x = cx-s*(0.35+(1-u)*0.12); y = cy+s*(0.7-u*0.95); a = 0.5; }
+    else if (t < 0.30) { const u = (t-0.12)/0.18; x = cx-s*0.22; y = cy-s*(0.25-u*0.45); a = 0.8; }
+    else if (t < 0.48) { const u = (t-0.30)/0.18; x = cx-s*(0.22-u*0.02); y = cy+s*(u*0.22); a = 0.9; }
+    else if (t < 0.70) { const u = (t-0.48)/0.22; x = cx-s*(0.20-u*0.05); y = cy-s*(0.22*(1-u)+0.42*u); a = 0.7; }
+    else { const u = (t-0.70)/0.30; x = cx-s*(0.15-u*0.65); y = cy-s*(0.42+u*0.22); a = 0.5; }
+  }
+  return { x, y, a };
+}
+
+// ================================================================
+// ECG / WAVEFORM GENERATORS
+// ================================================================
+function ecgSample(p) {
+  let v = 0;
+  const ph = p % 1;
+  if (S.scenario === 'vtach') {
+    return Math.sin(ph*Math.PI*6)*0.65 + Math.sin(ph*Math.PI*10)*0.2 + Math.sin(ph*Math.PI*3)*0.1;
+  }
+  if (S.scenario !== 'afib') {
+    if (ph > 0.0 && ph < 0.09) v += Math.sin((ph/0.09)*Math.PI)*0.1;
+  } else {
+    v += (Math.random()-0.5)*0.07;
+  }
+  if (ph > 0.14 && ph < 0.22) {
+    const t = (ph-0.14)/0.08;
+    if (t < 0.15) v -= t*0.8;
+    else if (t < 0.45) v += (t-0.15)*3.8 - 0.12;
+    else if (t < 0.65) v += (0.65-t)*3.8 + 0.3;
+    else v -= (t-0.65)*2.0;
+  }
+  if (ph > 0.22 && ph < 0.30 && S.scenario === 'mi') v += 0.18;
+  if (ph > 0.27 && ph < 0.42) {
+    const t = (ph-0.27)/0.15;
+    v += Math.sin(t*Math.PI)*0.22*(S.scenario==='mi'?0.4:1);
+  }
+  return v + (Math.random()-0.5)*0.008;
+}
+
+function spo2Sample(p) {
+  const ph = p % 1;
+  if (ph < 0.25) return Math.sin((ph/0.25)*Math.PI*0.5)*0.75;
+  if (ph < 0.45) { const t=(ph-0.25)/0.2; return 0.75-t*0.18; }
+  const t = (ph-0.45)/0.55; return 0.57-t*0.57;
+}
+
+function abpSample(p) {
+  const ph = p % 1;
+  const sys = S.systolic/120, dia = S.diastolic/120;
+  if (ph < 0.08) { const t=ph/0.08; return dia+(sys-dia)*Math.sin(t*Math.PI*0.5); }
+  if (ph < 0.18) { const t=(ph-0.08)/0.1; return sys-t*0.08; }
+  if (ph < 0.35) { const t=(ph-0.18)/0.17; return (sys-0.08)*(1-t)+dia*t+Math.sin(t*Math.PI)*0.06; }
+  const t=(ph-0.35)/0.65; return dia+(1-t)*0.04;
+}
+
+// ================================================================
+// HEMODYNAMICS
+// ================================================================
+function updateHemo() {
+  const hr = S.hr, c = S.contractility, bv = S.bloodVolume, pr = S.svr;
+  const preload = bv / 5.0;
+  S.sv = Math.round(70 * c * Math.min(preload, 1.35) * (1 - Math.max(0, hr-160)/250));
+  if (S.tamponade) S.sv = Math.round(S.sv * 0.45);
+  if (S.peBlock) S.sv = Math.round(S.sv * 0.5);
+  S.sv = Math.max(5, S.sv);
+  S.co = +(S.sv * hr / 1000).toFixed(1);
+  S.ci = +(S.co / 1.9).toFixed(1);
+  S.ef = Math.round(Math.min(75, S.sv / 1.12));
+
+  const coF = S.co / 5.0;
+  S.systolic = Math.round(120 * coF * pr * (0.65 + c * 0.35));
+  S.diastolic = Math.round(80 * pr * (0.45 + coF * 0.55));
+  S.systolic = Math.max(35, Math.min(260, S.systolic));
+  S.diastolic = Math.max(15, Math.min(160, Math.min(S.systolic - 8, S.diastolic)));
+  S.map = Math.round(S.diastolic + (S.systolic - S.diastolic) / 3);
+
+  S.spo2 = Math.round(Math.min(100, 87 + coF * 9 + preload * 4));
+  if (S.scenario === 'vtach') S.spo2 -= 14;
+  if (S.peBlock) S.spo2 -= 10;
+  S.spo2 = Math.max(55, Math.min(100, S.spo2));
+
+  S.cvp = Math.round(6 * preload + (S.tamponade ? 12 : 0) + (S.scenario === 'chf' ? 8 : 0));
+  S.pcwp = Math.round(10 * preload * (S.scenario === 'chf' ? 2.4 : 1) + (S.tamponade ? 8 : 0));
+  S.pap_s = Math.round(25 * (S.peBlock ? 2.2 : 1) * (S.scenario === 'chf' ? 1.6 : 1));
+  S.pap_d = Math.round(10 * (S.peBlock ? 1.8 : 1) * (S.scenario === 'chf' ? 1.5 : 1));
+}
+
+// ================================================================
+// HEART RENDERER
+// ================================================================
+const Heart = {
+  draw(ctx, w, h, phase, mode) {
+    const cx = 0.5*w, cy = 0.47*h, sc = Math.min(w,h)*0.36;
+    const beat = Math.sin(phase * Math.PI * 2);
+    const sq = 1 - beat*0.07*S.contractility;
+    const ex = 1 + beat*0.035*S.contractility;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+
+    // ---- Ambient glow ----
+    const gI = Math.max(0, beat)*0.25;
+    const rg = ctx.createRadialGradient(0, 0, sc*0.15, 0, 0, sc*1.4);
+    rg.addColorStop(0, `rgba(180,30,40,${0.06+gI})`);
+    rg.addColorStop(0.5, `rgba(100,20,60,${0.02+gI*0.3})`);
+    rg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = rg;
+    ctx.fillRect(-sc*1.5, -sc*1.5, sc*3, sc*3);
+
+    // ---- Pericardium ----
+    this.heartShape(ctx, sc*1.08, 'rgba(20,12,25,0.7)', 'rgba(80,40,50,0.15)', 1);
+    // ---- Epicardium ----
+    this.heartShape(ctx, sc*1.02, 'rgba(45,18,30,0.5)', 'rgba(120,50,60,0.2)', 1.5);
+    // ---- Myocardium ----
+    this.heartShape(ctx, sc, 'rgba(65,20,30,1)', 'rgba(160,60,70,0.3)', 2);
+
+    // Tissue texture
+    this.drawTexture(ctx, sc);
+
+    // ---- Septum ----
+    ctx.save();
+    ctx.strokeStyle = 'rgba(90,35,45,0.85)';
+    ctx.lineWidth = sc*0.045;
+    ctx.shadowColor = 'rgba(0,0,0,0.3)';
+    ctx.shadowBlur = 4;
+    ctx.beginPath();
+    ctx.moveTo(0, -sc*0.32);
+    ctx.bezierCurveTo(sc*0.015, -sc*0.1, sc*0.02, sc*0.15, 0, sc*0.52);
+    ctx.stroke();
+    // Horizontal
+    ctx.lineWidth = sc*0.035;
+    ctx.beginPath();
+    ctx.moveTo(-sc*0.36, sc*0.04);
+    ctx.bezierCurveTo(-sc*0.15, sc*0.07, sc*0.15, sc*0.07, sc*0.36, sc*0.04);
+    ctx.stroke();
+    ctx.restore();
+
+    // ---- Chambers ----
+    const cols = {
+      anatomy: { ra:'rgba(35,65,140,0.55)', la:'rgba(150,35,45,0.55)', rv:'rgba(30,55,130,0.65)', lv:'rgba(140,28,38,0.65)' },
+      flow:    { ra:'rgba(25,50,120,0.35)', la:'rgba(120,25,35,0.35)', rv:'rgba(20,45,110,0.45)', lv:'rgba(110,20,30,0.45)' },
+      pressure: { ra:this.pCol(8), la:this.pCol(12), rv:this.pCol(25), lv:this.pCol(S.systolic) },
+      electrical: { ra:'rgba(25,35,60,0.5)', la:'rgba(60,25,35,0.5)', rv:'rgba(20,30,55,0.6)', lv:'rgba(55,20,30,0.6)' },
+    };
+    const c = cols[mode] || cols.anatomy;
+
+    this.chamber(ctx, -sc*0.22, -sc*0.17, sc*0.19*ex, sc*0.16*ex, c.ra, 'RA', sc);
+    this.chamber(ctx, sc*0.22, -sc*0.17, sc*0.19*ex, sc*0.16*ex, c.la, 'LA', sc);
+    this.chamber(ctx, -sc*0.20, sc*0.23, sc*0.21*sq, sc*0.24*sq, c.rv, 'RV', sc);
+    this.chamber(ctx, sc*0.20, sc*0.23, sc*0.21*sq, sc*0.27*sq, c.lv, 'LV', sc);
+
+    // ---- LV Wall thickness visual ----
+    if (mode === 'anatomy' || mode === 'pressure') {
+      ctx.save();
+      ctx.globalAlpha = 0.15;
+      ctx.strokeStyle = '#ff8a80';
+      ctx.lineWidth = sc * 0.06;
+      ctx.beginPath();
+      ctx.ellipse(sc*0.20, sc*0.23, sc*0.24*sq, sc*0.30*sq, 0, 0.3, Math.PI*1.7);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // MI zone
+    if (S.miZone) {
+      ctx.save();
+      const flicker = 0.25 + Math.sin(S.time*5)*0.2 + Math.sin(S.time*13)*0.08;
+      ctx.globalAlpha = flicker;
+      const mig = ctx.createRadialGradient(sc*0.3, sc*0.4, 0, sc*0.3, sc*0.4, sc*0.14);
+      mig.addColorStop(0, 'rgba(255,235,59,0.8)');
+      mig.addColorStop(0.5, 'rgba(255,152,0,0.4)');
+      mig.addColorStop(1, 'rgba(255,87,34,0)');
+      ctx.fillStyle = mig;
+      ctx.beginPath();
+      ctx.ellipse(sc*0.3, sc*0.4, sc*0.13, sc*0.09, 0.4, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,152,0,0.6)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([3,3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+
+    // Tamponade effusion
+    if (S.tamponade) {
+      ctx.save();
+      ctx.globalAlpha = 0.25 + Math.sin(S.time*2)*0.05;
+      this.heartShape(ctx, sc*1.15, 'rgba(255,235,59,0.15)', 'rgba(255,235,59,0.25)', 2);
+      ctx.restore();
+    }
+
+    // ---- Valves ----
+    const vOpen = phase < 0.33;
+    this.valve(ctx, -sc*0.22, sc*0.03, sc*0.09, vOpen, 'TV', sc);
+    this.valve(ctx, sc*0.22, sc*0.03, sc*0.09, vOpen, 'MV', sc);
+    this.valve(ctx, -sc*0.14, -sc*0.40, sc*0.065, !vOpen, 'PV', sc);
+    this.valve(ctx, sc*0.14, -sc*0.40, sc*0.065, !vOpen, 'AV', sc);
+
+    // ---- Great Vessels ----
+    this.vessels(ctx, sc, mode);
+
+    // ---- Coronary Arteries ----
+    this.coronaries(ctx, sc, phase);
+
+    // ---- Electrical Conduction ----
+    if (mode === 'electrical') this.conduction(ctx, sc, phase);
+
+    // ---- Pressure mode labels ----
+    if (mode === 'pressure') {
+      ctx.font = `bold ${sc*0.045}px 'JetBrains Mono', monospace`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.fillText(`${S.systolic}`, sc*0.20, sc*0.28);
+      ctx.fillText('8', -sc*0.22, -sc*0.12);
+      ctx.fillText('12', sc*0.22, -sc*0.12);
+      ctx.fillText('25', -sc*0.20, sc*0.28);
+    }
+
+    ctx.restore();
+  },
+
+  heartShape(ctx, s, fill, stroke, lw) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, -s*0.42);
+    ctx.bezierCurveTo(-s*0.5, -s*0.68, -s*0.72, -s*0.08, -s*0.44, s*0.15);
+    ctx.quadraticCurveTo(-s*0.24, s*0.48, 0, s*0.65);
+    ctx.quadraticCurveTo(s*0.24, s*0.48, s*0.44, s*0.15);
+    ctx.bezierCurveTo(s*0.72, -s*0.08, s*0.5, -s*0.68, 0, -s*0.42);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = lw;
+    ctx.stroke();
+    ctx.restore();
+  },
+
+  drawTexture(ctx, sc) {
+    ctx.save();
+    ctx.globalAlpha = 0.04;
+    ctx.strokeStyle = '#ff8a80';
+    for (let i = 0; i < 30; i++) {
+      const a = (i/30)*Math.PI*2;
+      const r1 = sc*(0.3+Math.sin(a*3)*0.08);
+      const r2 = sc*(0.5+Math.cos(a*5)*0.1);
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a)*r1, Math.sin(a)*r1);
+      ctx.lineTo(Math.cos(a)*r2, Math.sin(a)*r2);
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+    ctx.restore();
+  },
+
+  chamber(ctx, x, y, rx, ry, color, label, sc) {
+    ctx.save();
+    // Inner glow
+    const cg = ctx.createRadialGradient(x, y, 0, x, y, Math.max(rx, ry));
+    cg.addColorStop(0, color);
+    cg.addColorStop(1, 'rgba(0,0,0,0.1)');
+    ctx.beginPath();
+    ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI*2);
+    ctx.fillStyle = cg;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(200,150,160,0.15)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    // Label
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.font = `600 ${sc*0.06}px 'Inter', sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(label, x, y);
+    ctx.restore();
+  },
+
+  valve(ctx, x, y, sz, open, label, sc) {
+    ctx.save();
+    ctx.translate(x, y);
+    const a = open ? 0.7 : 0.08;
+    const col = open ? 'rgba(220,220,240,0.7)' : 'rgba(180,180,200,0.35)';
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = open ? 'rgba(200,200,255,0.3)' : 'transparent';
+    ctx.shadowBlur = open ? 6 : 0;
+    ctx.beginPath();
+    ctx.moveTo(0, -sz);
+    ctx.quadraticCurveTo(-sz*a, -sz*0.2, 0, sz*0.1);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, -sz);
+    ctx.quadraticCurveTo(sz*a, -sz*0.2, 0, sz*0.1);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    // Annulus ring
+    ctx.beginPath();
+    ctx.ellipse(0, -sz*0.45, sz*0.5, sz*0.12, 0, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(200,200,220,0.12)';
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+    // Label
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.font = `500 ${sc*0.035}px Inter`;
+    ctx.textAlign = 'center';
+    ctx.fillText(label, 0, sz*0.65);
+    ctx.restore();
+  },
+
+  vessels(ctx, sc, mode) {
+    // Aorta (thick, red, arched)
+    const aCol = mode==='pressure' ? this.pCol(S.systolic) : 'rgba(180,35,45,0.65)';
+    ctx.save();
+    ctx.strokeStyle = aCol;
+    ctx.lineWidth = sc*0.09;
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(200,40,40,0.15)';
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.moveTo(sc*0.12, -sc*0.38);
+    ctx.bezierCurveTo(sc*0.16, -sc*0.72, -sc*0.08, -sc*0.85, -sc*0.28, -sc*0.72);
+    ctx.quadraticCurveTo(-sc*0.42, -sc*0.62, -sc*0.38, -sc*0.42);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    // Aorta inner highlight
+    ctx.strokeStyle = 'rgba(255,100,100,0.08)';
+    ctx.lineWidth = sc*0.04;
+    ctx.stroke();
+    // Label
+    ctx.fillStyle = 'rgba(255,200,200,0.4)';
+    ctx.font = `600 9px Inter`;
+    ctx.textAlign = 'center';
+    ctx.fillText('AORTA', sc*0.02, -sc*0.86);
+    ctx.restore();
+
+    // Branching arteries from aortic arch
+    ctx.save();
+    ctx.strokeStyle = 'rgba(180,50,60,0.3)';
+    ctx.lineWidth = sc*0.025;
+    ctx.lineCap = 'round';
+    // Brachiocephalic
+    ctx.beginPath(); ctx.moveTo(-sc*0.05, -sc*0.82); ctx.lineTo(-sc*0.02, -sc*0.98); ctx.stroke();
+    // Left common carotid
+    ctx.beginPath(); ctx.moveTo(-sc*0.12, -sc*0.82); ctx.lineTo(-sc*0.15, -sc*0.98); ctx.stroke();
+    // Left subclavian
+    ctx.beginPath(); ctx.moveTo(-sc*0.20, -sc*0.78); ctx.lineTo(-sc*0.32, -sc*0.92); ctx.stroke();
+    ctx.restore();
+
+    // SVC
+    this.vessel(ctx, -sc*0.34, -sc*0.50, -sc*0.30, -sc*0.78, sc*0.055,
+      mode==='pressure'?this.pCol(5):'rgba(35,60,150,0.45)', 'SVC');
+    // IVC
+    this.vessel(ctx, -sc*0.28, sc*0.50, -sc*0.34, sc*0.78, sc*0.065,
+      mode==='pressure'?this.pCol(5):'rgba(35,60,150,0.45)', 'IVC');
+    // PA
+    ctx.save();
+    ctx.strokeStyle = mode==='pressure'?this.pCol(S.pap_s):'rgba(50,70,160,0.55)';
+    ctx.lineWidth = sc*0.055;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-sc*0.14, -sc*0.42);
+    ctx.bezierCurveTo(-sc*0.18, -sc*0.65, -sc*0.40, -sc*0.68, -sc*0.50, -sc*0.55);
+    ctx.stroke();
+    // PA bifurcation
+    ctx.lineWidth = sc*0.03;
+    ctx.beginPath(); ctx.moveTo(-sc*0.42, -sc*0.65); ctx.lineTo(-sc*0.58, -sc*0.60); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-sc*0.42, -sc*0.65); ctx.lineTo(-sc*0.55, -sc*0.72); ctx.stroke();
+    ctx.fillStyle = 'rgba(100,140,255,0.35)';
+    ctx.font = '9px Inter';
+    ctx.fillText('PA', -sc*0.30, -sc*0.70);
+    ctx.restore();
+
+    // Pulmonary Veins
+    ctx.save();
+    ctx.strokeStyle = mode==='pressure'?this.pCol(10):'rgba(170,50,60,0.4)';
+    ctx.lineWidth = sc*0.035;
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(sc*0.35, -sc*0.35); ctx.lineTo(sc*0.52, -sc*0.55); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sc*0.35, -sc*0.30); ctx.lineTo(sc*0.55, -sc*0.42); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,140,140,0.3)';
+    ctx.font = '8px Inter';
+    ctx.fillText('PVs', sc*0.55, -sc*0.48);
+    ctx.restore();
+
+    // PE blockage
+    if (S.peBlock) {
+      ctx.save();
+      ctx.globalAlpha = 0.5 + Math.sin(S.time*6)*0.2;
+      ctx.fillStyle = '#ff1744';
+      ctx.beginPath();
+      ctx.arc(-sc*0.35, -sc*0.62, sc*0.04, 0, Math.PI*2);
+      ctx.fill();
+      ctx.font = 'bold 8px Inter';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.fillText('PE', -sc*0.35, -sc*0.60);
+      ctx.restore();
+    }
+  },
+
+  vessel(ctx, x1, y1, x2, y2, w, col, label) {
+    ctx.save();
+    ctx.strokeStyle = col;
+    ctx.lineWidth = w;
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.font = '8px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, (x1+x2)/2 + 14, (y1+y2)/2);
+    ctx.restore();
+  },
+
+  coronaries(ctx, sc, phase) {
+    const pulse = Math.max(0, Math.sin((1-phase)*Math.PI*2))*0.4;
+    ctx.save();
+    ctx.globalAlpha = 0.35 + pulse;
+    ctx.strokeStyle = `rgb(255, ${Math.round(140+pulse*60)}, 50)`;
+    ctx.lineWidth = 1.2;
+    ctx.lineCap = 'round';
+    ctx.shadowColor = 'rgba(255,150,50,0.3)';
+    ctx.shadowBlur = 4;
+
+    // LAD
+    ctx.beginPath();
+    ctx.moveTo(sc*0.08, -sc*0.30);
+    ctx.bezierCurveTo(sc*0.06, -sc*0.10, sc*0.03, sc*0.10, sc*0.01, sc*0.40);
+    ctx.stroke();
+    // LCx
+    ctx.beginPath();
+    ctx.moveTo(sc*0.10, -sc*0.28);
+    ctx.bezierCurveTo(sc*0.25, -sc*0.20, sc*0.35, -sc*0.05, sc*0.32, sc*0.15);
+    ctx.stroke();
+    // RCA
+    ctx.beginPath();
+    ctx.moveTo(-sc*0.08, -sc*0.32);
+    ctx.bezierCurveTo(-sc*0.25, -sc*0.28, -sc*0.38, -sc*0.10, -sc*0.30, sc*0.20);
+    ctx.stroke();
+    // Diagonals
+    ctx.lineWidth = 0.7;
+    ctx.globalAlpha *= 0.6;
+    ctx.beginPath();
+    ctx.moveTo(sc*0.05, -sc*0.15);
+    ctx.lineTo(sc*0.18, sc*0.02);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sc*0.04, sc*0.05);
+    ctx.lineTo(sc*0.15, sc*0.18);
+    ctx.stroke();
+
+    ctx.shadowBlur = 0;
+    // Labels
+    ctx.font = '7px Inter';
+    ctx.fillStyle = 'rgba(255,200,100,0.4)';
+    ctx.textAlign = 'left';
+    ctx.fillText('LAD', sc*0.05, sc*0.35);
+    ctx.fillText('LCx', sc*0.34, sc*0.05);
+    ctx.fillText('RCA', -sc*0.40, sc*0.10);
+    ctx.restore();
+  },
+
+  conduction(ctx, sc, phase) {
+    ctx.save();
+    // SA Node burst
+    const saT = phase < 0.12 ? phase/0.12 : 0;
+    const saBurst = saT > 0 ? (1-saT) : 0;
+    ctx.beginPath();
+    ctx.arc(-sc*0.30, -sc*0.27, sc*0.04 + saBurst*sc*0.02, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,214,0,${0.3+saBurst*0.7})`;
+    ctx.shadowColor = '#ffd600';
+    ctx.shadowBlur = 15*saBurst;
+    ctx.fill();
+    // Rings
+    if (saBurst > 0.2) {
+      ctx.beginPath();
+      ctx.arc(-sc*0.30, -sc*0.27, sc*0.04 + (1-saBurst)*sc*0.15, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(255,214,0,${saBurst*0.3})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 8px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText('SA', -sc*0.30, -sc*0.26);
+
+    // Atrial wave
+    if (phase > 0.02 && phase < 0.15) {
+      const wp = (phase-0.02)/0.13;
+      ctx.strokeStyle = `rgba(255,214,0,${0.5*(1-wp)})`;
+      ctx.lineWidth = 1.5;
+      ctx.shadowColor = '#ffd600';
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.arc(-sc*0.30, -sc*0.27, sc*0.06 + wp*sc*0.35, -Math.PI*0.3, Math.PI*0.8);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    // AV Node
+    const avT = phase > 0.10 && phase < 0.20 ? (phase-0.10)/0.10 : 0;
+    const avGlow = avT > 0 ? Math.sin(avT*Math.PI) : 0;
+    ctx.beginPath();
+    ctx.arc(0, sc*0.01, sc*0.035, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,214,0,${0.2+avGlow*0.6})`;
+    ctx.shadowColor = '#ffd600';
+    ctx.shadowBlur = 12*avGlow;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 7px Inter';
+    ctx.fillText('AV', 0, sc*0.02);
+
+    // His bundle + branches
+    const hisT = phase > 0.18 ? Math.min(1, (phase-0.18)/0.20) : 0;
+    if (hisT > 0) {
+      ctx.strokeStyle = `rgba(213,0,249,${hisT*0.8})`;
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#d500f9';
+      ctx.shadowBlur = 8*hisT;
+      // His
+      ctx.beginPath();
+      ctx.moveTo(0, sc*0.04);
+      ctx.lineTo(0, sc*0.04 + sc*0.08*hisT);
+      ctx.stroke();
+      // Left bundle
+      const lbT = Math.max(0, (hisT-0.3)/0.7);
+      if (lbT > 0) {
+        ctx.beginPath();
+        ctx.moveTo(0, sc*0.12);
+        ctx.quadraticCurveTo(sc*0.08, sc*0.18, sc*0.15, sc*0.12 + sc*0.30*lbT);
+        ctx.stroke();
+        // Left anterior fascicle
+        if (lbT > 0.4) {
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(sc*0.10, sc*0.25);
+          ctx.lineTo(sc*0.22, sc*0.18);
+          ctx.stroke();
+        }
+      }
+      // Right bundle
+      const rbT = Math.max(0, (hisT-0.35)/0.65);
+      if (rbT > 0) {
+        ctx.beginPath();
+        ctx.moveTo(0, sc*0.12);
+        ctx.quadraticCurveTo(-sc*0.06, sc*0.18, -sc*0.13, sc*0.12 + sc*0.25*rbT);
+        ctx.stroke();
+      }
+
+      // Purkinje network
+      const pkT = Math.max(0, (hisT-0.6)/0.4);
+      if (pkT > 0) {
+        ctx.lineWidth = 0.8;
+        ctx.globalAlpha = pkT * 0.6;
+        for (let i = 0; i < 12; i++) {
+          const ang = (i/12)*Math.PI*1.4 - Math.PI*0.2;
+          const side = i < 6 ? 1 : -1;
+          const ox = side * sc*0.14;
+          const oy = sc*0.38;
+          ctx.beginPath();
+          ctx.moveTo(ox, oy);
+          ctx.lineTo(ox + Math.cos(ang)*sc*0.10*pkT, oy + Math.sin(ang)*sc*0.06*pkT);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+    }
+    ctx.shadowBlur = 0;
+    ctx.restore();
+  },
+
+  pCol(p) {
+    const t = Math.min(1, p/150);
+    return `rgba(${Math.round(30+t*200)}, ${Math.round(70-t*30)}, ${Math.round(150-t*100)}, 0.55)`;
+  }
+};
+
+// ================================================================
+// PV LOOP + WIGGERS DIAGRAM
+// ================================================================
+const pvHistory = [];
+const WIGGERS_LEN = 300;
+const wiggersLVP = new Float32Array(WIGGERS_LEN);
+const wiggersAoP = new Float32Array(WIGGERS_LEN);
+const wiggersLAP = new Float32Array(WIGGERS_LEN);
+const wiggersVol = new Float32Array(WIGGERS_LEN);
+let wigIdx = 0;
+
+function drawPVView(ctx, w, h) {
+  ctx.clearRect(0, 0, w, h);
+
+  const margin = { t: 20, b: 30, l: 35, r: 10 };
+  const pw = (w - margin.l - margin.r) * 0.42;
+  const ph = h - margin.t - margin.b;
+  const ww = w - margin.l - margin.r - pw - 20;
+  const wx = margin.l + pw + 20;
+
+  // ---- PV Loop ----
+  ctx.save();
+  ctx.translate(margin.l, margin.t);
+
+  // Axes
+  ctx.strokeStyle = 'rgba(100,150,200,0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, 0); ctx.lineTo(0, ph); ctx.lineTo(pw, ph);
+  ctx.stroke();
+
+  // Grid
+  ctx.strokeStyle = 'rgba(100,150,200,0.05)';
+  for (let i = 1; i < 5; i++) {
+    ctx.beginPath(); ctx.moveTo(0, ph*i/5); ctx.lineTo(pw, ph*i/5); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pw*i/5, 0); ctx.lineTo(pw*i/5, ph); ctx.stroke();
+  }
+
+  // Labels
+  ctx.fillStyle = 'rgba(100,150,200,0.3)';
+  ctx.font = '8px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('Volume (mL)', pw/2, ph + 18);
+  ctx.save();
+  ctx.translate(-22, ph/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.fillText('Pressure (mmHg)', 0, 0);
+  ctx.restore();
+
+  // Axis values
+  ctx.font = '7px JetBrains Mono';
+  ctx.textAlign = 'right';
+  ctx.fillText('150', -4, 8);
+  ctx.fillText('0', -4, ph + 3);
+  ctx.textAlign = 'center';
+  ctx.fillText('0', 0, ph + 12);
+  ctx.fillText('150', pw, ph + 12);
+
+  // ESPVR line (end-systolic PV relationship)
+  ctx.strokeStyle = 'rgba(255,100,100,0.15)';
+  ctx.setLineDash([4,4]);
+  ctx.beginPath();
+  ctx.moveTo(pw*0.1, ph);
+  ctx.lineTo(pw*0.6, 0);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // PV Loop
+  const edv = 50 + S.sv * 0.9;
+  const esv = edv - S.sv;
+  const esp = S.systolic;
+
+  // Generate loop points
+  ctx.strokeStyle = 'rgba(0,229,255,0.8)';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = 'rgba(0,229,255,0.4)';
+  ctx.shadowBlur = 6;
+  ctx.beginPath();
+  const loopPts = [];
+  for (let i = 0; i <= 40; i++) {
+    const t = i / 40;
+    let vol, pres;
+    if (t < 0.15) { // Isovolumic contraction
+      const u = t / 0.15;
+      vol = edv;
+      pres = 8 + (esp - 8) * Math.sin(u * Math.PI * 0.5);
+    } else if (t < 0.45) { // Ejection
+      const u = (t - 0.15) / 0.30;
+      vol = edv - (edv - esv) * Math.sin(u * Math.PI * 0.5);
+      pres = esp - (esp * 0.15) * Math.sin(u * Math.PI);
+    } else if (t < 0.60) { // Isovolumic relaxation
+      const u = (t - 0.45) / 0.15;
+      vol = esv;
+      pres = esp * (1 - u) * (1 - u) + 5;
+    } else { // Filling
+      const u = (t - 0.60) / 0.40;
+      vol = esv + (edv - esv) * u;
+      pres = 5 + 8 * Math.sin(u * Math.PI * 0.3);
+    }
+    const px = (vol / 150) * pw;
+    const py = ph - (pres / 150) * ph;
+    loopPts.push({x: px, y: py});
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.stroke();
+
+  // Fill loop
+  ctx.fillStyle = 'rgba(0,229,255,0.05)';
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Current position dot
+  const cIdx = Math.floor(S.phase * 40) % 40;
+  const cp = loopPts[cIdx];
+  if (cp) {
+    ctx.beginPath();
+    ctx.arc(cp.x, cp.y, 4, 0, Math.PI*2);
+    ctx.fillStyle = '#00e5ff';
+    ctx.shadowColor = '#00e5ff';
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  ctx.restore();
+
+  // ---- Wiggers Diagram ----
+  ctx.save();
+  ctx.translate(wx, margin.t);
+  const wh = ph;
+
+  // Background label
+  ctx.fillStyle = 'rgba(100,150,200,0.12)';
+  ctx.font = '8px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('Wiggers Diagram', ww/2, -6);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(100,150,200,0.06)';
+  ctx.lineWidth = 0.5;
+  for (let i = 1; i < 6; i++) {
+    ctx.beginPath(); ctx.moveTo(0, wh*i/6); ctx.lineTo(ww, wh*i/6); ctx.stroke();
+  }
+
+  // Draw traces
+  const drawWigTrace = (buf, color, scaleY) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.2;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 3;
+    ctx.beginPath();
+    let started = false;
+    for (let i = 0; i < WIGGERS_LEN; i++) {
+      const idx = (wigIdx + i) % WIGGERS_LEN;
+      const x = (i / WIGGERS_LEN) * ww;
+      const y = wh * 0.85 - buf[idx] * wh * scaleY;
+      if (!started) { ctx.moveTo(x, y); started = true; }
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  };
+
+  drawWigTrace(wiggersLVP, 'rgba(255,23,68,0.7)', 0.005);
+  drawWigTrace(wiggersAoP, 'rgba(255,145,0,0.5)', 0.005);
+  drawWigTrace(wiggersLAP, 'rgba(0,229,255,0.4)', 0.005);
+
+  // Volume trace (bottom portion)
+  ctx.strokeStyle = 'rgba(213,0,249,0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  let st = false;
+  for (let i = 0; i < WIGGERS_LEN; i++) {
+    const idx = (wigIdx + i) % WIGGERS_LEN;
+    const x = (i / WIGGERS_LEN) * ww;
+    const y = wh - wiggersVol[idx] * wh * 0.003;
+    if (!st) { ctx.moveTo(x, y); st = true; }
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  // Sweep line
+  const sx = (wigIdx / WIGGERS_LEN) * ww;
+  ctx.fillStyle = 'rgba(5,10,20,0.95)';
+  ctx.fillRect(sx, 0, 15, wh);
+
+  // Legend
+  ctx.font = '7px Inter';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(255,23,68,0.6)'; ctx.fillText('LV Press.', 4, wh - 22);
+  ctx.fillStyle = 'rgba(255,145,0,0.5)'; ctx.fillText('Aortic', 55, wh - 22);
+  ctx.fillStyle = 'rgba(0,229,255,0.4)'; ctx.fillText('LA', 95, wh - 22);
+  ctx.fillStyle = 'rgba(213,0,249,0.4)'; ctx.fillText('LV Vol', 115, wh - 22);
+
+  ctx.restore();
+}
+
+// ================================================================
+// STRIP RENDERER (phosphor decay effect)
+// ================================================================
+function drawStrip(ctx, buf, w, h, color, idx) {
+  // Phosphor decay: don't fully clear, overlay dark
+  ctx.fillStyle = 'rgba(5,8,16,0.12)';
+  ctx.fillRect(0, 0, w, h);
+
+  // Main trace
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.8;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 6;
+  ctx.beginPath();
+  let started = false;
+  const gap = 20;
+  for (let i = 0; i < BUF; i++) {
+    const di = (i - idx + BUF) % BUF;
+    if (di < gap && di > 0) { started = false; continue; }
+    const bi = (idx + i) % BUF;
+    const x = (i / BUF) * w;
+    const y = h * 0.5 - buf[bi] * h * 0.38;
+    if (!started) { ctx.moveTo(x, y); started = true; }
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  // Glow layer
+  ctx.globalAlpha = 0.3;
+  ctx.lineWidth = 4;
+  ctx.shadowBlur = 12;
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+
+  // Bright dot at write head
+  const hx = (idx / BUF) * w;
+  const hy = h * 0.5 - buf[(idx - 1 + BUF) % BUF] * h * 0.38;
+  ctx.beginPath();
+  ctx.arc(hx, hy, 3, 0, Math.PI*2);
+  ctx.fillStyle = '#fff';
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 15;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+// ================================================================
+// SPARKLINE RENDERER
+// ================================================================
+function drawSparkline(sparkObj, data, color) {
+  const c = sparkObj.canvas, ctx = sparkObj.ctx;
+  const w = c._w, h = c._h;
+  ctx.clearRect(0, 0, w, h);
+  if (data.length < 2) return;
+  const max = Math.max(...data) * 1.1 || 1;
+  const min = Math.min(...data) * 0.9;
+  const range = max - min || 1;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1;
+  ctx.globalAlpha = 0.6;
+  ctx.beginPath();
+  data.forEach((v, i) => {
+    const x = (i / (SPARK_LEN - 1)) * w;
+    const y = h - ((v - min) / range) * h;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+
+// ================================================================
+// CONTROLS
+// ================================================================
+const sliders = [
+  { id: 'hr-slider', valId: 'hr-val', key: 'hr', fmt: v => v + ' bpm' },
+  { id: 'contr-slider', valId: 'contr-val', key: 'contractility', fmt: v => v + '%', scale: 0.01 },
+  { id: 'bv-slider', valId: 'bv-val', key: 'bloodVolume', fmt: v => (v/10).toFixed(1) + ' L', scale: 0.1 },
+  { id: 'pr-slider', valId: 'pr-val', key: 'svr', fmt: v => v + '%', scale: 0.01 },
+  { id: 'rr-slider', valId: 'rr-val', key: 'rr', fmt: v => v + ' /min' },
+];
+sliders.forEach(s => {
+  document.getElementById(s.id).addEventListener('input', e => {
+    const raw = +e.target.value;
+    S[s.key] = s.scale ? raw * s.scale : raw;
+    document.getElementById(s.valId).textContent = s.fmt(raw);
+  });
+});
+
+document.querySelectorAll('[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    S.viewMode = btn.dataset.view;
+    const labels = { anatomy:'4-Chamber Anterior View', flow:'Blood Flow Dynamics', pressure:'Pressure Gradient Map', electrical:'Electrical Conduction System' };
+    document.getElementById('view-label').textContent = labels[S.viewMode];
+  });
+});
+
+document.querySelectorAll('[data-scenario]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-scenario]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyScenario(btn.dataset.scenario);
+  });
+});
+
+function applyScenario(name) {
+  // Reset
+  S.scenario = name;
+  S.miZone = false; S.tamponade = false; S.peBlock = false;
+  const info = document.getElementById('info-box');
+  const setSliders = (hr, c, bv, pr) => {
+    S.hr = hr; S.contractility = c/100; S.bloodVolume = bv/10; S.svr = pr/100;
+    document.getElementById('hr-slider').value = hr;
+    document.getElementById('contr-slider').value = c;
+    document.getElementById('bv-slider').value = bv;
+    document.getElementById('pr-slider').value = pr;
+    document.getElementById('hr-val').textContent = hr + ' bpm';
+    document.getElementById('contr-val').textContent = c + '%';
+    document.getElementById('bv-val').textContent = (bv/10).toFixed(1) + ' L';
+    document.getElementById('pr-val').textContent = pr + '%';
+  };
+  switch (name) {
+    case 'normal':
+      setSliders(72, 100, 50, 100);
+      info.textContent = 'Normal sinus rhythm with healthy hemodynamics. All parameters within physiological range.';
+      break;
+    case 'mi':
+      setSliders(105, 50, 50, 110);
+      S.miZone = true;
+      info.textContent = 'STEMI: ST-segment elevation, ischemic zone on anterolateral LV wall (LAD territory). Reduced EF, compensatory tachycardia, mildly elevated SVR.';
+      break;
+    case 'afib':
+      setSliders(138, 85, 50, 100);
+      info.textContent = 'Atrial Fibrillation with RVR: Irregularly irregular rhythm, absent P-waves, loss of atrial kick reduces SV by ~15-25%. Thromboembolic risk.';
+      break;
+    case 'vtach':
+      setSliders(185, 25, 50, 100);
+      info.textContent = 'Ventricular Tachycardia: Wide-complex tachycardia, AV dissociation, severe hemodynamic compromise. Pulseless VT requires immediate defibrillation.';
+      break;
+    case 'hypovolemia':
+      setSliders(125, 100, 22, 170);
+      info.textContent = 'Class III Hemorrhagic Shock (30-40% volume loss): Tachycardia, hypotension, narrowed pulse pressure, elevated SVR. Cold, clammy extremities.';
+      break;
+    case 'tamponade':
+      setSliders(115, 90, 50, 120);
+      S.tamponade = true;
+      info.textContent = 'Cardiac Tamponade: Pericardial effusion compressing chambers. Beck\'s triad: hypotension, JVD (elevated CVP), muffled heart sounds. Pulsus paradoxus.';
+      break;
+    case 'pe':
+      setSliders(110, 90, 50, 100);
+      S.peBlock = true;
+      info.textContent = 'Massive Pulmonary Embolism: Acute RV strain, elevated PA pressures, reduced LV preload. Hypoxemia, tachycardia. RV dilation on echo.';
+      break;
+    case 'chf':
+      setSliders(95, 35, 65, 130);
+      info.textContent = 'Decompensated Heart Failure (HFrEF): Severely reduced EF, volume overload, elevated filling pressures (PCWP/CVP), pulmonary congestion, low CO state.';
+      break;
+  }
+}
+
+// ================================================================
+// UPDATE UI
+// ================================================================
+function updateUI() {
+  const rhythms = { normal:'Sinus Rhythm', mi:'Sinus Tach (STEMI)', afib:'A-Fib w/ RVR', vtach:'Ventricular Tachycardia', hypovolemia:'Sinus Tach (Shock)', tamponade:'Sinus Tach (Tamponade)', pe:'Sinus Tach (PE)', chf:'Sinus (CHF)' };
+
+  document.getElementById('v-hr').textContent = S.hr;
+  document.getElementById('v-rhythm').textContent = rhythms[S.scenario];
+  document.getElementById('v-bp').textContent = `${S.systolic}/${S.diastolic}`;
+  document.getElementById('v-map').textContent = `MAP ${S.map}`;
+  document.getElementById('v-spo2').textContent = S.spo2;
+  document.getElementById('v-spo2-status').textContent = S.spo2 >= 95 ? 'Normal' : S.spo2 >= 90 ? 'Borderline' : 'CRITICAL';
+  document.getElementById('v-co').textContent = S.co;
+  document.getElementById('v-ci').textContent = `CI ${S.ci} L/min/m\u00B2`;
+  document.getElementById('v-sv').textContent = S.sv;
+  document.getElementById('v-ef').textContent = `EF ${S.ef}%`;
+  document.getElementById('v-rr').textContent = S.rr;
+  document.getElementById('v-cvp').textContent = S.cvp;
+  document.getElementById('v-pcwp').textContent = S.pcwp;
+  document.getElementById('v-pap').textContent = `${S.pap_s}/${S.pap_d}`;
+
+  // Strip values
+  document.getElementById('ecg-val').innerHTML = `${S.hr} <span class="su">bpm</span>`;
+  document.getElementById('spo2-val').innerHTML = `${S.spo2} <span class="su">%</span>`;
+  document.getElementById('abp-val').textContent = `${S.systolic}/${S.diastolic}`;
+
+  // Colors for critical states
+  document.getElementById('v-hr').style.color = (S.hr > 150 || S.hr < 45) ? 'var(--red)' : 'var(--green)';
+  document.getElementById('v-spo2').style.color = S.spo2 < 90 ? 'var(--red)' : 'var(--cyan)';
+  document.getElementById('v-bp').style.color = (S.systolic < 90 || S.systolic > 180) ? 'var(--yellow)' : 'var(--red)';
+
+  // Alarm overlay
+  const alarm = S.spo2 < 88 || S.systolic < 70 || S.hr > 180 || S.hr < 35;
+  document.getElementById('alarm-overlay').classList.toggle('active', alarm);
+}
+
+// ================================================================
+// AUDIO
+// ================================================================
+let audioCtx = null;
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  S.audioOn = true;
+}
+let lastBeepPhase = 0;
+
+function doBeep() {
+  if (!audioCtx || audioCtx.state !== 'running') return;
+  if (S.phase < 0.05 && lastBeepPhase > 0.85) {
+    // QRS beep
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    // Pitch varies with SpO2
+    osc.frequency.value = 300 + S.spo2 * 6;
+    osc.type = 'sine';
+    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.06);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.06);
+  }
+  lastBeepPhase = S.phase;
+}
+
+document.addEventListener('click', () => { initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume(); }, { once: false });
+
+// ================================================================
+// MAIN LOOP
+// ================================================================
+let prevTime = 0;
+let sparkTimer = 0;
+
+function loop(ts) {
+  requestAnimationFrame(loop);
+
+  S.dt = Math.min(0.05, (ts - prevTime) / 1000);
+  prevTime = ts;
+  S.time += S.dt;
+  S.frameCount++;
+
+  // FPS
+  if (ts - S.fpsTime > 500) {
+    S.fps = Math.round(S.frameCount / ((ts - S.fpsTime) / 1000));
+    S.frameCount = 0; S.fpsTime = ts;
+    document.getElementById('fps-badge').textContent = S.fps + ' FPS';
+  }
+
+  // Clock
+  const sec = Math.floor(S.time);
+  document.getElementById('sim-clock').textContent =
+    `T+ ${String(Math.floor(sec/3600)).padStart(2,'0')}:${String(Math.floor((sec%3600)/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
+
+  // Cardiac cycle
+  const beatDur = 60 / S.hr;
+  const afibJ = S.scenario === 'afib' ? (Math.random()-0.5)*0.12 : 0;
+  S.phase = ((S.time + afibJ) % beatDur) / beatDur;
+
+  updateHemo();
+
+  // Waveform samples
+  const sPerFrame = Math.max(1, Math.round(300 * S.dt));
+  for (let i = 0; i < sPerFrame; i++) {
+    const ph = S.phase + (i/sPerFrame) * S.dt / beatDur;
+    ecgBuf[wIdx] = ecgSample(ph);
+    spo2Buf[wIdx] = spo2Sample(ph);
+    abpBuf[wIdx] = abpSample(ph);
+    wIdx = (wIdx + 1) % BUF;
+  }
+
+  // Wiggers
+  const wigPerFrame = Math.max(1, Math.round(200 * S.dt));
+  for (let i = 0; i < wigPerFrame; i++) {
+    const ph = S.phase + (i/wigPerFrame) * S.dt / beatDur;
+    const p = ph % 1;
+    // LV pressure model
+    let lvp = 8;
+    if (p < 0.1) lvp = 8 + (S.systolic - 8) * Math.sin((p/0.1)*Math.PI*0.5);
+    else if (p < 0.35) lvp = S.systolic - 5*Math.sin(((p-0.1)/0.25)*Math.PI*0.3);
+    else if (p < 0.45) { const u=(p-0.35)/0.1; lvp = S.systolic*(1-u*u) + 8*u*u; }
+    else lvp = 8 + 4*Math.sin(((p-0.45)/0.55)*Math.PI*0.2);
+
+    // Aortic
+    let aop = S.diastolic;
+    if (p > 0.05 && p < 0.35) { const u=(p-0.05)/0.3; aop = S.diastolic + (S.systolic-S.diastolic)*Math.sin(u*Math.PI*0.7); }
+    else if (p >= 0.35) { const u=(p-0.35)/0.65; aop = S.systolic*0.85 - u*(S.systolic*0.85-S.diastolic); }
+
+    // LA pressure
+    const lap = 8 + 6*Math.sin(p*Math.PI*2*0.4+0.5);
+
+    // LV volume
+    let vol = 50 + S.sv*0.9;
+    if (p > 0.1 && p < 0.35) { const u=(p-0.1)/0.25; vol = (50+S.sv*0.9) - S.sv*Math.sin(u*Math.PI*0.5); }
+    else if (p >= 0.35 && p < 0.45) vol = 50;
+    else if (p >= 0.45) { const u=(p-0.45)/0.55; vol = 50 + S.sv*0.9*u; }
+
+    wiggersLVP[wigIdx] = lvp;
+    wiggersAoP[wigIdx] = aop;
+    wiggersLAP[wigIdx] = lap;
+    wiggersVol[wigIdx] = vol;
+    wigIdx = (wigIdx + 1) % WIGGERS_LEN;
+  }
+
+  // Sparklines
+  sparkTimer += S.dt;
+  if (sparkTimer > 1) {
+    sparkTimer = 0;
+    sparkHR.push(S.hr); if (sparkHR.length > SPARK_LEN) sparkHR.shift();
+    sparkBP.push(S.map); if (sparkBP.length > SPARK_LEN) sparkBP.shift();
+    sparkSPO2.push(S.spo2); if (sparkSPO2.length > SPARK_LEN) sparkSPO2.shift();
+  }
+
+  // ---- RENDER ----
+  const hw = heartCanvas._w, hh = heartCanvas._h;
+  heartCtx.clearRect(0, 0, hw, hh);
+
+  // Subtle background pulse
+  const pa = Math.max(0, Math.sin(S.phase*Math.PI*2)*0.03);
+  heartCtx.fillStyle = `rgba(120,20,30,${pa})`;
+  heartCtx.fillRect(0, 0, hw, hh);
+
+  // Heart
+  Heart.draw(heartCtx, hw, hh, S.phase, S.viewMode);
+
+  // Particles
+  const fSpeed = (S.co / 5) * (0.4 + S.contractility * 0.6);
+  particles.forEach(p => {
+    p.progress += S.dt * p.speed * fSpeed;
+    if (p.progress > 1) p.progress -= 1;
+
+    const pos = flowPos(p.progress, p.type, hw, hh);
+    const wobX = Math.sin(S.time * 3 + p.wobble) * p.wobbleAmp;
+    const wobY = Math.cos(S.time * 2.5 + p.wobble) * p.wobbleAmp * 0.7;
+    p.x = pos.x + wobX;
+    p.y = pos.y + wobY;
+    p.alpha = pos.a;
+
+    // Trail
+    p.trail.push({ x: p.x, y: p.y });
+    if (p.trail.length > TRAIL_LEN) p.trail.shift();
+
+    const isFlow = S.viewMode === 'flow';
+    const baseAlpha = p.alpha * (isFlow ? 0.85 : 0.35);
+
+    // Draw trail
+    if (isFlow && p.trail.length > 2) {
+      heartCtx.beginPath();
+      heartCtx.moveTo(p.trail[0].x, p.trail[0].y);
+      for (let i = 1; i < p.trail.length; i++) {
+        heartCtx.lineTo(p.trail[i].x, p.trail[i].y);
+      }
+      heartCtx.strokeStyle = p.type === 'oxy'
+        ? `rgba(255,23,68,${baseAlpha*0.3})` : `rgba(41,121,255,${baseAlpha*0.3})`;
+      heartCtx.lineWidth = p.size * 0.6;
+      heartCtx.stroke();
+    }
+
+    // Draw particle
+    const sz = p.size * (isFlow ? 1.6 : 1);
+    heartCtx.beginPath();
+    heartCtx.arc(p.x, p.y, sz, 0, Math.PI*2);
+    heartCtx.fillStyle = p.type === 'oxy'
+      ? `rgba(255,82,82,${baseAlpha})` : `rgba(68,138,255,${baseAlpha})`;
+    heartCtx.fill();
+
+    if (isFlow) {
+      heartCtx.shadowColor = p.type === 'oxy' ? '#ff1744' : '#2979ff';
+      heartCtx.shadowBlur = 8;
+      heartCtx.fill();
+      heartCtx.shadowBlur = 0;
+    }
+  });
+
+  // Vignette
+  const vig = heartCtx.createRadialGradient(hw/2, hh/2, hw*0.15, hw/2, hh/2, hw*0.65);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.4)');
+  heartCtx.fillStyle = vig;
+  heartCtx.fillRect(0, 0, hw, hh);
+
+  // PV/Wiggers
+  drawPVView(pvCtx, pvCanvas._w, pvCanvas._h);
+
+  // ECG strips
+  drawStrip(ecgCtx, ecgBuf, ecgCanvas._w, ecgCanvas._h, 'rgba(0,230,118,0.85)', wIdx);
+  drawStrip(spo2Ctx, spo2Buf, spo2Canvas._w, spo2Canvas._h, 'rgba(0,229,255,0.85)', wIdx);
+  drawStrip(abpCtx, abpBuf, abpCanvas._w, abpCanvas._h, 'rgba(255,23,68,0.85)', wIdx);
+
+  // Sparklines
+  if (S.frameCount % 30 === 0) {
+    drawSparkline(sparkCanvases[0], sparkHR, 'var(--green)');
+    drawSparkline(sparkCanvases[1], sparkBP, 'var(--red)');
+    drawSparkline(sparkCanvases[2], sparkSPO2, 'var(--cyan)');
+  }
+
+  // UI update
+  if (S.frameCount % 8 === 0) updateUI();
+
+  // Audio
+  doBeep();
+}
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
