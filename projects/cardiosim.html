@@ -287,11 +287,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .wu-unit{font-size:9px;color:var(--text-secondary);opacity:.6;margin-left:2px}
 
 /* ── Panel resizers ─────────────────────────────────────────── */
-.resizer-v{position:fixed;width:6px;background:transparent;cursor:col-resize;z-index:500;user-select:none;transition:background .15s}
-.resizer-h{position:fixed;height:6px;background:transparent;cursor:row-resize;z-index:500;user-select:none;transition:background .15s}
-.resizer-v:hover,.resizer-v.rz-drag,.resizer-h:hover,.resizer-h.rz-drag{background:rgba(0,229,255,.35)}
-.resizer-v::after{content:'';position:absolute;left:2px;top:50%;transform:translateY(-50%);width:1px;height:30px;background:rgba(0,229,255,.25);border-radius:1px}
-.resizer-h::after{content:'';position:absolute;top:2px;left:50%;transform:translateX(-50%);height:1px;width:30px;background:rgba(0,229,255,.25);border-radius:1px}
+.resizer-v{position:fixed;width:10px;background:rgba(60,100,160,.08);cursor:col-resize;z-index:500;user-select:none;transition:background .2s;border-left:1px solid rgba(60,100,160,.18);border-right:1px solid rgba(60,100,160,.18)}
+.resizer-h{position:fixed;height:10px;background:rgba(60,100,160,.08);cursor:row-resize;z-index:500;user-select:none;transition:background .2s;border-top:1px solid rgba(60,100,160,.18);border-bottom:1px solid rgba(60,100,160,.18)}
+.resizer-v:hover,.resizer-v.rz-drag{background:rgba(0,229,255,.22);border-color:rgba(0,229,255,.5)}
+.resizer-h:hover,.resizer-h.rz-drag{background:rgba(0,229,255,.22);border-color:rgba(0,229,255,.5)}
+/* grip dots in the center */
+.resizer-v::after{content:'⋮';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:rgba(0,229,255,.4);font-size:14px;line-height:1;pointer-events:none}
+.resizer-h::after{content:'⋯';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:rgba(0,229,255,.4);font-size:14px;line-height:1;pointer-events:none}
 
 /* ── Drug interaction panel ─────────────────────────────────── */
 .drug-active-bar{display:flex;align-items:center;justify-content:space-between;background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);border-radius:5px;padding:5px 8px;margin-bottom:8px;gap:6px}
@@ -2106,10 +2108,10 @@ function posRZ() {
   const wh = window.innerHeight;
   const x1 = GS.c1, x2 = GS.c1+GS.c2, x3 = GS.c1+GS.c2+GS.c3;
   // Use direct property assignment — never += cssText (would accumulate duplicates)
-  Object.assign(rv1.style, { left:(x1-3)+'px', top:'52px',          width:'6px', height:(wh-52)+'px' });
-  Object.assign(rv2.style, { left:(x2-3)+'px', top:'52px',          width:'6px', height:(wh-52-GS.r3)+'px' });
-  Object.assign(rv3.style, { left:(x3-3)+'px', top:'52px',          width:'6px', height:(wh-52)+'px' });
-  Object.assign(rh.style,  { left: x1+'px',    top:(wh-GS.r3-3)+'px', height:'6px', width:(x3-x1)+'px' });
+  Object.assign(rv1.style, { left:(x1-5)+'px', top:'52px',            width:'10px', height:(wh-52)+'px' });
+  Object.assign(rv2.style, { left:(x2-5)+'px', top:'52px',            width:'10px', height:(wh-52-GS.r3)+'px' });
+  Object.assign(rv3.style, { left:(x3-5)+'px', top:'52px',            width:'10px', height:(wh-52)+'px' });
+  Object.assign(rh.style,  { left: x1+'px',    top:(wh-GS.r3-5)+'px', height:'10px', width:(x3-x1)+'px' });
 }
 
 function makeDragger(el, fn) {
@@ -2162,7 +2164,7 @@ window.addEventListener('resize', () => {
   GS.c2 = Math.round(GS.c2*scale);
   GS.c3 = Math.round(GS.c3*scale);
   GS.c4 = newW-GS.c1-GS.c2-GS.c3;
-  posRZ();
+  gsApply(); // was posRZ() — must call gsApply to update grid + resize canvases
 });
 
 gsInit();
