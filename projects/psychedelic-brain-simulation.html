@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psychedelic Neuroscience Brain Simulation v4</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Quicksand:wght@300;400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0015;--panel:rgba(12,4,28,0.88);--border:rgba(255,255,255,0.08);--text:#e8e0f8;--text-dim:#9988bb;--accent:#ff66cc;--glow:rgba(255,102,204,0.4)}
+body{background:var(--bg);color:var(--text);font-family:'Quicksand',sans-serif;overflow:hidden;height:100vh}
+
+@keyframes rainbow{
+  0%{border-color:hsl(0,100%,70%)}
+  14%{border-color:hsl(50,100%,70%)}
+  28%{border-color:hsl(100,100%,70%)}
+  42%{border-color:hsl(150,100%,70%)}
+  57%{border-color:hsl(200,100%,70%)}
+  71%{border-color:hsl(260,100%,70%)}
+  85%{border-color:hsl(310,100%,70%)}
+  100%{border-color:hsl(360,100%,70%)}
+}
+@keyframes rainbowBg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes breathe{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.015)}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes rainbowText{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 0 15px rgba(255,102,204,0.3)}
+  50%{box-shadow:0 0 30px rgba(255,102,204,0.6)}
+}
+
+#canvas-container{position:absolute;top:56px;left:270px;right:320px;bottom:80px;z-index:1}
+#canvas-container-2{position:absolute;top:56px;right:320px;bottom:80px;z-index:1;display:none;border-left:2px solid rgba(255,102,204,0.4)}
+.compare-active #canvas-container{right:calc(50% + 5px);left:270px}
+.compare-active #canvas-container-2{display:block;left:calc(50% + 135px + 5px);right:0}
+.compare-active #right-panel{display:none}
+.compare-active #time-bar{right:0}
+.compare-active #narration-bar{right:0}
+
+/* Top Bar */
+#top-bar{position:fixed;top:0;left:0;right:0;height:56px;background:linear-gradient(135deg,rgba(20,0,40,0.95),rgba(10,0,30,0.95));border-bottom:2px solid;border-image:linear-gradient(90deg,#ff0055,#ff6600,#ffcc00,#33ff33,#00ccff,#6633ff,#ff0055) 1;display:flex;align-items:center;padding:0 24px;z-index:100;backdrop-filter:blur(20px)}
+#top-bar h1{font-family:'Righteous',cursive;font-size:22px;font-weight:400;letter-spacing:2px;background:linear-gradient(90deg,#ff0055,#ff6600,#ffcc00,#33ff33,#00ccff,#6633ff,#ff00aa,#ff0055);background-size:400% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbowText 4s ease infinite}
+#top-bar .sub{font-size:11px;color:var(--text-dim);margin-left:18px;font-weight:500}
+
+/* Left Panel */
+#left-panel{position:fixed;top:56px;left:0;width:270px;bottom:0;background:var(--panel);border-right:2px solid;border-image:linear-gradient(180deg,#ff0055,#ff6600,#ffcc00,#33ff33,#00ccff,#6633ff) 1;z-index:90;backdrop-filter:blur(24px);overflow-y:auto;padding:14px;animation:breathe 6s ease-in-out infinite}
+.ptitle{font-family:'Righteous',cursive;font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin:12px 0 8px;background:linear-gradient(90deg,#ff66cc,#66ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.substance-btn{width:100%;padding:9px 14px;margin-bottom:4px;background:rgba(255,255,255,0.02);border:2px solid transparent;border-radius:20px;color:var(--text);font-family:'Quicksand';font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all 0.3s}
+.substance-btn:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15)}
+.substance-btn.active{border-color:var(--substance-color,var(--accent));background:rgba(255,102,204,0.08);animation:rainbow 3s linear infinite;box-shadow:0 0 20px rgba(255,102,204,0.2)}
+.sdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;box-shadow:0 0 8px currentColor}
+.stype{font-size:9px;color:var(--text-dim);margin-left:auto;font-weight:500}
+
+.slider-group{margin-bottom:14px}
+.slider-label{display:flex;justify-content:space-between;margin-bottom:5px}
+.slider-label span{font-size:11px;color:var(--text-dim);font-weight:500}
+.slider-value{font-family:'Quicksand';font-size:11px;color:var(--accent);font-weight:700}
+input[type="range"]{-webkit-appearance:none;width:100%;height:4px;background:linear-gradient(90deg,#ff0055,#ff6600,#ffcc00,#33ff33,#00ccff,#6633ff);border-radius:4px;outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:radial-gradient(circle,#fff,#ff66cc);border-radius:50%;cursor:pointer;box-shadow:0 0 12px var(--glow)}
+.dose-markers{display:flex;justify-content:space-between;margin-top:4px}
+.dose-markers span{font-size:8px;color:var(--text-dim);font-weight:500}
+
+.ctrl-section{margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06)}
+.toggle-row{display:flex;gap:5px;margin-bottom:7px}
+.toggle-btn{flex:1;padding:6px 8px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;color:var(--text-dim);font-family:'Quicksand';font-size:10px;font-weight:600;cursor:pointer;transition:all 0.3s}
+.toggle-btn.active{background:rgba(255,102,204,0.12);border-color:var(--accent);color:var(--text);box-shadow:0 0 10px rgba(255,102,204,0.2)}
+
+.audio-btn{width:100%;padding:10px;margin-top:8px;background:linear-gradient(135deg,rgba(255,0,85,0.12),rgba(102,51,255,0.12),rgba(0,204,255,0.12));background-size:300% 300%;animation:rainbowBg 4s ease infinite;border:2px solid rgba(255,102,204,0.4);border-radius:20px;color:#ff66cc;font-family:'Righteous',cursive;font-size:12px;font-weight:400;cursor:pointer;transition:all 0.3s;letter-spacing:1px}
+.audio-btn:hover{border-color:#ff66cc;box-shadow:0 0 20px rgba(255,102,204,0.3)}
+.audio-btn.playing{border-color:#66ccff;color:#66ccff;box-shadow:0 0 20px rgba(102,204,255,0.4)}
+
+/* Right Panel */
+#right-panel{position:fixed;top:56px;right:0;width:320px;bottom:0;background:var(--panel);border-left:2px solid;border-image:linear-gradient(180deg,#6633ff,#00ccff,#33ff33,#ffcc00,#ff6600,#ff0055) 1;z-index:90;backdrop-filter:blur(24px);overflow-y:auto;padding:14px;animation:breathe 7s ease-in-out infinite}
+.info-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:12px 14px;margin-bottom:10px;backdrop-filter:blur(8px);animation:float 8s ease-in-out infinite}
+.info-card h3{font-family:'Righteous',cursive;font-size:13px;font-weight:400;margin-bottom:6px}
+.info-card p,.info-card li{font-size:11px;line-height:1.6;color:var(--text-dim);font-weight:500}
+.info-card ul{list-style:none;padding:0}
+.info-card ul li::before{content:"\2726 ";color:#ff66cc;margin-right:4px;font-size:10px}
+.stat-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.stat-row:last-child{border:none}
+.stat-label{font-size:11px;color:var(--text-dim);font-weight:500}
+.stat-value{font-size:11px;font-family:'Quicksand';color:var(--text);font-weight:700}
+.receptor-badge{display:inline-block;padding:2px 8px;background:linear-gradient(135deg,rgba(255,102,204,0.15),rgba(102,51,255,0.15));border-radius:12px;font-size:10px;font-family:'Quicksand';color:#ff66cc;font-weight:700;margin:2px}
+
+.region-effect-detail{background:linear-gradient(135deg,rgba(255,102,204,0.06),rgba(102,51,255,0.06));border-left:3px solid;border-image:linear-gradient(180deg,#ff0055,#6633ff) 1;padding:8px 12px;margin:8px 0;border-radius:0 16px 16px 0}
+.region-effect-detail .effect-title{font-family:'Righteous',cursive;font-size:11px;font-weight:400;color:#ff66cc}
+.region-effect-detail .effect-desc{font-size:10px;color:var(--text-dim);margin-top:3px;line-height:1.5;font-weight:500}
+
+/* Time bar */
+#time-bar{position:fixed;bottom:0;left:270px;right:320px;height:80px;background:var(--panel);border-top:2px solid;border-image:linear-gradient(90deg,#ff0055,#ff6600,#ffcc00,#33ff33,#00ccff,#6633ff,#ff0055) 1;z-index:90;backdrop-filter:blur(24px);padding:10px 22px}
+.compare-active #time-bar{right:320px}
+#time-phases{display:flex;height:20px;margin-bottom:5px;gap:2px;border-radius:10px;overflow:hidden;background:linear-gradient(90deg,rgba(255,0,85,0.3),rgba(255,102,0,0.3),rgba(255,204,0,0.3),rgba(51,255,51,0.3),rgba(0,204,255,0.3),rgba(102,51,255,0.3))}
+.phase-segment{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:rgba(255,255,255,0.5);transition:all 0.3s;font-family:'Quicksand'}
+.phase-segment.active{filter:brightness(2.0);color:rgba(255,255,255,0.9);text-shadow:0 0 8px rgba(255,255,255,0.5)}
+.phase-onset{background:rgba(100,200,255,0.25)}.phase-peak{background:rgba(255,60,120,0.35)}.phase-plateau{background:rgba(255,180,60,0.25)}.phase-comedown{background:rgba(100,200,150,0.2)}.phase-afterglow{background:rgba(200,200,255,0.15)}
+#time-info{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+#time-info span{font-size:11px;font-family:'Quicksand';font-weight:600}
+.play-btn{padding:4px 18px;background:linear-gradient(135deg,#ff0055,#6633ff);border:none;border-radius:14px;color:white;font-family:'Righteous',cursive;font-size:11px;font-weight:400;cursor:pointer;letter-spacing:1px;transition:all 0.3s;box-shadow:0 0 15px rgba(255,0,85,0.3)}
+.play-btn:hover{box-shadow:0 0 25px rgba(255,0,85,0.5)}
+
+/* Narration */
+#narration-bar{position:fixed;bottom:80px;left:270px;right:320px;z-index:95;pointer-events:none}
+#narration-text{background:linear-gradient(135deg,rgba(20,0,40,0.92),rgba(10,0,30,0.92));border:2px solid;border-image:linear-gradient(90deg,#ff6600,#ffcc00,#33ff33,#00ccff,#6633ff) 1;border-radius:0;padding:10px 18px;font-size:12px;line-height:1.6;color:var(--text);backdrop-filter:blur(12px);font-family:'Quicksand';font-weight:500;transition:opacity 0.4s;box-shadow:0 0 20px rgba(102,51,255,0.15)}
+
+/* Floating labels */
+.floating-label{position:absolute;transform:translate(-50%,-120%);background:rgba(20,0,40,0.9);border:2px solid;animation:rainbow 4s linear infinite;border-radius:16px;padding:5px 10px;pointer-events:none;z-index:50;backdrop-filter:blur(8px);transition:opacity 0.4s,box-shadow 0.4s;max-width:200px}
+.fl-name{font-family:'Righteous',cursive;font-size:11px;font-weight:400;color:#fff;letter-spacing:0.5px}
+.fl-icon{display:inline-block;margin-right:4px;font-size:10px}
+.fl-effect{font-size:9px;font-weight:500;margin-top:2px;line-height:1.3}
+
+/* Tooltip */
+#region-tooltip{position:fixed;display:none;background:rgba(20,0,40,0.95);border:2px solid rgba(255,102,204,0.4);border-radius:16px;padding:10px 14px;z-index:200;max-width:260px;pointer-events:none;backdrop-filter:blur(12px);box-shadow:0 0 20px rgba(255,102,204,0.2)}
+#region-tooltip h4{font-family:'Righteous',cursive;font-size:12px;font-weight:400;margin-bottom:4px}
+#region-tooltip p{font-size:10px;color:var(--text-dim);line-height:1.5;font-weight:500}
+.activity-bar{height:4px;background:rgba(255,255,255,0.1);border-radius:4px;margin-top:6px;overflow:hidden}
+.activity-fill{height:100%;border-radius:4px;transition:width 0.5s;background:linear-gradient(90deg,#ff0055,#ff6600,#ffcc00)}
+
+/* Compare mode */
+#compare-select{display:none;margin-top:8px}
+.compare-active #compare-select{display:block}
+#compare-select select{width:100%;padding:7px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Quicksand';font-size:11px;font-weight:600}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,102,204,0.2);border-radius:4px}
+</style>
+</head>
+<body>
+
+<div id="top-bar">
+  <h1>&#10023; PSYCHEDELIC NEUROSCIENCE &#10023;</h1>
+  <span class="sub">Interactive neurological visualization &middot; v4 Cosmic Hippie</span>
+  <span class="sub" id="audio-indicator" style="margin-left:auto;color:#66ccff;display:none">&#10023; AUDIO ON &#10023;</span>
+</div>
+
+<div id="left-panel">
+  <div class="ptitle">Substance</div>
+  <div id="substance-list"></div>
+
+  <div class="ctrl-section">
+    <div class="ptitle">Dose Level</div>
+    <div class="slider-group">
+      <div class="slider-label"><span id="dose-label">Micro</span><span class="slider-value" id="dose-value">--</span></div>
+      <input type="range" id="dose-slider" min="0" max="4" step="1" value="0">
+      <div class="dose-markers"><span>Micro</span><span>Threshold</span><span>Common</span><span>Strong</span><span>Heavy</span></div>
+    </div>
+  </div>
+
+  <div class="ctrl-section">
+    <div class="ptitle">View</div>
+    <div class="toggle-row">
+      <button class="toggle-btn active" data-view="regions" onclick="setView('regions')">Regions</button>
+      <button class="toggle-btn" data-view="connectivity" onclick="setView('connectivity')">Connectivity</button>
+    </div>
+    <div class="toggle-row">
+      <button class="toggle-btn active" data-view="labels" onclick="toggleLabels()">Labels</button>
+      <button class="toggle-btn" data-view="rotate" onclick="toggleRotate()">Auto-Rotate</button>
+    </div>
+    <div class="toggle-row">
+      <button class="toggle-btn" id="compare-btn" onclick="toggleCompare()">Compare Mode</button>
+    </div>
+    <div id="compare-select">
+      <div class="ptitle">Compare With</div>
+      <select id="compare-substance" onchange="selectCompareSubstance(this.value)"></select>
+    </div>
+  </div>
+
+  <div class="ctrl-section">
+    <div class="ptitle">Sound</div>
+    <button class="audio-btn" id="audio-btn" onclick="toggleAudio()">ENABLE AUDIO</button>
+  </div>
+</div>
+
+<div id="canvas-container"></div>
+<div id="canvas-container-2"></div>
+
+<div id="narration-bar">
+  <div id="narration-text" data-current="">&#10022; Select a substance to begin... &#10022;</div>
+</div>
+
+<div id="time-bar">
+  <div id="time-phases"></div>
+  <input type="range" id="time-slider" min="0" max="100" value="0" step="0.5">
+  <div id="time-info">
+    <span id="time-current">T+0:00</span>
+    <span id="time-phase-label">Pre-ingestion</span>
+    <button class="play-btn" id="play-btn" onclick="togglePlay()">PLAY</button>
+    <span id="time-total">0:00 / --:--</span>
+  </div>
+</div>
+
+<div id="right-panel">
+  <div class="ptitle">Substance Profile</div>
+  <div id="substance-info"></div>
+  <div class="ptitle" style="margin-top:14px">Selected Region</div>
+  <div id="region-info"><div class="info-card"><p style="color:var(--text-dim);font-size:11px">&#10022; Click a brain region for details &#10022;</p></div></div>
+</div>
+
+<div id="region-tooltip"><h4 id="tooltip-title"></h4><p id="tooltip-text"></p><div class="activity-bar"><div class="activity-fill" id="tooltip-bar"></div></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+// ============================================================
+// SUBSTANCE DATA (identical science from v3)
+// ============================================================
+const S = {
+  lsd:{name:"LSD",full:"Lysergic Acid Diethylamide",color:"#c084fc",type:"Classical",cls:"Ergoline",target:"5-HT2A partial agonist",
+    receptors:[{n:"5-HT2A",ki:"3-7 nM",a:"Partial agonist"},{n:"5-HT1A",ki:"2-5 nM",a:"Partial agonist"},{n:"D2",ki:"~2 nM",a:"Partial agonist"}],
+    doses:["5-20 ug","15-75 ug","75-150 ug","150-300 ug","300+ ug"],doseL:["Micro","Threshold","Common","Strong","Heavy"],
+    dur:{onset:30,peak:150,plateau:300,comedown:180,afterglow:120,total:"8-12 hr"},
+    mech:"Binds 5-HT2A on layer V pyramidal neurons. EL2 'lid' traps molecule. Gq/11->PLC->IP3 cascade. Disrupts CSTC loops. Unique D1/D2 activity.",
+    findings:["DMN disintegration (Carhart-Harris 2016)","Claustrum suppressed (Barrett 2020)","5-HT2A blockade abolishes all effects (Preller 2018)"],
+    fx:{speed:0.003,chaos:0.8,style:'flowing'},bloom:{filCount:12,filLen:3.5,filWave:6,memDetail:2,pulseSpeed:3.5,breathAmp:0.4,tipSize:1.8,spiralFactor:0.15},
+    effects:{dmn:-0.85,visual_cortex:0.8,thalamus:0.7,amygdala:-0.5,pfc:0.6,claustrum:-0.7,hippocampus:0.3,acc:0.4,pcc:-0.8,insula:0.5,raphe:-0.3,tpj:0.4,lc:0.3,sn:0.5,striatum:0.3}},
+  psilocybin:{name:"Psilocybin",full:"4-phosphoryloxy-N,N-DMT \u2192 Psilocin",color:"#60a5fa",type:"Classical",cls:"Tryptamine",target:"5-HT2A full agonist",
+    receptors:[{n:"5-HT2A",ki:"6-10 nM",a:"Full agonist"},{n:"5-HT2C",ki:"10-20 nM",a:"Agonist"},{n:"5-HT1A",ki:"50-125 nM",a:"Partial agonist"}],
+    doses:["0.1-0.5 g","0.5-1.5 g","2-3.5 g","3.5-5 g","5+ g"],doseL:["Micro","Threshold","Common","Strong","Heavy"],
+    dur:{onset:25,peak:75,plateau:120,comedown:90,afterglow:60,total:"4-6 hr"},
+    mech:"Prodrug \u2192 psilocin. Full agonist at 5-HT2A. Same Gq/PLC cascade. Promotes dendritic spine growth. REBUS model: relaxes predictive priors.",
+    findings:["DECREASES brain activity in hubs (Carhart-Harris 2012)",">3x FC disruption vs methylphenidate (Siegel 2024, Nature)","Spine density +1 month (Shao 2021)"],
+    fx:{speed:0.002,chaos:0.5,style:'organic'},bloom:{filCount:8,filLen:2.5,filWave:3,memDetail:1,pulseSpeed:2.0,breathAmp:0.35,tipSize:1.2,spiralFactor:0.0},
+    effects:{dmn:-0.9,visual_cortex:0.6,thalamus:0.65,amygdala:-0.4,pfc:-0.5,claustrum:-0.8,hippocampus:0.4,acc:-0.6,pcc:-0.9,insula:0.4,raphe:-0.2,tpj:0.3,lc:0.2,sn:-0.3,striatum:0.2}},
+  dmt:{name:"DMT",full:"N,N-Dimethyltryptamine",color:"#fb7185",type:"Classical",cls:"Tryptamine (endogenous)",target:"5-HT2A + Sigma-1",
+    receptors:[{n:"5-HT2A",ki:"75-130 nM",a:"Agonist"},{n:"Sigma-1",ki:"~14 nM",a:"Agonist"},{n:"5-HT1A",ki:"40-75 nM",a:"Agonist"}],
+    doses:["5-10 mg","10-20 mg","20-40 mg","40-60 mg","60+ mg"],doseL:["Threshold","Light","Common","Strong","Breakthrough"],
+    dur:{onset:1,peak:4,plateau:10,comedown:10,afterglow:15,total:"15-30 min"},
+    mech:"5-HT2A + sigma-1 dual mechanism. Endogenous in mammalian brains. Sigma-1 promotes neuroprotection and neurogenesis. Rapid MAO-A metabolism.",
+    findings:["Brain enters waking+REM hybrid (Timmermann 2023, PNAS)","Endogenous DMT in rat brain (Dean 2019)","Promotes neurogenesis via sigma-1"],
+    fx:{speed:0.008,chaos:1.0,style:'burst'},bloom:{filCount:18,filLen:4.0,filWave:10,memDetail:3,pulseSpeed:6.0,breathAmp:0.6,tipSize:2.5,spiralFactor:0.3},
+    effects:{dmn:-0.7,visual_cortex:0.95,thalamus:0.6,amygdala:-0.3,pfc:0.5,claustrum:-0.5,hippocampus:0.6,acc:0.3,pcc:-0.6,insula:0.4,raphe:-0.2,tpj:0.5,lc:0.4,sn:0.4,striatum:0.2}},
+  mescaline:{name:"Mescaline",full:"3,4,5-trimethoxyphenethylamine",color:"#4ade80",type:"Classical",cls:"Phenethylamine",target:"5-HT2A (low affinity)",
+    receptors:[{n:"5-HT2A",ki:"~4900 nM",a:"Agonist"},{n:"5-HT2B",ki:"~1600 nM",a:"Agonist"},{n:"Alpha-1",ki:"moderate",a:"Agonist"}],
+    doses:["50-100 mg","100-200 mg","200-400 mg","400-600 mg","600+ mg"],doseL:["Threshold","Light","Common","Strong","Heavy"],
+    dur:{onset:60,peak:180,plateau:240,comedown:180,afterglow:120,total:"8-12 hr"},
+    mech:"5-HT2A agonism via Gq/PLC. Phenethylamine = slow absorption, large dose needed. Additional adrenergic/dopaminergic activity.",
+    findings:["Kluver's form constants (1928)","Most vivid color enhancement of any psychedelic","~500mg = 100ug LSD = 20mg psilocybin"],
+    fx:{speed:0.0015,chaos:0.4,style:'geometric'},bloom:{filCount:6,filLen:2.0,filWave:2,memDetail:0,pulseSpeed:1.5,breathAmp:0.2,tipSize:1.0,spiralFactor:0.0},
+    effects:{dmn:-0.6,visual_cortex:0.85,thalamus:0.55,amygdala:-0.3,pfc:0.4,claustrum:-0.4,hippocampus:0.3,acc:0.2,pcc:-0.5,insula:0.4,raphe:-0.2,tpj:0.3,lc:0.3,sn:0.3,striatum:0.2}},
+  mdma:{name:"MDMA",full:"3,4-Methylenedioxymethamphetamine",color:"#fbbf24",type:"Entactogen",cls:"Amphetamine",target:"SERT/DAT/NET reversal",
+    receptors:[{n:"SERT",ki:"EC50 ~70 nM",a:"Substrate reversal"},{n:"NET",ki:"EC50 ~110 nM",a:"Substrate reversal"},{n:"DAT",ki:"EC50 ~375 nM",a:"Substrate reversal"}],
+    doses:["5-20 mg","30-75 mg","75-125 mg","125-175 mg","175+ mg"],doseL:["Micro","Threshold","Common","Strong","Heavy"],
+    dur:{onset:40,peak:90,plateau:90,comedown:120,afterglow:180,total:"3-5 hr"},
+    mech:"Reverses monoamine transporters \u2192 serotonin/NE/DA flood. Triggers oxytocin release. NOT primarily 5-HT2A. Reduces amygdala reactivity.",
+    findings:["67% PTSD remission after 3 sessions (MAPS Phase 3)","Amygdala reactivity dramatically reduced (Bedi 2009)","Powerful oxytocin release"],
+    fx:{speed:0.002,chaos:0.2,style:'warm'},bloom:{filCount:7,filLen:1.8,filWave:2,memDetail:1,pulseSpeed:2.5,breathAmp:0.3,tipSize:1.5,spiralFactor:0.05},
+    effects:{dmn:-0.2,visual_cortex:0.1,thalamus:0.2,amygdala:-0.8,pfc:0.6,claustrum:-0.1,hippocampus:0.4,acc:0.3,pcc:-0.15,insula:0.5,raphe:0.3,tpj:0.2,lc:0.5,sn:-0.3,striatum:0.7}},
+  ketamine:{name:"Ketamine",full:"Arylcyclohexylamine",color:"#22d3ee",type:"Dissociative",cls:"Arylcyclohexylamine",target:"NMDA antagonist",
+    receptors:[{n:"NMDA",ki:"500-3000 nM",a:"Non-competitive antagonist"},{n:"Mu-opioid",ki:"~10,000 nM",a:"Weak agonist"},{n:"HCN1",ki:"clinical",a:"Blocker"}],
+    doses:["0.1 mg/kg","0.2-0.3 mg/kg","0.5 mg/kg IV","0.5-1 mg/kg","1.5+ mg/kg"],doseL:["Sub-threshold","Sub-dissociative","Antidepressant","Dissociative","Anesthetic"],
+    dur:{onset:5,peak:25,plateau:30,comedown:30,afterglow:60,total:"45-90 min"},
+    mech:"Blocks NMDA on GABAergic interneurons \u2192 paradoxical glutamate surge \u2192 AMPA \u2192 BDNF \u2192 mTORC1 \u2192 rapid synaptogenesis. Lateral habenula blockade.",
+    findings:["Rapid antidepressant in 2-4h (Berman 2000)","Restores stress-lost spines (Moda-Sava 2019, Science)","HNK metabolite sustains effects"],
+    fx:{speed:0.001,chaos:0.6,style:'cloud'},bloom:{filCount:5,filLen:3.0,filWave:1,memDetail:2,pulseSpeed:1.0,breathAmp:0.5,tipSize:2.0,spiralFactor:0.0},
+    effects:{dmn:-0.5,visual_cortex:0.2,thalamus:-0.6,amygdala:-0.3,pfc:0.7,claustrum:-0.3,hippocampus:0.5,acc:-0.6,pcc:-0.5,insula:0.3,raphe:0.1,tpj:-0.4,lc:0.3,sn:-0.4,striatum:0.4}},
+  ayahuasca:{name:"Ayahuasca",full:"DMT + MAOIs (Harmine, Harmaline, THH)",color:"#a78bfa",type:"Classical",cls:"Tryptamine+MAOI",target:"5-HT2A + MAO-A inhibition",
+    receptors:[{n:"5-HT2A",ki:"75-130 nM (DMT)",a:"Agonist"},{n:"MAO-A",ki:"IC50 2-5 nM",a:"Reversible inhibitor"},{n:"Sigma-1",ki:"~14 nM",a:"Agonist"}],
+    doses:["~10mg DMT","15-25mg","25-50mg","50-75mg","75+mg"],doseL:["Threshold","Light","Common","Strong","Heavy"],
+    dur:{onset:40,peak:120,plateau:120,comedown:60,afterglow:120,total:"4-6 hr"},
+    mech:"MAOIs prevent oral DMT degradation. Sustained plasma DMT. Harmine: DYRK1A inhibitor (neurogenesis). THH: weak SSRI. Unique synergy.",
+    findings:["V1 activation = actual seeing (de Araujo 2012)","Strongest parahippocampal activation","Antidepressant at 1+7 days (Palhano-Fontes 2019)"],
+    fx:{speed:0.002,chaos:0.7,style:'serpent'},bloom:{filCount:10,filLen:3.5,filWave:5,memDetail:1,pulseSpeed:2.0,breathAmp:0.45,tipSize:1.4,spiralFactor:0.2},
+    effects:{dmn:-0.7,visual_cortex:0.9,thalamus:0.5,amygdala:-0.4,pfc:0.5,claustrum:-0.5,hippocampus:0.7,acc:0.4,pcc:-0.6,insula:0.5,raphe:-0.3,tpj:0.4,lc:0.3,sn:0.3,striatum:0.2}},
+  "5meodmt":{name:"5-MeO-DMT",full:"5-Methoxy-N,N-dimethyltryptamine",color:"#f472b6",type:"Classical",cls:"Tryptamine",target:"5-HT1A full agonist",
+    receptors:[{n:"5-HT1A",ki:"3-10 nM",a:"Full agonist"},{n:"5-HT2A",ki:"80-100 nM",a:"Moderate agonist"}],
+    doses:["1-3 mg","3-6 mg","6-15 mg","15-25 mg","25+ mg"],doseL:["Threshold","Light","Common","Strong","Heavy"],
+    dur:{onset:1,peak:4,plateau:10,comedown:10,afterglow:30,total:"15-30 min"},
+    mech:"DOMINANT 5-HT1A agonism (Gi/Go \u2192 inhibit cAMP \u2192 GIRK channels). Less visual, more ego dissolution. 80% rated top-5 life experience.",
+    findings:["Most potent ego dissolver","80% top-5 meaningful experience (Johns Hopkins)","Sustained improvements 4+ weeks (Maastricht)"],
+    fx:{speed:0.01,chaos:1.2,style:'whiteout'},bloom:{filCount:4,filLen:2.0,filWave:1,memDetail:2,pulseSpeed:5.0,breathAmp:0.8,tipSize:1.0,spiralFactor:0.0},
+    effects:{dmn:-0.95,visual_cortex:0.3,thalamus:0.4,amygdala:-0.5,pfc:0.3,claustrum:-0.6,hippocampus:0.3,acc:-0.3,pcc:-0.9,insula:0.6,raphe:-0.7,tpj:-0.5,lc:0.2,sn:-0.5,striatum:0.1}}
+};
+
+// Per-substance per-region SPECIFIC effects
+const REGION_SPECIFIC = {
+  lsd: {
+    dmn:"Dramatic disintegration of self-narrative. mPFC-PCC decouple. Ego boundaries dissolve. Autobiographical processing halts.",
+    visual_cortex:"V1 receives input from ALL brain areas (normally just thalamus). Complex geometry, fractals, color intensification. Eyes-open trails/morphing.",
+    thalamus:"Sensory gate OPENS via CSTC disruption. Unfiltered perceptual data floods cortex. Synesthesia (hearing colors, seeing sounds).",
+    amygdala:"Fear reactivity reduced (Mueller 2017, Basel). Emotional openness. Threat detection dampened.",
+    pfc:"Enhanced lateral PFC connectivity. Novel associations, creative leaps. D2 dopamine activity adds stimulant-like cognitive drive.",
+    claustrum:"Consciousness 'conductor' suppressed. Integrated experience fragments. Boundary between senses dissolves.",
+    hippocampus:"Time perception distorted. Associative memory links restructured. Past events viewed from new perspectives.",
+    acc:"Error monitoring altered. Rumination loops disrupted. Cognitive flexibility increased.",
+    pcc:"STRONGEST deactivation \u2014 core ego dissolution hub. Self-referential processing stops. 'I' disappears.",
+    insula:"Interoceptive awareness heightened. Body feels electric/fluid. Empathic resonance amplified.",
+    raphe:"5-HT system modulated at source. Autoreceptor dynamics shift entire serotonergic tone.",
+    tpj:"Self-other boundary blurs. Out-of-body possible at high dose. Merging with environment.",
+    lc:"Norepinephrine surge. Pupil dilation. Heightened arousal and alertness. Sympathetic activation.",
+    sn:"Salience filtering collapses. EVERYTHING becomes meaningful. Attention hierarchy flattened.",
+    striatum:"Mild reward activation via D2. Euphoria less prominent than with MDMA but present."
+  },
+  psilocybin: {
+    dmn:"PCC and mPFC show GREATEST decreases. The greater the decrease, the more intense the experience. DMN 'resets' post-session.",
+    visual_cortex:"Geometric patterns, breathing/morphing surfaces. Less electric than LSD \u2014 more organic, flowing, nature-like.",
+    thalamus:"Thalamocortical connectivity increases (Vollenweider CSTC). Sensory flooding with warm, organic quality.",
+    amygdala:"Initial INCREASE in emotional access (therapeutic window), then long-term DECREASE in reactivity to negative stimuli (Roseman 2018).",
+    pfc:"Medial PFC DECREASES (rare for a drug). Prefrontal 'editor' goes offline. Thoughts become uncensored, raw.",
+    claustrum:"Most heavily suppressed region (Barrett 2020, Johns Hopkins). Consciousness integration breaks down.",
+    hippocampus:"Persistent FC decrease lasting WEEKS (Siegel 2024, Nature). Memory reconsolidation. 'Life review' experiences.",
+    acc:"sgACC (depression target) activity normalized. Rumination reduces. Emotional regulation recalibrates.",
+    pcc:"Epicenter of ego dissolution. Deactivation magnitude predicts mystical experience intensity.",
+    insula:"Body dissolving sensation. Waves of warmth. Nausea possible (gut serotonin). Enhanced emotional embodiment.",
+    raphe:"Serotonergic tone shifted. 5-HT2A downregulation begins (tolerance onset within hours).",
+    tpj:"Boundary dissolution. Feeling of unity with surroundings. Social cognition altered.",
+    lc:"Mild arousal increase. Less stimulating than LSD (no dopamine component).",
+    sn:"Salience network partially disrupted. Internal experiences become more salient than external.",
+    striatum:"Minimal reward circuit activation. Experience is meaningful but not euphoric per se."
+  },
+  dmt: {
+    dmn:"Rapid dissolution. Brain hierarchy collapses within 60 seconds of smoking. Complete ego loss at breakthrough doses.",
+    visual_cortex:"MOST INTENSE visual activation of any psychedelic. 'Realer than real' landscapes, entities, geometric cathedrals. Eyes-closed visions rival reality.",
+    thalamus:"Gate opens instantly. Sensory system overwhelmed. New dimensions of perception reported.",
+    amygdala:"Brief fear response possible at onset ('the rush'), then dissolution into the experience.",
+    pfc:"Altered but not suppressed. Cognitive witness often maintained ('I can't believe what I'm seeing').",
+    claustrum:"Suppressed. Unified consciousness fragments into kaleidoscopic multiplicity.",
+    hippocampus:"Dream-like replay. Narrative visions with plot. Memory-like 'other worlds'. Parahippocampal activation.",
+    acc:"Briefly destabilized then overridden by the intensity of the experience.",
+    pcc:"Rapid ego dissolution. Self-referential processing stops almost immediately.",
+    insula:"Intense somatic rush at onset. Body awareness may disappear completely at breakthrough.",
+    raphe:"5-HT system overridden at source. Endogenous DMT system amplified (DMT is produced here naturally).",
+    tpj:"Complete self-other dissolution. 'Entity contact' may involve TPJ-mediated social cognition activating without external social input.",
+    lc:"Strong norepinephrine surge at onset. Adrenaline-like rush.",
+    sn:"Salience overwhelmed. Everything is maximally salient simultaneously.",
+    striatum:"Sigma-1 activation provides neuroprotective reward-adjacent signaling."
+  },
+  mescaline: {
+    dmn:"Moderate disruption. Ego remains more intact than tryptamines \u2014 'earthy', grounded quality. Self-awareness persists.",
+    visual_cortex:"MOST COLOR-RICH psychedelic. Vivid saturation, Kluver form constants (tunnels, spirals, cobwebs). 'Doors of Perception' (Huxley 1954).",
+    thalamus:"Slow sensory gate opening over 60-90min. Gradual perceptual shift rather than sudden onset.",
+    amygdala:"Emotional depth without overwhelming flooding. Heart-opening quality.",
+    pfc:"Philosophical insights. Abstract thinking enhanced. 'Cosmic' perspective on ordinary objects.",
+    claustrum:"Mildly suppressed. Experience remains more integrated than with tryptamines.",
+    hippocampus:"Deep connection to ancestral/cultural memory. Traditional ceremonial use spans 5,000+ years (Huichol, NAC).",
+    acc:"Gentle recalibration. Less dramatic than psilocybin's ACC effects.",
+    pcc:"Moderate ego softening rather than dissolution. Self expands rather than disappears.",
+    insula:"Strong body awareness. 'Earthy' somatic quality. Nausea common first 1-2h with cactus.",
+    raphe:"Serotonergic modulation via different receptor profile (phenethylamine vs tryptamine backbone).",
+    tpj:"Feeling of connection to nature and environment. Body-environment boundary softens.",
+    lc:"Adrenergic activity contributes to physical stimulation and wakefulness over long duration.",
+    sn:"Mildly altered. Attention becomes contemplative, slow, deep rather than scattered.",
+    striatum:"Weak dopaminergic activity. Gentle mood lift rather than euphoria."
+  },
+  mdma: {
+    dmn:"MILD disruption only. Self remains coherent. This is key: MDMA reduces FEAR, not SELF. You stay 'you' but without the armor.",
+    visual_cortex:"Minimal visual effects. Slight color enhancement, lights more beautiful. No geometry or hallucinations.",
+    thalamus:"Mild sensory enhancement. Music sounds incredible. Touch hypersensitive. Warmth.",
+    amygdala:"PRIMARY TARGET. Dramatically suppressed. Fear extinction enabled. Traumatic memories accessible WITHOUT terror. Core PTSD mechanism.",
+    pfc:"mPFC ACTIVATED \u2014 top-down emotional regulation strengthened. mPFC-amygdala connectivity INCREASES (regulatory circuit enhanced).",
+    claustrum:"Minimal effect. Consciousness integration preserved (unlike classical psychedelics).",
+    hippocampus:"Memory RECONSOLIDATION window. Traumatic memories accessed and re-stored with reduced emotional charge. Key to PTSD therapy.",
+    acc:"Emotional conflict processing altered. Inner critic quieted. Self-compassion enhanced.",
+    pcc:"Barely affected. Self-narrative continues but becomes more positive, accepting.",
+    insula:"Altered interoception: bodily warmth, tactile pleasure, 'body high'. Empathy circuitry enhanced.",
+    raphe:"Serotonin RELEASE (not receptor agonism). 5-HT floods synapse. Post-session depletion possible ('Tuesday blues').",
+    tpj:"Self-other boundary maintained but EMPATHY massively enhanced. Prosocial cognition peaks.",
+    lc:"Strong NE release. Jaw clenching, pupil dilation. Sympathomimetic stimulation.",
+    sn:"Reduced right insula/SN connectivity. Threat detection suppressed. Safety feeling enhanced.",
+    striatum:"STRONG dopamine release. Euphoria. Reward circuitry fully activated. This is where the 'love' feeling lives."
+  },
+  ketamine: {
+    dmn:"Disrupted via NMDA blockade (NOT serotonin). Different quality \u2014 'floating away' rather than 'dissolving'. Dissociation, not ego death.",
+    visual_cortex:"Minimal at therapeutic dose. At dissociative dose: tunnel vision, abstract spaces, but less vivid than serotonergic psychedelics.",
+    thalamus:"Thalamocortical DISRUPTION (different mechanism than 5-HT2A). Information integration breaks down. Sensory disconnection.",
+    amygdala:"Indirectly calmed via glutamate-GABA rebalancing. Less targeted than MDMA's amygdala suppression.",
+    pfc:"GLUTAMATE SURGE. Paradoxical excitation despite NMDA blockade. Pyramidal neurons fire freely. Synaptogenesis trigger.",
+    claustrum:"Mildly disrupted. Dissociative rather than psychedelic quality.",
+    hippocampus:"BDNF release \u2192 new synapses. Dendritic spine growth within HOURS. Stress-lost connections restored (Moda-Sava 2019).",
+    acc:"sgACC NORMALIZED. Overactive rumination hub in depression quieted. Fastest-acting antidepressant mechanism known.",
+    pcc:"Disrupted. 3 Hz oscillation in posteromedial cortex specifically linked to dissociative experience.",
+    insula:"Body disconnection. Feeling of floating, numbness. Anesthetic heritage apparent.",
+    raphe:"Minimal direct effect. Ketamine works through glutamate, not serotonin system.",
+    tpj:"Out-of-body experiences. 'K-hole' involves complete dissociation from physical form.",
+    lc:"Moderate arousal. Norepinephrine mildly elevated.",
+    sn:"Salience detection disrupted. External world becomes distant, dream-like, unreal.",
+    striatum:"Indirect dopamine increase via VTA disinhibition. Contributes to mood lift."
+  },
+  ayahuasca: {
+    dmn:"Disrupted similarly to psilocybin but with more NARRATIVE content. Visions have plot, characters, meaning.",
+    visual_cortex:"Eyes-closed activation = ACTUALLY SEEING. V1 activated to level comparable to real visual stimulation (de Araujo 2012). Full scenes, landscapes.",
+    thalamus:"Gate opens gradually (oral absorption). Sensory flooding builds over 30-60 minutes.",
+    amygdala:"Emotional processing deepened. Difficult emotions surfaced and processed. Purging (vomiting) considered therapeutically meaningful.",
+    pfc:"Activated. Cognitive insight preserved during visions. Integration happening in real-time.",
+    claustrum:"Suppressed similarly to other DMT experiences but over longer timeframe.",
+    hippocampus:"STRONGEST parahippocampal activation. 'Life review' experiences. Autobiographical memories replayed with new emotional perspective.",
+    acc:"Emotional regulation shifts. ACC involved in processing the nausea/purging experience.",
+    pcc:"DMN hub disrupted. Ego softens over hours rather than seconds (vs smoked DMT).",
+    insula:"Intense interoception: nausea, purging, gut awareness. 'La purga' \u2014 considered cleansing, not side effect.",
+    raphe:"Both DMT (5-HT receptor) and harmine (MAO-A inhibitor) modulate serotonin at source. Double modulation.",
+    tpj:"Connection to larger reality. Spiritual/mystical experiences. 'Plant teacher' encounters.",
+    lc:"Mild arousal. Less sympathetic activation than smoked DMT due to gradual absorption.",
+    sn:"Altered salience. Visions feel MORE real than ordinary reality. Significance of everything amplified.",
+    striatum:"Mild. Ayahuasca is not euphoric \u2014 it's meaningful. Often difficult, not pleasurable."
+  },
+  "5meodmt": {
+    dmn:"MOST PROFOUND disruption of ANY substance. Complete, instantaneous ego annihilation. 'Non-dual' state achieved in seconds.",
+    visual_cortex:"Paradoxically LOW visual activation. 5-HT1A dominance over 5-HT2A means less visual, more formless. White-out, not fractal.",
+    thalamus:"Gating disrupted but experience is formless rather than sensory-rich. Consciousness without content.",
+    amygdala:"Suppressed via 5-HT1A anxiolysis. Fear dissolves not into safety but into formlessness.",
+    pfc:"Reduced. Executive function goes offline. No cognitive witness \u2014 only pure awareness.",
+    claustrum:"Deeply suppressed. No integrated experience to speak of. Everything dissolves.",
+    hippocampus:"Memory encoding disrupted. Many users cannot remember the peak \u2014 only the approach and return.",
+    acc:"Offline. No error monitoring, no self-evaluation. Complete surrender.",
+    pcc:"MAXIMUM suppression. If PCC is the 'self' hub, 5-MeO-DMT is the most complete self-deletion.",
+    insula:"Intense somatic waves: energy, heat, vibration. Body becomes pure sensation then disappears.",
+    raphe:"5-HT1A AUTORECEPTOR activation in raphe nuclei. Serotonin firing reduced at source. Complex downstream cascade.",
+    tpj:"Self-other distinction ERASED. No 'self' to have a boundary. Oceanic boundlessness.",
+    lc:"Brief intense arousal at onset, then irrelevant as body awareness dissolves.",
+    sn:"Salience network meaningless when there is no 'self' to find things salient. Total dissolution.",
+    striatum:"Minimal. 5-MeO-DMT is not rewarding in the dopamine sense. It is MEANINGFUL in a beyond-self sense."
+  }
+};
+
+// Narration per phase per substance
+const NARR = {
+  lsd:{onset:["LSD crosses BBB. Binds 5-HT2A with EL2 'lid' trapping molecule in pocket. Gq/11 cascade initiates.","Glutamate release increasing in PFC. CSTC feedback loops beginning to destabilize. First perceptual shifts."],peak:["DMN collapses. Thalamic gate opens \u2014 unfiltered sensory data floods cortex. Brain entropy at maximum.","V1 receives input from all brain areas. Claustrum suppressed. Alpha oscillations disappear. Ego dissolving."],plateau:["Global connectivity at max. Brain near criticality (Tagliazucchi 2016). D1/D2 dopamine adds cognitive drive.","Lempel-Ziv complexity peaked. Every brain region communicating with every other. Unprecedented integration."],comedown:["Slow dissociation from receptor as 'lid' opens. DMN reconstituting with altered topology.","Thalamic gating restoring. Perceptual normalization. New connectivity patterns persisting."],afterglow:["BDNF upregulated. Dendritic spine growth via mTOR/TrkB. Neuroplastic window open.","Pathological belief patterns (REBUS model) may be durably revised. Cognitive flexibility enhanced for days-weeks."]},
+  psilocybin:{onset:["Psilocybin \u2192 psilocin via alkaline phosphatase. Active metabolite crosses BBB. Full agonist at 5-HT2A begins binding.","Glutamate surge in PFC. First body sensations. Subtle color enhancement. The world starts breathing."],peak:["DMN activity PLUMMETS. PCC/mPFC show greatest decreases. Greater decrease = more intense experience (Carhart-Harris 2012).","Claustrum heavily suppressed. >3x FC disruption vs methylphenidate (Siegel 2024). The 'self' editor goes offline."],plateau:["Amygdala: initial emotional flooding (therapeutic window), then reprocessing begins. Hippocampal memory reconsolidation active.","Thalamocortical connectivity maximum. Sensory gating fully open. Inner experience feels more real than outer world."],comedown:["Psilocin t\u00bd ~2.5h declining. DMN reconnecting but reconfigured. New connectivity topology forming.","Amygdala reactivity to negative stimuli beginning long-term reduction. Emotional recalibration underway."],afterglow:["Dendritic spine density increasing in frontal cortex (persists 1+ month \u2014 Shao 2021). Network desegregation sustained.","Persistent hippocampus-DMN FC decrease (weeks). Structural basis for lasting therapeutic change established."]},
+  dmt:{onset:["Vaporized DMT crosses BBB in seconds. Full effects in 30-60s. Fastest psychedelic onset possible.","5-HT2A + sigma-1 dual activation. Visual cortex surges. Temporal lobe spikes. Brain enters waking-dream hybrid."],peak:["BREAKTHROUGH. Hierarchical brain organization collapses (Timmermann 2023, PNAS). Entity encounters via fusiform/social brain.","Simultaneously in waking AND REM state. Sigma-1 modulates calcium signaling. 'Realer than real' immersive reality."],plateau:["EEG: alpha/beta decrease, delta/theta increase \u2014 dream-wake hybrid. Endogenous DMT system amplified.","Hippocampal replay: narrative-rich visions with plot. Parahippocampal gyrus maximally activated."],comedown:["MAO-A rapidly degrades DMT. Plasma crashes in minutes. Visual cortex normalizing. Entities fading.","Sigma-1 neuroprotective effects may persist beyond psychoactive window. Return to consensus reality."],afterglow:["Sigma-1 promotes neurogenesis (Morales-Garcia 2020). Despite 15-min duration, lasting well-being changes reported.","Integration period. Processing of visionary content. Brain returning to baseline with neuroplastic changes initiated."]},
+  mescaline:{onset:["Slow GI absorption of phenethylamine. Nausea common (the purge). 60-90 minutes to first effects.","Low 5-HT2A affinity (Ki ~4900nM) compensated by high dose (200-400mg). Adrenergic body load building."],peak:["Visual cortex maximally activated. Kluver form constants: tunnels, spirals, lattices. Most vivid COLOR of any psychedelic.","CSTC loops disrupted. Phenethylamine backbone gives unique earthy, bodily, grounded quality."],plateau:["DMN moderately disrupted. Ego EXPANDS rather than dissolves. Deep emotional connection to nature and existence.","Traditional ceremonial use 5,000+ years (peyote, San Pedro). 'Seeing what Adam saw on the morning of creation' \u2014 Huxley."],comedown:["Slow metabolism via MAO-B. Visual richness gradually fading. Emotional depth continuing.","Long duration pharmacokinetics. Effects may persist 10-14 hours at high dose."],afterglow:["Neuroplasticity expected via 5-HT2A/BDNF/mTOR pathway. University of Bern planning first modern mescaline neuroimaging.","Integration of the earth-connected, contemplative experience. Lasting sense of wonder and appreciation."]},
+  mdma:{onset:["MDMA enters monoaminergic neurons via transporters. Reverses VMAT2 \u2192 cytoplasmic dump. Then reverses SERT/NET/DAT \u2192 synaptic flood.","Serotonin release most potent (EC50 ~70nM) > NE (110nM) > DA (375nM). CYP2D6 self-inhibition begins within 1 hour."],peak:["AMYGDALA SUPPRESSED. Fear extinction enabled. Traumatic memories accessible without terror. Oxytocin surging from posterior pituitary.","mPFC-amygdala regulatory circuit STRENGTHENED. Self stays coherent while emotional armor drops. Trust, bonding, love."],plateau:["Hippocampal reconsolidation window: traumatic memories re-stored with reduced emotional charge. 67% PTSD remission (MAPS).","Striatum dopamine: euphoria. Insula: bodily warmth. Oxytocin: prosocial bonding. The 'empathogenic' state at full expression."],comedown:["Serotonin stores depleting. Tryptophan hydroxylase potentially oxidized. SERT internalizing. Gradual monoamine recovery.","Therapeutic gains consolidated. Trauma memories now stored with safety signal. Emotional processing continuing."],afterglow:["'Tuesday blues' possible (2-4 days): transient serotonin depletion. Full recovery 1-4 weeks.","NOT 5-HT2A neuroplasticity. Therapeutic mechanism is emotional reprocessing + reconsolidation, not neural rewiring."]},
+  ketamine:{onset:["IV ketamine reaches brain in seconds. Enters NMDA ion channels (PCP binding site). Preferentially blocks GABAergic interneurons.","PARADOX: blocking inhibition = excitation. Glutamate SURGE in prefrontal cortex. AMPA receptors activated."],peak:["Glutamate \u2192 AMPA \u2192 BDNF \u2192 TrkB \u2192 mTORC1 signaling. sgACC hyperactivity (depression hub) rapidly NORMALIZED.","Dissociative dose: thalamocortical integration breaks. K-hole. 3Hz posteromedial oscillation = dissociation signature."],plateau:["Lateral habenula burst-firing BLOCKED (Yang 2018, Nature). Brain's 'disappointment center' silenced. Gamma oscillations elevated.","DMN disrupted via NMDA (not 5-HT). Qualitatively different: floating/distant rather than dissolving/expanding."],comedown:["Ketamine t\u00bd ~2.5h declining. Active metabolite (2R,6R)-HNK forming \u2014 may sustain effects via AMPA potentiation.","mTORC1 cascade ACTIVE: synaptic protein synthesis underway. New synapses forming RIGHT NOW."],afterglow:["New dendritic spines in PFC/hippocampus within HOURS (Li 2010, Science). Stress-lost spines restored (Moda-Sava 2019).","Antidepressant peaks day 1-3, wanes by day 7-14. The brain has been physically rebuilt at the synaptic level."]},
+  ayahuasca:{onset:["Beta-carbolines absorbed first. Harmine (IC50 2-5nM) reversibly inhibits MAO-A in gut/liver/brain. DMT now survives oral route.","Nausea/purging at 20-40min. 'La purga' \u2014 not a side effect but the first therapeutic event. Cleansing ritual."],peak:["Visual cortex activated eyes-closed = LEVEL OF ACTUAL SEEING (de Araujo 2012). Full scenes, landscapes, entities, narratives.","Parahippocampal gyrus STRONGEST activation. 'Life review'. Deep autobiographical memories with new emotional perspective."],plateau:["Most narrative-rich psychedelic. Visions have plot, characters, meaning. Harmine DYRK1A \u2192 neurogenesis. THH SSRI activity.","Insula: intense interoception. Emotional processing deepened. Difficult feelings surfaced and processed through the body."],comedown:["DMT metabolized as MAO-A inhibition wanes. Gradual return (vs DMT's abrupt end). Visual fading, meaning persisting.","Harmine neural progenitor stimulation may persist (Morales-Garcia 2017). Integration happening naturally."],afterglow:["Antidepressant effects at 1 and 7 days (Palhano-Fontes 2019, RCT). Cortical thickness increases in regular users.","Combined neuroplasticity: DMT(sigma-1) + harmine(DYRK1A) + 5-HT2A structural changes. Triple mechanism."]},
+  "5meodmt":{onset:["Vaporized 5-MeO-DMT absorbed via lungs. Brain in 15-60 seconds. POTENT 5-HT1A full agonist \u2014 NOT 5-HT2A.","Gi/Go \u2192 inhibit cAMP \u2192 GIRK K+ channels open \u2192 raphe nuclei hyperpolarize. Serotonin system modulated at source."],peak:["DMN MORE PROFOUNDLY DISRUPTED than by ANY other substance. Complete ego annihilation. Non-dual consciousness.","Less visual (weak 5-HT2A), more formless dissolution (strong 5-HT1A). 'White-out'. 80% rated top-5 life experience (Hopkins)."],plateau:["Raphe autoreceptor activation creates complex downstream cascade. Intense somatic: energy waves, temperature flux.","'Oceanic boundlessness' more consistent than any other substance. Self, time, space all dissolved simultaneously."],comedown:["Rapid MAO-A metabolism. Effects fading within minutes. 'Reactivations' possible: emotional/somatic re-experiencing.","Return of self-referential processing. DMN reconstituting. 'Who am I?' question hits differently now."],afterglow:["Sustained improvements in satisfaction, mindfulness, psychopathology 4+ weeks (Uthaug 2019, Maastricht).","Conservation: Incilius alvarius toad vulnerable. Synthetic 5-MeO-DMT identical, ethically preferred."]}
+};
+
+// Brain regions
+const R = {
+  dmn:{name:"Default Mode Network",abbr:"DMN",pos:[0,0.45,-0.15],sz:0.14,col:"#ff6b6b",fn:"Self-narrative, mind-wandering, autobiographical memory, theory of mind",sub:"mPFC, PCC, precuneus, angular gyrus"},
+  visual_cortex:{name:"Visual Cortex",abbr:"V1-V5",pos:[0,-0.05,-0.8],sz:0.12,col:"#ffd93d",fn:"Visual processing, pattern recognition, color, motion",sub:"V1-V5, BA17"},
+  thalamus:{name:"Thalamus",abbr:"THAL",pos:[0,-0.15,-0.1],sz:0.1,col:"#6bcb77",fn:"Sensory relay/gating, consciousness regulation, attention filtering",sub:"LGN, MGN, pulvinar, MD"},
+  amygdala:{name:"Amygdala",abbr:"AMY",pos:[0.4,-0.3,0.05],sz:0.08,col:"#ff6b9d",fn:"Fear processing, threat detection, emotional memory",sub:"Basolateral, central, medial nuclei"},
+  pfc:{name:"Prefrontal Cortex",abbr:"PFC",pos:[0,0.2,0.7],sz:0.13,col:"#4ecdc4",fn:"Executive function, decision-making, cognitive flexibility",sub:"dlPFC, vlPFC, mPFC, OFC"},
+  claustrum:{name:"Claustrum",abbr:"CLA",pos:[0.42,-0.08,0.15],sz:0.06,col:"#a8e6cf",fn:"Consciousness integration, multimodal binding ('conductor' \u2014 Crick)",sub:"Thin sheet beneath insula"},
+  hippocampus:{name:"Hippocampus",abbr:"HPC",pos:[0.35,-0.28,-0.2],sz:0.08,col:"#ffd166",fn:"Memory encoding/retrieval, spatial navigation, neurogenesis",sub:"CA1, CA3, dentate gyrus"},
+  acc:{name:"Anterior Cingulate",abbr:"ACC",pos:[0,0.15,0.25],sz:0.08,col:"#c9b1ff",fn:"Error detection, emotional regulation, pain, motivation",sub:"dACC, sgACC, BA 24/25/32"},
+  pcc:{name:"Posterior Cingulate",abbr:"PCC",pos:[0,0.15,-0.35],sz:0.09,col:"#ff8a80",fn:"Self-referential processing, autobiographical memory, consciousness",sub:"BA 23/31, retrosplenial"},
+  insula:{name:"Insula",abbr:"INS",pos:[-0.42,-0.05,0.15],sz:0.08,col:"#80cbc4",fn:"Interoception, empathy, bodily self-awareness, disgust",sub:"Anterior (affective), posterior (sensory)"},
+  raphe:{name:"Raphe Nuclei",abbr:"RAPHE",pos:[0,-0.55,-0.42],sz:0.05,col:"#b39ddb",fn:"Primary 5-HT production center for entire brain",sub:"Dorsal raphe, median raphe"},
+  tpj:{name:"Temporal-Parietal Junction",abbr:"TPJ",pos:[-0.5,0.1,-0.25],sz:0.08,col:"#ef9a9a",fn:"Body ownership, self-other distinction, social cognition",sub:"BA 39/40, posterior STS"},
+  lc:{name:"Locus Coeruleus",abbr:"LC",pos:[0.06,-0.58,-0.48],sz:0.04,col:"#90caf9",fn:"Primary norepinephrine source, arousal, stress response",sub:"Small nucleus in dorsal pons"},
+  sn:{name:"Salience Network",abbr:"SN",pos:[0.3,0.1,0.35],sz:0.09,col:"#ffab91",fn:"Filtering salient stimuli, switching DMN\u2194task networks",sub:"Anterior insula, dACC, amygdala"},
+  striatum:{name:"Ventral Striatum",abbr:"STR",pos:[0.2,-0.12,0.28],sz:0.07,col:"#fff176",fn:"Reward, motivation, pleasure, dopamine hub",sub:"NAcc, caudate, putamen"}
+};
+
+// Connectivity
+const CONN = {
+  classical:[{f:"pcc",t:"pfc",c:-0.7},{f:"dmn",t:"visual_cortex",c:0.8},{f:"thalamus",t:"pfc",c:0.7},{f:"thalamus",t:"visual_cortex",c:0.6},{f:"amygdala",t:"pfc",c:-0.4},{f:"hippocampus",t:"pcc",c:-0.5},{f:"claustrum",t:"pfc",c:-0.6},{f:"sn",t:"dmn",c:0.6}],
+  mdma:[{f:"amygdala",t:"pfc",c:0.6},{f:"amygdala",t:"hippocampus",c:-0.5},{f:"striatum",t:"pfc",c:0.7},{f:"insula",t:"pfc",c:0.5}],
+  ketamine:[{f:"pfc",t:"thalamus",c:-0.6},{f:"acc",t:"pfc",c:-0.5},{f:"hippocampus",t:"pfc",c:0.6},{f:"striatum",t:"pfc",c:0.5}]
+};
+
+// ============================================================
+// NEW AGE SOUND ENGINE (Web Audio API — Solfeggio + Binaural)
+// ============================================================
+
+let audioCtx = null;
+let audioEnabled = false;
+let masterGain;
+let singingBowlOscs = [];
+let binauralLeft, binauralRight, binauralGainL, binauralGainR;
+let omDrone, omDroneGain;
+let chimeTimer = null;
+let windNoise, windNoiseGain, windFilter;
+let convolver;
+
+const SOLFEGGIO = [396, 417, 528, 639, 741, 852];
+
+const NEWAGE_PROFILES = {
+  lsd:        { bowls: [0,2,4], binBase: 200, chimeRate: 2500, windQ: 3, windFreq: 800 },
+  psilocybin: { bowls: [1,2,3], binBase: 180, chimeRate: 3000, windQ: 2, windFreq: 600 },
+  dmt:        { bowls: [2,4,5], binBase: 220, chimeRate: 1500, windQ: 5, windFreq: 1200 },
+  mescaline:  { bowls: [0,1,3], binBase: 160, chimeRate: 4000, windQ: 1.5, windFreq: 500 },
+  mdma:       { bowls: [2,3,5], binBase: 190, chimeRate: 3500, windQ: 2, windFreq: 700 },
+  ketamine:   { bowls: [0,3,4], binBase: 150, chimeRate: 4500, windQ: 4, windFreq: 400 },
+  ayahuasca:  { bowls: [1,3,5], binBase: 170, chimeRate: 2800, windQ: 2.5, windFreq: 650 },
+  "5meodmt":  { bowls: [0,2,5], binBase: 240, chimeRate: 2000, windQ: 6, windFreq: 1500 }
+};
+
+function createReverb(duration, decay) {
+  var rate = audioCtx.sampleRate;
+  var length = rate * duration;
+  var impulse = audioCtx.createBuffer(2, length, rate);
+  for (var ch = 0; ch < 2; ch++) {
+    var data = impulse.getChannelData(ch);
+    for (var i = 0; i < length; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+    }
+  }
+  var conv = audioCtx.createConvolver();
+  conv.buffer = impulse;
+  return conv;
+}
+
+function createNoiseBuffer() {
+  var bufferSize = audioCtx.sampleRate * 2;
+  var buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  var data = buffer.getChannelData(0);
+  for (var i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+  var src = audioCtx.createBufferSource();
+  src.buffer = buffer;
+  src.loop = true;
+  return src;
+}
+
+function initAudio() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
+  masterGain.connect(audioCtx.destination);
+
+  // Long reverb for spacious ethereal feel
+  convolver = createReverb(5.5, 2.0);
+  var reverbGain = audioCtx.createGain();
+  reverbGain.gain.value = 0.55;
+  convolver.connect(reverbGain);
+  reverbGain.connect(masterGain);
+
+  var dryGain = audioCtx.createGain();
+  dryGain.gain.value = 0.45;
+  dryGain.connect(masterGain);
+
+  // Singing bowl oscillators (3 per substance, sine at Solfeggio freqs)
+  singingBowlOscs = [];
+  for (var i = 0; i < 3; i++) {
+    var osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = SOLFEGGIO[i];
+    var gain = audioCtx.createGain();
+    gain.gain.value = 0;
+    osc.connect(gain);
+    gain.connect(dryGain);
+    gain.connect(convolver);
+    osc.start();
+    singingBowlOscs.push({ osc: osc, gain: gain });
+  }
+
+  // Binaural beat oscillators (left and right channel)
+  var merger = audioCtx.createChannelMerger(2);
+  merger.connect(dryGain);
+  merger.connect(convolver);
+
+  binauralLeft = audioCtx.createOscillator();
+  binauralLeft.type = 'sine';
+  binauralLeft.frequency.value = 200;
+  binauralGainL = audioCtx.createGain();
+  binauralGainL.gain.value = 0;
+  binauralLeft.connect(binauralGainL);
+  binauralGainL.connect(merger, 0, 0);
+  binauralLeft.start();
+
+  binauralRight = audioCtx.createOscillator();
+  binauralRight.type = 'sine';
+  binauralRight.frequency.value = 204;
+  binauralGainR = audioCtx.createGain();
+  binauralGainR.gain.value = 0;
+  binauralRight.connect(binauralGainR);
+  binauralGainR.connect(merger, 0, 1);
+  binauralRight.start();
+
+  // Om drone at 136.1Hz
+  omDrone = audioCtx.createOscillator();
+  omDrone.type = 'sine';
+  omDrone.frequency.value = 136.1;
+  omDroneGain = audioCtx.createGain();
+  omDroneGain.gain.value = 0;
+  omDrone.connect(omDroneGain);
+  omDroneGain.connect(dryGain);
+  omDroneGain.connect(convolver);
+  omDrone.start();
+
+  // Wind/nature noise texture
+  windNoise = createNoiseBuffer();
+  windNoiseGain = audioCtx.createGain();
+  windNoiseGain.gain.value = 0;
+  windFilter = audioCtx.createBiquadFilter();
+  windFilter.type = 'bandpass';
+  windFilter.frequency.value = 600;
+  windFilter.Q.value = 2;
+  windNoise.connect(windFilter);
+  windFilter.connect(windNoiseGain);
+  windNoiseGain.connect(convolver);
+  windNoise.start();
+}
+
+function triggerChime() {
+  if (!audioCtx || !audioEnabled) return;
+  var freq = 1000 + Math.random() * 2000;
+  var osc = audioCtx.createOscillator();
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  var gain = audioCtx.createGain();
+  var now = audioCtx.currentTime;
+  gain.gain.setValueAtTime(0.04, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+  osc.connect(gain);
+  gain.connect(masterGain);
+  osc.start(now);
+  osc.stop(now + 0.9);
+}
+
+function scheduleChimes(rate) {
+  if (chimeTimer) clearTimeout(chimeTimer);
+  if (!audioEnabled) return;
+  var delay = rate + Math.random() * rate;
+  chimeTimer = setTimeout(function() {
+    triggerChime();
+    scheduleChimes(rate);
+  }, delay);
+}
+
+function updateAudio() {
+  if (!audioEnabled || !audioCtx) return;
+  var sub = S[currentSubstance];
+  var prof = NEWAGE_PROFILES[currentSubstance];
+  var timeMult = getTimeMultiplier(currentTime, sub);
+  var doseMult = [0.15, 0.4, 0.7, 0.9, 1.0][currentDose];
+  var intensity = timeMult * doseMult;
+  var now = audioCtx.currentTime;
+  var t = Date.now() * 0.001;
+
+  // Master volume
+  var targetVol = 0.03 + intensity * 0.12;
+  masterGain.gain.linearRampToValueAtTime(targetVol, now + 0.1);
+
+  // Singing bowls — set to substance-specific Solfeggio frequencies
+  for (var i = 0; i < 3; i++) {
+    var bowlIdx = prof.bowls[i];
+    var freq = SOLFEGGIO[bowlIdx];
+    // Subtle detuning for richness
+    var detune = Math.sin(t * 0.1 + i * 2.1) * 1.5;
+    singingBowlOscs[i].osc.frequency.linearRampToValueAtTime(freq + detune, now + 0.5);
+    singingBowlOscs[i].gain.gain.linearRampToValueAtTime(0.025 * intensity * (0.6 + 0.4 * Math.sin(t * 0.3 + i)), now + 0.2);
+  }
+
+  // Binaural beats — phase-dependent beat frequency
+  var pi = getPhaseIdx(currentSubstance);
+  var beatFreqs = [10, 4, 2, 8, 12]; // alpha, theta, delta, alpha, beta
+  var beatHz = beatFreqs[pi];
+  var baseFreq = prof.binBase;
+  binauralLeft.frequency.linearRampToValueAtTime(baseFreq, now + 0.3);
+  binauralRight.frequency.linearRampToValueAtTime(baseFreq + beatHz, now + 0.3);
+  binauralGainL.gain.linearRampToValueAtTime(0.02 * intensity, now + 0.2);
+  binauralGainR.gain.linearRampToValueAtTime(0.02 * intensity, now + 0.2);
+
+  // Om drone follows intensity
+  omDroneGain.gain.linearRampToValueAtTime(0.04 * intensity, now + 0.3);
+
+  // Wind noise — slow filter sweep
+  var windSweep = prof.windFreq + Math.sin(t * 0.05) * 200;
+  windFilter.frequency.linearRampToValueAtTime(windSweep, now + 0.5);
+  windFilter.Q.value = prof.windQ;
+  windNoiseGain.gain.linearRampToValueAtTime(0.015 * intensity, now + 0.3);
+}
+
+function toggleAudio() {
+  if (!audioCtx) initAudio();
+  audioEnabled = !audioEnabled;
+  var btn = document.getElementById('audio-btn');
+  var indicator = document.getElementById('audio-indicator');
+  if (audioEnabled) {
+    audioCtx.resume();
+    btn.textContent = 'DISABLE AUDIO';
+    btn.classList.add('playing');
+    indicator.style.display = '';
+    masterGain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 1);
+    var prof = NEWAGE_PROFILES[currentSubstance];
+    scheduleChimes(prof.chimeRate);
+  } else {
+    masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
+    btn.textContent = 'ENABLE AUDIO';
+    btn.classList.remove('playing');
+    indicator.style.display = 'none';
+    if (chimeTimer) { clearTimeout(chimeTimer); chimeTimer = null; }
+  }
+}
+
+// ============================================================
+// THREE.JS SETUP
+// ============================================================
+
+var scene, camera, renderer, controls, brainGroup;
+var regionMeshes = {}, floatingLabels = {}, connectivityLines = [];
+var raycaster, mouse;
+var selectedRegion = null, currentSubstance = 'psilocybin', currentDose = 0, currentTime = 0;
+var isPlaying = false, playInterval = null, showLabels = true, showConnectivity = false, autoRotate = false;
+var compareMode = false, compareSubstance = 'lsd';
+var scene2, camera2, renderer2, controls2, brainGroup2, regionMeshes2 = {};
+var orbitLights = [];
+var starField = null;
+var sacredGeoShapes = [];
+var bloomSubstance1 = null, bloomSubstance2 = null;
+
+function init() {
+  var c1 = document.getElementById('canvas-container');
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0015);
+  scene.fog = new THREE.FogExp2(0x0a0015, 0.04);
+
+  camera = new THREE.PerspectiveCamera(45, c1.clientWidth / c1.clientHeight, 0.1, 100);
+  camera.position.set(1.8, 1.2, 3.2);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(c1.clientWidth, c1.clientHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.8;
+  c1.appendChild(renderer.domElement);
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.minDistance = 2;
+  controls.maxDistance = 8;
+
+  addLights(scene);
+  addOrbitLights(scene);
+  addStarField(scene);
+  addSacredGeometry(scene);
+
+  brainGroup = new THREE.Group();
+  scene.add(brainGroup);
+  createBrainShell(brainGroup);
+  createBioRegions(brainGroup, regionMeshes, 'psilocybin');
+  bloomSubstance1 = 'psilocybin';
+  createFloatingLabels('canvas-container', floatingLabels);
+
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2();
+
+  window.addEventListener('resize', onResize);
+  renderer.domElement.addEventListener('mousemove', onMouseMove);
+  renderer.domElement.addEventListener('click', onMouseClick);
+
+  createSubstanceList();
+  selectSubstance('psilocybin', false);
+  animate();
+}
+
+function addLights(sc) {
+  sc.add(new THREE.AmbientLight(0x221133, 0.5));
+  var k = new THREE.DirectionalLight(0xffeedd, 0.4); k.position.set(3, 4, 4); sc.add(k);
+  var t = new THREE.DirectionalLight(0xccddff, 0.25); t.position.set(0, 6, 0); sc.add(t);
+  sc.add(new THREE.HemisphereLight(0x6633aa, 0x220022, 0.3));
+}
+
+function addOrbitLights(sc) {
+  var colors = [0xff0044, 0x00ff66, 0x4400ff];
+  for (var i = 0; i < 3; i++) {
+    var light = new THREE.PointLight(colors[i], 0.6, 10);
+    light.position.set(Math.cos(i * 2.094) * 3, Math.sin(i * 1.5) * 1.5, Math.sin(i * 2.094) * 3);
+    sc.add(light);
+    orbitLights.push(light);
+  }
+}
+
+function addStarField(sc) {
+  var starsGeo = new THREE.BufferGeometry();
+  var starPositions = [];
+  var starColors = [];
+  for (var i = 0; i < 800; i++) {
+    var x = (Math.random() - 0.5) * 40;
+    var y = (Math.random() - 0.5) * 40;
+    var z = (Math.random() - 0.5) * 40;
+    starPositions.push(x, y, z);
+    var hue = Math.random();
+    var col = new THREE.Color();
+    col.setHSL(hue, 0.8, 0.8);
+    starColors.push(col.r, col.g, col.b);
+  }
+  starsGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPositions, 3));
+  starsGeo.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+  var starsMat = new THREE.PointsMaterial({ size: 0.06, vertexColors: true, transparent: true, opacity: 0.7, depthWrite: false });
+  starField = new THREE.Points(starsGeo, starsMat);
+  sc.add(starField);
+}
+
+function addSacredGeometry(sc) {
+  var geoTypes = [
+    new THREE.TetrahedronGeometry(0.15, 0),
+    new THREE.IcosahedronGeometry(0.12, 0),
+    new THREE.OctahedronGeometry(0.13, 0),
+    new THREE.TetrahedronGeometry(0.1, 0),
+    new THREE.IcosahedronGeometry(0.18, 0),
+    new THREE.DodecahedronGeometry(0.11, 0)
+  ];
+  for (var i = 0; i < geoTypes.length; i++) {
+    var hue = i / geoTypes.length;
+    var col = new THREE.Color();
+    col.setHSL(hue, 0.9, 0.6);
+    var mat = new THREE.MeshBasicMaterial({ color: col, wireframe: true, transparent: true, opacity: 0.15, depthWrite: false });
+    var mesh = new THREE.Mesh(geoTypes[i], mat);
+    var angle = (i / geoTypes.length) * Math.PI * 2;
+    var radius = 4 + Math.random() * 3;
+    mesh.position.set(Math.cos(angle) * radius, (Math.random() - 0.5) * 4, Math.sin(angle) * radius);
+    mesh.userData = { rotSpeed: 0.002 + Math.random() * 0.005, orbitSpeed: 0.0003 + Math.random() * 0.001, orbitAngle: angle, orbitRadius: radius, yOffset: mesh.position.y };
+    sc.add(mesh);
+    sacredGeoShapes.push(mesh);
+  }
+}
+
+// ============================================================
+// BRAIN SHELL (same anatomical shape — iridescent holographic)
+// ============================================================
+
+function makeHemi(side) {
+  var geo = new THREE.SphereGeometry(1.0, 64, 48);
+  var pos = geo.getAttribute('position');
+  for (var i = 0; i < pos.count; i++) {
+    var x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+    x *= 0.62; y *= 0.75; z *= 0.95;
+    x += side * 0.28;
+    var d = x * side;
+    if (d < 0.15) x = side * (0.1 + (y > -0.2 ? 0.08 : 0.05)) + (d - 0.15) * 0.1;
+    var ff = Math.max(0, z - 0.4) / 0.6; x *= 1 - ff * 0.15; y *= 1 - ff * 0.08;
+    var of2 = Math.max(0, -z - 0.5) / 0.5; x *= 1 - of2 * 0.2; y *= 1 - of2 * 0.1;
+    if (y < -0.1 && y > -0.55) { var tb = Math.max(0, 1 - Math.abs(y + 0.3) / 0.25) * Math.max(0, 1 - Math.abs(z + 0.1) / 0.6); x += side * tb * 0.12; y -= tb * 0.05; }
+    if (y < -0.5) y = -0.5 - (y + 0.5) * 0.3;
+    if (y > 0.3) { var tf = (y - 0.3) / 0.45; x *= 1 - tf * 0.12; z *= 1 - tf * 0.06; }
+    var cs = 0.05 * Math.exp(-(Math.pow((z - 0.08) / 0.06, 2))) * Math.max(0, (y + 0.15) / 0.9); y -= cs;
+    if (y < 0.05 && y > -0.4) { var sd = 0.035 * Math.exp(-(Math.pow((y + 0.12 - z * 0.35 + 0.05) / 0.05, 2))); var lf = Math.max(0, Math.abs(x) - 0.25) / 0.35; x -= side * sd * lf * 2.5; y -= sd * lf * 0.8; }
+    var po = 0.025 * Math.exp(-(Math.pow((z + 0.4) / 0.07, 2))) * Math.max(0, (y + 0.1) / 0.8); y -= po;
+    var f1 = Math.sin(y * 22 + z * 5) * Math.cos(x * 14 + z * 7) * 0.022;
+    var f2 = Math.sin(z * 18 + y * 10) * Math.cos(y * 12 + x * 9) * 0.015;
+    var f3 = Math.sin(x * 25 + y * 18 + z * 12) * 0.008;
+    var f4 = Math.sin(y * 30 + x * 8) * Math.cos(z * 20) * 0.006;
+    var ft = f1 + f2 + f3 + f4;
+    var dd = Math.sqrt(x * x + y * y + z * z);
+    if (dd > 0.01) { x += (x / dd) * ft; y += (y / dd) * ft; z += (z / dd) * ft; }
+    pos.setXYZ(i, x, y, z);
+  }
+  geo.computeVertexNormals();
+  return geo;
+}
+
+function createBrainShell(group) {
+  // Iridescent holographic shell
+  var mat = new THREE.MeshPhysicalMaterial({
+    color: 0xaa66ff, transparent: true, opacity: 0.15, roughness: 0.1,
+    metalness: 0.3, side: THREE.FrontSide, depthWrite: false,
+    clearcoat: 1.0, clearcoatRoughness: 0.1
+  });
+  var matI = new THREE.MeshPhysicalMaterial({
+    color: 0x6633aa, transparent: true, opacity: 0.08, roughness: 0.2,
+    side: THREE.BackSide, depthWrite: false, clearcoat: 0.8, clearcoatRoughness: 0.15
+  });
+  var wireM = new THREE.MeshBasicMaterial({ color: 0x9966ff, wireframe: true, transparent: true, opacity: 0.04 });
+  for (var si = 0; si < 2; si++) {
+    var s = si === 0 ? 1 : -1;
+    var g = makeHemi(s);
+    group.add(new THREE.Mesh(g, mat.clone()));
+    group.add(new THREE.Mesh(g, matI.clone()));
+    group.add(new THREE.Mesh(g.clone(), wireM.clone()));
+  }
+  // Cerebellum
+  for (var ci = 0; ci < 2; ci++) {
+    var cside = ci === 0 ? -1 : 1;
+    var cg = new THREE.SphereGeometry(0.28, 32, 24);
+    var cp = cg.getAttribute('position');
+    for (var i = 0; i < cp.count; i++) { var x = cp.getX(i), y = cp.getY(i), z = cp.getZ(i); if (y > 0.1) y *= 0.5; x *= 1.1; z *= 0.85; var fl = Math.sin(y * 40 + x * 5) * 0.008; z += fl; cp.setXYZ(i, x, y, z); }
+    cg.computeVertexNormals();
+    var cm = new THREE.Mesh(cg, new THREE.MeshPhysicalMaterial({
+      color: 0x8855cc, transparent: true, opacity: 0.12, roughness: 0.2,
+      side: THREE.DoubleSide, depthWrite: false, clearcoat: 0.8, clearcoatRoughness: 0.1
+    }));
+    cm.position.set(cside * 0.22, -0.55, -0.72);
+    group.add(cm);
+  }
+  // Brainstem
+  var sg = new THREE.CylinderGeometry(0.09, 0.065, 0.55, 16);
+  var sm = new THREE.Mesh(sg, new THREE.MeshPhysicalMaterial({
+    color: 0x7744aa, transparent: true, opacity: 0.12, roughness: 0.2,
+    depthWrite: false, clearcoat: 0.6
+  }));
+  sm.position.set(0, -0.72, -0.52); sm.rotation.x = 0.35;
+  group.add(sm);
+  // Corpus callosum
+  var cc = new THREE.CubicBezierCurve3(new THREE.Vector3(0, 0.15, 0.45), new THREE.Vector3(0, 0.35, 0.15), new THREE.Vector3(0, 0.35, -0.25), new THREE.Vector3(0, 0.1, -0.5));
+  group.add(new THREE.Mesh(new THREE.TubeGeometry(cc, 30, 0.04, 8, false), new THREE.MeshPhysicalMaterial({
+    color: 0xcc99ff, transparent: true, opacity: 0.1, roughness: 0.2,
+    depthWrite: false, clearcoat: 0.5
+  })));
+}
+
+// ============================================================
+// BIOLUMINESCENT BLOOM REGIONS (rainbow cycling)
+// ============================================================
+
+function createBioRegions(group, meshMap, substanceKey) {
+  var bloom = substanceKey ? S[substanceKey].bloom : {filCount:8,filLen:2.5,filWave:4,memDetail:1,pulseSpeed:2,breathAmp:0.3,tipSize:1.5,spiralFactor:0.1};
+  var subCol = substanceKey ? new THREE.Color(S[substanceKey].color) : null;
+  for (var entry of Object.entries(R)) {
+    var id = entry[0], r = entry[1];
+    var g = new THREE.Group();
+    g.position.set(r.pos[0], r.pos[1], r.pos[2]);
+    var col = new THREE.Color(r.col);
+    var vivid = subCol ? col.clone().lerp(subCol, 0.35).multiplyScalar(1.8) : col.clone().multiplyScalar(1.8);
+
+    // Nucleus
+    var nucGeo = new THREE.SphereGeometry(r.sz * 0.3, 12, 12);
+    var nucMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0 });
+    var nuc = new THREE.Mesh(nucGeo, nucMat);
+    g.add(nuc);
+
+    // Core ring
+    var coreRingGeo = new THREE.TorusGeometry(r.sz * 0.35, r.sz * 0.06, 8, 16);
+    var coreRingMat = new THREE.MeshBasicMaterial({ color: vivid, transparent: true, opacity: 0.0, depthWrite: false });
+    var coreRing = new THREE.Mesh(coreRingGeo, coreRingMat);
+    coreRing.rotation.x = Math.PI * 0.5;
+    g.add(coreRing);
+
+    // Membrane
+    var memGeoTypes = [THREE.IcosahedronGeometry, THREE.OctahedronGeometry, THREE.DodecahedronGeometry, THREE.IcosahedronGeometry];
+    var MemGeoClass = memGeoTypes[bloom.memDetail] || THREE.IcosahedronGeometry;
+    var memGeo = new MemGeoClass(r.sz * 0.75, bloom.memDetail < 2 ? 1 : 2);
+    var memMat = new THREE.MeshPhysicalMaterial({
+      color: vivid, emissive: vivid, emissiveIntensity: 0.0,
+      transparent: true, opacity: 0.0, roughness: 0.2, metalness: 0.15,
+      side: THREE.DoubleSide, depthWrite: false
+    });
+    var mem = new THREE.Mesh(memGeo, memMat);
+    g.add(mem);
+
+    // Outer glow
+    var glowGeo = new THREE.SphereGeometry(r.sz * 1.3, 16, 16);
+    var glowMat = new THREE.MeshBasicMaterial({ color: vivid, transparent: true, opacity: 0.0, side: THREE.BackSide, depthWrite: false });
+    var glow = new THREE.Mesh(glowGeo, glowMat);
+    g.add(glow);
+
+    // Halo
+    var haloGeo = new THREE.SphereGeometry(r.sz * 1.8, 12, 12);
+    var haloMat = new THREE.MeshBasicMaterial({ color: vivid, transparent: true, opacity: 0.0, side: THREE.BackSide, depthWrite: false });
+    var halo = new THREE.Mesh(haloGeo, haloMat);
+    g.add(halo);
+
+    // Filaments
+    var filaments = [];
+    var numFil = Math.max(3, bloom.filCount + Math.floor(r.sz * 10));
+    for (var i = 0; i < numFil; i++) {
+      var theta = (i / numFil) * Math.PI * 2 + (bloom.spiralFactor > 0 ? i * 0.3 : Math.random() * Math.PI * 2);
+      var phi = Math.random() * Math.PI;
+      var dir = new THREE.Vector3(Math.sin(phi) * Math.cos(theta), Math.sin(phi) * Math.sin(theta), Math.cos(phi));
+      var len = r.sz * (bloom.filLen * 0.5 + Math.random() * bloom.filLen * 0.5);
+      var pts = [];
+      var waveFreq = bloom.filWave;
+      var spiral = bloom.spiralFactor;
+      for (var j = 0; j <= 16; j++) {
+        var t2 = j / 16;
+        var wave = Math.sin(t2 * Math.PI * waveFreq + i) * t2 * 0.06;
+        var spiralX = spiral > 0 ? Math.cos(t2 * Math.PI * 4 + i) * t2 * spiral * 0.1 : 0;
+        var spiralY = spiral > 0 ? Math.sin(t2 * Math.PI * 4 + i) * t2 * spiral * 0.1 : 0;
+        pts.push(new THREE.Vector3(
+          dir.x * t2 * len + wave + spiralX,
+          dir.y * t2 * len + Math.cos(t2 * waveFreq * 0.7 + i * 2) * t2 * 0.04 + spiralY,
+          dir.z * t2 * len + Math.sin(t2 * waveFreq * 0.5 + i) * t2 * 0.04
+        ));
+      }
+      var curve = new THREE.CatmullRomCurve3(pts);
+      var thickness = 0.003 + Math.random() * 0.005;
+      var fGeo = new THREE.TubeGeometry(curve, 18, thickness, 5, false);
+      var fMat = new THREE.MeshBasicMaterial({ color: vivid, transparent: true, opacity: 0.0, depthWrite: false });
+      var fil = new THREE.Mesh(fGeo, fMat);
+      g.add(fil);
+
+      // Tip sprite with additive blending (lens flare cross)
+      var tipSz = (0.01 + Math.random() * 0.01) * bloom.tipSize;
+      var tipGeo = new THREE.SphereGeometry(tipSz, 8, 8);
+      var tipMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, blending: THREE.AdditiveBlending });
+      var tip = new THREE.Mesh(tipGeo, tipMat);
+      tip.position.copy(pts[pts.length - 1]);
+      g.add(tip);
+
+      // Cross sprite for lens flare effect
+      var crossMat = new THREE.SpriteMaterial({ color: 0xffffff, transparent: true, opacity: 0.0, blending: THREE.AdditiveBlending, depthWrite: false });
+      var cross = new THREE.Sprite(crossMat);
+      cross.scale.set(tipSz * 6, tipSz * 6, 1);
+      cross.position.copy(pts[pts.length - 1]);
+      g.add(cross);
+
+      filaments.push({ mesh: fil, tip: tip, cross: cross, idx: i });
+    }
+
+    g.userData = { regionId: id, nuc: nuc, mem: mem, glow: glow, halo: halo, coreRing: coreRing, filaments: filaments, col: vivid, bloom: bloom };
+    group.add(g);
+    meshMap[id] = g;
+  }
+}
+
+function rebuildBlooms(group, meshMap, substanceKey, which) {
+  var toRemove = [];
+  group.children.forEach(function(c) { if (c.userData && c.userData.regionId) toRemove.push(c); });
+  toRemove.forEach(function(c) { group.remove(c); });
+  for (var k in meshMap) delete meshMap[k];
+  createBioRegions(group, meshMap, substanceKey);
+  if (which === 1) bloomSubstance1 = substanceKey;
+  else bloomSubstance2 = substanceKey;
+}
+
+function createFloatingLabels(containerId, labelMap) {
+  var container = document.getElementById(containerId);
+  for (var entry of Object.entries(R)) {
+    var id = entry[0], r = entry[1];
+    var el = document.createElement('div');
+    el.className = 'floating-label';
+    el.id = 'fl-' + containerId + '-' + id;
+    el.innerHTML = '<div class="fl-name"><span class="fl-icon">\u2726</span>' + r.abbr + '</div><div class="fl-effect"></div>';
+    el.style.display = 'none';
+    container.appendChild(el);
+    labelMap[id] = el;
+  }
+}
+
+// ============================================================
+// UPDATE REGIONS (rainbow cycling bioluminescence)
+// ============================================================
+
+function updateBioRegions(meshMap, substanceKey, cam) {
+  var sub = S[substanceKey];
+  if (!sub) return;
+  var doseMult = [0.15, 0.4, 0.7, 0.9, 1.0][currentDose];
+  var timeMult = getTimeMultiplier(currentTime, sub);
+  var t = Date.now() * 0.001;
+  var bloom = sub.bloom;
+
+  for (var entry of Object.entries(meshMap)) {
+    var id = entry[0], group = entry[1];
+    var raw = sub.effects[id] || 0;
+    var effect = raw * doseMult * timeMult;
+    var abs = Math.abs(effect);
+    var d = group.userData;
+    var substCol = new THREE.Color(sub.color);
+    var regionCol = d.col.clone();
+
+    // RAINBOW: cycle hue over time for each region
+    var hueShift = (t * 0.05 + group.position.x * 0.5 + group.position.z * 0.3) % 1;
+    var rainbowCol = new THREE.Color();
+    rainbowCol.setHSL(hueShift, 0.9, 0.6);
+
+    var activeCol;
+    if (abs < 0.05) {
+      activeCol = new THREE.Color('#221133');
+    } else if (effect > 0) {
+      activeCol = regionCol.clone().lerp(rainbowCol, 0.4).lerp(substCol, 0.3).lerp(new THREE.Color('#ff2255'), abs * 0.2);
+    } else {
+      activeCol = regionCol.clone().lerp(rainbowCol, 0.4).lerp(substCol, 0.3).lerp(new THREE.Color('#3388ff'), abs * 0.2);
+    }
+    activeCol.multiplyScalar(1.5 + abs * 0.8);
+
+    var pSpeed = bloom.pulseSpeed;
+    var pulse = Math.sin(t * pSpeed + group.position.x * 5) * 0.5 + 0.5;
+    var pulse2 = Math.sin(t * pSpeed * 0.7 + group.position.z * 3) * 0.5 + 0.5;
+
+    // Nucleus
+    d.nuc.material.opacity = abs > 0.08 ? (0.5 + abs * 0.5) * (0.6 + pulse * 0.4) : 0;
+    d.nuc.material.color.lerpColors(activeCol, new THREE.Color(0xffffff), 0.6);
+    var ns = 0.7 + pulse * 0.8 * abs;
+    d.nuc.scale.setScalar(ns);
+
+    // Core ring
+    d.coreRing.material.color.copy(activeCol);
+    d.coreRing.material.opacity = abs > 0.15 ? abs * 0.5 * pulse2 : 0;
+    d.coreRing.rotation.z = t * 0.5;
+    d.coreRing.scale.setScalar(0.8 + abs * 0.6 * pulse);
+
+    // Membrane
+    var breathe = 1 + Math.sin(t * 1.5 + group.position.z * 3) * bloom.breathAmp * abs;
+    d.mem.scale.setScalar(breathe);
+    d.mem.material.color.copy(activeCol);
+    d.mem.material.emissive.copy(activeCol);
+    d.mem.material.emissiveIntensity = abs * 2.0 * (0.5 + pulse * 0.5);
+    d.mem.material.opacity = abs > 0.05 ? 0.15 + abs * 0.5 : 0.02;
+    d.mem.rotation.x = t * 0.2 * (1 + abs);
+    d.mem.rotation.y = t * 0.15 * (1 + abs * 0.5);
+
+    // Glow
+    d.glow.material.color.copy(activeCol);
+    d.glow.material.opacity = abs * 0.35 * (0.6 + pulse * 0.4);
+    d.glow.scale.setScalar(1 + abs * 1.2);
+
+    // Halo
+    d.halo.material.color.copy(activeCol);
+    d.halo.material.opacity = abs > 0.2 ? abs * 0.12 * pulse2 : 0;
+    d.halo.scale.setScalar(1 + abs * 0.5 + pulse * 0.2);
+
+    // Filaments with rainbow cycle
+    d.filaments.forEach(function(f) {
+      var filHue = (hueShift + f.idx * 0.07) % 1;
+      var filCol = new THREE.Color();
+      filCol.setHSL(filHue, 0.9, 0.65);
+      filCol.lerp(activeCol, 0.5);
+
+      f.mesh.material.color.copy(filCol);
+      var filPulse = 0.5 + Math.sin(t * pSpeed * 0.8 + f.idx * 1.2) * 0.5;
+      f.mesh.material.opacity = abs > 0.08 ? (0.25 + abs * 0.6) * filPulse : 0;
+
+      // Tip
+      f.tip.material.color.lerpColors(filCol, new THREE.Color(0xffffff), 0.4);
+      f.tip.material.opacity = abs > 0.15 ? (0.5 + abs * 0.5) * (0.5 + pulse * 0.5) : 0;
+      var tipScale = (0.5 + abs * bloom.tipSize * pulse) * 1.5;
+      f.tip.scale.setScalar(tipScale);
+
+      // Cross sprite (lens flare)
+      f.cross.material.opacity = abs > 0.25 ? abs * 0.3 * pulse : 0;
+      f.cross.material.color.copy(filCol);
+      f.cross.scale.setScalar(tipScale * 4);
+    });
+  }
+}
+
+function getTimeMultiplier(pct, sub) {
+  var dur = sub.dur;
+  var tot = dur.onset + dur.peak + dur.plateau + dur.comedown + dur.afterglow;
+  var m = (pct / 100) * tot;
+  if (m < dur.onset) return Math.pow(m / dur.onset, 1.5) * 0.6;
+  if (m < dur.onset + dur.peak) return 0.6 + ((m - dur.onset) / dur.peak) * 0.4;
+  if (m < dur.onset + dur.peak + dur.plateau) return 0.85 + Math.sin(((m - dur.onset - dur.peak) / dur.plateau) * Math.PI) * 0.15;
+  if (m < dur.onset + dur.peak + dur.plateau + dur.comedown) return 0.85 * (1 - ((m - dur.onset - dur.peak - dur.plateau) / dur.comedown) * 0.7);
+  return 0.25 * (1 - ((m - dur.onset - dur.peak - dur.plateau - dur.comedown) / dur.afterglow));
+}
+
+function getPhaseIdx(substanceKey) {
+  var dur = S[substanceKey].dur;
+  var tot = dur.onset + dur.peak + dur.plateau + dur.comedown + dur.afterglow;
+  var m = (currentTime / 100) * tot;
+  var acc = 0;
+  var phases = [dur.onset, dur.peak, dur.plateau, dur.comedown, dur.afterglow];
+  for (var i = 0; i < phases.length; i++) {
+    acc += phases[i];
+    if (m < acc) return i;
+  }
+  return 4;
+}
+
+// ============================================================
+// FLOATING LABELS
+// ============================================================
+
+function updateLabels(meshMap, labelMap, substanceKey, cam, containerEl) {
+  if (!showLabels) { for (var k in labelMap) labelMap[k].style.display = 'none'; return; }
+  var sub = S[substanceKey];
+  var doseMult = [0.15, 0.4, 0.7, 0.9, 1.0][currentDose];
+  var timeMult = getTimeMultiplier(currentTime, sub);
+  var rect = containerEl.getBoundingClientRect();
+
+  for (var entry of Object.entries(labelMap)) {
+    var id = entry[0], label = entry[1];
+    var group = meshMap[id];
+    if (!group) continue;
+    var effect = (sub.effects[id] || 0) * doseMult * timeMult;
+    var abs = Math.abs(effect);
+    if (abs < 0.1) { label.style.display = 'none'; continue; }
+
+    var pos = new THREE.Vector3();
+    group.getWorldPosition(pos);
+    pos.project(cam);
+    var sx = (pos.x * 0.5 + 0.5) * rect.width + rect.left;
+    var sy = (-pos.y * 0.5 + 0.5) * rect.height + rect.top;
+    if (pos.z > 1 || sx < rect.left + 10 || sx > rect.right - 10 || sy < rect.top + 60 || sy > rect.bottom - 80) {
+      label.style.display = 'none'; continue;
+    }
+
+    label.style.display = 'block';
+    label.style.left = sx + 'px';
+    label.style.top = sy + 'px';
+    label.style.opacity = Math.min(1, abs * 1.5);
+
+    var regionSpec = REGION_SPECIFIC[substanceKey];
+    var effectEl = label.querySelector('.fl-effect');
+    if (regionSpec && regionSpec[id]) {
+      var text = regionSpec[id].split('.')[0];
+      effectEl.textContent = text;
+    }
+    var borderCol = effect > 0 ? 'rgba(255,68,119,' + abs + ')' : 'rgba(68,136,255,' + abs + ')';
+    effectEl.style.color = effect > 0 ? '#ff4477' : '#4488ff';
+    label.style.boxShadow = '0 0 ' + (abs * 20) + 'px ' + borderCol + ', 0 0 ' + (abs * 10) + 'px rgba(255,102,204,0.3)';
+  }
+}
+
+// ============================================================
+// NARRATION + CONNECTIVITY
+// ============================================================
+
+function updateNarration() {
+  var narr = NARR[currentSubstance];
+  if (!narr) return;
+  var pi = getPhaseIdx(currentSubstance);
+  var keys = ['onset', 'peak', 'plateau', 'comedown', 'afterglow'];
+  var lines = narr[keys[pi]];
+  if (!lines) return;
+  var dur = S[currentSubstance].dur;
+  var durs = [dur.onset, dur.peak, dur.plateau, dur.comedown, dur.afterglow];
+  var tot = durs.reduce(function(a, b) { return a + b; }, 0);
+  var m = (currentTime / 100) * tot;
+  var ps = 0; for (var i = 0; i < pi; i++) ps += durs[i];
+  var pp = (m - ps) / durs[pi];
+  var li = Math.min(lines.length - 1, Math.floor(pp * lines.length));
+  var el = document.getElementById('narration-text');
+  if (el && el.dataset.current !== lines[li]) {
+    el.dataset.current = lines[li];
+    el.style.opacity = 0;
+    setTimeout(function() { el.textContent = '\u2726 ' + lines[li]; el.style.opacity = 1; }, 200);
+  }
+}
+
+function updateConnectivity(group, meshMap, substanceKey) {
+  connectivityLines.forEach(function(l) { group.remove(l); });
+  connectivityLines = [];
+  if (!showConnectivity) return;
+  var sub = S[substanceKey];
+  var doseMult = [0.15, 0.4, 0.7, 0.9, 1.0][currentDose];
+  var timeMult = getTimeMultiplier(currentTime, sub);
+  var conns = substanceKey === 'mdma' ? CONN.mdma : substanceKey === 'ketamine' ? CONN.ketamine : CONN.classical;
+  var sc = new THREE.Color(sub.color);
+  var t = Date.now() * 0.001;
+  conns.forEach(function(cn) {
+    var from = meshMap[cn.f], to = meshMap[cn.t];
+    if (!from || !to) return;
+    var str = Math.abs(cn.c) * doseMult * timeMult;
+    if (str < 0.05) return;
+    var s = from.position.clone(), e = to.position.clone(), mid = s.clone().add(e).multiplyScalar(0.5);
+    mid.y += 0.15 + str * 0.1;
+    var curve = new THREE.QuadraticBezierCurve3(s, mid, e);
+    // Rainbow connectivity lines
+    var hue = (t * 0.1 + cn.f.length * 0.1) % 1;
+    var col = new THREE.Color();
+    col.setHSL(hue, 0.9, 0.6);
+    col.lerp(sc, 0.3);
+    var line = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(curve.getPoints(24)),
+      new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: str * 0.7 })
+    );
+    group.add(line);
+    connectivityLines.push(line);
+  });
+}
+
+// ============================================================
+// COMPARE MODE
+// ============================================================
+
+function initCompareScene() {
+  var c2 = document.getElementById('canvas-container-2');
+  scene2 = new THREE.Scene();
+  scene2.background = new THREE.Color(0x0a0015);
+  scene2.fog = new THREE.FogExp2(0x0a0015, 0.04);
+  camera2 = new THREE.PerspectiveCamera(45, c2.clientWidth / c2.clientHeight, 0.1, 100);
+  camera2.position.set(1.8, 1.2, 3.2);
+  renderer2 = new THREE.WebGLRenderer({ antialias: true });
+  renderer2.setSize(c2.clientWidth, c2.clientHeight);
+  renderer2.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer2.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer2.toneMappingExposure = 1.8;
+  c2.appendChild(renderer2.domElement);
+  controls2 = new THREE.OrbitControls(camera2, renderer2.domElement);
+  controls2.enableDamping = true;
+  controls2.dampingFactor = 0.05;
+  controls2.minDistance = 2;
+  controls2.maxDistance = 8;
+  addLights(scene2);
+  addOrbitLights(scene2);
+  addStarField(scene2);
+  brainGroup2 = new THREE.Group();
+  scene2.add(brainGroup2);
+  createBrainShell(brainGroup2);
+  createBioRegions(brainGroup2, regionMeshes2, compareSubstance);
+  bloomSubstance2 = compareSubstance;
+}
+
+function toggleCompare() {
+  compareMode = !compareMode;
+  document.body.classList.toggle('compare-active', compareMode);
+  document.getElementById('compare-btn').classList.toggle('active', compareMode);
+  if (compareMode && !scene2) initCompareScene();
+  onResize();
+}
+
+function selectCompareSubstance(id) {
+  compareSubstance = id;
+  if (scene2 && bloomSubstance2 !== id) rebuildBlooms(brainGroup2, regionMeshes2, id, 2);
+}
+
+// ============================================================
+// UI
+// ============================================================
+
+var substanceSymbols = {
+  lsd: '\u2726', psilocybin: '\u262e', dmt: '\u2726', mescaline: '\u2726',
+  mdma: '\u262e', ketamine: '\u2726', ayahuasca: '\u262e', '5meodmt': '\u2726'
+};
+
+function createSubstanceList() {
+  var list = document.getElementById('substance-list');
+  var sel = document.getElementById('compare-substance');
+  list.innerHTML = '';
+  sel.innerHTML = '';
+  for (var entry of Object.entries(S)) {
+    var id = entry[0], s = entry[1];
+    var btn = document.createElement('button');
+    btn.className = 'substance-btn';
+    btn.dataset.id = id;
+    btn.style.setProperty('--substance-color', s.color);
+    (function(capturedId) {
+      btn.onclick = function() { selectSubstance(capturedId, true); };
+    })(id);
+    var sym = substanceSymbols[id] || '\u2726';
+    btn.innerHTML = '<div class="sdot" style="background:' + s.color + ';box-shadow:0 0 8px ' + s.color + '"></div><span>' + sym + ' ' + s.name + '</span><span class="stype">' + s.type + '</span>';
+    list.appendChild(btn);
+    var opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = s.name;
+    sel.appendChild(opt);
+  }
+}
+
+function selectSubstance(id, autoplay) {
+  currentSubstance = id;
+  document.querySelectorAll('.substance-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.id === id); });
+  if (bloomSubstance1 !== id) rebuildBlooms(brainGroup, regionMeshes, id, 1);
+  updateDoseDisplay();
+  updateTimePhases();
+  updateSubstanceInfo();
+  // Update chime rate for new substance
+  if (audioEnabled && NEWAGE_PROFILES[id]) {
+    scheduleChimes(NEWAGE_PROFILES[id].chimeRate);
+  }
+  if (autoplay) {
+    currentTime = 0;
+    document.getElementById('time-slider').value = 0;
+    updateTimeDisplay();
+    if (!isPlaying) togglePlay();
+  }
+}
+
+function updateDoseDisplay() {
+  var s = S[currentSubstance];
+  document.getElementById('dose-label').textContent = s.doseL[currentDose];
+  document.getElementById('dose-value').textContent = s.doses[currentDose];
+}
+
+function updateTimePhases() {
+  var dur = S[currentSubstance].dur;
+  var tot = dur.onset + dur.peak + dur.plateau + dur.comedown + dur.afterglow;
+  var phases = [{n:'Onset',d:dur.onset,c:'phase-onset'},{n:'Peak',d:dur.peak,c:'phase-peak'},{n:'Plateau',d:dur.plateau,c:'phase-plateau'},{n:'Comedown',d:dur.comedown,c:'phase-comedown'},{n:'Afterglow',d:dur.afterglow,c:'phase-afterglow'}];
+  var container = document.getElementById('time-phases');
+  container.innerHTML = '';
+  phases.forEach(function(p) { var div = document.createElement('div'); div.className = 'phase-segment ' + p.c; div.style.flex = p.d / tot; div.textContent = p.n; container.appendChild(div); });
+  updateTimeDisplay();
+}
+
+function updateTimeDisplay() {
+  var dur = S[currentSubstance].dur;
+  var tot = dur.onset + dur.peak + dur.plateau + dur.comedown + dur.afterglow;
+  var m = (currentTime / 100) * tot;
+  var h = Math.floor(m / 60), mn = Math.floor(m % 60);
+  document.getElementById('time-current').textContent = 'T+' + h + ':' + mn.toString().padStart(2, '0');
+  var th = Math.floor(tot / 60), tm = Math.floor(tot % 60);
+  document.getElementById('time-total').textContent = h + ':' + mn.toString().padStart(2, '0') + ' / ' + th + ':' + tm.toString().padStart(2, '0');
+  var pi = getPhaseIdx(currentSubstance);
+  var names = ['Onset (absorption)', 'Peak effects', 'Plateau', 'Comedown', 'Afterglow (neuroplastic window)'];
+  document.getElementById('time-phase-label').textContent = names[pi];
+  document.querySelectorAll('.phase-segment').forEach(function(s, i) { s.classList.toggle('active', i === pi); });
+}
+
+function updateSubstanceInfo() {
+  var s = S[currentSubstance];
+  document.getElementById('substance-info').innerHTML =
+    '<div class="info-card"><h3 style="color:' + s.color + '">\u2726 ' + s.name + '</h3><p style="font-size:10px;color:var(--text-dim);margin-bottom:6px">' + s.full + '</p>' +
+    '<div class="stat-row"><span class="stat-label">Class</span><span class="stat-value">' + s.cls + '</span></div>' +
+    '<div class="stat-row"><span class="stat-label">Type</span><span class="stat-value">' + s.type + '</span></div>' +
+    '<div class="stat-row"><span class="stat-label">Duration</span><span class="stat-value">' + s.dur.total + '</span></div>' +
+    '<div class="stat-row"><span class="stat-label">Target</span><span class="stat-value">' + s.target + '</span></div></div>' +
+    '<div class="info-card"><h3>\u2726 Receptors</h3>' + s.receptors.map(function(r) { return '<div class="stat-row"><span class="receptor-badge">' + r.n + '</span><span class="stat-value">' + r.ki + '</span></div><div style="font-size:9px;color:var(--text-dim);padding:0 0 3px 8px">' + r.a + '</div>'; }).join('') + '</div>' +
+    '<div class="info-card"><h3>\u2726 Mechanism</h3><p>' + s.mech + '</p></div>' +
+    '<div class="info-card"><h3>\u2726 Key Findings</h3><ul>' + s.findings.map(function(f) { return '<li>' + f + '</li>'; }).join('') + '</ul></div>';
+}
+
+function updateRegionInfo(regionId) {
+  var r = R[regionId], sub = S[currentSubstance];
+  var eff = (sub.effects[regionId] || 0) * [0.15, 0.4, 0.7, 0.9, 1.0][currentDose];
+  var lbl = eff > 0.05 ? 'ACTIVATED' : eff < -0.05 ? 'SUPPRESSED' : 'MINIMAL';
+  var col = eff > 0.05 ? '#ff4477' : eff < -0.05 ? '#4488ff' : '#aaa';
+  var spec = REGION_SPECIFIC[currentSubstance] ? REGION_SPECIFIC[currentSubstance][regionId] : '';
+  document.getElementById('region-info').innerHTML =
+    '<div class="info-card"><h3 style="color:' + r.col + '">\u2726 ' + r.name + ' <span style="font-size:10px;color:var(--text-dim)">(' + r.abbr + ')</span></h3>' +
+    '<div style="margin:6px 0"><span style="font-size:11px;font-weight:700;color:' + col + '">' + lbl + '</span><span style="font-size:10px;color:var(--text-dim);margin-left:6px">' + (Math.abs(eff)*100).toFixed(0) + '%</span></div>' +
+    '<div class="activity-bar"><div class="activity-fill" style="width:' + Math.abs(eff)*100 + '%;background:' + col + '"></div></div></div>' +
+    '<div class="info-card"><h3>\u2726 Normal Function</h3><p>' + r.fn + '</p><p style="margin-top:4px;font-size:10px"><strong>Sub-regions:</strong> ' + r.sub + '</p></div>' +
+    (spec ? '<div class="region-effect-detail"><div class="effect-title">' + r.name + ' under ' + sub.name + '</div><div class="effect-desc">' + spec + '</div></div>' : '');
+}
+
+// ============================================================
+// EVENTS
+// ============================================================
+
+function onMouseMove(e) {
+  var rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  var hits = [];
+  for (var entry of Object.entries(regionMeshes)) {
+    var id = entry[0], g = entry[1];
+    var pos = new THREE.Vector3(); g.getWorldPosition(pos);
+    var dist = raycaster.ray.distanceToPoint(pos);
+    if (dist < R[id].sz * 1.2) hits.push({ id: id, dist: dist });
+  }
+  hits.sort(function(a, b) { return a.dist - b.dist; });
+  var tooltip = document.getElementById('region-tooltip');
+  if (hits.length > 0) {
+    var id = hits[0].id, r = R[id], sub = S[currentSubstance];
+    var eff = (sub.effects[id] || 0) * [0.15, 0.4, 0.7, 0.9, 1.0][currentDose];
+    var spec = REGION_SPECIFIC[currentSubstance] ? REGION_SPECIFIC[currentSubstance][id] : '';
+    document.getElementById('tooltip-title').textContent = '\u2726 ' + r.name + ' (' + r.abbr + ')';
+    document.getElementById('tooltip-text').textContent = spec ? spec.split('.')[0] : r.fn;
+    var bar = document.getElementById('tooltip-bar');
+    bar.style.width = Math.abs(eff) * 100 + '%';
+    bar.style.background = eff > 0 ? 'linear-gradient(90deg,#ff0055,#ffcc00)' : eff < 0 ? 'linear-gradient(90deg,#4488ff,#00ccff)' : '#aaa';
+    tooltip.style.display = 'block';
+    tooltip.style.left = (e.clientX + 15) + 'px';
+    tooltip.style.top = (e.clientY - 10) + 'px';
+    renderer.domElement.style.cursor = 'pointer';
+  } else {
+    tooltip.style.display = 'none';
+    renderer.domElement.style.cursor = 'grab';
+  }
+}
+
+function onMouseClick() {
+  raycaster.setFromCamera(mouse, camera);
+  var hits = [];
+  for (var entry of Object.entries(regionMeshes)) {
+    var id = entry[0], g = entry[1];
+    var pos = new THREE.Vector3(); g.getWorldPosition(pos);
+    if (raycaster.ray.distanceToPoint(pos) < R[id].sz * 1.2) hits.push({ id: id, d: raycaster.ray.distanceToPoint(pos) });
+  }
+  if (hits.length > 0) {
+    hits.sort(function(a, b) { return a.d - b.d; });
+    selectedRegion = hits[0].id;
+    updateRegionInfo(selectedRegion);
+  }
+}
+
+function onResize() {
+  var c1 = document.getElementById('canvas-container');
+  camera.aspect = c1.clientWidth / c1.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(c1.clientWidth, c1.clientHeight);
+  if (compareMode && renderer2) {
+    var c2 = document.getElementById('canvas-container-2');
+    camera2.aspect = c2.clientWidth / c2.clientHeight;
+    camera2.updateProjectionMatrix();
+    renderer2.setSize(c2.clientWidth, c2.clientHeight);
+  }
+}
+
+function setView(m) {
+  showConnectivity = m === 'connectivity';
+  document.querySelector('[data-view="connectivity"]').classList.toggle('active', showConnectivity);
+  document.querySelector('[data-view="regions"]').classList.toggle('active', !showConnectivity);
+}
+function toggleLabels() { showLabels = !showLabels; document.querySelector('[data-view="labels"]').classList.toggle('active', showLabels); }
+function toggleRotate() { autoRotate = !autoRotate; controls.autoRotate = autoRotate; if (controls2) controls2.autoRotate = autoRotate; document.querySelector('[data-view="rotate"]').classList.toggle('active', autoRotate); }
+function togglePlay() {
+  isPlaying = !isPlaying;
+  document.getElementById('play-btn').textContent = isPlaying ? 'PAUSE' : 'PLAY';
+  if (isPlaying) {
+    playInterval = setInterval(function() {
+      currentTime += 0.15;
+      if (currentTime >= 100) currentTime = 0; // LOOP
+      document.getElementById('time-slider').value = currentTime;
+      updateTimeDisplay();
+    }, 50);
+  } else clearInterval(playInterval);
+}
+
+document.getElementById('dose-slider').addEventListener('input', function() { currentDose = parseInt(this.value); updateDoseDisplay(); if (selectedRegion) updateRegionInfo(selectedRegion); });
+document.getElementById('time-slider').addEventListener('input', function() { currentTime = parseFloat(this.value); if (isPlaying) togglePlay(); updateTimeDisplay(); if (selectedRegion) updateRegionInfo(selectedRegion); });
+
+// ============================================================
+// UPDATE SCENE PSYCHEDELIC EFFECTS
+// ============================================================
+
+function updateOrbitLights(t) {
+  for (var i = 0; i < orbitLights.length; i++) {
+    var speed = 0.3 + i * 0.15;
+    var radius = 3 + Math.sin(t * 0.2 + i) * 0.5;
+    orbitLights[i].position.x = Math.cos(t * speed + i * 2.094) * radius;
+    orbitLights[i].position.y = Math.sin(t * 0.5 + i * 1.5) * 1.5;
+    orbitLights[i].position.z = Math.sin(t * speed + i * 2.094) * radius;
+    // Cycle the light color
+    var hue = (t * 0.05 + i * 0.33) % 1;
+    orbitLights[i].color.setHSL(hue, 0.9, 0.5);
+  }
+}
+
+function updateStarField(t) {
+  if (starField) {
+    starField.rotation.y = t * 0.003;
+    starField.rotation.x = Math.sin(t * 0.001) * 0.1;
+  }
+}
+
+function updateSacredGeometry(t) {
+  sacredGeoShapes.forEach(function(mesh) {
+    var ud = mesh.userData;
+    mesh.rotation.x += ud.rotSpeed;
+    mesh.rotation.y += ud.rotSpeed * 0.7;
+    ud.orbitAngle += ud.orbitSpeed;
+    mesh.position.x = Math.cos(ud.orbitAngle) * ud.orbitRadius;
+    mesh.position.z = Math.sin(ud.orbitAngle) * ud.orbitRadius;
+    mesh.position.y = ud.yOffset + Math.sin(t * 0.5 + ud.orbitAngle) * 0.3;
+    // Color cycle
+    var hue = (t * 0.02 + ud.orbitAngle) % 1;
+    mesh.material.color.setHSL(hue, 0.9, 0.6);
+  });
+}
+
+function updateBrainShellHue(group, t) {
+  // Cycle the brain shell color over time for holographic effect
+  group.children.forEach(function(child) {
+    if (child.material && child.material.isMeshPhysicalMaterial && !child.userData.regionId) {
+      var hue = (t * 0.02) % 1;
+      child.material.color.setHSL(hue, 0.3, 0.5);
+    }
+  });
+}
+
+// ============================================================
+// MAIN LOOP
+// ============================================================
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  var t = Date.now() * 0.001;
+
+  // Update psychedelic scene elements
+  updateOrbitLights(t);
+  updateStarField(t);
+  updateSacredGeometry(t);
+  updateBrainShellHue(brainGroup, t);
+
+  updateBioRegions(regionMeshes, currentSubstance, camera);
+  updateLabels(regionMeshes, floatingLabels, currentSubstance, camera, document.getElementById('canvas-container'));
+  updateConnectivity(brainGroup, regionMeshes, currentSubstance);
+  updateNarration();
+  updateAudio();
+
+  if (autoRotate) brainGroup.rotation.y += 0.002;
+
+  // Subtle hue-shift post-processing: tint the scene via toneMappingExposure oscillation
+  var sub = S[currentSubstance];
+  var timeMult = getTimeMultiplier(currentTime, sub);
+  var doseMult = [0.15, 0.4, 0.7, 0.9, 1.0][currentDose];
+  var intensity = timeMult * doseMult;
+  renderer.toneMappingExposure = 1.6 + Math.sin(t * 0.3) * 0.3 * intensity;
+
+  renderer.render(scene, camera);
+
+  // Compare mode
+  if (compareMode && scene2) {
+    controls2.update();
+    updateBioRegions(regionMeshes2, compareSubstance, camera2);
+    if (autoRotate) brainGroup2.rotation.y += 0.002;
+    renderer2.toneMappingExposure = 1.6 + Math.sin(t * 0.3 + 1) * 0.3 * intensity;
+    renderer2.render(scene2, camera2);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
