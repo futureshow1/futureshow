@@ -2079,6 +2079,7 @@ requestAnimationFrame(loop);
 // ================================================================
 // PANEL RESIZE — draggable column + row splitters
 // ================================================================
+{
 const GS = { c1:240, c2:null, c3:null, c4:220, r3:200, MIN:110, MIN_R:80 };
 
 function gsInit() {
@@ -2089,86 +2090,93 @@ function gsInit() {
 
 function gsApply() {
   const app = document.getElementById('app');
-  app.style.gridTemplateColumns = `${GS.c1}px ${GS.c2}px ${GS.c3}px ${GS.c4}px`;
-  app.style.gridTemplateRows    = `52px 1fr ${GS.r3}px`;
+  app.style.gridTemplateColumns = GS.c1+'px '+GS.c2+'px '+GS.c3+'px '+GS.c4+'px';
+  app.style.gridTemplateRows    = '52px 1fr '+GS.r3+'px';
   posRZ();
   resizeAll();
 }
 
-// Create resizer elements in JS (must be after DOM is ready — avoids the
-// "getElementById returns null" bug that occurs when divs are placed after </script>)
+const RZ_REST = 'rgba(60,100,160,0.08)';
+const RZ_HOVER = 'rgba(0,229,255,0.25)';
+const RZ_DRAG = 'rgba(0,229,255,0.45)';
+const RZ_V_STYLE = 'position:fixed;width:8px;cursor:col-resize;z-index:99990;user-select:none;background:'+RZ_REST+';transition:background .15s;';
+const RZ_H_STYLE = 'position:fixed;height:8px;cursor:row-resize;z-index:99990;user-select:none;background:'+RZ_REST+';transition:background .15s;';
+
 const rv1 = document.createElement('div');
 const rv2 = document.createElement('div');
 const rv3 = document.createElement('div');
 const rh  = document.createElement('div');
-[rv1, rv2, rv3].forEach(el => { el.className = 'resizer-v'; document.body.appendChild(el); });
-rh.className = 'resizer-h'; document.body.appendChild(rh);
+rv1.style.cssText = RZ_V_STYLE;
+rv2.style.cssText = RZ_V_STYLE;
+rv3.style.cssText = RZ_V_STYLE;
+rh.style.cssText  = RZ_H_STYLE;
+[rv1,rv2,rv3,rh].forEach(function(el) {
+  el.addEventListener('mouseenter', function(){ el.style.background = RZ_HOVER; });
+  el.addEventListener('mouseleave', function(){ el.style.background = RZ_REST; });
+  document.body.appendChild(el);
+});
 
 function posRZ() {
-  const wh = window.innerHeight;
-  const x1 = GS.c1, x2 = GS.c1+GS.c2, x3 = GS.c1+GS.c2+GS.c3;
-  // Use direct property assignment — never += cssText (would accumulate duplicates)
-  Object.assign(rv1.style, { left:(x1-5)+'px', top:'52px',            width:'10px', height:(wh-52)+'px' });
-  Object.assign(rv2.style, { left:(x2-5)+'px', top:'52px',            width:'10px', height:(wh-52-GS.r3)+'px' });
-  Object.assign(rv3.style, { left:(x3-5)+'px', top:'52px',            width:'10px', height:(wh-52)+'px' });
-  Object.assign(rh.style,  { left: x1+'px',    top:(wh-GS.r3-5)+'px', height:'10px', width:(x3-x1)+'px' });
+  var wh = window.innerHeight;
+  var x1 = GS.c1, x2 = GS.c1+GS.c2, x3 = GS.c1+GS.c2+GS.c3;
+  rv1.style.left = (x1-4)+'px'; rv1.style.top = '52px'; rv1.style.height = (wh-52)+'px';
+  rv2.style.left = (x2-4)+'px'; rv2.style.top = '52px'; rv2.style.height = (wh-52-GS.r3)+'px';
+  rv3.style.left = (x3-4)+'px'; rv3.style.top = '52px'; rv3.style.height = (wh-52)+'px';
+  rh.style.left = x1+'px'; rh.style.top = (wh-GS.r3-4)+'px'; rh.style.width = (x3-x1)+'px';
 }
 
-function makeDragger(el, fn) {
-  el.addEventListener('mousedown', e => {
+function makeDragger(el, cursorType, fn) {
+  el.addEventListener('mousedown', function(e) {
     e.preventDefault();
-    const sx = e.clientX, sy = e.clientY, snap = {...GS};
-    el.classList.add('rz-drag');
-    document.body.style.cursor = el.classList.contains('resizer-h') ? 'row-resize' : 'col-resize';
-    const mv = ev => { fn(ev.clientX-sx, ev.clientY-sy, snap); gsApply(); };
-    const up = () => {
-      el.classList.remove('rz-drag');
+    var sx = e.clientX, sy = e.clientY;
+    var snap = {c1:GS.c1,c2:GS.c2,c3:GS.c3,c4:GS.c4,r3:GS.r3};
+    el.style.background = RZ_DRAG;
+    document.body.style.cursor = cursorType;
+    function mv(ev) { fn(ev.clientX-sx, ev.clientY-sy, snap); gsApply(); }
+    function up() {
+      el.style.background = RZ_REST;
       document.body.style.cursor = '';
       document.removeEventListener('mousemove', mv);
       document.removeEventListener('mouseup', up);
-    };
+    }
     document.addEventListener('mousemove', mv);
     document.addEventListener('mouseup', up);
   });
 }
 
-// rv1: left panel ↔ heart view
-makeDragger(rv1, (dx,dy,s) => {
-  const tot = s.c1+s.c2;
+makeDragger(rv1, 'col-resize', function(dx,dy,s) {
+  var tot = s.c1+s.c2;
   GS.c1 = Math.max(GS.MIN, Math.min(tot-GS.MIN, s.c1+dx));
   GS.c2 = tot-GS.c1;
 });
-// rv2: heart view ↔ PV/Wiggers view
-makeDragger(rv2, (dx,dy,s) => {
-  const tot = s.c2+s.c3;
+makeDragger(rv2, 'col-resize', function(dx,dy,s) {
+  var tot = s.c2+s.c3;
   GS.c2 = Math.max(GS.MIN, Math.min(tot-GS.MIN, s.c2+dx));
   GS.c3 = tot-GS.c2;
 });
-// rv3: PV view ↔ right panel
-makeDragger(rv3, (dx,dy,s) => {
-  const tot = s.c3+s.c4;
+makeDragger(rv3, 'col-resize', function(dx,dy,s) {
+  var tot = s.c3+s.c4;
   GS.c4 = Math.max(GS.MIN, Math.min(tot-GS.MIN, s.c4-dx));
   GS.c3 = tot-GS.c4;
 });
-// rh: main area ↔ bottom strip
-makeDragger(rh, (dx,dy,s) => {
-  const h = window.innerHeight;
+makeDragger(rh, 'row-resize', function(dx,dy,s) {
+  var h = window.innerHeight;
   GS.r3 = Math.max(GS.MIN_R, Math.min(h-52-GS.MIN_R, s.r3-dy));
 });
 
-// Proportional rescale on window resize
-window.addEventListener('resize', () => {
-  const oldW = GS.c1+GS.c2+GS.c3+GS.c4, newW = window.innerWidth;
-  const scale = newW/oldW;
+window.addEventListener('resize', function() {
+  var oldW = GS.c1+GS.c2+GS.c3+GS.c4, newW = window.innerWidth;
+  var scale = newW/oldW;
   GS.c1 = Math.round(GS.c1*scale);
   GS.c2 = Math.round(GS.c2*scale);
   GS.c3 = Math.round(GS.c3*scale);
   GS.c4 = newW-GS.c1-GS.c2-GS.c3;
-  gsApply(); // was posRZ() — must call gsApply to update grid + resize canvases
+  gsApply();
 });
 
 gsInit();
 gsApply();
+}
 
 // ================================================================
 // ACTIVE DRUG TRACKER + INTERACTION WARNINGS
