@@ -2093,18 +2093,23 @@ function gsApply() {
   resizeAll();
 }
 
-const rv1 = document.getElementById('rv1');
-const rv2 = document.getElementById('rv2');
-const rv3 = document.getElementById('rv3');
-const rh  = document.getElementById('rh');
+// Create resizer elements in JS (must be after DOM is ready — avoids the
+// "getElementById returns null" bug that occurs when divs are placed after </script>)
+const rv1 = document.createElement('div');
+const rv2 = document.createElement('div');
+const rv3 = document.createElement('div');
+const rh  = document.createElement('div');
+[rv1, rv2, rv3].forEach(el => { el.className = 'resizer-v'; document.body.appendChild(el); });
+rh.className = 'resizer-h'; document.body.appendChild(rh);
 
 function posRZ() {
   const wh = window.innerHeight;
   const x1 = GS.c1, x2 = GS.c1+GS.c2, x3 = GS.c1+GS.c2+GS.c3;
-  rv1.style.cssText += `position:fixed;left:${x1-3}px;top:52px;height:${wh-52}px;`;
-  rv2.style.cssText += `position:fixed;left:${x2-3}px;top:52px;height:${wh-52-GS.r3}px;`;
-  rv3.style.cssText += `position:fixed;left:${x3-3}px;top:52px;height:${wh-52}px;`;
-  rh.style.cssText  += `position:fixed;left:${x1}px;top:${wh-GS.r3-3}px;width:${x3-x1}px;`;
+  // Use direct property assignment — never += cssText (would accumulate duplicates)
+  Object.assign(rv1.style, { left:(x1-3)+'px', top:'52px',          width:'6px', height:(wh-52)+'px' });
+  Object.assign(rv2.style, { left:(x2-3)+'px', top:'52px',          width:'6px', height:(wh-52-GS.r3)+'px' });
+  Object.assign(rv3.style, { left:(x3-3)+'px', top:'52px',          width:'6px', height:(wh-52)+'px' });
+  Object.assign(rh.style,  { left: x1+'px',    top:(wh-GS.r3-3)+'px', height:'6px', width:(x3-x1)+'px' });
 }
 
 function makeDragger(el, fn) {
@@ -2226,9 +2231,5 @@ document.querySelectorAll('.drug-slider').forEach(sl => {
 
 </script>
 
-<div id="rv1" class="resizer-v"></div>
-<div id="rv2" class="resizer-v"></div>
-<div id="rv3" class="resizer-v"></div>
-<div id="rh"  class="resizer-h"></div>
 </body>
 </html>
