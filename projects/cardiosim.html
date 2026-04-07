@@ -261,6 +261,31 @@ input[type="range"]::-webkit-slider-thumb:hover {
   max-width: 200px;
 }
 #back-btn{display:flex;align-items:center;gap:5px;background:rgba(10,16,30,.85);border:1px solid rgba(60,100,160,.25);border-radius:6px;padding:5px 12px 5px 8px;color:rgba(200,220,255,.5);font-family:'JetBrains Mono',monospace;font-size:10px;text-decoration:none;cursor:pointer;transition:all .2s;white-space:nowrap}#back-btn:hover{background:rgba(20,40,80,.9);color:rgba(200,220,255,.85);border-color:rgba(80,160,255,.4)}#back-btn svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none}
+/* Tabs */
+.tab-bar{display:flex;gap:2px;margin-bottom:10px}
+.tab-btn{flex:1;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:rgba(10,20,40,.5);border:1px solid var(--border);border-radius:4px;color:var(--text-secondary);padding:5px 0;cursor:pointer;transition:all .2s}
+.tab-btn.active{background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.35);color:var(--cyan)}
+.tab-pane{display:none}.tab-pane.active{display:block}
+
+/* Drug panel */
+.drug-item{background:rgba(8,16,32,.7);border:1px solid var(--border);border-radius:6px;padding:9px 10px;margin-bottom:7px;transition:border-color .25s}
+.drug-item.drug-on{border-color:rgba(0,229,255,.3);background:rgba(0,30,50,.5)}
+.drug-name{font-size:11px;font-weight:600;color:var(--text-primary);margin-bottom:1px}
+.drug-class{font-size:8.5px;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-secondary);opacity:.7;margin-bottom:7px}
+.drug-dose-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.drug-dose-lbl{font-size:9px;color:var(--text-secondary);opacity:.6}
+.drug-dose-val{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--cyan);min-width:56px;text-align:right}
+.drug-effects{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}
+.drug-eff{font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px}
+.drug-eff.dn{background:rgba(41,121,255,.12);color:#5599ff;border:1px solid rgba(41,121,255,.25)}
+.drug-eff.up{background:rgba(255,65,129,.12);color:var(--pink);border:1px solid rgba(255,65,129,.2)}
+.drug-eff.neu{background:rgba(80,100,130,.1);color:var(--text-secondary);border:1px solid var(--border)}
+.drug-onset{font-size:8px;color:var(--text-secondary);opacity:.6;margin-top:4px;font-family:'JetBrains Mono',monospace}
+.drug-onset-bar{height:2px;background:var(--border);border-radius:1px;margin-top:3px;overflow:hidden}
+.drug-onset-fill{height:100%;background:var(--cyan);width:0%;transition:width .3s;border-radius:1px}
+.wu-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-secondary)}
+.wu-unit{font-size:9px;color:var(--text-secondary);opacity:.6;margin-left:2px}
+
 #rotate-hint{display:none;position:fixed;inset:0;z-index:99999;background:#050a12;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;padding:40px}
 #rotate-hint svg{width:64px;height:64px;stroke:var(--cyan);fill:none;stroke-width:1.5;animation:rot-anim 2s ease-in-out infinite}
 @keyframes rot-anim{0%,100%{transform:rotate(0deg)}50%{transform:rotate(90deg)}}
@@ -293,6 +318,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
   <!-- LEFT PANEL: Controls -->
   <div class="panel left-panel">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="params">PARAMS</button>
+      <button class="tab-btn" data-tab="drugs">DRUGS</button>
+    </div>
+
+    <!-- TAB: Parameters -->
+    <div class="tab-pane active" id="tab-params">
     <div class="section-title st-controls">Parameters</div>
     <div class="control-group">
       <div class="control-header"><span class="control-label">Heart Rate</span><span class="control-value" id="hr-val">72 bpm</span></div>
@@ -309,6 +341,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
     <div class="control-group">
       <div class="control-header"><span class="control-label">SVR (Afterload)</span><span class="control-value" id="pr-val">100%</span></div>
       <input type="range" id="pr-slider" min="25" max="220" value="100">
+    </div>
+    <div class="control-group">
+      <div class="control-header"><span class="control-label">PVR (Pulm. Resistance)</span><span class="control-value" id="pvr-val">100%</span></div>
+      <input type="range" id="pvr-slider" min="25" max="400" value="100">
     </div>
     <div class="control-group">
       <div class="control-header"><span class="control-label">Resp. Rate</span><span class="control-value" id="rr-val">16 /min</span></div>
@@ -348,6 +384,78 @@ input[type="range"]::-webkit-slider-thumb:hover {
     <div class="info-box" id="info-box">
       Real-time hemodynamic simulation with Frank-Starling mechanics. Adjust parameters or select a clinical scenario to observe physiological changes.
     </div>
+    </div><!-- /tab-params -->
+
+    <!-- TAB: Drugs -->
+    <div class="tab-pane" id="tab-drugs">
+    <div class="section-title st-scenarios" style="--before-color:var(--cyan)">Pharmacology</div>
+    <div style="font-size:9px;color:var(--text-secondary);opacity:.6;margin-bottom:10px;line-height:1.5">Dose sliders simulate real pharmacodynamics with onset delay. Effects are cumulative.</div>
+
+    <!-- Metoprolol -->
+    <div class="drug-item" id="di-metoprolol">
+      <div class="drug-name">Metoprolol</div>
+      <div class="drug-class">Selective β1-blocker</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 200 mg</span><span class="drug-dose-val" id="dd-metoprolol">0 mg</span></div>
+      <input type="range" class="drug-slider" id="ds-metoprolol" data-drug="metoprolol" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff dn">HR↓</span><span class="drug-eff dn">Contr↓</span><span class="drug-eff neu">SVR—</span><span class="drug-eff neu">PVR—</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-metoprolol"></div></div>
+    </div>
+
+    <!-- Carvedilol -->
+    <div class="drug-item" id="di-carvedilol">
+      <div class="drug-name">Carvedilol</div>
+      <div class="drug-class">α/β non-selective blocker</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 50 mg</span><span class="drug-dose-val" id="dd-carvedilol">0 mg</span></div>
+      <input type="range" class="drug-slider" id="ds-carvedilol" data-drug="carvedilol" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff dn">HR↓</span><span class="drug-eff dn">Contr↓</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff dn">PVR↓</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-carvedilol"></div></div>
+    </div>
+
+    <!-- Diltiazem -->
+    <div class="drug-item" id="di-diltiazem">
+      <div class="drug-name">Diltiazem</div>
+      <div class="drug-class">CCB — rate-limiting (non-DHP)</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 360 mg</span><span class="drug-dose-val" id="dd-diltiazem">0 mg</span></div>
+      <input type="range" class="drug-slider" id="ds-diltiazem" data-drug="diltiazem" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff dn">HR↓↓</span><span class="drug-eff dn">Contr↓</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff neu">PVR—</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-diltiazem"></div></div>
+    </div>
+
+    <!-- Amlodipine -->
+    <div class="drug-item" id="di-amlodipine">
+      <div class="drug-name">Amlodipine</div>
+      <div class="drug-class">CCB — vasodilator (DHP)</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 10 mg</span><span class="drug-dose-val" id="dd-amlodipine">0 mg</span></div>
+      <input type="range" class="drug-slider" id="ds-amlodipine" data-drug="amlodipine" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff up">HR↑</span><span class="drug-eff neu">Contr—</span><span class="drug-eff dn">SVR↓↓</span><span class="drug-eff dn">PVR↓</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-amlodipine"></div></div>
+    </div>
+
+    <!-- Dobutamine -->
+    <div class="drug-item" id="di-dobutamine">
+      <div class="drug-name">Dobutamine</div>
+      <div class="drug-class">β1/β2 agonist — inotrope</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 20 μg/kg/min</span><span class="drug-dose-val" id="dd-dobutamine">0 μg/kg/min</span></div>
+      <input type="range" class="drug-slider" id="ds-dobutamine" data-drug="dobutamine" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff up">HR↑</span><span class="drug-eff up">Contr↑↑</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff dn">PVR↓</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-dobutamine"></div></div>
+    </div>
+
+    <!-- Norepinephrine -->
+    <div class="drug-item" id="di-norepinephrine">
+      <div class="drug-name">Norepinephrine</div>
+      <div class="drug-class">α1/β1 agonist — vasopressor</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 0.5 μg/kg/min</span><span class="drug-dose-val" id="dd-norepinephrine">0 μg/kg/min</span></div>
+      <input type="range" class="drug-slider" id="ds-norepinephrine" data-drug="norepinephrine" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff dn">HR↓</span><span class="drug-eff up">Contr↑</span><span class="drug-eff up">SVR↑↑</span><span class="drug-eff up">PVR↑</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-norepinephrine"></div></div>
+    </div>
+
+    <div style="font-size:8.5px;color:var(--text-secondary);opacity:.5;margin-top:8px;line-height:1.6;border-top:1px solid var(--border);padding-top:8px">
+      ⚠ Educational model only. Effects are pharmacodynamic approximations for teaching purposes.
+    </div>
+    </div><!-- /tab-drugs -->
+
   </div>
 
   <!-- MAIN HEART VIEW -->
@@ -420,6 +528,16 @@ input[type="range"]::-webkit-slider-thumb:hover {
       <div class="vital-label">PA Pressure</div>
       <div class="vital-row"><span class="vital-value" style="color:var(--cyan);font-size:20px" id="v-pap">25/10</span><span class="vital-unit">mmHg</span></div>
     </div>
+    <div class="vital-card vc-sv">
+      <div class="vital-label">SVR — Systemic Resistance</div>
+      <div class="vital-row"><span class="wu-val" id="v-svr-wu">1392</span><span class="wu-unit">dyn·s/cm⁵</span></div>
+      <div class="vital-sub" id="v-svr-wu2" style="font-family:'JetBrains Mono',monospace;font-size:9px">≈ 17.4 WU</div>
+    </div>
+    <div class="vital-card vc-co">
+      <div class="vital-label">PVR — Pulmonary Resistance</div>
+      <div class="vital-row"><span class="wu-val" id="v-pvr-wu">80</span><span class="wu-unit">dyn·s/cm⁵</span></div>
+      <div class="vital-sub" id="v-pvr-wu2" style="font-family:'JetBrains Mono',monospace;font-size:9px">≈ 1.0 WU</div>
+    </div>
   </div>
 
   <!-- BOTTOM: Waveform Strips -->
@@ -452,17 +570,46 @@ input[type="range"]::-webkit-slider-thumb:hover {
 // SIMULATION STATE
 // ================================================================
 const S = {
-  hr: 72, contractility: 1.0, bloodVolume: 5.0, svr: 1.0, rr: 16,
+  hr: 72, contractility: 1.0, bloodVolume: 5.0, svr: 1.0, pvr: 1.0, rr: 16,
   scenario: 'normal', viewMode: 'anatomy',
   // Derived
   systolic: 120, diastolic: 80, map: 93, spo2: 98, co: 5.0, sv: 70,
   ef: 62, ci: 2.6, cvp: 6, pcwp: 10, pap_s: 25, pap_d: 10,
+  svr_wu: 1392, pvr_wu: 80,
   // Cycle
   phase: 0, time: 0, dt: 0, frameCount: 0, fpsTime: 0, fps: 60,
   miZone: false, tamponade: false, peBlock: false,
   // Audio
   audioOn: false,
 };
+
+// ================================================================
+// DRUG STATE
+// ================================================================
+const DRUGS = {
+  metoprolol:    { label:'Metoprolol',    unit:'mg',         maxLabel:'200',  maxDose:200, onsetK:0.008, hr:-0.32, contr:-0.22, svr: 0.02, pvr: 0.00 },
+  carvedilol:    { label:'Carvedilol',    unit:'mg',         maxLabel:'50',   maxDose:50,  onsetK:0.006, hr:-0.30, contr:-0.20, svr:-0.22, pvr:-0.10 },
+  diltiazem:     { label:'Diltiazem',     unit:'mg',         maxLabel:'360',  maxDose:360, onsetK:0.015, hr:-0.38, contr:-0.14, svr:-0.16, pvr:-0.04 },
+  amlodipine:    { label:'Amlodipine',    unit:'mg',         maxLabel:'10',   maxDose:10,  onsetK:0.003, hr: 0.10, contr: 0.00, svr:-0.34, pvr:-0.12 },
+  dobutamine:    { label:'Dobutamine',    unit:'μg/kg/min',  maxLabel:'20',   maxDose:20,  onsetK:0.025, hr: 0.22, contr: 0.48, svr:-0.14, pvr:-0.16 },
+  norepinephrine:{ label:'Norepinephrine',unit:'μg/kg/min',  maxLabel:'0.5',  maxDose:0.5, onsetK:0.030, hr:-0.10, contr: 0.18, svr: 0.58, pvr: 0.14 },
+};
+// drugTarget = desired effect level (0–1, set by slider)
+// drugLevel  = actual effective level (lerps toward target, simulating onset/offset)
+const drugTarget = {}, drugLevel = {};
+for (const d in DRUGS) { drugTarget[d] = 0; drugLevel[d] = 0; }
+
+function getDrugMods() {
+  let dHR=0, dContr=0, dSVR=0, dPVR=0;
+  for (const [d, cfg] of Object.entries(DRUGS)) {
+    const lv = drugLevel[d];
+    dHR    += lv * cfg.hr;
+    dContr += lv * cfg.contr;
+    dSVR   += lv * cfg.svr;
+    dPVR   += lv * cfg.pvr;
+  }
+  return { dHR, dContr, dSVR, dPVR };
+}
 
 // ================================================================
 // CANVAS REFERENCES
@@ -605,21 +752,26 @@ function abpSample(p) {
 // HEMODYNAMICS
 // ================================================================
 function updateHemo() {
-  const hr = S.hr, c = S.contractility, bv = S.bloodVolume, pr = S.svr;
+  const dm = getDrugMods();
+  // Apply drug modifiers to effective params (clamped to physiological range)
+  const hr  = Math.max(20,  Math.min(220, S.hr   * (1 + dm.dHR)));
+  const c   = Math.max(0.1, Math.min(2.0, S.contractility * (1 + dm.dContr)));
+  const bv  = S.bloodVolume;
+  const pr  = Math.max(0.15, Math.min(3.0, S.svr  * (1 + dm.dSVR)));
+  const pvrF= Math.max(0.15, Math.min(5.0, S.pvr  * (1 + dm.dPVR)));
+
   const preload = bv / 5.0;
   S.sv = Math.round(70 * c * Math.min(preload, 1.35) * (1 - Math.max(0, hr-160)/250));
   if (S.tamponade) S.sv = Math.round(S.sv * 0.45);
-  if (S.peBlock) S.sv = Math.round(S.sv * 0.5);
+  if (S.peBlock)   S.sv = Math.round(S.sv * 0.5);
   S.sv = Math.max(5, S.sv);
   S.co = +(S.sv * hr / 1000).toFixed(1);
   S.ci = +(S.co / 1.9).toFixed(1);
   S.ef = Math.round(Math.min(75, S.sv / 1.12));
 
   const coF = S.co / 5.0;
-  S.systolic = Math.round(120 * coF * pr * (0.65 + c * 0.35));
-  S.diastolic = Math.round(80 * pr * (0.45 + coF * 0.55));
-  S.systolic = Math.max(35, Math.min(260, S.systolic));
-  S.diastolic = Math.max(15, Math.min(160, Math.min(S.systolic - 8, S.diastolic)));
+  S.systolic  = Math.max(35,  Math.min(260, Math.round(120 * coF * pr * (0.65 + c * 0.35))));
+  S.diastolic = Math.max(15,  Math.min(160, Math.min(S.systolic - 8, Math.round(80 * pr * (0.45 + coF * 0.55)))));
   S.map = Math.round(S.diastolic + (S.systolic - S.diastolic) / 3);
 
   S.spo2 = Math.round(Math.min(100, 87 + coF * 9 + preload * 4));
@@ -627,10 +779,20 @@ function updateHemo() {
   if (S.peBlock) S.spo2 -= 10;
   S.spo2 = Math.max(55, Math.min(100, S.spo2));
 
-  S.cvp = Math.round(6 * preload + (S.tamponade ? 12 : 0) + (S.scenario === 'chf' ? 8 : 0));
+  S.cvp  = Math.round(6 * preload + (S.tamponade ? 12 : 0) + (S.scenario === 'chf' ? 8 : 0));
   S.pcwp = Math.round(10 * preload * (S.scenario === 'chf' ? 2.4 : 1) + (S.tamponade ? 8 : 0));
-  S.pap_s = Math.round(25 * (S.peBlock ? 2.2 : 1) * (S.scenario === 'chf' ? 1.6 : 1));
-  S.pap_d = Math.round(10 * (S.peBlock ? 1.8 : 1) * (S.scenario === 'chf' ? 1.5 : 1));
+  S.pap_s = Math.round(25 * pvrF * (S.peBlock ? 2.2 : 1) * (S.scenario === 'chf' ? 1.6 : 1));
+  S.pap_d = Math.round(S.pap_s * 0.4);
+
+  // Vascular resistance in Wood Units: R = ΔP / CO; ×80 → dyn·s·cm⁻⁵
+  const coSafe = Math.max(0.5, S.co);
+  const svrWU  = (S.map - S.cvp) / coSafe;
+  const mPAP   = (S.pap_s + 2 * S.pap_d) / 3;
+  const pvrWU  = Math.max(0.1, (mPAP - S.pcwp) / coSafe);
+  S.svr_wu = Math.round(svrWU * 80);
+  S.pvr_wu = Math.round(pvrWU * 80);
+  S._svrWU = +svrWU.toFixed(1);
+  S._pvrWU = +pvrWU.toFixed(1);
 }
 
 // ================================================================
@@ -1402,6 +1564,7 @@ const sliders = [
   { id: 'contr-slider', valId: 'contr-val', key: 'contractility', fmt: v => v + '%', scale: 0.01 },
   { id: 'bv-slider', valId: 'bv-val', key: 'bloodVolume', fmt: v => (v/10).toFixed(1) + ' L', scale: 0.1 },
   { id: 'pr-slider', valId: 'pr-val', key: 'svr', fmt: v => v + '%', scale: 0.01 },
+  { id: 'pvr-slider', valId: 'pvr-val', key: 'pvr', fmt: v => v + '%', scale: 0.01 },
   { id: 'rr-slider', valId: 'rr-val', key: 'rr', fmt: v => v + ' /min' },
 ];
 sliders.forEach(s => {
@@ -1505,6 +1668,10 @@ function updateUI() {
   document.getElementById('v-cvp').textContent = S.cvp;
   document.getElementById('v-pcwp').textContent = S.pcwp;
   document.getElementById('v-pap').textContent = `${S.pap_s}/${S.pap_d}`;
+  document.getElementById('v-svr-wu').textContent = S.svr_wu;
+  document.getElementById('v-svr-wu2').textContent = `≈ ${S._svrWU} WU`;
+  document.getElementById('v-pvr-wu').textContent = S.pvr_wu;
+  document.getElementById('v-pvr-wu2').textContent = `≈ ${S._pvrWU} WU`;
 
   // Strip values
   document.getElementById('ecg-val').innerHTML = `${S.hr} <span class="su">bpm</span>`;
@@ -1554,6 +1721,35 @@ function doBeep() {
 document.addEventListener('click', () => { initAudio(); if (audioCtx.state === 'suspended') audioCtx.resume(); }, { once: false });
 
 // ================================================================
+// TAB SWITCHING
+// ================================================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ================================================================
+// DRUG HANDLERS
+// ================================================================
+document.querySelectorAll('.drug-slider').forEach(sl => {
+  sl.addEventListener('input', e => {
+    const d = e.target.dataset.drug;
+    const cfg = DRUGS[d];
+    const pct = +e.target.value / 100;
+    drugTarget[d] = pct;
+    // Update dose label
+    const doseVal = (pct * cfg.maxDose).toFixed(cfg.maxDose < 1 ? 2 : cfg.maxDose < 10 ? 1 : 0);
+    document.getElementById('dd-' + d).textContent = doseVal + ' ' + cfg.unit;
+    // Highlight card if active
+    document.getElementById('di-' + d).classList.toggle('drug-on', pct > 0);
+  });
+});
+
+// ================================================================
 // MAIN LOOP
 // ================================================================
 let prevTime = 0;
@@ -1583,6 +1779,17 @@ function loop(ts) {
   const beatDur = 60 / S.hr;
   const afibJ = S.scenario === 'afib' ? (Math.random()-0.5)*0.12 : 0;
   S.phase = ((S.time + afibJ) % beatDur) / beatDur;
+
+  // Drug onset lerp — each drug ramps toward target at its own speed
+  for (const [d, cfg] of Object.entries(DRUGS)) {
+    const diff = drugTarget[d] - drugLevel[d];
+    if (Math.abs(diff) > 0.0001) {
+      drugLevel[d] += diff * Math.min(1, cfg.onsetK * (S.dt * 60));
+      // Update onset bar
+      const fill = document.getElementById('do-' + d);
+      if (fill) fill.style.width = (drugLevel[d] * 100).toFixed(1) + '%';
+    }
+  }
 
   updateHemo();
 
