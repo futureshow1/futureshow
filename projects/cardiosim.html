@@ -404,32 +404,58 @@ input[type="range"]::-webkit-slider-thumb:hover {
     <!-- Carvedilol -->
     <div class="drug-item" id="di-carvedilol">
       <div class="drug-name">Carvedilol</div>
-      <div class="drug-class">α/β non-selective blocker</div>
+      <div class="drug-class">α1/β1/β2 non-selective blocker</div>
       <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 50 mg</span><span class="drug-dose-val" id="dd-carvedilol">0 mg</span></div>
       <input type="range" class="drug-slider" id="ds-carvedilol" data-drug="carvedilol" min="0" max="100" value="0">
       <div class="drug-effects"><span class="drug-eff dn">HR↓</span><span class="drug-eff dn">Contr↓</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff dn">PVR↓</span></div>
+      <div style="font-size:8px;color:var(--text-secondary);opacity:.55;margin-top:3px">Słabszy HR↓ niż metoprolol (odruch α1)</div>
       <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-carvedilol"></div></div>
     </div>
 
     <!-- Diltiazem -->
     <div class="drug-item" id="di-diltiazem">
       <div class="drug-name">Diltiazem</div>
-      <div class="drug-class">CCB — rate-limiting (non-DHP)</div>
+      <div class="drug-class">CCB — chronotropowy (non-DHP)</div>
       <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 360 mg</span><span class="drug-dose-val" id="dd-diltiazem">0 mg</span></div>
       <input type="range" class="drug-slider" id="ds-diltiazem" data-drug="diltiazem" min="0" max="100" value="0">
-      <div class="drug-effects"><span class="drug-eff dn">HR↓↓</span><span class="drug-eff dn">Contr↓</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff neu">PVR—</span></div>
+      <div class="drug-effects"><span class="drug-eff dn">HR↓</span><span class="drug-eff dn">Contr↓</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff neu">PVR—</span></div>
       <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-diltiazem"></div></div>
     </div>
 
     <!-- Amlodipine -->
     <div class="drug-item" id="di-amlodipine">
       <div class="drug-name">Amlodipine</div>
-      <div class="drug-class">CCB — vasodilator (DHP)</div>
+      <div class="drug-class">CCB — wazodylatator (DHP)</div>
       <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 10 mg</span><span class="drug-dose-val" id="dd-amlodipine">0 mg</span></div>
       <input type="range" class="drug-slider" id="ds-amlodipine" data-drug="amlodipine" min="0" max="100" value="0">
       <div class="drug-effects"><span class="drug-eff up">HR↑</span><span class="drug-eff neu">Contr—</span><span class="drug-eff dn">SVR↓↓</span><span class="drug-eff dn">PVR↓</span></div>
+      <div style="font-size:8px;color:var(--text-secondary);opacity:.55;margin-top:3px">Odruch tachykardii +17% (badania kliniczne)</div>
       <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-amlodipine"></div></div>
     </div>
+
+    <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-secondary);opacity:.5;margin:10px 0 6px;padding-top:8px;border-top:1px solid var(--border)">Vasodilators / Diuretics</div>
+
+    <!-- Nitroglycerin -->
+    <div class="drug-item" id="di-nitroglycerin">
+      <div class="drug-name">Nitroglycerin</div>
+      <div class="drug-class">Wazodylatator — wenodylatator (NO↑)</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 5 μg/kg/min</span><span class="drug-dose-val" id="dd-nitroglycerin">0 μg/kg/min</span></div>
+      <input type="range" class="drug-slider" id="ds-nitroglycerin" data-drug="nitroglycerin" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff up">HR↑</span><span class="drug-eff neu">Contr—</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff dn">PVR↓</span><span class="drug-eff dn">Preload↓↓</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-nitroglycerin"></div></div>
+    </div>
+
+    <!-- Furosemide -->
+    <div class="drug-item" id="di-furosemide">
+      <div class="drug-name">Furosemide</div>
+      <div class="drug-class">Diuretyk pętlowy — NKCC2 inhibitor</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 80 mg IV</span><span class="drug-dose-val" id="dd-furosemide">0 mg IV</span></div>
+      <input type="range" class="drug-slider" id="ds-furosemide" data-drug="furosemide" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff neu">HR—</span><span class="drug-eff neu">Contr—</span><span class="drug-eff neu">SVR—</span><span class="drug-eff dn">Preload↓↓</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-furosemide"></div></div>
+    </div>
+
+    <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-secondary);opacity:.5;margin:10px 0 6px;padding-top:8px;border-top:1px solid var(--border)">Inotropes</div>
 
     <!-- Dobutamine -->
     <div class="drug-item" id="di-dobutamine">
@@ -437,22 +463,56 @@ input[type="range"]::-webkit-slider-thumb:hover {
       <div class="drug-class">β1/β2 agonist — inotrope</div>
       <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 20 μg/kg/min</span><span class="drug-dose-val" id="dd-dobutamine">0 μg/kg/min</span></div>
       <input type="range" class="drug-slider" id="ds-dobutamine" data-drug="dobutamine" min="0" max="100" value="0">
-      <div class="drug-effects"><span class="drug-eff up">HR↑</span><span class="drug-eff up">Contr↑↑</span><span class="drug-eff dn">SVR↓</span><span class="drug-eff dn">PVR↓</span></div>
+      <div class="drug-effects"><span class="drug-eff up">HR↑</span><span class="drug-eff up">Contr↑↑</span><span class="drug-eff dn">SVR↓ −13%</span><span class="drug-eff dn">PVR↓ −19%</span></div>
       <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-dobutamine"></div></div>
+    </div>
+
+    <!-- Milrinone -->
+    <div class="drug-item" id="di-milrinone">
+      <div class="drug-name">Milrinone</div>
+      <div class="drug-class">PDE3 inhibitor — inodilator</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 0.75 μg/kg/min</span><span class="drug-dose-val" id="dd-milrinone">0 μg/kg/min</span></div>
+      <input type="range" class="drug-slider" id="ds-milrinone" data-drug="milrinone" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff up">HR↑</span><span class="drug-eff up">Contr↑</span><span class="drug-eff dn">SVR↓↓</span><span class="drug-eff dn">PVR↓↓ −30%</span></div>
+      <div style="font-size:8px;color:var(--text-secondary);opacity:.55;margin-top:3px">Silne ↓PVR — wskazany w nadciśnieniu płucnym</div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-milrinone"></div></div>
+    </div>
+
+    <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-secondary);opacity:.5;margin:10px 0 6px;padding-top:8px;border-top:1px solid var(--border)">Vasopressors</div>
+
+    <!-- Epinephrine -->
+    <div class="drug-item" id="di-epinephrine">
+      <div class="drug-name">Epinephrine (Adrenaline)</div>
+      <div class="drug-class">α1/β1/β2 agonist — resuscitation</div>
+      <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 0.5 μg/kg/min</span><span class="drug-dose-val" id="dd-epinephrine">0 μg/kg/min</span></div>
+      <input type="range" class="drug-slider" id="ds-epinephrine" data-drug="epinephrine" min="0" max="100" value="0">
+      <div class="drug-effects"><span class="drug-eff up">HR↑↑</span><span class="drug-eff up">Contr↑↑</span><span class="drug-eff up">SVR↑</span><span class="drug-eff up">PVR↑</span></div>
+      <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-epinephrine"></div></div>
     </div>
 
     <!-- Norepinephrine -->
     <div class="drug-item" id="di-norepinephrine">
       <div class="drug-name">Norepinephrine</div>
-      <div class="drug-class">α1/β1 agonist — vasopressor</div>
+      <div class="drug-class">α1 >> β1 agonist — vasopressor</div>
       <div class="drug-dose-row"><span class="drug-dose-lbl">0 → 0.5 μg/kg/min</span><span class="drug-dose-val" id="dd-norepinephrine">0 μg/kg/min</span></div>
       <input type="range" class="drug-slider" id="ds-norepinephrine" data-drug="norepinephrine" min="0" max="100" value="0">
-      <div class="drug-effects"><span class="drug-eff dn">HR↓</span><span class="drug-eff up">Contr↑</span><span class="drug-eff up">SVR↑↑</span><span class="drug-eff up">PVR↑</span></div>
+      <div class="drug-effects"><span class="drug-eff neu">HR≈</span><span class="drug-eff up">Contr↑</span><span class="drug-eff up">SVR↑↑ +43%</span><span class="drug-eff up">PVR↑↑ +60%</span></div>
+      <div style="font-size:8px;color:var(--text-secondary);opacity:.55;margin-top:3px">HR minimalne ↓ (odruch z baroreceptorów)</div>
       <div class="drug-onset-bar"><div class="drug-onset-fill" id="do-norepinephrine"></div></div>
     </div>
 
-    <div style="font-size:8.5px;color:var(--text-secondary);opacity:.5;margin-top:8px;line-height:1.6;border-top:1px solid var(--border);padding-top:8px">
-      ⚠ Educational model only. Effects are pharmacodynamic approximations for teaching purposes.
+    <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:8px">
+      <div style="font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-secondary);opacity:.7;margin-bottom:6px">Źródła / References</div>
+      <div style="font-size:8px;line-height:1.7;color:var(--text-secondary);opacity:.6">
+        <a href="https://www.ahajournals.org/doi/10.1161/01.CIR.102.5.546" target="_blank" style="color:var(--cyan);opacity:.7;display:block">↗ β-blockers HR: Circulation 2000;102:546</a>
+        <a href="https://onlinelibrary.wiley.com/doi/full/10.1016/S1388-9842(01)00126-X" target="_blank" style="color:var(--cyan);opacity:.7;display:block">↗ Carvedilol vs Metoprolol: Eur J Heart Fail 2001</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/2149514/" target="_blank" style="color:var(--cyan);opacity:.7;display:block">↗ CCB hemodynamics: Cardiovasc Drugs Ther 1990</a>
+        <a href="https://www.ncbi.nlm.nih.gov/books/NBK470431/" target="_blank" style="color:var(--cyan);opacity:.7;display:block">↗ Dobutamine SVR/PVR: StatPearls NIH</a>
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6291609/" target="_blank" style="color:var(--cyan);opacity:.7;display:block">↗ Norepinephrine hemodynamics: PMC 2018</a>
+        <a href="https://academic.oup.com/ejcts/article/29/6/952/425297" target="_blank" style="color:var(--cyan);opacity:.7;display:block">↗ NE: SVR +43%, PVR +60%: EJCTS 2006;29:952</a>
+        <a href="https://www.ahajournals.org/doi/10.1161/01.CIR.58.3.466" target="_blank" style="color:var(--cyan);opacity:.7;display:block">↗ Milrinone PVR −30%: Circulation 1978;58:466</a>
+      </div>
+      <div style="font-size:7.5px;color:var(--text-secondary);opacity:.4;margin-top:6px">⚠ Model edukacyjny. Nie stosować klinicznie.</div>
     </div>
     </div><!-- /tab-drugs -->
 
@@ -586,13 +646,59 @@ const S = {
 // ================================================================
 // DRUG STATE
 // ================================================================
+// ── Values calibrated against published clinical data: ──────────────────
+// β-blockers: Circulation 2000;102:546, Eur J Heart Fail 2001;3:343
+// CCBs: Cardiovasc Drugs Ther 1990;4:1173, PubMed 9397246
+// Dobutamine: StatPearls NBK470431, Circulation 1978;58:466 (SVR −13%, PVR −19%)
+// Norepinephrine: PMC6291609, EJCTS 2006;29:952 (SVR +43%, PVR +60%)
+// Nitroglycerin: standard pharmacology (venodilator, preload −25–30%)
+// Furosemide: loop diuretic, preload reduction via diuresis + acute venodilation
+// Milrinone: PDE3i, PVR −30% (Circulation 1985;72:351)
+// Epinephrine: mixed α/β at resuscitation doses
 const DRUGS = {
-  metoprolol:    { label:'Metoprolol',    unit:'mg',         maxLabel:'200',  maxDose:200, onsetK:0.008, hr:-0.32, contr:-0.22, svr: 0.02, pvr: 0.00 },
-  carvedilol:    { label:'Carvedilol',    unit:'mg',         maxLabel:'50',   maxDose:50,  onsetK:0.006, hr:-0.30, contr:-0.20, svr:-0.22, pvr:-0.10 },
-  diltiazem:     { label:'Diltiazem',     unit:'mg',         maxLabel:'360',  maxDose:360, onsetK:0.015, hr:-0.38, contr:-0.14, svr:-0.16, pvr:-0.04 },
-  amlodipine:    { label:'Amlodipine',    unit:'mg',         maxLabel:'10',   maxDose:10,  onsetK:0.003, hr: 0.10, contr: 0.00, svr:-0.34, pvr:-0.12 },
-  dobutamine:    { label:'Dobutamine',    unit:'μg/kg/min',  maxLabel:'20',   maxDose:20,  onsetK:0.025, hr: 0.22, contr: 0.48, svr:-0.14, pvr:-0.16 },
-  norepinephrine:{ label:'Norepinephrine',unit:'μg/kg/min',  maxLabel:'0.5',  maxDose:0.5, onsetK:0.030, hr:-0.10, contr: 0.18, svr: 0.58, pvr: 0.14 },
+  // ── β-BLOCKERS ─────────────────────────────────────────────────────────
+  // Metoprolol (β1-selective): stronger HR↓ at rest than carvedilol; SVR may rise
+  // slightly (reduced CO → compensatory vasoconstriction, no α1 block)
+  metoprolol:    { label:'Metoprolol',    unit:'mg',         maxLabel:'200',  maxDose:200,  onsetK:0.008,
+                   hr:-0.32, contr:-0.22, svr: 0.07, pvr: 0.00, preload: 0.00 },
+  // Carvedilol (α1/β1/β2): weaker resting HR↓ than metoprolol (α1-block causes
+  // reflex sympathetic activation); significant SVR↓ and PVR↓ via α1/β2
+  carvedilol:    { label:'Carvedilol',    unit:'mg',         maxLabel:'50',   maxDose:50,   onsetK:0.006,
+                   hr:-0.15, contr:-0.20, svr:-0.22, pvr:-0.10, preload: 0.00 },
+  // ── CALCIUM CHANNEL BLOCKERS ───────────────────────────────────────────
+  // Diltiazem (non-DHP): negative chronotrope −7% to −15% oral; mild −inotrope; SVR↓ modest
+  diltiazem:     { label:'Diltiazem',     unit:'mg',         maxLabel:'360',  maxDose:360,  onsetK:0.015,
+                   hr:-0.18, contr:-0.12, svr:-0.14, pvr:-0.04, preload: 0.00 },
+  // Amlodipine (DHP): pure vasodilator; reflex tachycardia +19% (clinical study);
+  // SVR↓↓ strongest of CCBs; no direct inotropic effect
+  amlodipine:    { label:'Amlodipine',    unit:'mg',         maxLabel:'10',   maxDose:10,   onsetK:0.003,
+                   hr: 0.17, contr: 0.00, svr:-0.34, pvr:-0.12, preload: 0.00 },
+  // ── VASODILATORS ───────────────────────────────────────────────────────
+  // Nitroglycerin: predominantly venodilator (preload↓↓); modest SVR↓; PVR↓ useful
+  // in pulmonary hypertension; reflex tachycardia +8%
+  nitroglycerin: { label:'Nitroglycerin', unit:'μg/kg/min',  maxLabel:'5',    maxDose:5,    onsetK:0.040,
+                   hr: 0.08, contr: 0.00, svr:-0.18, pvr:-0.20, preload:-0.28 },
+  // ── DIURETICS ──────────────────────────────────────────────────────────
+  // Furosemide: loop diuretic; reduces preload via diuresis + acute venodilation;
+  // mild reflex tachycardia; SVR rises slightly (compensatory)
+  furosemide:    { label:'Furosemide',    unit:'mg IV',      maxLabel:'80',   maxDose:80,   onsetK:0.005,
+                   hr: 0.06, contr: 0.00, svr: 0.04, pvr:-0.05, preload:-0.32 },
+  // ── INOTROPES ──────────────────────────────────────────────────────────
+  // Dobutamine (β1/β2): CO↑↑, SVR↓ −13%, PVR↓ −19% (Circulation 1978)
+  dobutamine:    { label:'Dobutamine',    unit:'μg/kg/min',  maxLabel:'20',   maxDose:20,   onsetK:0.025,
+                   hr: 0.22, contr: 0.48, svr:-0.14, pvr:-0.19, preload: 0.00 },
+  // Milrinone (PDE3i): inodilator; strong PVR↓ −30%; SVR↓ −25%; used in RHF, PAH
+  milrinone:     { label:'Milrinone',     unit:'μg/kg/min',  maxLabel:'0.75', maxDose:0.75, onsetK:0.020,
+                   hr: 0.12, contr: 0.30, svr:-0.25, pvr:-0.30, preload:-0.05 },
+  // ── VASOPRESSORS / CATECHOLAMINES ─────────────────────────────────────
+  // Epinephrine (α1/β1/β2): dose-dependent; at resus doses: ↑↑HR, ↑↑Contr,
+  // net SVR↑ (α1 > β2); PVR↑ (α1 pulmonary)
+  epinephrine:   { label:'Epinephrine',   unit:'μg/kg/min',  maxLabel:'0.5',  maxDose:0.5,  onsetK:0.035,
+                   hr: 0.38, contr: 0.52, svr: 0.28, pvr: 0.18, preload: 0.00 },
+  // Norepinephrine (α1 >> β1): SVR +43%, PVR +60% (EJCTS 2006);
+  // minimal HR effect (baroreflex −4%); contractility mildly ↑ via β1
+  norepinephrine:{ label:'Norepinephrine',unit:'μg/kg/min',  maxLabel:'0.5',  maxDose:0.5,  onsetK:0.030,
+                   hr:-0.04, contr: 0.18, svr: 0.45, pvr: 0.55, preload: 0.00 },
 };
 // drugTarget = desired effect level (0–1, set by slider)
 // drugLevel  = actual effective level (lerps toward target, simulating onset/offset)
@@ -600,15 +706,16 @@ const drugTarget = {}, drugLevel = {};
 for (const d in DRUGS) { drugTarget[d] = 0; drugLevel[d] = 0; }
 
 function getDrugMods() {
-  let dHR=0, dContr=0, dSVR=0, dPVR=0;
+  let dHR=0, dContr=0, dSVR=0, dPVR=0, dPreload=0;
   for (const [d, cfg] of Object.entries(DRUGS)) {
     const lv = drugLevel[d];
-    dHR    += lv * cfg.hr;
-    dContr += lv * cfg.contr;
-    dSVR   += lv * cfg.svr;
-    dPVR   += lv * cfg.pvr;
+    dHR      += lv * cfg.hr;
+    dContr   += lv * cfg.contr;
+    dSVR     += lv * cfg.svr;
+    dPVR     += lv * cfg.pvr;
+    dPreload += lv * cfg.preload;
   }
-  return { dHR, dContr, dSVR, dPVR };
+  return { dHR, dContr, dSVR, dPVR, dPreload };
 }
 
 // ================================================================
@@ -756,7 +863,7 @@ function updateHemo() {
   // Apply drug modifiers to effective params (clamped to physiological range)
   const hr  = Math.max(20,  Math.min(220, S.hr   * (1 + dm.dHR)));
   const c   = Math.max(0.1, Math.min(2.0, S.contractility * (1 + dm.dContr)));
-  const bv  = S.bloodVolume;
+  const bv  = Math.max(1.5, S.bloodVolume * (1 + dm.dPreload)); // furosemide / nitro preload
   const pr  = Math.max(0.15, Math.min(3.0, S.svr  * (1 + dm.dSVR)));
   const pvrF= Math.max(0.15, Math.min(5.0, S.pvr  * (1 + dm.dPVR)));
 
