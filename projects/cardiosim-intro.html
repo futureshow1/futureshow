@@ -106,7 +106,7 @@ html[lang="pl"] span[data-lang="en"]{display:none}
 @media(max-width:768px){
   .feat-grid{grid-template-columns:1fr}
   .sc-grid{grid-template-columns:repeat(2,1fr)}
-  .howto-grid{grid-template-columns:1fr}
+  .howto-grid{grid-template-columns:repeat(2,1fr)!important}
   .stats{gap:24px;flex-wrap:wrap}
   .hero{padding:80px 20px 40px}
   .features,.scenarios,.howto{padding-left:20px;padding-right:20px}
@@ -135,11 +135,11 @@ html[lang="pl"] span[data-lang="en"]{display:none}
 
     <div data-lang="en">
       <h1>CardioSim <span class="grad">Pro v2</span></h1>
-      <p class="hero-sub">A 4-chamber heart model with hemodynamic engine, blood flow particles, ECG/SpO2/ABP monitors, pressure-volume loops, and 8 clinical scenarios. Zero dependencies. One HTML file. Runs in any browser.</p>
+      <p class="hero-sub">A 4-chamber heart model with hemodynamic engine, 10 cardiovascular drugs with pharmacodynamic modeling, blood flow particles, ECG/SpO2/ABP monitors, PV loops, Wiggers diagrams, and 8 clinical scenarios. Resizable panels. Zero dependencies. One HTML file.</p>
     </div>
     <div data-lang="pl">
       <h1>CardioSim <span class="grad">Pro v2</span></h1>
-      <p class="hero-sub">Model 4-jamowego serca z silnikiem hemodynamicznym, cząsteczkami przepływu krwi, monitorami EKG/SpO2/ABP, pętlami ciśnienie-objętość i 8 scenariuszami klinicznymi. Zero zależności. Jeden plik HTML. Działa w każdej przeglądarce.</p>
+      <p class="hero-sub">Model 4-jamowego serca z silnikiem hemodynamicznym, 10 lekami kardiologicznymi z modelowaniem farmakodynamicznym, cząsteczkami przepływu krwi, monitorami EKG/SpO2/ABP, pętlami PV, diagramami Wiggersa i 8 scenariuszami klinicznymi. Skalowalne panele. Zero zależności. Jeden plik HTML.</p>
     </div>
 
     <a href="cardiosim.html" class="cta-btn">
@@ -154,8 +154,8 @@ html[lang="pl"] span[data-lang="en"]{display:none}
 
     <div class="stats">
       <div><div class="stat-num">800</div><div class="stat-label"><span data-lang="en">Blood particles</span><span data-lang="pl">Cząsteczek krwi</span></div></div>
+      <div><div class="stat-num">10</div><div class="stat-label"><span data-lang="en">Cardiovascular drugs</span><span data-lang="pl">Leków kardiologicznych</span></div></div>
       <div><div class="stat-num">8</div><div class="stat-label"><span data-lang="en">Clinical scenarios</span><span data-lang="pl">Scenariuszy klinicznych</span></div></div>
-      <div><div class="stat-num">4</div><div class="stat-label"><span data-lang="en">View modes</span><span data-lang="pl">Trybów widoku</span></div></div>
       <div><div class="stat-num">~25KB</div><div class="stat-label"><span data-lang="en">Total size</span><span data-lang="pl">Rozmiar</span></div></div>
     </div>
   </div>
@@ -209,6 +209,28 @@ html[lang="pl"] span[data-lang="en"]{display:none}
       <div data-lang="pl">
         <h3>Pętle PV i Wiggers</h3>
         <p>Diagram ciśnienie-objętość z linią ESPVR i ruchomym kursorem. Zsynchronizowany diagram Wiggersa z ciśnieniem LV, ciśnieniem aortalnym, ciśnieniem LA i objętością LV.</p>
+      </div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="color:var(--blue)">&#9883;</div>
+      <div data-lang="en">
+        <h3>Pharmacodynamic Drug Panel</h3>
+        <p>10 cardiovascular drugs: beta-blockers, calcium blockers, vasodilators, inotropes, vasopressors, and diuretics. Each drug modifies HR, contractility, SVR, PVR, and preload with realistic onset dynamics. Drug interaction warnings and combined effect tracking.</p>
+      </div>
+      <div data-lang="pl">
+        <h3>Panel farmakodynamiczny</h3>
+        <p>10 leków kardiologicznych: beta-blokery, blokery kanału wapniowego, wazodylatatory, inotropowe, wazopresory i diuretyki. Każdy lek modyfikuje HR, kurczliwość, SVR, PVR i preload z realistyczną dynamiką wchłaniania. Ostrzeżenia o interakcjach i śledzenie efektów łączonych.</p>
+      </div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="color:var(--cyan)">&#10697;</div>
+      <div data-lang="en">
+        <h3>Resizable Layout</h3>
+        <p>Drag panel borders to resize columns and the bottom waveform strip. Customize the workspace to focus on the heart, vitals, hemodynamics, or monitors — all panels adapt in real time.</p>
+      </div>
+      <div data-lang="pl">
+        <h3>Skalowalne panele</h3>
+        <p>Przeciągaj granice paneli, by zmieniać rozmiar kolumn i dolnego paska przebiegów. Dostosuj przestrzeń roboczą, by skupić się na sercu, parametrach, hemodynamice lub monitorach — wszystko dopasowuje się w czasie rzeczywistym.</p>
       </div>
     </div>
   </div>
@@ -268,21 +290,26 @@ html[lang="pl"] span[data-lang="en"]{display:none}
     <span data-lang="en">How to use</span>
     <span data-lang="pl">Jak używać</span>
   </div>
-  <div class="howto-grid">
+  <div class="howto-grid" style="grid-template-columns:repeat(4,1fr)">
     <div class="howto-card">
       <div class="howto-num">1</div>
-      <div data-lang="en"><h3>Adjust parameters</h3><p>Use the left panel sliders: heart rate, contractility, blood volume (preload), SVR (afterload). Watch the heart and vitals respond in real time.</p></div>
-      <div data-lang="pl"><h3>Reguluj parametry</h3><p>Użyj suwaków w lewym panelu: częstość akcji serca, kurczliwość, objętość krwi (preload), SVR (afterload). Obserwuj reakcję serca i parametrów.</p></div>
+      <div data-lang="en"><h3>Adjust parameters</h3><p>Use the PARAMS tab: heart rate, contractility, blood volume, SVR, PVR, respiratory rate. Watch the heart and vitals respond in real time.</p></div>
+      <div data-lang="pl"><h3>Reguluj parametry</h3><p>Użyj zakładki PARAMS: częstość akcji serca, kurczliwość, objętość krwi, SVR, PVR, częstość oddechów. Obserwuj reakcję w czasie rzeczywistym.</p></div>
     </div>
     <div class="howto-card">
       <div class="howto-num">2</div>
-      <div data-lang="en"><h3>Switch views</h3><p>Toggle between Anatomy, Blood Flow, Pressure Gradient, and Electrical Conduction. Each reveals a different layer of cardiac physiology.</p></div>
-      <div data-lang="pl"><h3>Zmieniaj widoki</h3><p>Przełączaj między Anatomią, Przepływem krwi, Gradientem ciśnienia i Przewodzeniem elektrycznym. Każdy ujawnia inną warstwę fizjologii.</p></div>
+      <div data-lang="en"><h3>Administer drugs</h3><p>Switch to the DRUGS tab. Titrate doses of 10 cardiovascular drugs — observe gradual onset, combined effects on hemodynamics, and interaction warnings.</p></div>
+      <div data-lang="pl"><h3>Podawaj leki</h3><p>Przełącz na zakładkę DRUGS. Miareczkuj dawki 10 leków kardiologicznych — obserwuj stopniowe działanie, łączny wpływ na hemodynamikę i ostrzeżenia o interakcjach.</p></div>
     </div>
     <div class="howto-card">
       <div class="howto-num">3</div>
-      <div data-lang="en"><h3>Load a scenario</h3><p>Select a clinical pathology to see its hemodynamic signature: altered waveforms, changed vitals, visible anatomical changes.</p></div>
-      <div data-lang="pl"><h3>Załaduj scenariusz</h3><p>Wybierz patologię kliniczną, by zobaczyć jej sygnaturę hemodynamiczną: zmienione przebiegi, parametry i widoczne zmiany anatomiczne.</p></div>
+      <div data-lang="en"><h3>Load a scenario</h3><p>Select a clinical pathology to see its hemodynamic signature: altered waveforms, changed vitals, visible anatomical changes. Then treat it with drugs.</p></div>
+      <div data-lang="pl"><h3>Załaduj scenariusz</h3><p>Wybierz patologię kliniczną, by zobaczyć jej sygnaturę hemodynamiczną. Następnie lecz ją odpowiednimi lekami.</p></div>
+    </div>
+    <div class="howto-card">
+      <div class="howto-num">4</div>
+      <div data-lang="en"><h3>Customize layout</h3><p>Drag the panel borders to resize columns and the bottom strip. Focus on the heart view, vitals, or waveforms — the workspace adapts to you.</p></div>
+      <div data-lang="pl"><h3>Dostosuj układ</h3><p>Przeciągaj granice paneli, by zmieniać rozmiary kolumn i dolnego paska. Skup się na sercu, parametrach lub przebiegach — układ dostosuje się do Ciebie.</p></div>
     </div>
   </div>
 </section>
