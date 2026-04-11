@@ -2274,6 +2274,34 @@
       });
     });
   </script>
+<!-- ====== HIDDEN: Projects In Progress ====== -->
+<div id="wip-gate" style="max-width:400px;margin:80px auto 40px;padding:32px;text-align:center;opacity:0.25;transition:opacity 0.3s">
+  <input id="wip-pass" type="password" placeholder="..." style="background:#111;border:1px solid #222;color:#666;padding:10px 16px;border-radius:8px;width:200px;font-size:14px;text-align:center;outline:none" autocomplete="off">
+</div>
+<div id="wip-projects" style="display:none;max-width:700px;margin:0 auto 80px;padding:0 24px">
+  <h3 style="font-family:'JetBrains Mono',monospace;color:#374151;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;text-align:center">Projects In Progress</h3>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <a href="https://futureshow1.github.io/psychedelic-brain-sim/" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">Psychedelic Brain Simulation</a>
+    <a href="https://futureshow1.github.io/psychedelic-brain-sim/psychedelic_brain_simulation_v4.html" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">Psychedelic Brain Sim — v4</a>
+    <a href="https://bronislaw-przyluski.vercel.app/" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">Archiwum Bronisława Przyłuskiego</a>
+    <a href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">Jan Swidzinski — Contextual Art (archiwum/gra)</a>
+    <a href="https://futureshow1.github.io/emfazy-archiwum/archiwum.html" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">EMFAZY — archiwum</a>
+    <a href="https://futureshow1.github.io/emfazy-archiwum/" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">EMFAZY — pitch</a>
+    <a href="https://futureshow1.github.io/oil-gas-atlas/" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">Symulacja / mapa zmian klimatu (Oil &amp; Gas Atlas)</a>
+    <a href="https://futureshow1.github.io/izabela-chamczyk/" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">Izabela Chamczyk — portfolio</a>
+    <a href="https://futureshow1.github.io/zem-demo/" target="_blank" style="display:block;padding:14px 20px;background:#0c1018;border:1px solid #1a1f2e;border-radius:8px;color:#6b7280;font-size:14px;transition:all 0.2s">ZEM</a>
+  </div>
+</div>
+<script>
+document.getElementById('wip-pass').addEventListener('input', function() {
+  if (this.value === 'Janek1') {
+    document.getElementById('wip-projects').style.display = 'block';
+    document.getElementById('wip-gate').style.opacity = '0';
+    document.getElementById('wip-gate').style.pointerEvents = 'none';
+    this.blur();
+  }
+});
+</script>
 <script src="cookie-consent.js"></script>
 </body>
 </html>
