@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Emergent Social Behavior Simulation</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a12; overflow: hidden; font-family: 'Courier New', monospace; color: #ccc; }
+canvas { display: block; position: absolute; top: 0; left: 0; }
+#ui {
+  position: fixed; top: 14px; left: 14px; font-size: 11px;
+  pointer-events: none; z-index: 20; line-height: 1.7; color: rgba(255,255,255,0.7);
+}
+#stats {
+  position: fixed; top: 14px; right: 14px; font-size: 11px;
+  pointer-events: none; z-index: 20; text-align: right; line-height: 1.7; color: rgba(255,255,255,0.6);
+}
+#legend {
+  position: fixed; bottom: 60px; right: 14px; font-size: 10px;
+  pointer-events: none; z-index: 20; line-height: 2; color: rgba(255,255,255,0.5);
+}
+#controls {
+  position: fixed; bottom: 14px; left: 14px; font-size: 10px;
+  pointer-events: none; z-index: 20; line-height: 1.8; color: rgba(255,255,255,0.4);
+}
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+#panel {
+  position: fixed; left: 14px; top: 50%; transform: translateY(-50%);
+  z-index: 30; display: flex; flex-direction: column; gap: 6px;
+}
+#panel label {
+  font-size: 10px; color: rgba(255,255,255,0.5); display: flex;
+  align-items: center; gap: 6px; cursor: pointer; pointer-events: all;
+}
+#panel input[type=range] {
+  width: 80px; height: 3px; accent-color: #6af;
+}
+#scenarioName {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-size: 22px; color: rgba(255,255,255,0.8); pointer-events: none;
+  z-index: 30; transition: opacity 1.5s; letter-spacing: 3px;
+}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<canvas id="c"></canvas>
+
+<div id="ui">
+  <div>AGENTS: <span id="agentCount">0</span></div>
+  <div>GROUPS: <span id="groupCount">0</span></div>
+  <div>CONNECTIONS: <span id="connCount">0</span></div>
+  <div>INFLUENCE EVENTS: <span id="infCount">0</span></div>
+  <div>FPS: <span id="fps">0</span></div>
+  <div>TIME: <span id="simTime">0</span></div>
+</div>
+
+<div id="stats">
+  <div>AVG HAPPINESS: <span id="happiness">0</span></div>
+  <div>SEGREGATION: <span id="segregation">0</span></div>
+  <div>POLARIZATION: <span id="polarization">0</span></div>
+  <div>COOPERATION: <span id="cooperation">0</span></div>
+  <div>RUMORS SPREAD: <span id="rumors">0</span></div>
+</div>
+
+<div id="legend">
+  <div><span class="dot" style="background:#4af"></span>LEADERS</div>
+  <div><span class="dot" style="background:#f74"></span>EXTROVERTS</div>
+  <div><span class="dot" style="background:#7e5"></span>COOPERATORS</div>
+  <div><span class="dot" style="background:#f5a"></span>INFLUENCERS</div>
+  <div><span class="dot" style="background:#aaa"></span>FOLLOWERS</div>
+  <div><span class="dot" style="background:#fa0"></span>DEFECTORS</div>
+  <div style="margin-top:4px;font-size:9px;opacity:0.6">RING = CARRYING RUMOR</div>
+</div>
+
+<div id="controls">
+  [1-5] SCENARIOS &nbsp; [SPACE] PAUSE &nbsp; [R] RESET &nbsp; [CLICK] INJECT RUMOR<br>
+  [D] TOGGLE CONNECTIONS &nbsp; [F] TOGGLE FIELDS &nbsp; [H] TOGGLE HEATMAP
+</div>
+
+<div id="panel">
+  <label>SOCIAL GRAVITY <input type="range" id="sGrav" min="0" max="100" value="50"></label>
+  <label>CONFORMITY <input type="range" id="sConf" min="0" max="100" value="40"></label>
+  <label>CURIOSITY <input type="range" id="sCuri" min="0" max="100" value="30"></label>
+  <label>FEAR OF OTHERS <input type="range" id="sFear" min="0" max="100" value="20"></label>
+</div>
+
+<div id="scenarioName"></div>
+
+<script>
+// ================================================================
+//  EMERGENT SOCIAL BEHAVIOR SIMULATION
+//  Agent-based model: personality, opinion dynamics, group formation,
+//  cooperation/defection, rumor spreading, Schelling segregation,
+//  leader-follower dynamics, social network visualization
+// ================================================================
+
+const bgCanvas = document.getElementById('bg');
+const canvas = document.getElementById('c');
+const bgCtx = bgCanvas.getContext('2d');
+const ctx = canvas.getContext('2d');
+
+let W, H;
+function resize() {
+  W = window.innerWidth; H = window.innerHeight;
+  bgCanvas.width = canvas.width = W;
+  bgCanvas.height = canvas.height = H;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// --- Enums ---
+const ROLE = { LEADER: 0, EXTROVERT: 1, COOPERATOR: 2, INFLUENCER: 3, FOLLOWER: 4, DEFECTOR: 5 };
+const ROLE_COLORS = ['#4af','#f74','#7e5','#f5a','#aaa','#fa0'];
+const ROLE_NAMES = ['Leader','Extrovert','Cooperator','Influencer','Follower','Defector'];
+
+// --- Sliders ---
+const sGrav = document.getElementById('sGrav');
+const sConf = document.getElementById('sConf');
+const sCuri = document.getElementById('sCuri');
+const sFear = document.getElementById('sFear');
+
+// --- State ---
+let agents = [];
+let connections = []; // { a, b, strength, age }
+let groups = [];      // { members: Set, cx, cy, color }
+let N = 300;
+let paused = false;
+let showConnections = true;
+let showFields = false;
+let showHeatmap = false;
+let simTime = 0;
+let influenceEvents = 0;
+let rumorsSpread = 0;
+let currentScenario = 0;
+
+// --- Agent class ---
+function createAgent(x, y, role) {
+  return {
+    x, y,
+    vx: (Math.random() - 0.5) * 2,
+    vy: (Math.random() - 0.5) * 2,
+    role,
+    opinion: Math.random(),          // 0..1 continuous opinion
+    tribe: Math.floor(Math.random() * 4), // cultural group identity
+    energy: 0.5 + Math.random() * 0.5,
+    happiness: 0.5,
+    socialRadius: role === ROLE.EXTROVERT ? 120 : role === ROLE.LEADER ? 100 : 60 + Math.random() * 40,
+    personalSpace: role === ROLE.FOLLOWER ? 15 : 20 + Math.random() * 10,
+    charisma: role === ROLE.LEADER ? 0.8 : role === ROLE.INFLUENCER ? 0.9 : 0.2 + Math.random() * 0.4,
+    stubbornness: role === ROLE.LEADER ? 0.7 : role === ROLE.DEFECTOR ? 0.6 : 0.1 + Math.random() * 0.4,
+    cooperativeness: role === ROLE.COOPERATOR ? 0.9 : role === ROLE.DEFECTOR ? 0.1 : 0.3 + Math.random() * 0.4,
+    hasRumor: false,
+    rumorTimer: 0,
+    group: -1,
+    connections: new Set(),
+    influenceCD: 0,
+    trail: [],
+  };
+}
+
+// --- Gaussian ---
+function grand() {
+  let u = 0, v = 0;
+  while (!u) u = Math.random();
+  while (!v) v = Math.random();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+// --- Scenarios ---
+const scenarios = [
+  { name: "URBAN SOCIETY", desc: "Mixed population with natural group emergence", init() {
+    N = 300; agents = [];
+    const roles = [ROLE.LEADER, ROLE.EXTROVERT, ROLE.COOPERATOR, ROLE.INFLUENCER, ROLE.FOLLOWER, ROLE.DEFECTOR];
+    const weights = [0.05, 0.2, 0.25, 0.08, 0.35, 0.07];
+    for (let i = 0; i < N; i++) {
+      let r = Math.random(), cum = 0, role = ROLE.FOLLOWER;
+      for (let j = 0; j < weights.length; j++) { cum += weights[j]; if (r < cum) { role = roles[j]; break; } }
+      agents.push(createAgent(
+        100 + Math.random() * (W - 200),
+        100 + Math.random() * (H - 200),
+        role
+      ));
+    }
+  }},
+  { name: "SCHELLING SEGREGATION", desc: "Agents cluster by cultural tribe", init() {
+    N = 400; agents = [];
+    for (let i = 0; i < N; i++) {
+      const a = createAgent(100 + Math.random() * (W-200), 100 + Math.random() * (H-200), ROLE.FOLLOWER);
+      a.tribe = Math.floor(Math.random() * 4);
+      a.stubbornness = 0.6 + Math.random() * 0.3;
+      agents.push(a);
+    }
+    sFear.value = 60;
+    sConf.value = 70;
+  }},
+  { name: "OPINION POLARIZATION", desc: "Two ideological camps forming", init() {
+    N = 350; agents = [];
+    for (let i = 0; i < N; i++) {
+      const role = Math.random() < 0.1 ? ROLE.INFLUENCER : Math.random() < 0.15 ? ROLE.LEADER : ROLE.FOLLOWER;
+      const a = createAgent(100 + Math.random() * (W-200), 100 + Math.random() * (H-200), role);
+      a.opinion = Math.random() < 0.5 ? 0.1 + Math.random() * 0.2 : 0.7 + Math.random() * 0.2;
+      a.stubbornness = 0.3 + Math.random() * 0.5;
+      agents.push(a);
+    }
+    sConf.value = 55;
+  }},
+  { name: "COOPERATION DILEMMA", desc: "Prisoner's dilemma with spatial dynamics", init() {
+    N = 300; agents = [];
+    for (let i = 0; i < N; i++) {
+      const role = Math.random() < 0.6 ? ROLE.COOPERATOR : ROLE.DEFECTOR;
+      const a = createAgent(100 + Math.random() * (W-200), 100 + Math.random() * (H-200), role);
+      a.cooperativeness = role === ROLE.COOPERATOR ? 0.7 + Math.random() * 0.3 : Math.random() * 0.3;
+      agents.push(a);
+    }
+    sGrav.value = 60;
+  }},
+  { name: "INFORMATION CASCADE", desc: "Rumor spreading through social network", init() {
+    N = 350; agents = [];
+    const roles = [ROLE.LEADER, ROLE.EXTROVERT, ROLE.INFLUENCER, ROLE.FOLLOWER];
+    for (let i = 0; i < N; i++) {
+      const role = roles[Math.floor(Math.random() * roles.length)];
+      const a = createAgent(100 + Math.random() * (W-200), 100 + Math.random() * (H-200), role);
+      agents.push(a);
+    }
+    // Seed initial rumors
+    for (let i = 0; i < 3; i++) {
+      const a = agents[Math.floor(Math.random() * N)];
+      a.hasRumor = true; a.rumorTimer = 600;
+    }
+    sCuri.value = 60;
+  }}
+];
+
+function showScenarioName(name) {
+  const el = document.getElementById('scenarioName');
+  el.textContent = name;
+  el.style.opacity = 1;
+  setTimeout(() => el.style.opacity = 0, 2000);
+}
+
+function loadScenario(i) {
+  currentScenario = i;
+  simTime = 0; influenceEvents = 0; rumorsSpread = 0;
+  connections = []; groups = [];
+  scenarios[i].init();
+  showScenarioName(scenarios[i].name);
+  document.getElementById('scenarioName').title = scenarios[i].desc;
+}
+
+// --- Spatial hash for neighbor queries ---
+const CELL = 80;
+let grid = {};
+
+function hashKey(x, y) {
+  return ((x / CELL | 0) * 10000 + (y / CELL | 0));
+}
+
+function buildGrid() {
+  grid = {};
+  for (let i = 0; i < agents.length; i++) {
+    const k = hashKey(agents[i].x, agents[i].y);
+    if (!grid[k]) grid[k] = [];
+    grid[k].push(i);
+  }
+}
+
+function getNeighbors(a, radius) {
+  const results = [];
+  const cr = Math.ceil(radius / CELL);
+  const cx = a.x / CELL | 0, cy = a.y / CELL | 0;
+  for (let dx = -cr; dx <= cr; dx++) {
+    for (let dy = -cr; dy <= cr; dy++) {
+      const k = (cx + dx) * 10000 + (cy + dy);
+      const cell = grid[k];
+      if (!cell) continue;
+      for (let j = 0; j < cell.length; j++) {
+        const b = agents[cell[j]];
+        if (b === a) continue;
+        const ddx = b.x - a.x, ddy = b.y - a.y;
+        if (ddx * ddx + ddy * ddy < radius * radius) results.push(cell[j]);
+      }
+    }
+  }
+  return results;
+}
+
+// --- Social physics ---
+function update() {
+  const gravStr = sGrav.value / 50;
+  const confStr = sConf.value / 50;
+  const curiStr = sCuri.value / 50;
+  const fearStr = sFear.value / 50;
+
+  buildGrid();
+
+  for (let i = 0; i < agents.length; i++) {
+    const a = agents[i];
+    let fx = 0, fy = 0;
+    let nearCount = 0;
+    let sameTribes = 0;
+    let totalTribes = 0;
+    let avgOpinion = 0;
+    let opinionCount = 0;
+
+    const neighbors = getNeighbors(a, a.socialRadius);
+
+    for (let ni = 0; ni < neighbors.length; ni++) {
+      const b = agents[neighbors[ni]];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const nx = dx / dist, ny = dy / dist;
+
+      nearCount++;
+      totalTribes++;
+      if (b.tribe === a.tribe) sameTribes++;
+
+      // Opinion tracking
+      avgOpinion += b.opinion;
+      opinionCount++;
+
+      // --- Social gravity: attraction to similar agents ---
+      const similarity = 1 - Math.abs(a.opinion - b.opinion);
+      const tribeSame = a.tribe === b.tribe ? 1.5 : 0.5;
+      const attraction = similarity * tribeSame * gravStr * 0.3;
+
+      if (dist > a.personalSpace) {
+        fx += nx * attraction;
+        fy += ny * attraction;
+      }
+
+      // --- Personal space repulsion ---
+      if (dist < a.personalSpace) {
+        const repel = (a.personalSpace - dist) / a.personalSpace * 2;
+        fx -= nx * repel;
+        fy -= ny * repel;
+      }
+
+      // --- Fear of dissimilar ---
+      if (a.tribe !== b.tribe && dist < a.socialRadius * 0.6) {
+        const fear = fearStr * (1 - similarity) * 0.4;
+        fx -= nx * fear;
+        fy -= ny * fear;
+      }
+
+      // --- Leader attraction ---
+      if (b.role === ROLE.LEADER && a.role === ROLE.FOLLOWER) {
+        const pull = b.charisma * gravStr * 0.5;
+        fx += nx * pull;
+        fy += ny * pull;
+      }
+
+      // --- Connection formation ---
+      if (dist < a.socialRadius * 0.5 && similarity > 0.6 && Math.random() < 0.002) {
+        if (!a.connections.has(neighbors[ni]) && a.connections.size < 8) {
+          a.connections.add(neighbors[ni]);
+          b.connections.add(i);
+          connections.push({ a: i, b: neighbors[ni], strength: similarity, age: 0 });
+        }
+      }
+
+      // --- Opinion influence ---
+      if (a.influenceCD <= 0 && dist < 40) {
+        const influence = b.charisma * (1 - a.stubbornness) * confStr * 0.01;
+        a.opinion += (b.opinion - a.opinion) * influence;
+        a.opinion = Math.max(0, Math.min(1, a.opinion));
+        if (influence > 0.005) { influenceEvents++; a.influenceCD = 10; }
+      }
+
+      // --- Rumor spreading ---
+      if (b.hasRumor && !a.hasRumor && dist < 50) {
+        const spreadChance = b.charisma * (1 - a.stubbornness) * curiStr * 0.02;
+        if (Math.random() < spreadChance) {
+          a.hasRumor = true;
+          a.rumorTimer = 300 + Math.random() * 300;
+          rumorsSpread++;
+        }
+      }
+
+      // --- Cooperation game ---
+      if (dist < 30 && Math.random() < 0.005) {
+        const aCoops = Math.random() < a.cooperativeness;
+        const bCoops = Math.random() < b.cooperativeness;
+        if (aCoops && bCoops) {
+          a.energy += 0.02; b.energy += 0.02;
+          a.happiness += 0.01; b.happiness += 0.01;
+        } else if (aCoops && !bCoops) {
+          a.energy -= 0.01; b.energy += 0.03;
+          a.happiness -= 0.02;
+        } else if (!aCoops && bCoops) {
+          a.energy += 0.03; b.energy -= 0.01;
+          b.happiness -= 0.02;
+        } else {
+          a.energy -= 0.005; b.energy -= 0.005;
+        }
+        // Adapt strategy based on outcome
+        if (a.energy > 0.7) a.cooperativeness = Math.min(1, a.cooperativeness + 0.005);
+        if (a.energy < 0.3) a.cooperativeness = Math.max(0, a.cooperativeness - 0.005);
+      }
+    }
+
+    // --- Curiosity: random exploration ---
+    fx += (Math.random() - 0.5) * curiStr * 0.8;
+    fy += (Math.random() - 0.5) * curiStr * 0.8;
+
+    // --- Conformity: move toward average opinion position ---
+    if (opinionCount > 0) {
+      avgOpinion /= opinionCount;
+      a.opinion += (avgOpinion - a.opinion) * confStr * (1 - a.stubbornness) * 0.002;
+      a.opinion = Math.max(0, Math.min(1, a.opinion));
+    }
+
+    // --- Happiness ---
+    if (totalTribes > 0) {
+      const tribalRatio = sameTribes / totalTribes;
+      a.happiness += (tribalRatio - 0.5) * 0.01;
+    }
+    a.happiness += (nearCount > 2 && nearCount < 15 ? 0.005 : -0.003);
+    a.happiness = Math.max(0, Math.min(1, a.happiness));
+
+    // --- Energy decay ---
+    a.energy = Math.max(0.1, Math.min(1, a.energy - 0.0002));
+
+    // --- Rumor timer ---
+    if (a.hasRumor) {
+      a.rumorTimer--;
+      if (a.rumorTimer <= 0) a.hasRumor = false;
+    }
+    if (a.influenceCD > 0) a.influenceCD--;
+
+    // --- Apply forces ---
+    a.vx = (a.vx + fx) * 0.92;
+    a.vy = (a.vy + fy) * 0.92;
+    const speed = Math.sqrt(a.vx * a.vx + a.vy * a.vy);
+    const maxSpeed = a.role === ROLE.EXTROVERT ? 3 : 2;
+    if (speed > maxSpeed) { a.vx *= maxSpeed / speed; a.vy *= maxSpeed / speed; }
+
+    a.x += a.vx;
+    a.y += a.vy;
+
+    // --- Boundary ---
+    const margin = 30;
+    if (a.x < margin) { a.x = margin; a.vx *= -0.5; }
+    if (a.x > W - margin) { a.x = W - margin; a.vx *= -0.5; }
+    if (a.y < margin) { a.y = margin; a.vy *= -0.5; }
+    if (a.y > H - margin) { a.y = H - margin; a.vy *= -0.5; }
+
+    // --- Trail ---
+    a.trail.push({ x: a.x, y: a.y });
+    if (a.trail.length > 12) a.trail.shift();
+  }
+
+  // --- Age connections, remove weak ones ---
+  for (let i = connections.length - 1; i >= 0; i--) {
+    connections[i].age++;
+    const ca = agents[connections[i].a];
+    const cb = agents[connections[i].b];
+    const dx = ca.x - cb.x, dy = ca.y - cb.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist > 200 || connections[i].age > 1500) {
+      ca.connections.delete(connections[i].b);
+      cb.connections.delete(connections[i].a);
+      connections.splice(i, 1);
+    } else {
+      connections[i].strength = Math.max(0.1, 1 - dist / 200);
+    }
+  }
+
+  // --- Detect groups (simple flood fill on connections) ---
+  if (simTime % 30 < 1) detectGroups();
+
+  simTime++;
+}
+
+// --- Group detection ---
+function detectGroups() {
+  const visited = new Set();
+  groups = [];
+  for (let i = 0; i < agents.length; i++) {
+    if (visited.has(i) || agents[i].connections.size === 0) continue;
+    const group = { members: new Set(), cx: 0, cy: 0, color: '' };
+    const stack = [i];
+    while (stack.length) {
+      const idx = stack.pop();
+      if (visited.has(idx)) continue;
+      visited.add(idx);
+      group.members.add(idx);
+      for (const c of agents[idx].connections) {
+        if (!visited.has(c)) stack.push(c);
+      }
+    }
+    if (group.members.size >= 3) {
+      let cx = 0, cy = 0, avgH = 0;
+      for (const mi of group.members) {
+        cx += agents[mi].x; cy += agents[mi].y;
+        avgH += agents[mi].opinion;
+      }
+      group.cx = cx / group.members.size;
+      group.cy = cy / group.members.size;
+      avgH /= group.members.size;
+      const h = avgH * 280;
+      group.color = `hsla(${h}, 50%, 40%, 0.08)`;
+      groups.push(group);
+    }
+  }
+}
+
+// --- Heatmap ---
+function drawHeatmap() {
+  const res = 12;
+  const cols = Math.ceil(W / res), rows = Math.ceil(H / res);
+  for (let i = 0; i < agents.length; i++) {
+    const a = agents[i];
+    const gx = (a.x / res) | 0, gy = (a.y / res) | 0;
+    const rad = 3;
+    for (let dx = -rad; dx <= rad; dx++) {
+      for (let dy = -rad; dy <= rad; dy++) {
+        const px = gx + dx, py = gy + dy;
+        if (px < 0 || px >= cols || py < 0 || py >= rows) continue;
+        const d = Math.sqrt(dx*dx + dy*dy) / rad;
+        if (d > 1) continue;
+        const intensity = (1 - d) * 0.15;
+        const h = a.opinion * 280;
+        ctx.fillStyle = `hsla(${h}, 70%, 50%, ${intensity})`;
+        ctx.fillRect(px * res, py * res, res, res);
+      }
+    }
+  }
+}
+
+// --- Render ---
+let frameCount = 0, lastFT = performance.now(), curFps = 0;
+
+function render() {
+  if (!paused) update();
+
+  // --- Background fade ---
+  bgCtx.fillStyle = 'rgba(10, 10, 18, 0.15)';
+  bgCtx.fillRect(0, 0, W, H);
+
+  // --- Draw trails on background ---
+  for (let i = 0; i < agents.length; i++) {
+    const a = agents[i];
+    if (a.trail.length < 2) continue;
+    bgCtx.strokeStyle = ROLE_COLORS[a.role] + '15';
+    bgCtx.lineWidth = 1;
+    bgCtx.beginPath();
+    bgCtx.moveTo(a.trail[0].x, a.trail[0].y);
+    for (let t = 1; t < a.trail.length; t++) {
+      bgCtx.lineTo(a.trail[t].x, a.trail[t].y);
+    }
+    bgCtx.stroke();
+  }
+
+  // --- Main canvas ---
+  ctx.clearRect(0, 0, W, H);
+
+  // --- Heatmap ---
+  if (showHeatmap) drawHeatmap();
+
+  // --- Group halos ---
+  for (const g of groups) {
+    let maxR = 0;
+    let cx = 0, cy = 0;
+    for (const mi of g.members) { cx += agents[mi].x; cy += agents[mi].y; }
+    cx /= g.members.size; cy /= g.members.size;
+    for (const mi of g.members) {
+      const dx = agents[mi].x - cx, dy = agents[mi].y - cy;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d > maxR) maxR = d;
+    }
+    if (maxR > 10) {
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR + 30);
+      grad.addColorStop(0, g.color.replace('0.08', '0.06'));
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, maxR + 30, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // --- Social fields ---
+  if (showFields) {
+    for (let i = 0; i < agents.length; i++) {
+      const a = agents[i];
+      if (a.role === ROLE.LEADER || a.role === ROLE.INFLUENCER) {
+        const grad = ctx.createRadialGradient(a.x, a.y, 0, a.x, a.y, a.socialRadius);
+        grad.addColorStop(0, ROLE_COLORS[a.role] + '18');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, a.socialRadius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  // --- Connections ---
+  if (showConnections) {
+    for (const c of connections) {
+      const a = agents[c.a], b = agents[c.b];
+      const alpha = c.strength * 0.3;
+      ctx.strokeStyle = `rgba(150, 180, 255, ${alpha})`;
+      ctx.lineWidth = c.strength * 1.5;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
+  }
+
+  // --- Agents ---
+  for (let i = 0; i < agents.length; i++) {
+    const a = agents[i];
+    const baseColor = ROLE_COLORS[a.role];
+    const size = a.role === ROLE.LEADER ? 5 : a.role === ROLE.INFLUENCER ? 4.5 : 3 + a.energy;
+
+    // Opinion aura
+    const opH = a.opinion * 280;
+    ctx.fillStyle = `hsla(${opH}, 60%, 50%, 0.15)`;
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, size + 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Body
+    ctx.fillStyle = baseColor;
+    ctx.globalAlpha = 0.5 + a.happiness * 0.5;
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Rumor ring
+    if (a.hasRumor) {
+      ctx.strokeStyle = '#ff0';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, size + 4, 0, Math.PI * 2);
+      ctx.stroke();
+      // Pulse
+      const pulse = Math.sin(simTime * 0.15) * 3 + 8;
+      ctx.strokeStyle = 'rgba(255,255,0,0.15)';
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, size + pulse, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Leader crown indicator
+    if (a.role === ROLE.LEADER) {
+      ctx.strokeStyle = '#4af';
+      ctx.lineWidth = 1;
+      const t = simTime * 0.05;
+      for (let p = 0; p < 3; p++) {
+        const angle = t + p * Math.PI * 2 / 3;
+        ctx.beginPath();
+        ctx.arc(a.x + Math.cos(angle) * (size + 3), a.y + Math.sin(angle) * (size + 3), 1, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+
+    // Defector X indicator
+    if (a.role === ROLE.DEFECTOR) {
+      ctx.strokeStyle = '#fa0';
+      ctx.lineWidth = 1;
+      const s = size * 0.5;
+      ctx.beginPath();
+      ctx.moveTo(a.x - s, a.y - s); ctx.lineTo(a.x + s, a.y + s);
+      ctx.moveTo(a.x + s, a.y - s); ctx.lineTo(a.x - s, a.y + s);
+      ctx.stroke();
+    }
+  }
+
+  // --- Vignette ---
+  const cx = W / 2, cy = H / 2;
+  const grad = ctx.createRadialGradient(cx, cy, H * 0.35, cx, cy, H * 0.85);
+  grad.addColorStop(0, 'rgba(10,10,18,0)');
+  grad.addColorStop(1, 'rgba(10,10,18,0.5)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // --- HUD ---
+  frameCount++;
+  const now = performance.now();
+  if (now - lastFT > 500) {
+    curFps = Math.round(frameCount * 1000 / (now - lastFT));
+    frameCount = 0; lastFT = now;
+
+    document.getElementById('fps').textContent = curFps;
+    document.getElementById('agentCount').textContent = agents.length;
+    document.getElementById('groupCount').textContent = groups.length;
+    document.getElementById('connCount').textContent = connections.length;
+    document.getElementById('infCount').textContent = influenceEvents;
+    document.getElementById('simTime').textContent = (simTime * 0.016).toFixed(1) + 's';
+    document.getElementById('rumors').textContent = rumorsSpread;
+
+    // Stats
+    let avgHappy = 0, avgOp = 0, coopCount = 0, avgOpSq = 0;
+    let sameN = 0, totalN = 0;
+    for (let i = 0; i < agents.length; i++) {
+      avgHappy += agents[i].happiness;
+      avgOp += agents[i].opinion;
+      avgOpSq += agents[i].opinion * agents[i].opinion;
+      if (agents[i].cooperativeness > 0.5) coopCount++;
+    }
+    avgHappy /= agents.length;
+    avgOp /= agents.length;
+    avgOpSq /= agents.length;
+    const variance = avgOpSq - avgOp * avgOp;
+    const polarization = Math.min(1, variance * 4);
+
+    // Segregation index (from group detection)
+    buildGrid();
+    let segSame = 0, segTotal = 0;
+    for (let i = 0; i < Math.min(agents.length, 200); i++) {
+      const nb = getNeighbors(agents[i], 50);
+      for (const n of nb) {
+        segTotal++;
+        if (agents[n].tribe === agents[i].tribe) segSame++;
+      }
+    }
+    const segregation = segTotal > 0 ? segSame / segTotal : 0;
+
+    document.getElementById('happiness').textContent = (avgHappy * 100).toFixed(0) + '%';
+    document.getElementById('segregation').textContent = (segregation * 100).toFixed(0) + '%';
+    document.getElementById('polarization').textContent = (polarization * 100).toFixed(0) + '%';
+    document.getElementById('cooperation').textContent = ((coopCount / agents.length) * 100).toFixed(0) + '%';
+  }
+
+  requestAnimationFrame(render);
+}
+
+// --- Input ---
+window.addEventListener('keydown', e => {
+  if (e.key >= '1' && e.key <= '5') loadScenario(+e.key - 1);
+  else if (e.key === ' ') { paused = !paused; e.preventDefault(); }
+  else if (e.key === 'r' || e.key === 'R') {
+    loadScenario(currentScenario);
+    bgCtx.clearRect(0, 0, W, H);
+  }
+  else if (e.key === 'd' || e.key === 'D') showConnections = !showConnections;
+  else if (e.key === 'f' || e.key === 'F') showFields = !showFields;
+  else if (e.key === 'h' || e.key === 'H') showHeatmap = !showHeatmap;
+});
+
+// Click to inject rumor
+canvas.addEventListener('click', e => {
+  let closest = -1, closestD = Infinity;
+  for (let i = 0; i < agents.length; i++) {
+    const dx = agents[i].x - e.clientX, dy = agents[i].y - e.clientY;
+    const d = dx*dx + dy*dy;
+    if (d < closestD) { closestD = d; closest = i; }
+  }
+  if (closest >= 0 && closestD < 2500) {
+    agents[closest].hasRumor = true;
+    agents[closest].rumorTimer = 500;
+    // Also spread to nearby
+    const nb = getNeighbors(agents[closest], 60);
+    for (const n of nb.slice(0, 3)) {
+      agents[n].hasRumor = true;
+      agents[n].rumorTimer = 400;
+    }
+  }
+});
+
+// --- Start ---
+loadScenario(0);
+render();
+</script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>
