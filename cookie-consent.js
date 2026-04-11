@@ -18,7 +18,7 @@
 // ═══════════════════════════════════════════
 // CONFIG — set your Google Analytics 4 ID here
 // ═══════════════════════════════════════════
-var GA_ID = '';  // e.g. 'G-XXXXXXXXXX'
+var GA_ID = 'G-RNDL66P478';
 // ═══════════════════════════════════════════
 (function(){
   'use strict';
