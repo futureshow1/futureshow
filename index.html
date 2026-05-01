@@ -469,102 +469,6 @@
     }
 
     /* ============================================
-       Films / Reel
-       ============================================ */
-    .films {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px 40px 120px;
-    }
-
-    .films__featured {
-      margin-bottom: 40px;
-    }
-
-    .films__featured iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--bg2);
-    }
-
-    .films__featured-caption {
-      margin-top: 12px;
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
-
-    .films__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .film-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .film-card:hover {
-      border-color: var(--border-glow);
-      box-shadow: 0 0 30px rgba(99,179,255,0.06);
-    }
-
-    .film-card iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      display: block;
-      border: none;
-    }
-
-    .film-card__info {
-      padding: 14px 16px;
-    }
-
-    .film-card__title {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 2px;
-      line-height: 1.3;
-    }
-
-    .film-card__date {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      margin-bottom: 2px;
-    }
-
-    .film-card__tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.58rem;
-      color: var(--accent2);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 900px) {
-      .films__grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .films { padding: 60px 20px 80px; }
-      .films__grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ============================================
        About / Process
        ============================================ */
     .about {
@@ -1044,7 +948,7 @@
           <span data-lang="en">Projects</span>
           <span data-lang="pl">Projekty</span>
         </a></li>
-        <li><a href="#films">
+        <li><a href="films.html">
           <span data-lang="en">Films</span>
           <span data-lang="pl">Filmy</span>
         </a></li>
@@ -1819,10 +1723,12 @@
         <div data-lang="en">
           <h3>Generative AI Films</h3>
           <p>Short films, music videos, and visual essays created with Sora, Runway, and other AI video tools. Concept to final cut.</p>
+          <a href="films.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:0.78rem;font-weight:600;color:#ffb060;letter-spacing:0.03em;">Watch the reel <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
         <div data-lang="pl">
           <h3>Filmy generatywne AI</h3>
           <p>Krótkie filmy, teledyski i eseje wizualne tworzone z Sora, Runway i innymi narzędziami AI video. Od konceptu do finalnego montażu.</p>
+          <a href="films.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:0.78rem;font-weight:600;color:#ffb060;letter-spacing:0.03em;">Zobacz reel <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
     </div>
@@ -1922,159 +1828,6 @@
           <p>Workflow z AI oznacza, że złożone projekty dostarczam w dniach, nie miesiącach. Od briefu do wdrożonego produktu — radykalnie szybciej niż tradycyjny rozwój.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Generative AI Films -->
-  <section class="films" id="films">
-    <div class="section-label">
-      <span data-lang="en">Generative AI Films</span>
-      <span data-lang="pl">Generatywne filmy AI</span>
-    </div>
-
-    <!-- Featured: Gniew -->
-    <div class="films__featured">
-      <iframe src="https://player.vimeo.com/video/1155023846?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      <div class="films__featured-caption">
-        <div data-lang="en"><strong>Gniew (Iliada)</strong> &middot; 2025 &middot; Various AI tools — Homer's Iliad reimagined as AI-generated hip-hop. Both the music and visuals are fully synthesized.</div>
-        <div data-lang="pl"><strong>Gniew (Iliada)</strong> &middot; 2025 &middot; Various AI tools — Iliada Homera jako hip-hop generowany przez AI. Muzyka i wizualia w pełni syntetyczne.</div>
-      </div>
-    </div>
-
-    <!-- Films grid -->
-    <div class="films__grid">
-
-      <!-- Row 1: Heret, World, Witness -->
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1175558144?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
-          <div class="film-card__title">Heret. The Story</div>
-          <div class="film-card__tag">AI Short</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">A narrative of heresy and otherness, told through AI-generated dreamscapes.</span>
-            <span data-lang="pl">Narracja o herezji i inności, opowiedziana przez generowane przez AI krajobrazy senne.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1175558401?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
-          <div class="film-card__title">World is like an onion...</div>
-          <div class="film-card__tag">AI Film</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">Layers of reality peeled back in a surreal visual meditation on perception.</span>
-            <span data-lang="pl">Warstwy rzeczywistości odkrywane w surrealistycznej medytacji wizualnej o percepcji.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1175558320?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
-          <div class="film-card__title">Witness</div>
-          <div class="film-card__tag">AI Short</div>
-          <div class="film-card__lock" style="font-size:0.65rem;color:var(--text-dim);margin-top:0.3rem;">&#128274; <span data-lang="en">Festival submission — contact for access</span><span data-lang="pl">Zgłoszenie festiwalowe — proszę o kontakt</span></div>
-        </div>
-      </div>
-
-      <!-- Row 2: Occult PRL, Mediation, Emfazy -->
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1155024443?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
-          <div class="film-card__title">Occult PRL</div>
-          <div class="film-card__tag">AI Short</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">Esoteric undercurrents of communist-era Poland, reimagined through AI-generated imagery.</span>
-            <span data-lang="pl">Ezoteryczne prądy PRL-u, przetworzone przez generatywną wyobraźnię AI.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1175558057?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
-          <div class="film-card__title">Cross-Culture Mediation: Art of Finding Peace</div>
-          <div class="film-card__tag">AI Short</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">Visual essay on intercultural dialogue and conflict resolution.</span>
-            <span data-lang="pl">Esej wizualny o dialogu międzykulturowym i rozwiązywaniu konfliktów.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/994981682?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2024 &middot; Runway</div>
-          <div class="film-card__title">Emfazy i psychotronika za żelazną kurtyną</div>
-          <div class="film-card__tag">AI Impression</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">Cold War parapsychology and emphasis poetry — a retro-futuristic AI impression.</span>
-            <span data-lang="pl">Parapsychologia zimnej wojny i poezja emfatyczna — retro-futurystyczna impresja AI.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 3: Creative Use reel, Dolls, Legenda -->
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1030326189?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2024 &middot; Compilation</div>
-          <div class="film-card__title">Creative Use of AI Video Generation</div>
-          <div class="film-card__tag">Showcase Reel</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">Evolution of AI filmmaking tools (2023-2024) — from early experiments to cinematic results.</span>
-            <span data-lang="pl">Ewolucja narzędzi AI do filmów (2023-2024) — od wczesnych eksperymentów po efekty kinowe.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1029420078?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2024 &middot; Stable Diffusion</div>
-          <div class="film-card__title">The Dolls</div>
-          <div class="film-card__tag">AI Film</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">Uncanny valley explored — when the artificial becomes disturbingly alive.</span>
-            <span data-lang="pl">Dolina niesamowitości — kiedy sztuczność staje się niepokojąco żywa.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/902923528?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2023 &middot; Runway Gen-2</div>
-          <div class="film-card__title">Legenda Czarnego Dzika z lasów pod miastem Dobre</div>
-          <div class="film-card__tag">AI Animation</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">Polish folk legend of the Black Boar, one of the earliest experiments with AI animation.</span>
-            <span data-lang="pl">Polska legenda ludowa o Czarnym Dziku — jeden z najwcześniejszych eksperymentów z animacją AI.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Last -->
-      <div class="film-card">
-        <iframe src="https://player.vimeo.com/video/1029420139?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="film-card__info">
-          <div class="film-card__date">2023 &middot; Runway</div>
-          <div class="film-card__title">One Over Many_</div>
-          <div class="film-card__tag">AI Film</div>
-          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
-            <span data-lang="en">An experiment between ritual and music video — AI-generated visuals as a bridge between the sacred and the pop.</span>
-            <span data-lang="pl">Eksperyment między rytuałem a wideoklipem — wizualia generowane przez AI jako pomost między sacrum a popem.</span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 

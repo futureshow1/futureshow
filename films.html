@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Films — FutureShow</title>
+  <meta property="og:title" content="FutureShow — Generative AI Films">
+  <meta property="og:description" content="Short films, music videos, and visual essays created with Sora, Runway, LTX and other AI video tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://futureshow1.github.io/futureshow/films.html">
+  <meta name="description" content="Generative AI films, music videos, and visual essays — concept to final cut.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06080d;
+      --bg2: #0c1018;
+      --bg3: #111827;
+      --surface: #161d2e;
+      --border: rgba(255,255,255,0.06);
+      --border-glow: rgba(99,179,255,0.2);
+      --text: #e5e7eb;
+      --text-dim: #6b7280;
+      --text-muted: #374151;
+      --accent: #63b3ff;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --white: #f9fafb;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(6, 8, 13, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__brand { display: flex; align-items: center; gap: 10px; }
+    .nav__logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .nav__logo span { color: var(--accent); }
+    .nav__dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent); }
+      50% { opacity: 0.4; box-shadow: 0 0 8px var(--accent); }
+    }
+    .nav__right { display: flex; align-items: center; gap: 28px; }
+    .nav__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .nav__back:hover { color: var(--accent); }
+    .nav__back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .nav__lang {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--text-dim);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .nav__lang:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* Page header */
+    .page-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 140px 40px 40px;
+    }
+    .page-header__kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .page-header h1 {
+      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 18px;
+    }
+    .page-header h1 .gradient {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-header p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 640px;
+    }
+
+    /* Films */
+    .films {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 40px 120px;
+    }
+    .films__featured { margin-bottom: 40px; }
+    .films__featured iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg2);
+    }
+    .films__featured-caption {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+    .films__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .film-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .film-card:hover {
+      border-color: var(--border-glow);
+      box-shadow: 0 0 30px rgba(99,179,255,0.06);
+    }
+    .film-card iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+      border: none;
+    }
+    .film-card__info { padding: 14px 16px; }
+    .film-card__title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+    .film-card__date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+    }
+    .film-card__tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .footer a { color: var(--text-dim); transition: color 0.2s; }
+    .footer a:hover { color: var(--accent); }
+
+    /* Lang toggle */
+    [data-lang="pl"] { display: none; }
+    html[lang="pl"] [data-lang="pl"] { display: block; }
+    html[lang="pl"] [data-lang="en"] { display: none; }
+    span[data-lang="pl"], span[data-lang="en"] { display: inline; }
+    html[lang="pl"] span[data-lang="en"] { display: none; }
+    span[data-lang="pl"] { display: none; }
+    html[lang="pl"] span[data-lang="pl"] { display: inline; }
+
+    @media (max-width: 900px) {
+      .films__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 0 20px; }
+      .nav__right { gap: 14px; }
+      .page-header { padding: 110px 20px 30px; }
+      .films { padding: 20px 20px 80px; }
+      .films__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav__brand">
+      <div class="nav__dot"></div>
+      <a href="index.html" class="nav__logo">Future<span>Show</span></a>
+    </div>
+    <div class="nav__right">
+      <a href="index.html" class="nav__back">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-lang="en">Back to portfolio</span>
+        <span data-lang="pl">Powrót do portfolio</span>
+      </a>
+      <button class="nav__lang" onclick="toggleLang()" id="langToggle">PL</button>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="page-header">
+    <div class="page-header__kicker">
+      <span data-lang="en">Reel · 2023–2026</span>
+      <span data-lang="pl">Reel · 2023–2026</span>
+    </div>
+    <div data-lang="en">
+      <h1>Generative <span class="gradient">AI Films</span></h1>
+      <p>Short films, music videos, and visual essays created with Sora, Runway, LTX, and other AI video tools — concept to final cut.</p>
+    </div>
+    <div data-lang="pl">
+      <h1>Generatywne <span class="gradient">filmy AI</span></h1>
+      <p>Krótkie filmy, teledyski i eseje wizualne tworzone z Sora, Runway, LTX i innymi narzędziami AI video — od konceptu do finalnego montażu.</p>
+    </div>
+  </header>
+
+  <!-- Films -->
+  <section class="films">
+
+    <!-- Featured: Gniew -->
+    <div class="films__featured">
+      <iframe src="https://player.vimeo.com/video/1155023846?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <div class="films__featured-caption">
+        <div data-lang="en"><strong>Gniew (Iliada)</strong> &middot; 2025 &middot; Various AI tools — Homer's Iliad reimagined as AI-generated hip-hop. Both the music and visuals are fully synthesized.</div>
+        <div data-lang="pl"><strong>Gniew (Iliada)</strong> &middot; 2025 &middot; Various AI tools — Iliada Homera jako hip-hop generowany przez AI. Muzyka i wizualia w pełni syntetyczne.</div>
+      </div>
+    </div>
+
+    <!-- Films grid -->
+    <div class="films__grid">
+
+      <!-- Row 1: Heret, World, Witness -->
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1175558144?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
+          <div class="film-card__title">Heret. The Story</div>
+          <div class="film-card__tag">AI Short</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">A narrative of heresy and otherness, told through AI-generated dreamscapes.</span>
+            <span data-lang="pl">Narracja o herezji i inności, opowiedziana przez generowane przez AI krajobrazy senne.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1175558401?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
+          <div class="film-card__title">World is like an onion...</div>
+          <div class="film-card__tag">AI Film</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Layers of reality peeled back in a surreal visual meditation on perception.</span>
+            <span data-lang="pl">Warstwy rzeczywistości odkrywane w surrealistycznej medytacji wizualnej o percepcji.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1175558320?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
+          <div class="film-card__title">Witness</div>
+          <div class="film-card__tag">AI Short</div>
+          <div class="film-card__lock" style="font-size:0.65rem;color:var(--text-dim);margin-top:0.3rem;">&#128274; <span data-lang="en">Festival submission — contact for access</span><span data-lang="pl">Zgłoszenie festiwalowe — proszę o kontakt</span></div>
+        </div>
+      </div>
+
+      <!-- Row 2: Occult PRL, Mediation, Emfazy -->
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1155024443?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
+          <div class="film-card__title">Occult PRL</div>
+          <div class="film-card__tag">AI Short</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Esoteric undercurrents of communist-era Poland, reimagined through AI-generated imagery.</span>
+            <span data-lang="pl">Ezoteryczne prądy PRL-u, przetworzone przez generatywną wyobraźnię AI.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1175558057?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2025 &middot; LTX / Runway / DaVinci Resolve</div>
+          <div class="film-card__title">Cross-Culture Mediation: Art of Finding Peace</div>
+          <div class="film-card__tag">AI Short</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Visual essay on intercultural dialogue and conflict resolution.</span>
+            <span data-lang="pl">Esej wizualny o dialogu międzykulturowym i rozwiązywaniu konfliktów.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/994981682?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2024 &middot; Runway</div>
+          <div class="film-card__title">Emfazy i psychotronika za żelazną kurtyną</div>
+          <div class="film-card__tag">AI Impression</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Cold War parapsychology and emphasis poetry — a retro-futuristic AI impression.</span>
+            <span data-lang="pl">Parapsychologia zimnej wojny i poezja emfatyczna — retro-futurystyczna impresja AI.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Creative Use reel, Dolls, Legenda -->
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1030326189?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2024 &middot; Compilation</div>
+          <div class="film-card__title">Creative Use of AI Video Generation</div>
+          <div class="film-card__tag">Showcase Reel</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Evolution of AI filmmaking tools (2023-2024) — from early experiments to cinematic results.</span>
+            <span data-lang="pl">Ewolucja narzędzi AI do filmów (2023-2024) — od wczesnych eksperymentów po efekty kinowe.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1029420078?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2024 &middot; Stable Diffusion</div>
+          <div class="film-card__title">The Dolls</div>
+          <div class="film-card__tag">AI Film</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Uncanny valley explored — when the artificial becomes disturbingly alive.</span>
+            <span data-lang="pl">Dolina niesamowitości — kiedy sztuczność staje się niepokojąco żywa.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/902923528?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2023 &middot; Runway Gen-2</div>
+          <div class="film-card__title">Legenda Czarnego Dzika z lasów pod miastem Dobre</div>
+          <div class="film-card__tag">AI Animation</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">Polish folk legend of the Black Boar, one of the earliest experiments with AI animation.</span>
+            <span data-lang="pl">Polska legenda ludowa o Czarnym Dziku — jeden z najwcześniejszych eksperymentów z animacją AI.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Last -->
+      <div class="film-card">
+        <iframe src="https://player.vimeo.com/video/1029420139?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="film-card__info">
+          <div class="film-card__date">2023 &middot; Runway</div>
+          <div class="film-card__title">One Over Many_</div>
+          <div class="film-card__tag">AI Film</div>
+          <div style="font-size:0.68rem;color:var(--text-dim);margin-top:4px;line-height:1.4;">
+            <span data-lang="en">An experiment between ritual and music video — AI-generated visuals as a bridge between the sacred and the pop.</span>
+            <span data-lang="pl">Eksperyment między rytuałem a wideoklipem — wizualia generowane przez AI jako pomost między sacrum a popem.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span data-lang="en">&copy; 2026 FutureShow &middot; <a href="index.html">Back to portfolio</a> &middot; <a href="mailto:futureshow@proton.me">Contact</a></span>
+    <span data-lang="pl">&copy; 2026 FutureShow &middot; <a href="index.html">Powrót do portfolio</a> &middot; <a href="mailto:futureshow@proton.me">Kontakt</a></span>
+  </footer>
+
+<script>
+  function toggleLang() {
+    const html = document.documentElement;
+    const btn = document.getElementById('langToggle');
+    if (html.lang === 'en') {
+      html.lang = 'pl';
+      btn.textContent = 'EN';
+      localStorage.setItem('lang', 'pl');
+    } else {
+      html.lang = 'en';
+      btn.textContent = 'PL';
+      localStorage.setItem('lang', 'en');
+    }
+  }
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang === 'pl') {
+    document.documentElement.lang = 'pl';
+    document.getElementById('langToggle').textContent = 'EN';
+  }
+</script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>
