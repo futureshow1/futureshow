@@ -2012,7 +2012,7 @@
             </svg>
             <!-- Beta pill, pinned to top-right of the cover -->
             <div style="position:absolute;top:14px;right:16px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;padding:4px 9px;background:rgba(232,184,48,0.14);border:0.5px solid rgba(232,184,48,0.55);color:#f5cc55;border-radius:3px;">
-              Beta · v0.4
+              Beta · v0.5
             </div>
           </div>
         </div>
@@ -2025,14 +2025,14 @@
             <div class="case__title">Sejm Symulator — Polish Parliament Power Map</div>
             <div class="case__desc">Full database of the 10th Polish Parliament: 3,834 floor votes, 1.76M individual MP decisions, 460 MPs across 12 clubs, all 40 standing committees with 3,706 meetings, 1,392 legislative bills. Interactive hemicycle, behavioral simulator on 23 policy topics, club×club agreement heatmap, loyalty rankings, top rebels, career-path graph for 1,979 politicians from 8 parliamentary terms.</div>
             <p style="font-size:0.75rem;line-height:1.5;color:rgba(245,204,85,0.85);margin-top:8px;border-left:2px solid rgba(245,204,85,0.5);padding-left:10px;">
-              <strong style="color:#f5cc55;">Work in progress.</strong> The simulator currently maps free-text input to one of 23 fixed topics; arbitrary phrasing isn't fully understood yet. Roadmap: vote-similarity engine across all 3,834 historical votes, optionally with an LLM classification layer.
+              <strong style="color:#f5cc55;">Beta.</strong> The simulator now runs TF-IDF cosine similarity over all 3,834 historical votes (lazy-loaded on first interaction) — type any phrasing and the engine finds the closest historical analogues, then aggregates each MP's actual votes on those. An LLM classification layer for borderline-abstract queries is the next planned upgrade.
             </p>
           </div>
           <div data-lang="pl">
             <div class="case__title">Sejm Symulator — mapa wpływów politycznych</div>
             <div class="case__desc">Pełna baza X kadencji Sejmu RP: 3 834 głosowań, 1,76 mln indywidualnych głosów, 460 posłów w 12 klubach, wszystkie 40 komisji stałych z 3 706 posiedzeniami, 1 392 inicjatywy ustawodawcze. Interaktywny hemicykl, symulator zachowań na 23 tematach, heatmapa zgodności klubów, ranking lojalności, top buntownicy, graf karier 1 979 polityków z 8 kadencji.</div>
             <p style="font-size:0.75rem;line-height:1.5;color:rgba(245,204,85,0.85);margin-top:8px;border-left:2px solid rgba(245,204,85,0.5);padding-left:10px;">
-              <strong style="color:#f5cc55;">Wersja robocza.</strong> Symulator dopasowuje wpisany tekst do jednego z 23 tematów — dowolne sformułowanie nie jest jeszcze rozumiane. W planach: silnik podobieństwa do 3 834 historycznych głosowań, opcjonalnie z warstwą klasyfikacji LLM.
+              <strong style="color:#f5cc55;">Beta.</strong> Symulator działa teraz na silniku podobieństwa TF-IDF do <strong>3 834 historycznych głosowań</strong> (cosine similarity, lokalnie w przeglądarce, lazy-load przy pierwszej interakcji) — wpisz dowolne sformułowanie, system znajduje najbliższe historyczne analogie i agreguje faktyczne głosy każdego posła na tych głosowaniach. Następny etap: opcjonalna warstwa klasyfikacji LLM dla bardzo abstrakcyjnych zapytań.
             </p>
           </div>
           <div class="case__metrics">
