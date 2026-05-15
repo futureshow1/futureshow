@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alchemica — Psychoaktywne perfumy botaniczne</title>
+<meta name="description" content="Alchemica — psychoaktywne perfumy botaniczne. Naturalne kompozycje zapachowe, które wpływają na nastrój, emocje i stan ducha." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Italiana&display=swap" rel="stylesheet">
+<style>
+  /* ---------- TOKENS ---------- */
+  :root {
+    --paper: #f1e6cf;
+    --paper-warm: #ebdcbc;
+    --paper-deep: #e2cea5;
+    --ink: #1d2b34;
+    --ink-soft: #344852;
+    --gold: #b8924e;
+    --gold-deep: #8f6e34;
+    --moss: #6b7a3f;
+    --terracotta: #a85a3f;
+    --dusty-rose: #c47a6a;
+    --serif: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+    --display: "Italiana", "Cormorant Garamond", serif;
+    --body: "Lora", Georgia, serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    /* Subtelna tekstura papieru */
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184, 146, 78, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(107, 122, 63, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% 90%, rgba(168, 90, 63, 0.04) 0%, transparent 50%);
+  }
+
+  ::selection { background: var(--gold); color: var(--paper); }
+
+  a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--gold-deep); }
+
+  h1, h2, h3, h4 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em; margin: 0; }
+
+  .display { font-family: var(--display); letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(8px);
+    background: rgba(241, 230, 207, 0.85);
+    border-bottom: 1px solid rgba(29, 43, 52, 0.08);
+  }
+  .nav-inner {
+    max-width: 1300px; margin: 0 auto;
+    padding: 18px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+  }
+  .nav-brand {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.32em;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-brand img {
+    height: 40px; width: 40px;
+    object-fit: contain;
+  }
+  .nav-links { display: flex; gap: 36px; font-family: var(--serif); font-size: 16px; letter-spacing: 0.05em; }
+  .nav-links a { position: relative; }
+  .nav-links a:hover::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+    height: 1px; background: var(--gold);
+  }
+  .nav-cart {
+    font-family: var(--serif);
+    border: 1px solid var(--ink);
+    padding: 8px 18px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+  .nav-cart:hover { background: var(--ink); color: var(--paper); }
+  .nav-cart .count { color: var(--gold-deep); margin-left: 6px; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 32px 100px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero-inner { max-width: 760px; position: relative; z-index: 2; }
+  .hero-logo {
+    width: 220px; height: 220px; margin: 0 auto 30px;
+    display: block;
+    filter: drop-shadow(0 8px 24px rgba(29, 43, 52, 0.15));
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(48px, 7vw, 86px);
+    letter-spacing: 0.22em;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+  .hero-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--gold-deep);
+    letter-spacing: 0.08em;
+    margin-bottom: 36px;
+  }
+  .hero-tagline::before, .hero-tagline::after { content: "✦"; margin: 0 18px; font-size: 14px; color: var(--gold); }
+  .hero-lead {
+    font-size: 19px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    max-width: 600px;
+    margin: 0 auto 44px;
+  }
+  .btn {
+    display: inline-block;
+    font-family: var(--serif);
+    font-size: 16px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 16px 42px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); letter-spacing: 0.28em; }
+  .btn-gold { border-color: var(--gold-deep); color: var(--gold-deep); }
+  .btn-gold:hover { background: var(--gold-deep); color: var(--paper); }
+
+  /* Dekoracyjne łuki tła w hero */
+  .hero-arc {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 140%; max-width: 1400px; height: 100%;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ---------- SECTION BASE ---------- */
+  section { padding: 100px 32px; position: relative; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-head { text-align: center; margin-bottom: 70px; }
+  .eyebrow {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+  }
+  .section-head h2 {
+    font-family: var(--display);
+    font-size: clamp(34px, 5vw, 52px);
+    letter-spacing: 0.18em;
+    color: var(--ink);
+  }
+  .divider {
+    width: 70px; height: 1px; background: var(--gold);
+    margin: 26px auto;
+    position: relative;
+  }
+  .divider::before, .divider::after {
+    content: ""; position: absolute; top: 50%;
+    width: 6px; height: 6px;
+    border: 1px solid var(--gold);
+    background: var(--paper);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .divider::before { left: -10px; }
+  .divider::after { right: -10px; }
+
+  /* ---------- MANIFEST ---------- */
+  .manifest { background: var(--paper-warm); }
+  .manifest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .manifest-portrait {
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(29, 43, 52, 0.18);
+  }
+  .manifest-portrait img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .manifest-text h2 {
+    font-family: var(--display);
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: 0.16em;
+    margin-bottom: 28px;
+    color: var(--ink);
+  }
+  .manifest-text p {
+    font-size: 17px; line-height: 1.85;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  .manifest-text .signature {
+    margin-top: 36px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold-deep);
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how { padding-top: 120px; padding-bottom: 120px; }
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    margin-top: 40px;
+  }
+  .how-card {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .how-icon {
+    width: 70px; height: 70px;
+    margin: 0 auto 24px;
+    color: var(--gold-deep);
+  }
+  .how-card h3 {
+    font-family: var(--display);
+    font-size: 20px;
+    letter-spacing: 0.18em;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .how-card p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin: 0;
+  }
+  .how-note {
+    margin-top: 60px;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 700px;
+    margin-left: auto; margin-right: auto;
+    padding: 24px 30px;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+
+  /* ---------- COLLECTION ---------- */
+  .collection { background: var(--paper-warm); padding-top: 120px; padding-bottom: 120px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 40px;
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid rgba(184, 146, 78, 0.4);
+    padding: 36px 32px 32px;
+    display: flex; flex-direction: column;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ""; position: absolute; inset: 6px;
+    border: 1px solid rgba(184, 146, 78, 0.2);
+    pointer-events: none;
+    transition: all 0.4s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(29, 43, 52, 0.12);
+    border-color: var(--gold);
+  }
+  .card:hover::before { inset: 10px; border-color: var(--gold); }
+
+  .card-bottle {
+    height: 140px;
+    display: flex; align-items: flex-end; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .card-bottle svg { height: 100%; }
+  .card-name {
+    font-family: var(--display);
+    font-size: 28px;
+    letter-spacing: 0.16em;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .card-sub {
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+    min-height: 20px;
+  }
+  .card-divider {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    margin: 0 auto 22px;
+    position: relative;
+  }
+  .card-divider::before {
+    content: "✦"; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--paper);
+    color: var(--gold);
+    font-size: 10px;
+    padding: 0 5px;
+  }
+  .card-desc {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+    text-align: justify;
+    flex-grow: 1;
+  }
+  .notes {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .notes-row { margin-bottom: 8px; display: flex; gap: 8px; }
+  .notes-label {
+    font-style: italic;
+    color: var(--gold-deep);
+    min-width: 85px;
+    flex-shrink: 0;
+  }
+  .notes-val { color: var(--ink-soft); line-height: 1.5; }
+  .card-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid rgba(29, 43, 52, 0.1);
+  }
+  .price {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+  }
+  .price small { font-size: 13px; color: var(--ink-soft); margin-left: 4px; }
+  .add-btn {
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .add-btn:hover { background: var(--ink); color: var(--paper); }
+
+  /* Wariant kolorystyczny dla każdego perfumu (dla nazwy z plakatu klientki) */
+  .card[data-tone="abramelin"] .card-name { color: #2a3d3a; }
+  .card[data-tone="aphrodesia"] .card-name { color: #c4577e; }
+  .card[data-tone="cor"] .card-name { color: #2e5c8a; }
+  .card[data-tone="idun"] .card-name { color: #d77a4f; }
+  .card[data-tone="inspiratio"] .card-name { color: #b85533; }
+  .card[data-tone="laloba"] .card-name { color: #843d2b; }
+  .card[data-tone="metanoia"] .card-name { color: #3e6b9e; }
+  .card[data-tone="radical"] .card-name { color: #d78140; }
+  .card[data-tone="shinrin"] .card-name { color: #3b6e5a; }
+  .card[data-tone="volupia"] .card-name { color: #c4a456; }
+
+  /* ---------- BESPOKE ---------- */
+  .bespoke {
+    background:
+      linear-gradient(135deg, rgba(29, 43, 52, 0.92), rgba(52, 72, 82, 0.92));
+    color: var(--paper);
+    padding: 100px 32px;
+    text-align: center;
+  }
+  .bespoke .eyebrow { color: var(--gold); }
+  .bespoke h2 { color: var(--paper); }
+  .bespoke .divider { background: var(--gold); }
+  .bespoke .divider::before, .bespoke .divider::after { background: var(--ink); border-color: var(--gold); }
+  .bespoke-lead {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(241, 230, 207, 0.85);
+  }
+  .bespoke .btn {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .bespoke .btn:hover { background: var(--gold); color: var(--ink); }
+
+  /* ---------- INGREDIENTS / TRUST ---------- */
+  .trust { padding: 100px 32px; }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 50px;
+    margin-top: 50px;
+  }
+  .trust-item { text-align: center; }
+  .trust-item svg { width: 50px; height: 50px; color: var(--gold-deep); margin-bottom: 18px; }
+  .trust-item h4 {
+    font-family: var(--display);
+    font-size: 16px;
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .trust-item p { font-size: 14px; color: var(--ink-soft); margin: 0; line-height: 1.6; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: rgba(241, 230, 207, 0.85);
+    padding: 70px 32px 30px;
+  }
+  .footer-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 50px;
+  }
+  footer h4 {
+    font-family: var(--display);
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  footer ul { list-style: none; padding: 0; margin: 0; }
+  footer li { margin-bottom: 12px; font-size: 14px; }
+  footer a { color: rgba(241, 230, 207, 0.7); }
+  footer a:hover { color: var(--gold); }
+  .footer-brand {
+    font-family: var(--display);
+    font-size: 28px;
+    letter-spacing: 0.28em;
+    color: var(--paper);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .footer-brand img {
+    height: 56px; width: 56px;
+    object-fit: contain;
+  }
+  .footer-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .footer-about { font-size: 14px; line-height: 1.7; color: rgba(241, 230, 207, 0.65); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    padding-top: 28px;
+    border-top: 1px solid rgba(241, 230, 207, 0.15);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: rgba(241, 230, 207, 0.5);
+    letter-spacing: 0.05em;
+  }
+  .footer-allergen {
+    max-width: 1200px; margin: 30px auto 0;
+    font-size: 12px; font-style: italic;
+    color: rgba(241, 230, 207, 0.45);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .manifest-grid { grid-template-columns: 1fr; gap: 50px; }
+    .how-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    section { padding: 70px 22px; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 14px; }
+    .hero { min-height: 80vh; padding: 60px 22px 80px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <img src="assets/logo.png" alt="" aria-hidden="true">
+      <span>ALCHEMICA</span>
+    </a>
+    <div class="nav-links">
+      <a href="#kolekcja">Kolekcja</a>
+      <a href="#manifest">O marce</a>
+      <a href="#jak-dziala">Jak działają</a>
+      <a href="#eliksir">Twój eliksir</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <a href="#" class="nav-cart">Koszyk<span class="count">(0)</span></a>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <!-- Tęcza/łuk w tle, motyw z plakatu klientki -->
+  <svg class="hero-arc" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+    <defs>
+      <radialGradient id="arcGrad" cx="50%" cy="100%" r="80%">
+        <stop offset="60%" stop-color="transparent"/>
+        <stop offset="62%" stop-color="#a85a3f" stop-opacity="0.25"/>
+        <stop offset="66%" stop-color="#d77a4f" stop-opacity="0.25"/>
+        <stop offset="70%" stop-color="#c4a456" stop-opacity="0.25"/>
+        <stop offset="74%" stop-color="#6b7a3f" stop-opacity="0.25"/>
+        <stop offset="78%" stop-color="#3b6e5a" stop-opacity="0.25"/>
+        <stop offset="82%" stop-color="#2e5c8a" stop-opacity="0.25"/>
+        <stop offset="86%" stop-color="#3e6b9e" stop-opacity="0.25"/>
+        <stop offset="90%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+    <circle cx="700" cy="900" r="820" fill="url(#arcGrad)"/>
+  </svg>
+
+  <div class="hero-inner">
+    <img src="assets/logo.png" alt="Alchemica" class="hero-logo">
+    <h1>Alchemica</h1>
+    <div class="hero-tagline">Psychoaktywne perfumy botaniczne</div>
+    <p class="hero-lead">
+      Perfumy z przeznaczeniem, wpływające na zmianę nastroju w ciągu kilku minut.
+      Naturalne kompozycje współpracujące z układem węchowym i nerwowym —
+      ukoją, odświeżą umysł, pobudzą do działania albo otulą zmysły.
+    </p>
+    <a href="#kolekcja" class="btn">Odkryj kolekcję</a>
+  </div>
+</header>
+
+<!-- ========== MANIFEST ========== -->
+<section class="manifest" id="manifest">
+  <div class="container">
+    <div class="manifest-grid">
+      <div class="manifest-portrait">
+        <img src="assets/art-woman-crow.jpg" alt="Botaniczny portret">
+      </div>
+      <div class="manifest-text">
+        <div class="eyebrow">Manifest marki</div>
+        <h2>Eliksiry dla codzienności</h2>
+        <p>
+          Zapraszam Cię do świata, w którym piękno całkowicie naturalnych zapachów
+          łączy się z pielęgnacją psychicznego dobrostanu.
+        </p>
+        <p>
+          Perfumy, które tworzę, są jak eliksiry — uzdrawiająca moc roślin została
+          uchwycona w kompozycji zapachowej, aby Cię wspierać, inspirować,
+          dodawać Ci mocy, a także harmonizować i koić system nerwowy.
+        </p>
+        <p>
+          Na co dzień jestem psycholożką — wspieram ludzi w rozwoju, zmianie
+          i wychodzeniu z kryzysu. Łączę współczesną sztukę olfaktoryczną
+          z odwieczną mocą roślin, aby dać Tobie nie tylko wyjątkowy zapach,
+          ale też holistyczne doświadczenie dla zmysłów.
+        </p>
+        <div class="signature">— Ola, twórczyni Alchemiki</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="how" id="jak-dziala">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Nauka i tradycja</div>
+      <h2>Jak działają zapachy</h2>
+      <div class="divider"></div>
+      <p style="max-width: 680px; margin: 0 auto; color: var(--ink-soft);">
+        Zapach moduluje pracę układu limbicznego i ma głęboki sens
+        w regulacji samopoczucia.
+      </p>
+    </div>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <svg class="how-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M32 8 C 22 8, 16 18, 16 30 C 16 42, 22 50, 28 52 L 28 58 L 36 58 L 36 52 C 42 50, 48 42, 48 30 C 48 18, 42 8, 32 8 Z"/>
+          <path d="M22 30 Q 32 26, 42 30" />
+          <circle cx="32" cy="36" r="3"/>
+        </svg>
+        <h3>Olejki eteryczne</h3>
+        <p>Najwyższej jakości olejki z upraw organicznych, żywice, absoluty i ekstrakty CO₂ pozyskiwane w zrównoważony i sprawiedliwy sposób.</p>
+      </div>
+
+      <div class="how-card">
+        <svg class="how-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20 32 Q 32 14, 44 32 Q 32 50, 20 32 Z"/>
+          <path d="M28 32 Q 32 26, 36 32 Q 32 38, 28 32 Z" fill="currentColor"/>
+          <path d="M32 8 L 32 14 M 32 50 L 32 56 M 8 32 L 14 32 M 50 32 L 56 32"/>
+        </svg>
+        <h3>Układ limbiczny</h3>
+        <p>Molekuły olejków przenikają barierę krew-mózg, wędrują wzdłuż szlaków olfaktorycznych i wpływają na emocje, koncentrację i samopoczucie.</p>
+      </div>
+
+      <div class="how-card">
+        <svg class="how-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M32 10 L 32 54"/>
+          <path d="M32 18 Q 22 22, 18 32 Q 22 28, 32 28"/>
+          <path d="M32 28 Q 42 32, 46 42 Q 42 38, 32 38"/>
+          <path d="M32 38 Q 24 42, 22 50 Q 26 46, 32 46"/>
+          <circle cx="32" cy="10" r="3"/>
+        </svg>
+        <h3>Zmiana nastroju</h3>
+        <p>Formuły działają w ciągu kilku minut — relaksują, koją, dodają odwagi lub uruchamiają proces twórczy. Potwierdzone badaniami klinicznymi.</p>
+      </div>
+    </div>
+
+    <div class="how-note">
+      „Zapach, jaki na siebie nakładasz, może determinować Twój poziom energii
+      i nastrój. Esencje olejowe pomogą Ci w naturalny sposób wzmocnić energię życiową,
+      napełnić się spokojem i radością."
+    </div>
+  </div>
+</section>
+
+<!-- ========== KOLEKCJA ========== -->
+<section class="collection" id="kolekcja">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Kolekcja</div>
+      <h2>Dziesięć eliksirów</h2>
+      <div class="divider"></div>
+      <p style="max-width: 680px; margin: 0 auto; color: var(--ink-soft);">
+        Każda kompozycja to osobny rytuał. Na bazie oleju jojoba lub alkoholu.
+        Wszystkie unisex.
+      </p>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Karty wygenerowane przez JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ========== BESPOKE ========== -->
+<section class="bespoke" id="eliksir">
+  <div class="container">
+    <div class="eyebrow">Twój osobisty eliksir</div>
+    <h2 style="font-family: var(--display); font-size: clamp(34px, 5vw, 52px); letter-spacing: 0.18em; margin-bottom: 0;">
+      Skomponuj zapach dla siebie
+    </h2>
+    <div class="divider"></div>
+    <p class="bespoke-lead">
+      Jeśli interesuje Cię stworzenie osobistego eliksiru mocy, który odpowie
+      na Twoje aktualne potrzeby i wyzwania — skontaktuj się ze mną.
+      Taki eliksir komponuję w oparciu o rozmowę nie tylko o zapachach,
+      ale o emocjach, pragnieniach i przeszkodach.
+    </p>
+    <a href="#kontakt" class="btn">Umów konsultację</a>
+  </div>
+</section>
+
+<!-- ========== TRUST ========== -->
+<section class="trust">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Dlaczego Alchemica</div>
+      <h2>Czysty skład, czysta intencja</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M25 6 L 30 18 L 43 19 L 33 28 L 36 41 L 25 34 L 14 41 L 17 28 L 7 19 L 20 18 Z"/>
+        </svg>
+        <h4>Organiczne uprawy</h4>
+        <p>Olejki eteryczne i absoluty z certyfikowanych źródeł, badane laboratoryjnie.</p>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M10 25 Q 25 8, 40 25 Q 25 42, 10 25 Z"/>
+          <path d="M25 14 L 25 36 M 14 25 L 36 25" stroke-width="1"/>
+        </svg>
+        <h4>Bez syntetyków</h4>
+        <p>Wyłącznie naturalne składniki — żadnych ftalanów, parabenów, sztucznych barwników.</p>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="25" cy="25" r="18"/>
+          <path d="M16 25 L 22 31 L 34 19"/>
+        </svg>
+        <h4>Unisex</h4>
+        <p>Wszystkie kompozycje są neutralne płciowo — odpowiednie dla każdego.</p>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M25 10 Q 18 18, 18 28 Q 18 38, 25 42 Q 32 38, 32 28 Q 32 18, 25 10 Z"/>
+          <path d="M25 14 L 25 42"/>
+        </svg>
+        <h4>Fair trade</h4>
+        <p>Surowce pozyskiwane w sposób zrównoważony i sprawiedliwy społecznie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer id="kontakt">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img src="assets/logo-light.png" alt="" aria-hidden="true">
+        <span>ALCHEMICA</span>
+      </div>
+      <div class="footer-tag">Psychoaktywne perfumy botaniczne</div>
+      <p class="footer-about">
+        Naturalne kompozycje zapachowe komponowane ręcznie. Każdy eliksir
+        powstaje w małych partiach z najwyższej jakości olejków eterycznych,
+        żywic i absolutów.
+      </p>
+    </div>
+    <div>
+      <h4>Sklep</h4>
+      <ul>
+        <li><a href="#kolekcja">Kolekcja</a></li>
+        <li><a href="#eliksir">Twój eliksir</a></li>
+        <li><a href="#">Karty podarunkowe</a></li>
+        <li><a href="#">Dostawa i zwroty</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Marka</h4>
+      <ul>
+        <li><a href="#manifest">O Alchemice</a></li>
+        <li><a href="#jak-dziala">Jak działają zapachy</a></li>
+        <li><a href="#">Składniki</a></li>
+        <li><a href="#">Badania</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <ul>
+        <li><a href="mailto:hello@alchemica.pl">hello@alchemica.pl</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Newsletter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-allergen">
+    * Olejki eteryczne mogą uczulać. W razie wystąpienia reakcji alergicznej zaprzestań używania.
+    Produkty nie są przeznaczone do spożycia. Trzymać z dala od dzieci.
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Alchemica. Wszystkie prawa zastrzeżone.</div>
+    <div>Regulamin · Polityka prywatności</div>
+  </div>
+</footer>
+
+<!-- ========== DATA + RENDERING ========== -->
+<script>
+  const PERFUMES = [
+    {
+      key: "abramelin",
+      name: "Abramelin",
+      sub: "na podstawie Księgi Świętej Magii Abramelina Maga z XV w.",
+      desc: "Głęboka, wielowymiarowa podróż dla zmysłów, z nutą dekadencji i mistycyzmu. Ziemiste akordy wetywerii i tytoniu Burley zrównoważone nutami cytrusowymi i słodką, kremową wanilią. Drzewno-korzenny charakter, stymuluje kognitywnie i afrodyzyjnie — nie pozwala zasnąć.",
+      head: "tangerynka, grejpfrut, bergamotka",
+      heart: "nerd, cynamon kasja",
+      base: "wetyweria, tytoń Burley, wanilia",
+      price: 280,
+      bottleColor: "#2a3d3a"
+    },
+    {
+      key: "aphrodesia",
+      name: "Aphrodesia",
+      sub: "wibrujący pomruk",
+      desc: "Rozpieszcza owocową słodyczą, a różowy pieprz nadaje jej pikanterii. Działa tonizująco na układ nerwowy, jednocześnie inspirując do działania. Orzeźwia umysł i ducha, porusza kundalini. Afrodyzjak, pobudza emocje i wiele skojarzeń.",
+      head: "pomarańcza, pieprz różowy",
+      heart: "święta bazylia, nasiona kolendry",
+      base: "paczula, sandał biały",
+      price: 280,
+      bottleColor: "#c4577e"
+    },
+    {
+      key: "cor",
+      name: "Cor Silentii",
+      sub: "łac. serce ciszy",
+      desc: "Intymny rytuał zatrzymania — w codzienności, w emocjach, w myślach. Nie narzuca nastroju, otwiera przestrzeń dla regeneracji psychicznej i świadomej obecności. Olfaktoryczny przewodnik w stronę równowagi emocjonalnej i wewnętrznej klarowności.",
+      head: "drzewo ho, bergamotka, tangerynka",
+      heart: "cynamon kasja",
+      base: "nagarmotha",
+      price: 280,
+      bottleColor: "#2e5c8a"
+    },
+    {
+      key: "idun",
+      name: "Idun",
+      sub: "eliksir kobiecej dojrzałości",
+      desc: "Inspirowany nordycką boginią Idun, strażniczką złotych jabłek dających wieczną młodość. Zapach, który łączy świeżość cytrusów z mistycznym ciepłem żywic i zwierzęcą głębią castoreum.",
+      head: "rozmaryn, bergamotka, ho",
+      heart: "szałwia muszkatołowa, opoponax, kocanki",
+      base: "wetiweria, kadzidłowiec carterii i green sacra, mirra, balsam copaiba, castoreum, żywica benzoesowa",
+      price: 320,
+      bottleColor: "#d77a4f"
+    },
+    {
+      key: "inspiratio",
+      name: "Inspiratio",
+      sub: "uziemienie i uniesienie",
+      desc: "Połączenie soczystych, ożywczych nut z uziemiającą mocą paczuli wprawia umysł i zmysły w stan przyjemnego podniecenia z jednoczesnym poczuciem osadzenia. Wspiera w poprawie nastroju i leczeniu dolegliwości związanych ze stresem i depresją. Bardzo seksi zapach.",
+      head: "pomarańcza, pieprz różowy",
+      heart: "nasiona kolendry",
+      base: "paczula",
+      price: 280,
+      bottleColor: "#b85533"
+    },
+    {
+      key: "laloba",
+      name: "La Loba",
+      sub: "Kobieta-Wilk, dzika kobieta",
+      desc: "Zapach tej, która wie. Żywiczne leśne akordy łączą się z instynktem i intuicją. Otrzeźwiająca moc kadzidła wspiera medytację i kontakt z głęboką mądrością. Cytrusowe nuty nadają lekkość roześmianej, wolnej kobiety biegnącej w stronę horyzontu.",
+      head: "cytryna, litsea cubeba, jałowiec, świerk, sosna, jodła biała, daglezja",
+      heart: "tulsi, cynamon",
+      base: "kadzidło",
+      price: 300,
+      bottleColor: "#843d2b"
+    },
+    {
+      key: "metanoia",
+      name: "Metanoia",
+      sub: "gr. przemiana wewnętrzna",
+      desc: "Zapach, który osadza w ciele, oczyszcza umysł, uzdrawia serce. Wspiera kobiece cykle i gospodarkę hormonalną, głęboko rozluźnia. Dominantą tej królewskiej kompozycji jest tulsi — w ajurwedzie „królowa ziół".",
+      head: "jałowiec (igliwie)",
+      heart: "geranium bourbon, tulsi, nasiona kolendry, pączki goździka",
+      base: "kadzidłowiec carterii",
+      price: 300,
+      bottleColor: "#3e6b9e"
+    },
+    {
+      key: "radical",
+      name: "Radical Joy",
+      sub: "radosny podmuch wiatru",
+      desc: "Esencja jak radosny podmuch wiatru łechce neurony poprzez powonienie. Liczne cytrusy rozweselają i podnoszą na duchu, jednocześnie kojąco wpływając na system nerwowy. Całość równoważy osładzająca nuta wanilii, a uszlachetnia kadzidło.",
+      head: "bergamotka, tangerynka, biały i różowy grejpfrut, cytryna, pomarańcza, may chang, drzewo ho",
+      heart: "lawenda lekarska, melisa",
+      base: "wanilia, kadzidłowiec zielony — green sacra",
+      price: 280,
+      bottleColor: "#d78140"
+    },
+    {
+      key: "shinrin",
+      name: "Shinrin'yoku",
+      sub: "jap. 森林浴 · kąpiel leśna",
+      desc: "Kompozycja inspirowana japońską koncepcją kąpieli leśnych i wiedzą naukową o fitoncydach — związkach organicznych wytwarzanych przez drzewa, które poprawiają samopoczucie i koją układ nerwowy. Las zawsze tam, gdzie Ty.",
+      head: "jałowiec, cedr atlaski, jodła biała i syberyjska, czarny świerk, sosna, daglezja, grejpfrut, pomarańcza",
+      heart: "cynamon, goździk, kolendra, cyprys, święta bazylia",
+      base: "wetiweria, copaiba, mech dębowy",
+      price: 320,
+      bottleColor: "#3b6e5a"
+    },
+    {
+      key: "volupia",
+      name: "Volupia",
+      sub: "bogini zmysłowej rozkoszy",
+      desc: "Zapach łączący egzotyczną zmysłowość ylang-ylang z subtelną elegancją róży, tworząc harmonijną podróż do spokoju. Ylang-ylang koi zmysły, róża przynosi ukojenie, a ziemista nuta drzewa sandałowego wprowadza głęboki spokój i medytacyjną ciszę.",
+      head: "ylang-ylang",
+      heart: "róża",
+      base: "drzewo sandałowe",
+      price: 320,
+      bottleColor: "#c4a456"
+    }
+  ];
+
+  // SVG buteleczki — minimalna, elegancka
+  function bottleSVG(color) {
+    return `
+      <svg viewBox="0 0 80 130" aria-hidden="true">
+        <defs>
+          <linearGradient id="g-${color.replace('#','')}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="${color}" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="${color}" stop-opacity="0.5"/>
+          </linearGradient>
+        </defs>
+        <!-- kapsel -->
+        <rect x="30" y="6" width="20" height="14" fill="#1d2b34" rx="1"/>
+        <rect x="32" y="20" width="16" height="6" fill="#b8924e"/>
+        <!-- szyjka -->
+        <rect x="34" y="26" width="12" height="10" fill="${color}" opacity="0.7"/>
+        <!-- korpus -->
+        <path d="M 20 36 Q 14 40, 14 48 L 14 112 Q 14 122, 24 122 L 56 122 Q 66 122, 66 112 L 66 48 Q 66 40, 60 36 Z"
+              fill="url(#g-${color.replace('#','')})"
+              stroke="#1d2b34" stroke-width="0.8"/>
+        <!-- etykieta -->
+        <rect x="22" y="60" width="36" height="46" fill="#f1e6cf" opacity="0.92" stroke="#b8924e" stroke-width="0.5"/>
+        <!-- linia na etykiecie -->
+        <line x1="28" y1="72" x2="52" y2="72" stroke="#1d2b34" stroke-width="0.6"/>
+        <line x1="32" y1="82" x2="48" y2="82" stroke="#b8924e" stroke-width="0.4"/>
+        <text x="40" y="98" text-anchor="middle" font-family="Italiana, serif" font-size="6" fill="#1d2b34" letter-spacing="0.5">15 ML</text>
+        <!-- refleks -->
+        <path d="M 20 42 Q 18 50, 20 80" stroke="#f1e6cf" stroke-width="1.5" opacity="0.4" fill="none"/>
+      </svg>
+    `;
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = PERFUMES.map(p => `
+      <article class="card" data-tone="${p.key}">
+        <div class="card-bottle">${bottleSVG(p.bottleColor)}</div>
+        <h3 class="card-name">${p.name}</h3>
+        <div class="card-sub">${p.sub}</div>
+        <div class="card-divider"></div>
+        <p class="card-desc">${p.desc}</p>
+        <div class="notes">
+          <div class="notes-row"><span class="notes-label">Nuty głowy</span><span class="notes-val">${p.head}</span></div>
+          <div class="notes-row"><span class="notes-label">Nuty serca</span><span class="notes-val">${p.heart}</span></div>
+          <div class="notes-row"><span class="notes-label">Nuty bazy</span><span class="notes-val">${p.base}</span></div>
+        </div>
+        <div class="card-foot">
+          <div class="price">${p.price} zł<small>/ 15 ml</small></div>
+          <button class="add-btn" data-key="${p.key}">Do koszyka</button>
+        </div>
+      </article>
+    `).join('');
+
+    // Prosty licznik koszyka
+    let cart = 0;
+    const cartEl = document.querySelector('.nav-cart .count');
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        cart++;
+        cartEl.textContent = `(${cart})`;
+        const original = btn.textContent;
+        btn.textContent = "✓ Dodano";
+        btn.style.background = 'var(--gold-deep)';
+        btn.style.color = 'var(--paper)';
+        btn.style.borderColor = 'var(--gold-deep)';
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 1400);
+      });
+    });
+  }
+
+  renderCards();
+</script>
+
+</body>
+</html>
