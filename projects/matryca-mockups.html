@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Matryca — okładki v2, propozycje | Future Show</title>
+<title>Matryca — okładki v3, propozycje | Future Show</title>
 <style>
   :root {
     --bg: #06080d;
@@ -20,314 +20,371 @@
   h1 { font-family: Georgia, serif; font-weight: 500; font-size: 28px; margin: 0 0 8px; max-width: 900px; }
   .lede { color: var(--text-2); max-width: 700px; margin: 0 0 48px; font-size: 14px; line-height: 1.6; }
   .mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 28px; max-width: 1200px; margin: 0 auto; }
-  .mock {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .mock__visual {
-    aspect-ratio: 16/9;
-    position: relative;
-    overflow: hidden;
-  }
+  .mock { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .mock__visual { aspect-ratio: 16/9; position: relative; overflow: hidden; }
   .mock__info { padding: 20px 24px 24px; }
-  .mock__num {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin: 0 0 8px;
-  }
-  .mock__title {
-    font-family: Georgia, serif;
-    font-size: 19px;
-    font-weight: 500;
-    margin: 0 0 8px;
-    color: var(--text);
-  }
-  .mock__desc {
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--text-2);
-    margin: 0;
-  }
+  .mock__num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin: 0 0 8px; }
+  .mock__title { font-family: Georgia, serif; font-size: 19px; font-weight: 500; margin: 0 0 8px; color: var(--text); }
+  .mock__desc { font-size: 13px; line-height: 1.55; color: var(--text-2); margin: 0; }
 </style>
 </head>
 <body>
 
-<h1>Cztery propozycje okładki — wersja 2</h1>
-<p class="lede">Bez cyfry 33. Każdy obraz operuje inną metaforą naruszenia: złamana pieczęć, zacenzurowany dokument, oko nadzoru, wyciek. Czerń + polski czerwony #A32D2D, spójność z resztą futureshow.</p>
+<h1>Cztery propozycje okładki — wersja 3</h1>
+<p class="lede">Bez powtórzeń z poprzednich rund. Nowy kierunek: prawo, infrastruktura, asymetria władzy między obywatelem a platformą. Czerń + polski czerwony #A32D2D.</p>
 
 <div class="mocks">
 
   <!-- ============================================================ -->
-  <!-- A · Złamana pieczęć -->
+  <!-- E · Anatomia transferu — mapa Europa → USA -->
   <!-- ============================================================ -->
   <div class="mock">
-    <div class="mock__visual" style="background: linear-gradient(180deg, #100808 0%, #060606 100%); display: flex; align-items: center; justify-content: center; position: relative;">
-      <!-- paper texture -->
-      <svg viewBox="0 0 600 340" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.07;">
-        <filter id="paperA">
+    <div class="mock__visual" style="background: linear-gradient(180deg, #0a0a0a 0%, #050507 100%); position: relative;">
+
+      <!-- top label -->
+      <div style="position: absolute; top: 22px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.85); text-transform: uppercase; z-index: 2;">
+        <span>Anatomia transferu</span>
+        <span>UE → USA</span>
+      </div>
+
+      <svg viewBox="0 0 600 340" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+        <!-- background grid -->
+        <defs>
+          <pattern id="gridE" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(196,194,189,0.06)" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="340" fill="url(#gridE)"/>
+
+        <!-- simplified Europe silhouette on the right -->
+        <g fill="none" stroke="rgba(196,194,189,0.35)" stroke-width="1">
+          <!-- iberian / france -->
+          <path d="M 380 195 Q 395 175 415 180 L 432 175 L 440 155 L 432 145 L 442 138 L 455 145 L 462 158 L 470 168 L 482 165 L 488 178 L 495 195 L 488 215 L 472 222 L 460 210 L 445 218 L 425 218 L 410 225 L 395 215 Z"/>
+          <!-- british isles -->
+          <path d="M 412 130 L 422 125 L 425 138 L 415 145 Z"/>
+          <path d="M 422 110 L 428 110 L 430 122 L 422 124 Z"/>
+          <!-- scandinavia -->
+          <path d="M 462 75 L 472 80 L 478 95 L 482 115 L 490 130 L 498 138 L 488 148 L 478 138 L 472 120 L 466 100 Z"/>
+        </g>
+
+        <!-- IRELAND dot — emphasized -->
+        <g>
+          <circle cx="418" cy="135" r="14" fill="none" stroke="#A32D2D" stroke-width="1" stroke-opacity="0.4"/>
+          <circle cx="418" cy="135" r="6" fill="#A32D2D"/>
+          <text x="402" y="118" font-family="'JetBrains Mono', monospace" font-size="10" fill="#A32D2D" letter-spacing="1.5">DUBLIN</text>
+          <text x="406" y="160" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(163,45,45,0.7)" letter-spacing="0.5">META · GOOGLE · APPLE</text>
+          <text x="406" y="172" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(163,45,45,0.7)" letter-spacing="0.5">MICROSOFT · TIKTOK</text>
+          <text x="406" y="184" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(163,45,45,0.7)" letter-spacing="0.5">LINKEDIN · X</text>
+        </g>
+
+        <!-- USA gradient zone on the left -->
+        <defs>
+          <linearGradient id="usaGrad" x1="0%" x2="100%">
+            <stop offset="0%" stop-color="#1a0303" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#1a0303" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="180" height="340" fill="url(#usaGrad)"/>
+        <text x="28" y="172" font-family="'JetBrains Mono', monospace" font-size="11" fill="#A32D2D" letter-spacing="3" font-weight="700">USA</text>
+        <text x="28" y="188" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(163,45,45,0.7)" letter-spacing="0.8">FISA 702 · EO 12333</text>
+        <text x="28" y="200" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(163,45,45,0.7)" letter-spacing="0.8">NSA · PRISM</text>
+
+        <!-- TRANSFER ARROWS — Dublin → USA -->
+        <g stroke="#A32D2D" stroke-width="1.5" fill="none" opacity="0.85">
+          <path d="M 412 132 Q 280 90 100 130" stroke-dasharray="4,3"/>
+          <path d="M 412 138 Q 280 168 100 180" stroke-dasharray="4,3"/>
+          <path d="M 412 144 Q 280 220 100 230" stroke-dasharray="4,3"/>
+        </g>
+        <!-- arrowheads -->
+        <g fill="#A32D2D">
+          <polygon points="100,130 108,127 108,133"/>
+          <polygon points="100,180 108,177 108,183"/>
+          <polygon points="100,230 108,227 108,233"/>
+        </g>
+
+        <!-- annotation -->
+        <text x="220" y="60" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#f2f0ea" letter-spacing="-0.01em">Twoje dane.</text>
+        <text x="220" y="84" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#A32D2D" letter-spacing="-0.01em">Cudza jurysdykcja.</text>
+
+        <!-- footer rule -->
+        <line x1="28" y1="305" x2="572" y2="305" stroke="rgba(163,45,45,0.3)" stroke-width="0.5"/>
+        <text x="300" y="324" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#c4c2bd">Matryca · Big Tech Files</text>
+      </svg>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant E · anatomia transferu</p>
+      <h2 class="mock__title">Twoje dane. Cudza jurysdykcja.</h2>
+      <p class="mock__desc">Schematyczna mapa Europy z Dublinem jako węzłem (12 największych firm tam ma siedzibę dla UE), trzy przerywane linie odpływające do USA, w tle gradientowa strefa „FISA 702 · NSA · PRISM". Najmocniejszy argument prawny portalu w jednym obrazku: jak działają transfery danych. Bliżej The Economist / FT Graphics niż dramatu.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- F · Czarna skrzynka algorytmu -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background: linear-gradient(170deg, #0a0a0a 0%, #06060c 100%); position: relative; display: flex; align-items: center; justify-content: center;">
+
+      <!-- top label -->
+      <div style="position: absolute; top: 22px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.85); text-transform: uppercase; z-index: 2;">
+        <span>Czarna skrzynka</span>
+        <span>Black box</span>
+      </div>
+
+      <svg viewBox="0 0 600 340" style="position: relative; z-index: 1; width: 95%; max-width: 540px;">
+
+        <!-- INPUT labels (left) -->
+        <g font-family="'JetBrains Mono', monospace" font-size="11" fill="#c4c2bd" letter-spacing="0.5" text-anchor="end">
+          <text x="155" y="115">Twoje kliknięcia</text>
+          <text x="155" y="155">Twoja lokalizacja</text>
+          <text x="155" y="195">Twoi znajomi</text>
+          <text x="155" y="235">Co przewijasz</text>
+        </g>
+
+        <!-- INPUT arrows -->
+        <g stroke="#c4c2bd" stroke-width="1" fill="none" stroke-opacity="0.6">
+          <path d="M 165 112 L 230 145"/>
+          <path d="M 165 152 L 230 165"/>
+          <path d="M 165 192 L 230 185"/>
+          <path d="M 165 232 L 230 205"/>
+        </g>
+        <g fill="#c4c2bd" fill-opacity="0.7">
+          <polygon points="232,145 224,142 224,148"/>
+          <polygon points="232,165 224,162 224,168"/>
+          <polygon points="232,185 224,182 224,188"/>
+          <polygon points="232,205 224,202 224,208"/>
+        </g>
+
+        <!-- BLACK BOX -->
+        <g>
+          <rect x="232" y="125" width="160" height="100" fill="#000" stroke="#A32D2D" stroke-width="1.5"/>
+          <text x="312" y="168" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#A32D2D" letter-spacing="3" font-weight="700">ALGORYTM</text>
+          <text x="312" y="190" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="rgba(163,45,45,0.7)" letter-spacing="2">model · własność firmy</text>
+          <!-- subtle inner texture (like static / noise) -->
+          <g fill="rgba(163,45,45,0.15)">
+            <rect x="245" y="208" width="3" height="3"/>
+            <rect x="270" y="135" width="2" height="2"/>
+            <rect x="295" y="215" width="2" height="2"/>
+            <rect x="340" y="138" width="3" height="3"/>
+            <rect x="370" y="210" width="2" height="2"/>
+            <rect x="350" y="155" width="2" height="2"/>
+          </g>
+        </g>
+
+        <!-- OUTPUT arrows -->
+        <g stroke="#A32D2D" stroke-width="1.5" fill="none">
+          <path d="M 392 145 L 455 115"/>
+          <path d="M 392 165 L 455 155"/>
+          <path d="M 392 185 L 455 195"/>
+          <path d="M 392 205 L 455 235"/>
+        </g>
+        <g fill="#A32D2D">
+          <polygon points="457,115 449,112 449,118"/>
+          <polygon points="457,155 449,152 449,158"/>
+          <polygon points="457,195 449,192 449,198"/>
+          <polygon points="457,235 449,232 449,238"/>
+        </g>
+
+        <!-- OUTPUT labels (right) -->
+        <g font-family="'JetBrains Mono', monospace" font-size="11" fill="#A32D2D" letter-spacing="0.5">
+          <text x="465" y="118">Jaką reklamę zobaczysz</text>
+          <text x="465" y="158">Czy dostaniesz kredyt</text>
+          <text x="465" y="198">Czy widzisz post znajomej</text>
+          <text x="465" y="238">Co Cię uzależni</text>
+        </g>
+
+        <!-- bottom annotation -->
+        <text x="300" y="285" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="17" fill="#f2f0ea">Wchodzi: Ty. Wychodzi: decyzja o Tobie.</text>
+        <text x="300" y="308" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#c4c2bd">Matryca · Big Tech Files</text>
+      </svg>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant F · czarna skrzynka</p>
+      <h2 class="mock__title">Wchodzi Ty. Wychodzi decyzja o Tobie.</h2>
+      <p class="mock__desc">Klasyczna ikonografia black-box: po lewej wchodzą Twoje dane (kliknięcia, lokalizacja, znajomi), po prawej wychodzą decyzje (reklama, kredyt, uzależnienie), w środku nieprzeniknione pudło z napisem „ALGORYTM · model · własność firmy". Bliska istocie RODO art. 22 (decyzje automatyczne) i Algorithm Watch. Ton: dydaktyczny, ostry, jednoznaczny.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- G · Waga sprawiedliwości — przechylona -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background: linear-gradient(180deg, #100808 0%, #060606 100%); position: relative; display: flex; align-items: center; justify-content: center;">
+
+      <!-- paper noise -->
+      <svg viewBox="0 0 600 340" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.06;">
+        <filter id="paperG">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"/>
           <feColorMatrix values="0 0 0 0 0.64  0 0 0 0 0.18  0 0 0 0 0.18  0 0 0 1 0"/>
         </filter>
-        <rect width="600" height="340" filter="url(#paperA)"/>
+        <rect width="600" height="340" filter="url(#paperG)"/>
       </svg>
 
       <!-- top label -->
-      <div style="position: absolute; top: 22px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.7); text-transform: uppercase;">
-        <span>Akta · Dossier</span>
-        <span>Big Tech Files</span>
+      <div style="position: absolute; top: 22px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.85); text-transform: uppercase; z-index: 2;">
+        <span>Wymiar sprawiedliwości</span>
+        <span>RODO · DSA · DMA</span>
       </div>
 
-      <!-- BROKEN SEAL -->
-      <svg viewBox="0 0 360 360" style="position: relative; z-index: 1; width: 62%; max-width: 260px;">
-        <defs>
-          <radialGradient id="wax" cx="40%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#d04040"/>
-            <stop offset="60%" stop-color="#A32D2D"/>
-            <stop offset="100%" stop-color="#5a1414"/>
-          </radialGradient>
-        </defs>
+      <svg viewBox="0 0 600 340" style="position: relative; z-index: 1; width: 80%; max-width: 460px;">
 
-        <!-- left half of broken seal -->
+        <!-- central column -->
+        <line x1="300" y1="280" x2="300" y2="110" stroke="#c4c2bd" stroke-width="3"/>
+        <!-- base -->
+        <rect x="270" y="280" width="60" height="14" fill="#c4c2bd"/>
+        <rect x="255" y="294" width="90" height="6" fill="#c4c2bd"/>
+
+        <!-- beam — TILTED right-heavy (Big Tech side) -->
+        <g transform="rotate(15 300 110)">
+          <rect x="100" y="105" width="400" height="6" fill="#c4c2bd"/>
+          <!-- pivot point -->
+          <circle cx="300" cy="108" r="6" fill="#c4c2bd"/>
+        </g>
+
+        <!-- LEFT PAN (high — citizen) -->
         <g>
-          <path d="M 180 30 A 150 150 0 0 0 30 180 L 168 180 Z M 30 180 A 150 150 0 0 0 165 328 L 174 188 Z" fill="url(#wax)"/>
-          <!-- jagged crack edge on left half -->
-          <path d="M 168 30 L 162 80 L 175 130 L 165 165 L 170 195 L 158 230 L 172 270 L 162 310 L 174 340" stroke="#1a0303" stroke-width="3" fill="none" stroke-opacity="0.4"/>
+          <!-- suspension chains -->
+          <line x1="150" y1="60" x2="135" y2="40" stroke="#c4c2bd" stroke-width="0.5" stroke-opacity="0.6"/>
+          <line x1="150" y1="60" x2="165" y2="40" stroke="#c4c2bd" stroke-width="0.5" stroke-opacity="0.6"/>
+          <!-- pan -->
+          <path d="M 115 65 L 185 65 Q 175 82 150 82 Q 125 82 115 65 Z" fill="none" stroke="#c4c2bd" stroke-width="1.5"/>
+          <!-- content: single small person dot -->
+          <circle cx="150" cy="72" r="3" fill="#c4c2bd"/>
+          <text x="150" y="105" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#c4c2bd" letter-spacing="1.5">OBYWATEL</text>
         </g>
 
-        <!-- right half, slightly offset (broken apart) -->
-        <g transform="translate(18, 8) rotate(4 180 180)">
-          <path d="M 180 30 A 150 150 0 0 1 330 180 L 192 180 Z M 330 180 A 150 150 0 0 1 195 328 L 186 188 Z" fill="url(#wax)"/>
-        </g>
-
-        <!-- text on seal (left half) -->
-        <defs>
-          <path id="sealArcA" d="M 180 180 m -110 0 a 110 110 0 0 1 220 0"/>
-        </defs>
-        <text font-family="'JetBrains Mono', monospace" font-size="13" letter-spacing="5" fill="#f2c4c4" fill-opacity="0.95">
-          <textPath href="#sealArcA" startOffset="6%">PRIVACY · CONFIDENTIAL · PRIVACY</textPath>
-        </text>
-
-        <!-- shadow line where seal was broken -->
-        <line x1="170" y1="0" x2="195" y2="360" stroke="#0a0202" stroke-width="2" stroke-opacity="0.7"/>
-      </svg>
-
-      <!-- footer -->
-      <div style="position: absolute; bottom: 22px; left: 28px; right: 28px; text-align: center; font-family: Georgia, serif; font-style: italic; font-size: clamp(0.9rem, 1.3vw, 1.05rem); color: #d4c8c8; letter-spacing: 0.01em;">
-        Matryca · Big Tech Files
-      </div>
-    </div>
-    <div class="mock__info">
-      <p class="mock__num">— Wariant A · złamana pieczęć</p>
-      <h2 class="mock__title">Privacy / Confidential — naruszone</h2>
-      <p class="mock__desc">Pieczęć z lakieru z napisem „PRIVACY · CONFIDENTIAL" rozłamana na dwie części, między nimi cienie i nierówna szczelina. Klasyczna ikonografia naruszonej tajemnicy korespondencji — z aktualizacją: tajemnica korespondencji XXI wieku to dane. Ton: archiwum, dossier, „ktoś wszedł tam, gdzie nie powinien".</p>
-    </div>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- B · Redacted dokument -->
-  <!-- ============================================================ -->
-  <div class="mock">
-    <div class="mock__visual" style="background: #f2f0ea; display: flex; align-items: stretch; justify-content: stretch; position: relative; padding: 0;">
-      <!-- paper noise -->
-      <svg viewBox="0 0 600 340" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.12;">
-        <filter id="paperB">
-          <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2"/>
-          <feColorMatrix values="0 0 0 0 0.2  0 0 0 0 0.2  0 0 0 0 0.2  0 0 0 1 0"/>
-        </filter>
-        <rect width="600" height="340" filter="url(#paperB)"/>
-      </svg>
-
-      <!-- document content -->
-      <div style="position: relative; z-index: 1; width: 100%; padding: 26px 32px; font-family: 'Courier New', monospace; color: #1a1c20; line-height: 1.7; font-size: clamp(11px, 1.4vw, 13px);">
-        <!-- header -->
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #5C5E64; margin-bottom: 18px;">
-          <span>INTERNAL MEMO · CONFIDENTIAL</span>
-          <span style="color: var(--accent); border: 1px solid var(--accent); padding: 2px 8px; letter-spacing: 0.15em;">UJAWNIONE</span>
-        </div>
-
-        <!-- lines with redactions -->
-        <div>FROM: <span style="background: #1a1c20; color: #1a1c20; padding: 0 4px;">████████████</span> &lt;<span style="background: #1a1c20; color: #1a1c20;">█████████████</span>@meta.com&gt;</div>
-        <div>RE: harm to <span style="background: #1a1c20; color: #1a1c20; padding: 0 4px;">teen girls</span> · internal research</div>
-        <div>DATE: <span style="background: #1a1c20; color: #1a1c20; padding: 0 4px;">██ / ██ / 20██</span></div>
-        <div style="margin: 14px 0; border-top: 1px dashed #5C5E64;"></div>
-        <div>We know that <span style="background: #1a1c20; color: #1a1c20; padding: 0 4px;">████████████ ███████ ███████████</span></div>
-        <div>but the metric <span style="background: #1a1c20; color: #1a1c20; padding: 0 4px;">██████ ██████ ██████</span> outweighs</div>
-        <div>any reputational <span style="background: #1a1c20; color: #1a1c20; padding: 0 4px;">█████████</span>. Recommend</div>
-        <div>we <span style="background: #1a1c20; color: #1a1c20; padding: 0 4px;">██████████ ███████</span> until further notice.</div>
-
-        <!-- bottom stamp -->
-        <div style="position: absolute; bottom: 22px; right: 28px; transform: rotate(-8deg); border: 2px solid var(--accent); color: var(--accent); padding: 6px 14px; font-weight: 700; letter-spacing: 0.2em; font-size: 14px; opacity: 0.85;">BREACH</div>
-        <!-- footer signature -->
-        <div style="position: absolute; bottom: 22px; left: 32px; font-family: Georgia, serif; font-style: italic; font-size: clamp(0.85rem, 1.2vw, 1rem); color: #1a1c20;">Matryca · Big Tech Files</div>
-      </div>
-    </div>
-    <div class="mock__info">
-      <p class="mock__num">— Wariant B · zacenzurowany dokument</p>
-      <h2 class="mock__title">Internal memo · ujawnione</h2>
-      <p class="mock__desc">Zeskanowany wewnętrzny memorandum w stylu dokumentów Snowdena / Pegasus Papers / Facebook Files — czarne paski cenzury w newralgicznych miejscach, ironiczny stempel „BREACH" pod kątem. Czytelnik w pół sekundy rozumie: to jest portal o tym, co miało być ukryte. Najbliżej tonu ProPublica i dziennikarstwa śledczego.</p>
-    </div>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- C · Oko nadzoru -->
-  <!-- ============================================================ -->
-  <div class="mock">
-    <div class="mock__visual" style="background: linear-gradient(180deg, #0a0a0a 0%, #050507 100%); display: flex; align-items: center; justify-content: center; position: relative;">
-
-      <!-- top label -->
-      <div style="position: absolute; top: 22px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.85); text-transform: uppercase;">
-        <span>Pod obserwacją</span>
-        <span>Big Tech Files</span>
-      </div>
-
-      <!-- THE EYE -->
-      <svg viewBox="0 0 600 340" style="position: relative; z-index: 1; width: 90%; max-width: 520px;">
-        <!-- eye outline (almond shape) -->
-        <defs>
-          <radialGradient id="iris" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#A32D2D"/>
-            <stop offset="55%" stop-color="#5a1414"/>
-            <stop offset="100%" stop-color="#1a0303"/>
-          </radialGradient>
-          <clipPath id="eyeClip">
-            <path d="M 50 170 Q 300 30 550 170 Q 300 310 50 170 Z"/>
-          </clipPath>
-        </defs>
-
-        <!-- eye sclera -->
-        <path d="M 50 170 Q 300 30 550 170 Q 300 310 50 170 Z" fill="#e5e1d8" />
-
-        <!-- iris + pupil clipped to eye shape -->
-        <g clip-path="url(#eyeClip)">
-          <circle cx="300" cy="170" r="105" fill="url(#iris)"/>
-
-          <!-- iris detail: tiny dots like a map/dataset -->
-          <g fill="#f2c4c4" fill-opacity="0.55">
-            <circle cx="260" cy="140" r="1.5"/><circle cx="285" cy="135" r="1.3"/><circle cx="305" cy="148" r="1.2"/>
-            <circle cx="325" cy="142" r="1.5"/><circle cx="350" cy="155" r="1.3"/>
-            <circle cx="245" cy="165" r="1.4"/><circle cx="270" cy="172" r="1.2"/><circle cx="295" cy="180" r="1.4"/>
-            <circle cx="320" cy="175" r="1.3"/><circle cx="345" cy="180" r="1.4"/>
-            <circle cx="255" cy="195" r="1.3"/><circle cx="280" cy="200" r="1.4"/><circle cx="310" cy="205" r="1.5"/>
-            <circle cx="335" cy="195" r="1.3"/>
+        <!-- RIGHT PAN (low — Big Tech) -->
+        <g transform="translate(0, 90)">
+          <!-- suspension chains -->
+          <line x1="450" y1="60" x2="425" y2="40" stroke="#A32D2D" stroke-width="0.5" stroke-opacity="0.7"/>
+          <line x1="450" y1="60" x2="475" y2="40" stroke="#A32D2D" stroke-width="0.5" stroke-opacity="0.7"/>
+          <!-- pan -->
+          <path d="M 405 65 L 495 65 Q 485 85 450 85 Q 415 85 405 65 Z" fill="none" stroke="#A32D2D" stroke-width="1.5"/>
+          <!-- HEAVY content: stack of dollar signs / fines / lawyers -->
+          <g fill="#A32D2D">
+            <rect x="418" y="42" width="64" height="6"/>
+            <rect x="421" y="32" width="58" height="6"/>
+            <rect x="425" y="22" width="50" height="6"/>
+            <rect x="430" y="12" width="40" height="6"/>
+            <rect x="436" y="2" width="28" height="6"/>
           </g>
-
-          <!-- pupil -->
-          <circle cx="300" cy="170" r="35" fill="#000"/>
-          <!-- pupil highlight (camera lens reflection) -->
-          <circle cx="290" cy="160" r="6" fill="#f2f0ea" fill-opacity="0.8"/>
-          <circle cx="312" cy="178" r="2" fill="#f2f0ea" fill-opacity="0.5"/>
+          <text x="450" y="110" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#A32D2D" letter-spacing="1.5">BIG TECH</text>
         </g>
 
-        <!-- eye outline (drawn) -->
-        <path d="M 50 170 Q 300 30 550 170 Q 300 310 50 170 Z" fill="none" stroke="#A32D2D" stroke-width="2"/>
+        <!-- ground rule -->
+        <line x1="40" y1="298" x2="560" y2="298" stroke="rgba(196,194,189,0.2)" stroke-width="0.5"/>
 
-        <!-- targeting reticle / crosshair frame -->
-        <g stroke="#A32D2D" stroke-width="1.5" fill="none" stroke-opacity="0.8">
-          <!-- corners -->
-          <path d="M 30 100 L 30 80 L 60 80"/>
-          <path d="M 570 100 L 570 80 L 540 80"/>
-          <path d="M 30 240 L 30 260 L 60 260"/>
-          <path d="M 570 240 L 570 260 L 540 260"/>
-        </g>
-
-        <!-- vertical scanning line through pupil -->
-        <line x1="300" y1="40" x2="300" y2="300" stroke="#A32D2D" stroke-width="0.5" stroke-opacity="0.4" stroke-dasharray="3,3"/>
       </svg>
 
-      <!-- bottom rule -->
-      <div style="position: absolute; bottom: 22px; left: 28px; right: 28px; border-top: 0.5px solid rgba(163,45,45,0.3); padding-top: 8px; text-align: center; font-family: Georgia, serif; font-style: italic; font-size: clamp(0.85rem, 1.2vw, 1rem); color: #c4c2bd;">
-        Matryca · Sprawy Big Techu
+      <!-- bottom -->
+      <div style="position: absolute; bottom: 22px; left: 28px; right: 28px; text-align: center;">
+        <div style="font-family: Georgia, serif; font-style: italic; font-size: clamp(0.95rem, 1.4vw, 1.15rem); color: #f2f0ea; margin-bottom: 4px;">Prawo istnieje. Egzekwowanie — selektywnie.</div>
+        <div style="font-family: Georgia, serif; font-style: italic; font-size: clamp(0.8rem, 1.1vw, 0.95rem); color: #c4c2bd;">Matryca · Big Tech Files</div>
       </div>
     </div>
     <div class="mock__info">
-      <p class="mock__num">— Wariant C · oko nadzoru</p>
-      <h2 class="mock__title">Pod obserwacją</h2>
-      <p class="mock__desc">Klasyczna ikonografia panopticonu: oko z tęczówką wypełnioną drobnymi kropkami (jak baza danych albo mapa), pionowa linia skanująca, narożniki celownika. Ton: Foucault, Wielki Brat, kamera-która-patrzy-z-monitora. Najbardziej psychologiczny rejestr — odwołuje się do bycia obserwowanym.</p>
+      <p class="mock__num">— Wariant G · waga przechylona</p>
+      <h2 class="mock__title">Prawo istnieje. Egzekwowanie — selektywnie.</h2>
+      <p class="mock__desc">Waga sprawiedliwości przechylona o 15° — szala „Big Tech" przygnieciona stosem prostokątów (kary, prawnicy, lobbing), szala „Obywatel" wysoko w górę z jedną kropką. Klasyczna alegoria niesprawiedliwości w nowoczesnej, minimalistycznej kresce. Najbliżej ikonografii ekonomicznych raportów NGO (HFPC, Amnesty). Ton: edytorial, polityczny, dosłowny.</p>
     </div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- D · Wyciek -->
+  <!-- H · Człowiek w sieci -->
   <!-- ============================================================ -->
   <div class="mock">
-    <div class="mock__visual" style="background: linear-gradient(180deg, #0a0a0a 0%, #06060c 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+    <div class="mock__visual" style="background: linear-gradient(180deg, #0a0a0a 0%, #050507 100%); position: relative; display: flex; align-items: center; justify-content: center;">
 
       <!-- top label -->
-      <div style="position: absolute; top: 22px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.85); text-transform: uppercase;">
-        <span>Data leak</span>
-        <span>Big Tech Files</span>
+      <div style="position: absolute; top: 22px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.85); text-transform: uppercase; z-index: 2;">
+        <span>Sieć powiązań</span>
+        <span>Profil użytkownika</span>
       </div>
 
-      <!-- THE LEAK -->
       <svg viewBox="0 0 600 340" style="position: relative; z-index: 1; width: 100%; height: 100%;">
-        <!-- a closed "container" — like a vault / phone -->
-        <g transform="translate(180 60)">
-          <!-- phone/device shape -->
-          <rect x="0" y="0" width="240" height="220" rx="22" fill="#0c1018" stroke="#A32D2D" stroke-width="1.5" stroke-opacity="0.7"/>
-          <!-- crack — main line -->
-          <path d="M 70 50 L 120 110 L 95 145 L 145 175 L 110 215" stroke="#A32D2D" stroke-width="2.5" fill="none" stroke-linejoin="miter"/>
-          <!-- crack — branches -->
-          <path d="M 120 110 L 165 95" stroke="#A32D2D" stroke-width="1.5" fill="none"/>
-          <path d="M 95 145 L 60 130" stroke="#A32D2D" stroke-width="1.5" fill="none"/>
-          <path d="M 145 175 L 195 165" stroke="#A32D2D" stroke-width="1.5" fill="none"/>
-          <!-- glow inside crack -->
-          <path d="M 70 50 L 120 110 L 95 145 L 145 175 L 110 215" stroke="#ff4848" stroke-width="0.5" fill="none" stroke-opacity="0.6"/>
+
+        <!-- NETWORK NODES (Big Tech, regulators, data points) — irregular cloud -->
+        <g>
+          <!-- outer ring of red nodes (Big Tech) -->
+          <circle cx="80" cy="80" r="5" fill="#A32D2D"/>
+          <circle cx="160" cy="50" r="6" fill="#A32D2D"/>
+          <circle cx="280" cy="40" r="5" fill="#A32D2D"/>
+          <circle cx="400" cy="55" r="6" fill="#A32D2D"/>
+          <circle cx="490" cy="80" r="5" fill="#A32D2D"/>
+          <circle cx="545" cy="160" r="6" fill="#A32D2D"/>
+          <circle cx="520" cy="260" r="5" fill="#A32D2D"/>
+          <circle cx="430" cy="295" r="6" fill="#A32D2D"/>
+          <circle cx="320" cy="305" r="5" fill="#A32D2D"/>
+          <circle cx="200" cy="295" r="6" fill="#A32D2D"/>
+          <circle cx="100" cy="270" r="5" fill="#A32D2D"/>
+          <circle cx="60" cy="180" r="5" fill="#A32D2D"/>
+
+          <!-- mid nodes (data points / categories) -->
+          <circle cx="200" cy="130" r="3" fill="#c44848" fill-opacity="0.7"/>
+          <circle cx="280" cy="100" r="3" fill="#c44848" fill-opacity="0.7"/>
+          <circle cx="370" cy="135" r="3" fill="#c44848" fill-opacity="0.7"/>
+          <circle cx="430" cy="180" r="3" fill="#c44848" fill-opacity="0.7"/>
+          <circle cx="380" cy="240" r="3" fill="#c44848" fill-opacity="0.7"/>
+          <circle cx="250" cy="245" r="3" fill="#c44848" fill-opacity="0.7"/>
+          <circle cx="160" cy="200" r="3" fill="#c44848" fill-opacity="0.7"/>
+          <circle cx="155" cy="135" r="3" fill="#c44848" fill-opacity="0.7"/>
         </g>
 
-        <!-- "data" leaking out — characters streaming -->
-        <g font-family="'JetBrains Mono', monospace" font-size="9" fill="#A32D2D" fill-opacity="0.85" letter-spacing="0.5">
-          <!-- left stream -->
-          <text x="155" y="95">01101</text>
-          <text x="145" y="115">jan.k</text>
-          <text x="138" y="135">@gmail</text>
-          <text x="130" y="155">11.05</text>
-          <text x="122" y="175">.1987</text>
-          <text x="115" y="195">52.23</text>
-          <text x="110" y="215">21.01</text>
-          <text x="105" y="235">PESEL</text>
-          <text x="100" y="255">ID:9F4</text>
-          <text x="95" y="275">█████</text>
-
-          <!-- right/upper stream -->
-          <text x="430" y="105">cookie</text>
-          <text x="438" y="125">ad_id</text>
-          <text x="446" y="145">geo:PL</text>
-          <text x="454" y="165">sess.7</text>
-          <text x="450" y="185">100110</text>
-          <text x="458" y="205">trk_v2</text>
+        <!-- EDGES — from center figure to all nodes (the user IS the center being analyzed) -->
+        <g stroke="#A32D2D" stroke-width="0.5" stroke-opacity="0.4" fill="none">
+          <line x1="300" y1="170" x2="80" y2="80"/>
+          <line x1="300" y1="170" x2="160" y2="50"/>
+          <line x1="300" y1="170" x2="280" y2="40"/>
+          <line x1="300" y1="170" x2="400" y2="55"/>
+          <line x1="300" y1="170" x2="490" y2="80"/>
+          <line x1="300" y1="170" x2="545" y2="160"/>
+          <line x1="300" y1="170" x2="520" y2="260"/>
+          <line x1="300" y1="170" x2="430" y2="295"/>
+          <line x1="300" y1="170" x2="320" y2="305"/>
+          <line x1="300" y1="170" x2="200" y2="295"/>
+          <line x1="300" y1="170" x2="100" y2="270"/>
+          <line x1="300" y1="170" x2="60" y2="180"/>
+          <line x1="300" y1="170" x2="200" y2="130" stroke-opacity="0.6"/>
+          <line x1="300" y1="170" x2="280" y2="100" stroke-opacity="0.6"/>
+          <line x1="300" y1="170" x2="370" y2="135" stroke-opacity="0.6"/>
+          <line x1="300" y1="170" x2="430" y2="180" stroke-opacity="0.6"/>
+          <line x1="300" y1="170" x2="380" y2="240" stroke-opacity="0.6"/>
+          <line x1="300" y1="170" x2="250" y2="245" stroke-opacity="0.6"/>
+          <line x1="300" y1="170" x2="160" y2="200" stroke-opacity="0.6"/>
+          <line x1="300" y1="170" x2="155" y2="135" stroke-opacity="0.6"/>
         </g>
 
-        <!-- droplet trails -->
-        <g fill="#A32D2D" fill-opacity="0.55">
-          <circle cx="95" cy="225" r="2"/>
-          <circle cx="100" cy="240" r="1.5"/>
-          <circle cx="92" cy="255" r="2.5"/>
-          <circle cx="445" cy="220" r="2"/>
-          <circle cx="455" cy="240" r="1.5"/>
+        <!-- CENTER FIGURE — human silhouette inside a halo of red light -->
+        <g transform="translate(300 170)">
+          <!-- soft red glow -->
+          <circle cx="0" cy="0" r="60" fill="#A32D2D" fill-opacity="0.18"/>
+          <circle cx="0" cy="0" r="40" fill="#A32D2D" fill-opacity="0.25"/>
+          <!-- simplified human (head + shoulders) -->
+          <g fill="#0a0a0a" stroke="#f2f0ea" stroke-width="1.2">
+            <!-- head -->
+            <circle cx="0" cy="-10" r="11"/>
+            <!-- shoulders/torso -->
+            <path d="M -20 28 Q -22 12 -10 6 L 10 6 Q 22 12 20 28 Z"/>
+          </g>
         </g>
+
+        <!-- side label -->
+        <text x="300" y="248" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="rgba(163,45,45,0.85)" letter-spacing="3" text-transform="uppercase">PROFIL · ID #████████</text>
+
+        <!-- bottom -->
+        <text x="300" y="305" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#c4c2bd">Matryca · Big Tech Files</text>
       </svg>
-
-      <!-- footer -->
-      <div style="position: absolute; bottom: 22px; left: 28px; right: 28px; border-top: 0.5px solid rgba(163,45,45,0.3); padding-top: 8px; text-align: center; font-family: Georgia, serif; font-style: italic; font-size: clamp(0.85rem, 1.2vw, 1rem); color: #c4c2bd;">
-        Matryca · Big Tech Files
-      </div>
     </div>
     <div class="mock__info">
-      <p class="mock__num">— Wariant D · wyciek</p>
-      <h2 class="mock__title">Pęknięte urządzenie</h2>
-      <p class="mock__desc">Sylwetka telefonu / sejfu z pęknięciem rozgałęziającym się jak błyskawica. Przez szczelinę uciekają strzępy danych: PESEL, ad_id, geolokalizacja, ciąg cyfrowy, fragment maila — to, co miało zostać w środku, jest na zewnątrz. Ton: cyfrowy, dynamiczny, bardziej dynamiczne niż złamana pieczęć. Tu naruszenie nie jest historyczne — dzieje się teraz.</p>
+      <p class="mock__num">— Wariant H · człowiek w sieci</p>
+      <h2 class="mock__title">Każda kropka to ktoś, kto wie o Tobie</h2>
+      <p class="mock__desc">Sylwetka osoby w środku, otoczona dwunastoma czerwonymi węzłami zewnętrznymi (Big Tech) i ośmioma mniejszymi (kategorie danych) — wszystkie połączone z centrum cienkimi liniami. Człowiek nie jest wolny: jest punktem zbiegu sieci. Bliska estetyka grafu Cytoscape z drzwi „Dlaczego" portalu. Najbardziej osobisty rejestr — to mógłbyś być Ty.</p>
     </div>
   </div>
 
 </div>
 
 <p style="max-width: 700px; margin: 56px auto 0; color: var(--text-3); font-size: 12px; line-height: 1.6; text-align: center; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em;">
-  A · złamana pieczęć  ·  B · zacenzurowany dokument  ·  C · oko nadzoru  ·  D · wyciek
+  E · anatomia transferu  ·  F · czarna skrzynka  ·  G · waga przechylona  ·  H · człowiek w sieci
   <br/><br/>
   Daj znać literę — podmienię w index.html.
 </p>
