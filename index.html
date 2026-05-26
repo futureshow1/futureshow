@@ -2229,47 +2229,52 @@
       <!-- 40 Afer -->
       <div class="case">
         <a class="case__visual" href="projects/afery-polska-v2.html">
-          <div class="case__bg" style="background:linear-gradient(180deg,#100808 0%,#060606 100%);position:relative;overflow:hidden;">
-            <!-- paper texture -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
-              <filter id="aferyPaper">
-                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"/>
-                <feColorMatrix values="0 0 0 0 0.64  0 0 0 0 0.18  0 0 0 0 0.18  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#aferyPaper)"/>
+          <div class="case__bg" style="background:linear-gradient(135deg,#0a0e17 0%,#1a1028 50%,#0a0e17 100%);position:relative;overflow:hidden;">
+            <!-- radial amber glow (mirrors the report's hero) -->
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,0.10),transparent 60%);pointer-events:none;z-index:1;"></div>
+            <!-- subtle dot grid (dashboard chrome) -->
+            <svg viewBox="0 0 600 340" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18;z-index:1;">
+              <defs>
+                <pattern id="aferyDots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="1" fill="#fbbf24"/>
+                </pattern>
+              </defs>
+              <rect width="600" height="340" fill="url(#aferyDots)"/>
             </svg>
-            <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(163,45,45,0.7);text-transform:uppercase;z-index:2;">
-              <span>Akta · Sygn. III RP</span>
-              <span>1988 — 2026</span>
+            <!-- top label bar -->
+            <div style="position:absolute;top:18px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;z-index:3;">
+              <span style="color:#fbbf24;display:flex;align-items:center;gap:6px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#fbbf24;box-shadow:0 0 8px #fbbf24;"></span>
+                FUTURESHOW · raport
+              </span>
+              <span style="color:#94a3b8;">1988 — 2026</span>
             </div>
-            <!-- typed background: case list (subtle) -->
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;">
-              <div style="font-family:'Courier New',monospace;color:rgba(228,219,202,0.18);font-size:10px;line-height:1.7;letter-spacing:0.5px;text-align:left;padding:60px 100px;">
-                01. FOZZ &nbsp;&nbsp;&nbsp;&nbsp; 1989–2007<br>
-                02. Art-B &nbsp;&nbsp;&nbsp;&nbsp; 1990–1991<br>
-                03. Telegraph 1992<br>
-                04. Olin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1992–1996<br>
-                05. Orlen &nbsp;&nbsp;&nbsp; 2002–2005<br>
-                06. Rywin &nbsp;&nbsp;&nbsp; 2002–2004<br>
-                07. Starachow. 2003<br>
-                08. Sopot &nbsp;&nbsp;&nbsp; 2007<br>
-                09. Hazard &nbsp;&nbsp; 2009<br>
-                10. SKOK Wołomin 2014
+
+            <!-- main title block -->
+            <div style="position:absolute;top:50%;left:0;right:0;transform:translateY(-58%);text-align:center;z-index:3;padding:0 20px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.4em;color:#64748b;text-transform:uppercase;margin-bottom:8px;">III Rzeczpospolita</div>
+              <div style="font-family:'Segoe UI',system-ui,sans-serif;font-weight:900;font-size:clamp(3.6rem,9vw,6.4rem);line-height:0.95;background:linear-gradient(135deg,#fbbf24 0%,#f87171 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;letter-spacing:-0.02em;">40 AFER</div>
+              <div style="font-family:Georgia,serif;font-style:italic;font-size:clamp(0.85rem,1.25vw,1rem);color:#cbd5e1;letter-spacing:0.02em;margin-top:6px;">cztery dekady, jeden raport</div>
+            </div>
+
+            <!-- bottom stat tiles -->
+            <div style="position:absolute;bottom:18px;left:24px;right:24px;display:flex;gap:8px;z-index:3;">
+              <div style="flex:1;background:rgba(17,24,39,0.7);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);border-radius:7px;padding:8px 10px;text-align:center;">
+                <div style="font-size:1.05rem;font-weight:800;color:#fbbf24;line-height:1.05;">40</div>
+                <div style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;">spraw</div>
               </div>
-            </div>
-            <!-- BIG STAMP "UMORZONO" -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;">
-              <g transform="rotate(-12 300 170)">
-                <rect x="135" y="120" width="330" height="100" fill="none" stroke="#A32D2D" stroke-width="4" stroke-opacity="0.9"/>
-                <rect x="148" y="133" width="304" height="74" fill="none" stroke="#A32D2D" stroke-width="1" stroke-opacity="0.5"/>
-                <text x="300" y="178" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="42" letter-spacing="10" fill="#A32D2D" fill-opacity="0.92">UMORZONO</text>
-                <text x="300" y="200" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="6" fill="#A32D2D" fill-opacity="0.65">SYGN. 40 / III RP</text>
-              </g>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d4c8c8;letter-spacing:0.01em;z-index:3;">
-              40 największych afer w Polsce
+              <div style="flex:1;background:rgba(17,24,39,0.7);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);border-radius:7px;padding:8px 10px;text-align:center;">
+                <div style="font-size:1.05rem;font-weight:800;color:#fbbf24;line-height:1.05;">38</div>
+                <div style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;">lat</div>
+              </div>
+              <div style="flex:1;background:rgba(17,24,39,0.7);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);border-radius:7px;padding:8px 10px;text-align:center;">
+                <div style="font-size:1.05rem;font-weight:800;color:#fbbf24;line-height:1.05;">200+</div>
+                <div style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;">osób</div>
+              </div>
+              <div style="flex:1;background:rgba(17,24,39,0.7);backdrop-filter:blur(6px);border:1px solid rgba(239,68,68,0.18);border-radius:7px;padding:8px 10px;text-align:center;">
+                <div style="font-size:1.05rem;font-weight:800;color:#fca5a5;line-height:1.05;">mld</div>
+                <div style="font-size:8px;color:#f87171;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;">PLN strat</div>
+              </div>
             </div>
           </div>
         </a>
