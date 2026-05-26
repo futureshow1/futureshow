@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>40 Afer — okładki, propozycje | Future Show</title>
+<style>
+  :root {
+    --bg: #06080d;
+    --card-bg: #0c1018;
+    --border: #1a1f2e;
+    --text: #e5e7eb;
+    --text-2: #9ca3af;
+    --text-3: #6b7280;
+    --accent: #A32D2D;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { padding: 48px 24px 80px; }
+  h1 { font-family: Georgia, serif; font-weight: 500; font-size: 28px; margin: 0 0 8px; max-width: 900px; }
+  .lede { color: var(--text-2); max-width: 720px; margin: 0 0 48px; font-size: 14px; line-height: 1.6; }
+  .mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 28px; max-width: 1200px; margin: 0 auto; }
+  .mock { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .mock__visual { aspect-ratio: 16/9; position: relative; overflow: hidden; }
+  .mock__info { padding: 20px 24px 24px; }
+  .mock__num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin: 0 0 8px; }
+  .mock__title { font-family: Georgia, serif; font-size: 19px; font-weight: 500; margin: 0 0 8px; color: var(--text); }
+  .mock__desc { font-size: 13px; line-height: 1.55; color: var(--text-2); margin: 0; }
+</style>
+</head>
+<body>
+
+<h1>40 Afer — cztery propozycje okładki</h1>
+<p class="lede">Obecna karta używa jaskrawego żółtego „40" z czerwonym sloganem — krzyczy bardziej niż mówi. Cztery alternatywy: każda inaczej operuje powagą i tonem. Spójność wizualna z nową okładką Matrycy (czerń + polski czerwony #A32D2D), ale temat odróżniony.</p>
+
+<div class="mocks">
+
+  <!-- ============================================================ -->
+  <!-- A · Pieczęć "UMORZONO" -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background:linear-gradient(180deg,#100808 0%,#060606 100%);display:flex;align-items:center;justify-content:center;position:relative;">
+
+      <!-- paper texture -->
+      <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
+        <filter id="paperAfA">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"/>
+          <feColorMatrix values="0 0 0 0 0.64  0 0 0 0 0.18  0 0 0 0 0.18  0 0 0 1 0"/>
+        </filter>
+        <rect width="600" height="340" filter="url(#paperAfA)"/>
+      </svg>
+
+      <!-- top label -->
+      <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(163,45,45,0.7);text-transform:uppercase;z-index:2;">
+        <span>Akta · Sygn. III RP</span>
+        <span>1988 — 2026</span>
+      </div>
+
+      <!-- typed background: case list (subtle) -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;">
+        <div style="font-family:'Courier New',monospace;color:rgba(228,219,202,0.18);font-size:10px;line-height:1.7;letter-spacing:0.5px;text-align:left;padding:60px 100px;">
+          01. FOZZ &nbsp;&nbsp;&nbsp;&nbsp; 1989–2007<br>
+          02. Art-B &nbsp;&nbsp;&nbsp;&nbsp; 1990–1991<br>
+          03. Telegraph 1992<br>
+          04. Olin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1992–1996<br>
+          05. Orlen &nbsp;&nbsp;&nbsp; 2002–2005<br>
+          06. Rywin &nbsp;&nbsp;&nbsp; 2002–2004<br>
+          07. Starachow. 2003<br>
+          08. Sopot &nbsp;&nbsp;&nbsp; 2007<br>
+          09. Hazard &nbsp;&nbsp; 2009<br>
+          10. SKOK Wołomin 2014
+        </div>
+      </div>
+
+      <!-- BIG STAMP -->
+      <svg viewBox="0 0 600 340" style="position:relative;z-index:2;width:100%;height:100%;">
+        <g transform="rotate(-12 300 170)">
+          <rect x="135" y="120" width="330" height="100" fill="none" stroke="#A32D2D" stroke-width="4" stroke-opacity="0.9"/>
+          <rect x="148" y="133" width="304" height="74" fill="none" stroke="#A32D2D" stroke-width="1" stroke-opacity="0.5"/>
+          <text x="300" y="178" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="42" letter-spacing="10" fill="#A32D2D" fill-opacity="0.92">UMORZONO</text>
+          <text x="300" y="200" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="6" fill="#A32D2D" fill-opacity="0.65">SYGN. 40 / III RP</text>
+        </g>
+      </svg>
+
+      <!-- footer -->
+      <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d4c8c8;letter-spacing:0.01em;z-index:3;">
+        40 największych afer w Polsce
+      </div>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant A · UMORZONO</p>
+      <h2 class="mock__title">Wielka pieczątka „UMORZONO"</h2>
+      <p class="mock__desc">Czerwona pieczątka pod kątem -12°, przez tło z fragmentem listy spraw maszynopisem (FOZZ, Art-B, Orlen, Rywin, Sopot...). Ironiczna teza okładki: 40 afer — większość kończyła się bez konsekwencji. Klasyczna estetyka akt prokuratorskich z lat 90. Bliska tonowi Matrycy (pieczęć), ale polska sygnatura zamiast „CONFIDENTIAL".</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- B · Kolaż wycinków gazet -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background:#1a1815;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+
+      <!-- paper background -->
+      <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18;">
+        <filter id="paperAfB">
+          <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2"/>
+          <feColorMatrix values="0 0 0 0 0.2  0 0 0 0 0.2  0 0 0 0 0.2  0 0 0 1 0"/>
+        </filter>
+        <rect width="600" height="340" filter="url(#paperAfB)"/>
+      </svg>
+
+      <!-- top label -->
+      <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(163,45,45,0.85);text-transform:uppercase;z-index:5;">
+        <span>Wycinki · 1988–2026</span>
+        <span>40 spraw</span>
+      </div>
+
+      <!-- newspaper clippings — overlapping, rotated -->
+      <div style="position:relative;z-index:2;width:100%;height:100%;">
+
+        <!-- Clipping 1 (FOZZ) -->
+        <div style="position:absolute;top:54px;left:22px;width:200px;background:#e8e1cf;color:#1a1a1a;padding:10px 12px;transform:rotate(-4deg);box-shadow:2px 4px 12px rgba(0,0,0,0.5);font-family:Georgia,serif;">
+          <div style="font-size:8px;color:#666;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #888;padding-bottom:3px;margin-bottom:4px;">Gazeta Wyborcza · 1991</div>
+          <div style="font-size:14px;font-weight:700;line-height:1.15;">Falzmann nie żyje. <span style="background:#1a1a1a;color:#1a1a1a;">██████</span> FOZZ <span style="background:#1a1a1a;color:#1a1a1a;">█████</span>.</div>
+        </div>
+
+        <!-- Clipping 2 (Rywin) -->
+        <div style="position:absolute;top:32px;right:30px;width:185px;background:#e8e1cf;color:#1a1a1a;padding:10px 12px;transform:rotate(3deg);box-shadow:2px 4px 12px rgba(0,0,0,0.5);font-family:Georgia,serif;">
+          <div style="font-size:8px;color:#666;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #888;padding-bottom:3px;margin-bottom:4px;">Rzeczpospolita · 2002</div>
+          <div style="font-size:14px;font-weight:700;line-height:1.15;">„Mam pana grupę trzymającą władzę"</div>
+        </div>
+
+        <!-- Clipping 3 (Pegasus) -->
+        <div style="position:absolute;bottom:62px;left:80px;width:210px;background:#e8e1cf;color:#1a1a1a;padding:10px 12px;transform:rotate(2deg);box-shadow:2px 4px 12px rgba(0,0,0,0.5);font-family:Georgia,serif;">
+          <div style="font-size:8px;color:#666;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #888;padding-bottom:3px;margin-bottom:4px;">Onet · 2021</div>
+          <div style="font-size:14px;font-weight:700;line-height:1.15;">CBA podsłuchiwało Brejzę. Pegasus.</div>
+        </div>
+
+        <!-- Clipping 4 (Orlen) -->
+        <div style="position:absolute;bottom:80px;right:46px;width:180px;background:#e8e1cf;color:#1a1a1a;padding:10px 12px;transform:rotate(-6deg);box-shadow:2px 4px 12px rgba(0,0,0,0.5);font-family:Georgia,serif;">
+          <div style="font-size:8px;color:#666;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #888;padding-bottom:3px;margin-bottom:4px;">Polityka · 2005</div>
+          <div style="font-size:14px;font-weight:700;line-height:1.15;">Orlen, Kaczmarek, Sejmowa komisja.</div>
+        </div>
+
+        <!-- Diagonal red line drawn over the whole composition (manual marker) -->
+        <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;">
+          <path d="M 50 280 Q 200 180 350 200 T 560 90" stroke="#A32D2D" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+        </svg>
+      </div>
+
+      <!-- footer -->
+      <div style="position:absolute;bottom:18px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.85rem,1.2vw,1rem);color:#c4c2bd;z-index:5;">
+        40 największych afer w Polsce
+      </div>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant B · kolaż wycinków</p>
+      <h2 class="mock__title">Sterta wycinków na biurku</h2>
+      <p class="mock__desc">Cztery rotowane wycinki gazet z różnych dekad: „Gazeta Wyborcza 1991: Falzmann nie żyje", „Rzeczpospolita 2002: Mam pana grupę trzymającą władzę", „Onet 2021: CBA podsłuchiwało Brejzę. Pegasus.", „Polityka 2005: Orlen, Kaczmarek, Sejmowa komisja.". Czerwona linia ołówkiem reportera łączy wątki. Najbardziej dziennikarski rejestr — od razu widać że to historia mediów, nie tylko afer.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- C · Pionowa lista 1–40 -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background:linear-gradient(180deg,#0a0a0a 0%,#050507 100%);position:relative;overflow:hidden;">
+
+      <!-- top label -->
+      <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(163,45,45,0.85);text-transform:uppercase;z-index:2;">
+        <span>Spis spraw</span>
+        <span>40 / III RP</span>
+      </div>
+
+      <!-- column of cases (40 entries, monospace) -->
+      <div style="position:absolute;top:50px;left:28px;right:200px;bottom:50px;font-family:'Courier New',monospace;font-size:10px;color:#c4c2bd;line-height:1.5;letter-spacing:0.5px;columns:2;column-gap:24px;">
+        <div>01 &nbsp;FOZZ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">89—07</span></div>
+        <div>02 &nbsp;Art-B &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">90—91</span></div>
+        <div><s style="opacity:0.5;">03 &nbsp;Telegraph &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">1992</span></s></div>
+        <div>04 &nbsp;Olin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">92—96</span></div>
+        <div>05 &nbsp;Orlen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">02—05</span></div>
+        <div>06 &nbsp;Rywin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">02—04</span></div>
+        <div><s style="opacity:0.5;">07 &nbsp;Starachowice &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2003</span></s></div>
+        <div>08 &nbsp;Sopot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2007</span></div>
+        <div>09 &nbsp;Hazard &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2009</span></div>
+        <div>10 &nbsp;SKOK Wołomin &nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2014</span></div>
+        <div>11 &nbsp;Amber Gold &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">09—12</span></div>
+        <div><s style="opacity:0.5;">12 &nbsp;Marszałkowa &nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2014</span></s></div>
+        <div>13 &nbsp;SREBRNA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2019</span></div>
+        <div>14 &nbsp;Pegasus &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">17—24</span></div>
+        <div>15 &nbsp;Mailgate &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2021</span></div>
+        <div><s style="opacity:0.5;">16 &nbsp;Wizygate &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2023</span></s></div>
+        <div>17 &nbsp;Fundusz Spr. &nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2023</span></div>
+        <div>18 &nbsp;NCBR &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2024</span></div>
+        <div>19 &nbsp;TVP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">15—23</span></div>
+        <div>20 &nbsp;Suski &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2024</span></div>
+        <div>21 &nbsp;CPK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.7);">2024</span></div>
+        <div>22 &nbsp;... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.4);">...</span></div>
+        <div>40 &nbsp;...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(163,45,45,0.4);">2026</span></div>
+      </div>
+
+      <!-- right side: title -->
+      <div style="position:absolute;top:80px;right:28px;width:160px;text-align:right;">
+        <div style="font-family:Georgia,serif;font-style:italic;color:#A32D2D;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:500;letter-spacing:-0.02em;line-height:1;">Czterdzieści<br/>spraw</div>
+        <div style="font-family:Georgia,serif;color:#c4c2bd;font-style:italic;font-size:clamp(0.85rem,1.2vw,1rem);margin-top:14px;line-height:1.35;">jedenaście umorzonych</div>
+        <div style="font-family:'JetBrains Mono',monospace;color:rgba(196,194,189,0.5);font-size:9px;letter-spacing:2px;margin-top:18px;text-transform:uppercase;">1988 — 2026</div>
+      </div>
+
+      <!-- footer -->
+      <div style="position:absolute;bottom:14px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.85rem,1.2vw,1rem);color:#c4c2bd;">
+        40 największych afer w Polsce
+      </div>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant C · spis spraw</p>
+      <h2 class="mock__title">Czterdzieści spraw. Jedenaście umorzonych.</h2>
+      <p class="mock__desc">Po lewej dwuszpaltowy spis 22 (z 40) spraw monospace'em: numer, krótka nazwa, lata. Niektóre przekreślone — *umorzone*. Po prawej tytuł serif italikiem: „Czterdzieści spraw / jedenaście umorzonych". Najbardziej editorialny rejestr, najbardziej kataloguje to co jest w środku raportu. Bliski wymowie spisu treści książki śledczej.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- D · Teczka archiwum -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background:linear-gradient(180deg,#06060c 0%,#0a0a0a 100%);position:relative;display:flex;align-items:center;justify-content:center;">
+
+      <!-- top label -->
+      <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(163,45,45,0.85);text-transform:uppercase;z-index:2;">
+        <span>Archiwum III RP</span>
+        <span>Sygn. PL/AFR</span>
+      </div>
+
+      <svg viewBox="0 0 600 340" style="position:relative;z-index:1;width:78%;max-width:420px;">
+
+        <!-- folder back (drawn at angle) -->
+        <g transform="rotate(-3 300 170)">
+
+          <!-- folder body -->
+          <rect x="100" y="50" width="400" height="260" fill="#d4c8a8" stroke="#8a7e60" stroke-width="1"/>
+          <!-- folder tab on top -->
+          <path d="M 240 50 L 240 30 L 360 30 L 360 50 Z" fill="#d4c8a8" stroke="#8a7e60" stroke-width="1"/>
+
+          <!-- horizontal ruled lines (like folder cover) -->
+          <g stroke="rgba(112,98,72,0.35)" stroke-width="0.5">
+            <line x1="120" y1="80" x2="480" y2="80"/>
+            <line x1="120" y1="100" x2="480" y2="100"/>
+            <line x1="120" y1="120" x2="480" y2="120"/>
+          </g>
+
+          <!-- corner reinforcement / hole -->
+          <circle cx="125" cy="65" r="4" fill="none" stroke="#8a7e60" stroke-width="1"/>
+
+          <!-- big label area -->
+          <rect x="135" y="145" width="330" height="100" fill="#f0e6c8" stroke="#a39068" stroke-width="0.5"/>
+
+          <!-- TYPED label content -->
+          <text x="155" y="167" font-family="'Courier New', monospace" font-size="9" letter-spacing="1.5" fill="#3a2e1a">SPRAWA:</text>
+          <text x="218" y="167" font-family="'Courier New', monospace" font-size="10" font-weight="700" fill="#1a1a1a" letter-spacing="2">AFERY · III RP</text>
+
+          <text x="155" y="186" font-family="'Courier New', monospace" font-size="9" letter-spacing="1.5" fill="#3a2e1a">OKRES:</text>
+          <text x="218" y="186" font-family="'Courier New', monospace" font-size="10" fill="#1a1a1a" letter-spacing="2">1988 — 2026</text>
+
+          <text x="155" y="205" font-family="'Courier New', monospace" font-size="9" letter-spacing="1.5" fill="#3a2e1a">TOM:</text>
+          <text x="218" y="205" font-family="'Courier New', monospace" font-size="10" fill="#1a1a1a" letter-spacing="2">I / I &nbsp;&nbsp; SPRAW: 40</text>
+
+          <text x="155" y="224" font-family="'Courier New', monospace" font-size="9" letter-spacing="1.5" fill="#3a2e1a">STATUS:</text>
+          <text x="218" y="224" font-family="'Courier New', monospace" font-size="10" font-weight="700" fill="#A32D2D" letter-spacing="2">DO WGLĄDU</text>
+
+          <!-- red stamp in corner -->
+          <g transform="translate(380 260) rotate(-8)">
+            <rect x="0" y="0" width="90" height="40" fill="none" stroke="#A32D2D" stroke-width="2" stroke-opacity="0.85"/>
+            <text x="45" y="26" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="14" letter-spacing="3" fill="#A32D2D" fill-opacity="0.9">AFERY</text>
+          </g>
+
+          <!-- handwritten signature -->
+          <text x="155" y="280" font-family="'Brush Script MT', cursive" font-style="italic" font-size="16" fill="#3a2e1a">J. Lubicz</text>
+
+        </g>
+      </svg>
+
+      <!-- footer -->
+      <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.85rem,1.2vw,1rem);color:#c4c2bd;">
+        40 największych afer w Polsce
+      </div>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant D · teczka archiwalna</p>
+      <h2 class="mock__title">Teczka „Afery · III RP"</h2>
+      <p class="mock__desc">Klasyczna tekturowa teczka aktowa pod kątem -3°, z maszynopisową etykietą: SPRAWA: AFERY · III RP, OKRES: 1988–2026, TOM: I/I, STATUS: <strong style="color:#A32D2D">DO WGLĄDU</strong>. W rogu czerwona pieczątka „AFERY", podpis odręczny. Estetyka archiwum sądowego/prokuratorskiego z lat 90. Najbliżej wymowy „dokumentacji bez retuszu" — to nie reportaż, to akta.</p>
+    </div>
+  </div>
+
+</div>
+
+<p style="max-width: 700px; margin: 56px auto 0; color: var(--text-3); font-size: 12px; line-height: 1.6; text-align: center; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em;">
+  A · UMORZONO  ·  B · kolaż wycinków  ·  C · spis spraw  ·  D · teczka archiwalna
+  <br/><br/>
+  Daj znać literę — podmienię w index.html.
+</p>
+
+</body>
+</html>
