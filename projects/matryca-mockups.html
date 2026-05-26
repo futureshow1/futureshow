@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Matryca — okładki, propozycje | Future Show</title>
+<style>
+  :root {
+    --bg: #06080d;
+    --card-bg: #0c1018;
+    --border: #1a1f2e;
+    --text: #e5e7eb;
+    --text-2: #9ca3af;
+    --text-3: #6b7280;
+    --accent: #A32D2D;
+    --accent-soft: #c44848;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { padding: 48px 24px 80px; }
+  h1 { font-family: Georgia, serif; font-weight: 500; font-size: 28px; margin: 0 0 8px; max-width: 900px; }
+  .lede { color: var(--text-2); max-width: 700px; margin: 0 0 48px; font-size: 14px; line-height: 1.6; }
+  .mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 28px; max-width: 1200px; margin: 0 auto; }
+  .mock {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .mock__visual {
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+  }
+  .mock__info {
+    padding: 20px 24px 24px;
+  }
+  .mock__num {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .mock__title {
+    font-family: Georgia, serif;
+    font-size: 19px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .mock__desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-2);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Cztery propozycje okładki Matrycy</h1>
+<p class="lede">Każda inny rejestr. Tło: czerń jak na obecnej karcie (spójność z resztą futureshow). Akcent: polski czerwony #A32D2D z portalu Matryca. Wybierz numer, podmienię w index.html.</p>
+
+<div class="mocks">
+
+  <!-- ============================================================ -->
+  <!-- WARIANT A — Wielka liczba 33 (typograficzny manifest) -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background: linear-gradient(160deg, #0a0a0a 0%, #150404 60%, #0a0a0a 100%); display: flex; align-items: center; justify-content: center;">
+      <!-- subtle grid texture -->
+      <svg viewBox="0 0 600 340" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.06;">
+        <defs>
+          <pattern id="gridA" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#A32D2D" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="340" fill="url(#gridA)"/>
+      </svg>
+      <!-- header -->
+      <div style="position: absolute; top: 24px; left: 28px; right: 28px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.7); text-transform: uppercase;">
+        <span>Big Tech Files</span>
+        <span>2007 — 2025</span>
+      </div>
+      <!-- main -->
+      <div style="position: relative; z-index: 1; text-align: center; padding: 0 30px;">
+        <div style="font-family: Georgia, serif; font-style: italic; font-weight: 500; color: #A32D2D; font-size: clamp(7rem, 14vw, 11rem); line-height: 1; letter-spacing: -0.04em;">33</div>
+        <div style="font-family: Georgia, serif; color: #f2f0ea; font-size: clamp(1rem, 1.8vw, 1.3rem); font-weight: 500; letter-spacing: -0.01em; margin-top: 8px;">udokumentowane sprawy</div>
+        <div style="font-family: Georgia, serif; color: #c4c2bd; font-size: clamp(0.85rem, 1.2vw, 1rem); font-style: italic; margin-top: 4px;">Matryca · Sprawy Big Techu</div>
+      </div>
+      <!-- footer rule -->
+      <div style="position: absolute; bottom: 24px; left: 28px; right: 28px; border-top: 0.5px solid rgba(163,45,45,0.3); padding-top: 8px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: rgba(196, 194, 189, 0.5); text-transform: uppercase;">
+        <span>12 firm</span>
+        <span>480+ źródeł</span>
+        <span>PL / EN</span>
+      </div>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant A · typograficzny manifest</p>
+      <h2 class="mock__title">Wielka liczba 33</h2>
+      <p class="mock__desc">Mniej znaczy więcej. Jedna cyfra serif w italiku zajmuje większość kadru, wszystko inne to subtelne meta (rok od–do, „12 firm", „480 źródeł"). Najbliżej okładki numeru Le Monde Diplomatique albo The Pudding. Najbardziej editorialny rejestr.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- WARIANT B — Pieczęć dokumentacyjna -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background: linear-gradient(180deg, #100808 0%, #0a0a0a 100%); display: flex; align-items: center; justify-content: center;">
+      <!-- subtle paper texture (noise) -->
+      <svg viewBox="0 0 600 340" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.08;">
+        <filter id="noiseB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/>
+          <feColorMatrix values="0 0 0 0 0.64  0 0 0 0 0.18  0 0 0 0 0.18  0 0 0 1 0"/>
+        </filter>
+        <rect width="600" height="340" filter="url(#noiseB)"/>
+      </svg>
+      <!-- stamp -->
+      <svg viewBox="0 0 360 360" style="position: relative; z-index: 1; width: 70%; height: 70%; max-width: 280px;">
+        <!-- outer circle -->
+        <circle cx="180" cy="180" r="158" fill="none" stroke="#A32D2D" stroke-width="3" stroke-opacity="0.85" transform="rotate(-6 180 180)"/>
+        <circle cx="180" cy="180" r="138" fill="none" stroke="#A32D2D" stroke-width="1" stroke-opacity="0.6" transform="rotate(-6 180 180)"/>
+        <!-- ring text -->
+        <defs>
+          <path id="circlePathB" d="M 180,180 m -148,0 a 148,148 0 1,1 296,0 a 148,148 0 1,1 -296,0"/>
+        </defs>
+        <text font-family="'JetBrains Mono', monospace" font-size="14" letter-spacing="6" fill="#A32D2D" fill-opacity="0.85">
+          <textPath href="#circlePathB" startOffset="0">· MATRYCA · UDOKUMENTOWANE · MATRYCA · UDOKUMENTOWANE ·</textPath>
+        </text>
+        <!-- center number -->
+        <text x="180" y="170" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="120" font-weight="500" fill="#A32D2D" transform="rotate(-6 180 180)">33</text>
+        <text x="180" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" letter-spacing="3" fill="#A32D2D" fill-opacity="0.9" transform="rotate(-6 180 180)">SPRAWY · BIG TECH</text>
+        <!-- crossing line (used stamp effect) -->
+        <line x1="40" y1="320" x2="320" y2="40" stroke="#A32D2D" stroke-width="1" stroke-opacity="0.25"/>
+      </svg>
+      <!-- footer -->
+      <div style="position: absolute; bottom: 22px; left: 28px; right: 28px; font-family: Georgia, serif; font-size: clamp(0.85rem, 1.2vw, 1rem); color: #c4c2bd; font-style: italic; text-align: center; letter-spacing: 0.01em;">
+        Matryca · Big Tech Files
+      </div>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant B · pieczęć dokumentacyjna</p>
+      <h2 class="mock__title">Czerwona pieczęć</h2>
+      <p class="mock__desc">Okrągły stempel jak na aktach archiwalnych: „MATRYCA · UDOKUMENTOWANE" w obwodzie, „33 / SPRAWY · BIG TECH" w środku, przekrzywiony o kilka stopni jak prawdziwie odbity, na tle papierowej tekstury. Dossier, śledztwo, archiwum z lat 70. Najbardziej teatralny rejestr.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- WARIANT C — Faktura paradoksu (1,2 mld = 0,7%) -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background: linear-gradient(170deg, #0a0a0a 0%, #06060c 100%); display: flex; align-items: center; justify-content: center; padding: 30px;">
+      <div style="position: relative; z-index: 1; text-align: left; width: 100%; max-width: 480px;">
+        <!-- top label -->
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: rgba(163,45,45,0.9); text-transform: uppercase; margin-bottom: 16px;">Rekordowa kara RODO · 2023</div>
+        <!-- big number 1 -->
+        <div style="font-family: Georgia, serif; color: #f2f0ea; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 500; line-height: 1; letter-spacing: -0.03em;">€1,2&nbsp;mld</div>
+        <!-- equals sign / context -->
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(196,194,189,0.6); letter-spacing: 0.1em; margin: 14px 0 14px; text-transform: uppercase;">
+          = w skali Mety
+        </div>
+        <!-- big number 2 -->
+        <div style="font-family: Georgia, serif; color: #A32D2D; font-size: clamp(3rem, 7.5vw, 5.5rem); font-weight: 500; line-height: 1; letter-spacing: -0.03em;">0,7%</div>
+        <div style="font-family: Georgia, serif; color: #c4c2bd; font-size: clamp(0.85rem, 1.2vw, 1rem); font-style: italic; margin-top: 6px;">rocznego przychodu</div>
+        <!-- footer -->
+        <div style="border-top: 0.5px solid rgba(163,45,45,0.3); margin-top: 22px; padding-top: 10px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(196,194,189,0.5); letter-spacing: 0.1em; text-transform: uppercase;">
+          <span>Matryca · Big Tech Files</span>
+          <span>33 udokumentowane sprawy</span>
+        </div>
+      </div>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant C · paradoks księgowy</p>
+      <h2 class="mock__title">€1,2 mld = 0,7%</h2>
+      <p class="mock__desc">Centralna teza portalu wyrażona dwiema liczbami. „Największa kara RODO" obok „0,7% rocznego przychodu" — czytelnik widzi cały argument na sekundę. Bliski stylowi infografik The Economist albo Bloomberg. Najmocniejszy retorycznie — okładka, która mówi co znajdziesz w środku.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- WARIANT D — Oś czasu 2007–2025 -->
+  <!-- ============================================================ -->
+  <div class="mock">
+    <div class="mock__visual" style="background: linear-gradient(180deg, #0a0a0a 0%, #06060c 60%, #0a0a0a 100%); display: flex; align-items: center; justify-content: center; padding: 30px;">
+      <svg viewBox="0 0 540 280" style="width: 100%; height: 100%; max-width: 480px;">
+        <!-- top label -->
+        <text x="0" y="20" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="4" fill="#A32D2D" fill-opacity="0.85">2007 — 2025 · OŚ CZASU</text>
+
+        <!-- main title -->
+        <text x="0" y="80" font-family="Georgia, serif" font-style="italic" font-size="58" font-weight="500" fill="#f2f0ea" letter-spacing="-0.02em">Matryca</text>
+        <text x="0" y="110" font-family="Georgia, serif" font-size="18" fill="#c4c2bd" font-style="italic">33 udokumentowane sprawy</text>
+
+        <!-- horizontal axis -->
+        <line x1="0" y1="190" x2="540" y2="190" stroke="rgba(196,194,189,0.25)" stroke-width="0.5"/>
+
+        <!-- year ticks -->
+        <g font-family="'JetBrains Mono', monospace" font-size="9" fill="rgba(196,194,189,0.5)" letter-spacing="1">
+          <text x="0" y="215">2007</text>
+          <text x="116" y="215">2012</text>
+          <text x="232" y="215">2017</text>
+          <text x="348" y="215">2022</text>
+          <text x="495" y="215">2025</text>
+        </g>
+
+        <!-- case dots (33, spread along axis 2007-2025) -->
+        <g fill="#A32D2D">
+          <!-- 2007: Beacon (small marker — early) -->
+          <circle cx="10" cy="190" r="3"/>
+          <!-- 2010: Street View -->
+          <circle cx="80" cy="190" r="3"/>
+          <!-- 2012: Safari -->
+          <circle cx="120" cy="190" r="3"/>
+          <!-- 2014: Emotional Contagion -->
+          <circle cx="165" cy="190" r="3"/>
+          <!-- 2017-18: cluster -->
+          <circle cx="232" cy="190" r="3"/>
+          <circle cx="245" cy="190" r="3"/>
+          <circle cx="258" cy="190" r="3"/>
+          <!-- 2018: CA (big) -->
+          <circle cx="270" cy="190" r="7"/>
+          <!-- 2019 cluster -->
+          <circle cx="290" cy="190" r="3"/>
+          <circle cx="296" cy="190" r="3"/>
+          <circle cx="304" cy="190" r="3"/>
+          <!-- 2020: Clearview, Zoom, Schrems II -->
+          <circle cx="320" cy="190" r="4"/>
+          <circle cx="328" cy="190" r="3"/>
+          <circle cx="336" cy="190" r="3"/>
+          <!-- 2021: Haugen big -->
+          <circle cx="350" cy="190" r="6"/>
+          <circle cx="362" cy="190" r="3"/>
+          <!-- 2022 -->
+          <circle cx="378" cy="190" r="3"/>
+          <circle cx="386" cy="190" r="3"/>
+          <!-- 2023: 1.2B BIG -->
+          <circle cx="408" cy="190" r="8"/>
+          <circle cx="422" cy="190" r="3"/>
+          <circle cx="430" cy="190" r="3"/>
+          <circle cx="438" cy="190" r="3"/>
+          <!-- 2024 -->
+          <circle cx="456" cy="190" r="3"/>
+          <circle cx="464" cy="190" r="3"/>
+          <circle cx="472" cy="190" r="3"/>
+          <circle cx="480" cy="190" r="3"/>
+          <!-- 2025: Local Mess + DMA -->
+          <circle cx="502" cy="190" r="5"/>
+          <circle cx="514" cy="190" r="3"/>
+          <circle cx="524" cy="190" r="3"/>
+          <circle cx="532" cy="190" r="3"/>
+        </g>
+
+        <!-- labels on key dots -->
+        <g font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(163,45,45,0.85)" letter-spacing="0.5">
+          <line x1="270" y1="180" x2="270" y2="160" stroke="rgba(163,45,45,0.5)" stroke-width="0.5"/>
+          <text x="270" y="155" text-anchor="middle">CAMBRIDGE A.</text>
+
+          <line x1="350" y1="180" x2="350" y2="138" stroke="rgba(163,45,45,0.5)" stroke-width="0.5"/>
+          <text x="350" y="133" text-anchor="middle">HAUGEN</text>
+
+          <line x1="408" y1="180" x2="408" y2="160" stroke="rgba(163,45,45,0.5)" stroke-width="0.5"/>
+          <text x="408" y="155" text-anchor="middle">€1,2 MLD</text>
+        </g>
+
+        <!-- bottom rule -->
+        <line x1="0" y1="255" x2="540" y2="255" stroke="rgba(163,45,45,0.3)" stroke-width="0.5"/>
+        <text x="0" y="272" font-family="'JetBrains Mono', monospace" font-size="9" fill="rgba(196,194,189,0.5)" letter-spacing="1.5">META · GOOGLE · APPLE · MICROSOFT · AMAZON · UBER · TIKTOK · X · CLEARVIEW · ZOOM</text>
+      </svg>
+    </div>
+    <div class="mock__info">
+      <p class="mock__num">— Wariant D · oś czasu</p>
+      <h2 class="mock__title">2007–2025 w jednej linii</h2>
+      <p class="mock__desc">Tytuł serif po lewej, pod nim oś z 33 kropkami w realnych pozycjach chronologicznych. Trzy największe momenty mają etykietki: Cambridge Analytica, Haugen, €1,2 mld. Najbliżej The Pudding / FT Visual Storytelling. Najbardziej infograficzny rejestr — okładka i wykres w jednym.</p>
+    </div>
+  </div>
+
+</div>
+
+<p style="max-width: 700px; margin: 56px auto 0; color: var(--text-3); font-size: 12px; line-height: 1.6; text-align: center; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em;">
+  Daj znać A, B, C czy D — podmienię w index.html. Można też zmiksować elementy (np. liczba 33 z wariantu A + footer z metryczkami z wariantu D).
+</p>
+
+</body>
+</html>
