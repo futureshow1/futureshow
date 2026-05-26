@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>40 Afer — okładki, druga seria (dashboard)</title>
+<style>
+  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    background:#f5f3eb;
+    color:#1a1a1a;
+    font-family:'Inter',system-ui,sans-serif;
+    padding:60px 24px 100px;
+    line-height:1.55;
+  }
+  .wrap { max-width:1280px; margin:0 auto; }
+  h1 {
+    font-family:Georgia,serif;
+    font-weight:400;
+    font-size:clamp(1.5rem,3vw,2.2rem);
+    margin-bottom:8px;
+    letter-spacing:-0.01em;
+  }
+  .intro {
+    font-size:14px;
+    color:#666;
+    max-width:780px;
+    margin-bottom:48px;
+    line-height:1.65;
+  }
+  .intro b { color:#1a1a1a; }
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:32px;
+  }
+  @media (max-width: 900px) { .grid { grid-template-columns:1fr; } }
+
+  .mock {
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    border-radius:6px;
+    padding:24px;
+  }
+  .mock__head {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:#a32d2d;
+    margin-bottom:4px;
+  }
+  .mock__title {
+    font-family:Georgia,serif;
+    font-weight:400;
+    font-size:1.2rem;
+    margin-bottom:14px;
+    color:#1a1a1a;
+  }
+  .mock__visual {
+    aspect-ratio:16/9;
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:14px;
+    position:relative;
+  }
+  .mock__desc {
+    font-size:13px;
+    color:#555;
+    line-height:1.65;
+  }
+  .mock__desc b { color:#1a1a1a; }
+
+  /* === Wariant E — Network swarm === */
+  .v-E {
+    background:linear-gradient(135deg,#0a0e17 0%,#1a1028 50%,#0a0e17 100%);
+    position:relative; overflow:hidden;
+  }
+  .v-E__glow {
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 30% 50%,rgba(245,158,11,0.12),transparent 55%);
+    pointer-events:none;
+  }
+  .v-E__top {
+    position:absolute; top:14px; left:18px; right:18px;
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:8px; letter-spacing:0.28em; text-transform:uppercase;
+    color:#fbbf24; z-index:3;
+  }
+  .v-E__title {
+    position:absolute; bottom:18px; left:18px; right:18px;
+    z-index:3;
+  }
+  .v-E__title h2 {
+    font-family:'Segoe UI',sans-serif; font-weight:900;
+    font-size:clamp(1.4rem,3.6vw,2.4rem);
+    background:linear-gradient(135deg,#fbbf24 0%,#f87171 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    line-height:0.95; letter-spacing:-0.01em;
+  }
+  .v-E__title p {
+    font-family:Georgia,serif; font-style:italic;
+    font-size:11px; color:#cbd5e1; margin-top:4px;
+    letter-spacing:0.01em;
+  }
+
+  /* === Wariant F — Timeline strip === */
+  .v-F {
+    background:linear-gradient(180deg,#0a0e17 0%,#111827 100%);
+    position:relative; overflow:hidden;
+  }
+  .v-F__title {
+    position:absolute; top:24px; left:0; right:0;
+    text-align:center; z-index:3;
+  }
+  .v-F__title h2 {
+    font-family:'Segoe UI',sans-serif; font-weight:900;
+    font-size:clamp(1.6rem,4vw,2.8rem);
+    background:linear-gradient(135deg,#fbbf24 0%,#f87171 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    line-height:0.95; letter-spacing:-0.01em;
+  }
+  .v-F__title p {
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; letter-spacing:0.3em; text-transform:uppercase;
+    color:#fbbf24; margin-top:4px;
+  }
+  .v-F__line {
+    position:absolute; left:6%; right:6%; top:62%;
+    height:2px;
+    background:linear-gradient(90deg,transparent 0%,rgba(245,158,11,0.4) 12%,rgba(245,158,11,0.4) 88%,transparent 100%);
+    z-index:2;
+  }
+  .v-F__years {
+    position:absolute; left:6%; right:6%; top:calc(62% + 10px);
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; color:#94a3b8; letter-spacing:0.08em;
+    z-index:2;
+  }
+  .v-F__dot {
+    position:absolute; top:62%;
+    transform:translate(-50%, -50%);
+    width:10px; height:10px; border-radius:50%;
+    z-index:3;
+  }
+  .v-F__dot::after {
+    content:''; position:absolute; inset:-4px;
+    border-radius:50%; border:1px solid currentColor;
+    opacity:0.4;
+  }
+  .v-F__caption {
+    position:absolute; bottom:10%; left:6%; right:6%;
+    text-align:center;
+    font-family:Georgia,serif; font-style:italic;
+    font-size:11px; color:#cbd5e1;
+  }
+
+  /* === Wariant G — Stacked case cards === */
+  .v-G {
+    background:linear-gradient(135deg,#0a0e17 0%,#1a1f2e 100%);
+    position:relative; overflow:hidden;
+  }
+  .v-G__glow {
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 100%,rgba(245,158,11,0.10),transparent 50%);
+    pointer-events:none;
+  }
+  .v-G__top {
+    position:absolute; top:14px; left:18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; letter-spacing:0.24em; text-transform:uppercase;
+    color:#fbbf24; z-index:3;
+    display:flex; align-items:center; gap:6px;
+  }
+  .v-G__top::before {
+    content:''; width:5px; height:5px; border-radius:50%;
+    background:#fbbf24; box-shadow:0 0 6px #fbbf24;
+  }
+  .v-G__cards {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    perspective:800px;
+    z-index:2;
+  }
+  .v-G__card {
+    position:absolute;
+    width:38%; aspect-ratio:1/1.15;
+    background:rgba(17,24,39,0.85);
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px;
+    padding:14px 12px;
+    color:#cbd5e1;
+    font-size:10px;
+    font-family:'Segoe UI',sans-serif;
+    box-shadow:0 8px 30px rgba(0,0,0,0.4);
+  }
+  .v-G__card-1 { transform:translateX(-32%) rotate(-7deg); }
+  .v-G__card-2 { transform:translateX(0%) rotate(0deg); z-index:2; }
+  .v-G__card-3 { transform:translateX(32%) rotate(7deg); }
+  .v-G__card .num {
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; color:#fbbf24; letter-spacing:0.15em;
+  }
+  .v-G__card .title {
+    font-weight:700; font-size:13px; color:#f1f5f9;
+    margin:4px 0 6px; line-height:1.2;
+  }
+  .v-G__card .pill {
+    display:inline-block; padding:1px 7px; border-radius:8px;
+    font-size:8px; font-weight:600; letter-spacing:0.04em;
+    text-transform:uppercase; margin-top:4px;
+  }
+  .pill-r { background:rgba(239,68,68,0.18); color:#f87171; }
+  .pill-a { background:rgba(245,158,11,0.18); color:#fbbf24; }
+  .pill-g { background:rgba(107,114,128,0.25); color:#9ca3af; }
+  .v-G__title {
+    position:absolute; bottom:16px; left:18px; right:18px;
+    text-align:center; z-index:3;
+  }
+  .v-G__title h2 {
+    font-family:'Segoe UI',sans-serif; font-weight:900;
+    font-size:clamp(1.2rem,3.2vw,2rem);
+    background:linear-gradient(135deg,#fbbf24 0%,#f87171 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    line-height:1;
+  }
+
+  /* === Wariant H — Era marker (big "1988→2026") === */
+  .v-H {
+    background:#0a0e17;
+    position:relative; overflow:hidden;
+  }
+  .v-H__grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(245,158,11,0.05) 1px,transparent 1px);
+    background-size:24px 24px;
+    z-index:1;
+  }
+  .v-H__glow {
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 50%,rgba(245,158,11,0.15),transparent 60%);
+    z-index:2;
+  }
+  .v-H__content {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    z-index:3; padding:0 16px;
+  }
+  .v-H__small {
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; letter-spacing:0.4em; text-transform:uppercase;
+    color:#fbbf24; margin-bottom:8px;
+  }
+  .v-H__big {
+    font-family:'Segoe UI',sans-serif; font-weight:900;
+    font-size:clamp(2.6rem,7vw,4.6rem);
+    background:linear-gradient(135deg,#fbbf24 0%,#f87171 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    line-height:0.95; letter-spacing:-0.02em;
+    text-align:center;
+  }
+  .v-H__arrow {
+    display:inline-block;
+    color:#f87171;
+    -webkit-text-fill-color:#f87171;
+    margin:0 0.05em;
+    transform:translateY(-0.06em);
+  }
+  .v-H__sub {
+    font-family:Georgia,serif; font-style:italic;
+    font-size:13px; color:#cbd5e1; margin-top:8px;
+    letter-spacing:0.01em;
+  }
+  .v-H__count {
+    position:absolute; bottom:14px; left:18px; right:18px;
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; letter-spacing:0.18em; text-transform:uppercase;
+    color:#64748b; z-index:3;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>40 Afer — okładki, druga seria</h1>
+<p class="intro">
+Cztery nowe propozycje w estetyce <b>dashboardu</b> samej strony „40 największych afer" (ciemnogranat + amber-gold + glassmorphism + gradient amber→red na tytułach). Pierwsza seria (<b>UMORZONO / wycinki / spis / teczka</b>) była w estetyce <i>papier + czerwień</i>, która rozjeżdżała się z faktyczną stroną. Obecnie na home użyty wariant z <b>4 stat-tilami</b> + tytułem „40 AFER" w gradiencie. Poniżej alternatywy.
+</p>
+
+<div class="grid">
+
+  <!-- E: Network swarm -->
+  <div class="mock">
+    <div class="mock__head">— Wariant E · sieć powiązań</div>
+    <h2 class="mock__title">Sieć 200+ osób</h2>
+    <div class="mock__visual v-E">
+      <div class="v-E__glow"></div>
+      <svg viewBox="0 0 600 340" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;">
+        <!-- node connections (subtle lines) -->
+        <g stroke="rgba(245,158,11,0.18)" stroke-width="0.6" fill="none">
+          <line x1="80" y1="120" x2="180" y2="80"/>
+          <line x1="80" y1="120" x2="160" y2="200"/>
+          <line x1="180" y1="80" x2="280" y2="100"/>
+          <line x1="180" y1="80" x2="250" y2="180"/>
+          <line x1="160" y1="200" x2="250" y2="180"/>
+          <line x1="250" y1="180" x2="350" y2="160"/>
+          <line x1="250" y1="180" x2="320" y2="240"/>
+          <line x1="320" y1="240" x2="420" y2="220"/>
+          <line x1="350" y1="160" x2="430" y2="120"/>
+          <line x1="420" y1="220" x2="520" y2="200"/>
+          <line x1="430" y1="120" x2="520" y2="100"/>
+          <line x1="430" y1="120" x2="520" y2="200"/>
+          <line x1="280" y1="100" x2="350" y2="160"/>
+          <line x1="80" y1="240" x2="160" y2="200"/>
+          <line x1="80" y1="240" x2="180" y2="280"/>
+          <line x1="180" y1="280" x2="320" y2="240"/>
+        </g>
+        <!-- big amber nodes (key figures) -->
+        <g fill="#fbbf24">
+          <circle cx="180" cy="80" r="6"/>
+          <circle cx="250" cy="180" r="7"/>
+          <circle cx="350" cy="160" r="5"/>
+          <circle cx="430" cy="120" r="6"/>
+          <circle cx="320" cy="240" r="5"/>
+        </g>
+        <!-- amber halos -->
+        <g fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.5">
+          <circle cx="250" cy="180" r="14"/>
+          <circle cx="180" cy="80" r="11"/>
+          <circle cx="430" cy="120" r="12"/>
+        </g>
+        <!-- small nodes -->
+        <g fill="#cbd5e1" opacity="0.65">
+          <circle cx="80" cy="120" r="2.5"/>
+          <circle cx="160" cy="200" r="3"/>
+          <circle cx="280" cy="100" r="2.5"/>
+          <circle cx="520" cy="100" r="3"/>
+          <circle cx="520" cy="200" r="2.5"/>
+          <circle cx="420" cy="220" r="2.5"/>
+          <circle cx="80" cy="240" r="3"/>
+          <circle cx="180" cy="280" r="2.5"/>
+          <circle cx="120" cy="60" r="2"/>
+          <circle cx="380" cy="60" r="2"/>
+          <circle cx="470" cy="260" r="2"/>
+          <circle cx="240" cy="40" r="2"/>
+        </g>
+        <!-- red edge node (uciekinier/skazany) -->
+        <circle cx="520" cy="100" r="4" fill="#ef4444"/>
+        <circle cx="80" cy="240" r="4" fill="#ef4444"/>
+      </svg>
+      <div class="v-E__top">
+        <span>FUTURESHOW · sieć powiązań</span>
+        <span style="color:#94a3b8;">1988 — 2026</span>
+      </div>
+      <div class="v-E__title">
+        <h2>40 AFER</h2>
+        <p>kto kogo i z kim, przez cztery dekady</p>
+      </div>
+    </div>
+    <p class="mock__desc">
+      Graf <b>200+ osób</b> powiązanych z aferami — duże amber-gold węzły to figury kluczowe, czerwone to skazani / uciekinierzy. Mimowi sekcji <b>„Powiązania"</b> samej strony. Wskazuje na siłę raportu: nie izolowane sprawy, ale ekosystem nazwisk.
+    </p>
+  </div>
+
+  <!-- F: Timeline strip -->
+  <div class="mock">
+    <div class="mock__head">— Wariant F · oś czasu</div>
+    <h2 class="mock__title">Czterdzieści punktów na osi</h2>
+    <div class="mock__visual v-F">
+      <div class="v-F__title">
+        <h2>40 AFER</h2>
+        <p>III Rzeczpospolita · 1988 — 2026</p>
+      </div>
+      <div class="v-F__line"></div>
+      <!-- 12 dots scattered, mostly amber with a few red -->
+      <span class="v-F__dot" style="left:8%; color:#fbbf24; background:#fbbf24;"></span>
+      <span class="v-F__dot" style="left:14%; color:#ef4444; background:#ef4444;"></span>
+      <span class="v-F__dot" style="left:21%; color:#fbbf24; background:#fbbf24;"></span>
+      <span class="v-F__dot" style="left:28%; color:#fbbf24; background:#fbbf24;"></span>
+      <span class="v-F__dot" style="left:35%; color:#9ca3af; background:#9ca3af;"></span>
+      <span class="v-F__dot" style="left:42%; color:#ef4444; background:#ef4444;"></span>
+      <span class="v-F__dot" style="left:50%; color:#fbbf24; background:#fbbf24; width:14px; height:14px;"></span>
+      <span class="v-F__dot" style="left:57%; color:#fbbf24; background:#fbbf24;"></span>
+      <span class="v-F__dot" style="left:64%; color:#a855f7; background:#a855f7;"></span>
+      <span class="v-F__dot" style="left:72%; color:#fbbf24; background:#fbbf24;"></span>
+      <span class="v-F__dot" style="left:80%; color:#ef4444; background:#ef4444;"></span>
+      <span class="v-F__dot" style="left:88%; color:#fbbf24; background:#fbbf24;"></span>
+      <div class="v-F__years">
+        <span>'88</span><span>'94</span><span>'00</span><span>'06</span><span>'12</span><span>'18</span><span>'26</span>
+      </div>
+      <div class="v-F__caption">cztery dekady afer, jeden interaktywny raport</div>
+    </div>
+    <p class="mock__desc">
+      Pozioma oś czasu jak w sekcji <b>„Oś czasu"</b> raportu — kropki rozsiane między 1988 a 2026, kodowane kolorem (amber = trwa, czerwony = skazany, szary = umorzono, fiolet = uciekinier). Podpowiada: <b>każda kropka to skandal</b>.
+    </p>
+  </div>
+
+  <!-- G: Stacked cards -->
+  <div class="mock">
+    <div class="mock__head">— Wariant G · stos kart</div>
+    <h2 class="mock__title">40 spraw, talia kart</h2>
+    <div class="mock__visual v-G">
+      <div class="v-G__glow"></div>
+      <div class="v-G__top">FUTURESHOW · raport</div>
+      <div class="v-G__cards">
+        <div class="v-G__card v-G__card-1">
+          <div class="num">SYGN. 04 · 1992</div>
+          <div class="title">Afera Olin</div>
+          <span class="pill pill-g">Umorzono</span>
+        </div>
+        <div class="v-G__card v-G__card-2">
+          <div class="num">SYGN. 06 · 2002</div>
+          <div class="title">Afera Rywina</div>
+          <span class="pill pill-r">Skazany</span>
+        </div>
+        <div class="v-G__card v-G__card-3">
+          <div class="num">SYGN. 23 · 2015</div>
+          <div class="title">Amber Gold</div>
+          <span class="pill pill-r">Skazany</span>
+        </div>
+      </div>
+      <div class="v-G__title">
+        <h2>40 AFER</h2>
+      </div>
+    </div>
+    <p class="mock__desc">
+      Trzy karty spraw rozłożone w wachlarz — każda ze <b>sygnaturą</b>, tytułem i statusowym pillem (jak na faktycznej siatce <b>„Sprawy"</b>). Podgląd dashboardu w sensie: <i>tak to wygląda w środku</i>.
+    </p>
+  </div>
+
+  <!-- H: Era marker -->
+  <div class="mock">
+    <div class="mock__head">— Wariant H · znak epoki</div>
+    <h2 class="mock__title">1988 → 2026</h2>
+    <div class="mock__visual v-H">
+      <div class="v-H__grid"></div>
+      <div class="v-H__glow"></div>
+      <div class="v-H__content">
+        <div class="v-H__small">III Rzeczpospolita · 40 afer</div>
+        <div class="v-H__big">1988<span class="v-H__arrow">→</span>2026</div>
+        <div class="v-H__sub">cztery dekady, jeden raport</div>
+      </div>
+      <div class="v-H__count">
+        <span>40 spraw</span>
+        <span>200+ osób</span>
+      </div>
+    </div>
+    <p class="mock__desc">
+      Minimalizm. Tylko dwie daty w wielkim amber→red gradiencie, siatka pikseli w tle (jak w hero strony), drobne JetBrains-Mono pasy u góry i dołu. Mówi: <b>cztery dekady</b> jednym gestem — nic nie odwraca uwagi.
+    </p>
+  </div>
+
+</div>
+
+</div>
+</body>
+</html>
