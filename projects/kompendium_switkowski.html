@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Świtkowski — Okultyzm i magja w świetle parapsychologji (1939) — Kompendium</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #faf7f2;
+    --c-bg-card: #ffffff;
+    --c-text: #1f1a16;
+    --c-muted: #6b5f54;
+    --c-accent: #8b1e1e;
+    --c-gold: #b08a3e;
+    --c-border: #e6dfd3;
+    --c-quote: #f3ebd9;
+  }
+  .dark {
+    --c-bg: #14110d;
+    --c-bg-card: #1f1a14;
+    --c-text: #f0e9dc;
+    --c-muted: #9c8f7e;
+    --c-accent: #d4504f;
+    --c-gold: #d9b860;
+    --c-border: #2e2620;
+    --c-quote: #2a221a;
+  }
+  body {
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: 'Inter', sans-serif;
+    transition: background .25s, color .25s;
+  }
+  h1, h2, h3, h4, .serif { font-family: 'Cormorant Garamond', serif; }
+  .card { background: var(--c-bg-card); border-color: var(--c-border); }
+  .text-muted { color: var(--c-muted); }
+  .text-accent { color: var(--c-accent); }
+  .text-gold { color: var(--c-gold); }
+  .border-themed { border-color: var(--c-border); }
+  .bg-quote { background: var(--c-quote); }
+  .bg-accent { background: var(--c-accent); color: #fff; }
+  .bg-gold { background: var(--c-gold); color: #fff; }
+  .ring-themed { box-shadow: 0 0 0 1px var(--c-border); }
+  .nav-item { color: var(--c-muted); }
+  .nav-item:hover { color: var(--c-text); background: var(--c-quote); }
+  .nav-item.active { color: var(--c-accent); background: var(--c-quote); font-weight: 600; border-left: 3px solid var(--c-accent); }
+  blockquote {
+    background: var(--c-quote);
+    border-left: 4px solid var(--c-gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    padding: 1rem 1.25rem;
+    border-radius: 0 .5rem .5rem 0;
+    color: var(--c-text);
+  }
+  .pill { display: inline-block; padding: .15rem .55rem; border-radius: 999px; font-size: .75rem; background: var(--c-quote); color: var(--c-muted); border: 1px solid var(--c-border); }
+  .pill-accent { background: var(--c-accent); color: white; border-color: var(--c-accent); }
+  .pill-gold { background: var(--c-gold); color: white; border-color: var(--c-gold); }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn .3s ease-out; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(8px);} to {opacity:1; transform:translateY(0);} }
+
+  /* Flashcard flip */
+  .flashcard { perspective: 1000px; min-height: 240px; cursor: pointer; }
+  .flashcard-inner { position: relative; width: 100%; height: 100%; min-height: 240px; transition: transform .6s; transform-style: preserve-3d; }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-face { position: absolute; inset: 0; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 1.5rem; border-radius: .75rem; border: 1px solid var(--c-border); background: var(--c-bg-card); text-align: center; }
+  .flashcard-back { transform: rotateY(180deg); background: var(--c-quote); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ""; position: absolute; left: .5rem; top: 0; bottom: 0; width: 2px; background: var(--c-border); }
+  .timeline-item { position: relative; padding-bottom: 1.25rem; }
+  .timeline-item::before { content: ""; position: absolute; left: -1.6rem; top: .4rem; width: 12px; height: 12px; border-radius: 999px; background: var(--c-gold); box-shadow: 0 0 0 3px var(--c-bg); }
+
+  /* Accordion */
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(90deg); }
+  .chev { transition: transform .2s; display: inline-block; }
+
+  /* Quiz */
+  .quiz-opt { transition: all .15s; cursor: pointer; }
+  .quiz-opt:hover { background: var(--c-quote); }
+  .quiz-opt.selected { border-color: var(--c-gold); background: var(--c-quote); }
+  .quiz-opt.correct { background: #2d6a4f; color: white; border-color: #2d6a4f; }
+  .quiz-opt.wrong { background: #9d0208; color: white; border-color: #9d0208; }
+
+  /* Print */
+  @media print {
+    aside, .no-print { display: none !important; }
+    .section { display: block !important; page-break-after: always; }
+    body { background: white; color: black; }
+  }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 4px; }
+
+  .chapter-card { transition: transform .15s, box-shadow .15s; }
+  .chapter-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+
+  .concept-map-block { background: linear-gradient(135deg, var(--c-quote) 0%, var(--c-bg-card) 100%); }
+</style>
+</head>
+<body class="min-h-screen">
+
+<div class="flex">
+  <!-- SIDEBAR -->
+  <aside class="no-print fixed top-0 left-0 h-screen w-64 border-r border-themed bg-white dark:bg-[#14110d] overflow-y-auto z-10 flex flex-col" style="background: var(--c-bg-card);">
+    <div class="p-4 border-b border-themed">
+      <div class="text-xs text-muted uppercase tracking-widest">Kompendium</div>
+      <div class="serif text-xl font-bold mt-1 leading-tight text-accent">Świtkowski (1939)</div>
+      <div class="text-xs text-muted mt-1">Okultyzm i magja w świetle parapsychologji</div>
+    </div>
+    <nav class="flex-1 p-2" id="nav">
+      <!-- populated by JS -->
+    </nav>
+    <div class="p-3 border-t border-themed flex items-center justify-between text-xs">
+      <button id="darkToggle" class="px-3 py-1.5 rounded border border-themed hover:bg-quote">🌓 Tryb</button>
+      <button onclick="window.print()" class="px-3 py-1.5 rounded border border-themed hover:bg-quote">🖨 Druk</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="ml-64 flex-1 min-h-screen">
+    <div class="max-w-5xl mx-auto px-6 md:px-12 py-10" id="content">
+      <!-- populated by JS -->
+    </div>
+  </main>
+</div>
+
+<script>
+// ============= DATA =============
+const DATA = {
+  meta: {
+    title: "Okultyzm i magja w świetle parapsychologji",
+    author: "Józef Świtkowski",
+    year: 1939,
+    publisher: "Biblioteka Lotosu, tom 14 (wyd. Jan Hadyna, Wisła)",
+    pages_in_doc: "ok. 80% dzieła (do połowy rozdziału «Okultyzm średniowieczny»)",
+    source_url: "https://docs.google.com/document/d/1QCkQlLeEAxeIF8xcHhldT0HNkEdr2Qqx/edit"
+  },
+  intro: {
+    foreword: "Świtkowski we wstępie zaznacza, że pisze książkę dla czytelnika zaznajomionego już z podstawami psychologii, ale ciekawego zjawisk uchodzących za «cudowne». Programowo unika sensacji i zarówno bezkrytycznej wiary, jak i a priori sceptycyzmu. Materiał uporządkowany jest spiralnie od najzwyklejszych mechanizmów świadomości po najbardziej spektakularne zjawiska parafizyczne, a wreszcie ku tradycji okultystycznej. Cel: pokazać, że wszelkie «cuda» mają korzenie w naturze człowieka (podświadomość, magnetyzm żywotny, ektoplazma, wyobrażenie myślowe). Autor wielokrotnie podkreśla, że poziom moralny jest warunkiem koniecznym prawdziwej władzy paranormalnej — czego z oczu stracił okultyzm średniowieczny i nowoczesny. Książkę kończy w grudniu 1938 r., dedykuje wydawcy i przyjacielowi Janowi Hadynie z Wisły, prowadzącemu czasopismo «Lotos».",
+    publisher_note: "Jan Hadyna (wydawca) przedstawia książkę jako monumentalny syntetyczny wykład w polskiej literaturze ezoterycznej, owoc dziesięcioleci pracy Świtkowskiego jako badacza, eksperymentatora i tłumacza. Zachęca do lektury powolnej i systematycznej, sugerując także własne dzieła pomocnicze («Droga w światy nadzmysłowe», przekłady z Wiwekanandy).",
+    introduction: "Wstęp wyjaśnia pojęcia podstawowe. Parapsychologia (Richet, 1884: «metapsychika») to nauka indukcyjna, badająca zjawiska zwane potocznie cudami, gromadząca fakty, wysnuwająca prawa. Okultyzm to wiedza dedukcyjna oparta na tradycji rzekomo objawionej. Magia to praktyka działania na podstawie tej wiedzy. Świtkowski deklaruje, że pierwsza i druga część książki traktują o parapsychologii (psychologia zwykła i parapsychologia eksperymentalna), trzecia — o okultyzmie historycznym (Indie, Chaldea, Egipt, Izrael, średniowiecze, XVI–XX w.) i o magii praktycznej. Autor odróżnia trzy szkoły: animizm (zjawiska to praca podświadomości medjum), spirytyzm (duchy zmarłych), okultyzm właściwy (system tradycji). Sam staje pomiędzy — jest «zaangażowanym sceptykiem»."
+  },
+  theses: [
+    { n: 1, t: "Między medjum a człowiekiem zwykłym jest tylko różnica stopnia, nie jakości.", d: "Zalążki uzdolnień paranormalnych ma każdy. Klasycznym dowodem są eksperymenty hr. de Gasparina (1854) i prof. Thury'ego (1855), w których przeciętni ludzie wprawiali stół w ruch bez medjum." },
+    { n: 2, t: "Świadomość na jawie obejmuje zaledwie ułamek całej psychiki.", d: "Większość zdarzeń psychicznych odbywa się w podświadomości; uświadamiamy sobie tylko to, na co zwróciliśmy uwagę." },
+    { n: 3, t: "Podświadomość jest właściwym motorem zjawisk parapsychicznych.", d: "Telepatia, jasnowidzenie, telekinezja, materializacja — wszystkie pochodzą z głębszych warstw psyche, niedostępnych krytyce świadomości." },
+    { n: 4, t: "Trans medjalny jest jakościowo różny od hipnozy sugestyjnej.", d: "Tylko trans właściwy (osiągany przez magnetyzm żywotny, nie przez sugestię) otwiera dostęp do głębszych warstw podświadomości i zjawisk parafizycznych." },
+    { n: 5, t: "Ektoplazma jest realną substancją organiczną.", d: "Wyłaniana z ciała medjum, przechodzi stadia od gazu/światła do twardej materii organicznej; zimna, lepka, śluzowata, odporna na ogień, wrażliwa na światło i dotyk. Tworzy ręce, postacie ludzkie, foremki parafinowe." },
+    { n: 6, t: "Magnetyzm żywotny istnieje obok hipnozy sugestyjnej.", d: "Jest siłą kształtującą materię ektoplastyczną; działa na rośliny i zwierzęta — więc nie jest tylko sugestią. Wymaga raportu (łączności) między magnetyzerem a chorym." },
+    { n: 7, t: "Ideoplastja: wyobrażenie myślowe kształtuje materię.", d: "Trzy formy wedle P. Lebiedzińskiego (Kopenhaga 1920): psychiczna, materialna, energetyczna. Tłumaczy materializacje, foremki, radiografie." },
+    { n: 8, t: "Ciało eteryczne — niewidzialny plan struktury fizycznej.", d: "Hipoteza nieunikniona dla wyjaśnienia materializacji i odlewów: substancja musi mieć «plan», wedle którego się układa — jak nasienie rośliny, jak krystaliczne linie sił soli." },
+    { n: 9, t: "Paralelizm psychofizyczny jest błędny.", d: "Pamięć i indywidualność istnieją niezależnie od mózgu (Bergson, Geley, Lodge); śmierć jest tylko wyzwoleniem indywidualności z ograniczeń narzędzia mózgowego." },
+    { n: 10, t: "Poziom moralny jest warunkiem koniecznym prawdziwej władzy magicznej.", d: "Okultyzm średniowieczny i nowoczesny zatracił tę zasadę, czyniąc rytuały substytutem charakteru. Wzorem są jogini, święci, «magowie biali»." }
+  ],
+  conceptMap: [
+    {
+      id: "psy",
+      title: "BLOK I — Psychologia zwykła",
+      color: "#8b1e1e",
+      desc: "Fundament: jak działa normalna świadomość, pamięć, sen, sugestia. Bez tego dalsze zjawiska wydawałyby się cudowne.",
+      chapters: ["Świadomość na jawie","Władanie uwagą","Pamięć","Wrażenia niezauważone","Podświadomość","Błędy w postrzeganiu","Sen zwyczajny","Sen sztucznie wywołany","Marzenia senne","Stany do snu zbliżone","Sugestja","Hipnoza sugestyjna","Psychoanaliza","Telepatja","Autosugestja","Układ nerwowy człowieka","Histerja"]
+    },
+    {
+      id: "para",
+      title: "BLOK II — Parapsychologia",
+      color: "#b08a3e",
+      desc: "Systematyczny przegląd zbadanych zjawisk paranormalnych według podziału Richeta na trzy działy.",
+      chapters: ["Fizjologja medjum","Cechy transu","Psychika transowa","Zjawiska parafizyczne","Ektoplazma","Materializacje","Odlewy i aporty","Fotografja zjawisk niewidzialnych","Pismo medjalne","Psychologja zjaw","Sobowtóry","Udział świadków","Telestezja","Psychometrja","Rabdomancja","Widzenie w czasie","Magnetyzm żywotny","Stany snu magnetycznego","Inteligencje bezcielesne","Domy nawiedzone","Mistycyzm","Wnioski"]
+    },
+    {
+      id: "occ",
+      title: "BLOK III — Okultyzm historyczny i praktyczny",
+      color: "#4a5d4f",
+      desc: "Umieszczenie nauki w kontekście tradycji: Indie, Chaldea, Egipt, Izrael, średniowiecze, alchemia, kabała, magia ceremonialna, spirytyzm, teozofia.",
+      chapters: ["Wstęp do okultyzmu","Joga indyjska","Okultyzm starożytny","Qabbalah","Okultyzm średniowieczny","Wybitni okultyści XVI w. *","Alchemja *","Procesy czarownic *","Satanizm *","Spirytyzm *","Astrologja *","Teozofja *","Reinkarnacja *","Magja ceremonjalna *","Magja seksualna *","Zakończenie *"]
+    }
+  ],
+  chaptersPart1: [
+    { n:1, title:"Świadomość na jawie", essence:"Świadomość przyjmuje wrażenia zmysłowe, afektowe i myślowe tylko gdy mózg na nich skupia uwagę; reszta wrażeń, choć rejestrowana, pozostaje poza świadomością. Każde wrażenie przyjęte staje się spostrzeżeniem, utrwala się jako wyobrażenie w pamięci i podlega ocenie. Długotrwałe skupienie na wyobrażeniu może wytworzyć halucynację. Ludzie normalni odróżniają wrażenia rzeczywiste od wyobrażeń pamięciowych i halucynacji.",
+      theses:["wrażenie staje się spostrzeżeniem tylko dzięki uwadze","spostrzeżenie automatycznie odkłada się w pamięci","długie skupienie wytwarza halucynacje wolicjonalne"],
+      concepts:[["spostrzeżenie","wrażenie przyjęte przez świadomość"],["wyobrażenie","pamięciowa kopia spostrzeżenia"],["halucynacja","wyobrażenie bez bodźca"],["idjosynkrazja","kojarzenie wyobrażeń bez logicznego związku"]],
+      people:["H. Meyer (halucynacje z wytężenia uwagi)","przykład wstrętu do miodu po ukłuciu pszczoły"],
+      quote:"Uświadamiamy sobie tylko to, na co zwróciliśmy uwagę." },
+    { n:2, title:"Władanie uwagą", essence:"Większość ludzi nie panuje nad uwagą — błąka się ona od jednego silnego wrażenia do drugiego. Świadome obserwowanie nigdy nie jest naprawdę równoczesne (przykład koncertu); poznanie wymaga monoideizmu, czyli skupienia na jednym przedmiocie. Polideizm prowadzi do roztargnienia. Skupienie uwagi można ćwiczyć — joga indyjska zna to od starożytności jako pratjaharę i dharanę.",
+      theses:["dokładność postrzegania zależy od skupienia uwagi","obserwacja jest zawsze kolejna, nie równoczesna","uwagą można świadomie kierować"],
+      concepts:[["monoideizm","jedna idea wypełnia świadomość"],["polideizm","wielość wrażeń naraz"],["pratjahara","joga skupiania uwagi"],["dharana","joga utrzymania uwagi"]],
+      people:["koncert orkiestrowy (flet vs całość)","uczeni, myśliwi, kierowcy aeroplanów"],
+      quote:"Dokładność postrzegania jest tem większa, im ściślej zdołamy wybrany zespół wrażeń wyodrębnić od postronnych." },
+    { n:3, title:"Pamięć", essence:"Pamięć jest magazynem wyobrażeń, z którego wolą wydobywamy materiał. Dzieli się na prostą (bez akcentu czasu) i szczegółową. Silne wstrząsy mogą zniszczyć pamięć (T.C. Hanna). Wyobrażenia układają się chronologicznie i jakościowo — przykre są spychane w głąb. Wbrew paralelizmowi psychofizycznemu mózg jest tylko narzędziem, nie wytwórcą pamięci (Bergson, Geley, Lodge).",
+      theses:["pamięć ma sortowanie chronologiczne i jakościowe","mózg to przekaźnik, nie twórca pamięci","przykre wspomnienia są spychane (kompleksy)"],
+      concepts:[["kryptomnezja","utajona pamięć"],["paralelizm psychofizyczny","teza, że każdej myśli odpowiada zmiana w mózgu"],["kompleks","zespół zepchniętych wyobrażeń"],["uraz psychiczny","rana w duszy"]],
+      people:["duchowny T.C. Hanna","H. Bergson (1897)","G. Geley"],
+      quote:"Instrument nie stanowi inteligencji: przenosi myśl, ale jej nie tworzy." },
+    { n:4, title:"Wrażenia niezauważone", essence:"Żadne wrażenie nie ginie — wszystko ponad progiem zmysłów wędruje do pamięci niezależnie od uwagi. Eksperymenty Lombroso i Glogau pokazują, że hipnotyk pod sugestią reprodukuje szczegóły nigdy nie uświadomione (gra Rossiniego, haft krzyżykowy). Pamięć przewyższa pojemność mózgu. Driesch: obrazy pamięciowe nie są dokładnymi kopiami, lecz «produkcjami nowych form ze starego materiału».",
+      theses:["każde wrażenie ponad progiem wrażliwości jest zanotowane","podświadomość zachowuje to, czego świadomość nie zauważyła","halucynacja może być sfałszowanym obrazem pamięciowym"],
+      concepts:[["próg wrażliwości","minimalna intensywność bodźca"],["kryptopsychja","psychika ukryta (Geley)"],["paralelizm psychofizyczny","krytyka"]],
+      people:["dr E.A. Glogau","C. Lombroso (hipnotyk-Rossini, hipnotyk-kobieta haftująca)","H. Driesch"],
+      quote:"Żadno wrażenie nie ginie." },
+    { n:5, title:"Podświadomość", essence:"Świadomość na jawie obejmuje tylko cząstkę spostrzeżeń; reszta funkcjonuje pod jej progiem. Podświadomość jest jakby drugą osobowością — autonomiczną, amoralną, zarządzającą funkcjami fizjologicznymi (krążenie, trawienie) i odruchami (rumieniec, gniew). Nowa psychologia rozróżnia podświadomość (Unterbewusstsein) i zaświadomość (Nebenbewusstsein). Geley dowodzi, że pamięć podświadoma jest niezniszczalna i niezależna od mózgu — argument za przeżyciem śmierci.",
+      theses:["podświadomość ma własną autonomię i amoralność","pamięć pozamózgowa jest niezniszczalna","śmierć to wyzwolenie od ograniczenia mózgowego"],
+      concepts:[["podświadomość","pod progiem świadomości"],["zaświadomość","obok świadomości (Driesch)"],["halucynacja negatywna","niewidzenie obecnego"]],
+      people:["G. Geley","eksperyment niewidzianej karty u hipnotyka","rumieniec wstydu jako odruch"],
+      quote:"Ponad pamięcią świadomą, związaną ściśle z komórkami mózgowemi, istnieje jeszcze druga pamięć, nieświadoma, niezależna od mózgowia i niezniszczalna." },
+    { n:6, title:"Błędy w postrzeganiu", essence:"Postrzeganie jest niedoskonałe: błędnie oceniamy wielkość i odległość, źródło dźwięku, czas; afekty (strach, oczekiwanie) wytwarzają iluzje. Iluzja to mylne wnioskowanie o realnym wrażeniu, halucynacja — wyobrażenie bez bodźca. Richet: halucynacja to «obraz duchowy rzutowany na zewnątrz, nie odpowiadający rzeczywistości»; odróżnia halucynacje patologiczne (alkohol, obłęd) od telepatycznych (prawdomownych) o realnej przyczynie zewnętrznej.",
+      theses:["oczekiwanie i afekt rodzą iluzje na seansach","halucynacja telepatyczna ma realne źródło zewnętrzne","klasyczny przykład: indyjski sznur–wąż"],
+      concepts:[["iluzja","mylna interpretacja bodźca"],["halucynacja","wyobrażenie bez bodźca"],["halucynacja prawdomowna","telepatyczna"]],
+      people:["K. Richet (definicja)","zatrucie haszyszem, eterem, alkoholem","pukania w stół na seansach"],
+      quote:"Mieć halucynacje, znaczy: śnić w stanie jawy zupełnej, nie wiedząc o tem, że śnimy." },
+    { n:7, title:"Sen zwyczajny", essence:"Sen wymaga nieczynności świadomości; ułatwiają go zezwolenie (autosugestia), zmęczenie, rytm jednostajny. Mazurkiewicz: sen można tylko warunkować, nie wywołać. Podświadomość pozostaje czynna: oddech, trawienie, regeneracja, kryzysy chorobowe nocą. Liebeault wskazuje cztery podstawy: przyzwolenie, zamknięcie zmysłów, wyobrażenie snu, środki uspokajające.",
+      theses:["świadomość przeszkadza zasypianiu, podświadomość pracuje","sen leczy (przełomy gorączkowe w nocy)","bezsenność wieloletnia możliwa po urazach mózgu"],
+      concepts:[["hipnotoksyny","hipotetyczne «ciałka zmęczenia"],["letarg","sen niezwykle głęboki"],["drzemka","sen lekki"]],
+      people:["prof. Mazurkiewicz","dr A. Liebeault","Węgier nie sypiający od 20 lat po postrzale (1938)"],
+      quote:"Warunkiem podstawowym snu jest nieczynność świadomości." },
+    { n:8, title:"Sen sztucznie wywołany", essence:"Narkotyki (alkohol, eter, morfina, opium, kokaina, haszysz, luminal) hamują korę mózgową. Schleich wyróżnia 13 stadiów: utrata pojęcia czasu, przestrzeni, przyczynowości, postrzegania, fantazji, logiki, «ja», ruchów automatycznych, instynktów, trawienia, mięśni gładkich, oddechu, serca. Te same stadia występują w naturalnym zasypianiu. Sen można też wywołać prądem elektrycznym (Weinhold, Preyer, Stein, Vasseur).",
+      theses:["stadia narkozy i snu naturalnego są identyczne","głębokość chirurgiczna celuje w stadium 7","prąd elektryczny może wywołać hipnozę"],
+      concepts:[["narkoza","sen narkotyczny"],["ataksja","utrata orientacji przestrzennej"],["stadia Schleicha (1–13)","skala głębokości"],["katalepsja","sztywność mięśni"]],
+      people:["prof. L. Schleich (Berlin)","Weinhold, Preyer, Hansen, Stein, Vasseur","C. Lombroso (Studi ipnotici)"],
+      quote:"Zjawiska we śnie zwyczajnym nie różnią się zatem od zjawisk snu sztucznie wywołanego narkotykami." },
+    { n:9, title:"Marzenia senne", essence:"Sny śnią się także w głębokim śnie, lecz po nagłym przebudzeniu nie można ich przenieść do świadomości. Cechą jest bezczasowość i brak logiki. Driesch: sny mają sens i strukturę, brak im akcentu sądu. Chodkiewicz dzieli sny na fizjologiczne, psychiczne, fizyczne, psychometryczne, telepatyczne, o zmarłych i wieszcze. Freud przypisał im seksualne tło symboliczne; Lifschitz i Driesch tę uniwersalność odrzucają.",
+      theses:["sny pojawiają się także w głębokim śnie","we śnie brak akcentu czasu i krytyki","symbolika seksualna nie jest powszechna"],
+      concepts:[["bezczasowość snów","brak następstwa czasowego"],["sen wieszczy","zapowiadający przyszłość"],["sennik","symboliczny katalog"],["uraz psychiczny","Freud"]],
+      people:["H. Driesch","Z. Freud, J. Breuer, A. Adler, S. Ferenczi","Chodkiewicz","Lifschitz"],
+      quote:"Sny mają sens i znaczenie; nie są wcale chaotyczne, a nieraz są nawet dramatyczne." },
+    { n:10, title:"Stany do snu zbliżone", essence:"Trzy stany: omdlenie (synkope), letarg, katalepsja. Omdlenie ma przyczyny fizjologiczne (anemia, wzruszenia) — ciało ziębnie, tętno słabe. Letarg to omdlenie szczególnie długie (coma), trudne do odróżnienia od śmierci. Katalepsja: mięśnie zachowują nadaną pozycję (tężec kataleptyczny), świadomość zwykle zachowana. Somnambulizm: pole świadomości zwężone, władza nad mięśniami zachowana; w wersji samorzutnej zwany lunatyzmem.",
+      theses:["letarg może symulować śmierć","katalepsja: mięśnie sztywnieją bez utraty świadomości","lunatyzm wiąże się z pokwitaniem"],
+      concepts:[["synkope","omdlenie"],["letarg","głębokie coma"],["katalepsja","sztywność z zachowaniem pozycji"],["somnambulizm","aktywny sen"],["katapleksja","ubezwładnienie z przestrachu"]],
+      people:["środki cucące (amoniak, koniak)","marzenia o księżycu jako pobudka lunatyzmu"],
+      quote:"Katalepsja nie trwa nigdy długo (od sekund do minut), poczem przechodzi w letarg lub w sen zwyczajny." },
+    { n:11, title:"Sugestja", essence:"Sugestia to wprowadzenie wyobrażenia do mózgu, który je przyjmie (Bernheim); każde przyjęte ma dążność do realizacji (Moll). Otoczeni jesteśmy sugestiami — wychowanie, opinia publiczna. Sugestia działa nie tylko na mózg, lecz i na funkcje fizjologiczne (krew, gruczoły, sen). Oporami są doświadczenia w pamięci oraz cenzura moralna. Podświadomość przyjmuje sugestie łatwiej niż świadomość.",
+      theses:["świadomość stawia opory, podświadomość jest łatwowierna","sugestia może materializować się w ciele","cenzura moralna blokuje sugestie zbrodnicze"],
+      concepts:[["sugestia","narzucone wyobrażenie"],["opór","krytyka świadomości"],["cenzura moralna","blokada etyczna"],["autosugestia","sugestia własna"]],
+      people:["prof. H. Bernheim","dr Moll","F. Imkoff","C. Lombroso (hipnotyk-Napoleon)"],
+      quote:"Każda w tej drodze wprowadzona idea ma dążność do przemienienia się w czynność." },
+    { n:12, title:"Hipnoza sugestyjna", essence:"Hipnoza to nie tajemnicza władza, lecz sen zwyczajny pogłębiony sugestią; Bernheim: «niema hipnotyzmu, jest tylko podatność na sugestje». Pęcherz pod znaczkiem to monoideizm. Etapy: charme, hypotaxis, somnambulizm (Lifschitz); albo 6 stopni Liebeaulta. Wrażliwość słuchowa wzrasta 8-krotnie w somnambulizmie. Sugestie terminowe wskazują na «zegar wewnętrzny» podświadomości. Hipnoza możliwa też na odległość (Hericourt, Liebeault, Ochorowicz).",
+      theses:["hipnoza = sen + monoideizm","sugestia terminowa realizuje się przez chwilowy somnambulizm","istnieje zegar podświadomości"],
+      concepts:[["charme","rozmarzenie"],["hypotaxis","omroczenie"],["somnambulizm","trzecie stadium"],["raport","łączność hipnotyka z hipnotyzerem"],["sugestia terminowa","odroczona w czasie"]],
+      people:["Bernheim (szkoła nantejska)","Liebeault, Forel, Lifschitz","Hericourt (hipnoza na odległość)","T.W. Mitchell"],
+      quote:"Niema hipnotyzmu, jest tylko podatność na sugestje." },
+    { n:13, title:"Psychoanaliza", essence:"Freud przyjmuje, że nerwice (histeria, psychastenia, paranoia) wynikają z urazów dzieciństwa zwykle płciowo zabarwionych — «afektów uwięzłych». Postuluje kompleksy: Edypa, Elektry, kastracji, narcyzmu. Leczy się «odreagowaniem» przez psychoanalizę: wolne kojarzenie + interpretacja snów + galwanometr Junga. Lifschitz odrzuca panseksualizm i symbolikę snów; opracował hipnanalizę — bezpośrednie sięganie w podświadomość w «punkcie drażliwym». Świtkowski sugeruje, że panseksualne nastawienie Freuda wynika z atmosfery napięcia między pacjentką a lekarzem.",
+      theses:["uraz wczesnego dzieciństwa rodzi nerwicę","leczenie = wydobycie + odreagowanie","hipnanaliza jest prostsza od psychoanalizy"],
+      concepts:[["uraz (trauma)","głęboki wstrząs psychiczny"],["afekt uwięzły","stłumiony afekt"],["kompleks Edypa/Elektry/kastracji/narcyzmu","Freud"],["libido","popęd"],["konwersja","afekt → objaw somatyczny"],["hipnanaliza","Lifschitz"]],
+      people:["Z. Freud, J. Breuer, A. Adler, S. Ferenczi, C.G. Jung","prof. Lifschitz (Moskwa 1930)"],
+      quote:"Afekty uwięzłe tworzą w duszy ranę ciągle jątrzącą." },
+    { n:14, title:"Telepatja", essence:"Telepatia — odczuwanie umysłu na odległość — uznana przez naukę od I Kongresu Psychofizjologii 1889 (Myers, 1883: termin). Wymaga nadawcy i odbiorcy; bez nadawcy jest tylko jasnowidzenie. Odległość nie gra roli; treść uczuciowa łatwiej przesyłana; sen sprzyja odbiorowi (59% przypadków). Ochorowicz: 92 wyniki na 283 doświadczeń. Eksperymenty Warszawa–Ateny (1926, 1937) — do 90% trafień. Telepata może wykradać szczegóły z czyjejś podświadomości — to wyjaśnia powodzenie chiromantów.",
+      theses:["telepatia wymaga 2 inteligencji","sen ułatwia odbiór","odległość nie ma znaczenia","głęboki odbiorca > nadawca"],
+      concepts:[["telepatia (Myers 1883)","przekazywanie myśli bez zmysłów"],["poliideizm, monoideizm, aideizm","skala Ochorowicza"],["halucynacja telepatyczna","obraz nadawcy"],["raport","kanał łączności"]],
+      people:["F.H. Myers","J. Ochorowicz («Sugestja myślowa»)","K. Richet","Dusart (112 km)","Schrenck-Notzing","sztab brytyjski w Indjach"],
+      quote:"Uważamy za rzecz pewną, że myśl jednej osoby może się przenosić na drugą bez pośrednictwa znanych nam narządów zmysłowych." },
+    { n:15, title:"Autosugestja", essence:"Granica między sugestią obcą a własną jest nieostra. Autosugestia realizuje się tylko gdy się w nią uwierzy i da się jej czas na przejście do podświadomości — najlepiej tuż przed zaśnięciem (metoda Coué'go). Treść musi być twierdząca, kategoryczna, w czasie teraźniejszym («to się już spełnia»). Może gojić rany, regulować krew. Klasyczny przykład — uczeń wstający w nocy i piszący w somnambulizmie zadanie szkolne, którego nie umiał za dnia.",
+      theses:["autosugestia działa przez podświadomość","formuła musi być twierdzeniem teraźniejszym","najlepszy moment to chwila zasypiania"],
+      concepts:[["autosugestia","sugestia własna"],["metoda Coué","«już się spełnia»"],["somnambulizm samorzutny","spontaniczny"],["automatyzm","działanie bez świadomości"]],
+      people:["Émile Coué","pomocnik aptekarski wydający w nocy leki bez świadomości","uczeń kładący książkę pod poduszkę"],
+      quote:"Już się spełnia." },
+    { n:16, title:"Układ nerwowy człowieka", essence:"Anatomia nowoczesna rozróżnia trzy układy: mózgowo-rdzeniowy (cerebrospinalis), współczulny (sympathicus) i przywspółczulny (parasympathicus). Mózgowy zawiera korę (świadomość) i ośrodki podkorowe (podświadomość). Współczulny ma splot słoneczny — «mózg trzewi». Przywspółczulny troszczy się o regenerację. Gruczoły dokrewne (przysadka, szyszynka, tarczyca, grasica, nadnercza, trzustka, gruczoły płciowe) wydzielają hormony do krwi.",
+      theses:["trzy autonomiczne układy nerwowe","splot słoneczny to drugi mózg","gruczoły dokrewne mają znaczenie okultystyczne"],
+      concepts:[["cerebrospinalis","mózgowo-rdzeniowy"],["sympathicus","współczulny"],["parasympathicus","przywspółczulny"],["plexus Solaris","splot słoneczny"],["hormony","wydzielany do krwi"]],
+      people:["Z. Szantroch (schemat)","Szuman i Skowron (rozmieszczenie gruczołów)"],
+      quote:"[Układ współczulny] jest jakgdyby palaczem pod kotłem maszyny organizmu." },
+    { n:17, title:"Histerja i schorzenia podobne", essence:"Histeria: parestezje, hiperestezje, porażenia, ataki kloniczne i toniczne, attitudes passionnelles, ekstaza. Kula histeryczna (globus hystericus). Janet: bodźce do «niewrażliwych» narządów są przyjmowane poza świadomością — histeria jako rozszczepienie psychiczne, «misère psychologique». Freud wprowadza konwersję. Schizofrenia prowadzi do podwójnej i potrójnej osobowości. Klasyczny przykład: Félida X. (dr Azam, 1858) z dwiema kolejnymi osobowościami.",
+      theses:["histeria to rozszczepienie psychiczne","konwersja zamienia afekt na objaw cielesny","osobowość transowa to nie schizofrenia"],
+      concepts:[["globus hystericus","kula histeryczna"],["attitudes passionnelles","postawy namiętne"],["konwersja","Freud"],["misère psychologique","Janet"],["dementia praecox","schizofrenia"]],
+      people:["Charcot (Salpêtrière)","P. Janet","Binswanger","Félida X. (dr Azam, Bordeaux 1858)","pani Beauchamp (dr Prince 1899)"],
+      quote:"Histerja jest szczególnym wypadkiem zjawisk rozszczepienia psychicznego." }
+  ],
+  chaptersPart2: [
+    { n:18, title:"Fizjologja medjum", essence:"Medjum nie jest «uduchowioną istotą», lecz człowiekiem zwykłym — drobne cechy odkrywa dopiero doświadczony parapsycholog. Uzdolnienia są zwykle dziedziczne lub ujawniają się po urazie (kontuzja, operacja, katastrofa, zawód miłosny). Schrenck-Notzing wskazuje na związek medjalności z seksualnością. Nieczułość dotykowa miejsc hipnogennych, czasem widzenie w ciemności (amblyopia), różdżkarstwo. Cechą wspólną jest zdolność do transu.",
+      theses:["medjum jest fizycznie normalne","uzdolnienia uaktywnia uraz","histeria to biegun przeciwny medjalności"],
+      concepts:[["medjum","osoba o uzdolnieniach paranormalnych"],["punkt hipnogenny","miejsce wprowadzające w sen"],["hipnoskop","magnes Ochorowicza"],["trans","szczególny sen medjum"]],
+      people:["Eusapja Paladino","S. Tomczyk","Franek Kluski (T. Modrzejewski)","A. Rasmussen","dr Kindborg, M. Selt"],
+      quote:"Histerja, to biegun przeciwny medjalności." },
+    { n:19, title:"Cechy transu", essence:"Trans medjalny różni się od hipnozy sugestyjnej; jest samorzutny przy odpowiednim nastroju i «łańcuchu rąk». Faza początkowa: medjum zamyka oczy, oddycha głęboko; potem somnambulizm; wreszcie stadium czynne z poceniem się, zimnym powiewem, ruchliwością. Tętno wzrasta z 60–80 do 120–150. Wrażliwość dotykowa znika (Schneider, Gruber 1925: spadnięcie drążka uszkodziło bok medjum). Łańcuch rąk z uczestnikami harmonizuje «fluid».",
+      theses:["trans ≠ hipnoza sugestyjna","puls — najpewniejsza wskazówka głębokości","przerwanie połączenia ektoplastycznego rani medjum"],
+      concepts:[["łańcuch rąk","krąg uczestników"],["fluid","siła kształtująca"],["zimny powiew","spadek temperatury"],["pępowina ektoplastyczna","wiążąca zjawę z medjum"],["ciemny gabinet","zasłonięty kąt"]],
+      people:["d'Esperance","prof. K. Gruber (Schneider, 1925)","prof. Pawłowski (o Kluskim)","Eleonora Zugun"],
+      quote:"Cechą charakterystyczną wszystkich medjów jest zdolność do wpadania w szczególny stan uśpienia, zwany transem." },
+    { n:20, title:"Psychika transowa", essence:"Medjum w transie mówi «ty» do każdego, nie pamięta nazwisk; ma ambicję przekonania krytyków. Pojawiają się odrębne osobowości transowe z własnym imieniem, charakterem, językiem, czasem zdolnościami (gra na fortepianie, malowanie). Tomczykówna: «Stasia»; Paladino: «John King»; d'Esperance: «Jolanda». Po obudzeniu zwykle pełna amnezja. Animizm vs spirytyzm — zależne od nastawienia badacza.",
+      theses:["osobowości transowe są konsekwentne","brak stadium «bez ja»","nastawienie badacza kształtuje objawy"],
+      concepts:[["osobowość transowa","nowe «ja» w transie"],["duch kontrolny","opiekun"],["ksenoglossja","mówienie nieznanymi językami"],["amnezja","zapomnienie potransowe"]],
+      people:["«Stasia» (Tomczyk)","«Jolanda» (d'Esperance)","«John King» (Paladino)","«Nada» (Cooper)","«Feda» (Leonard)"],
+      quote:"Każda osobowość transowa zachowuje konsekwentnie swój charakter, ruchy, sposób mówienia, nawyki." },
+    { n:21, title:"Zjawiska parafizyczne", essence:"Niektóre medja wpływają na igłę magnetyczną (ferromagnetyzm) lub przedmioty na odległość — telekinezja, w cięższej postaci lewitacja (powolne unoszenie). Klasyczny przedmiot: stół. Inne objawy: gitara w powietrzu, dzwonki, fortepian, lewitacja medjum z krzesłem ku sufitowi. Eksperyment Colleya (1877): tabliczka łupkowa znalazła się na schodach. Ruchy wagi pod kloszem (Crookes, Crawford). Świetlne kuliste/eliptyczne formy towarzyszą materializacjom (Geley, Guzik, Kluski).",
+      theses:["telekinezja działa bez fizycznego kontaktu","lewitacja jest spokojna, nie pchnięcie","światła towarzyszą materializacjom"],
+      concepts:[["ferromagnetyzm","wpływ na magnes"],["telekinezja","ruch przedmiotów"],["lewitacja","wznoszenie się"],["zjawiska świetlne","kuliste/eliptyczne"]],
+      people:["Jan Guzik","Franek Kluski","E. Paladino","S. Tomczyk","Crookes, Crawford, Hare, Zöllner","Colley (Monck, 1877)","C. Blacher (Ryga)"],
+      quote:"Nie dotykaj mnie, bo spadnę." },
+    { n:22, title:"Ektoplazma", essence:"Crawford badał substancję między medjum a stołem — «lepką, zimną, oleistą», wychodzącą z kostek nóg. Jej ciężar dochodził połowy ciała medjum. Ochorowicz: cienkie nitki z palców («promienie sztywne»), elastyczne, odporne na ogień. U Kluskiego — grube taśmy. Schrenck-Notzing u Ewy C. (Marty Béraud) opisał wydobywanie pian, splotów nitek z ust. Materia organiczna, śluzowata, bolesna przy dotknięciu, odporna na ogień (D.D. Home brał węgle żarzące). Geley nazwał ektoplazmą (wcześniej teleplazma).",
+      theses:["ektoplazma jest niezróżnicowaną materią organiczną","cofa się przy nagłym świetle, dotyku, oszustwie","zawiera nerwy czuciowe medjum"],
+      concepts:[["ektoplazma","substancja organiczna z medjum"],["teleplazma","wcześniejsza nazwa"],["promienie sztywne","cienkie nitki (Ochorowicz)"],["pseudopodia","wypustki ektoplastyczne"]],
+      people:["W.J. Crawford","Ochorowicz (Tomczyk, Paladino)","Schrenck-Notzing (Ewa C./Marta Béraud)","Geley","dr E. Osty (promienie podczerwone)"],
+      quote:"Lepka, zimna i oleista substancja, jakgdyby tam powietrze zmieszane było z cząsteczkami jakiejś wstrętnej płazowatej materji." },
+    { n:23, title:"Materjalizacje", essence:"Niektóre medja produkują pełne postacie z ektoplazmy — często niedoskonałe (płaskie jak karton, mniejsze od normalnych). Najsłynniejsza: Katie King u Florencji Cook (1873), badana przez W. Crookesa przez rok niemal codziennie — Crookes mierzył jej puls, oddech, opór elektryczny (5× wyższy niż medjum), wykonał 43 negatywy. Zjawa «Estelli» u Kate Fox — 388 seansów (1861–68). Geley o Kluskim: zjawa lekarza średniowiecznego, arcykapłana. Materia odzieży zjaw pochodzi z odzieży medjum.",
+      theses:["zjawy mogą być częściowe lub zmniejszone","Crookes systematycznie udowodnił realność Katie King","materiał odzieży zjaw pochodzi z otoczenia"],
+      concepts:[["materializacja","ukształtowanie postaci"],["zjawa","forma ludzka z ektoplazmy"],["ciemny gabinet","miejsce gromadzenia siły"],["dematerializacja","znikanie"]],
+      people:["Katie King + F. Cook + W. Crookes","Estelle + Kate Fox","Kluski + Okołowicz","Ewa C. + Schrenck-Notzing + p. Bisson","Jolanda + d'Esperance","Jeanson (25.05.1921, 20cm kobieta)"],
+      quote:"Miałem wrażenie, że zjawy te były ożywionemi maskami." },
+    { n:24, title:"Odlewy i aporty", essence:"Medja materializują rękę z ektoplazmy, zanurzają w gorącą parafinę i wodę, a po skrzepnięciu dematerializują, zostawiając pustą formę parafinową — niemożliwą do podrobienia. Pierwsze: W. Denton (1875, medjum Hardy). Aporty — przenoszenie przedmiotów przez ściany — Świtkowski uważa za rozpylenie na atomy + rekonstrukcję; dowodzi gorąco świeżo aportowanych przedmiotów, woń spalenizny. Aportowano kwiaty, owoce, żywe raki, węgorze, żurawia. Czasem znika samo medjum (Kluski, sierpień 1919).",
+      theses:["odlewy parafinowe są niepodrabialne","aport = rozpylenie + skupienie","gorąco i woń spalenizny świadczą o energii"],
+      concepts:[["odlew parafinowy","pusta forma ręki"],["aport","przeniesienie przedmiotu"],["rozpylenie na atomy","hipoteza mechanizmu"],["rematerializacja","ponowne skupienie"]],
+      people:["W. Denton (1875)","Eglinton","Kluski (foremki Geley)","Zöllner + Slade","Stasiek Z., Niuta G.","Tosje Onasami","C. Blacher (raki)"],
+      quote:"Niemożliwe jest utworzyć materjał, jeżeli podobnego nie posiada medjum lub uczestnicy." },
+    { n:25, title:"Fotografja zjawisk niewidzialnych", essence:"Od 1872 (Beattie z Bristolu) robiono zdjęcia, na których obok osoby żywej pojawiała się postać niewidzialna dla oka. Hudson w Londynie został zdyskredytowany. Eksperyment Reimersa (1879) z Firmanem dał obrazek innej zjawy niż oczekiwana. Ochorowicz z Tomczykówną (1909): «mała Stasia» sama się sfotografowała. Ochorowicz rozwinął radiografię bez kamery — ektoplastyczna ręka działa jak światło na płytę; mogła owinąć błonę zwiniętą w rurkę w butelce. Schwab z Popielską (1925) — kinematograf.",
+      theses:["ektoplazma działa jak światło, gdy jest rzadka","idea kształtuje formę (ideoplastja)","Osty wykrył ektoplazmę promieniami podczerwonymi"],
+      concepts:[["radiografia","fotografia bez kamery"],["ideoplastja","kształtowanie materii myślą (Ochorowicz)"],["promienie podczerwone","metoda Osty'ego"],["fotografia medialna","zdjęcie zjawy"]],
+      people:["Beattie (Bristol, 1872)","Hudson (Londyn)","Hartman + Teeple (1876)","Firman + Reimers (1879)","Ochorowicz + Tomczyk (1909)","dr Niederl + Marja Silbert","Schwab + Popielska (1925)"],
+      quote:"Alternatywą energetyczną: albo światło, albo materja." },
+    { n:26, title:"Pismo medjalne, transfiguracje", essence:"Pismo bezpośrednie — ołówek/rysik pisze sam (Zöllner, Crookes — tabliczki łupkowe). Pismo automatyczne — ręka medjum pisze bez świadomości; czasem obie ręce naraz dwoma językami (Mansfield). Półroczne dziecko Jencken pisało zdania logiczne. Mówienie obcymi językami (ksenoglossja) — medjum do 10 językami. Transfiguracja — rysy medjum zmieniają się na inny typ; Kluski (broda), Stasiek Z. (twarz matołka), pani Crookes (rysy ojca). Geley porównuje do poczwarek owadów.",
+      theses:["pismo bezpośrednie nie wymaga ręki medjum","dziecko może być medjum (Jencken)","transfiguracja = dematerializacja + materializacja in situ"],
+      concepts:[["pismo bezpośrednie","bez ręki medjum"],["pismo automatyczne","bez świadomości"],["pismo lustrowe","czytelne w lustrze"],["ksenoglossja","obce języki"],["transfiguracja","zmiana wyglądu"]],
+      people:["Zöllner, Crookes","Mansfield (dr Wolf)","Bronisław Ł.","Jencken (półroczne dziecko)","Stainton-Moses","Kluski, Stasiek Z., Artur Omerod","pani Crookes"],
+      quote:"Wszystkie te indywidualności okazują się tylko zmiennymi sposobami przejawiania się jednej i tej samej duszy medjum." },
+    { n:27, title:"Psychologja zjaw", essence:"Już w XIX w. badacze podzielili się: animizm (zjawisko = praca podświadomości medjum) vs spirytyzm (= duchy zmarłych). Schrenck-Notzing skrajny animista, kółka spirytystyczne — same «duchy zmarłych». Sprawa złożona: u Brittana (medjum Home) komunikat o chorobie dziecka byłby niemożliwy do wyjaśnienia podświadomością. Każde medjum ma głównego «opiekuna» + pomocników o określonych «specjalnościach» (W. Schneider: Olga, dr Maier, Anton). Pani Sidgwick: opiekunowie są wtórnymi osobowościami, inne duchy mogą być realne.",
+      theses:["animizm i spirytyzm — oba częściowo trafne","opiekunowie = personifikacje podświadomości","niektóre zjawy podają dowody niemożliwe animistycznie"],
+      concepts:[["animizm","praca podświadomości"],["spirytyzm","duchy zmarłych"],["duch opiekuńczy","stały kontroler"],["osobowość wtórna","drugorzędne «ja»"]],
+      people:["D.D. Home (Brittan)","Cooper + Nada","Phinuit (Piper)","Olga/Maier/Anton (Schneider)","Feda (Leonard)","Stainton-Moses (Rector, Doctor, Imperator)","pani Sidgwick"],
+      quote:"Każde medjum ma swego ducha opiekuńczego — i tego możnaby uważać za uosobioną podświadomość medjum." },
+    { n:28, title:"Sobowtóry", essence:"Sobowtór — zjawa osoby żyjącej (lub zmarłej) pojawiająca się jednocześnie z fizycznym ciałem w innym miejscu. Kluski wysyłał sobowtóra świadomie, Geley widział go w Paryżu, gdy Kluski był w Warszawie (1920). Sobowtór bywa mglisty lub jak żywy, krótkotrwały. Najlepiej udokumentowany: Emilja Sagée — nauczycielka z Rygi, 1845, 32 lat; uczennice i koleżanki nieraz widywały dwie Sagée naraz, gdy jedna traciła ruchliwość. Często wrażenie zimna lodowatego.",
+      theses:["sobowtór może być zamierzony lub mimowolny","widzialność dla świadków jest zmienna","zanikanie ruchliwości oryginału = nabieranie życia przez sobowtóra"],
+      concepts:[["sobowtór","zjawa-projekcja człowieka"],["halucynacja telepatyczna","wariant"],["ektoplazma","budulec"]],
+      people:["Franek Kluski","Emilja Sagée (Ryga 1845)","Benning (USA)","L. Primavesi","pani Hartmann + Collin","córka pani J. (zielone rękawiczki)"],
+      quote:"Spostrzegały, że im bardziej wyraźny i ruchliwy był sobowtór, tem bardziej traciła cechy żywotności sama Sagée." },
+    { n:29, title:"Udział świadków", essence:"Świadkowie nie są bierni — wpływają na seans nastawieniem i fizjologią. Medjum w transie dobiera ich «wartości», przesadza miejsca, magnetyzuje. «Ciasto» wedle medjum Bernoullego: cukrowate, słone, czerwone, niebieskie. Eksperymentator chcący kontroli, medjum chce obserwacji. Obniżenie temperatury w pokoju (do 10°C) to fizyczne następstwo «zabierania» materii z uczestników. Hr. de Gasparin (1854) i prof. Thury (1855) bez medjum wywoływali ruchy stołu — dowodząc, że uzdolnienia tkwią zalążkowo w każdym.",
+      theses:["świadkowie dają ektoplazmę","temperatura spada w pobliżu «siły»","przygotowanie ascetyczne wzmaga seans"],
+      concepts:[["«ciasto»","materia transowa"],["fluid","siła kształtująca"],["zimny powiew","odbiór ektoplazmy"]],
+      people:["Schrenck-Notzing","Ochorowicz","N. Okołowicz","dr R. Bernoulli","hr. de Gasparin (1854)","prof. Thury (Genewa 1855)"],
+      quote:"Każda kontrola paraliżuje medjum i działa na nie szkodliwie." },
+    { n:30, title:"Telestezja (jasnowidzenie)", essence:"Telestezja — postrzeganie pozazmysłowe wzrokowe, słuchowe, dotykowe na odległość. Bywa mimowolna (Swedenborg widzi z Gothenburga pożar Sztokholmu) lub zamierzona. Najlepiej zbadane jasnowidzenie wzrokowe. Klasyczne zadania (skrzynka SPR 1926) pozostają nierozwiązane. Jasnowidz nie potrzebuje znać kierunku ani adresu. Ossowiecki na kongresie w Warszawie opisał zawartość rurki ołowianej (rysunek Piłsudskiego). Widzenie wnętrza ciała ludzkiego (anatomia mikroskopowa) bez wykształcenia. Nyktalopia — widzenie bez światła.",
+      theses:["kierunek/adres niepotrzebny","zadania z dramatyczną treścią są łatwiejsze","jasnowidz «patrzy» zamkniętymi oczyma"],
+      concepts:[["telestezja","postrzeganie na odległość"],["kryptestezja","ogólne postrzeganie pozazmysłowe (Richet)"],["metagnomia","wiedza pozazmysłowa"],["nyktalopia","widzenie w ciemności"]],
+      people:["Swedenborg","ks. Sanders","SPR Londyn (skrzynka 1926)","inż. Ossowiecki (rurka)","pani Dixon","dr Anna Kingsford","pani Hauffe (magnes-teleskop)"],
+      quote:"Postrzeganie pozazmysłowe w najszerszem znaczeniu tego wyrazu." },
+    { n:31, title:"Psychometrja", essence:"Psychometria: medjum bierze przedmiot i «odczytuje» zdarzenia w jego pobliżu. Pierwsze eksperymenty: prof. J.R. Buchanan (1840), W. Denton (1854, okazy geologiczne). Pani Henry-Anderson opisała ołtarz w Beninie (kła słoniowe + płot z kości ludzkich). Emma (analfabetka u dra Haddocka) znalazła 650 funtów. Gizela Winiarska odnalazła dokumenty państwowe. Schermann — metagrafolog. Sabira Churamowicz opisała autorów listów anonimowych. Rozpoznawanie chorób (dr Polończyk + medjum lwowskie).",
+      theses:["przedmiot «nosi» zapis zdarzeń","zdarzenia tragiczne najłatwiej odczytać","niektóre choroby diagnozowane przez kontakt"],
+      concepts:[["psychometria","odczytywanie historii przedmiotu"],["metagrafologia","odczytywanie pisma"],["raport","łączność z miejscem"],["kryptestezja","postrzeganie pozazmysłowe"]],
+      people:["prof. J.R. Buchanan (1840)","prof. W. Denton (1854)","Henry-Anderson (Benin)","Emma + dr Haddock","Gizela Winiarska","Rafał Schermann","Sabira Churamowicz","inż. Ossowiecki","dr Polończyk"],
+      quote:"[Przedmiot] tworzy pewnego rodzaju łącznik między medjum a miejscem opisywanych zdarzeń." },
+    { n:32, title:"Rabdomancja", essence:"Różdżkarstwo — najstarsze uzdolnienie ludzkości (Mojżesz). Różdżka Y z leszczyny, metalu lub szkła. Specjalizacja: woda, ropa, węgle, metale, ciała ludzkie. Rząd brytyjski w Indjach zwracał połowę kosztów za niefarte; Niemcy w Kamerunie odkryli źródła; w I wojnie majorowie Beichl (Włochy) i Graeve (Palestyna — wykrył wodę po 10 latach posuchy, 70% trafień). Stadion w Weronie (1931, prof. Cazzamalli) — 5/8 trafień, stan zbliżony do somnambulizmu. Świtkowski tłumaczy autosugestią podświadomości.",
+      theses:["różdżka jest narzędziem podświadomości, nie magnesem","trafność wyższa od geologii","rabdomanta musi wiedzieć, czego szuka"],
+      concepts:[["rabdomancja","wróżenie z różdżki"],["autosugestia","mechanizm działania"],["kryptestezja","postrzeganie pozazmysłowe"],["somnambulizm chwilowy","stan rabdomanty"]],
+      people:["Aymar (Lyon 1692)","rząd brytyjski w Indjach","major Beichl, major Graeve (I wojna)","prof. Cazzamalli (Werona 1931)","L. Szczepański"],
+      quote:"Nad wodą różdżka się poruszy." },
+    { n:33, title:"Widzenie w czasie / przeczucia", essence:"Widzenie przeszłości i przyszłości. Pani Dixon widzi chłopczyka chowającego spinkę w słoniu-zabawce. Zschokke widział przeszłość każdego, kto stał przed nim. Pani Hauffe (1827) — śmierć N. za 3 miesiące. Cazotte (1788) przewidział rewolucję francuską. Nostradamus — czterowiersze sięgające 2000 lat. Św. Malachiasz — papieże. Trzęsienie ziemi (Rudi Schneider + Cartheuser jednocześnie). Pani Walerja S. — wizja złamanej ręki ziściła się po 25 dniach. Zwierzęta przeczuwają — psy w św. Gottharda przed lawiną, koty angorskie przed powodzią Kalifornii 1938.",
+      theses:["przyszłość i przeszłość są przeczuwalne","zwierzęta mają tę zdolność powszechnie","czas wizji najczęściej bliski wydarzeniu"],
+      concepts:[["przeczucie","zapowiedź zdarzenia"],["Borderland","stan przejściowy (Richet)"],["sen wieszczy","przyszłościowy"],["jasnowidzenie w czasie","postrzeganie poza teraźniejszością"]],
+      people:["A. de Rochas","H. Zschokke","pani Hauffe (1827)","Wanner i Kramer (Fryderyk Wirtemberski 1820)","Lenormand (Liebeault)","Cazotte (1788)","Nostradamus","Rudi Schneider + Cartheuser","pani Walerja S. (1932)"],
+      quote:"Wszak to wszystko leży przedemną, jedno obok drugiego." },
+    { n:34, title:"Magnetyzm żywotny", essence:"Parapsychologia go zaniedbała, mieszając z hipnozą. Medja, jasnowidze i somnambulicy żądają «głasków» (passes); zjawy magnetyzują swoje medja (Olga zbierając «siłę», potem oddając). Magnetyzowanie roślin (Jolanda: nasienie w 30 min) jest dowodem przeciw identyfikacji z sugestią. Woda magnetyzowana ma inny smak, «świeci» dla jasnowidzów, dłużej zachowuje świeżość. Leczenie: ostre choroby przyspieszają, przewlekłe przechodzą w ostre. Magnetyzer nie potrzebuje krzepy, lecz wysokiego poziomu moralnego (patriarchowie, święci, «wkładanie rąk»).",
+      theses:["magnetyzm działa na rośliny (nie sugestia)","leczenie zależy od poziomu moralnego","działa przez przeszkody, na odległość setek km"],
+      concepts:[["magnetyzm żywotny","siła organiczna"],["głaski (passes)","ruchy magnetyzera"],["fluid","siła kształtująca"],["raport magnetyczny","łączność"],["mumifikacja","konserwacja przez magnetyzm"]],
+      people:["Ochorowicz","J. Kerner (pani Hauffe)","Rudi Schneider + Olga","S. Tomczyk","Jolanda + d'Esperance","H. Durville"],
+      quote:"Twoja katalepsja wzmacnia, a moja wyczerpuje." },
+    { n:35, title:"Stany snu magnetycznego", essence:"W przeciwieństwie do hipnozy sugestyjnej, sen magnetyczny daje uśpionemu rosnącą samodzielność i niezależność od magnetyzera. Pacjent dyktuje sam treść i termin sugestii. Klasyczne studium Leonji B. (dr Janet) — Leonja I → II → III. Pani Beauchamp — cztery osobowości. Pani Hauffe (jasnowidząca z Prevorst) — 4 stany: jawa, marzenie magnetyczne, somnambulizm, jasnowidzenie. De Rochas i Durville: 7 stadiów (łatwowierność → telekinezja, sobowtór). Świtkowski dzieli na: hipnozę płytką, głęboką, trans właściwy.",
+      theses:["w transie zanika podatność na sugestię","somnambulizm głęboki samodzielnie diagnozuje","istnieje «drabina» stadiów Rochas"],
+      concepts:[["sen magnetyczny","sztuczny somnambulizm"],["raport","łączność"],["jasnowidzenie wewnętrzne","widzenie ciała"],["ekstaza","najwyższe stadium"],["automagnetyzm","samouśpienie"]],
+      people:["Russel Wallace","Leonja B. (Janet)","pani Beauchamp (Prince 1899)","F. Hauffe (Kerner, Prevorst)","A. de Rochas","H. Durville","dr Lifschitz"],
+      quote:"Każde z tych stadjów przedzielone jest od następnego letargiem, jak szczeble drabiny." },
+    { n:36, title:"Inteligencje bezcielesne", essence:"«Bezcielesne» = bez ciała fizycznego stwierdzalnego zmysłami. Czy są to duchy zmarłych? Wątpliwości. Marja Jewdokimowa (1936, Wilno) prosi o modły — sprawdzono, że umarła 17 maja w klasztorze. Gordon Davis (Soal 1922, Cooper) — okazał się żywy. Jerzy Pelham (zm. 1892) przez panią Piper i dra Hodgsona — 150 uczestników; po śmierci samego Hodgsona kontynuuje seanse z W. Jamesem. Pelham przetłumaczył tekst grecki, choć Piper nie znała greki. Korespondencja krzyżowa testuje rzeczywistość zjawisk.",
+      theses:["niektóre identyfikacje przekonywające","żywi też mogą się przejawiać (Davis)","korespondencja krzyżowa testuje rzeczywistość"],
+      concepts:[["inteligencja bezcielesna","istota bez ciała"],["korespondencja krzyżowa","fragmenty u różnych medjów"],["raport","łączność"],["identyfikacja pośmiertna","dowody tożsamości"]],
+      people:["Carrington + Garrett + Uvani (1932–33)","J. Pelham + Piper + Hodgson (1892)","Hodgson + W. James (1905)","F. Myers (list zapieczętowany)","Soal + Davis (1922) + Cooper","Marja Jewdokimowa (Wilno 1936)"],
+      quote:"Zmarły do żywego; dziwny świat, prawda?" },
+    { n:37, title:"Domy nawiedzone", essence:"Cechy: samorzutność, brak celu, ograniczenie do jednego domu, «zimny wiatr». Bozzano zebrał 532 wypadki (374 z postaciami ludzkimi, 180 ze śmiercią gwałtowną, 158 tylko hałasy). Generał Campbell, panna W.B. w Road, zamek T. w Normandii (godzina za godziną — galop koni, ryk byka). Wypadek w Neuried (Bawaria 1925) — komisja Schrenck-Notzinga: medjum 15-letnia Anna bez menses; gdy się pojawiły, objawy ustały. Eleonora Zugun — «dracu» (diabeł) szczypał ją. Medja w domach nawiedzonych to zwykle dzieci 10–17 lat w okresie dojrzewania.",
+      theses:["zimny wiatr = pobieranie ektoplazmy z domowników","medjum często dojrzewające dziecko","objawy znikają z dojrzałością płciową"],
+      concepts:[["dom nawiedzony","stała aktywność paranormalna"],["«dracu»","duch szczypiący"],["medialność spontaniczna","niekontrolowana"]],
+      people:["E. Bozzano (1920)","rodzina T. (W. Brompton)","gen. Campbell (1882)","zamek T. (Normandia)","Anna (Neuried 1925)","Eleonora Zugun","Willy Schneider (świadek)"],
+      quote:"Coś rzuca przedmiotami, nieraz uszkadza je i niszczy, coś zakłóca spokój domownikom." },
+    { n:38, title:"Mistycyzm", essence:"Mistycyzm wynika z poczucia dwoistości człowieka (duch vs materia). Asceza — zwalczanie popędów cielesnych. Stłumiony popęd płciowy «sublimuje się» w żarliwą miłość Boga. Hagiografia chrześcijańska zna lewitacje (Teresa, Józef z Copertino), odporność na ogień (Katarzyna sjeneńska), ksenoglossję (Maria d'Agreda nawracała Indjan w Meksyku). Pani Guyon opisała «śmierć mistyczną». Swedenborg — przypadek przejściowy: jasnowidzenie po «ekscesach płciowych», lecz także napady obłąkania. Niedostateczne oczyszczenie grozi paranoia mystica.",
+      theses:["mistycyzm wymaga uprzedniego oczyszczenia","ekstaza = śmierć mistyczna + zjednoczenie z Bogiem","bez oczyszczenia: psychopatia"],
+      concepts:[["asceza","zwalczanie popędów"],["jama","sanskryckie unicestwianie"],["ekstaza","szczytowe zjednoczenie"],["śmierć mistyczna","pogrzebanie dawnego «ja»"],["paranoia mystica","patologia"]],
+      people:["św. Teresa","św. Józef z Copertino","św. Katarzyna sjeneńska","M. d'Agreda (Nowy Meksyk)","E. Swedenborg","pani Guyon","H.P. Bławatska","Elie Marion (Kamizardzi)","prof. Staudenmaier"],
+      quote:"Bóg jest teraz naszem «ja», stał się życiem naszego życia." },
+    { n:39, title:"Wnioski (Część II)", essence:"Medja są fizycznie zdrowe i psychicznie normalne — różnica od ludzi zwykłych tylko stopnia, nie jakości. Zalążki uzdolnień (telepatja, jasnowidzenie, ektoplazma) tkwią w każdym (de Gasparin/Thury). Motorem zjawisk jest podświadomość; im głębsze uśpienie, tym bogatsze objawy. Trans właściwy dostępny tylko magnetyzmowi, nie hipnozie sugestyjnej. Hipoteza ciała eterycznego i ideoplastii (Ochorowicz, Lebiedziński) — myśl tworzy plastycznie. Przyszłe badania powinny objąć ludzi normalnych i poziom moralny. Wzorem są jogini, święci, «magowie biali».",
+      theses:["różnica między medjum a zwykłym tylko stopnia","ideoplastia = myśl modeluje materię","trans dostępny tylko magnetyzmowi"],
+      concepts:[["ideoplastia","psychiczna, materialna, energetyczna"],["ciało eteryczne","plan niewidzialny"],["świadomość głębinowa","najgłębsza warstwa"],["magnetyzm żywotny","mechanizm transu"]],
+      people:["hr. de Gasparin (1854)","prof. Thury (1855)","J. Ochorowicz","P. Lebiedziński (Kopenhaga 1920)","Doris (Price)","de Rochas, Durville","jogini, «magowie biali»"],
+      quote:"Siła medjalna, będąca jednym z przejawów kosmicznego czynnika psychicznego w naszym świecie materjalnym, jest potęgą niemal wszechwładną." }
+  ],
+  chaptersPart3: [
+    { n:40, title:"Wstęp do okultyzmu i magii", essence:"Świtkowski przeciwstawia parapsychologię okultyzmowi. Parapsychologia jest indukcyjna — bada zjawiska, gromadzi fakty, odkrywa prawa. Okultyzm jest dedukcyjny — opiera się na dogmatach «wiedzy objawionej» przez bogów lub im równych, nielicznym, ustnie. Część spisano w «księgach świętych» formą archaiczną lub symboliczną. Z czasem rozumienie wiedzy malało, narastały szczegóły rytuału. Spadkobiercy tracili poziom moralny — zachowali rozumienie, utracili zdolność działania. Papus: scientia occulta (tajemna), occultans (ukrywająca), occultata (zatajona). Najlepszym przykładem jest alchemia, w słabszym stopniu kabała. «Księgi święte» zgodne co do treści: kosmogonia, dzieje (potop), hierarchie duchów, nauka o niewidzialnych pierwiastkach człowieka.",
+      theses:["okultyzm dedukcyjny, parapsychologia indukcyjna","pierwotna wiedza wymagała wysokiego poziomu moralnego","trzy rodzaje wiedzy okultystycznej (Papus): tajemna, ukrywająca, zatajona"],
+      concepts:[["okultyzm","dedukcyjna «wiedza ukryta»"],["magia","praktyka działania"],["tradycja","ustna lub pisana"],["wiedza objawiona","od bogów"],["scientia occulta/occultans/occultata","podział Papusa"]],
+      people:["Papus (Gérard Encausse)","szamani, derwisze, czarownicy","«księgi święte» różnych narodów"],
+      quote:"Spadkobiercy tej wiedzy jednak dbali coraz mniej o swój poziom moralny, a w parze z tem tracili zdolność działania magicznego." },
+    { n:41, title:"Joga indyjska", essence:"Indie uchodzą za kolebkę okultyzmu, ale Świtkowski twierdzi, że nigdy nie miały okultyzmu we właściwym znaczeniu. «Mistrzowie tybetańscy» rządzący ludzkością to fantazje europejskie. Indie mają «księgi święte», lecz ich treść nie jest symboliczna — istnieją przekłady europejskie. Cel ostateczny — zjednoczenie z Bogiem (nirwana); siedem dróg (joga): 1) Bhaktijoga (miłości Boga), 2) Karmajoga (sumiennej pracy), 3) Dżnianajoga (poznania), 4) Lajajoga (psychofizjologiczna — sześć czakr, kundalini), 5) Radżajoga (królewska, 8 stopni), 6) Mantrajoga (modlitewna, 16 stopni — wpływ na kabałę i hipnozę), 7) Hathajoga (przez wysiłek — wprowadziła pierwiastek seksualny). Wszystko jawne — dzieła można kupić w księgarniach. Czakry, ciało eteryczne, prana, pitha (wir prany) są niewidoczne w okultyzmie zachodnim.",
+      theses:["filozofia indyjska jest jawna","siedem systemów jogi to siedem dróg do Boga","indyjskie szczegóły niewidoczne w Europie","pierwiastek seksualny w hathajodze odbił się w Europie"],
+      concepts:[["joga","droga zjednoczenia"],["nirwana","zjednoczenie z Bogiem"],["czakra","narząd ciała eterycznego"],["kundalini","ogień wężowy"],["prana","siła życiowa"],["pitha","wir prany"],["bhakti, karma, dżniana, laja, radża, mantra, hatha","systemy jogi"]],
+      people:["Swami Wiwekananda","Sankaraczarja","Patandżali (Joga-aforyzmy)","Jasnowidząca z Prevorst (Hauffe)"],
+      quote:"Niema natomiast ani śladu tego, co później w Chaldei i Fenicji dało początek dzisiejszej astrologji." },
+    { n:42, title:"Okultyzm starożytny", essence:"Najstarsze źródła: chaldejskie tabliczki ceglane i papirusy egipskie. British Museum: dzieło magiczne króla Assurbanipala (870 p.n.e.). Sargon I (3800 p.n.e.) — astronomia, rok 365,4 dnia, «saros» (18 lat). Magia chaldejsko-babilońska: niezliczone duchy przyrody (apsu), nad którymi władają zaklęcia. Lecznictwo — wkładanie rąk, wpływy planet, talizmany. Po zdobyciu Babilonu przez Cyrusa (539 p.n.e.) magowie medyjscy dostali się na dwór perski; Żydzi zabrali wiedzę chaldejską — stąd kabała. Egipt: papirusy z XXIV w. p.n.e. Bogiem mądrości Toth (Hermes). Hermesa zdanie podstawa alchemii: «Tego nie osiągniesz, jeżeli ciałom nie odbierzesz cielesności, a substancjom bezcielesnym nie nadasz ciał». Demokryt, Pitagoras — szkoły ezoteryczne i egzoteryczne. Astrologia Ptolemeusza: planety rządzą dniami tygodnia (dimanche-Słońce, lundi-Księżyc). «Dnie szczęśliwe» i feralne (dies fausti, dies ferales).",
+      theses:["Chaldea i Egipt — najstarsze źródła magii pisanej","magia była głównie pracą kapłanów-uczonych","Hermes-Toth — pojęcie alchemii i potęgi «słowa»","astrologia planet i «dni szczęśliwych» przetrwała w średniowieczu"],
+      concepts:[["apsu","zaklęcia chaldejskie"],["Toth/Hermes","bóg mądrości"],["chema","formuły, zaklęcia"],["księga Henocha","źródło kabały"],["saros","cykl 18-letni"],["dies fausti/ferales","dni szczęśliwe i feralne"]],
+      people:["Sargon I","Assurbanipal","Cyrus","Hipparch","Toth/Hermes","Demokryt, Plato, Sokrates","Pitagoras","Diotyma z Mantynei","Apollo (Delfi, Dodona)"],
+      quote:"Tego, czego oczekujesz, nie osiągniesz, jeżeli ciałom nie odbierzesz ich stanu cielesnego i jeżeli substancji bezcielesnych nie zdołasz przekształcać w ciała." },
+    { n:43, title:"Qabbalah", essence:"Talmud babiloński mówi o udzieleniu Mojżeszowi 10 przykazań plus tajemnic dla 70 najstarszych. Najstarsze dzieła: Sepher Jezirah (IX w. n.e.) i Sohar (II–III w.). Alfabet hebrajski nie ma osobnych znaków liczbowych — litery są liczbami. Trzy metody: 1) Gematrija — podstawianie liter o tej samej wartości liczbowej (RVCH ALHJM = 300 = Szin); 2) Notariqon — czytanie pionowe/akrostyczne, tym sposobem znaleziono 72 imiona aniołów (Szemhamphorasz); 3) Aiq Bekar — kabała dziewięciu przegródek, 27 liter w 3×3 polach, do konstruowania pieczęci demonów. Pentakl sporządzano w wybranym czasie astrologicznym krwią maga (Clavicula Salomonis). Filozoficzną stronę kabały (sefirot, hierarchie) Świtkowski uznaje za spekulacje sofistyczne; jasnowidze unikają tych ksiąg jako pochodzących z «najniższych regionów świata astralnego».",
+      theses:["trzy metody kabały: Gematrija, Notariqon, Aiq Bekar","imię demona przez kabalizowanie imion boskich i tablic planet","pentakl sporządza się krwią maga","filozoficzna kabała to spekulacje"],
+      concepts:[["Gematrija","wymiana liter o równej wartości"],["Notariqon","czytanie pionowe"],["Aiq Bekar","9 przegródek"],["Szemhamphorasz","72 imiona aniołów"],["pentakl","talizman z pieczęcią"],["sefirot","10 imion Boga"]],
+      people:["Mojżesz","Sepher Jezirah, Sohar","Agryppa von Nettesheim («Philosophia occulta»)","Clavicula Salomonis"],
+      quote:"Kto chce słać prośbę do Pana, musi wezwać Go imionami świętemi, a to: Eheje, Jah, Jehova, El, Elohim, Jehud, Eloha, Sabaoth, Szadaj, Adonaj." },
+    { n:44, title:"Okultyzm średniowieczny", essence:"Magia wschodnia przedostawała się do Europy dwiema drogami: z Egiptu przez Grecję oraz z Arabii przez Maurów do Hiszpanii. Grecja przedstawiała dzieje wszechświata w symbolicznych misteriach. Chrześcijaństwo pierwotne zakazywało magii, ale nie wątpiło w jej potęgę. Ojcowie Kościoła kształceni byli na filozofii aleksandryjskiej. W V w. biskup Cyryl kazał zgładzić Hypatię. Zmiana: Tomasz z Akwinu (XIII w.) — demony i czarownice mogą wpływać za wolą Boga. Szkoła neoplatońska (Filon, Porfiriusz, Jamblichus) połączyła jogę indyjską z demonologią. Jamblichus: «Bogowie nie zstępują ku duszy, lecz dusza wznosi się ku nim». Teurg vs zwykły mag. Demony — z Indii (dewas) przez Persję. Każdym człowiekiem rządzi jeden z siedmiu «duchów planetarnych». Kabalizacja imienia + tablice → planeta władcza. Pentakl: znak planety, znak demona, pieczęć zaklęcia.",
+      theses:["dwie drogi przenikania magii: Egipt→Grecja, Arabia→Hiszpania","Tomasz z Akwinu zmienił stanowisko Kościoła","Jamblichus i neoplatonicy łączą jogę z demonologią","pentakl z trzech znaków: planety, demona, zaklęcia"],
+      concepts:[["teurg","mag wznoszący duszę ku bogom"],["demon","istota bez ciała widzialnego"],["sukub, inkub, wilkołak, wampir","klasyfikacja"],["kabalizacja imienia","metoda znalezienia planety"],["pentakl","talizman z trzema znakami"]],
+      people:["Sokrates, Plato, Pitagoras, Jamblichus, Plotyn","Hypatia (Cyryl bp.)","Tomasz z Akwinu (XIII w.)","Filon, Porfiriusz, Jamblichus («De mysteriis»)","Paracelsus","R.P. Sabazius","J.B. Hepburn d'Écosse (Watykan, «Virga aurea»)"],
+      quote:"Bogowie nie zstępują ku duszy ludzkiej, modlącej się do nich, tylko dusza wznosi się ku nim. W ten sposób dusza osiąga wyższą naturę i władzę boską." },
+    { n:45, title:"[NIEDOSTĘPNE] Dalsze rozdziały Części III", essence:"Tekst książki w dostępnym fragmencie urywa się w środku rozdziału «Okultyzm średniowieczny». Następujące rozdziały, wymienione w spisie treści, znajdują się poza dostępnym fragmentem: Wybitni okultyści XVI wieku (Paracelsus i in.); Ewolucja pojęć; Alchemja; Procesy czarownic; Satanizm; Spirytyzm; Wróżbiarstwo; Astrologja; Teozofja; Reinkarnacja i karma; Budowa człowieka; Stowarzyszenia tajne; Wtajemniczenia; Magja ceremonjalna; Magja seksualna?; Pomocnicy magów; Rytuały czarów; Źródłem jest człowiek; Różne stopnie rzeczywistości; Praktyka magiczna; Wiry astralne; Magja wobec parapsychologji; Rzut oka w przyszłość; Zakończenie. Dla pełnego wglądu w te rozdziały konieczne jest sięgnięcie do oryginalnego wydania (Biblioteka Lotosu, tom 14, Wisła 1939).",
+      theses:["fragment dostępny obejmuje ok. 80% dzieła","23 końcowe rozdziały wymagają dostępu do oryginału","tematyka: alchemia, czarownice, spirytyzm, teozofia, magia ceremonialna"],
+      concepts:[],
+      people:[],
+      quote:"Tekst urywa się w środku rozdziału «Okultyzm średniowieczny» na opisie 'Virga aurea' J.B. Hepburna d'Écosse." }
+  ],
+  glossary: [
+    ["Animizm","Pogląd, że zjawiska medialne pochodzą z pracy podświadomości medjum (a nie od duchów zmarłych)."],
+    ["Aiq Bekar","Kabała dziewięciu przegródek — 27 liter wpisanych w 3×3 pola, służąca do tworzenia pieczęci demonów i jako alfabet szyfrowy."],
+    ["Aport","Przeniesienie przedmiotu przez przeszkody, prawdopodobnie przez rozpylenie na atomy i ponowne skupienie."],
+    ["Astrologia ptolomeuszowska","System wpływów planetarnych dni tygodnia i godzin."],
+    ["Autosugestia","Sugestia udzielana sobie samemu; metoda Coué'go."],
+    ["Behawioryzm","Kierunek psychologiczny twierdzący, że pamięć ginie wraz z mózgiem; odrzucony przez Świtkowskiego."],
+    ["Bhaktijoga","Droga mistyczna miłości Boga."],
+    ["Bindu","«Punkt mistyczny» w lajajodze."],
+    ["Borderland","Stan pośredni między snem a jawą, gdzie pojawiają się przeczucia (Richet)."],
+    ["Charme","Rozmarzenie, pierwsze stadium hipnozy sugestyjnej."],
+    ["Ciało astralne","W okultyzmie średniowiecznym powłoka niewidzialna duszy; w jodze: kama rupa."],
+    ["Ciało eteryczne","«Plan niewidzialny» struktury fizycznej, w jodze: linga sarira."],
+    ["Ciemny gabinet","Odgrodzony zasłoną kąt pokoju, gromadzący «siłę» na seansach."],
+    ["Czakra (padma)","W jodze: niewidzialny narząd ciała eterycznego przy gruczołach dokrewnych."],
+    ["Dżnianajoga","Droga poznania rozumowego."],
+    ["Dematerializacja","Znikanie ektoplazmy lub przedmiotów ektoplastycznych."],
+    ["Demon","Duch nigdy niebędący człowiekiem; w okultyzmie średniowiecznym pomocnik maga lub szatański sprzymierzeniec."],
+    ["Dharana","Utrzymywanie uwagi na obranym przedmiocie (joga)."],
+    ["Dhjana","Kontemplacja, medytacja w jodze."],
+    ["Ektoplazma","Substancja organiczna wyłaniana z ciała medjum: początkowo gazowa, potem ciekła, galaretowata, twarda; zimna, lepka, śluzowata, odporna na ogień, wrażliwa na światło."],
+    ["Ekstaza","Szczytowe stadium transu/mistycyzmu; w lajajodze: samadhi."],
+    ["Ferromagnetyzm medjalny","Oddziaływanie medjum na igłę magnetyczną."],
+    ["Gematria","Kabalistyczne podstawianie liter o tej samej wartości liczbowej."],
+    ["Halucynacja","Wyobrażenie pojawiające się w świadomości bez bodźca zmysłowego; klasyczne (patologiczne) lub «prawdomówne» (telepatyczne)."],
+    ["Hathajoga","Droga «przez wysiłek», schyłkowa, materialistyczna, wprowadzająca pierwiastek seksualny."],
+    ["Hipnanaliza (Lifschitz)","Terapia urazów przez sugerowane uśpienie w «punkcie drażliwym»."],
+    ["Hipnoskop","Magnes cylindryczny Ochorowicza do badania podatności na sugestię."],
+    ["Hipnoza sugestyjna","Sen sztucznie wywołany sugestią; sen normalny z narzuconym wyobrażeniem."],
+    ["Hipotaxis","Omroczenie, drugie stadium hipnozy."],
+    ["Histeria","Częściowo psychiczne schorzenie z napadami kurczów, paraliżami, halucynacjami; «biegun przeciwny» mediumiczności."],
+    ["Ideoplastia","Kształtowanie materii przez wyobrażenie (Ochorowicz); w trzech postaciach wg Lebiedzińskiego: psychiczna, materialna, energetyczna."],
+    ["Iluzja","Mylne wnioskowanie o realnym bodźcu zmysłowym."],
+    ["Inkub, sukub","Demony cielesnego nawiedzenia (sukuby u mężczyzn, inkuby u kobiet)."],
+    ["Inteligencja bezcielesna","Istota działająca bez ciała zmysłowego (duch zmarłego lub żyjącego)."],
+    ["Jama, nijama","Opanowanie wrażeń zewnętrznych i wewnętrznych (1. i 2. stopień jogi)."],
+    ["Jasnowidzenie","Wzrokowa odmiana telestezji; postrzeganie wzrokowe poza zasięgiem zmysłów."],
+    ["Joga","Droga zjednoczenia z Bogiem; siedem głównych systemów."],
+    ["Kabała (Qabbalah)","Żydowska mistyka liczb i liter; główne dzieła: Sepher Jezirah, Sohar."],
+    ["Karmajoga","Droga sumiennej pracy."],
+    ["Katalepsja","Sztywnienie mięśni z zachowaniem narzuconej pozycji."],
+    ["Katapleksja","Katalepsja z przestrachu."],
+    ["Konwersja (Freud)","Przekształcenie zepchniętego afektu w objaw somatyczny."],
+    ["Kompleks","Zespół afektów zepchniętych w podświadomość (Edypa, Elektry, kastracji, narcyzmu)."],
+    ["Korespondencja krzyżowa","Różne medja w różnych miejscach dostarczają fragmentów jednej całości."],
+    ["Kryptestezja","Szerokie pojęcie «postrzegania pozazmysłowego» (Richet)."],
+    ["Kryptomnezja","Pamięć utajona, ujawniająca się w transie (Geley)."],
+    ["Kryptopsychja","Utajona psychika (Geley)."],
+    ["Ksenoglossja","Mówienie obcymi, nieznanymi medjum językami."],
+    ["Kundalini","«Ogień wężowy» pobudzający czakry (joga)."],
+    ["Lajajoga","Psychofizjologiczna droga jogi, najbliższa parapsychologii."],
+    ["Letarg","Głębokie omdlenie podobne do śmierci pozornej."],
+    ["Lewitacja","Wznoszenie się przedmiotu (lub medjum) bez widomego podparcia."],
+    ["Łańcuch rąk","Krąg uczestników seansu trzymających się za ręce."],
+    ["Magia ceremonialna","Rytuały wzywające demony lub aniołów."],
+    ["Magnetyzm żywotny (zwierzęcy)","Siła wpływu między organizmami; mechanizm leczniczy."],
+    ["Mantra","Formuła słowna o magicznej mocy (Toth: «władca słów»)."],
+    ["Mantrajoga","Modlitewno-ascetyczna droga jogi (16 stopni)."],
+    ["Medjum","Osoba o rozwiniętych zdolnościach parapsychicznych; pośrednik na seansach."],
+    ["Mesmeryzm","Synonim magnetyzmu żywotnego (od F. Mesmera)."],
+    ["Metapsychika","Termin Richeta (1884) dla zjawisk pozapsychologicznych; zastąpiony przez «parapsychologię»."],
+    ["Misère psychologique","Niedomoga duszy, brak zdolności syntezy (Janet)."],
+    ["Mistycyzm","Droga zjednoczenia z Bogiem przez doznania subiektywne."],
+    ["Monoideizm","Skupienie wyłącznie na jednej idei."],
+    ["Nada","W lajajodze: siła niematerialna pobudzająca dhjanę."],
+    ["Nadis","Niewidzialne przewody prany (joga)."],
+    ["Narkoza","Sen wywołany środkiem chemicznym; 13 stadiów Schleicha."],
+    ["Notariqon","Kabalistyczne tworzenie zdań z liter słowa lub czytanie pionowe."],
+    ["Nyktalopia","Zdolność widzenia bez światła."],
+    ["Okultyzm","Wiedza dedukcyjna oparta na dogmatach «objawionych»."],
+    ["Opętanie","Wejście demona w ciało ludzkie."],
+    ["Osobowość transowa","Nowe «ja» wyłaniające się w transie medjum."],
+    ["Paralelizm psychofizyczny","XIX-wieczna teza o ścisłym związku zjawisk psychicznych i mózgowych; odrzucona przez Świtkowskiego."],
+    ["Paranoia mystica","Patologiczna odmiana mistycyzmu."],
+    ["Parafizyka, parafizjologia, parapsychologia","Trzy główne działy nauki o zjawiskach paranormalnych (Richet)."],
+    ["Pentakl (pentaculum)","Magiczny znak demona/anioła sporządzony rytualnie krwią maga."],
+    ["Pitha","W jodze: wir prany; podstawa wszystkich zjawisk parapsychicznych."],
+    ["Pismo automatyczne","Pisanie bez świadomości piszącego."],
+    ["Pismo bezpośrednie","Pisanie bez ręki ludzkiej."],
+    ["Pismo lustrowe","Pisanie w kierunku od prawej ku lewej, czytelne w lustrze."],
+    ["Poliideizm","Różnorodność idei w świadomości."],
+    ["Podświadomość","Zespół procesów psychicznych poza świadomością; właściwy motor zjawisk parapsychicznych."],
+    ["Prana","Siła życiowa w jodze, analogia magnetyzmu żywotnego."],
+    ["Pratjahara","Wycofywanie uwagi od wrażeń zewnętrznych (joga)."],
+    ["Promienie sztywne","Termin Ochorowicza dla cienkich nitek ektoplastycznych."],
+    ["Psychoanaliza","Metoda Freuda wydobywania zepchniętych urazów."],
+    ["Psychometria","Odczytywanie historii przedmiotu przez dotyk."],
+    ["Punkt drażliwy","Stadium uśpienia, w którym znikają opory pacjenta (Lifschitz)."],
+    ["Punkt hipnogenny","Miejsce na ciele medjum, którego dotknięcie wprawia w sen."],
+    ["Rabdomancja","Wróżenie z różdżki; znajdowanie wody, kruszców, śladów."],
+    ["Radżajoga","«Droga królewska», 8 stopni."],
+    ["Raport","Wyłączna łączność medjum z hipnotyzerem/magnetyzerem."],
+    ["Reinkarnacja","Przebywanie ducha w kolejnych ciałach."],
+    ["Samadhi","Ekstaza w lajajodze (=maha-laja)."],
+    ["Schizofrenia","Końcowe stadium rozpadu osobowości."],
+    ["Sefirot","10 świętych imion Boga w kabale."],
+    ["Sepher Jezirah","Kabalistyczna «Księga stworzenia»."],
+    ["Sobowtór","Zjawa-projekcja człowieka żywego lub zmarłego."],
+    ["Sohar","Kabalistyczne «Światło»."],
+    ["Somnambulizm","Szczególne uśpienie z zachowaną zdolnością mowy/ruchu; trzecie stadium hipnozy."],
+    ["Spirytyzm","Pogląd, że zjawiska medjalne pochodzą od duchów zmarłych."],
+    ["Stigmaty","Rany przypominające rany Chrystusa u mistyków."],
+    ["Sugestia","Narzucenie wyobrażenia mózgowi (Bernheim)."],
+    ["Sugestia terminowa","Wykonywana po obudzeniu w wyznaczonym czasie/miejscu."],
+    ["Synkope","Przejściowa utrata świadomości (omdlenie)."],
+    ["Szamanizm","Tradycja ustna magiczna wśród ludów dzikich."],
+    ["Szemhamphorasz","Kabalistyczna tablica 72 imion aniołów."],
+    ["Teleplazma","Wcześniejsza nazwa ektoplazmy."],
+    ["Telekinezja","Ruch przedmiotów niedotkniętych."],
+    ["Telepatia","Przekazywanie myśli/uczuć bez zmysłów (Myers, 1883)."],
+    ["Telestezja","Postrzeganie na odległość; szczególny przypadek kryptestezji."],
+    ["Teozofia","Nauka H.P. Bławatskiej."],
+    ["Teurg","Mag wzywający bogów (Jamblichus)."],
+    ["Transfiguracja","Zmiana wyglądu medjum w czyjąś podobiznę."],
+    ["Trauma (uraz)","Głęboki wstrząs psychiczny w dzieciństwie (Freud)."],
+    ["Trans","Szczególne uśpienie medjum, odrębne od hipnozy sugestyjnej."],
+    ["Wampiryzm energetyczny","Zabieranie siły żywotnej innym osobom."],
+    ["Wiatr lodowaty","Obniżenie temperatury jako symptom gromadzenia ektoplazmy."],
+    ["Wolne kojarzenie","Psychoanalityczna technika diagnostyczna."],
+    ["Wtajemniczenie","W starożytności: przyjęcie ucznia (czela) przez mistrza (guru) po próbach."],
+    ["Zaświadomość (Nebenbewusstsein)","Psychika równoległa do głównej (Driesch)."],
+    ["Zjawa zmaterializowana","Postać ludzka, zwierzęca lub roślinna ukształtowana z ektoplazmy."]
+  ],
+  people: [
+    { cat:"Parapsychologia — Francja", n:"Karol Richet (1850–1935)", d:"Fizjolog francuski, twórca terminu «metapsychika»; autor «Traité de métapsychique» (1929). Kluczowa postać dla Świtkowskiego." },
+    { cat:"Parapsychologia — Francja", n:"Gustave Geley (1865–1924)", d:"Lekarz, autor «L'ectoplasmie et la clairvoyance»; eksperymentował z Ewą C. i Kluskim w Paryżu." },
+    { cat:"Parapsychologia — Francja", n:"Eugène Osty (1874–1938)", d:"Eksperymenty z promieniami podczerwonymi do wykrywania ektoplazmy w stadium niewidzialnym." },
+    { cat:"Parapsychologia — Francja", n:"Albert de Rochas (1837–1914)", d:"Twórca «drabiny» siedmiu stadiów uśpienia magnetycznego." },
+    { cat:"Parapsychologia — Francja", n:"Hector Durville (1849–1923)", d:"Kontynuator de Rochasa." },
+    { cat:"Parapsychologia — Francja", n:"H. Bernheim", d:"Twórca szkoły nantejskiej hipnotyzmu; «niema hipnotyzmu, jest tylko podatność na sugestje»." },
+    { cat:"Parapsychologia — Francja", n:"A. Liebeault", d:"«Le sommeil artificiel»; cztery podstawy snu." },
+    { cat:"Parapsychologia — Francja", n:"Pierre Janet", d:"Psycholog, badacz Léonie B., teoretyk rozszczepienia psychiki." },
+    { cat:"Parapsychologia — Francja", n:"Émile Coué", d:"Metoda autosugestii — «już się spełnia»." },
+    { cat:"Parapsychologia — Francja", n:"Henri Bergson (1859–1941)", d:"Filozof, kwestionował tezę o mózgu jako siedzibie pamięci." },
+    { cat:"Parapsychologia — Anglia", n:"William Crookes (1832–1919)", d:"Fizyk, eksperymenty z Florencją Cook i zjawą Katie King (1873–75)." },
+    { cat:"Parapsychologia — Anglia", n:"Frederic Myers (1843–1901)", d:"Twórca terminu «telepatja» (1883), współzałożyciel SPR." },
+    { cat:"Parapsychologia — Anglia", n:"W. Crawford", d:"Opisał mechanizm telekinezji (medjum Goligher); badał ektoplazmę." },
+    { cat:"Parapsychologia — Anglia", n:"Oliver Lodge", d:"Fizyk, badacz parapsychiczny, opisał przejawianie się dr Hodgsona." },
+    { cat:"Parapsychologia — Anglia", n:"Edmund Gurney", d:"Eksperymenty z sugestiami pohipnotycznymi." },
+    { cat:"Parapsychologia — Anglia", n:"Stainton Moses (1839–1892)", d:"Pastor anglikański, medjum z duchami Imperator/Rector/Doctor/Prudens." },
+    { cat:"Parapsychologia — Anglia", n:"Hereward Carrington", d:"American Psychical Institute; eksperymenty z Eileen Garrett." },
+    { cat:"Parapsychologia — Anglia", n:"Harry Price", d:"Leczenie Doris; eksperymenty z R. Schneiderem." },
+    { cat:"Parapsychologia — Anglia", n:"F. Soal", d:"Eksperymenty z Blanką Cooper i Gordonem Davisem." },
+    { cat:"Parapsychologia — Anglia", n:"William James (1842–1910)", d:"Psycholog, opisał przejawianie się dr Hodgsona." },
+    { cat:"Parapsychologia — Niemcy/Austria", n:"Karl Zöllner", d:"Fizyk, eksperymenty z Slade i hipoteza «czwartego wymiaru»." },
+    { cat:"Parapsychologia — Niemcy/Austria", n:"Albert von Schrenck-Notzing (1862–1929)", d:"Najwybitniejszy parapsycholog niemiecki; obserwacje Ewy C., Schneiderów." },
+    { cat:"Parapsychologia — Niemcy/Austria", n:"Karl Gruber", d:"Eksperymenty z Schneiderami, Neuried (1925)." },
+    { cat:"Parapsychologia — Niemcy/Austria", n:"Justinus Kerner (1786–1862)", d:"Autor monografii «Jasnowidząca z Prevorst» (pani Hauffe)." },
+    { cat:"Parapsychologia — Niemcy/Austria", n:"Hans Driesch", d:"Filozof, biolog; kwestionował paralelizm psychofizyczny." },
+    { cat:"Parapsychologia — Włochy", n:"Cesare Lombroso (1835–1909)", d:"Psychiatra, eksperymenty hipnotyczne; «Studi ipnotici e spiritistici»." },
+    { cat:"Parapsychologia — Włochy", n:"Ernesto Bozzano", d:"«Les phénomènes de hantise»; statystyki domów nawiedzonych (1920)." },
+    { cat:"Parapsychologia — Włochy", n:"Ferdinando Cazzamalli", d:"Neurolog, badania mózgu medjów; eksperymenty z rabdomantami." },
+    { cat:"Parapsychologia — Ameryka/inne", n:"William Denton", d:"Geolog, pierwsze badania psychometryczne (z żoną, 1854)." },
+    { cat:"Parapsychologia — Ameryka/inne", n:"J.R. Buchanan", d:"Odkrywca psychometrii (1840)." },
+    { cat:"Parapsychologia — Ameryka/inne", n:"Aleksander Aksakow (1832–1903)", d:"Radca stanu, autor «Animismus und Spiritismus», twórca «Psychische Studien» (Lipsk 1874)." },
+    { cat:"Parapsychologia — Polska", n:"Julian Ochorowicz (1850–1917)", d:"Najwybitniejszy polski parapsycholog; «Sugestja myślowa», «Zjawiska medjumiczne»; eksperymenty z Tomczykówną; hipnoskop." },
+    { cat:"Parapsychologia — Polska", n:"Piotr Lebiedziński (?–1934)", d:"Wnioski na Kongresie Kopenhaga 1920 (ideoplastia: psychiczna, materialna, energetyczna)." },
+    { cat:"Parapsychologia — Polska", n:"Norbert Okołowicz", d:"Autor monografii o Franku Kluskim." },
+    { cat:"Parapsychologia — Polska", n:"Ludwik Szczepański", d:"«Okultyzm współczesny», «Medjumizm współczesny»." },
+    { cat:"Parapsychologia — Polska", n:"Józef Świtkowski", d:"Autor książki; eksperymenty z medjami Staś Z., Bronisław Ł., Niuta G." },
+    { cat:"Parapsychologia — Polska", n:"Jan Hadyna", d:"Wydawca, redaktor «Lotosu» (Wisła)." },
+    { cat:"Medja", n:"Eusapia Paladino (1854–1918)", d:"Włoskie medjum parafizyczne; duch opiekuńczy John King; telekinezja, lewitacja, materializacje." },
+    { cat:"Medja", n:"Daniel Dunglas Home (1833–1886)", d:"Szkockie medjum; odporne na ogień (węgiel żarzący w rękach), lewitacje, materializacje." },
+    { cat:"Medja", n:"Florencja Cook (1856–1904)", d:"Medjum Crookesa, zjawa Katie King." },
+    { cat:"Medja", n:"Katie King", d:"Historyczna zjawa «córki pirata»; materializowała się u Cook, badana przez Crookesa." },
+    { cat:"Medja", n:"Stanisława Tomczyk (Popielska)", d:"Polskie medjum Ochorowicza; osobowości transowe «Stasia» i «mała Stasia»; zdjęcia radiograficzne." },
+    { cat:"Medja", n:"Franek Kluski (Teofil Modrzejewski)", d:"Wybitne polskie medjum materializacyjne; opisane przez Okołowicza; zjawy «lekarz średniowieczny», łasiczka, sęp." },
+    { cat:"Medja", n:"Ewa C. (Marta Beraud)", d:"Medjum Schrenck-Notzinga; materializacje z mgły, piany, nitek." },
+    { cat:"Medja", n:"Pani d'Esperance", d:"Medjum z zjawą Jolandą; materializowała rośliny (Ixora crocata, 1880)." },
+    { cat:"Medja", n:"Jan Guzik", d:"Polskie medjum z zjawami zwierzęcymi (pies), światełka." },
+    { cat:"Medja", n:"Willy i Rudi Schneider", d:"Bracia z duchami Olga, dr Maier, Anton." },
+    { cat:"Medja", n:"Eileen Garrett", d:"Medjum z duchem opiekuńczym Uvani (Arab)." },
+    { cat:"Medja", n:"Pani Piper (Leonora)", d:"Medjum amerykańskie, opiekun Phinuit; przez nią przemawiali Pelham, Hodgson." },
+    { cat:"Medja", n:"Pani Hauffe (Friederike)", d:"«Jasnowidząca z Prevorst» dra Kernera; cztery stany świadomości." },
+    { cat:"Medja", n:"Eleonora Zugun", d:"Medjum z «dracu» (diabłem), ślady ukąszeń." },
+    { cat:"Medja", n:"Stefan Ossowiecki", d:"Polski jasnowidz (rurka z rysunkiem Piłsudskiego)." },
+    { cat:"Medja", n:"Rafał Schermann", d:"Polsko-austriacki metagrafolog." },
+    { cat:"Medja", n:"Aymar", d:"Wieśniak-rabdomanta z Lyonu (1692)." },
+    { cat:"Medja", n:"Léonie B.", d:"Pacjentka Janet z trzema osobowościami (Leonja I, II, III)." },
+    { cat:"Medja", n:"Felida X.", d:"Przypadek dra Azama z Bordeaux (1858, rozszczepienie osobowości)." },
+    { cat:"Postacie historyczne", n:"Emanuel Swedenborg (1688–1772)", d:"Szwedzki uczony i mistyk; widzenie pożaru Sztokholmu z Gothenburga." },
+    { cat:"Postacie historyczne", n:"Helena Pietrowna Bławatska (1831–1891)", d:"Twórczyni teozofii." },
+    { cat:"Postacie historyczne", n:"Paracelsus", d:"Alchemik renesansowy (Theophrastus Bombast von Hohenheim)." },
+    { cat:"Postacie historyczne", n:"Cornelius Agryppa von Nettesheim", d:"Autor «Philosophia occulta»." },
+    { cat:"Postacie historyczne", n:"Nostradamus", d:"Przepowiednie XVI w." },
+    { cat:"Postacie historyczne", n:"Toth / Hermes Trismegistos", d:"Egipski bóg mądrości; ojciec alchemii." },
+    { cat:"Postacie historyczne", n:"Pitagoras, Plato, Sokrates, Plotyn, Jamblichus", d:"Filozofowie starożytni." },
+    { cat:"Postacie historyczne", n:"Hypatia", d:"Córka matematyka Theona, zgładzona przez bp. Cyryla (V w.)." },
+    { cat:"Postacie historyczne", n:"św. Tomasz z Akwinu", d:"Uznał wpływ demonów na ludzi (XIII w.)." },
+    { cat:"Postacie historyczne", n:"św. Teresa, św. Józef z Copertino, św. Katarzyna sjeneńska", d:"Mistycy chrześcijańscy (lewitacje, ksenoglossja, odporność na ogień)." },
+    { cat:"Postacie historyczne", n:"Vivekananda, Sankaraczarja, Patandżali", d:"Komentatorzy jogi." }
+  ],
+  timeline: [
+    { y:"3800 p.n.e.", e:"Sargon I — obserwacje astronomiczne, rok 365,4 dnia, tablice zaćmień." },
+    { y:"870 p.n.e.", e:"Assurbanipal — dzieło magiczne na tabliczkach (British Museum)." },
+    { y:"539 p.n.e.", e:"Cyrus zdobywa Babilon; magowie medyjscy na dwór perski; Żydzi przynoszą wiedzę chaldejską." },
+    { y:"V w. n.e.", e:"Hypatia zgładzona przez bp. Cyryla; ojcowie Kościoła na bazie filozofii aleksandryjskiej." },
+    { y:"IX w.", e:"Powstaje Sepher Jezirah (najstarsza księga kabały)." },
+    { y:"XIII w.", e:"św. Tomasz z Akwinu uznaje wpływ demonów; rozwój demonologii chrześcijańskiej." },
+    { y:"XVI w.", e:"Paracelsus, Agryppa von Nettesheim, Nostradamus — renesans okultyzmu." },
+    { y:"1688–1772", e:"Emanuel Swedenborg — jasnowidzenia, pożar Sztokholmu, dyktando duchów." },
+    { y:"1788", e:"M. Cazotte przepowiada Rewolucję Francuską na obiedzie u Choiseula." },
+    { y:"1816", e:"Somnambuliczki Kramer i Wanner przepowiadają datę śmierci Fryderyka Wirtemberskiego." },
+    { y:"1827", e:"Pani Hauffe — «Jasnowidząca z Prevorst» opisana przez J. Kernera." },
+    { y:"1840", e:"Prof. J.R. Buchanan odkrywa psychometrię." },
+    { y:"1848", e:"Powstanie spirytyzmu (siostry Fox w USA)." },
+    { y:"1854", e:"Hr. de Gasparin — ruchy stołu bez medjum. Denton — pierwsze eksperymenty psychometryczne." },
+    { y:"1855", e:"Prof. Thury (Genewa) potwierdza eksperymenty de Gasparina." },
+    { y:"1858", e:"Pierwsze obserwacje Felidy X. przez dra Azama." },
+    { y:"1861–68", e:"388 seansów ze zjawą Estelli (Livermoore + Kate Fox)." },
+    { y:"1872", e:"Pierwsze fotografie zjaw (Beattie z Bristolu)." },
+    { y:"1873–75", e:"Eksperymenty Crookesa z Florencją Cook i zjawą Katie King." },
+    { y:"1874", e:"Aksakow zakłada «Psychische Studien» w Lipsku." },
+    { y:"1875", e:"Pierwsze foremki parafinowe (Denton z medjum Hardy)." },
+    { y:"1877", e:"Eksperyment Colleya z medjum Monck — tabliczka na schodach." },
+    { y:"1879", e:"Pierwsze zdjęcie zjawy w ciemności (Reimers + Firman, zjawa Bertie)." },
+    { y:"1880", e:"Jolanda u d'Esperance materializuje Ixora crocata." },
+    { y:"1882–90", e:"«Hallucinations Télépathiques» Gurneya, Podmore'a i Myersa (700 wypadków)." },
+    { y:"1883", e:"F. Myers wprowadza termin «telepatja»." },
+    { y:"1884", e:"K. Richet wprowadza termin «metapsychika»." },
+    { y:"1889", e:"I Kongres Międzynarodowy Psychofizjologii w Paryżu — oficjalne uznanie telepatii." },
+    { y:"1892", e:"Śmierć Jerzego Pelhama; rozpoczęcie jego przejawiania się przez panią Piper." },
+    { y:"1897", e:"Bergson kwestionuje paralelizm psychofizyczny." },
+    { y:"1899", e:"Przypadek pani Beauchamp dra Prince'a." },
+    { y:"1905", e:"Śmierć dra Hodgsona; przejawianie się przez panią Piper (opisane przez W. Jamesa)." },
+    { y:"1909", e:"Eksperyment Ochorowicza ze zjawą «małej Stasi» — autoportret medjum." },
+    { y:"1912–16", e:"Schrenck-Notzing — pierwsze zdjęcia kinematograficzne ektoplazmy." },
+    { y:"1919", e:"Kluski znika z pokoju seansowego (sierpień)." },
+    { y:"1920", e:"Kongres Międzynarodowy Badań Psychicznych w Kopenhadze — wnioski Lebiedzińskiego." },
+    { y:"1921", e:"Eksperyment Jeansona z Ewą C. (20-cm postać kobiety, 25.05)." },
+    { y:"1922", e:"Eksperyment Soala z Blanką Cooper i Gordonem Davisem (rzekoma śmierć)." },
+    { y:"1925", e:"Schwab — kinematografia ektoplazmy. Neuried — komisja Schrenck-Notzinga." },
+    { y:"1926", e:"Eksperymenty Tow. Psychofizycznego Warszawa–Ateny; zadanie SPR ze skrzynką." },
+    { y:"1929", e:"Karol Richet publikuje «Traité de métapsychique»." },
+    { y:"1930", e:"Lifschitz publikuje «Hypnoanalyse» w Moskwie." },
+    { y:"1931", e:"Eksperymenty rabdomantów na stadionie w Weronie (prof. Cazzamalli)." },
+    { y:"1932–33", e:"Carrington z Eileen Garrett i Uvanim." },
+    { y:"1936", e:"5.10: Marja Jewdokimowa przejawia się w Wilnie." },
+    { y:"1938", e:"Luty: psy św. Gottharda przeczuwają lawinę. Marzec: koty angorskie w Kalifornii przeczuwają powódź. Grudzień: Świtkowski kończy pisanie przedmowy." },
+    { y:"1939", e:"Wydanie książki w Wiśle przez Jana Hadynę (Biblioteka Lotosu, tom 14)." }
+  ],
+  flashcards: [
+    { q:"Czym różni się parapsychologia od okultyzmu?", a:"Parapsychologia jest indukcyjna (bada fakty, gromadzi obserwacje, wysnuwa prawa). Okultyzm jest dedukcyjny (opiera się na dogmatach «wiedzy objawionej» i tradycji)." },
+    { q:"Kto wprowadził termin «metapsychika» i kiedy?", a:"Karol Richet w 1884 r. — później zastąpiony przez «parapsychologię»." },
+    { q:"Kto wprowadził termin «telepatja»?", a:"Frederic Myers w 1883 r. Oficjalnie uznana na I Kongresie Międzynarodowym Psychofizjologii w Paryżu (1889)." },
+    { q:"Co to jest ektoplazma?", a:"Substancja organiczna wyłaniana z ciała medjum: gazowa, ciekła, galaretowata, twarda; zimna, lepka, śluzowata, odporna na ogień, wrażliwa na światło. Termin Geleya (wcześniej teleplazma)." },
+    { q:"Czym jest ideoplastia i kto ją sformułował?", a:"Kształtowanie materii przez wyobrażenie myślowe. Termin Ochorowicza. Trzy formy wg P. Lebiedzińskiego (Kongres Kopenhaga 1920): psychiczna, materialna, energetyczna." },
+    { q:"Wymień trzy stadia hipnozy sugestyjnej wg Schrenck-Notzinga / Lifschitza.", a:"Charme (rozmarzenie), Hypotaxis (omroczenie), Somnambulizm." },
+    { q:"Czym różni się trans medjalny od hipnozy sugestyjnej?", a:"W hipnozie sugestyjnej hipnotyzer ma rosnącą władzę nad uśpionym; w transie medjum staje się samodzielne, traci podatność na sugestie, wpada w czynny somnambulizm." },
+    { q:"Wymień siedem głównych systemów jogi indyjskiej.", a:"Bhaktijoga (miłości), karmajoga (pracy), dżnianajoga (poznania), lajajoga (psychofizjologiczna), radżajoga (królewska), mantrajoga (modlitewna), hathajoga (przez wysiłek)." },
+    { q:"Co to jest psychometria?", a:"Zdolność medjum do odczytywania historii i otoczenia martwego przedmiotu przez jego dotyk lub zbliżenie do czoła/splotu słonecznego." },
+    { q:"Jak działa rabdomancja?", a:"Rabdomanta z różdżką Y (zwykle leszczynową) chodzi po terenie; różdżka porusza się nad źródłami wody, ropy, kruszców. Mechanizm: autosugestia podświadomości w stanie zbliżonym do somnambulizmu." },
+    { q:"Czym jest «raport» w magnetyzmie żywotnym?", a:"Wzajemną łącznością między magnetyzerem a chorym, rosnącą z każdym zabiegiem. Odróżnia magnetyzm od hipnozy sugestyjnej, w której raportu nie ma." },
+    { q:"Co to jest sobowtór? Podaj klasyczny przypadek.", a:"Zjawa-projekcja człowieka żywego lub zmarłego. Klasyczny: Emilja Sagée (nauczycielka koło Rygi, 1845, widywana przez uczennice w dwóch miejscach naraz)." },
+    { q:"Co opisał Crawford o ektoplazmie?", a:"Wodząc ręką między medjum a stołem natrafił na lepką, zimną, oleistą substancję; wychodzi z kostek u nóg, gęstnieje w sztywny pręt; jej waga dochodzi do połowy wagi ciała medjum." },
+    { q:"Wymień trzy metody kabały żydowskiej.", a:"Gematria (podstawianie liter o równej wartości liczbowej), Notariqon (tworzenie zdań z liter słowa lub pionowe czytanie), Aiq Bekar (kabała dziewięciu przegródek, tworzenie pieczęci demonów)." },
+    { q:"Jaką pamięć opisuje Geley jako niezniszczalną?", a:"Pamięć podświadomą — niezależną od mózgu, niezniszczalną; to argument za przeżyciem indywidualności po śmierci." },
+    { q:"Czym jest «ciało eteryczne»?", a:"Niewidzialny «plan» struktury fizycznej; hipoteza nieunikniona dla wyjaśnienia materializacji i odlewów. Wszystko zachowuje stałe proporcje, jak nasienie rośliny." },
+    { q:"Wymień osobowości transowe znanych medjów.", a:"Tomczykówna: «Stasia»; Paladino: John King; d'Esperance: Jolanda; Cooper: Nada; Schneider W.: Olga/Maier/Anton; Leonard: Feda; Piper: Phinuit; Stainton-Moses: Imperator/Rector/Doctor/Prudens." },
+    { q:"Jakie były klasyczne eksperymenty Crookesa z Katie King?", a:"Z medjum Florencja Cook przez rok niemal codziennie (1873–75). Mierzył puls, oddech, opór elektryczny zjawy (5× wobec medjum), wykonał 43 negatywy zdjęć." },
+    { q:"Wymień klasyczne przepowiednie historyczne.", a:"Lenormand (śmierć pacjenta Liebeaulta); Cazotte (1788, Rewolucja Francuska); Nostradamus (XVI w., 2000 lat naprzód); św. Malachiasz (papieże); Kramer i Wanner (1816, śmierć Fryderyka Wirtemberskiego)." },
+    { q:"Dlaczego Świtkowski uważa, że psychoanaliza ma znaczenie dla okultyzmu?", a:"Otwiera dostęp do zepchniętych warstw podświadomości — głównego motoru zjawisk parapsychicznych. Wraz z hipnanalizą Lifschitza pozwala na bezpośrednie badanie podświadomości." },
+    { q:"Czym jest «pentakl» w magii ceremonialnej?", a:"Magiczny znak demona/anioła sporządzony rytualnie krwią maga w wybranym czasie astrologicznym; trzy znaki: planety, demona, pieczęć zaklęcia." },
+    { q:"Co to jest monoideizm?", a:"Skupienie wyłącznie na jednej idei. Warunek hipnozy sugestyjnej i prawidłowego postrzegania." },
+    { q:"Co to są aporty?", a:"Przeniesienie przedmiotu przez przeszkody, prawdopodobnie przez rozpylenie na atomy i ponowne skupienie. Świadczy gorąco świeżo aportowanego przedmiotu i woń spalenizny." },
+    { q:"Co to jest ksenoglossja?", a:"Mówienie obcymi, nieznanymi medjum językami. Maria d'Agreda nawracała Indjan w Meksyku — przykład klasyczny." },
+    { q:"Wymień trzy autonomiczne układy nerwowe wg anatomii nowoczesnej.", a:"Mózgowo-rdzeniowy (cerebrospinalis), współczulny (sympathicus), przywspółczulny (parasympathicus). Splot słoneczny — «mózg trzewi»." }
+  ],
+  quiz: [
+    { q:"Według Karola Richeta, jak nazywa się szerokie pojęcie «postrzegania pozazmysłowego»?", o:["Telekinezja","Kryptestezja","Ksenoglossja","Telestezja"], c:1, e:"Kryptestezja (Richet) to ogólne pojęcie postrzegania pozazmysłowego, którego szczególnymi przypadkami są telestezja i telepatia." },
+    { q:"Kto i kiedy wprowadził termin «telepatja»?", o:["Karol Richet, 1884","Frederic Myers, 1883","William Crookes, 1875","Albert von Schrenck-Notzing, 1889"], c:1, e:"Frederic Myers wprowadził termin «telepatja» w 1883 r.; oficjalne uznanie na Kongresie 1889." },
+    { q:"Substancja organiczna wyłaniana z ciała medjum, początkowo gazowa, potem galaretowata to:", o:["Plazma","Ektoplazma","Pseudopodia","Prana"], c:1, e:"Ektoplazma (termin Geleya, wcześniej teleplazma) — odporna na ogień, wrażliwa na światło." },
+    { q:"Jaka jest różnica między medjum a człowiekiem zwykłym według Świtkowskiego?", o:["Jakościowa: medjum ma dodatkowe organy","Stopniowa: zalążki uzdolnień ma każdy","Religijna: medjum jest wybrane","Dziedziczna: tylko niektóre rody"], c:1, e:"Świtkowski wielokrotnie podkreśla, że różnica jest tylko stopnia — uzdolnienia tkwią zalążkowo w każdym (dowód: eksperymenty de Gasparina i Thury'ego)." },
+    { q:"Trzy formy ideoplastii według P. Lebiedzińskiego to:", o:["Mała, średnia, wielka","Psychiczna, materialna, energetyczna","Telepatyczna, telekinetyczna, materializacyjna","Wzrokowa, słuchowa, dotykowa"], c:1, e:"P. Lebiedziński na Kongresie Kopenhaga 1920: psychiczna, materialna, energetyczna." },
+    { q:"Najwybitniejszym polskim parapsychologiem XIX/XX w. był:", o:["Norbert Okołowicz","Julian Ochorowicz","Ludwik Szczepański","Stefan Ossowiecki"], c:1, e:"Julian Ochorowicz (1850–1917) — «Sugestja myślowa», «Zjawiska medjumiczne», eksperymenty z Tomczykówną; hipnoskop." },
+    { q:"Klasyczny przypadek Felidy X. (1858) opisał:", o:["Dr Azam z Bordeaux","Dr Janet","Dr Prince","Dr Schrenck-Notzing"], c:0, e:"Dr Azam z Bordeaux — przypadek rozszczepienia osobowości." },
+    { q:"Bernheim głosił: «niema hipnotyzmu, jest tylko...»", o:["...sen","...sugestia","...podatność na sugestje","...autosugestia"], c:2, e:"Pełna formuła Bernheima: «niema hipnotyzmu, jest tylko podatność na sugestje»." },
+    { q:"Najsłynniejsza zjawa Florencji Cook to:", o:["Jolanda","Katie King","Estelle","Olga"], c:1, e:"Katie King — historyczna zjawa «córki pirata», badana przez Crookesa przez rok (1873–75); 43 negatywy zdjęć." },
+    { q:"Klasyczny przypadek sobowtóra z 1845 r. dotyczy:", o:["Florencji Cook","Emilji Sagée","Pani Hauffe","Eusapii Paladino"], c:1, e:"Emilja Sagée — nauczycielka koło Rygi, widywana przez uczennice w dwóch miejscach naraz." },
+    { q:"Joga «przez wysiłek» wprowadzająca pierwiastek seksualny to:", o:["Bhaktijoga","Hathajoga","Lajajoga","Radżajoga"], c:1, e:"Hathajoga — okres schyłkowy kultury indyjskiej, «zjednoczenie przez wysiłek»." },
+    { q:"Pierwsze foremki parafinowe uzyskał:", o:["W. Crookes","W. Denton (1875)","J. Ochorowicz","G. Geley"], c:1, e:"W. Denton w 1875 r. z medjum Hardy." },
+    { q:"Co to jest «raport» w magnetyzmie żywotnym?", o:["Sprawozdanie z seansu","Łączność medjum z magnetyzerem","Tablica wyników","Wpis do dziennika"], c:1, e:"Raport to wzajemna łączność medjum z hipnotyzerem/magnetyzerem, rosnąca z każdym zabiegiem." },
+    { q:"Kabała dziewięciu przegródek to:", o:["Gematrija","Notariqon","Aiq Bekar","Szemhamphorasz"], c:2, e:"Aiq Bekar — wpisywanie 27 liter w 3×3 pola; do konstruowania pieczęci demonów i jako alfabet szyfrowy." },
+    { q:"Pomysł, że pamięć jest niezależna od mózgu i przeżywa śmierć, propagował:", o:["Bergson, Geley, Lodge","Freud, Adler, Jung","Bernheim, Liebeault, Forel","Lombroso, Charcot, Janet"], c:0, e:"Bergson (1897), Geley i Lodge — krytycy paralelizmu psychofizycznego, argument za przeżyciem indywidualności." },
+    { q:"«Mózg trzewi» to:", o:["Móżdżek","Splot słoneczny (plexus Solaris)","Wzgórek wzrokowy","Szyszynka"], c:1, e:"Splot słoneczny — ośrodek układu współczulnego, «palacz pod kotłem maszyny organizmu»." },
+    { q:"«Jasnowidząca z Prevorst» to:", o:["Eileen Garrett","Friederike Hauffe","Eleonora Zugun","Sabira Churamowicz"], c:1, e:"F. Hauffe — opisana przez dra J. Kernera (1827), cztery stany świadomości." },
+    { q:"Eksperymenty bez medjum dowodzące, że uzdolnienia tkwią w każdym, prowadzili:", o:["Crookes i Crawford","de Gasparin (1854) i Thury (1855)","Schrenck-Notzing i Gruber","Carrington i Garrett"], c:1, e:"Hr. de Gasparin (1854) i prof. Thury (Genewa 1855) — ruchy stołu bez medjum, dowód «demokracji» uzdolnień." },
+    { q:"Pierwsze badania psychometryczne (1840) prowadził:", o:["W. Denton","J.R. Buchanan","Gustave Geley","Cesare Lombroso"], c:1, e:"J.R. Buchanan (1840) — odkrywca psychometrii; W. Denton (1854) — kontynuator z okazami geologicznymi." },
+    { q:"Według Świtkowskiego, warunkiem koniecznym prawdziwej władzy magicznej jest:", o:["Znajomość rytuałów","Pochodzenie","Poziom moralny","Wiek inicjacji"], c:2, e:"Poziom moralny — okultyzm średniowieczny i nowoczesny zatracił to, czyniąc rytuały substytutem charakteru." }
+  ]
+};
+window.DATA = DATA;
+</script>
+<script>
+// =============== APPLICATION ===============
+const SECTIONS = [
+  { id: 'overview',   label: 'Strona główna',         icon: '📖' },
+  { id: 'theses',     label: '10 najważniejszych tez', icon: '★' },
+  { id: 'map',        label: 'Mapa pojęciowa',         icon: '🗺' },
+  { id: 'intro',      label: 'Wstęp & przedmowa',      icon: '✎' },
+  { id: 'part1',      label: 'Część I — Psychologia',  icon: 'I' },
+  { id: 'part2',      label: 'Część II — Parapsychologia', icon: 'II' },
+  { id: 'part3',      label: 'Część III — Okultyzm',   icon: 'III' },
+  { id: 'glossary',   label: 'Glosariusz',             icon: '⌘' },
+  { id: 'people',     label: 'Postacie & badacze',     icon: '☉' },
+  { id: 'timeline',   label: 'Chronologia',            icon: '⧖' },
+  { id: 'flashcards', label: 'Fiszki',                 icon: '⬚' },
+  { id: 'quiz',       label: 'Quiz',                   icon: '?' },
+  { id: 'sources',    label: 'Źródła & metadane',      icon: '⚓' }
+];
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// ---- Renderers ----
+const RENDER = {
+
+  overview: () => `
+    <div class="space-y-6">
+      <div class="text-xs uppercase tracking-widest text-gold">Kompendium edukacyjne</div>
+      <h1 class="serif text-5xl font-bold text-accent leading-tight">${esc(DATA.meta.title)}</h1>
+      <div class="serif text-2xl text-muted">${esc(DATA.meta.author)} <span class="text-gold">·</span> ${DATA.meta.year}</div>
+
+      <div class="grid md:grid-cols-3 gap-4 mt-8">
+        <div class="card p-5 rounded-lg border">
+          <div class="text-xs text-muted uppercase">Rozdziałów</div>
+          <div class="serif text-3xl text-accent mt-1">${DATA.chaptersPart1.length + DATA.chaptersPart2.length + DATA.chaptersPart3.length}</div>
+          <div class="text-sm text-muted">w trzech częściach</div>
+        </div>
+        <div class="card p-5 rounded-lg border">
+          <div class="text-xs text-muted uppercase">Pojęcia w glosariuszu</div>
+          <div class="serif text-3xl text-accent mt-1">${DATA.glossary.length}</div>
+          <div class="text-sm text-muted">z definicjami</div>
+        </div>
+        <div class="card p-5 rounded-lg border">
+          <div class="text-xs text-muted uppercase">Postacie & media</div>
+          <div class="serif text-3xl text-accent mt-1">${DATA.people.length}</div>
+          <div class="text-sm text-muted">badaczy i mediów</div>
+        </div>
+      </div>
+
+      <div class="card p-6 rounded-lg border mt-6">
+        <h2 class="serif text-2xl text-accent mb-3">Czym jest to opracowanie</h2>
+        <p class="leading-relaxed">Pełne kompendium polskiej książki <em>„Okultyzm i magja w świetle parapsychologji"</em> Józefa Świtkowskiego (1939) — monumentalnej syntezy zachodniej tradycji ezoterycznej z perspektywy nowoczesnej (przedwojennej) nauki. Książka prowadzi czytelnika krok po kroku od fundamentów psychologii i fizjologii, przez parapsychologię (transy, ektoplazma, materializacje, telepatia), aż po historyczny okultyzm (joga indyjska, kabała, magia chaldejsko-egipska, demonologia średniowieczna).</p>
+      </div>
+
+      <div class="card p-6 rounded-lg border">
+        <h2 class="serif text-2xl text-accent mb-3">Jak korzystać z kompendium</h2>
+        <ul class="space-y-2 text-sm">
+          <li>📖 <strong>Strona główna</strong> — Twoje miejsce startowe.</li>
+          <li>★ <strong>10 najważniejszych tez</strong> — esencja całej książki w 10 punktach. Zacznij tutaj, jeśli masz mało czasu.</li>
+          <li>🗺 <strong>Mapa pojęciowa</strong> — wizualne ujęcie struktury książki w trzech blokach.</li>
+          <li>I/II/III <strong>Streszczenia rozdziałów</strong> — każdy rozdział: esencja, tezy, pojęcia, postacie, cytat.</li>
+          <li>⌘ <strong>Glosariusz</strong> — ${DATA.glossary.length} pojęć z wyszukiwarką.</li>
+          <li>☉ <strong>Postacie</strong> — parapsychologowie, media, postacie historyczne (z filtrem kategorii).</li>
+          <li>⧖ <strong>Chronologia</strong> — kluczowe wydarzenia od 3800 p.n.e. do 1939 r.</li>
+          <li>⬚ <strong>Fiszki</strong> — 25 kart do nauki (kliknij, by odsłonić odpowiedź).</li>
+          <li>? <strong>Quiz</strong> — 20 pytań kontrolnych z wynikiem i wyjaśnieniami.</li>
+        </ul>
+      </div>
+
+      <div class="card p-6 rounded-lg border bg-quote">
+        <div class="text-xs text-muted uppercase mb-2">Wydanie źródłowe</div>
+        <div class="serif text-lg">${esc(DATA.meta.publisher)}</div>
+        <div class="text-sm text-muted mt-1">Zakres dostępny: ${esc(DATA.meta.pages_in_doc)}</div>
+        <a href="${DATA.meta.source_url}" target="_blank" rel="noopener" class="inline-block mt-3 text-accent hover:underline text-sm">→ Otwórz dokument źródłowy</a>
+      </div>
+    </div>
+  `,
+
+  theses: () => `
+    <h1 class="serif text-4xl text-accent mb-2">10 najważniejszych tez</h1>
+    <p class="text-muted mb-8">Esencja całej książki — fundamentalne tezy, do których Świtkowski systematycznie dochodzi.</p>
+    <div class="space-y-4">
+      ${DATA.theses.map(t => `
+        <div class="card p-6 rounded-lg border flex gap-5">
+          <div class="serif text-5xl text-gold leading-none shrink-0 w-16">${t.n}</div>
+          <div>
+            <div class="serif text-xl font-semibold mb-2">${esc(t.t)}</div>
+            <div class="text-sm text-muted leading-relaxed">${esc(t.d)}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+
+  map: () => `
+    <h1 class="serif text-4xl text-accent mb-2">Mapa pojęciowa</h1>
+    <p class="text-muted mb-8">Książka dzieli się na trzy bloki tematyczne, łączące się logiczno-spiralnie. Każdy blok uzupełnia poprzedni i przygotowuje do następnego.</p>
+    <div class="space-y-6">
+      ${DATA.conceptMap.map((b, i) => `
+        <div class="card p-6 rounded-lg border concept-map-block">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="serif text-4xl font-bold" style="color:${b.color}">${['I','II','III'][i]}</div>
+            <h2 class="serif text-2xl font-semibold">${esc(b.title)}</h2>
+          </div>
+          <p class="text-sm leading-relaxed mb-4 text-muted">${esc(b.desc)}</p>
+          <div class="flex flex-wrap gap-2">
+            ${b.chapters.map(c => `<span class="pill" style="border-color:${b.color}40;">${esc(c)}</span>`).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="card p-6 rounded-lg border mt-8">
+      <h3 class="serif text-xl text-accent mb-3">Logika narracyjna autora</h3>
+      <ol class="space-y-2 text-sm leading-relaxed">
+        <li><strong>Część I (Psychologia zwykła):</strong> uświadomienie, że to, co uważamy za „normalną" świadomość, to mały skrawek wszystkich zdarzeń psychicznych. Reszta dzieje się w podświadomości — i to ona jest motorem zjawisk „cudownych".</li>
+        <li><strong>Część II (Parapsychologia):</strong> systematyczny przegląd zjawisk paranormalnych według podziału Richeta: kryptestezja (psychika), parafizjologia (organizm), parafizyka (materia). Synteza: ideoplastia, ciało eteryczne, magnetyzm żywotny.</li>
+        <li><strong>Część III (Okultyzm historyczny):</strong> umieszczenie nauki w kontekście tradycji — Indie (joga), Chaldea/Egipt (magia), Izrael (kabała), średniowiecze, XVI–XX w. (alchemia, czarownice, spirytyzm, teozofia).</li>
+      </ol>
+    </div>
+  `,
+
+  intro: () => `
+    <h1 class="serif text-4xl text-accent mb-2">Wstęp i przedmowa</h1>
+    <p class="text-muted mb-8">Trzy ramy kontekstowe książki: przedmowa autora, słowo wydawcy, wstęp do całości.</p>
+
+    <div class="card p-6 rounded-lg border mb-5">
+      <div class="text-xs uppercase tracking-wider text-gold mb-2">Przedmowa autora (grudzień 1938)</div>
+      <p class="leading-relaxed">${esc(DATA.intro.foreword)}</p>
+    </div>
+
+    <div class="card p-6 rounded-lg border mb-5">
+      <div class="text-xs uppercase tracking-wider text-gold mb-2">Słowo wydawcy (Jan Hadyna)</div>
+      <p class="leading-relaxed">${esc(DATA.intro.publisher_note)}</p>
+    </div>
+
+    <div class="card p-6 rounded-lg border">
+      <div class="text-xs uppercase tracking-wider text-gold mb-2">Wstęp do całości</div>
+      <p class="leading-relaxed">${esc(DATA.intro.introduction)}</p>
+    </div>
+  `,
+
+  _chapters: (arr, title, sub) => `
+    <h1 class="serif text-4xl text-accent mb-2">${esc(title)}</h1>
+    <p class="text-muted mb-6">${esc(sub)}</p>
+    <div class="mb-4 flex gap-2 items-center text-sm">
+      <input id="chSearch" placeholder="Filtruj rozdziały..." class="px-3 py-2 rounded border border-themed bg-transparent flex-1" />
+      <span class="text-muted text-xs" id="chCount"></span>
+    </div>
+    <div class="space-y-3" id="chList">
+      ${arr.map(ch => `
+        <details class="card border rounded-lg overflow-hidden chapter-card" data-title="${esc(ch.title.toLowerCase())}">
+          <summary class="p-4 hover:bg-quote flex items-center gap-3">
+            <span class="serif text-2xl font-bold text-gold w-10 shrink-0">${ch.n}</span>
+            <div class="flex-1">
+              <div class="serif text-lg font-semibold">${esc(ch.title)}</div>
+              <div class="text-xs text-muted mt-0.5">${esc(ch.essence.substring(0, 110))}…</div>
+            </div>
+            <span class="chev text-muted">▸</span>
+          </summary>
+          <div class="px-5 pb-5 pt-2 border-t border-themed bg-quote">
+            <div class="mb-4">
+              <div class="text-xs uppercase tracking-wider text-gold mb-1.5">Esencja</div>
+              <p class="text-sm leading-relaxed">${esc(ch.essence)}</p>
+            </div>
+            ${ch.theses && ch.theses.length ? `
+              <div class="mb-4">
+                <div class="text-xs uppercase tracking-wider text-gold mb-1.5">Kluczowe tezy</div>
+                <ul class="text-sm space-y-1 list-disc list-inside">
+                  ${ch.theses.map(t => `<li>${esc(t)}</li>`).join('')}
+                </ul>
+              </div>` : ''}
+            ${ch.concepts && ch.concepts.length ? `
+              <div class="mb-4">
+                <div class="text-xs uppercase tracking-wider text-gold mb-1.5">Kluczowe pojęcia</div>
+                <div class="text-sm space-y-1">
+                  ${ch.concepts.map(c => `<div><span class="serif font-semibold italic">${esc(c[0])}</span> — <span class="text-muted">${esc(c[1])}</span></div>`).join('')}
+                </div>
+              </div>` : ''}
+            ${ch.people && ch.people.length ? `
+              <div class="mb-4">
+                <div class="text-xs uppercase tracking-wider text-gold mb-1.5">Postacie / przykłady</div>
+                <div class="flex flex-wrap gap-1.5">
+                  ${ch.people.map(p => `<span class="pill">${esc(p)}</span>`).join('')}
+                </div>
+              </div>` : ''}
+            ${ch.quote ? `<blockquote>${esc(ch.quote)}</blockquote>` : ''}
+          </div>
+        </details>
+      `).join('')}
+    </div>
+  `,
+
+  part1: () => RENDER._chapters(DATA.chaptersPart1, 'Część I — Psychologia zwykła', 'Rozdziały 1–17. Fundamenty wiedzy o normalnej psychice i fizjologii. Bez nich dalsze zjawiska parapsychiczne wydawałyby się cudowne.'),
+  part2: () => RENDER._chapters(DATA.chaptersPart2, 'Część II — Parapsychologia', 'Rozdziały 18–39. Systematyczny przegląd zbadanych zjawisk paranormalnych: trans, ektoplazma, materializacje, telepatia, jasnowidzenie, magnetyzm żywotny.'),
+  part3: () => RENDER._chapters(DATA.chaptersPart3, 'Część III — Okultyzm historyczny', 'Rozdziały 40–44 (dostępne w pliku). Umieszczenie nauki w kontekście tradycji: joga indyjska, magia chaldejsko-egipska, kabała, średniowiecze. 23 końcowe rozdziały (alchemia, satanizm, spirytyzm, teozofia, magia ceremonialna) wykraczają poza dostępny fragment dokumentu.'),
+
+  glossary: () => `
+    <h1 class="serif text-4xl text-accent mb-2">Glosariusz</h1>
+    <p class="text-muted mb-6">${DATA.glossary.length} kluczowych pojęć z całej książki. Użyj filtra do wyszukiwania.</p>
+    <div class="mb-4 sticky top-0 bg-white py-3 z-10" style="background:var(--c-bg);">
+      <input id="gSearch" placeholder="Szukaj pojęcia lub w definicji..." class="w-full px-4 py-2.5 rounded border border-themed bg-transparent" />
+      <div class="text-xs text-muted mt-1.5" id="gCount"></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-3" id="gList">
+      ${DATA.glossary.map(([term, def]) => `
+        <div class="card p-4 rounded-lg border g-item" data-search="${esc((term + ' ' + def).toLowerCase())}">
+          <div class="serif text-lg font-semibold text-accent mb-1">${esc(term)}</div>
+          <div class="text-sm leading-relaxed text-muted">${esc(def)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+
+  people: () => {
+    const cats = [...new Set(DATA.people.map(p => p.cat))];
+    return `
+    <h1 class="serif text-4xl text-accent mb-2">Postacie i badacze</h1>
+    <p class="text-muted mb-6">Parapsychologowie, media, postacie historyczne — z opisem roli.</p>
+    <div class="mb-4 flex flex-wrap gap-2" id="pCats">
+      <button class="pill pill-accent" data-cat="*">Wszystkie</button>
+      ${cats.map(c => `<button class="pill" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}
+    </div>
+    <input id="pSearch" placeholder="Filtruj imię lub opis..." class="w-full px-4 py-2.5 mb-4 rounded border border-themed bg-transparent" />
+    <div class="grid md:grid-cols-2 gap-3" id="pList">
+      ${DATA.people.map(p => `
+        <div class="card p-4 rounded-lg border p-item" data-cat="${esc(p.cat)}" data-search="${esc((p.n + ' ' + p.d + ' ' + p.cat).toLowerCase())}">
+          <div class="text-xs uppercase tracking-wider text-gold mb-1">${esc(p.cat)}</div>
+          <div class="serif text-lg font-semibold mb-1">${esc(p.n)}</div>
+          <div class="text-sm text-muted leading-relaxed">${esc(p.d)}</div>
+        </div>
+      `).join('')}
+    </div>
+    `;
+  },
+
+  timeline: () => `
+    <h1 class="serif text-4xl text-accent mb-2">Chronologia</h1>
+    <p class="text-muted mb-8">Kluczowe wydarzenia i odkrycia wzmiankowane w książce — od starożytności po rok wydania (1939).</p>
+    <div class="timeline">
+      ${DATA.timeline.map(t => `
+        <div class="timeline-item">
+          <div class="serif text-xl font-bold text-accent">${esc(t.y)}</div>
+          <div class="text-sm text-muted leading-relaxed">${esc(t.e)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+
+  flashcards: () => `
+    <h1 class="serif text-4xl text-accent mb-2">Fiszki do nauki</h1>
+    <p class="text-muted mb-2">25 kart kontrolnych. Kliknij kartę, aby odsłonić odpowiedź. Użyj przycisków do nawigacji.</p>
+    <div class="flex items-center gap-3 mb-6 mt-4">
+      <button id="fPrev" class="px-4 py-2 rounded border border-themed hover:bg-quote">← Poprzednia</button>
+      <span id="fCount" class="text-sm text-muted">1 / ${DATA.flashcards.length}</span>
+      <button id="fNext" class="px-4 py-2 rounded border border-themed hover:bg-quote">Następna →</button>
+      <button id="fShuffle" class="ml-auto px-4 py-2 rounded border border-themed hover:bg-quote">🔀 Tasuj</button>
+    </div>
+    <div id="fCard" class="flashcard" style="min-height:280px;">
+      <div class="flashcard-inner">
+        <div class="flashcard-face">
+          <div>
+            <div class="text-xs uppercase tracking-wider text-gold mb-3">Pytanie</div>
+            <div class="serif text-xl" id="fQ"></div>
+            <div class="text-xs text-muted mt-6">Kliknij, aby odsłonić odpowiedź</div>
+          </div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div>
+            <div class="text-xs uppercase tracking-wider text-gold mb-3">Odpowiedź</div>
+            <div class="text-base leading-relaxed" id="fA"></div>
+            <div class="text-xs text-muted mt-6">Kliknij ponownie, aby wrócić do pytania</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  quiz: () => `
+    <h1 class="serif text-4xl text-accent mb-2">Quiz kontrolny</h1>
+    <p class="text-muted mb-6">${DATA.quiz.length} pytań sprawdzających opanowanie kluczowych tez. Odpowiedz na wszystkie i sprawdź wynik.</p>
+    <div class="card p-5 rounded-lg border mb-4 flex items-center justify-between sticky top-0 z-10" style="background:var(--c-bg-card);">
+      <div>
+        <div class="text-xs text-muted uppercase">Postęp</div>
+        <div class="serif text-2xl" id="qProgress">0 / ${DATA.quiz.length}</div>
+      </div>
+      <div>
+        <div class="text-xs text-muted uppercase text-right">Wynik</div>
+        <div class="serif text-2xl text-gold text-right" id="qScore">—</div>
+      </div>
+      <button id="qReset" class="px-4 py-2 rounded border border-themed hover:bg-quote">↻ Reset</button>
+    </div>
+    <div id="qList" class="space-y-5">
+      ${DATA.quiz.map((q, qi) => `
+        <div class="card p-5 rounded-lg border" data-qi="${qi}">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="serif text-2xl text-gold font-bold w-10 shrink-0">${qi+1}.</span>
+            <div class="serif text-lg flex-1">${esc(q.q)}</div>
+          </div>
+          <div class="space-y-2 mt-3 ml-12">
+            ${q.o.map((opt, oi) => `
+              <div class="quiz-opt p-3 rounded border border-themed" data-oi="${oi}">${esc(opt)}</div>
+            `).join('')}
+          </div>
+          <div class="q-expl hidden mt-3 ml-12 p-3 rounded bg-quote text-sm leading-relaxed border border-themed">
+            <strong class="text-gold">Wyjaśnienie:</strong> ${esc(q.e)}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+
+  sources: () => `
+    <h1 class="serif text-4xl text-accent mb-2">Źródła i metadane</h1>
+    <p class="text-muted mb-6">Informacje o dziele źródłowym, autorze i materiałach uzupełniających.</p>
+
+    <div class="card p-6 rounded-lg border mb-5">
+      <h2 class="serif text-xl text-accent mb-3">O autorze</h2>
+      <p class="text-sm leading-relaxed">Józef Świtkowski — polski parapsycholog, ezoteryk, eksperymentator, tłumacz literatury jogi i teozofii (Sankaraczarja, Wiwekananda). Współpracownik miesięcznika „Lotos" wydawanego w Wiśle przez Jana Hadynę. Eksperymentował z medjami: Staś Z., Bronisław Z., Bronisława Ł., Bronisław Ł., Niuta G. Pisarz językiem polszczyzny międzywojennej z archaiczną ortografią (magja, medjum, psychologja).</p>
+    </div>
+
+    <div class="card p-6 rounded-lg border mb-5">
+      <h2 class="serif text-xl text-accent mb-3">Wydanie źródłowe</h2>
+      <div class="text-sm space-y-1">
+        <div><strong>Tytuł:</strong> ${esc(DATA.meta.title)}</div>
+        <div><strong>Autor:</strong> ${esc(DATA.meta.author)}</div>
+        <div><strong>Rok:</strong> ${DATA.meta.year}</div>
+        <div><strong>Wydawca:</strong> ${esc(DATA.meta.publisher)}</div>
+        <div><strong>Dostępność w dokumencie źródłowym:</strong> ${esc(DATA.meta.pages_in_doc)}</div>
+        <div class="mt-3"><a href="${DATA.meta.source_url}" target="_blank" rel="noopener" class="text-accent hover:underline">→ Otwórz dokument źródłowy (Google Docs)</a></div>
+      </div>
+    </div>
+
+    <div class="card p-6 rounded-lg border mb-5">
+      <h2 class="serif text-xl text-accent mb-3">Najczęściej cytowane źródła w książce</h2>
+      <ul class="text-sm space-y-1.5">
+        <li>Karol Richet, <em>Traité de métapsychique</em> (Paryż 1929)</li>
+        <li>Gustave Geley, <em>L'ectoplasmie et la clairvoyance</em></li>
+        <li>Julian Ochorowicz, <em>Sugestja myślowa</em>, <em>Zjawiska medjumiczne</em></li>
+        <li>Norbert Okołowicz — monografia o Franku Kluskim</li>
+        <li>A. Liebeault, <em>Le sommeil artificiel</em></li>
+        <li>E. Bozzano, <em>Les phénomènes de hantise</em> (Paryż 1920)</li>
+        <li>C. Lombroso, <em>Studi ipnotici e spiritistici</em></li>
+        <li>E. Mattiesen, <em>Der jenseitige Mensch</em></li>
+        <li>J. Kerner — opis Jasnowidzącej z Prevorst</li>
+        <li>F. Myers, E. Gurney, F. Podmore, <em>Phantasms of the Living</em></li>
+        <li>L. Szczepański, <em>Okultyzm współczesny</em>, <em>Medjumizm współczesny</em></li>
+        <li>E. Aksakow, <em>Animismus und Spiritismus</em></li>
+        <li>J. A. S. (Świtkowski), <em>Droga w światy nadzmysłowe (Radżajoga nowoczesna)</em>, Kraków 1936</li>
+        <li><em>Proceedings of the S.P.R.</em> (Society for Psychical Research, Londyn)</li>
+        <li><em>Zeitschrift für Parapsychologie</em></li>
+      </ul>
+    </div>
+
+    <div class="card p-6 rounded-lg border bg-quote">
+      <h2 class="serif text-xl text-accent mb-3">Uwagi edytorskie</h2>
+      <p class="text-sm leading-relaxed">Kompendium zostało opracowane na podstawie OCR'owanej wersji oryginalnego wydania udostępnionego w Google Docs. Dokument źródłowy zawiera ok. 80% pełnego tekstu książki — urywa się w środku rozdziału „Okultyzm średniowieczny" (na opisie <em>Virga aurea</em> J.B. Hepburna d'Écosse). 23 końcowe rozdziały Części III (alchemia, satanizm, spirytyzm, astrologia, teozofia, reinkarnacja, magia ceremonialna, magia seksualna, wiry astralne, zakończenie i in.) zostały oznaczone jako niedostępne. Wszystkie streszczenia, glosariusz, postacie, chronologia i quiz oparte są na rzeczywistej treści dostępnego fragmentu. Cytaty zachowują archaiczną pisownię oryginału.</p>
+    </div>
+  `
+};
+
+// ---- Routing ----
+function buildNav() {
+  const nav = document.getElementById('nav');
+  nav.innerHTML = SECTIONS.map(s => `
+    <a href="#${s.id}" data-id="${s.id}" class="nav-item flex items-center gap-2.5 px-3 py-2 rounded text-sm cursor-pointer">
+      <span class="serif font-bold w-5 text-center text-gold">${s.icon}</span>
+      <span>${s.label}</span>
+    </a>
+  `).join('');
+  nav.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (a) { e.preventDefault(); show(a.dataset.id); }
+  });
+}
+
+function show(id) {
+  const content = document.getElementById('content');
+  const r = RENDER[id];
+  content.innerHTML = r ? r() : '<p>Nie znaleziono sekcji.</p>';
+  document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('active', a.dataset.id === id));
+  window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null, '', '#' + id);
+  initInteractions(id);
+}
+
+// ---- Interactions per section ----
+function initInteractions(id) {
+  if (id === 'glossary') {
+    const inp = document.getElementById('gSearch');
+    const items = document.querySelectorAll('.g-item');
+    const cnt = document.getElementById('gCount');
+    const upd = () => {
+      const q = inp.value.toLowerCase().trim();
+      let n = 0;
+      items.forEach(el => {
+        const m = !q || el.dataset.search.includes(q);
+        el.style.display = m ? '' : 'none';
+        if (m) n++;
+      });
+      cnt.textContent = `Pokazano: ${n} / ${items.length}`;
+    };
+    inp.addEventListener('input', upd);
+    upd();
+  }
+
+  if (id === 'people') {
+    let activeCat = '*';
+    const sInp = document.getElementById('pSearch');
+    const cats = document.querySelectorAll('#pCats button');
+    const items = document.querySelectorAll('.p-item');
+    const upd = () => {
+      const q = sInp.value.toLowerCase().trim();
+      items.forEach(el => {
+        const catOk = activeCat === '*' || el.dataset.cat === activeCat;
+        const sOk = !q || el.dataset.search.includes(q);
+        el.style.display = (catOk && sOk) ? '' : 'none';
+      });
+    };
+    sInp.addEventListener('input', upd);
+    cats.forEach(b => b.addEventListener('click', () => {
+      activeCat = b.dataset.cat;
+      cats.forEach(x => x.classList.toggle('pill-accent', x === b));
+      upd();
+    }));
+  }
+
+  if (id === 'part1' || id === 'part2' || id === 'part3') {
+    const inp = document.getElementById('chSearch');
+    const items = document.querySelectorAll('#chList details');
+    const cnt = document.getElementById('chCount');
+    const upd = () => {
+      const q = inp.value.toLowerCase().trim();
+      let n = 0;
+      items.forEach(el => {
+        const m = !q || el.dataset.title.includes(q);
+        el.style.display = m ? '' : 'none';
+        if (m) n++;
+      });
+      cnt.textContent = `${n} / ${items.length} rozdziałów`;
+    };
+    inp.addEventListener('input', upd);
+    upd();
+  }
+
+  if (id === 'flashcards') {
+    let idx = 0;
+    let cards = [...DATA.flashcards];
+    const card = document.getElementById('fCard');
+    const qEl = document.getElementById('fQ');
+    const aEl = document.getElementById('fA');
+    const cnt = document.getElementById('fCount');
+    const render = () => {
+      qEl.textContent = cards[idx].q;
+      aEl.textContent = cards[idx].a;
+      cnt.textContent = `${idx + 1} / ${cards.length}`;
+      card.classList.remove('flipped');
+    };
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+    document.getElementById('fPrev').addEventListener('click', () => { idx = (idx - 1 + cards.length) % cards.length; render(); });
+    document.getElementById('fNext').addEventListener('click', () => { idx = (idx + 1) % cards.length; render(); });
+    document.getElementById('fShuffle').addEventListener('click', () => {
+      cards = [...DATA.flashcards].sort(() => Math.random() - 0.5);
+      idx = 0; render();
+    });
+    render();
+  }
+
+  if (id === 'quiz') {
+    const state = new Array(DATA.quiz.length).fill(null);
+    const progress = document.getElementById('qProgress');
+    const score = document.getElementById('qScore');
+    const updateScore = () => {
+      const done = state.filter(v => v !== null).length;
+      const correct = state.reduce((s, v, i) => s + (v === DATA.quiz[i].c ? 1 : 0), 0);
+      progress.textContent = `${done} / ${DATA.quiz.length}`;
+      score.textContent = done > 0 ? `${correct} / ${done}` : '—';
+    };
+    document.querySelectorAll('#qList > div').forEach((box, qi) => {
+      const opts = box.querySelectorAll('.quiz-opt');
+      const expl = box.querySelector('.q-expl');
+      opts.forEach((opt, oi) => {
+        opt.addEventListener('click', () => {
+          if (state[qi] !== null) return;
+          state[qi] = oi;
+          const correct = DATA.quiz[qi].c;
+          opts.forEach((o, i) => {
+            if (i === correct) o.classList.add('correct');
+            else if (i === oi) o.classList.add('wrong');
+            o.style.cursor = 'default';
+          });
+          expl.classList.remove('hidden');
+          updateScore();
+        });
+      });
+    });
+    document.getElementById('qReset').addEventListener('click', () => show('quiz'));
+    updateScore();
+  }
+}
+
+// ---- Dark mode ----
+function initDarkMode() {
+  const btn = document.getElementById('darkToggle');
+  const saved = localStorage.getItem('switkowski-dark');
+  if (saved === '1') document.body.classList.add('dark');
+  btn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('switkowski-dark', document.body.classList.contains('dark') ? '1' : '0');
+  });
+}
+
+// ---- Bootstrap ----
+document.addEventListener('DOMContentLoaded', () => {
+  buildNav();
+  initDarkMode();
+  const initial = location.hash.replace('#', '') || 'overview';
+  show(SECTIONS.find(s => s.id === initial) ? initial : 'overview');
+});
+</script>
+
+</body>
+</html>
