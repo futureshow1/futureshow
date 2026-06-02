@@ -3,587 +3,851 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Alchemica — Psychoaktywne perfumy botaniczne</title>
-<meta name="description" content="Alchemica — psychoaktywne perfumy botaniczne. Naturalne kompozycje zapachowe, które wpływają na nastrój, emocje i stan ducha." />
+<title>Alchemica · Psychoaktywne perfumy botaniczne · Vol. I</title>
+<meta name="description" content="Alchemica — psychoaktywne perfumy botaniczne. Edytorialna prezentacja kolekcji dziesięciu eliksirów." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,800;1,6..96,400;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* ---------- TOKENS ---------- */
+  /* ============================================================
+     ALCHEMICA · EDITORIAL ISSUE No. 01
+     Vogue-style glamour redesign — monochromatic ivory + ink + champagne
+  ============================================================ */
+
   :root {
-    --paper: #f1e6cf;
-    --paper-warm: #ebdcbc;
-    --paper-deep: #e2cea5;
-    --ink: #1d2b34;
-    --ink-soft: #344852;
-    --gold: #b8924e;
-    --gold-deep: #8f6e34;
-    --moss: #6b7a3f;
-    --terracotta: #a85a3f;
-    --dusty-rose: #c47a6a;
+    --ivory: #faf6ec;
+    --ivory-soft: #f3ecdb;
+    --ink: #0a0a0a;
+    --ink-soft: #1f1f1f;
+    --ink-mute: #4a4a4a;
+    --champagne: #a8853f;
+    --champagne-light: #c9a865;
+    --oxblood: #5a1f25;
+    --rule: rgba(10, 10, 10, 0.15);
+
+    --display: "Bodoni Moda", "Didot", "Bodoni 72", serif;
     --serif: "Cormorant Garamond", "EB Garamond", Georgia, serif;
-    --display: "Italiana", "Cormorant Garamond", serif;
-    --body: "Lora", Georgia, serif;
+    --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
   }
 
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
+
   body {
-    background: var(--paper);
+    background: var(--ivory);
     color: var(--ink);
-    font-family: var(--body);
-    font-size: 17px;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    /* Subtelna tekstura papieru */
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(184, 146, 78, 0.06) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(107, 122, 63, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 50% 90%, rgba(168, 90, 63, 0.04) 0%, transparent 50%);
-  }
-
-  ::selection { background: var(--gold); color: var(--paper); }
-
-  a { color: var(--ink); text-decoration: none; }
-  a:hover { color: var(--gold-deep); }
-
-  h1, h2, h3, h4 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em; margin: 0; }
-
-  .display { font-family: var(--display); letter-spacing: 0.18em; text-transform: uppercase; }
-
-  /* ---------- NAV ---------- */
-  nav {
-    position: sticky; top: 0; z-index: 50;
-    backdrop-filter: blur(8px);
-    background: rgba(241, 230, 207, 0.85);
-    border-bottom: 1px solid rgba(29, 43, 52, 0.08);
-  }
-  .nav-inner {
-    max-width: 1300px; margin: 0 auto;
-    padding: 18px 32px;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 24px;
-  }
-  .nav-brand {
-    font-family: var(--display);
-    font-size: 22px;
-    letter-spacing: 0.32em;
-    color: var(--ink);
-    display: flex; align-items: center; gap: 12px;
-  }
-  .nav-brand img {
-    height: 40px; width: 40px;
-    object-fit: contain;
-  }
-  .nav-links { display: flex; gap: 36px; font-family: var(--serif); font-size: 16px; letter-spacing: 0.05em; }
-  .nav-links a { position: relative; }
-  .nav-links a:hover::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
-    height: 1px; background: var(--gold);
-  }
-  .nav-cart {
     font-family: var(--serif);
-    border: 1px solid var(--ink);
-    padding: 8px 18px;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: all 0.3s;
+    font-size: 18px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  .nav-cart:hover { background: var(--ink); color: var(--paper); }
-  .nav-cart .count { color: var(--gold-deep); margin-left: 6px; }
 
-  /* ---------- HERO ---------- */
-  .hero {
+  ::selection { background: var(--ink); color: var(--ivory); }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--display);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* ============================================================
+     MASTHEAD — top metadata bar like a magazine issue
+  ============================================================ */
+  .masthead-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 40px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .masthead-top span { display: flex; align-items: center; gap: 10px; }
+  .masthead-top .dot {
+    width: 4px; height: 4px; background: var(--champagne); border-radius: 50%;
+  }
+
+  /* ============================================================
+     COVER — magazine cover hero
+  ============================================================ */
+  .cover {
     position: relative;
-    min-height: 90vh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 80px 32px 100px;
     text-align: center;
+    padding: 70px 40px 90px;
+    border-bottom: 1px solid var(--rule);
     overflow: hidden;
   }
-  .hero-inner { max-width: 760px; position: relative; z-index: 2; }
-  .hero-logo {
-    width: 220px; height: 220px; margin: 0 auto 30px;
-    display: block;
-    filter: drop-shadow(0 8px 24px rgba(29, 43, 52, 0.15));
+
+  .cover-logo {
+    width: 130px; height: 130px;
+    display: block; margin: 0 auto 36px;
+    filter: drop-shadow(0 4px 12px rgba(10, 10, 10, 0.08));
   }
-  .hero h1 {
+
+  .cover-title {
     font-family: var(--display);
-    font-size: clamp(48px, 7vw, 86px);
-    letter-spacing: 0.22em;
-    margin-bottom: 18px;
+    font-weight: 400;
+    font-size: clamp(80px, 16vw, 220px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    margin: 0;
     color: var(--ink);
   }
-  .hero-tagline {
+  .cover-title .a-italic {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .cover-tag {
     font-family: var(--serif);
     font-style: italic;
-    font-size: clamp(20px, 2.4vw, 26px);
-    color: var(--gold-deep);
-    letter-spacing: 0.08em;
-    margin-bottom: 36px;
-  }
-  .hero-tagline::before, .hero-tagline::after { content: "✦"; margin: 0 18px; font-size: 14px; color: var(--gold); }
-  .hero-lead {
-    font-size: 19px;
-    line-height: 1.8;
+    font-weight: 400;
+    font-size: clamp(20px, 2.2vw, 28px);
     color: var(--ink-soft);
-    max-width: 600px;
-    margin: 0 auto 44px;
+    margin-top: 32px;
+    letter-spacing: 0.02em;
   }
-  .btn {
-    display: inline-block;
-    font-family: var(--serif);
-    font-size: 16px;
-    letter-spacing: 0.22em;
+
+  .cover-features {
+    margin-top: 50px;
+    display: flex; justify-content: center; gap: 36px;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    padding: 16px 42px;
+    color: var(--ink-mute);
+  }
+  .cover-features span::before {
+    content: "·"; margin-right: 36px; color: var(--champagne);
+  }
+  .cover-features span:first-child::before { content: none; }
+
+  .cover-lead {
+    max-width: 640px;
+    margin: 60px auto 0;
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    font-weight: 300;
+  }
+
+  .cover-cta {
+    display: inline-block;
+    margin-top: 44px;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 18px 44px;
     border: 1px solid var(--ink);
     color: var(--ink);
     background: transparent;
+    transition: all 0.35s ease;
     cursor: pointer;
-    transition: all 0.4s;
   }
-  .btn:hover { background: var(--ink); color: var(--paper); letter-spacing: 0.28em; }
-  .btn-gold { border-color: var(--gold-deep); color: var(--gold-deep); }
-  .btn-gold:hover { background: var(--gold-deep); color: var(--paper); }
+  .cover-cta:hover { background: var(--ink); color: var(--ivory); letter-spacing: 0.4em; }
 
-  /* Dekoracyjne łuki tła w hero */
-  .hero-arc {
-    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-    width: 140%; max-width: 1400px; height: 100%;
-    opacity: 0.4;
-    pointer-events: none;
+  /* ============================================================
+     NAV — sticky thin
+  ============================================================ */
+  nav.editorial-nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250, 246, 236, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
   }
-
-  /* ---------- SECTION BASE ---------- */
-  section { padding: 100px 32px; position: relative; }
-  .container { max-width: 1200px; margin: 0 auto; }
-  .section-head { text-align: center; margin-bottom: 70px; }
-  .eyebrow {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 15px;
-    letter-spacing: 0.2em;
+  .editorial-nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--gold-deep);
-    margin-bottom: 18px;
   }
-  .section-head h2 {
+  .editorial-nav-brand {
     font-family: var(--display);
-    font-size: clamp(34px, 5vw, 52px);
-    letter-spacing: 0.18em;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  .editorial-nav-links { display: flex; gap: 36px; }
+  .editorial-nav-links a { position: relative; color: var(--ink-soft); }
+  .editorial-nav-links a:hover { color: var(--ink); }
+  .editorial-nav-cart { color: var(--champagne); }
+
+  /* ============================================================
+     SECTION SCAFFOLD
+  ============================================================ */
+  section { padding: 140px 40px; position: relative; }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .wrap-narrow { max-width: 880px; margin: 0 auto; }
+
+  .chapter {
+    display: flex; align-items: center; gap: 18px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 32px;
+  }
+  .chapter-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 28px;
+    letter-spacing: 0;
     color: var(--ink);
   }
-  .divider {
-    width: 70px; height: 1px; background: var(--gold);
-    margin: 26px auto;
-    position: relative;
-  }
-  .divider::before, .divider::after {
-    content: ""; position: absolute; top: 50%;
-    width: 6px; height: 6px;
-    border: 1px solid var(--gold);
-    background: var(--paper);
-    transform: translateY(-50%) rotate(45deg);
-  }
-  .divider::before { left: -10px; }
-  .divider::after { right: -10px; }
+  .chapter-rule { flex: 1; height: 1px; background: var(--rule); }
 
-  /* ---------- MANIFEST ---------- */
-  .manifest { background: var(--paper-warm); }
-  .manifest-grid {
+  h2.headline {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  h2.headline em { font-weight: 500; }
+
+  .deck {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-mute);
+    max-width: 700px;
+    margin-bottom: 60px;
+    font-weight: 300;
+  }
+
+  /* ============================================================
+     N° 01 — EDITOR'S LETTER (manifest)
+  ============================================================ */
+  .letter {
+    background: var(--ivory);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .letter-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 5fr 7fr;
     gap: 80px;
-    align-items: center;
+    align-items: start;
   }
-  .manifest-portrait {
+  .letter-portrait {
     aspect-ratio: 3/4;
-    position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(29, 43, 52, 0.18);
+    position: relative;
   }
-  .manifest-portrait img {
+  .letter-portrait img {
     width: 100%; height: 100%;
     object-fit: cover;
     display: block;
+    filter: grayscale(0.15) contrast(1.05);
+    transition: filter 1.2s ease;
   }
-  .manifest-text h2 {
+  .letter-portrait:hover img { filter: grayscale(0) contrast(1); }
+  .letter-portrait .caption {
+    position: absolute; left: 0; bottom: -28px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .letter-portrait .caption em { color: var(--champagne); font-style: normal; }
+
+  .letter-body p {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    font-weight: 400;
+  }
+  .letter-body p.dropcap::first-letter {
     font-family: var(--display);
-    font-size: clamp(28px, 4vw, 40px);
-    letter-spacing: 0.16em;
-    margin-bottom: 28px;
+    font-size: 88px;
+    line-height: 0.85;
+    float: left;
+    margin: 6px 14px 0 0;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .letter-signature {
+    margin-top: 44px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 22px;
     color: var(--ink);
   }
-  .manifest-text p {
-    font-size: 17px; line-height: 1.85;
-    color: var(--ink-soft);
-    margin-bottom: 18px;
-  }
-  .manifest-text .signature {
-    margin-top: 36px;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 18px;
-    color: var(--gold-deep);
+  .letter-signature small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-style: normal;
+    margin-top: 6px;
   }
 
-  /* ---------- HOW IT WORKS ---------- */
-  .how { padding-top: 120px; padding-bottom: 120px; }
-  .how-grid {
+  /* ============================================================
+     N° 02 — THE SCIENCE
+  ============================================================ */
+  .science { background: var(--ivory); }
+  .science-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
-    margin-top: 40px;
+    gap: 60px;
+    margin-top: 20px;
+    border-top: 1px solid var(--rule);
+    padding-top: 60px;
   }
-  .how-card {
-    text-align: center;
-    padding: 30px 20px;
+  .science-card {
+    text-align: left;
   }
-  .how-icon {
-    width: 70px; height: 70px;
-    margin: 0 auto 24px;
-    color: var(--gold-deep);
-  }
-  .how-card h3 {
+  .science-num {
     font-family: var(--display);
-    font-size: 20px;
-    letter-spacing: 0.18em;
+    font-style: italic;
+    font-size: 56px;
+    color: var(--champagne);
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .science-card h3 {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 500;
     margin-bottom: 14px;
     color: var(--ink);
   }
-  .how-card p {
-    font-size: 15px;
-    color: var(--ink-soft);
+  .science-card p {
+    font-family: var(--serif);
+    font-size: 17px;
     line-height: 1.7;
+    color: var(--ink-mute);
     margin: 0;
   }
-  .how-note {
-    margin-top: 60px;
+
+  .pullquote {
+    margin: 100px auto 0;
+    max-width: 900px;
+    padding: 50px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
     text-align: center;
-    font-family: var(--serif);
+    font-family: var(--display);
     font-style: italic;
-    font-size: 17px;
-    color: var(--ink-soft);
-    max-width: 700px;
-    margin-left: auto; margin-right: auto;
-    padding: 24px 30px;
-    border-top: 1px solid var(--gold);
-    border-bottom: 1px solid var(--gold);
+    font-weight: 400;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .pullquote::before, .pullquote::after {
+    display: block;
+    font-family: var(--display);
+    font-style: normal;
+    font-size: 14px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin: 0 auto 24px;
+    content: "✦";
+  }
+  .pullquote::after {
+    margin: 24px auto 0;
+    content: "✦";
   }
 
-  /* ---------- COLLECTION ---------- */
-  .collection { background: var(--paper-warm); padding-top: 120px; padding-bottom: 120px; }
-  .grid {
+  /* ============================================================
+     N° 03 — THE COLLECTION
+  ============================================================ */
+  .collection { background: var(--ivory-soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+
+  .index-list {
+    margin: 0 0 100px;
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 40px;
-  }
-  .card {
-    background: var(--paper);
-    border: 1px solid rgba(184, 146, 78, 0.4);
-    padding: 36px 32px 32px;
-    display: flex; flex-direction: column;
-    transition: all 0.4s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: ""; position: absolute; inset: 6px;
-    border: 1px solid rgba(184, 146, 78, 0.2);
-    pointer-events: none;
-    transition: all 0.4s;
-  }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 50px rgba(29, 43, 52, 0.12);
-    border-color: var(--gold);
-  }
-  .card:hover::before { inset: 10px; border-color: var(--gold); }
-
-  .card-bottle {
-    height: 140px;
-    display: flex; align-items: flex-end; justify-content: center;
-    margin-bottom: 20px;
-  }
-  .card-bottle svg { height: 100%; }
-  .card-name {
-    font-family: var(--display);
-    font-size: 28px;
-    letter-spacing: 0.16em;
-    text-align: center;
-    color: var(--ink);
-    margin-bottom: 6px;
-  }
-  .card-sub {
-    text-align: center;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    letter-spacing: 0.08em;
-    color: var(--gold-deep);
-    margin-bottom: 18px;
-    min-height: 20px;
-  }
-  .card-divider {
-    width: 40px; height: 1px;
-    background: var(--gold);
-    margin: 0 auto 22px;
-    position: relative;
-  }
-  .card-divider::before {
-    content: "✦"; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--paper);
-    color: var(--gold);
-    font-size: 10px;
-    padding: 0 5px;
-  }
-  .card-desc {
-    font-size: 15px;
-    line-height: 1.65;
-    color: var(--ink-soft);
-    margin-bottom: 22px;
-    text-align: justify;
-    flex-grow: 1;
-  }
-  .notes {
-    font-family: var(--serif);
-    font-size: 14px;
-    color: var(--ink);
-    margin-bottom: 24px;
-  }
-  .notes-row { margin-bottom: 8px; display: flex; gap: 8px; }
-  .notes-label {
-    font-style: italic;
-    color: var(--gold-deep);
-    min-width: 85px;
-    flex-shrink: 0;
-  }
-  .notes-val { color: var(--ink-soft); line-height: 1.5; }
-  .card-foot {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: 18px;
-    border-top: 1px solid rgba(29, 43, 52, 0.1);
-  }
-  .price {
-    font-family: var(--display);
-    font-size: 22px;
-    letter-spacing: 0.1em;
-    color: var(--ink);
-  }
-  .price small { font-size: 13px; color: var(--ink-soft); margin-left: 4px; }
-  .add-btn {
-    font-family: var(--serif);
-    font-size: 13px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 60px;
+    font-family: var(--sans);
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 10px 22px;
+    color: var(--ink-mute);
+  }
+  .index-list a {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule);
+    transition: color 0.2s;
+  }
+  .index-list a:last-child, .index-list a:nth-last-child(2) { border-bottom: none; }
+  .index-list a:hover { color: var(--ink); }
+  .index-list .idx-num {
+    font-family: var(--display);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--champagne);
+    font-size: 14px;
+    margin-right: 14px;
+  }
+  .index-list .idx-name {
+    flex: 1;
+    font-family: var(--display);
+    font-style: normal;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--ink);
+  }
+  .index-list .idx-page { color: var(--ink-mute); }
+
+  .catalog {
+    display: flex;
+    flex-direction: column;
+    gap: 130px;
+  }
+  .feature {
+    display: grid;
+    grid-template-columns: 4fr 7fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .feature:nth-child(even) {
+    grid-template-columns: 7fr 4fr;
+  }
+  .feature:nth-child(even) .feature-bottle-wrap { order: 2; }
+  .feature:nth-child(even) .feature-meta { order: 1; }
+
+  .feature-bottle-wrap {
+    background: var(--ivory);
+    aspect-ratio: 3/4;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    border: 1px solid var(--rule);
+  }
+  .feature-bottle-wrap::before {
+    content: ""; position: absolute; inset: 14px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+  .feature-bottle-wrap svg {
+    height: 70%;
+    z-index: 1;
+  }
+  .feature-bottle-wrap .feature-num {
+    position: absolute; top: 24px; left: 30px;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 52px;
+    color: var(--champagne);
+    line-height: 1;
+    z-index: 2;
+  }
+  .feature-bottle-wrap .feature-tag {
+    position: absolute; bottom: 24px; right: 30px;
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .feature-meta .feature-chapter {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 14px;
+  }
+  .feature-meta h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(54px, 6vw, 84px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  .feature-meta .feature-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink-mute);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+  .feature-meta .feature-desc {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+  .feature-notes {
+    margin-bottom: 40px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .feature-notes .note-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px;
+    padding: 8px 0;
+    font-family: var(--serif);
+    font-size: 16px;
+  }
+  .feature-notes .note-label {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    padding-top: 4px;
+  }
+  .feature-notes .note-val {
+    color: var(--ink-soft);
+    font-style: italic;
+    line-height: 1.55;
+  }
+  .feature-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 30px;
+  }
+  .feature-price {
+    font-family: var(--display);
+    font-size: 32px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .feature-price small {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-left: 8px;
+    font-weight: 400;
+  }
+  .feature-add {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 16px 36px;
     border: 1px solid var(--ink);
     color: var(--ink);
     background: transparent;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.35s;
   }
-  .add-btn:hover { background: var(--ink); color: var(--paper); }
+  .feature-add:hover { background: var(--ink); color: var(--ivory); letter-spacing: 0.4em; }
 
-  /* Wariant kolorystyczny dla każdego perfumu (dla nazwy z plakatu klientki) */
-  .card[data-tone="abramelin"] .card-name { color: #2a3d3a; }
-  .card[data-tone="aphrodesia"] .card-name { color: #c4577e; }
-  .card[data-tone="cor"] .card-name { color: #2e5c8a; }
-  .card[data-tone="idun"] .card-name { color: #d77a4f; }
-  .card[data-tone="inspiratio"] .card-name { color: #b85533; }
-  .card[data-tone="laloba"] .card-name { color: #843d2b; }
-  .card[data-tone="metanoia"] .card-name { color: #3e6b9e; }
-  .card[data-tone="radical"] .card-name { color: #d78140; }
-  .card[data-tone="shinrin"] .card-name { color: #3b6e5a; }
-  .card[data-tone="volupia"] .card-name { color: #c4a456; }
-
-  /* ---------- BESPOKE ---------- */
+  /* ============================================================
+     N° 04 — BESPOKE
+  ============================================================ */
   .bespoke {
-    background:
-      linear-gradient(135deg, rgba(29, 43, 52, 0.92), rgba(52, 72, 82, 0.92));
-    color: var(--paper);
-    padding: 100px 32px;
+    background: var(--ink);
+    color: var(--ivory);
     text-align: center;
+    padding: 180px 40px;
   }
-  .bespoke .eyebrow { color: var(--gold); }
-  .bespoke h2 { color: var(--paper); }
-  .bespoke .divider { background: var(--gold); }
-  .bespoke .divider::before, .bespoke .divider::after { background: var(--ink); border-color: var(--gold); }
-  .bespoke-lead {
-    max-width: 680px;
-    margin: 0 auto 40px;
-    font-size: 18px;
-    line-height: 1.8;
-    color: rgba(241, 230, 207, 0.85);
-  }
-  .bespoke .btn {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-  .bespoke .btn:hover { background: var(--gold); color: var(--ink); }
-
-  /* ---------- INGREDIENTS / TRUST ---------- */
-  .trust { padding: 100px 32px; }
-  .trust-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 50px;
-    margin-top: 50px;
-  }
-  .trust-item { text-align: center; }
-  .trust-item svg { width: 50px; height: 50px; color: var(--gold-deep); margin-bottom: 18px; }
-  .trust-item h4 {
+  .bespoke .chapter { color: var(--champagne-light); }
+  .bespoke .chapter-num { color: var(--ivory); }
+  .bespoke .chapter-rule { background: rgba(255, 255, 255, 0.2); }
+  .bespoke h2 {
+    color: var(--ivory);
     font-family: var(--display);
-    font-size: 16px;
-    letter-spacing: 0.16em;
-    margin-bottom: 10px;
-    color: var(--ink);
+    font-weight: 400;
+    font-size: clamp(56px, 9vw, 130px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 40px;
   }
-  .trust-item p { font-size: 14px; color: var(--ink-soft); margin: 0; line-height: 1.6; }
+  .bespoke h2 em {
+    font-weight: 500;
+    color: var(--champagne-light);
+  }
+  .bespoke-lead {
+    max-width: 720px;
+    margin: 0 auto 50px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.7;
+    color: rgba(250, 246, 236, 0.85);
+  }
+  .bespoke-cta {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    padding: 20px 50px;
+    border: 1px solid var(--champagne-light);
+    color: var(--champagne-light);
+    background: transparent;
+    transition: all 0.35s;
+  }
+  .bespoke-cta:hover {
+    background: var(--champagne-light);
+    color: var(--ink);
+    letter-spacing: 0.44em;
+  }
 
-  /* ---------- FOOTER ---------- */
+  /* ============================================================
+     N° 05 — THE HOUSE (trust)
+  ============================================================ */
+  .house { background: var(--ivory); }
+  .house-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    margin-top: 60px;
+    padding-top: 60px;
+    border-top: 1px solid var(--rule);
+  }
+  .house-item {
+    text-align: left;
+  }
+  .house-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 36px;
+    color: var(--champagne);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .house-item h4 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .house-item p {
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink-mute);
+    margin: 0;
+  }
+
+  /* ============================================================
+     COLOPHON (footer)
+  ============================================================ */
   footer {
     background: var(--ink);
-    color: rgba(241, 230, 207, 0.85);
-    padding: 70px 32px 30px;
+    color: var(--ivory);
+    padding: 100px 40px 40px;
+    border-top: 1px solid var(--champagne);
   }
-  .footer-grid {
-    max-width: 1200px; margin: 0 auto;
+  .colophon-top {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 50px;
-    margin-bottom: 50px;
+    gap: 60px;
+    margin-bottom: 80px;
   }
-  footer h4 {
-    font-family: var(--display);
-    font-size: 15px;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    margin-bottom: 22px;
+  .colophon-brand {
+    display: flex; align-items: center; gap: 20px;
+    margin-bottom: 24px;
   }
-  footer ul { list-style: none; padding: 0; margin: 0; }
-  footer li { margin-bottom: 12px; font-size: 14px; }
-  footer a { color: rgba(241, 230, 207, 0.7); }
-  footer a:hover { color: var(--gold); }
-  .footer-brand {
-    font-family: var(--display);
-    font-size: 28px;
-    letter-spacing: 0.28em;
-    color: var(--paper);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .footer-brand img {
+  .colophon-brand img {
     height: 56px; width: 56px;
     object-fit: contain;
   }
-  .footer-tag {
+  .colophon-brand .brand-mark {
+    font-family: var(--display);
+    font-size: 36px;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+  }
+  .colophon-tag {
     font-family: var(--serif);
     font-style: italic;
-    font-size: 15px;
-    color: var(--gold);
-    margin-bottom: 22px;
+    font-size: 18px;
+    color: var(--champagne-light);
+    margin-bottom: 24px;
   }
-  .footer-about { font-size: 14px; line-height: 1.7; color: rgba(241, 230, 207, 0.65); }
-  .footer-bottom {
-    max-width: 1200px; margin: 0 auto;
-    padding-top: 28px;
-    border-top: 1px solid rgba(241, 230, 207, 0.15);
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 12px; color: rgba(241, 230, 207, 0.5);
-    letter-spacing: 0.05em;
+  .colophon-about {
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: rgba(250, 246, 236, 0.7);
+    max-width: 380px;
   }
-  .footer-allergen {
-    max-width: 1200px; margin: 30px auto 0;
-    font-size: 12px; font-style: italic;
-    color: rgba(241, 230, 207, 0.45);
+  footer h4.col-head {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--champagne-light);
+    margin-bottom: 24px;
+  }
+  footer ul { list-style: none; padding: 0; margin: 0; }
+  footer li { margin-bottom: 12px; font-family: var(--serif); font-size: 16px; }
+  footer ul a { color: rgba(250, 246, 236, 0.75); transition: color 0.2s; }
+  footer ul a:hover { color: var(--champagne-light); }
+
+  .colophon-credits {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(250, 246, 236, 0.5);
+    margin-bottom: 30px;
+  }
+  .colophon-credits div em {
+    display: block;
+    color: var(--champagne-light);
+    font-style: normal;
+    margin-top: 4px;
+    letter-spacing: 0.2em;
+  }
+  .colophon-allergen {
     text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(250, 246, 236, 0.45);
     line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  .colophon-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(250, 246, 236, 0.4);
   }
 
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .manifest-grid { grid-template-columns: 1fr; gap: 50px; }
-    .how-grid { grid-template-columns: 1fr; gap: 40px; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    section { padding: 70px 22px; }
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 1000px) {
+    .letter-grid, .feature, .feature:nth-child(even) { grid-template-columns: 1fr; gap: 50px; }
+    .feature:nth-child(even) .feature-bottle-wrap { order: 0; }
+    .science-grid { grid-template-columns: 1fr; gap: 50px; }
+    .house-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .colophon-top { grid-template-columns: 1fr 1fr; }
+    .colophon-credits { grid-template-columns: 1fr 1fr; }
+    .editorial-nav-links { display: none; }
+    .index-list { grid-template-columns: 1fr; }
+    section { padding: 100px 26px; }
+    .masthead-top { padding: 12px 22px; flex-wrap: wrap; gap: 10px; font-size: 9.5px; }
+    .cover { padding: 50px 24px 70px; }
   }
   @media (max-width: 600px) {
-    .footer-grid { grid-template-columns: 1fr; }
-    .footer-bottom { flex-direction: column; gap: 14px; }
-    .hero { min-height: 80vh; padding: 60px 22px 80px; }
-    .grid { grid-template-columns: 1fr; }
+    .colophon-top, .colophon-credits { grid-template-columns: 1fr; }
+    .colophon-bottom { flex-direction: column; gap: 14px; }
+    .house-grid { grid-template-columns: 1fr; }
+    .cover-features { gap: 18px; font-size: 10px; }
+    .feature-foot { flex-direction: column; align-items: flex-start; gap: 18px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ========== NAV ========== -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-brand">
-      <img src="assets/logo.png" alt="" aria-hidden="true">
-      <span>ALCHEMICA</span>
-    </a>
-    <div class="nav-links">
-      <a href="#kolekcja">Kolekcja</a>
-      <a href="#manifest">O marce</a>
-      <a href="#jak-dziala">Jak działają</a>
-      <a href="#eliksir">Twój eliksir</a>
-      <a href="#kontakt">Kontakt</a>
+<!-- ============================================================
+     MASTHEAD
+============================================================ -->
+<div class="masthead-top">
+  <span>VOL. I &nbsp;·&nbsp; N<sup>o</sup> 01</span>
+  <span><span class="dot"></span> MMXXVI <span class="dot"></span></span>
+  <span>WARSZAWA · PL</span>
+</div>
+
+<!-- ============================================================
+     COVER
+============================================================ -->
+<header class="cover">
+  <img src="assets/logo.png" alt="Alchemica" class="cover-logo">
+  <h1 class="cover-title">Alchemic<span class="a-italic">a</span></h1>
+  <div class="cover-tag">Psychoaktywne perfumy botaniczne</div>
+
+  <div class="cover-features">
+    <span>Eliksiry dla codzienności</span>
+    <span>Dziesięć kompozycji</span>
+    <span>Made by hand</span>
+  </div>
+
+  <p class="cover-lead">
+    Perfumy z przeznaczeniem, wpływające na zmianę nastroju w ciągu kilku minut.
+    Naturalne kompozycje współpracujące z układem węchowym i nerwowym —
+    ukoją, odświeżą umysł, pobudzą do działania albo otulą zmysły.
+  </p>
+
+  <a href="#kolekcja" class="cover-cta">Odkryj kolekcję</a>
+</header>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav class="editorial-nav">
+  <div class="editorial-nav-inner">
+    <span class="editorial-nav-brand">Alchemica</span>
+    <div class="editorial-nav-links">
+      <a href="#kolekcja">The Collection</a>
+      <a href="#manifest">Editor's Letter</a>
+      <a href="#jak-dziala">The Science</a>
+      <a href="#eliksir">Bespoke</a>
     </div>
-    <a href="#" class="nav-cart">Koszyk<span class="count">(0)</span></a>
+    <a href="#" class="editorial-nav-cart">Cart <span class="count">(0)</span></a>
   </div>
 </nav>
 
-<!-- ========== HERO ========== -->
-<header class="hero">
-  <!-- Tęcza/łuk w tle, motyw z plakatu klientki -->
-  <svg class="hero-arc" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
-    <defs>
-      <radialGradient id="arcGrad" cx="50%" cy="100%" r="80%">
-        <stop offset="60%" stop-color="transparent"/>
-        <stop offset="62%" stop-color="#a85a3f" stop-opacity="0.25"/>
-        <stop offset="66%" stop-color="#d77a4f" stop-opacity="0.25"/>
-        <stop offset="70%" stop-color="#c4a456" stop-opacity="0.25"/>
-        <stop offset="74%" stop-color="#6b7a3f" stop-opacity="0.25"/>
-        <stop offset="78%" stop-color="#3b6e5a" stop-opacity="0.25"/>
-        <stop offset="82%" stop-color="#2e5c8a" stop-opacity="0.25"/>
-        <stop offset="86%" stop-color="#3e6b9e" stop-opacity="0.25"/>
-        <stop offset="90%" stop-color="transparent"/>
-      </radialGradient>
-    </defs>
-    <circle cx="700" cy="900" r="820" fill="url(#arcGrad)"/>
-  </svg>
+<!-- ============================================================
+     N° 01 — EDITOR'S LETTER
+============================================================ -->
+<section class="letter" id="manifest">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 01</span>
+      <span>Editor's Letter</span>
+      <span class="chapter-rule"></span>
+      <span>Manifest marki</span>
+    </div>
 
-  <div class="hero-inner">
-    <img src="assets/logo.png" alt="Alchemica" class="hero-logo">
-    <h1>Alchemica</h1>
-    <div class="hero-tagline">Psychoaktywne perfumy botaniczne</div>
-    <p class="hero-lead">
-      Perfumy z przeznaczeniem, wpływające na zmianę nastroju w ciągu kilku minut.
-      Naturalne kompozycje współpracujące z układem węchowym i nerwowym —
-      ukoją, odświeżą umysł, pobudzą do działania albo otulą zmysły.
-    </p>
-    <a href="#kolekcja" class="btn">Odkryj kolekcję</a>
-  </div>
-</header>
+    <h2 class="headline">Eliksiry <em>dla</em> codzienności</h2>
 
-<!-- ========== MANIFEST ========== -->
-<section class="manifest" id="manifest">
-  <div class="container">
-    <div class="manifest-grid">
-      <div class="manifest-portrait">
+    <div class="letter-grid">
+      <div class="letter-portrait">
         <img src="assets/art-woman-crow.jpg" alt="Botaniczny portret">
+        <div class="caption"><em>Fig. I</em> &nbsp; Portret · grafika tymczasowa</div>
       </div>
-      <div class="manifest-text">
-        <div class="eyebrow">Manifest marki</div>
-        <h2>Eliksiry dla codzienności</h2>
-        <p>
+      <div class="letter-body">
+        <p class="dropcap">
           Zapraszam Cię do świata, w którym piękno całkowicie naturalnych zapachów
           łączy się z pielęgnacją psychicznego dobrostanu.
         </p>
@@ -598,141 +862,147 @@
           z odwieczną mocą roślin, aby dać Tobie nie tylko wyjątkowy zapach,
           ale też holistyczne doświadczenie dla zmysłów.
         </p>
-        <div class="signature">— Ola, twórczyni Alchemiki</div>
+
+        <div class="letter-signature">
+          Ola
+          <small>Twórczyni Alchemiki · Psycholożka</small>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== HOW IT WORKS ========== -->
-<section class="how" id="jak-dziala">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Nauka i tradycja</div>
-      <h2>Jak działają zapachy</h2>
-      <div class="divider"></div>
-      <p style="max-width: 680px; margin: 0 auto; color: var(--ink-soft);">
-        Zapach moduluje pracę układu limbicznego i ma głęboki sens
-        w regulacji samopoczucia.
-      </p>
+<!-- ============================================================
+     N° 02 — THE SCIENCE
+============================================================ -->
+<section class="science" id="jak-dziala">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 02</span>
+      <span>The Science</span>
+      <span class="chapter-rule"></span>
+      <span>Nauka i tradycja</span>
     </div>
 
-    <div class="how-grid">
-      <div class="how-card">
-        <svg class="how-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M32 8 C 22 8, 16 18, 16 30 C 16 42, 22 50, 28 52 L 28 58 L 36 58 L 36 52 C 42 50, 48 42, 48 30 C 48 18, 42 8, 32 8 Z"/>
-          <path d="M22 30 Q 32 26, 42 30" />
-          <circle cx="32" cy="36" r="3"/>
-        </svg>
+    <h2 class="headline">Jak działają <em>zapachy</em></h2>
+    <p class="deck">
+      Zapach moduluje pracę układu limbicznego i ma głęboki sens
+      w regulacji samopoczucia.
+    </p>
+
+    <div class="science-grid">
+      <div class="science-card">
+        <div class="science-num">I.</div>
         <h3>Olejki eteryczne</h3>
         <p>Najwyższej jakości olejki z upraw organicznych, żywice, absoluty i ekstrakty CO₂ pozyskiwane w zrównoważony i sprawiedliwy sposób.</p>
       </div>
-
-      <div class="how-card">
-        <svg class="how-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M20 32 Q 32 14, 44 32 Q 32 50, 20 32 Z"/>
-          <path d="M28 32 Q 32 26, 36 32 Q 32 38, 28 32 Z" fill="currentColor"/>
-          <path d="M32 8 L 32 14 M 32 50 L 32 56 M 8 32 L 14 32 M 50 32 L 56 32"/>
-        </svg>
+      <div class="science-card">
+        <div class="science-num">II.</div>
         <h3>Układ limbiczny</h3>
         <p>Molekuły olejków przenikają barierę krew-mózg, wędrują wzdłuż szlaków olfaktorycznych i wpływają na emocje, koncentrację i samopoczucie.</p>
       </div>
-
-      <div class="how-card">
-        <svg class="how-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M32 10 L 32 54"/>
-          <path d="M32 18 Q 22 22, 18 32 Q 22 28, 32 28"/>
-          <path d="M32 28 Q 42 32, 46 42 Q 42 38, 32 38"/>
-          <path d="M32 38 Q 24 42, 22 50 Q 26 46, 32 46"/>
-          <circle cx="32" cy="10" r="3"/>
-        </svg>
+      <div class="science-card">
+        <div class="science-num">III.</div>
         <h3>Zmiana nastroju</h3>
         <p>Formuły działają w ciągu kilku minut — relaksują, koją, dodają odwagi lub uruchamiają proces twórczy. Potwierdzone badaniami klinicznymi.</p>
       </div>
     </div>
 
-    <div class="how-note">
-      „Zapach, jaki na siebie nakładasz, może determinować Twój poziom energii
-      i nastrój. Esencje olejowe pomogą Ci w naturalny sposób wzmocnić energię życiową,
-      napełnić się spokojem i radością."
+    <div class="pullquote">
+      Zapach, jaki na siebie nakładasz, może determinować Twój poziom energii i nastrój.
+      Esencje olejowe pomogą Ci w naturalny sposób wzmocnić energię życiową,
+      napełnić się spokojem i radością.
     </div>
   </div>
 </section>
 
-<!-- ========== KOLEKCJA ========== -->
+<!-- ============================================================
+     N° 03 — THE COLLECTION
+============================================================ -->
 <section class="collection" id="kolekcja">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Kolekcja</div>
-      <h2>Dziesięć eliksirów</h2>
-      <div class="divider"></div>
-      <p style="max-width: 680px; margin: 0 auto; color: var(--ink-soft);">
-        Każda kompozycja to osobny rytuał. Na bazie oleju jojoba lub alkoholu.
-        Wszystkie unisex.
-      </p>
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 03</span>
+      <span>The Collection</span>
+      <span class="chapter-rule"></span>
+      <span>Dziesięć eliksirów</span>
     </div>
 
-    <div class="grid" id="grid">
-      <!-- Karty wygenerowane przez JS -->
+    <h2 class="headline">Dziesięć <em>eliksirów</em></h2>
+    <p class="deck">
+      Każda kompozycja to osobny rytuał. Na bazie oleju jojoba lub alkoholu.
+      Wszystkie unisex.
+    </p>
+
+    <!-- Index -->
+    <div class="index-list" id="index-list">
+      <!-- generated by JS -->
+    </div>
+
+    <!-- Catalog -->
+    <div class="catalog" id="catalog">
+      <!-- generated by JS -->
     </div>
   </div>
 </section>
 
-<!-- ========== BESPOKE ========== -->
+<!-- ============================================================
+     N° 04 — BESPOKE
+============================================================ -->
 <section class="bespoke" id="eliksir">
-  <div class="container">
-    <div class="eyebrow">Twój osobisty eliksir</div>
-    <h2 style="font-family: var(--display); font-size: clamp(34px, 5vw, 52px); letter-spacing: 0.18em; margin-bottom: 0;">
-      Skomponuj zapach dla siebie
-    </h2>
-    <div class="divider"></div>
+  <div class="wrap-narrow">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 04</span>
+      <span>Bespoke</span>
+      <span class="chapter-rule"></span>
+      <span>Twój osobisty eliksir</span>
+    </div>
+
+    <h2>Skomponuj zapach <em>dla siebie</em></h2>
+
     <p class="bespoke-lead">
       Jeśli interesuje Cię stworzenie osobistego eliksiru mocy, który odpowie
       na Twoje aktualne potrzeby i wyzwania — skontaktuj się ze mną.
       Taki eliksir komponuję w oparciu o rozmowę nie tylko o zapachach,
       ale o emocjach, pragnieniach i przeszkodach.
     </p>
-    <a href="#kontakt" class="btn">Umów konsultację</a>
+
+    <a href="#kontakt" class="bespoke-cta">Umów konsultację</a>
   </div>
 </section>
 
-<!-- ========== TRUST ========== -->
-<section class="trust">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Dlaczego Alchemica</div>
-      <h2>Czysty skład, czysta intencja</h2>
-      <div class="divider"></div>
+<!-- ============================================================
+     N° 05 — THE HOUSE
+============================================================ -->
+<section class="house">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 05</span>
+      <span>The House</span>
+      <span class="chapter-rule"></span>
+      <span>Dlaczego Alchemica</span>
     </div>
-    <div class="trust-grid">
-      <div class="trust-item">
-        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M25 6 L 30 18 L 43 19 L 33 28 L 36 41 L 25 34 L 14 41 L 17 28 L 7 19 L 20 18 Z"/>
-        </svg>
+
+    <h2 class="headline">Czysty <em>skład</em>, czysta intencja</h2>
+
+    <div class="house-grid">
+      <div class="house-item">
+        <div class="house-num">i.</div>
         <h4>Organiczne uprawy</h4>
         <p>Olejki eteryczne i absoluty z certyfikowanych źródeł, badane laboratoryjnie.</p>
       </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M10 25 Q 25 8, 40 25 Q 25 42, 10 25 Z"/>
-          <path d="M25 14 L 25 36 M 14 25 L 36 25" stroke-width="1"/>
-        </svg>
+      <div class="house-item">
+        <div class="house-num">ii.</div>
         <h4>Bez syntetyków</h4>
         <p>Wyłącznie naturalne składniki — żadnych ftalanów, parabenów, sztucznych barwników.</p>
       </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="25" cy="25" r="18"/>
-          <path d="M16 25 L 22 31 L 34 19"/>
-        </svg>
+      <div class="house-item">
+        <div class="house-num">iii.</div>
         <h4>Unisex</h4>
         <p>Wszystkie kompozycje są neutralne płciowo — odpowiednie dla każdego.</p>
       </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M25 10 Q 18 18, 18 28 Q 18 38, 25 42 Q 32 38, 32 28 Q 32 18, 25 10 Z"/>
-          <path d="M25 14 L 25 42"/>
-        </svg>
+      <div class="house-item">
+        <div class="house-num">iv.</div>
         <h4>Fair trade</h4>
         <p>Surowce pozyskiwane w sposób zrównoważony i sprawiedliwy społecznie.</p>
       </div>
@@ -740,60 +1010,75 @@
   </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
+<!-- ============================================================
+     COLOPHON
+============================================================ -->
 <footer id="kontakt">
-  <div class="footer-grid">
-    <div>
-      <div class="footer-brand">
-        <img src="assets/logo-light.png" alt="" aria-hidden="true">
-        <span>ALCHEMICA</span>
+  <div class="wrap">
+    <div class="colophon-top">
+      <div>
+        <div class="colophon-brand">
+          <img src="assets/logo-light.png" alt="" aria-hidden="true">
+          <span class="brand-mark">Alchemica</span>
+        </div>
+        <div class="colophon-tag">Psychoaktywne perfumy botaniczne</div>
+        <p class="colophon-about">
+          Naturalne kompozycje zapachowe komponowane ręcznie. Każdy eliksir
+          powstaje w małych partiach z najwyższej jakości olejków eterycznych,
+          żywic i absolutów.
+        </p>
       </div>
-      <div class="footer-tag">Psychoaktywne perfumy botaniczne</div>
-      <p class="footer-about">
-        Naturalne kompozycje zapachowe komponowane ręcznie. Każdy eliksir
-        powstaje w małych partiach z najwyższej jakości olejków eterycznych,
-        żywic i absolutów.
-      </p>
+      <div>
+        <h4 class="col-head">The Shop</h4>
+        <ul>
+          <li><a href="#kolekcja">The Collection</a></li>
+          <li><a href="#eliksir">Bespoke Atelier</a></li>
+          <li><a href="#">Karty podarunkowe</a></li>
+          <li><a href="#">Dostawa i zwroty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="col-head">The House</h4>
+        <ul>
+          <li><a href="#manifest">Editor's Letter</a></li>
+          <li><a href="#jak-dziala">The Science</a></li>
+          <li><a href="#">Składniki</a></li>
+          <li><a href="#">Badania</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="col-head">Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@alchemica.pl">hello@alchemica.pl</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <h4>Sklep</h4>
-      <ul>
-        <li><a href="#kolekcja">Kolekcja</a></li>
-        <li><a href="#eliksir">Twój eliksir</a></li>
-        <li><a href="#">Karty podarunkowe</a></li>
-        <li><a href="#">Dostawa i zwroty</a></li>
-      </ul>
+
+    <div class="colophon-credits">
+      <div>Editor-in-chief <em>Ola</em></div>
+      <div>Creative direction <em>Alchemica Studio</em></div>
+      <div>Photography <em>Forthcoming</em></div>
+      <div>Issue N<sup>o</sup> 01 <em>MMXXVI</em></div>
     </div>
-    <div>
-      <h4>Marka</h4>
-      <ul>
-        <li><a href="#manifest">O Alchemice</a></li>
-        <li><a href="#jak-dziala">Jak działają zapachy</a></li>
-        <li><a href="#">Składniki</a></li>
-        <li><a href="#">Badania</a></li>
-      </ul>
+
+    <div class="colophon-allergen">
+      Olejki eteryczne mogą uczulać. W razie wystąpienia reakcji alergicznej zaprzestań używania.
+      Produkty nie są przeznaczone do spożycia. Trzymać z dala od dzieci.
     </div>
-    <div>
-      <h4>Kontakt</h4>
-      <ul>
-        <li><a href="mailto:hello@alchemica.pl">hello@alchemica.pl</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">Newsletter</a></li>
-      </ul>
+
+    <div class="colophon-bottom">
+      <div>© MMXXVI Alchemica · All rights reserved</div>
+      <div>Regulamin · Polityka prywatności</div>
     </div>
-  </div>
-  <div class="footer-allergen">
-    * Olejki eteryczne mogą uczulać. W razie wystąpienia reakcji alergicznej zaprzestań używania.
-    Produkty nie są przeznaczone do spożycia. Trzymać z dala od dzieci.
-  </div>
-  <div class="footer-bottom">
-    <div>© 2026 Alchemica. Wszystkie prawa zastrzeżone.</div>
-    <div>Regulamin · Polityka prywatności</div>
   </div>
 </footer>
 
-<!-- ========== DATA + RENDERING ========== -->
+<!-- ============================================================
+     DATA + RENDERING
+============================================================ -->
 <script>
   const PERFUMES = [
     {
@@ -816,7 +1101,7 @@
       heart: "święta bazylia, nasiona kolendry",
       base: "paczula, sandał biały",
       price: 280,
-      bottleColor: "#c4577e"
+      bottleColor: "#5a1f25"
     },
     {
       key: "cor",
@@ -827,7 +1112,7 @@
       heart: "cynamon kasja",
       base: "nagarmotha",
       price: 280,
-      bottleColor: "#2e5c8a"
+      bottleColor: "#1d3a52"
     },
     {
       key: "idun",
@@ -838,7 +1123,7 @@
       heart: "szałwia muszkatołowa, opoponax, kocanki",
       base: "wetiweria, kadzidłowiec carterii i green sacra, mirra, balsam copaiba, castoreum, żywica benzoesowa",
       price: 320,
-      bottleColor: "#d77a4f"
+      bottleColor: "#a8853f"
     },
     {
       key: "inspiratio",
@@ -849,7 +1134,7 @@
       heart: "nasiona kolendry",
       base: "paczula",
       price: 280,
-      bottleColor: "#b85533"
+      bottleColor: "#7a3520"
     },
     {
       key: "laloba",
@@ -860,7 +1145,7 @@
       heart: "tulsi, cynamon",
       base: "kadzidło",
       price: 300,
-      bottleColor: "#843d2b"
+      bottleColor: "#3d2818"
     },
     {
       key: "metanoia",
@@ -871,7 +1156,7 @@
       heart: "geranium bourbon, tulsi, nasiona kolendry, pączki goździka",
       base: "kadzidłowiec carterii",
       price: 300,
-      bottleColor: "#3e6b9e"
+      bottleColor: "#2e3d52"
     },
     {
       key: "radical",
@@ -882,7 +1167,7 @@
       heart: "lawenda lekarska, melisa",
       base: "wanilia, kadzidłowiec zielony — green sacra",
       price: 280,
-      bottleColor: "#d78140"
+      bottleColor: "#c9a865"
     },
     {
       key: "shinrin",
@@ -893,7 +1178,7 @@
       heart: "cynamon, goździk, kolendra, cyprys, święta bazylia",
       base: "wetiweria, copaiba, mech dębowy",
       price: 320,
-      bottleColor: "#3b6e5a"
+      bottleColor: "#2e4a3a"
     },
     {
       key: "volupia",
@@ -904,85 +1189,124 @@
       heart: "róża",
       base: "drzewo sandałowe",
       price: 320,
-      bottleColor: "#c4a456"
+      bottleColor: "#9a6f3a"
     }
   ];
 
-  // SVG buteleczki — minimalna, elegancka
+  const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
   function bottleSVG(color) {
+    const id = "g-" + color.replace('#', '');
     return `
-      <svg viewBox="0 0 80 130" aria-hidden="true">
+      <svg viewBox="0 0 100 160" aria-hidden="true">
         <defs>
-          <linearGradient id="g-${color.replace('#','')}" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="${color}" stop-opacity="0.85"/>
-            <stop offset="100%" stop-color="${color}" stop-opacity="0.5"/>
+          <linearGradient id="${id}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="${color}" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="${color}" stop-opacity="0.65"/>
           </linearGradient>
         </defs>
         <!-- kapsel -->
-        <rect x="30" y="6" width="20" height="14" fill="#1d2b34" rx="1"/>
-        <rect x="32" y="20" width="16" height="6" fill="#b8924e"/>
+        <rect x="36" y="6" width="28" height="18" fill="#0a0a0a"/>
+        <rect x="38" y="24" width="24" height="6" fill="#a8853f"/>
         <!-- szyjka -->
-        <rect x="34" y="26" width="12" height="10" fill="${color}" opacity="0.7"/>
+        <rect x="42" y="30" width="16" height="10" fill="${color}" opacity="0.8"/>
         <!-- korpus -->
-        <path d="M 20 36 Q 14 40, 14 48 L 14 112 Q 14 122, 24 122 L 56 122 Q 66 122, 66 112 L 66 48 Q 66 40, 60 36 Z"
-              fill="url(#g-${color.replace('#','')})"
-              stroke="#1d2b34" stroke-width="0.8"/>
+        <path d="M 22 40 Q 14 46, 14 56 L 14 142 Q 14 154, 26 154 L 74 154 Q 86 154, 86 142 L 86 56 Q 86 46, 78 40 Z"
+              fill="url(#${id})"
+              stroke="#0a0a0a" stroke-width="0.8"/>
         <!-- etykieta -->
-        <rect x="22" y="60" width="36" height="46" fill="#f1e6cf" opacity="0.92" stroke="#b8924e" stroke-width="0.5"/>
-        <!-- linia na etykiecie -->
-        <line x1="28" y1="72" x2="52" y2="72" stroke="#1d2b34" stroke-width="0.6"/>
-        <line x1="32" y1="82" x2="48" y2="82" stroke="#b8924e" stroke-width="0.4"/>
-        <text x="40" y="98" text-anchor="middle" font-family="Italiana, serif" font-size="6" fill="#1d2b34" letter-spacing="0.5">15 ML</text>
+        <rect x="26" y="74" width="48" height="62" fill="#faf6ec" opacity="0.96" stroke="#a8853f" stroke-width="0.4"/>
+        <!-- detal etykiety -->
+        <line x1="34" y1="86" x2="66" y2="86" stroke="#a8853f" stroke-width="0.4"/>
+        <line x1="38" y1="124" x2="62" y2="124" stroke="#a8853f" stroke-width="0.3"/>
+        <text x="50" y="110" text-anchor="middle" font-family="Bodoni Moda, serif" font-style="italic" font-size="7" fill="#0a0a0a">15 ml</text>
         <!-- refleks -->
-        <path d="M 20 42 Q 18 50, 20 80" stroke="#f1e6cf" stroke-width="1.5" opacity="0.4" fill="none"/>
+        <path d="M 22 48 Q 20 60, 22 110" stroke="#faf6ec" stroke-width="2" opacity="0.35" fill="none"/>
       </svg>
     `;
   }
 
-  function renderCards() {
-    const grid = document.getElementById('grid');
-    grid.innerHTML = PERFUMES.map(p => `
-      <article class="card" data-tone="${p.key}">
-        <div class="card-bottle">${bottleSVG(p.bottleColor)}</div>
-        <h3 class="card-name">${p.name}</h3>
-        <div class="card-sub">${p.sub}</div>
-        <div class="card-divider"></div>
-        <p class="card-desc">${p.desc}</p>
-        <div class="notes">
-          <div class="notes-row"><span class="notes-label">Nuty głowy</span><span class="notes-val">${p.head}</span></div>
-          <div class="notes-row"><span class="notes-label">Nuty serca</span><span class="notes-val">${p.heart}</span></div>
-          <div class="notes-row"><span class="notes-label">Nuty bazy</span><span class="notes-val">${p.base}</span></div>
+  function renderIndex() {
+    const list = document.getElementById('index-list');
+    // 2 kolumny - dzielimy 10 na pół
+    const half1 = PERFUMES.slice(0, 5);
+    const half2 = PERFUMES.slice(5, 10);
+    // interleave: render in column order (5 + 5)
+    let html = '';
+    PERFUMES.forEach((p, i) => {
+      html += `
+        <a href="#perfume-${p.key}">
+          <span class="idx-num">${ROMAN[i]}.</span>
+          <span class="idx-name">${p.name}</span>
+          <span class="idx-page">N<sup>o</sup> 03 · ${String(i + 1).padStart(2, '0')}</span>
+        </a>
+      `;
+    });
+    list.innerHTML = html;
+  }
+
+  function renderCatalog() {
+    const catalog = document.getElementById('catalog');
+    catalog.innerHTML = PERFUMES.map((p, i) => `
+      <article class="feature" id="perfume-${p.key}">
+        <div class="feature-bottle-wrap">
+          <div class="feature-num">${ROMAN[i]}.</div>
+          ${bottleSVG(p.bottleColor)}
+          <div class="feature-tag">Fig. ${ROMAN[i]} · 15 ml</div>
         </div>
-        <div class="card-foot">
-          <div class="price">${p.price} zł<small>/ 15 ml</small></div>
-          <button class="add-btn" data-key="${p.key}">Do koszyka</button>
+        <div class="feature-meta">
+          <div class="feature-chapter">N<sup>o</sup> 03 · ${String(i + 1).padStart(2, '0')} of 10</div>
+          <h3>${p.name}</h3>
+          <div class="feature-sub">${p.sub}</div>
+          <p class="feature-desc">${p.desc}</p>
+          <div class="feature-notes">
+            <div class="note-row"><span class="note-label">Top notes</span><span class="note-val">${p.head}</span></div>
+            <div class="note-row"><span class="note-label">Heart notes</span><span class="note-val">${p.heart}</span></div>
+            <div class="note-row"><span class="note-label">Base notes</span><span class="note-val">${p.base}</span></div>
+          </div>
+          <div class="feature-foot">
+            <div class="feature-price">${p.price} zł<small>15 ml</small></div>
+            <button class="feature-add" data-key="${p.key}">Add to cart</button>
+          </div>
         </div>
       </article>
     `).join('');
 
-    // Prosty licznik koszyka
+    // licznik koszyka
     let cart = 0;
-    const cartEl = document.querySelector('.nav-cart .count');
-    document.querySelectorAll('.add-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
+    const cartEl = document.querySelector('.editorial-nav-cart .count');
+    document.querySelectorAll('.feature-add').forEach(btn => {
+      btn.addEventListener('click', () => {
         cart++;
-        cartEl.textContent = `(${cart})`;
+        if (cartEl) cartEl.textContent = `(${cart})`;
         const original = btn.textContent;
-        btn.textContent = "✓ Dodano";
-        btn.style.background = 'var(--gold-deep)';
-        btn.style.color = 'var(--paper)';
-        btn.style.borderColor = 'var(--gold-deep)';
+        btn.textContent = "✓ Added";
+        btn.style.background = 'var(--ink)';
+        btn.style.color = 'var(--ivory)';
         setTimeout(() => {
           btn.textContent = original;
           btn.style.background = '';
           btn.style.color = '';
-          btn.style.borderColor = '';
         }, 1400);
       });
     });
   }
 
-  renderCards();
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  renderIndex();
+  renderCatalog();
 </script>
 
 </body>
