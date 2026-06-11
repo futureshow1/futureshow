@@ -1,7 +1,7 @@
-# Composition in Space · Mondrian × Malewicz
+# Mondrian/Malewicz
 
-Interaktywny tryptyk przestrzeni 3D — teza, antyteza i synteza w trzech pokojach,
-połączonych bramami:
+*Composition in Space* — interaktywny tryptyk przestrzeni 3D: teza, antyteza
+i synteza w trzech pokojach, połączonych bramami:
 
 1. **POKÓJ** (synteza) — ściany to proceduralnie generowane kompozycje neoplastyczne
    (Mondrian), a w środku dryfują suprematystyczne formy (Malewicz): czarny kwadrat,
