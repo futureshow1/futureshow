@@ -32,6 +32,15 @@ Przycisk **EN/PL** w nagłówku panelu przełącza całość (zapamiętywane w l
 Nazwy przestrzeni (POKÓJ · MIASTO · BIEL) pozostają po polsku w obu wersjach —
 jak tytuły dzieł.
 
+## Weryfikacja cytatów
+
+Wszystkie cytaty i fakty zweryfikowano ze źródłami (2026-06-11): brzmienie angielskie
+według przekładów kanonicznych (Dearstyne — „The Non-Objective World"; Bowlt — manifesty
+Malewicza; Andersen — „Essays on Art"; Holtzman & James — pisma Mondriana; notatki
+J.J. Sweeneya, MoMA Bulletin 1946), atrybucje sprawdzone m.in. w pełnym tekście
+„The Non-Objective World" (1959), katalogach MoMA/Tate/Guggenheim i literaturze
+przedmiotu. Przekłady polskie własne, wierne wobec wersji kanonicznych.
+
 ## Warstwa myśli
 
 Każde tapnięcie w formę lub powierzchnię pokoju wywołuje **chmurę myśli** w stylu
