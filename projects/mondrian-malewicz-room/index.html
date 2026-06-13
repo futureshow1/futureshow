@@ -474,6 +474,7 @@ function makePortal(w, h, accent, label, to, group, list){
   lab.position.set(0, h + .62, 0);
   g.add(l, r, lin, inner, lab);
   g.userData.portalTo = to;
+  g.userData.labelMesh = lab;
   group.add(g); list.push(g);
   return g;
 }
@@ -1192,21 +1193,37 @@ const UI = {
     pustka: obrót · scroll / pinch: zoom · prawy przycisk / dwa palce: pan`,
     walls:'NOWE ŚCIANY', reset:'RESET', soundOn:'DŹWIĘK: WŁ', soundOff:'DŹWIĘK: WYŁ',
     thoughts:'MYŚLI', dzis:'DZIŚ',
+    rooms:{ pokoj:'POKÓJ', miasto:'MIASTO', biel:'BIEL' },
     credit:'porządek neoplastyczny × suprematystyczny dryf · 2026' },
   en: {
     hint:`<b>drag a form</b> — move it through space<br>
     <b>tap a form</b> — it chimes &amp; thinks aloud<br>
     <b>tap walls / floor / ceiling</b> — the room thinks too<br>
-    <b>enter a doorway</b> — MIASTO (the city) &amp; BIEL (the white) await<br>
+    <b>enter a doorway</b> — the CITY &amp; the WHITE await<br>
     drag the void to orbit · scroll / pinch to zoom · right-drag to pan`,
     walls:'NEW WALLS', reset:'RESET', soundOn:'SOUND ON', soundOff:'SOUND OFF',
     thoughts:'THOUGHTS', dzis:'TODAY',
+    rooms:{ pokoj:'ROOM', miasto:'CITY', biel:'WHITE' },
     credit:'neoplastic order × suprematist drift · 2026' },
 };
 let LANG = 'pl';
 try{ LANG = localStorage.getItem('mm-room-lang') === 'en' ? 'en' : 'pl'; }catch(e){}
 function updateSoundLabel(){
   document.getElementById('soundLabel').textContent = soundOn ? UI[LANG].soundOn : UI[LANG].soundOff;
+}
+function localizePortals(U){
+  if(typeof ROOMS === 'undefined') return;
+  for(const id in ROOMS){
+    for(const p of ROOMS[id].portals){
+      const lm = p.userData.labelMesh, to = p.userData.portalTo;
+      if(lm && U.rooms[to]){
+        const old = lm.material.map;
+        lm.material.map = makeLabelTex(U.rooms[to]);
+        lm.material.needsUpdate = true;
+        if(old) old.dispose();
+      }
+    }
+  }
 }
 function applyLang(l){
   LANG = l === 'en' ? 'en' : 'pl';
@@ -1215,6 +1232,11 @@ function applyLang(l){
   document.getElementById('hint').innerHTML = U.hint;
   document.querySelector('#bWalls b').textContent = U.walls;
   document.querySelector('#bReset b').textContent = U.reset;
+  document.querySelectorAll('.roomBtn').forEach(b => {
+    const lab = b.querySelector('b');
+    if(lab && U.rooms[b.dataset.room]) lab.textContent = U.rooms[b.dataset.room];
+  });
+  localizePortals(U);
   updateSoundLabel();
   document.getElementById('credit').textContent = U.credit;
   document.getElementById('langBtn').textContent = LANG === 'pl' ? 'EN' : 'PL';
