@@ -690,7 +690,7 @@ const films = (window.FILMS || []).filter(f => f && f.id);
 let typeFilter = 'all';
 let query = '';
 let lang = localStorage.getItem('ka-lang') || 'pl';
-let theme = localStorage.getItem('ka-theme') || 'dark';
+let theme = localStorage.getItem('ka-theme') || 'light';
 
 const T = () => I18N[lang];
 const secName = s => lang === 'en' ? (SECTIONS_EN[s] || s) : s;
