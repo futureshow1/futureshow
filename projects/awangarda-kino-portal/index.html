@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KINO AWANGARDY — portal filmów eksperymentalnych</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0b09;
+    --bg-card: #14120f;
+    --bg-card-hover: #1b1815;
+    --bg-panel: rgba(12,11,9,.94);
+    --cream: #f2ecdd;
+    --cream-dim: #b8b0a0;
+    --cream-faint: #6e685c;
+    --red: #e6392e;
+    --red-deep: #b3261e;
+    --line: #2a2620;
+    --shadow: rgba(0,0,0,.55);
+    --display: 'Archivo Black', 'Arial Black', sans-serif;
+    --body: 'Space Grotesk', 'Helvetica Neue', sans-serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+  body.light {
+    --bg: #f2ecdd;
+    --bg-card: #faf7ee;
+    --bg-card-hover: #ffffff;
+    --bg-panel: rgba(242,236,221,.95);
+    --cream: #14120f;
+    --cream-dim: #55503f;
+    --cream-faint: #8d8672;
+    --red: #cf2b21;
+    --red-deep: #a02019;
+    --line: #d9d1ba;
+    --shadow: rgba(60,50,30,.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: var(--body);
+    line-height: 1.5;
+    overflow-x: hidden;
+    transition: background .3s, color .3s;
+  }
+  ::selection { background: var(--red); color: #fff; }
+
+  /* ============ HEADER ============ */
+  header {
+    position: relative;
+    padding: 5rem 4vw 3.5rem;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    top: -120px; right: -80px;
+    width: 480px; height: 480px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 12vw;
+    width: 2px; height: 100%;
+    background: var(--red);
+    transform: skewX(-18deg);
+    opacity: .85;
+    pointer-events: none;
+  }
+  .kicker {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.6rem, 8vw, 6.5rem);
+    line-height: .92;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+  }
+  h1 .stroke {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--cream);
+  }
+  .lede {
+    max-width: 560px;
+    margin-top: 1.6rem;
+    color: var(--cream-dim);
+    font-weight: 300;
+    font-size: 1.02rem;
+  }
+  .stats {
+    display: flex;
+    gap: 2.8rem;
+    margin-top: 2.4rem;
+    font-family: var(--mono);
+  }
+  .stat b {
+    display: block;
+    font-size: 1.7rem;
+    color: var(--red);
+    font-weight: 500;
+  }
+  .stat span {
+    font-size: .68rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+  }
+
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    align-items: center;
+    padding: .9rem 4vw;
+    background: var(--bg-panel);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-dd { position: relative; }
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .6em;
+    max-width: 320px;
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .06em;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    padding: .58rem .9rem;
+    cursor: pointer;
+    transition: border-color .2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover, .nav-dd.open .nav-btn { border-color: var(--red); }
+  .nav-btn .caret { color: var(--red); font-size: .6rem; }
+  .nav-btn .cur {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 230px;
+  }
+  .nav-list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: min(440px, 92vw);
+    max-height: min(60vh, 520px);
+    overflow-y: auto;
+    background: var(--bg-panel);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 48px var(--shadow);
+    z-index: 60;
+  }
+  .nav-dd.open .nav-list { display: block; }
+  .nav-item {
+    display: flex;
+    gap: .7em;
+    align-items: baseline;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    color: var(--cream-dim);
+    font-family: var(--mono);
+    font-size: .72rem;
+    line-height: 1.35;
+    padding: .55rem .85rem;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .nav-item:last-child { border-bottom: none; }
+  .nav-item b { color: var(--red); font-weight: 500; flex-shrink: 0; }
+  .nav-item .n { margin-left: auto; color: var(--cream-faint); flex-shrink: 0; }
+  .nav-item:hover { background: var(--bg-card-hover); color: var(--cream); }
+  .nav-item.active { color: var(--cream); background: var(--bg-card); box-shadow: inset 3px 0 0 var(--red); }
+
+  .search {
+    flex: 1 1 200px;
+    max-width: 380px;
+    position: relative;
+  }
+  .search input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    font-family: var(--mono);
+    font-size: .85rem;
+    padding: .6rem .9rem .6rem 2.2rem;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .search input:focus { border-color: var(--red); }
+  .search::before {
+    content: "◉";
+    position: absolute;
+    left: .8rem; top: 50%;
+    transform: translateY(-50%);
+    color: var(--red);
+    font-size: .8rem;
+  }
+  .filters { display: flex; gap: .4rem; }
+  .fbtn, .tbtn {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--cream-dim);
+    padding: .55rem .9rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .fbtn:hover, .tbtn:hover { border-color: var(--cream-dim); color: var(--cream); }
+  .fbtn.active { background: var(--red); border-color: var(--red); color: #fff; }
+  .tbtn { letter-spacing: .05em; }
+  .result-count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--cream-faint);
+    letter-spacing: .1em;
+  }
+
+  /* ============ CHAPTER INDEX ============ */
+  .chapter-index {
+    padding: 2.2rem 4vw 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .5rem;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: .68rem;
+    color: var(--cream-dim);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: .4rem .7rem;
+    transition: all .2s;
+    display: inline-flex;
+    gap: .5em;
+    align-items: baseline;
+    cursor: pointer;
+    background: none;
+  }
+  .chip:hover { border-color: var(--red); color: var(--cream); }
+  .chip b { color: var(--red); font-weight: 500; }
+
+  /* ============ SECTIONS ============ */
+  main { padding: 1rem 4vw 5rem; }
+  section.chapter { padding-top: 3.6rem; }
+  .chapter-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.4rem;
+    margin-bottom: 1.8rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1rem;
+    position: relative;
+  }
+  .chapter-head::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -1px;
+    width: 72px; height: 3px;
+    background: var(--red);
+  }
+  .ch-num {
+    font-family: var(--display);
+    font-size: 2.2rem;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--red);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .ch-title {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.4vw, 1.55rem);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .ch-count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--cream-faint);
+    white-space: nowrap;
+  }
+
+  /* ============ GRID + CARDS ============ */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.2rem;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: transform .25s cubic-bezier(.2,.7,.3,1), border-color .25s, background .25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--red);
+    background: var(--bg-card-hover);
+  }
+  .thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000;
+  }
+  .thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(28%) contrast(1.05);
+    transition: filter .3s, transform .5s;
+  }
+  .card:hover .thumb img {
+    filter: grayscale(0%) contrast(1.05);
+    transform: scale(1.045);
+  }
+  .thumb::after {
+    content: "▶";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    color: #fff;
+    background: rgba(230,57,46,0);
+    opacity: 0;
+    transition: all .25s;
+    text-shadow: 0 2px 18px rgba(0,0,0,.7);
+  }
+  .card:hover .thumb::after {
+    opacity: 1;
+    background: rgba(230,57,46,.18);
+  }
+  .dur {
+    position: absolute;
+    right: .5rem; bottom: .5rem;
+    font-family: var(--mono);
+    font-size: .65rem;
+    background: rgba(0,0,0,.82);
+    color: #f2ecdd;
+    padding: .15rem .45rem;
+    letter-spacing: .05em;
+    z-index: 2;
+  }
+  .badge {
+    position: absolute;
+    left: .5rem; top: .5rem;
+    font-family: var(--mono);
+    font-size: .58rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: .2rem .5rem;
+    z-index: 2;
+    background: var(--red);
+    color: #fff;
+  }
+  .badge.frag { background: #8a6d1f; }
+  .badge.doc { background: #3d5a80; }
+  .card-body {
+    padding: .9rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    flex: 1;
+  }
+  .f-artist {
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .f-title {
+    font-weight: 500;
+    font-size: .98rem;
+    line-height: 1.3;
+  }
+  .f-title .yr { color: var(--cream-faint); font-weight: 300; }
+  .f-meta {
+    margin-top: auto;
+    padding-top: .5rem;
+    font-family: var(--mono);
+    font-size: .64rem;
+    color: var(--cream-faint);
+    letter-spacing: .06em;
+    display: flex;
+    gap: .8em;
+  }
+
+  /* ============ MODAL ============ */
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6,5,4,.94);
+    padding: 3vh 3vw;
+  }
+  .modal.open { display: flex; }
+  .modal-inner {
+    width: min(1100px, 96vw);
+    max-height: 94vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .player {
+    aspect-ratio: 16/9;
+    width: 100%;
+    background: #000;
+    border: 1px solid #2a2620;
+    border-bottom: 3px solid var(--red);
+  }
+  .player iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .modal-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    padding: 1.1rem .2rem;
+  }
+  .modal-meta .f-artist { font-size: .72rem; }
+  .modal-meta .m-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    width: 100%;
+    color: #f2ecdd;
+  }
+  .modal-meta .m-info {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: #8d8672;
+    display: flex;
+    gap: 1.4em;
+    flex-wrap: wrap;
+  }
+  .modal-meta a {
+    color: #b8b0a0;
+    text-decoration: none;
+    border-bottom: 1px solid var(--red);
+  }
+  .modal-meta a:hover { color: #f2ecdd; }
+  .close {
+    position: fixed;
+    top: 1.2rem; right: 1.6rem;
+    font-family: var(--display);
+    font-size: 1.6rem;
+    color: #f2ecdd;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 110;
+    transition: color .2s, transform .2s;
+  }
+  .close:hover { color: var(--red); transform: rotate(90deg); }
+
+  /* ============ TO TOP ============ */
+  .totop {
+    position: fixed;
+    right: 1.4rem; bottom: 1.4rem;
+    z-index: 40;
+    width: 2.9rem; height: 2.9rem;
+    font-family: var(--display);
+    font-size: 1.05rem;
+    background: var(--bg-card);
+    color: var(--red);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s, border-color .2s, transform .2s;
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+  .totop.show { opacity: 1; pointer-events: auto; }
+  .totop:hover { border-color: var(--red); transform: translateY(-3px); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 2.5rem 4vw 3rem;
+    font-family: var(--mono);
+    font-size: .68rem;
+    color: var(--cream-faint);
+    letter-spacing: .08em;
+    line-height: 2;
+  }
+  footer b { color: var(--red); font-weight: 500; }
+
+  .empty-note {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--cream-faint);
+    padding: 1rem 0 2rem;
+  }
+  @media (max-width: 720px) {
+    header { padding-top: 3rem; }
+    .stats { gap: 1.6rem; }
+    .result-count { display: none; }
+    .nav-btn .cur { max-width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker" data-i18n="kicker"></div>
+  <h1>KINO<span class="stroke">AWANGARDY</span></h1>
+  <p class="lede" data-i18n="lede"></p>
+  <div class="stats">
+    <div class="stat"><b id="stat-films">0</b><span data-i18n="films"></span></div>
+    <div class="stat"><b id="stat-artists">0</b><span data-i18n="artists"></span></div>
+    <div class="stat"><b id="stat-chapters">0</b><span data-i18n="chapters"></span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="nav-dd" id="navDD">
+    <button class="nav-btn" id="navBtn" aria-haspopup="true" aria-expanded="false">
+      <span class="caret">▼</span><span class="cur" id="navCur"></span>
+    </button>
+    <div class="nav-list" id="navList" role="menu"></div>
+  </div>
+  <div class="search"><input id="q" type="search" autocomplete="off"></div>
+  <div class="filters">
+    <button class="fbtn active" data-type="all" data-i18n="fAll"></button>
+    <button class="fbtn" data-type="full" data-i18n="fFull"></button>
+    <button class="fbtn" data-type="fragment" data-i18n="fFrag"></button>
+  </div>
+  <button class="tbtn" id="themeBtn" title="motyw / theme">◐</button>
+  <button class="tbtn" id="langBtn"></button>
+  <div class="result-count" id="rcount"></div>
+</div>
+
+<nav class="chapter-index" id="chapterIndex"></nav>
+
+<main id="main"></main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <button class="close" id="closeBtn" aria-label="Zamknij">✕</button>
+  <div class="modal-inner">
+    <div class="player" id="player"></div>
+    <div class="modal-meta" id="modalMeta"></div>
+  </div>
+</div>
+
+<button class="totop" id="toTop" aria-label="Do góry">▲</button>
+
+<footer id="foot"></footer>
+
+<script src="data.js"></script>
+<script>
+const SECTIONS = [
+  "Kino dadaistów i surrealistów",
+  "O symfoniach wielkomiejskich i konstruktywizmie filmowym",
+  "Indywidualistki we francuskiej awangardzie",
+  "Kino a awangarda w Polsce przed 1939 rokiem",
+  "Synestezyjne eksperymenty",
+  "Maya Deren – prekursorka amerykańskiej awangardy filmowej",
+  "Amerykańska awangarda autobiograficzna",
+  "Queerowa ekspresja amerykańskiej awangardy filmowej",
+  "Ciało i płeć na ekranie",
+  "Home movies, wideodziennik, kino własne",
+  "Antyautorytaryzm długiego trwania - Tony Conrad",
+  "Fluxfilm Anthology i film w środowisku Fluxusu",
+  "Kino letrystyczne i sytuacjonistyczne",
+  "Kontynuatorki Mai Deren w amerykańskiej awangardzie",
+  "Refleksje nad statusem narracji - filmowa menippea",
+  "Dotyk kina - eksperymenty Barbary Hammer",
+  "Filmowe prototypy Petera Kubelki oraz konfiguracje ciała",
+  "Warsztat Formy Filmowej",
+  "Film awangardowy oraz sztuka wideo polskich artystek w latach 70.",
+  "Eseista z kamerą - awangardowa twórczość Chrisa Markera",
+  "Wielkie nieobecne - czarne reżyserki filmów eksperymentalnych w USA",
+  "Kino Haruna Farockiego jako narzędzie krytyki obrazów",
+  "Czarność i rasa w filmach Black Audio Film Collective",
+  "Awangarda w stylu queer - twórczość Dereka Jarmana",
+  "The Passing Billa Violi",
+  "Reprezentacja we współczesnym dokumentalnym kinie found footage",
+  "Sztuka ruchomego obrazu między filmem, kinem i wideo w latach 90.",
+  "Film artystyczny po Internecie",
+  "Kino-sztuka pięć lat później"
+];
+
+const SECTIONS_EN = {
+  "Kino dadaistów i surrealistów": "Dada and Surrealist Cinema",
+  "O symfoniach wielkomiejskich i konstruktywizmie filmowym": "City Symphonies and Film Constructivism",
+  "Indywidualistki we francuskiej awangardzie": "Women Individualists of the French Avant-Garde",
+  "Kino a awangarda w Polsce przed 1939 rokiem": "Cinema and the Avant-Garde in Poland before 1939",
+  "Synestezyjne eksperymenty": "Synesthetic Experiments",
+  "Maya Deren – prekursorka amerykańskiej awangardy filmowej": "Maya Deren – Pioneer of the American Film Avant-Garde",
+  "Amerykańska awangarda autobiograficzna": "American Autobiographical Avant-Garde",
+  "Queerowa ekspresja amerykańskiej awangardy filmowej": "Queer Expression in American Avant-Garde Film",
+  "Ciało i płeć na ekranie": "Body and Gender on Screen",
+  "Home movies, wideodziennik, kino własne": "Home Movies, Video Diary, Personal Cinema",
+  "Antyautorytaryzm długiego trwania - Tony Conrad": "Long-Duration Anti-Authoritarianism: Tony Conrad",
+  "Fluxfilm Anthology i film w środowisku Fluxusu": "Fluxfilm Anthology and Film in the Fluxus Milieu",
+  "Kino letrystyczne i sytuacjonistyczne": "Lettrist and Situationist Cinema",
+  "Kontynuatorki Mai Deren w amerykańskiej awangardzie": "Maya Deren's Successors in the American Avant-Garde",
+  "Refleksje nad statusem narracji - filmowa menippea": "Reflections on Narrative: Film Menippea",
+  "Dotyk kina - eksperymenty Barbary Hammer": "The Touch of Cinema: Barbara Hammer's Experiments",
+  "Filmowe prototypy Petera Kubelki oraz konfiguracje ciała": "Peter Kubelka's Film Prototypes and Configurations of the Body",
+  "Warsztat Formy Filmowej": "Workshop of the Film Form",
+  "Film awangardowy oraz sztuka wideo polskich artystek w latach 70.": "Avant-Garde Film and Video Art by Polish Women Artists in the 1970s",
+  "Eseista z kamerą - awangardowa twórczość Chrisa Markera": "Essayist with a Camera: Chris Marker's Avant-Garde Work",
+  "Wielkie nieobecne - czarne reżyserki filmów eksperymentalnych w USA": "The Great Absentees: Black Women Experimental Filmmakers in the USA",
+  "Kino Haruna Farockiego jako narzędzie krytyki obrazów": "Harun Farocki's Cinema as a Tool of Image Critique",
+  "Czarność i rasa w filmach Black Audio Film Collective": "Blackness and Race in the Films of the Black Audio Film Collective",
+  "Awangarda w stylu queer - twórczość Dereka Jarmana": "Queer-Style Avant-Garde: The Work of Derek Jarman",
+  "The Passing Billa Violi": "Bill Viola's The Passing",
+  "Reprezentacja we współczesnym dokumentalnym kinie found footage": "Representation in Contemporary Found-Footage Documentary",
+  "Sztuka ruchomego obrazu między filmem, kinem i wideo w latach 90.": "Moving-Image Art between Film, Cinema and Video in the 1990s",
+  "Film artystyczny po Internecie": "Artists' Film after the Internet",
+  "Kino-sztuka pięć lat później": "Cinema-Art Five Years Later"
+};
+
+const I18N = {
+  pl: {
+    kicker: "Awangarda filmowa · 1921 → dziś",
+    lede: "Filmy eksperymentalne dostępne na YouTube, zebrane w jednym miejscu — od dadaistów i surrealistów, przez Mayę Deren i Fluxus, po sztukę post-internetową. Kliknij kartę, aby obejrzeć.",
+    films: "filmów", artists: "artystów", chapters: "rozdziałów",
+    fAll: "Wszystko", fFull: "Pełne filmy", fFrag: "Fragmenty",
+    search: "szukaj filmu lub artysty…",
+    navLabel: "Rozdziały",
+    views: "wyśw.", viewsLong: "wyświetleń", channel: "kanał",
+    open: "otwórz na YouTube ↗",
+    noembed: "Film z ograniczeniami wieku — obejrzyj na YouTube ↗",
+    badgeFrag: "Fragment", badgeDoc: "Dokument", badgeShort: "Krótki",
+    empty: "Brak wyników dla tego zapytania.",
+    countWord: n => n === 1 ? "film" : (n % 10 >= 2 && n % 10 <= 4 && !(n % 100 >= 12 && n % 100 <= 14)) ? "filmy" : "filmów",
+    rcount: (a, b) => `${a} / ${b} FILMÓW`,
+    footer: `<b>KINO AWANGARDY</b> · portal zbudowany na podstawie listy artystów awangardy filmowej (29 rozdziałów)<br>Wszystkie filmy odtwarzane są bezpośrednio z YouTube (youtube-nocookie.com) — dostępność zależy od publikujących kanałów.`,
+    langBtn: "EN", htmlLang: "pl"
+  },
+  en: {
+    kicker: "Film avant-garde · 1921 → today",
+    lede: "Experimental films available on YouTube, gathered in one place — from the Dadaists and Surrealists, through Maya Deren and Fluxus, to post-internet art. Click a card to watch.",
+    films: "films", artists: "artists", chapters: "chapters",
+    fAll: "All", fFull: "Full films", fFrag: "Fragments",
+    search: "search film or artist…",
+    navLabel: "Chapters",
+    views: "views", viewsLong: "views", channel: "channel",
+    open: "open on YouTube ↗",
+    noembed: "Age-restricted — watch on YouTube ↗",
+    badgeFrag: "Fragment", badgeDoc: "Documentary", badgeShort: "Short",
+    empty: "No results for this query.",
+    countWord: n => n === 1 ? "film" : "films",
+    rcount: (a, b) => `${a} / ${b} FILMS`,
+    footer: `<b>KINO AWANGARDY</b> · a portal built from a list of film avant-garde artists (29 chapters)<br>All films play directly from YouTube (youtube-nocookie.com) — availability depends on the publishing channels.`,
+    langBtn: "PL", htmlLang: "en"
+  }
+};
+
+const films = (window.FILMS || []).filter(f => f && f.id);
+let typeFilter = 'all';
+let query = '';
+let lang = localStorage.getItem('ka-lang') || 'pl';
+let theme = localStorage.getItem('ka-theme') || 'dark';
+
+const T = () => I18N[lang];
+const secName = s => lang === 'en' ? (SECTIONS_EN[s] || s) : s;
+const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const fmtViews = v => {
+  if (!v) return '';
+  if (v >= 1e6) return (v/1e6).toFixed(1).replace('.0','') + 'M';
+  if (v >= 1e3) return (v/1e3).toFixed(0) + 'K';
+  return String(v);
+};
+const pad2 = n => String(n).padStart(2, '0');
+
+function matches(f) {
+  if (typeFilter === 'full' && f.type !== 'full') return false;
+  if (typeFilter === 'fragment' && f.type === 'full') return false;
+  if (query) {
+    const hay = norm(f.film + ' ' + f.artist + ' ' + (f.section || '') + ' ' + secName(f.section));
+    if (!query.split(/\s+/).every(w => hay.includes(w))) return false;
+  }
+  return true;
+}
+
+function badgeFor(f) {
+  if (f.type === 'fragment') return `<span class="badge frag">${T().badgeFrag}</span>`;
+  if (f.type === 'documentary') return `<span class="badge doc">${T().badgeDoc}</span>`;
+  return '';
+}
+
+function cardHTML(f, idx) {
+  return `<article class="card" data-idx="${idx}" tabindex="0" role="button" aria-label="${f.film}">
+    <div class="thumb">
+      ${badgeFor(f)}
+      <img loading="lazy" src="https://i.ytimg.com/vi/${f.id}/hqdefault.jpg"
+           onload="if(this.naturalWidth>120){const m=new Image();m.onload=()=>{if(m.naturalWidth>640)this.src=m.src};m.src='https://i.ytimg.com/vi/${f.id}/maxresdefault.jpg'}"
+           alt="${f.film}">
+      ${f.duration ? `<span class="dur">${f.duration}</span>` : ''}
+    </div>
+    <div class="card-body">
+      <div class="f-artist">${f.artist}</div>
+      <div class="f-title">${f.film}${f.year ? ` <span class="yr">(${f.year})</span>` : ''}</div>
+      <div class="f-meta">
+        ${f.views ? `<span>${fmtViews(f.views)} ${T().views}</span>` : ''}
+        ${f.channel ? `<span>${f.channel}</span>` : ''}
+      </div>
+    </div>
+  </article>`;
+}
+
+let visibleSections = []; // [{sec, si, anchor, num}]
+
+function render() {
+  const main = document.getElementById('main');
+  const idxNav = document.getElementById('chapterIndex');
+  const navList = document.getElementById('navList');
+  let html = '', idxHtml = '', navHtml = '', shown = 0, chapters = 0;
+  visibleSections = [];
+
+  SECTIONS.forEach((sec, si) => {
+    const secFilms = films.map((f, i) => ({...f, _i: i})).filter(f => f.section === sec && matches(f));
+    if (!secFilms.length) return;
+    chapters++;
+    const anchor = 'ch' + si;
+    const num = pad2(chapters);
+    visibleSections.push({sec, si, anchor, num});
+    const name = secName(sec);
+    idxHtml += `<button class="chip" data-goto="${anchor}"><b>${num}</b> ${name}</button>`;
+    navHtml += `<button class="nav-item" role="menuitem" data-goto="${anchor}" data-anchor="${anchor}"><b>${num}</b> ${name} <span class="n">${secFilms.length}</span></button>`;
+    html += `<section class="chapter" id="${anchor}">
+      <div class="chapter-head">
+        <div class="ch-num">${num}</div>
+        <div class="ch-title">${name}</div>
+        <div class="ch-count">${secFilms.length} ${T().countWord(secFilms.length)}</div>
+      </div>
+      <div class="grid">${secFilms.map(f => cardHTML(f, f._i)).join('')}</div>
+    </section>`;
+    shown += secFilms.length;
+  });
+
+  main.innerHTML = html || `<p class="empty-note">${T().empty}</p>`;
+  idxNav.innerHTML = idxHtml;
+  navList.innerHTML = navHtml;
+  document.getElementById('rcount').textContent = T().rcount(shown, films.length);
+  updateSpy();
+}
+
+function applyI18n() {
+  const t = T();
+  document.documentElement.lang = t.htmlLang;
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t[el.dataset.i18n]; });
+  document.getElementById('q').placeholder = t.search;
+  document.getElementById('langBtn').textContent = t.langBtn;
+  document.getElementById('foot').innerHTML = t.footer;
+  render();
+}
+
+function openModal(f) {
+  const modal = document.getElementById('modal');
+  document.getElementById('player').innerHTML = f.noembed
+    ? `<a href="${f.url}" target="_blank" rel="noopener" style="display:grid;place-items:center;width:100%;height:100%;text-decoration:none;background:url('https://i.ytimg.com/vi/${f.id}/hqdefault.jpg') center/cover;position:relative">
+         <span style="font-family:var(--mono);font-size:.85rem;letter-spacing:.1em;background:rgba(12,11,9,.9);border:1px solid var(--red);color:#f2ecdd;padding:1rem 1.6rem">
+           ${T().noembed}
+         </span></a>`
+    : `<iframe src="https://www.youtube-nocookie.com/embed/${f.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+  document.getElementById('modalMeta').innerHTML = `
+    <div class="m-title">${f.film}${f.year ? ` (${f.year})` : ''}</div>
+    <div class="f-artist">${f.artist}</div>
+    <div class="m-info">
+      ${f.duration ? `<span>⏱ ${f.duration}</span>` : ''}
+      ${f.views ? `<span>${fmtViews(f.views)} ${T().viewsLong}</span>` : ''}
+      ${f.channel ? `<span>${T().channel}: ${f.channel}</span>` : ''}
+      <a href="${f.url}" target="_blank" rel="noopener">${T().open}</a>
+    </div>`;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('player').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+// ---- scroll spy: current chapter shown in the sticky dropdown button ----
+function updateSpy() {
+  const t = T();
+  let current = null;
+  for (const vs of visibleSections) {
+    const el = document.getElementById(vs.anchor);
+    if (el && el.getBoundingClientRect().top <= 140) current = vs;
+    else break;
+  }
+  const cur = document.getElementById('navCur');
+  cur.textContent = current ? `${current.num} · ${secName(current.sec)}` : `${t.navLabel} (${visibleSections.length})`;
+  document.querySelectorAll('.nav-item').forEach(it => {
+    it.classList.toggle('active', !!current && it.dataset.anchor === current.anchor);
+  });
+  document.getElementById('toTop').classList.toggle('show', window.scrollY > 700);
+}
+let spyTick = false;
+window.addEventListener('scroll', () => {
+  if (spyTick) return;
+  spyTick = true;
+  requestAnimationFrame(() => { updateSpy(); spyTick = false; });
+}, {passive: true});
+
+// ---- events ----
+document.addEventListener('click', e => {
+  const goto = e.target.closest('[data-goto]');
+  if (goto) {
+    document.getElementById('navDD').classList.remove('open');
+    document.getElementById(goto.dataset.goto)?.scrollIntoView({behavior: 'smooth'});
+    return;
+  }
+  if (e.target.closest('#navBtn')) {
+    const dd = document.getElementById('navDD');
+    dd.classList.toggle('open');
+    document.getElementById('navBtn').setAttribute('aria-expanded', dd.classList.contains('open'));
+    if (dd.classList.contains('open')) {
+      const act = dd.querySelector('.nav-item.active');
+      if (act) act.scrollIntoView({block: 'center'});
+    }
+    return;
+  }
+  if (!e.target.closest('.nav-dd')) document.getElementById('navDD').classList.remove('open');
+  const card = e.target.closest('.card');
+  if (card) { openModal(films[+card.dataset.idx]); return; }
+  if (e.target.id === 'modal' || e.target.id === 'closeBtn') closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); document.getElementById('navDD').classList.remove('open'); }
+  if (e.key === 'Enter' && document.activeElement?.classList.contains('card'))
+    openModal(films[+document.activeElement.dataset.idx]);
+});
+document.getElementById('q').addEventListener('input', e => { query = norm(e.target.value.trim()); render(); });
+document.querySelectorAll('.fbtn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.fbtn').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  typeFilter = b.dataset.type;
+  render();
+}));
+document.getElementById('toTop').addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+document.getElementById('themeBtn').addEventListener('click', () => {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('ka-theme', theme);
+  document.body.classList.toggle('light', theme === 'light');
+});
+document.getElementById('langBtn').addEventListener('click', () => {
+  lang = lang === 'pl' ? 'en' : 'pl';
+  localStorage.setItem('ka-lang', lang);
+  applyI18n();
+});
+
+// ---- init ----
+document.body.classList.toggle('light', theme === 'light');
+document.getElementById('stat-films').textContent = films.length;
+document.getElementById('stat-artists').textContent = new Set(films.map(f => f.artist)).size;
+document.getElementById('stat-chapters').textContent = new Set(films.map(f => f.section)).size;
+applyI18n();
+</script>
+</body>
+</html>
