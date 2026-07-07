@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8090", "--directory", "/Users/user/Desktop/prywatne JAN/jan-new-projects"],
       "port": 8090
+    },
+    {
+      "name": "futureshow",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8091", "--directory", "/Users/user/Desktop/CLAUDE CODE/inne projekty/futureshow"],
+      "port": 8091
     }
   ]
 }
