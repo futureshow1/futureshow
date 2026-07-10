@@ -1,4 +1,4 @@
-// Wygenerowane automatycznie z wynikow yt-dlp (2026-07-07, fala 1+2). 455 filmow, 29 rozdzialow.
+// Wygenerowane automatycznie z wynikow yt-dlp (2026-07-07, fala 1+2 + uzupelnienia). 459 filmow, 29 rozdzialow.
 window.FILMS = [
  {
   "section": "Kino dadaistów i surrealistów",
@@ -1082,6 +1082,20 @@ window.FILMS = [
  },
  {
   "section": "Kino a awangarda w Polsce przed 1939 rokiem",
+  "artist": "Franciszka i Stefan Themersonowie",
+  "film": "Moment Musical (rekonstrukcja B. Checefsky'ego, fragment)",
+  "year": 1933,
+  "url": "https://www.youtube.com/watch?v=B7GtY5BBCl8",
+  "id": "B7GtY5BBCl8",
+  "duration": "1:02",
+  "duration_seconds": 62,
+  "views": 0,
+  "channel": "trickcat10",
+  "thumbnail": "",
+  "type": "fragment"
+ },
+ {
+  "section": "Kino a awangarda w Polsce przed 1939 rokiem",
   "artist": "Eugeniusz Cękalski",
   "film": "W kopalni węgla",
   "year": 1935,
@@ -1107,6 +1121,20 @@ window.FILMS = [
   "channel": "Han Jan Historia",
   "thumbnail": "https://i.ytimg.com/vi/IU_P4DY0Lnw/hqdefault.jpg",
   "type": "full"
+ },
+ {
+  "section": "Kino a awangarda w Polsce przed 1939 rokiem",
+  "artist": "Franciszka i Stefan Themersonowie",
+  "film": "Franciszka i Stefan Themerson (portret)",
+  "year": 1936,
+  "url": "https://www.youtube.com/watch?v=ae6RzdGS9k8",
+  "id": "ae6RzdGS9k8",
+  "duration": "1:29",
+  "duration_seconds": 89,
+  "views": 0,
+  "channel": "stationpeacepal",
+  "thumbnail": "",
+  "type": "documentary"
  },
  {
   "section": "Kino a awangarda w Polsce przed 1939 rokiem",
@@ -3802,6 +3830,20 @@ window.FILMS = [
  {
   "section": "Warsztat Formy Filmowej",
   "artist": "Józef Robakowski",
+  "film": "6 000 000",
+  "year": 1962,
+  "url": "https://www.youtube.com/watch?v=HVVYfJeFQ0k",
+  "id": "HVVYfJeFQ0k",
+  "duration": "",
+  "duration_seconds": 0,
+  "views": 0,
+  "channel": "Jan Jan",
+  "thumbnail": "",
+  "type": "full"
+ },
+ {
+  "section": "Warsztat Formy Filmowej",
+  "artist": "Józef Robakowski",
   "film": "Rynek (The Market)",
   "year": 1970,
   "url": "https://www.youtube.com/watch?v=CPo-CTvZetE",
@@ -3853,6 +3895,20 @@ window.FILMS = [
   "views": 345,
   "channel": "Mezsondra",
   "thumbnail": "https://i.ytimg.com/vi/QFvVzoBkp6A/sddefault.jpg",
+  "type": "full"
+ },
+ {
+  "section": "Warsztat Formy Filmowej",
+  "artist": "Józef Robakowski",
+  "film": "Test (1971)",
+  "year": 1971,
+  "url": "https://www.youtube.com/watch?v=JRpv5-3mSbY",
+  "id": "JRpv5-3mSbY",
+  "duration": "5:41",
+  "duration_seconds": 341,
+  "views": 0,
+  "channel": "Jan Jan",
+  "thumbnail": "",
   "type": "full"
  },
  {
