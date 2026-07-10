@@ -91,8 +91,9 @@
     text-transform: uppercase;
     letter-spacing: -.01em;
   }
+  h1 span { display: block; white-space: nowrap; }
+  h1 #titleTop { min-height: 1em; }
   h1 .stroke {
-    display: block;
     color: transparent;
     -webkit-text-stroke: 2px var(--cream);
   }
@@ -540,7 +541,7 @@
 
 <header>
   <div class="kicker" data-i18n="kicker"></div>
-  <h1>KINO<span class="stroke">AWANGARDY</span></h1>
+  <h1 aria-label="Kino Awangardy — Avant-Garde Cinema"><span id="titleTop">KINO</span><span class="stroke" id="titleBot">AWANGARDY</span></h1>
   <p class="lede" data-i18n="lede"></p>
   <div class="stats">
     <div class="stat"><b id="stat-films">0</b><span data-i18n="films"></span></div>
@@ -884,6 +885,41 @@ document.getElementById('langBtn').addEventListener('click', () => {
   localStorage.setItem('ka-lang', lang);
   applyI18n();
 });
+
+// ---- morfujący tytuł: KINO/AWANGARDY <-> AVANT-GARDE/CINEMA ----
+(function(){
+  const top = document.getElementById('titleTop');
+  const bot = document.getElementById('titleBot');
+  if (!top || !bot) return;
+  const TITLES = [ {t:'KINO', b:'AWANGARDY'}, {t:'AVANT-GARDE', b:'CINEMA'} ];
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZĄĆĘŁŃÓŚŹŻ▚▞█/·-';
+  const rnd = () => CHARS[(Math.random()*CHARS.length)|0];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const HOLD = 2800, MORPH = 900;
+  const render = (target, p) => {
+    const locked = Math.floor(p*p*target.length);
+    let s = '';
+    for (let k=0;k<target.length;k++){
+      const ch = target[k];
+      s += (k < locked || ch === ' ' || ch === '-') ? ch : rnd();
+    }
+    return s;
+  };
+  let i = 0, phase = 'hold', phaseStart = performance.now(), to = TITLES[0];
+  top.textContent = TITLES[0].t; bot.textContent = TITLES[0].b;
+  setInterval(() => {
+    const now = performance.now(), el = now - phaseStart;
+    if (phase === 'hold') {
+      if (el >= HOLD) { phase = 'morph'; phaseStart = now; i = (i+1) % TITLES.length; to = TITLES[i]; }
+    } else {
+      const p = Math.min(1, el / MORPH);
+      top.textContent = render(to.t, p);
+      bot.textContent = render(to.b, p);
+      if (p >= 1) { top.textContent = to.t; bot.textContent = to.b; phase = 'hold'; phaseStart = now; }
+    }
+  }, 45);
+})();
 
 // ---- init ----
 document.body.classList.toggle('light', theme === 'light');
