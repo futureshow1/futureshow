@@ -2014,10 +2014,10 @@
         </div>
       </div>
 
-      <!-- Sejm Symulator (parked — host migrated, redeploy pending) -->
+      <!-- Sejm Symulator (GH Pages demo, client-side password gate) -->
       <div class="case">
-        <div class="case__visual" style="cursor:default;">
-          <div class="case__bg" style="background:linear-gradient(180deg, #0c1018 0%, #0a0e17 60%, #050810 100%);overflow:hidden;filter:grayscale(0.4);">
+        <a class="case__visual" href="https://futureshow1.github.io/sejm/" target="_blank" rel="noopener">
+          <div class="case__bg" style="background:linear-gradient(180deg, #0c1018 0%, #0a0e17 60%, #050810 100%);overflow:hidden;">
             <!-- subtle grid backdrop -->
             <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.04;" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><pattern id="hemi-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M 32 0 L 0 0 0 32" fill="none" stroke="#63b3ff" stroke-width="0.4"/></pattern></defs><rect width="100%" height="100%" fill="url(#hemi-grid)"/></svg>
             <!-- 460-seat hemicycle, X kadencja composition -->
@@ -2497,30 +2497,30 @@
               <text x="300" y="354" text-anchor="middle"
                     style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 3px; fill: rgba(255,255,255,0.4); text-transform: uppercase;">Kad. X · 460 mandatów · 1.76M głosów</text>
             </svg>
-            <!-- Status pill: parked / offline (host migrated, redeploy pending) -->
-            <div style="position:absolute;top:14px;right:16px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:4px 9px;background:rgba(200,200,200,0.1);border:0.5px solid rgba(200,200,200,0.4);color:#c9ccd1;border-radius:3px;">
-              <span data-lang="en">In progress · offline</span>
-              <span data-lang="pl">W przebudowie · offline</span>
+            <!-- Status pill: gated demo -->
+            <div style="position:absolute;top:14px;right:16px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:4px 9px;background:rgba(232,184,48,0.14);border:0.5px solid rgba(232,184,48,0.55);color:#f5cc55;border-radius:3px;">
+              <span data-lang="en">Beta · password</span>
+              <span data-lang="pl">Beta · za hasłem</span>
             </div>
           </div>
-        </div>
+        </a>
         <div class="case__info">
-          <div class="case__tag" style="color:#c9ccd1;">
-            <span data-lang="en">Parked — redeploy pending</span>
-            <span data-lang="pl">Zaparkowany — czeka na ponowny hosting</span>
+          <div class="case__tag">
+            <span data-lang="en">Political Database — gated demo</span>
+            <span data-lang="pl">Baza polityczna — demo za hasłem</span>
           </div>
           <div data-lang="en">
             <div class="case__title">Sejm Symulator — Polish Parliament Power Map</div>
             <div class="case__desc">Full database of the 10th Polish Parliament: 3,834 floor votes, 1.76M individual MP decisions, 460 MPs across 12 clubs, all 40 standing committees with 3,706 meetings, 1,392 legislative bills. Interactive hemicycle, behavioral simulator on 23 policy topics, club×club agreement heatmap, loyalty rankings, top rebels, career-path graph for 1,979 politicians from 8 parliamentary terms.</div>
             <p style="font-size:0.75rem;line-height:1.5;color:rgba(245,204,85,0.85);margin-top:8px;border-left:2px solid rgba(245,204,85,0.5);padding-left:10px;">
-              <strong style="color:#c9ccd1;">Parked.</strong> The build is complete (TF-IDF similarity engine over all 3,834 historical votes, decision-maker scoring, floor-speech analysis) but the demo host was decommissioned — a redeploy to a new server is pending. Source is version-controlled; the live instance will return.
+              <strong style="color:#f5cc55;">Beta, password-gated.</strong> Now includes "Słowność" — a word-vs-vote consistency pilot: AI extracts stances from official floor transcripts (verbatim-quote-verified) and links them to the MP's actual votes. Plus the TF-IDF vote-similarity simulator, decision-maker scoring and floor-speech analysis. Ask for the password.
             </p>
           </div>
           <div data-lang="pl">
             <div class="case__title">Sejm Symulator — mapa wpływów politycznych</div>
             <div class="case__desc">Pełna baza X kadencji Sejmu RP: 3 834 głosowań, 1,76 mln indywidualnych głosów, 460 posłów w 12 klubach, wszystkie 40 komisji stałych z 3 706 posiedzeniami, 1 392 inicjatywy ustawodawcze. Interaktywny hemicykl, symulator zachowań na 23 tematach, heatmapa zgodności klubów, ranking lojalności, top buntownicy, graf karier 1 979 polityków z 8 kadencji.</div>
             <p style="font-size:0.75rem;line-height:1.5;color:rgba(245,204,85,0.85);margin-top:8px;border-left:2px solid rgba(245,204,85,0.5);padding-left:10px;">
-              <strong style="color:#c9ccd1;">Zaparkowany.</strong> Projekt jest gotowy (silnik podobieństwa TF-IDF do <strong>3 834 głosowań</strong>, scoring decyzyjności posłów, analiza wystąpień sejmowych), ale serwer demo został wyłączony — trwa przenoszenie na nowy hosting. Kod jest w repozytorium; wersja live wróci.
+              <strong style="color:#f5cc55;">Beta, za hasłem.</strong> Nowość: „Słowność" — pilotaż zgodności słów z głosami: AI wyciąga stanowiska z oficjalnych stenogramów (cytaty weryfikowane znak w znak) i zestawia je z faktycznymi głosami posłów. Do tego symulator podobieństwa TF-IDF do 3 834 głosowań, scoring decyzyjności i analiza wystąpień. Hasło na życzenie.
             </p>
           </div>
           <div class="case__metrics">
@@ -2540,20 +2540,20 @@
             </div>
           </div>
           <div class="case__links" data-lang="en">
-            <span class="case__cta" style="background:rgba(200,200,200,0.12);color:#c9ccd1;border-color:rgba(200,200,200,0.3);cursor:default;pointer-events:none;">
-              Temporarily offline
-            </span>
-            <span class="case__sublink" style="color:rgba(255,255,255,0.4);">
-              Redeploy in progress
-            </span>
+            <a href="https://futureshow1.github.io/sejm/" target="_blank" class="case__cta">
+              Enter (password) <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://futureshow1.github.io/sejm/slownosc/" target="_blank" class="case__sublink">
+              Słowność: words vs votes &rarr;
+            </a>
           </div>
           <div class="case__links" data-lang="pl">
-            <span class="case__cta" style="background:rgba(200,200,200,0.12);color:#c9ccd1;border-color:rgba(200,200,200,0.3);cursor:default;pointer-events:none;">
-              Chwilowo offline
-            </span>
-            <span class="case__sublink" style="color:rgba(255,255,255,0.4);">
-              Trwa ponowny hosting
-            </span>
+            <a href="https://futureshow1.github.io/sejm/" target="_blank" class="case__cta">
+              Wejdź (hasło) <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://futureshow1.github.io/sejm/slownosc/" target="_blank" class="case__sublink">
+              Słowność: słowa vs głosy &rarr;
+            </a>
           </div>
         </div>
       </div>
