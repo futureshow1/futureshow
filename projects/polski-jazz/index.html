@@ -81,6 +81,8 @@ h2{font-family:'Archivo Black',sans-serif;font-size:clamp(1.6rem,4vw,2.6rem);let
 .plink:hover{border-color:var(--gold);color:var(--gold)}
 @keyframes hlpulse{0%{box-shadow:0 0 0 3px var(--gold),0 0 40px rgba(217,164,65,.5)}100%{box-shadow:0 0 0 3px transparent,0 0 0 rgba(217,164,65,0)}}
 .acard.hl{border-color:var(--gold);animation:hlpulse 2.4s ease-out 1}
+.acard.playing{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.acard.playing .alisten::after{content:' ● ';color:var(--red)}
 #toast{position:fixed;left:50%;bottom:2rem;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--gold);color:var(--cream);font-family:var(--mono);font-size:.8rem;padding:.6rem 1.2rem;border-radius:99px;opacity:0;pointer-events:none;transition:all .3s;z-index:300}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -171,37 +173,74 @@ section.film-era h2{font-size:clamp(1.2rem,3vw,1.7rem);color:var(--cream)}
 footer{border-top:1px solid var(--line);margin-top:4rem;padding:2.5rem 1.5rem 3rem;text-align:center;color:var(--cream-dim);font-size:.8rem;font-weight:300}
 footer .fx{font-family:var(--mono);letter-spacing:.15em;color:var(--gold);margin-bottom:.6rem}
 
+/* ---------- PASEK: SŁUCHAJ CIĄGIEM + JĘZYK ---------- */
+#playall{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .85rem;border-radius:99px;border:1px solid var(--red);background:var(--red);color:var(--cream);cursor:pointer;white-space:nowrap;transition:filter .2s}
+#playall:hover{filter:brightness(1.15)}
+#playall svg{width:12px;height:12px;fill:currentColor}
+#playall.on{background:transparent;color:var(--gold);border-color:var(--gold)}
+.langsw{margin-left:auto;display:flex;gap:.25rem;flex-shrink:0}
+.langbtn{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;padding:.25rem .55rem;border-radius:5px;border:1px solid var(--line);background:transparent;color:var(--cream-dim);cursor:pointer;transition:all .2s}
+.langbtn:hover{color:var(--gold);border-color:var(--gold)}
+.langbtn.active{background:var(--cream);border-color:var(--cream);color:var(--bg);font-weight:500}
+
+/* ---------- ODTWARZACZ CIĄGŁY ---------- */
+#player{position:fixed;right:1.2rem;bottom:1.2rem;z-index:260;width:342px;max-width:calc(100vw - 2rem);background:var(--card);border:1px solid var(--gold);border-radius:12px;box-shadow:0 18px 60px rgba(0,0,0,.72);overflow:hidden;display:none}
+#player.on{display:block}
+.pl-head{display:flex;align-items:center;gap:.5rem;padding:.55rem .7rem;border-bottom:1px solid var(--line);background:var(--bg2)}
+.pl-kicker{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
+.pl-pos{font-family:var(--mono);font-size:.62rem;color:var(--cream-dim);margin-left:auto}
+.pl-x{background:none;border:none;color:var(--cream-dim);cursor:pointer;font-size:.9rem;line-height:1;padding:0 .15rem}
+.pl-x:hover{color:var(--red)}
+.pl-video{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.pl-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.pl-body{padding:.6rem .75rem .75rem}
+.pl-title{font-size:.85rem;font-weight:700;line-height:1.3;margin-bottom:.15rem}
+.pl-sub{font-family:var(--mono);font-size:.66rem;color:var(--gold);margin-bottom:.55rem}
+.pl-ctrl{display:flex;align-items:center;gap:.4rem}
+.pl-btn{flex:1;font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;padding:.35rem .3rem;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--cream-dim);cursor:pointer;transition:all .2s}
+.pl-btn:hover{border-color:var(--gold);color:var(--gold)}
+.pl-btn.act{border-color:var(--red);color:var(--red)}
+#player.min .pl-video,#player.min .pl-body{display:none}
+@media(max-width:640px){#player{right:.6rem;left:.6rem;bottom:.6rem;width:auto}}
+
 @media(max-width:640px){
   .hero-stats{gap:1.4rem}
   .agrid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
 }
 </style>
-<script data-goatcounter="https://futureshow.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="#top">POLSKI<span>■</span>JAZZ</a>
-    <a class="lnk main" href="#plyty1">Płyty: Złota era</a>
-    <a class="lnk main" href="#plyty2">Lata 70.</a>
-    <a class="lnk main" href="#plyty3">Lata 80.</a>
-    <a class="lnk main" href="#plyty4">Yass</a>
-    <a class="lnk main" href="#plyty5">XXI wiek</a>
-    <a class="lnk" href="#filmoteka-intro" style="color:var(--gold)">Filmoteka</a>
-    <a class="lnk" href="#biblioteka" style="color:var(--red)">Biblioteka</a>
+    <button id="playall" title="">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <span data-i18n="nav.playall">Słuchaj ciągiem</span>
+    </button>
+    <a class="lnk main" href="#plyty1" data-i18n="nav.era1">Płyty: Złota era</a>
+    <a class="lnk main" href="#plyty2" data-i18n="nav.era2">Lata 70.</a>
+    <a class="lnk main" href="#plyty3" data-i18n="nav.era3">Lata 80.</a>
+    <a class="lnk main" href="#plyty4" data-i18n="nav.era4">Yass</a>
+    <a class="lnk main" href="#plyty5" data-i18n="nav.era5">XXI wiek</a>
+    <a class="lnk" href="#filmoteka-intro" style="color:var(--gold)" data-i18n="nav.films">Filmoteka</a>
+    <a class="lnk" href="#biblioteka" style="color:var(--red)" data-i18n="nav.books">Biblioteka</a>
+    <div class="langsw">
+      <button class="langbtn active" data-lang="pl">PL</button>
+      <button class="langbtn" data-lang="en">EN</button>
+    </div>
   </div>
 </nav>
 
 <header id="top">
-  <div class="hero-eyebrow">kanon płyt · filmoteka · biblioteka</div>
+  <div class="hero-eyebrow" data-i18n="hero.eyebrow">kanon płyt · filmoteka · biblioteka</div>
   <h1>POLSKI<span class="vinyl"></span><span class="r">JAZZ</span></h1>
-  <p class="hero-sub">Historia polskiego jazzu opowiedziana <b>płytami</b> — 200 albumów: kompletna seria <b>Polish Jazz</b> (vol. 1–89), nagrania dla Decci, ECM, MPS, Columbii i Blue Note, yassowa rewolta i nowa fala. Prawdziwe okładki z Discogs, historie i nagrania z YouTube. Nicią boczną biegnie <b>filmoteka</b>, całość spina <b>biblioteka</b>.</p>
+  <p class="hero-sub" data-i18n-html="hero.sub">Historia polskiego jazzu opowiedziana <b>płytami</b> — 200 albumów: kompletna seria <b>Polish Jazz</b> (vol. 1–89), nagrania dla Decci, ECM, MPS, Columbii i Blue Note, yassowa rewolta i nowa fala. Prawdziwe okładki z Discogs, historie i nagrania z YouTube. Nicią boczną biegnie <b>filmoteka</b>, całość spina <b>biblioteka</b>.</p>
   <div class="hero-stats">
-    <div><b id="stat-albums">—</b>płyt w kanonie</div>
-    <div><b id="stat-videos">—</b>filmów</div>
-    <div><b>14</b>opracowań</div>
-    <div><b>5</b>epok</div>
+    <div><b id="stat-albums">—</b><span data-i18n="hero.s1">płyt w kanonie</span></div>
+    <div><b id="stat-videos">—</b><span data-i18n="hero.s2">filmów</span></div>
+    <div><b>14</b><span data-i18n="hero.s3">opracowań</span></div>
+    <div><b>5</b><span data-i18n="hero.s4">epok</span></div>
   </div>
 </header>
 
@@ -211,109 +250,109 @@ footer .fx{font-family:var(--mono);letter-spacing:.15em;color:var(--gold);margin
 
 <div class="filters" id="cat-filters" style="padding-top:2.2rem">
   <div class="filters-inner" style="margin-bottom:.5rem">
-    <span style="font-family:var(--mono);font-size:.72rem;color:var(--cream-dim);letter-spacing:.08em">WIDOK:</span>
-    <button class="chip vchip active" data-view="catalog">Katalog</button>
-    <button class="chip vchip" data-view="wall">Ściana okładek</button>
+    <span style="font-family:var(--mono);font-size:.72rem;color:var(--cream-dim);letter-spacing:.08em" data-i18n="view.label">WIDOK:</span>
+    <button class="chip vchip active" data-view="catalog" data-i18n="view.catalog">Katalog</button>
+    <button class="chip vchip" data-view="wall" data-i18n="view.wall">Ściana okładek</button>
   </div>
   <div class="filters-inner">
-    <button class="chip cchip active" data-cf="all">Wszystkie płyty</button>
-    <button class="chip cchip" data-cf="star">★ Filary kanonu</button>
-    <button class="chip cchip" data-cf="series">Seria Polish Jazz</button>
-    <button class="chip cchip" data-cf="west">Wytwórnie zachodnie</button>
-    <button class="chip cchip" data-cf="indie">Yass i niezależne</button>
-    <input id="asearch" type="search" placeholder="szukaj: artysta, płyta, wytwórnia…" autocomplete="off">
+    <button class="chip cchip active" data-cf="all" data-i18n="cf.all">Wszystkie płyty</button>
+    <button class="chip cchip" data-cf="star" data-i18n="cf.star">★ Filary kanonu</button>
+    <button class="chip cchip" data-cf="series" data-i18n="cf.series">Seria Polish Jazz</button>
+    <button class="chip cchip" data-cf="west" data-i18n="cf.west">Wytwórnie zachodnie</button>
+    <button class="chip cchip" data-cf="indie" data-i18n="cf.indie">Yass i niezależne</button>
+    <input id="asearch" type="search" placeholder="szukaj: artysta, płyta, wytwórnia…" data-i18n-ph="cf.search" autocomplete="off">
     <span class="count-info" id="acount-info"></span>
   </div>
 </div>
 
 <section class="era" id="plyty1">
-  <div class="era-head"><span class="era-num">PŁYTY · I</span><h2>Złota era — narodziny polskiej szkoły</h2><span class="era-years">1962–1969</span></div>
-  <p class="era-desc">Po odwilży 1956 roku polski jazz w dekadę przeszedł drogę od rekonstrukcji dixielandu do własnego języka: lirycznego, „słowiańskiego" modern jazzu. Symbolem epoki jest seria <b>Polish Jazz</b> Polskich Nagrań (od 1965) — i <b>Krzysztof Komeda</b>, który nadał tej muzyce filmową wyobraźnię.</p>
+  <div class="era-head"><span class="era-num" data-i18n="e1.num">PŁYTY · I</span><h2 data-i18n="e1.title">Złota era — narodziny polskiej szkoły</h2><span class="era-years">1962–1969</span></div>
+  <p class="era-desc" data-i18n-html="e1.desc">Po odwilży 1956 roku polski jazz w dekadę przeszedł drogę od rekonstrukcji dixielandu do własnego języka: lirycznego, „słowiańskiego" modern jazzu. Symbolem epoki jest seria <b>Polish Jazz</b> Polskich Nagrań (od 1965) — i <b>Krzysztof Komeda</b>, który nadał tej muzyce filmową wyobraźnię.</p>
   <div class="agrid" data-aera="1"></div>
 </section>
 
 <section class="era" id="plyty2">
-  <div class="era-head"><span class="era-num">PŁYTY · II</span><h2>Wielka dekada — folk, free i eksport</h2><span class="era-years">1970–1979</span></div>
-  <p class="era-desc">Najpłodniejsza dekada: Namysłowski żeni jazz z góralszczyzną, Stańko gra free na światowym poziomie, a <b>Urbaniak i Dudziak</b> wyjeżdżają do Nowego Jorku podpisać kontrakty z Columbią i Aristą. Seifert zostaje „Coltrane'em skrzypiec", Makowicza do Ameryki ściąga sam Willis Conover.</p>
+  <div class="era-head"><span class="era-num" data-i18n="e2.num">PŁYTY · II</span><h2 data-i18n="e2.title">Wielka dekada — folk, free i eksport</h2><span class="era-years">1970–1979</span></div>
+  <p class="era-desc" data-i18n-html="e2.desc">Najpłodniejsza dekada: Namysłowski żeni jazz z góralszczyzną, Stańko gra free na światowym poziomie, a <b>Urbaniak i Dudziak</b> wyjeżdżają do Nowego Jorku podpisać kontrakty z Columbią i Aristą. Seifert zostaje „Coltrane'em skrzypiec", Makowicza do Ameryki ściąga sam Willis Conover.</p>
   <div class="agrid" data-aera="2"></div>
 </section>
 
 <section class="era" id="plyty3">
-  <div class="era-head"><span class="era-num">PŁYTY · III</span><h2>Lata 80. — jazz w cieniu stanu wojennego</h2><span class="era-years">1980–1989</span></div>
-  <p class="era-desc">Bojkoty, emigracje, szarość — a mimo to powstają płyty wybitne: <b>„Time Killers"</b> uchodzi za najlepszy polski album dekady, młode wilki ze String Connection wypełniają sale, a Stańko nagrywa jedne ze swoich najodważniejszych rzeczy.</p>
+  <div class="era-head"><span class="era-num" data-i18n="e3.num">PŁYTY · III</span><h2 data-i18n="e3.title">Lata 80. — jazz w cieniu stanu wojennego</h2><span class="era-years">1980–1989</span></div>
+  <p class="era-desc" data-i18n-html="e3.desc">Bojkoty, emigracje, szarość — a mimo to powstają płyty wybitne: <b>„Time Killers"</b> uchodzi za najlepszy polski album dekady, młode wilki ze String Connection wypełniają sale, a Stańko nagrywa jedne ze swoich najodważniejszych rzeczy.</p>
   <div class="agrid" data-aera="3"></div>
 </section>
 
 <section class="era" id="plyty4">
-  <div class="era-head"><span class="era-num">PŁYTY · IV</span><h2>Lata 90. — yass kontra mainstream</h2><span class="era-years">1990–1999</span></div>
-  <p class="era-desc">Z Trójmiasta i Bydgoszczy uderza <b>yass</b> — punkowa rewolta przeciw „jazzowi środka" (Miłość, Kury, klub Mózg), do której dołącza legenda Art Ensemble of Chicago, <b>Lester Bowie</b>. Po drugiej stronie: eleganckie trio Jagodzińskiego jazzuje Chopina, a Stańko żegna Komedę „Litanią" w ECM.</p>
+  <div class="era-head"><span class="era-num" data-i18n="e4.num">PŁYTY · IV</span><h2 data-i18n="e4.title">Lata 90. — yass kontra mainstream</h2><span class="era-years">1990–1999</span></div>
+  <p class="era-desc" data-i18n-html="e4.desc">Z Trójmiasta i Bydgoszczy uderza <b>yass</b> — punkowa rewolta przeciw „jazzowi środka" (Miłość, Kury, klub Mózg), do której dołącza legenda Art Ensemble of Chicago, <b>Lester Bowie</b>. Po drugiej stronie: eleganckie trio Jagodzińskiego jazzuje Chopina, a Stańko żegna Komedę „Litanią" w ECM.</p>
   <div class="agrid" data-aera="4"></div>
 </section>
 
 <section class="era" id="plyty5">
-  <div class="era-head"><span class="era-num">PŁYTY · V</span><h2>XXI wiek — od ECM po Astigmatic Records</h2><span class="era-years">2000–dziś</span></div>
-  <p class="era-desc">Stańko i trio Wasilewskiego definiują „nordycko-polski" liryzm ECM, Możdżer staje się gwiazdą filharmonii, a pokolenie <b>EABS</b> i Kuby Więcka na nowo czyta Komedę — hip-hopem, elektroniką i reaktywowaną serią Polish Jazz (od vol. 77 w górę).</p>
+  <div class="era-head"><span class="era-num" data-i18n="e5.num">PŁYTY · V</span><h2 data-i18n="e5.title">XXI wiek — od ECM po Astigmatic Records</h2><span class="era-years" data-i18n="e5.years">2000–dziś</span></div>
+  <p class="era-desc" data-i18n-html="e5.desc">Stańko i trio Wasilewskiego definiują „nordycko-polski" liryzm ECM, Możdżer staje się gwiazdą filharmonii, a pokolenie <b>EABS</b> i Kuby Więcka na nowo czyta Komedę — hip-hopem, elektroniką i reaktywowaną serią Polish Jazz (od vol. 77 w górę).</p>
   <div class="agrid" data-aera="5"></div>
 </section>
 
 <!-- ================= NIĆ BOCZNA: FILMOTEKA ================= -->
 
 <section id="filmoteka-intro">
-  <div class="era-head"><span class="era-num" style="color:var(--gold)">NIĆ BOCZNA</span><h2>Filmoteka — historia opowiadana</h2></div>
-  <p class="era-desc">Dokumenty, archiwalia, wykłady i koncerty — komentarz do kanonu płyt. Tu opowiada się to, czego nie słychać na winylach: katakumby, festiwale, polityka i losy bohaterów.</p>
+  <div class="era-head"><span class="era-num" style="color:var(--gold)" data-i18n="fm.kicker">NIĆ BOCZNA</span><h2 data-i18n="fm.title">Filmoteka — historia opowiadana</h2></div>
+  <p class="era-desc" data-i18n="fm.desc">Dokumenty, archiwalia, wykłady i koncerty — komentarz do kanonu płyt. Tu opowiada się to, czego nie słychać na winylach: katakumby, festiwale, polityka i losy bohaterów.</p>
   <div class="filters">
     <div class="filters-inner">
-      <button class="chip active" data-f="all">Wszystko</button>
-      <button class="chip" data-f="dokument">Dokumenty</button>
-      <button class="chip" data-f="koncert">Koncerty</button>
-      <button class="chip" data-f="archiwum">Archiwalia</button>
-      <button class="chip" data-f="wyklad">Wykłady i rozmowy</button>
-      <button class="chip" data-f="en">🌍 English</button>
+      <button class="chip active" data-f="all" data-i18n="ff.all">Wszystko</button>
+      <button class="chip" data-f="dokument" data-i18n="ff.doc">Dokumenty</button>
+      <button class="chip" data-f="koncert" data-i18n="ff.con">Koncerty</button>
+      <button class="chip" data-f="archiwum" data-i18n="ff.arch">Archiwalia</button>
+      <button class="chip" data-f="wyklad" data-i18n="ff.lect">Wykłady i rozmowy</button>
+      <button class="chip" data-f="en" data-i18n="ff.en">🌍 English</button>
       <span class="count-info" id="count-info"></span>
     </div>
   </div>
 </section>
 
 <section class="film-era" id="era1">
-  <div class="era-head"><span class="era-num">F·01</span><h2>Panoramy — cała historia w pigułce</h2></div>
+  <div class="era-head"><span class="era-num">F·01</span><h2 data-i18n="f1">Panoramy — cała historia w pigułce</h2></div>
   <div class="grid" data-era="1"></div>
 </section>
 
 <section class="film-era" id="era2">
-  <div class="era-head"><span class="era-num">F·02</span><h2>Początki i katakumby</h2><span class="era-years">1923–1955</span></div>
+  <div class="era-head"><span class="era-num">F·02</span><h2 data-i18n="f2">Początki i katakumby</h2><span class="era-years">1923–1955</span></div>
   <div class="grid" data-era="2"></div>
 </section>
 
 <section class="film-era" id="era3">
-  <div class="era-head"><span class="era-num">F·03</span><h2>Era Komedy</h2><span class="era-years">1956–1969</span></div>
+  <div class="era-head"><span class="era-num">F·03</span><h2 data-i18n="f3">Era Komedy</h2><span class="era-years">1956–1969</span></div>
   <div class="grid" data-era="3"></div>
 </section>
 
 <section class="film-era" id="era4">
-  <div class="era-head"><span class="era-num">F·04</span><h2>Eksport i fusion</h2><span class="era-years">1970–1989</span></div>
+  <div class="era-head"><span class="era-num">F·04</span><h2 data-i18n="f4">Eksport i fusion</h2><span class="era-years">1970–1989</span></div>
   <div class="grid" data-era="4"></div>
 </section>
 
 <section class="film-era" id="era5">
-  <div class="era-head"><span class="era-num">F·05</span><h2>Tomasz Stańko</h2></div>
+  <div class="era-head"><span class="era-num">F·05</span><h2 data-i18n="f5">Tomasz Stańko</h2></div>
   <div class="grid" data-era="5"></div>
 </section>
 
 <section class="film-era" id="era6">
-  <div class="era-head"><span class="era-num">F·06</span><h2>Yass</h2><span class="era-years">1990–2002</span></div>
+  <div class="era-head"><span class="era-num">F·06</span><h2 data-i18n="f6">Yass</h2><span class="era-years">1990–2002</span></div>
   <div class="grid" data-era="6"></div>
 </section>
 
 <section class="film-era" id="era7">
-  <div class="era-head"><span class="era-num">F·07</span><h2>Scena współczesna</h2></div>
+  <div class="era-head"><span class="era-num">F·07</span><h2 data-i18n="f7">Scena współczesna</h2></div>
   <div class="grid" data-era="7"></div>
 </section>
 
 <!-- ================= BIBLIOTEKA ================= -->
 
 <section id="biblioteka">
-  <div class="era-head"><span class="era-num">◆</span><h2>Biblioteka — kanon opracowań</h2></div>
-  <p class="era-desc">Najlepsze i najpełniejsze opracowania historii polskiego jazzu — monografie, biografie, przewodniki płytowe i serie naukowe.</p>
+  <div class="era-head"><span class="era-num">◆</span><h2 data-i18n="lib.title">Biblioteka — kanon opracowań</h2></div>
+  <p class="era-desc" data-i18n="lib.desc">Najlepsze i najpełniejsze opracowania historii polskiego jazzu — monografie, biografie, przewodniki płytowe i serie naukowe.</p>
   <div class="book-grid" id="book-grid"></div>
 </section>
 
@@ -321,10 +360,29 @@ footer .fx{font-family:var(--mono);letter-spacing:.15em;color:var(--gold);margin
 
 <div class="modal" id="modal">
   <div class="modal-box">
-    <a class="modal-yt" id="modal-yt" href="#" target="_blank" rel="noopener">otwórz na YouTube ↗</a>
-    <button class="modal-close" id="modal-close">zamknij ✕</button>
+    <a class="modal-yt" id="modal-yt" href="#" target="_blank" rel="noopener" data-i18n="modal.yt">otwórz na YouTube ↗</a>
+    <button class="modal-close" id="modal-close" data-i18n="modal.close">zamknij ✕</button>
     <div class="modal-frame" id="modal-frame"></div>
     <div class="modal-title" id="modal-title"></div>
+  </div>
+</div>
+
+<div id="player">
+  <div class="pl-head">
+    <span class="pl-kicker" data-i18n="pl.kicker">Słuchasz ciągiem</span>
+    <span class="pl-pos" id="pl-pos"></span>
+    <button class="pl-x" id="pl-min" title="—">—</button>
+    <button class="pl-x" id="pl-close" title="✕">✕</button>
+  </div>
+  <div class="pl-video" id="pl-video"></div>
+  <div class="pl-body">
+    <div class="pl-title" id="pl-title"></div>
+    <div class="pl-sub" id="pl-sub"></div>
+    <div class="pl-ctrl">
+      <button class="pl-btn" id="pl-prev" data-i18n="pl.prev">◀ POPRZEDNIA</button>
+      <button class="pl-btn" id="pl-next" data-i18n="pl.next">NASTĘPNA ▶</button>
+      <button class="pl-btn" id="pl-shuf" data-i18n="pl.shuffle" style="flex:0 0 auto;padding:.35rem .6rem">LOSOWO</button>
+    </div>
   </div>
 </div>
 
@@ -332,75 +390,87 @@ footer .fx{font-family:var(--mono);letter-spacing:.15em;color:var(--gold);margin
 
 <footer>
   <div class="fx">POLSKI ■ JAZZ</div>
-  <p>Portal edukacyjny — nagrania osadzone z publicznych kanałów YouTube, prawa przy ich właścicielach.<br>
+  <p data-i18n-html="footer">Portal edukacyjny — nagrania osadzone z publicznych kanałów YouTube, prawa przy ich właścicielach.<br>
   Kanon zbudowany na podstawie opracowań (Brodacki, Pietraszewski, Lewenstein i in.) · 2026</p>
 </footer>
 
 <script src="data.js"></script>
 <script>
-/* ============ (stare dane inline — zastąpione przez data.js) ============ */
-
-/* ============ DANE: FILMY (nić boczna) ============ */
-const VIDEOS=[
-{era:1,id:"IZzJmtMCLzk",t:"Jarosław Śmietana — „Story of Polish Jazz”",typ:"dokument",lang:"pl",dur:"10:00",note:"Historia polskiego jazzu opowiedziana (i wyrapowana!) w 10 minut. Reż. Yach Paszkiewicz.",star:true},
-{era:1,id:"7iYJXwqBfxY",t:"Historia Polskiej Popkultury odc. 3 — „Polska Szkoła Jazzu”",typ:"dokument",lang:"pl",dur:"25:12",note:"Zwięzły przegląd: Komeda, Kosz, Stańko, aż po yass."},
-{era:1,id:"77yAcYFb_Fg",t:"The History of Jazz in Poland — lecture by Piotr Schmidt",typ:"wyklad",lang:"en",dur:"1:20:48",note:"Pełny anglojęzyczny wykład trębacza Piotra Schmidta o dziejach jazzu nad Wisłą."},
-{era:1,id:"BlL09kNd9Jo",t:"Jazz from Poland — the Heart of European Jazz (TVP World)",typ:"dokument",lang:"en",dur:"15:10",note:"Od Komedy po dzisiejszą scenę — reportaż „Pulse of Culture” (2025)."},
-{era:1,id:"1guRxpLXF6Y",t:"Polski jazz i polityka 1959–1989 (dyskusja IPN)",typ:"wyklad",lang:"pl",dur:"58:43",note:"Czy jazz był groźny dla partii? Historycy i świadkowie epoki, IPNtv."},
-{era:1,id:"XSkRz4ydKXE",t:"„Jazzowe dzieje Polaków” wg Andrzeja Wasylewskiego",typ:"wyklad",lang:"pl",dur:"12:05",note:"Polskie Radio o wielogłosowej biografii polskiego jazzu (IPN, 2018)."},
-{era:1,id:"KhwX15IPeA0",t:"Polska Filmografia Jazzowa #1 (RadioJAZZ.FM)",typ:"wyklad",lang:"pl",dur:"19:00",note:"Cykl o 100 polskich filmach z jazzem w tle — od fabuły do dokumentu."},
-{era:1,id:"KTcu036mZEE",t:"Historia jazzu dla laików (Ukulturalnieni)",typ:"wyklad",lang:"pl",dur:"19:59",note:"Światowe tło gatunku — dobre wprowadzenie przed polską opowieścią."},
-{era:2,id:"v2icRUxgeFU",t:"Jazz Camping Kalatówki 1959 — film WFDiF",typ:"archiwum",lang:"pl",dur:"9:07",note:"Legendarne zimowisko jazzowe w Tatrach: Komeda, Trzaskowski, Polański. Tak to się zaczęło.",star:true},
-{era:2,id:"PBXbS9nakXc",t:"Jazzowe śniadanie mistrzów 1959 (Ninateka)",typ:"archiwum",lang:"pl",dur:"2:32",note:"Fragment dokumentu o Jazz Campingu — pełna wersja za darmo w Ninatece."},
-{era:2,id:"6n2IFERDFHc",t:"Polska Kronika Filmowa 1962 — Zaduszki Jazzowe",typ:"archiwum",lang:"pl",dur:"10:35",note:"Jazz w oficjalnej kronice PRL — punkt 1: krakowskie Zaduszki (jazz od 8:00)."},
-{era:2,id:"KzOiw2OyCtg",t:"Jak PRL wypowiedział wojnę... skarpetkom? Bikiniarze",typ:"dokument",lang:"pl",dur:"12:42",note:"Subkultura bikiniarzy — pierwsi fani jazzu w stalinowskiej Polsce."},
-{era:3,id:"E20ZSQSUJnM",t:"KOMEDA — film dokumentalny (1973, pełna wersja)",typ:"dokument",lang:"pl",dur:"33:27",note:"Nakręcony 4 lata po śmierci artysty dokument TVP/WFD w reż. Krzysztofa Riege.",star:true},
-{era:3,id:"4NnFPllvyh8",t:"Krzysztof Komeda — film dokumentalny",typ:"dokument",lang:"pl",dur:"1:10:57",note:"Pełnometrażowa opowieść o życiu i muzyce Komedy."},
-{era:3,id:"BTwT7vzoa-Y",t:"Komeda — A Soundtrack for a Life (trailer)",typ:"dokument",lang:"en",dur:"4:39",note:"Międzynarodowy dokument o Komedzie (reż. C. Buthenhoff-Duffy, 2010)."},
-{era:3,id:"vx9HWcsV9ZM",t:"Krzysztof Komeda — Live in Copenhagen 1965",typ:"koncert",lang:"pl",dur:"1:36:53",note:"Rzadkie nagranie koncertowe kwintetu Komedy ze Skandynawii."},
-{era:3,id:"6BDz1Dwe5sY",t:"„Jazz in Poland” — zachodnioniemiecka TV, 1964",typ:"archiwum",lang:"en",dur:"42:47",note:"Sensacyjne archiwum: Warsaw Stompers i polska scena oczami TV RFN, angielskie napisy.",star:true},
-{era:4,id:"SuEGeVFFfkw",t:"Michał Urbaniak — pełna biografia legendy",typ:"dokument",lang:"pl",dur:"3:03:38",note:"Od Komedy i Niemena po Milesa Davisa — monumentalny odcinek kanału Historia Muzyki.",star:true},
-{era:4,id:"97-UPAcT_pk",t:"Urszula Dudziak & Michał Urbaniak — Jazz Jamboree 1991",typ:"koncert",lang:"pl",dur:"9:52",note:"„Papaya” i „Young Pale Man” na warszawskim festiwalu."},
-{era:4,id:"QskI4KHjSjo",t:"Urszula Dudziak — „Papaya” (koncert „Ladies”, 2003)",typ:"koncert",lang:"pl",dur:"3:37",note:"Największy światowy przebój polskiej wokalistyki jazzowej."},
-{era:4,id:"NX4486fU0L8",t:"Jazz.PL — Jan Ptaszyn Wróblewski (2022)",typ:"koncert",lang:"pl",dur:"1:09:35",note:"Nestor polskiego jazzu w Studiu S3 Polskiego Radia."},
-{era:4,id:"wYbTIS8slvw",t:"Wojciech Karolak — „Time Killers”",typ:"koncert",lang:"pl",dur:"7:20",note:"Ikona polskich organów Hammonda — z serii Polish Radio Jazz Archives."},
-{era:4,id:"qOQx68ORU_k",t:"„Zbigniew Seifert. Przerwana podróż” (trailer)",typ:"dokument",lang:"pl",dur:"2:25",note:"Dokument o genialnym skrzypku, który umarł w wieku 32 lat (reż. R. Kaczmarek, 2022)."},
-{era:5,id:"8bRInHD-tMw",t:"Tomasz Stańko Project — „Wisława” (Gdańsk 2012)",typ:"koncert",lang:"pl",dur:"10:21",note:"Muzyka inspirowana Szymborską — Solidarity of Arts.",star:true},
-{era:5,id:"IgJlwJnajU4",t:"Tomasz Stańko w Onet Rano (2017)",typ:"wyklad",lang:"pl",dur:"23:38",note:"Jedna z ostatnich dużych rozmów — o Polsce, wolności i trąbce."},
-{era:5,id:"zryxba7BhrQ",t:"Wywiad z Tomaszem Stańko cz. I (Męskie Granie 2012)",typ:"wyklad",lang:"pl",dur:"14:35",note:"Rozmowa Piotra Stelmacha z Trójki."},
-{era:5,id:"rjC8VnqL1sc",t:"„Stańko był symbolem niezależności” (Polskie Radio)",typ:"wyklad",lang:"pl",dur:"13:40",note:"Tomasz Tłuczkiewicz wspomina artystę tuż po jego śmierci (2018)."},
-{era:6,id:"2Q5rc69kOWw",t:"„Miłość” — film dokumentalny (reż. F. Dzierżawski, 2012)",typ:"dokument",lang:"pl",dur:"1:31:38",note:"Nagradzany pełny dokument o najważniejszym zespole yassu: Tymański, Możdżer, Trzaska, Olter, Sikała.",star:true},
-{era:6,id:"saAClS1Prjk",t:"Miłość — live in Suwałki 1994 (cz. 1)",typ:"koncert",lang:"pl",dur:"8:40",note:"Surowe nagranie z pubu Voo Doo — yass u źródeł."},
-{era:6,id:"ff4htVtfMuY",t:"Miłość — „Łzy Psa” live (Suwałki 1994)",typ:"koncert",lang:"pl",dur:"21:32",note:"Rozbudowana improwizacja klasycznego składu z Możdżerem i Olterem."},
-{era:6,id:"cvkt1p4WKrs",t:"Miłość w Sfinksie — Sopot 1993 (rarytas)",typ:"archiwum",lang:"pl",dur:"2:00",note:"Przypadkiem odnalezione nagranie z Balu Filmowego."},
-{era:6,id:"CSLzZ4c6Xs4",t:"Tymański Yass Ensemble — Klub Wytwórnia",typ:"koncert",lang:"pl",dur:"9:40",note:"Yass dwie dekady później."},
-{era:7,id:"vkiCGDsDcwU",t:"Marcin Wasilewski Trio — JazzBaltica 2019 (cały koncert)",typ:"koncert",lang:"pl",dur:"1:16:27",note:"Najważniejsze polskie trio XXI wieku w znakomitej formie.",star:true},
-{era:7,id:"wZhkH2gqWsc",t:"Joe Lovano & Marcin Wasilewski Trio (Leverkusen 2022)",typ:"koncert",lang:"en",dur:"1:25:37",note:"Polskie trio z amerykańską legendą saksofonu — pełny koncert WDR."},
-{era:7,id:"DOOpQI-yXjk",t:"Leszek Możdżer — koncert w Trójce (2014)",typ:"koncert",lang:"pl",dur:"53:15",note:"Solowy recital z Komedą w repertuarze."},
-{era:7,id:"zFeG-JbtUk8",t:"Możdżer / Danielsson / Fresco — „The Time” (Gdańsk 2005)",typ:"koncert",lang:"pl",dur:"41:25",note:"Zapis koncertu tria, które wypełniało filharmonie."},
-{era:7,id:"7yqN848i9xY",t:"Możdżer, Wasilewski, Kaczmarczyk, Orzechowski — „Enjoy the Silence”",typ:"koncert",lang:"pl",dur:"9:55",note:"Czterech pianistów gra Depeche Mode — gala 40-lecia Jazz Juniors."},
-{era:7,id:"AS-0rVgl8As",t:"EABS — „Kraksa” (Live at Jazz Club Hipnoza)",typ:"koncert",lang:"pl",dur:"10:04",note:"Wrocławski kolektyw reinterpretuje Komedę na żywo.",star:true},
-{era:7,id:"-H_YWPs6_6w",t:"EABS x Jaubi — Get Your Jazz Together (2022)",typ:"koncert",lang:"en",dur:"1:13:49",note:"Polsko-pakistańskie spotkanie — Instytut Adama Mickiewicza."},
-{era:7,id:"aIMSiy42VRo",t:"EABS — live at Jazz Forum Showcase (Worldwide FM)",typ:"koncert",lang:"en",dur:"55:35",note:"Transmisja legendarnego radia Gillesa Petersona ze Szczecina."}
-];
-
-/* ============ DANE: KSIĄŻKI ============ */
-const BOOKS=[
-{a:"Krystian Brodacki",t:"Historia jazzu w Polsce",y:"PWM, 2010",d:"Fundament polskiej jazzologii: 626 stron, 12 rozdziałów, dyskografia i bibliografia. Jedyna pełna monografia dziejów jazzu nad Wisłą — od lat 20. XX w. po współczesność.",tags:["monografia","kanon"],hot:true,url:"https://pwm.com.pl/pl/sklep/pub/historia-jazzu-w-polsce,krystian-brodacki,17004,ksiegarnia.htm"},
-{a:"Igor Pietraszewski",t:"Jazz w Polsce. Wolność improwizowana / Jazz in Poland: Improvised Freedom",y:"Nomos 2012 / Peter Lang 2014",d:"Socjolog i saksofonista o rolach jazzu w PRL i III RP: od muzyki zakazanej, przez wspieraną, po rynkową. Wydanie angielskie w serii „Jazz under State Socialism”.",tags:["naukowa","PL+EN"],hot:true,url:"https://www.peterlang.com/document/1047698"},
-{a:"Andrzej Wasylewski (oprac.)",t:"Jazzowe dzieje Polaków. Biografia wielogłosowa",y:"IPN, 2018",d:"Opowieść chóralna twórców gatunku: Matuszkiewicz, Ptaszyn, Urbaniak, Trzaskowski, Namysłowski, Karolak, Stańko — plus 4 DVD z filmami i koncertami.",tags:["świadectwa","+4 DVD"],hot:true,url:"https://ipn.gov.pl/pl/publikacje/ksiazki/46476,Jazzowe-dzieje-Polakow-Biografia-wieloglosowa.html"},
-{a:"Maciej Lewenstein",t:"Polish Jazz Recordings and Beyond (vol. 1–2)",y:"2014; wyd. rozszerz.",d:"Anglojęzyczny przewodnik po 1700+ płytach polskiego jazzu w formacie Penguin Guide — pisany przez fizyka kwantowego z kolekcją 8000 albumów. Jedyna taka pozycja na świecie.",tags:["dyskografia","EN"],hot:true,url:"https://jazzforum.com.pl/main/artykul/polish-jazz-recordings-and-beyond"},
-{a:"Krzysztof Karpiński",t:"Był jazz. Krzyk jazz-bandu w międzywojennej Polsce",y:"Wyd. Literackie, 2014",d:"Pierwsza książka w całości o jazzie II Rzeczypospolitej — Karasiński, Gold, Petersburski, Rosner — na barwnym tle obyczajowym epoki.",tags:["1918–1939"],url:"https://lubimyczytac.pl/ksiazka/227248/byl-jazz-krzyk-jazz-bandu-w-miedzywojennej-polsce"},
-{a:"Leopold Tyrmand",t:"U brzegów jazzu",y:"1957, wznowienia",d:"Klasyk-świadectwo: pisarz, który jazz w Polsce współtworzył (Zaduszki, festiwale), pisze o nim z pasją pioniera. Lektura obowiązkowa dla klimatu epoki.",tags:["klasyk","świadectwo"],url:"https://lubimyczytac.pl/ksiazka/4957896/u-brzegow-jazzu"},
-{a:"Magdalena Grzebałkowska",t:"Komeda. Osobiste życie jazzu / Komeda: A Private Life in Jazz",y:"Znak 2018 / Equinox 2021",d:"Wielka reporterska biografia Komedy — a przy okazji historia polskiego jazzu w pigułce. Bestseller przetłumaczony na angielski.",tags:["biografia","PL+EN"],hot:true,url:"https://lubimyczytac.pl/ksiazka/4808212/komeda-osobiste-zycie-jazzu"},
-{a:"Tomasz Stańko, Rafał Księżyk",t:"Desperado! Autobiografia",y:"Wyd. Literackie, 2010",d:"Rzeka-rozmowa z największym polskim trębaczem: free jazz, nałogi, ECM, filozofia improwizacji. Wydana także po angielsku.",tags:["autobiografia","PL+EN"],url:"https://www.wydawnictwoliterackie.pl/produkt/199/desperado-autobiografia"},
-{a:"Sebastian Rerak",t:"Chłepcąc ciekły hel. Historia yassu",y:"2013",d:"Ponad 500 stron i sześćdziesięciu rozmówców: jedyna monografia yassowej rewolty lat 90. — Miłość, Mózg, Trytony, Kury.",tags:["yass","lata 90."],url:"https://lubimyczytac.pl/ksiazka/172524/chlepcac-ciekly-hel-historia-yassu"},
-{a:"Andrzej Schmidt",t:"Historia jazzu",y:"Polihymnia, wyd. jednotomowe",d:"Jedyna polska pełna historia jazzu światowego (do 2000 r.) — niezbędne tło dla dziejów sceny rodzimej. Trzy tomy w jednym, czyta się jak powieść.",tags:["kontekst światowy"],url:"https://lubimyczytac.pl/ksiazka/204363/historia-jazzu"},
-{a:"Jacek Niedziela-Meira",t:"Historia jazzu. 100 wykładów",y:"2014",d:"Podręcznikowe (a przy tym przystępne) ujęcie historii gatunku przez wykładowcę i kontrabasistę — z kontekstem społecznym i funkcją jazzu w kulturze.",tags:["podręcznik"],url:"https://lubimyczytac.pl/ksiazka/83348/historia-jazzu-100-wykladow"},
-{a:"red. Rafał Ciesielski",t:"Jazz w kulturze polskiej, t. 1–4",y:"2014–2022",d:"Seria pokonferencyjna (Zielona Góra/UJ) — jedyne cykliczne naukowe forum polskiej jazzologii: recepcja, krytyka, edukacja, regionalne sceny.",tags:["naukowa","seria"],url:"https://www.alenuty.pl/pl/p/Jazz-w-kulturze-polskiej-tom-1-Rafal-Ciesielski/10705"},
-{a:"Culture.pl",t:"A Foreigner's Guide to Polish Jazz",y:"online, EN",d:"Najlepszy darmowy anglojęzyczny przewodnik wprowadzający — idealny do podsyłania zagranicznym znajomym.",tags:["online","EN"],url:"https://culture.pl/en/article/a-foreigners-guide-to-polish-jazz"},
-{a:"Wikipedia (EN)",t:"Polish jazz",y:"online",d:"Solidne hasło przeglądowe z bibliografią — dobry punkt startowy do dalszych poszukiwań.",tags:["online","EN"],url:"https://en.wikipedia.org/wiki/Polish_jazz"}
-];
+/* ============ I18N ============ */
+const T={
+ pl:{
+  'doc.title':'POLSKI JAZZ — kanon płyt i historia w obrazach',
+  'nav.playall':'Słuchaj ciągiem','nav.stopall':'Zatrzymaj','nav.playtitle':'Odtwarzaj po kolei wszystkie widoczne płyty',
+  'nav.era1':'Płyty: Złota era','nav.era2':'Lata 70.','nav.era3':'Lata 80.','nav.era4':'Yass','nav.era5':'XXI wiek',
+  'nav.films':'Filmoteka','nav.books':'Biblioteka',
+  'hero.eyebrow':'kanon płyt · filmoteka · biblioteka',
+  'hero.sub':'Historia polskiego jazzu opowiedziana <b>płytami</b> — 200 albumów: kompletna seria <b>Polish Jazz</b> (vol. 1–89), nagrania dla Decci, ECM, MPS, Columbii i Blue Note, yassowa rewolta i nowa fala. Prawdziwe okładki z Discogs, historie i nagrania z YouTube. Nicią boczną biegnie <b>filmoteka</b>, całość spina <b>biblioteka</b>.',
+  'hero.s1':'płyt w kanonie','hero.s2':'filmów','hero.s3':'opracowań','hero.s4':'epok',
+  'view.label':'WIDOK:','view.catalog':'Katalog','view.wall':'Ściana okładek',
+  'cf.all':'Wszystkie płyty','cf.star':'★ Filary kanonu','cf.series':'Seria Polish Jazz','cf.west':'Wytwórnie zachodnie','cf.indie':'Yass i niezależne',
+  'cf.search':'szukaj: artysta, płyta, wytwórnia…',
+  'e1.num':'PŁYTY · I','e1.title':'Złota era — narodziny polskiej szkoły',
+  'e1.desc':'Po odwilży 1956 roku polski jazz w dekadę przeszedł drogę od rekonstrukcji dixielandu do własnego języka: lirycznego, „słowiańskiego" modern jazzu. Symbolem epoki jest seria <b>Polish Jazz</b> Polskich Nagrań (od 1965) — i <b>Krzysztof Komeda</b>, który nadał tej muzyce filmową wyobraźnię.',
+  'e2.num':'PŁYTY · II','e2.title':'Wielka dekada — folk, free i eksport',
+  'e2.desc':'Najpłodniejsza dekada: Namysłowski żeni jazz z góralszczyzną, Stańko gra free na światowym poziomie, a <b>Urbaniak i Dudziak</b> wyjeżdżają do Nowego Jorku podpisać kontrakty z Columbią i Aristą. Seifert zostaje „Coltrane\'em skrzypiec", Makowicza do Ameryki ściąga sam Willis Conover.',
+  'e3.num':'PŁYTY · III','e3.title':'Lata 80. — jazz w cieniu stanu wojennego',
+  'e3.desc':'Bojkoty, emigracje, szarość — a mimo to powstają płyty wybitne: <b>„Time Killers"</b> uchodzi za najlepszy polski album dekady, młode wilki ze String Connection wypełniają sale, a Stańko nagrywa jedne ze swoich najodważniejszych rzeczy.',
+  'e4.num':'PŁYTY · IV','e4.title':'Lata 90. — yass kontra mainstream',
+  'e4.desc':'Z Trójmiasta i Bydgoszczy uderza <b>yass</b> — punkowa rewolta przeciw „jazzowi środka" (Miłość, Kury, klub Mózg), do której dołącza legenda Art Ensemble of Chicago, <b>Lester Bowie</b>. Po drugiej stronie: eleganckie trio Jagodzińskiego jazzuje Chopina, a Stańko żegna Komedę „Litanią" w ECM.',
+  'e5.num':'PŁYTY · V','e5.title':'XXI wiek — od ECM po Astigmatic Records','e5.years':'2000–dziś',
+  'e5.desc':'Stańko i trio Wasilewskiego definiują „nordycko-polski" liryzm ECM, Możdżer staje się gwiazdą filharmonii, a pokolenie <b>EABS</b> i Kuby Więcka na nowo czyta Komedę — hip-hopem, elektroniką i reaktywowaną serią Polish Jazz (od vol. 77 w górę).',
+  'fm.kicker':'NIĆ BOCZNA','fm.title':'Filmoteka — historia opowiadana',
+  'fm.desc':'Dokumenty, archiwalia, wykłady i koncerty — komentarz do kanonu płyt. Tu opowiada się to, czego nie słychać na winylach: katakumby, festiwale, polityka i losy bohaterów.',
+  'ff.all':'Wszystko','ff.doc':'Dokumenty','ff.con':'Koncerty','ff.arch':'Archiwalia','ff.lect':'Wykłady i rozmowy','ff.en':'🌍 English',
+  'f1':'Panoramy — cała historia w pigułce','f2':'Początki i katakumby','f3':'Era Komedy','f4':'Eksport i fusion','f5':'Tomasz Stańko','f6':'Yass','f7':'Scena współczesna',
+  'lib.title':'Biblioteka — kanon opracowań',
+  'lib.desc':'Najlepsze i najpełniejsze opracowania historii polskiego jazzu — monografie, biografie, przewodniki płytowe i serie naukowe.',
+  'lib.more':'więcej o książce ↗',
+  'modal.yt':'otwórz na YouTube ↗','modal.close':'zamknij ✕',
+  'card.listen':'▶ SŁUCHAJ','card.search':'SZUKAJ NA YOUTUBE ↗','card.pillar':'★ FILAR KANONU','card.must':'★ MUST-SEE','card.plink':'Kopiuj link do płyty',
+  'typ.dokument':'dokument','typ.koncert':'koncert','typ.archiwum':'archiwum','typ.wyklad':'wykład/rozmowa','typ.album':'album',
+  'pl.kicker':'Słuchasz ciągiem','pl.prev':'◀ POPRZEDNIA','pl.next':'NASTĘPNA ▶','pl.shuffle':'LOSOWO',
+  'toast.copied':'Link skopiowany: ','toast.prompt':'Skopiuj link:','pl.empty':'Brak płyt z nagraniem w tym filtrze.',
+  'footer':'Portal edukacyjny — nagrania osadzone z publicznych kanałów YouTube, prawa przy ich właścicielach.<br>Kanon zbudowany na podstawie opracowań (Brodacki, Pietraszewski, Lewenstein i in.) · 2026'
+ },
+ en:{
+  'doc.title':'POLSKI JAZZ — the canon of records, film and books',
+  'nav.playall':'Play all','nav.stopall':'Stop','nav.playtitle':'Play every visible record in sequence',
+  'nav.era1':'Records: Golden era','nav.era2':'The 1970s','nav.era3':'The 1980s','nav.era4':'Yass','nav.era5':'21st century',
+  'nav.films':'Cinematheque','nav.books':'Library',
+  'hero.eyebrow':'record canon · cinematheque · library',
+  'hero.sub':'The history of Polish jazz told through <b>records</b> — 200 albums: the complete <b>Polish Jazz</b> series (vol. 1–89), sessions for Decca, ECM, MPS, Columbia and Blue Note, the yass revolt and the new wave. Real sleeves from Discogs, the story behind each record and the music itself from YouTube. A <b>cinematheque</b> runs alongside; a <b>library</b> ties it together.',
+  'hero.s1':'records in the canon','hero.s2':'films','hero.s3':'key books','hero.s4':'eras',
+  'view.label':'VIEW:','view.catalog':'Catalogue','view.wall':'Wall of sleeves',
+  'cf.all':'All records','cf.star':'★ Pillars of the canon','cf.series':'Polish Jazz series','cf.west':'Western labels','cf.indie':'Yass and independents',
+  'cf.search':'search: artist, album, label…',
+  'e1.num':'RECORDS · I','e1.title':'The golden era — a Polish school is born',
+  'e1.desc':'After the thaw of 1956, Polish jazz took just one decade to travel from reconstructing Dixieland to a language of its own: lyrical, "Slavic" modern jazz. The era is embodied by the <b>Polish Jazz</b> series from Polskie Nagrania (launched 1965) — and by <b>Krzysztof Komeda</b>, who gave the music its cinematic imagination.',
+  'e2.num':'RECORDS · II','e2.title':'The great decade — folk, free and export',
+  'e2.desc':'The most fertile decade: Namysłowski weds jazz to Highland folk music, Stańko plays free at world level, and <b>Urbaniak and Dudziak</b> leave for New York to sign with Columbia and Arista. Seifert becomes "the Coltrane of the violin", and Willis Conover himself brings Makowicz to America.',
+  'e3.num':'RECORDS · III','e3.title':'The 1980s — jazz under martial law',
+  'e3.desc':'Boycotts, emigration, grey days — and still the outstanding records keep coming: <b>"Time Killers"</b> is widely called the best Polish album of the decade, the young guns of String Connection pack concert halls, and Stańko cuts some of his boldest music.',
+  'e4.num':'RECORDS · IV','e4.title':'The 1990s — yass against the mainstream',
+  'e4.desc':'Out of the Tri-City and Bydgoszcz comes <b>yass</b> — a punk revolt against "middle-of-the-road jazz" (Miłość, Kury, the Mózg club), joined by Art Ensemble of Chicago legend <b>Lester Bowie</b>. On the other side of the decade: Jagodziński\'s elegant trio turns Chopin into jazz, and Stańko says farewell to Komeda with "Litania" on ECM.',
+  'e5.num':'RECORDS · V','e5.title':'The 21st century — from ECM to Astigmatic Records','e5.years':'2000–today',
+  'e5.desc':'Stańko and the Wasilewski trio define ECM\'s "Nordic-Polish" lyricism, Możdżer becomes a concert-hall star, and the generation of <b>EABS</b> and Kuba Więcek rereads Komeda — through hip-hop, electronics and the revived Polish Jazz series (from vol. 77 onwards).',
+  'fm.kicker':'SIDE THREAD','fm.title':'Cinematheque — the story as told on film',
+  'fm.desc':'Documentaries, archival footage, lectures and concerts — a commentary on the canon of records. This is where you get what the vinyl cannot say: the catacombs, the festivals, the politics and the fates of the people involved.',
+  'ff.all':'Everything','ff.doc':'Documentaries','ff.con':'Concerts','ff.arch':'Archival','ff.lect':'Lectures and interviews','ff.en':'🌍 In English',
+  'f1':'Panoramas — the whole story in brief','f2':'Beginnings and the catacombs','f3':'The Komeda era','f4':'Export and fusion','f5':'Tomasz Stańko','f6':'Yass','f7':'The contemporary scene',
+  'lib.title':'Library — the canon of writing',
+  'lib.desc':'The best and most complete works on the history of Polish jazz — monographs, biographies, record guides and academic series.',
+  'lib.more':'more about the book ↗',
+  'modal.yt':'open on YouTube ↗','modal.close':'close ✕',
+  'card.listen':'▶ LISTEN','card.search':'SEARCH ON YOUTUBE ↗','card.pillar':'★ PILLAR OF THE CANON','card.must':'★ MUST-SEE','card.plink':'Copy link to this record',
+  'typ.dokument':'documentary','typ.koncert':'concert','typ.archiwum':'archival','typ.wyklad':'lecture/interview','typ.album':'album',
+  'pl.kicker':'Playing all','pl.prev':'◀ PREVIOUS','pl.next':'NEXT ▶','pl.shuffle':'SHUFFLE',
+  'toast.copied':'Link copied: ','toast.prompt':'Copy this link:','pl.empty':'No records with a recording in this filter.',
+  'footer':'An educational portal — recordings embedded from public YouTube channels; all rights remain with their owners.<br>Canon compiled from the standard works (Brodacki, Pietraszewski, Lewenstein and others) · 2026'
+ }
+};
+let LANG='pl';
+function t(k){ return (T[LANG]&&T[LANG][k]) || T.pl[k] || k; }
 
 /* ============ RENDER: PŁYTY ============ */
 function norm(s){
@@ -417,34 +487,38 @@ function acard(a){
   const badge=a.vol
     ?`<span class="vol">${a.vol}</span>`
     :`<span class="vol other">${a.label}</span>`;
-  const star=a.star?'<span class="star">★ FILAR KANONU</span>':'';
+  const star=a.star?`<span class="star">${t('card.pillar')}</span>`:'';
   const src=a.cover?`covers/${a.k}.jpg`:(a.yt?`https://i.ytimg.com/vi/${a.yt}/hqdefault.jpg`:'');
   const img=src?`<img loading="lazy" src="${src}" onerror="coverErr(this,'${a.yt||''}')" alt="${a.a} — ${a.t}">`:'';
-  const listen=a.yt?'▶ SŁUCHAJ':'SZUKAJ NA YOUTUBE ↗';
+  const listen=a.yt?t('card.listen'):t('card.search');
+  const desc=(LANG==='en'&&a.desc_en)?a.desc_en:a.desc;
+  const title=(LANG==='en'&&a.t_en)?a.t_en:a.t;
   const hay=norm(`${a.a} ${a.t} ${a.vol||''} ${a.label||''} ${a.y}`);
   return `<article class="acard" id="a-${a.k}" data-k="${a.k}" data-yt="${a.yt||''}" data-star="${a.star?1:0}" data-vol="${a.vol||''}" data-label="${a.label||''}" data-hay="${hay}" data-q="${encodeURIComponent(a.a+' '+a.t)}" data-t="${encodeURIComponent(a.a+' — '+a.t)}">
     <div class="cover${img?'':' noimg'}">
       ${img}
       ${badge}
-      <button class="plink" title="Kopiuj link do płyty">#</button>
-      <span class="wtip"><b>${a.t}</b><span>${a.a} · ${a.y}</span></span>
+      <button class="plink" title="${t('card.plink')}">#</button>
+      <span class="wtip"><b>${title}</b><span>${a.a} · ${a.y}</span></span>
       <span class="aplay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
     </div>
     <div class="abody">
       <div class="artist">${a.a}</div>
-      <div class="atitle">${a.t}</div>
+      <div class="atitle">${title}</div>
       <div class="ayear">${a.y}${a.vol?'':' · '+(a.label||'')}</div>
-      <div class="adesc">${a.desc}</div>
+      <div class="adesc">${desc}</div>
       <div class="vmeta">${star}</div>
       <div class="alisten">${listen}</div>
     </div>
   </article>`;
 }
-document.querySelectorAll('.agrid').forEach(g=>{
-  const era=+g.dataset.aera;
-  g.innerHTML=ALBUMS.filter(a=>a.era===era).sort((x,y)=>x.y-y.y).map(acard).join('');
-});
-document.getElementById('stat-albums').textContent=ALBUMS.length;
+function renderAlbums(){
+  document.querySelectorAll('.agrid').forEach(g=>{
+    const era=+g.dataset.aera;
+    g.innerHTML=ALBUMS.filter(a=>a.era===era).sort((x,y)=>x.y-y.y).map(acard).join('');
+  });
+  document.getElementById('stat-albums').textContent=ALBUMS.length;
+}
 
 /* filtry katalogu płyt */
 const WEST=['Decca','ECM','MPS','Columbia','Arista','CBS','Capitol','ACT','Blue Note','Ninja Tune','Inner City','Metronome','Philips','Electrola','Dot','Calig','Summit','Clean Feed','Core Port','Hip Bop'];
@@ -477,13 +551,13 @@ document.querySelectorAll('.cchip').forEach(ch=>ch.addEventListener('click',()=>
   applyCatalog();
 }));
 document.getElementById('asearch').addEventListener('input',applyCatalog);
-applyCatalog();
 
 /* ============ RENDER: FILMY ============ */
-const TYPE_LABEL={dokument:"dokument",koncert:"koncert",archiwum:"archiwum",wyklad:"wykład/rozmowa",album:"album"};
 function vcard(v){
-  const star=v.star?'<span class="star">★ MUST-SEE</span>':'';
-  return `<article class="vcard" data-typ="${v.typ}" data-lang="${v.lang}" data-id="${v.id}" data-t="${encodeURIComponent(v.t)}">
+  const star=v.star?`<span class="star">${t('card.must')}</span>`:'';
+  const title=(LANG==='en'&&v.t_en)?v.t_en:v.t;
+  const note=(LANG==='en'&&v.note_en)?v.note_en:v.note;
+  return `<article class="vcard" data-typ="${v.typ}" data-lang="${v.lang}" data-id="${v.id}" data-t="${encodeURIComponent(title)}">
     <div class="thumb">
       <img loading="lazy" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="">
       <span class="badge-lang ${v.lang}">${v.lang==='en'?'EN':'PL'}</span>
@@ -491,32 +565,39 @@ function vcard(v){
       <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
     </div>
     <div class="vbody">
-      <div class="vtitle">${v.t}</div>
-      <div class="vnote">${v.note}</div>
-      <div class="vmeta"><span class="vtype">${TYPE_LABEL[v.typ]}</span>${star}</div>
+      <div class="vtitle">${title}</div>
+      <div class="vnote">${note}</div>
+      <div class="vmeta"><span class="vtype">${t('typ.'+v.typ)}</span>${star}</div>
     </div>
   </article>`;
 }
-document.querySelectorAll('.grid').forEach(g=>{
-  const era=+g.dataset.era;
-  g.innerHTML=VIDEOS.filter(v=>v.era===era).map(vcard).join('');
-});
-document.getElementById('stat-videos').textContent=VIDEOS.length;
+function renderVideos(){
+  document.querySelectorAll('.grid').forEach(g=>{
+    const era=+g.dataset.era;
+    g.innerHTML=VIDEOS.filter(v=>v.era===era).map(vcard).join('');
+  });
+  document.getElementById('stat-videos').textContent=VIDEOS.length;
+}
 
 /* ============ RENDER: KSIĄŻKI ============ */
-document.getElementById('book-grid').innerHTML=BOOKS.map((b,i)=>`
-  <div class="book">
-    <div class="book-rank">${String(i+1).padStart(2,'0')}</div>
-    <div class="author">${b.a}</div>
-    <h3>${b.t}</h3>
-    <div class="author" style="color:var(--cream-dim)">${b.y}</div>
-    <p>${b.d}</p>
-    <div class="tags">${b.tags.map(t=>`<span class="tag${b.hot&&t===b.tags[0]?' hot':''}">${t}</span>`).join('')}</div>
-    <a href="${b.url}" target="_blank" rel="noopener">więcej o książce ↗</a>
-  </div>`).join('');
+function renderBooks(){
+  document.getElementById('book-grid').innerHTML=BOOKS.map((b,i)=>{
+    const y=(LANG==='en'&&b.y_en)?b.y_en:b.y;
+    const d=(LANG==='en'&&b.d_en)?b.d_en:b.d;
+    const tags=(LANG==='en'&&b.tags_en)?b.tags_en:b.tags;
+    return `<div class="book">
+      <div class="book-rank">${String(i+1).padStart(2,'0')}</div>
+      <div class="author">${b.a}</div>
+      <h3>${b.t}</h3>
+      <div class="author" style="color:var(--cream-dim)">${y}</div>
+      <p>${d}</p>
+      <div class="tags">${tags.map((x,j)=>`<span class="tag${b.hot&&j===0?' hot':''}">${x}</span>`).join('')}</div>
+      <a href="${b.url}" target="_blank" rel="noopener">${t('lib.more')}</a>
+    </div>`;
+  }).join('');
+}
 
-/* ============ FILTRY (tylko filmoteka) ============ */
-const chips=document.querySelectorAll('.chip');
+/* ============ FILTRY (filmoteka) ============ */
 function applyFilter(f){
   let shown=0;
   document.querySelectorAll('.vcard').forEach(c=>{
@@ -532,12 +613,11 @@ function applyFilter(f){
     s.style.display=any?'':'none';
   });
 }
-chips.forEach(ch=>ch.addEventListener('click',()=>{
-  chips.forEach(c=>c.classList.remove('active'));
+document.querySelectorAll('.filters-inner .chip[data-f]').forEach(ch=>ch.addEventListener('click',()=>{
+  document.querySelectorAll('.chip[data-f]').forEach(c=>c.classList.remove('active'));
   ch.classList.add('active');
   applyFilter(ch.dataset.f);
 }));
-applyFilter('all');
 
 /* ============ MODAL ============ */
 const modal=document.getElementById('modal');
@@ -551,13 +631,114 @@ function openVideo(id,title){
   modal.classList.add('open');
   document.body.style.overflow='hidden';
 }
+function closeModal(){modal.classList.remove('open');frame.innerHTML='';document.body.style.overflow='';}
+document.getElementById('modal-close').addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
 let toastTimer=null;
 function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2200);
 }
+
+/* ============ ODTWARZACZ CIĄGŁY ============ */
+const PLAYER=document.getElementById('player');
+let queue=[], qi=0, shuffleOn=false, ytPlayer=null, apiReady=false, pendingPlay=false;
+const byKey={};
+ALBUMS.forEach(a=>byKey[a.k]=a);
+
+function loadYTAPI(){
+  if(window.YT&&window.YT.Player){apiReady=true;return;}
+  if(document.getElementById('ytapi'))return;
+  window.onYouTubeIframeAPIReady=function(){
+    apiReady=true;
+    if(pendingPlay){pendingPlay=false;playCurrent();}
+  };
+  const sc=document.createElement('script');
+  sc.id='ytapi'; sc.src='https://www.youtube.com/iframe_api';
+  document.head.appendChild(sc);
+}
+function buildQueue(){
+  return [...document.querySelectorAll('.acard')]
+    .filter(c=>c.style.display!=='none'&&c.dataset.yt)
+    .map(c=>c.dataset.k);
+}
+function playerLabels(){
+  document.getElementById('pl-shuf').classList.toggle('act',shuffleOn);
+  const btn=document.getElementById('playall');
+  btn.classList.toggle('on',PLAYER.classList.contains('on'));
+  btn.querySelector('span').textContent=PLAYER.classList.contains('on')?t('nav.stopall'):t('nav.playall');
+  btn.title=t('nav.playtitle');
+}
+function renderNowPlaying(){
+  const a=byKey[queue[qi]];
+  if(!a)return;
+  document.getElementById('pl-title').textContent=a.t;
+  document.getElementById('pl-sub').textContent=`${a.a} · ${a.y}${a.vol?' · '+a.vol:(a.label?' · '+a.label:'')}`;
+  document.getElementById('pl-pos').textContent=`${qi+1} / ${queue.length}`;
+  document.querySelectorAll('.acard.playing').forEach(c=>c.classList.remove('playing'));
+  const card=document.getElementById('a-'+a.k);
+  if(card)card.classList.add('playing');
+}
+function playCurrent(){
+  const a=byKey[queue[qi]];
+  if(!a||!a.yt)return;
+  renderNowPlaying();
+  if(!apiReady){pendingPlay=true;loadYTAPI();return;}
+  if(ytPlayer&&ytPlayer.loadVideoById){ ytPlayer.loadVideoById(a.yt); return; }
+  const host=document.getElementById('pl-video');
+  host.innerHTML='<div id="pl-frame"></div>';
+  ytPlayer=new YT.Player('pl-frame',{
+    videoId:a.yt,
+    playerVars:{autoplay:1,rel:0,playsinline:1},
+    events:{
+      onReady:e=>e.target.playVideo(),
+      onStateChange:e=>{ if(e.data===YT.PlayerState.ENDED) nextTrack(); },
+      onError:()=>nextTrack()
+    }
+  });
+}
+function nextTrack(){
+  if(!queue.length)return;
+  qi = shuffleOn ? Math.floor(Math.random()*queue.length) : (qi+1)%queue.length;
+  playCurrent();
+}
+function prevTrack(){
+  if(!queue.length)return;
+  qi = (qi-1+queue.length)%queue.length;
+  playCurrent();
+}
+function startQueue(fromKey){
+  queue=buildQueue();
+  if(!queue.length){toast(t('pl.empty'));return;}
+  qi=Math.max(0,queue.indexOf(fromKey));
+  PLAYER.classList.add('on');
+  PLAYER.classList.remove('min');
+  playerLabels();
+  loadYTAPI();
+  playCurrent();
+}
+function stopQueue(){
+  PLAYER.classList.remove('on');
+  if(ytPlayer&&ytPlayer.destroy){try{ytPlayer.destroy();}catch(e){}}
+  ytPlayer=null; pendingPlay=false;
+  document.getElementById('pl-video').innerHTML='';
+  document.querySelectorAll('.acard.playing').forEach(c=>c.classList.remove('playing'));
+  playerLabels();
+}
+document.getElementById('playall').addEventListener('click',()=>{
+  if(PLAYER.classList.contains('on'))stopQueue(); else startQueue();
+});
+document.getElementById('pl-next').addEventListener('click',nextTrack);
+document.getElementById('pl-prev').addEventListener('click',prevTrack);
+document.getElementById('pl-shuf').addEventListener('click',()=>{shuffleOn=!shuffleOn;playerLabels();});
+document.getElementById('pl-close').addEventListener('click',stopQueue);
+document.getElementById('pl-min').addEventListener('click',()=>PLAYER.classList.toggle('min'));
+
+/* ============ KLIKNIĘCIA KART ============ */
 document.addEventListener('click',e=>{
   const pl=e.target.closest('.plink');
   if(pl){
@@ -565,14 +746,15 @@ document.addEventListener('click',e=>{
     const k=pl.closest('.acard').dataset.k;
     const url=location.origin+location.pathname+'#a-'+k;
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(url).then(()=>toast('Link skopiowany: #a-'+k),()=>toast(url));
-    }else{ prompt('Skopiuj link:',url); }
+      navigator.clipboard.writeText(url).then(()=>toast(t('toast.copied')+'#a-'+k),()=>toast(url));
+    }else{ prompt(t('toast.prompt'),url); }
     return;
   }
   const ac=e.target.closest('.acard');
   if(ac){
-    if(ac.dataset.yt) openVideo(ac.dataset.yt, decodeURIComponent(ac.dataset.t));
-    else window.open('https://www.youtube.com/results?search_query='+ac.dataset.q,'_blank');
+    if(!ac.dataset.yt){ window.open('https://www.youtube.com/results?search_query='+ac.dataset.q,'_blank'); return; }
+    if(PLAYER.classList.contains('on')) startQueue(ac.dataset.k);
+    else openVideo(ac.dataset.yt, decodeURIComponent(ac.dataset.t));
     return;
   }
   const card=e.target.closest('.vcard');
@@ -586,32 +768,52 @@ function setView(v){
   try{localStorage.setItem('pj-view',v);}catch(e){}
 }
 document.querySelectorAll('.vchip').forEach(ch=>ch.addEventListener('click',()=>setView(ch.dataset.view)));
-(function(){
-  let v=null;
-  const qp=new URLSearchParams(location.search).get('widok');
-  if(qp==='sciana')v='wall'; else if(qp==='katalog')v='catalog';
-  if(!v){try{v=localStorage.getItem('pj-view');}catch(e){}}
-  if(v==='wall')setView('wall');
-})();
 
-/* ============ PERMALINK #a-<klucz> ============ */
+/* ============ JĘZYK ============ */
+function applyLang(lang,rerender){
+  LANG=(lang==='en')?'en':'pl';
+  document.documentElement.lang=LANG;
+  document.title=t('doc.title');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=t(el.dataset.i18nHtml);});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t(el.dataset.i18nPh);});
+  document.querySelectorAll('.langbtn').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
+  if(rerender){
+    renderAlbums(); renderVideos(); renderBooks();
+    applyCatalog();
+    applyFilter((document.querySelector('.chip[data-f].active')||{dataset:{f:'all'}}).dataset.f);
+    if(PLAYER.classList.contains('on'))renderNowPlaying();
+  }
+  playerLabels();
+  try{localStorage.setItem('pj-lang',LANG);}catch(e){}
+}
+document.querySelectorAll('.langbtn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang,true)));
+
+/* ============ START ============ */
 (function(){
+  const qp=new URLSearchParams(location.search);
+  let lang=qp.get('lang');
+  if(lang!=='en'&&lang!=='pl'){ try{lang=localStorage.getItem('pj-lang');}catch(e){} }
+  if(lang!=='en'&&lang!=='pl'){ lang=(navigator.language||'pl').toLowerCase().startsWith('pl')?'pl':'en'; }
+  let v=qp.get('widok')||qp.get('view');
+  v=(v==='sciana'||v==='wall')?'wall':(v==='katalog'||v==='catalog')?'catalog':null;
+  if(!v){try{v=localStorage.getItem('pj-view');}catch(e){}}
+
+  applyLang(lang,true);
+  if(v==='wall')setView('wall');
+
   const m=location.hash.match(/^#a-([a-z0-9]+)$/i);
-  if(!m)return;
-  const el=document.getElementById('a-'+m[1]);
-  if(!el)return;
-  setTimeout(()=>{
-    document.documentElement.style.scrollBehavior='auto';
-    el.scrollIntoView({block:'center'});
-    document.documentElement.style.removeProperty('scroll-behavior');
-    el.classList.add('hl');
-    setTimeout(()=>el.classList.remove('hl'),2600);
-  },150);
+  if(m){
+    const el=document.getElementById('a-'+m[1]);
+    if(el)setTimeout(()=>{
+      document.documentElement.style.scrollBehavior='auto';
+      el.scrollIntoView({block:'center'});
+      document.documentElement.style.removeProperty('scroll-behavior');
+      el.classList.add('hl');
+      setTimeout(()=>el.classList.remove('hl'),2600);
+    },150);
+  }
 })();
-function closeModal(){modal.classList.remove('open');frame.innerHTML='';document.body.style.overflow='';}
-document.getElementById('modal-close').addEventListener('click',closeModal);
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 </script>
 </body>
 </html>
