@@ -262,6 +262,11 @@ h2::after{content:"";display:block;width:74px;height:6px;border-radius:4px;margi
 .atk .nm{font-weight:800;color:var(--navy)}.atk .dmg{float:right;color:var(--red);font-weight:800;font-size:18px}
 .atk p{color:var(--dim);font-size:13.5px;margin-top:3px;font-weight:500}
 .atk .cost{color:var(--blue);font-size:12.5px;font-weight:700}
+.torig{display:block;font-size:12.5px;color:#a3a8cf;font-weight:500;font-style:italic;margin-top:2px}
+.movtable .t .torig{font-weight:500}
+.orig{font-size:12.5px;color:#a3a8cf;font-style:italic;margin-top:5px;padding-left:10px;border-left:2px dotted #cfd6ee}
+.atk .nmpl{color:var(--red);font-weight:700;font-size:14.5px}
+.flav .orig{border-left:none;padding-left:0}
 .flav{font-style:italic;color:var(--dim);font-size:14px;margin-top:12px;border-left:4px solid var(--yellow);padding-left:12px}
 
 footer{border-top:0;background:var(--red);padding:24px 22px;text-align:center;

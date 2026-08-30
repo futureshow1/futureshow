@@ -268,25 +268,38 @@ function renderCards(){
 }
 window.setModern=function(s){modernSet=s;renderCards();};
 
+/* tłumaczenia treści kart: w PL pokazujemy polską wersję, a pod spodem oryginał
+   (karty fizycznie są po angielsku, więc dziecko musi móc porównać z kartą w ręku) */
+const TR=window.CARDS_PL||{};
+const tr=t=>TR[t]||null;
+const trName=(pref,n)=>TR[pref+'::'+n]||null;
+function bi(en, pl, cls){          // dwujęzyczny blok tekstu
+ if(lang!=='pl'||!pl||pl===en) return `<p class="${cls||''}">${en}</p>`;
+ return `<p class="${cls||''}">${pl}</p><p class="orig">${en}</p>`;
+}
+const label=(dict,v)=>lang==='pl'?((C.cardLabels[dict]||{})[v]||v):v;
+
 window.openCard=function(id){
  const c=allCards[id];if(!c)return;
  const hires=`https://images.pokemontcg.io/${c.set||'base1'}/${c.number}_hires.png`;
  const local=cardImg(c);
- const abil=(c.abilities||[]).map(a=>`<div class="atk"><span class="nm">💠 ${T(UI.cards.ability)}: ${a.name}</span><p>${a.text}</p></div>`).join('');
- const atks=(c.attacks||[]).map(a=>`<div class="atk"><span class="nm">${a.name}</span><span class="dmg">${a.damage||''}</span>
-   ${a.cost&&a.cost.length?`<div class="cost">${T(UI.cards.cost)}: ${a.cost.join(' · ')}</div>`:''}
-   ${a.text?`<p>${a.text}</p>`:''}</div>`).join('');
+ const nameOf=(pref,n)=>{const p=trName(pref,n);return lang==='pl'&&p&&p!==n?`${n} <span class="nmpl">(${p})</span>`:n;};
+ const abil=(c.abilities||[]).map(a=>`<div class="atk"><span class="nm">💠 ${T(UI.cards.ability)}: ${nameOf('ABL',a.name)}</span>${bi(a.text,tr(a.text))}</div>`).join('');
+ const atks=(c.attacks||[]).map(a=>`<div class="atk"><span class="nm">${nameOf('ATK',a.name)}</span><span class="dmg">${a.damage||''}</span>
+   ${a.cost&&a.cost.length?`<div class="cost">${T(UI.cards.cost)}: ${a.cost.map(e=>label('energy',e)).join(' · ')}</div>`:''}
+   ${a.text?bi(a.text,tr(a.text)):''}</div>`).join('');
+ const subs=(c.subtypes||[]).map(s=>label('subtype',s)).join(', ');
  $('modal-box').innerHTML=`
   <button class="mclose" onclick="closeModal()">✕</button>
   <div class="cardm">
    <div class="big"><img id="cardbig" src="${local}" alt="${c.name}"></div>
    <div class="det">
     <h2>${c.name}${c.hp?` <span class="badge">${c.hp} ${UI.cards.hp}</span>`:''}</h2>
-    <div class="sub">${c.setName||'Base Set (1999)'} · #${c.number} · ${c.supertype}${c.subtypes&&c.subtypes.length?' — '+c.subtypes.join(', '):''}</div>
+    <div class="sub">${c.setName||'Base Set (1999)'} · #${c.number} · ${label('supertype',c.supertype)}${subs?' — '+subs:''}</div>
     <p><b>${T(UI.cards.rarityWord)}:</b> <span class="rar">${rarLabel(c.rarity)}</span></p>
     ${c.evolvesFrom?`<p><b>${T(UI.cards.evolvesFrom)}:</b> ${c.evolvesFrom}</p>`:''}
     ${abil}${atks}
-    ${c.flavor?`<p class="flav">${c.flavor}</p>`:''}
+    ${c.flavor?bi(c.flavor,tr(c.flavor),'flav'):''}
     ${c.artist?`<p style="margin-top:10px;color:var(--dim);font-size:13.5px">🖌 ${T(UI.cards.artist)}: <b>${c.artist}</b></p>`:''}
    </div></div>`;
  $('modal').classList.add('on');
@@ -318,18 +331,25 @@ function renderHistory(){
 }
 
 /* ---------- anime ---------- */
+/* w PL: polski tytuł dystrybucyjny na pierwszym planie, oryginał pod spodem
+   (tam gdzie polskiego tytułu nie było — zostaje sam oryginał) */
+function titleOf(o){
+ return (lang==='pl'&&o.titlePl)
+  ? `${o.titlePl} <span class="torig">${o.title}</span>`
+  : o.title;
+}
 function renderAnime(){
  $('anime-title').textContent=T(UI.anime.title);
  $('anime-desc').textContent=T(UI.anime.desc);
  $('anime-list').innerHTML=C.anime.map(a=>`
-  <div class="animec"><div class="top"><h3>${a.title}</h3><span class="yrs">${a.years}</span><span class="rg">${a.region||''}</span></div>
+  <div class="animec"><div class="top"><h3>${titleOf(a)}</h3><span class="yrs">${a.years}</span><span class="rg">${a.region||''}</span></div>
    <p>${T(a)}</p></div>`).join('');
  $('side-title').textContent=T(UI.anime.side);
  $('side-list').innerHTML=C.sideSeries.map(s=>`
-  <div class="sidec"><h4>${s.title} <span class="yrs">${s.year}</span></h4><p>${T(s)}</p></div>`).join('');
+  <div class="sidec"><h4>${titleOf(s)} <span class="yrs">${s.year}</span></h4><p>${T(s)}</p></div>`).join('');
  $('movies-title').textContent=T(UI.anime.movies);
  $('movies-list').innerHTML=`<table class="movtable">${C.movies.map(m=>`
-  <tr><td class="n">${m.n}</td><td class="y">${m.year}</td><td class="t">${m.title}</td><td class="d">${T(m)}</td></tr>`).join('')}</table>`;
+  <tr><td class="n">${m.n}</td><td class="y">${m.year}</td><td class="t">${titleOf(m)}</td><td class="d">${T(m)}</td></tr>`).join('')}</table>`;
 }
 
 /* ---------- gry ---------- */

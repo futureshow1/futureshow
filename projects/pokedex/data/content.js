@@ -52,21 +52,21 @@ history: [
 
 // ---------- SERIE ANIME ----------
 anime: [
- {title:"Pokémon: Indigo League + Orange Islands + Johto", years:"1997–2002", seasons:"sezony 1–5", region:"Kanto / Johto",
+ {title:"Pokémon: Indigo League + Orange Islands + Johto", titlePl:"Liga Indigo", years:"1997–2002", seasons:"sezony 1–5", region:"Kanto / Johto",
   pl:"Oryginalna seria: 10-letni Ash Ketchum wyrusza z niepokornym Pikachu, poznaje Misty i Brocka, a Zespół R (Jessie, James i gadający Meowth) nieudolnie poluje na Pikachu w każdym odcinku. To ją pamięta pokolenie Polsatu.", en:"The original series: 10-year-old Ash sets out with a stubborn Pikachu, meets Misty and Brock, while Team Rocket bungles a Pikachu heist every single episode. The series a whole generation grew up on."},
  {title:"Pokémon: Advanced Generation", years:"2002–2006", seasons:"sezony 6–9", region:"Hoenn",
   pl:"Ash w Hoenn z nową towarzyszką May, która zamiast walk wybiera konkursy piękności Pokémonów — nowy wątek serii.", en:"Ash in Hoenn with newcomer May, who picks Pokémon Contests over battles — a fresh thread for the show."},
- {title:"Pokémon: Diamond & Pearl", years:"2006–2010", seasons:"sezony 10–13", region:"Sinnoh",
+ {title:"Pokémon: Diamond & Pearl", titlePl:"Diament i perła / Diament i perła: Wymiar walki / Diament i perła: Galaktyczne bitwy / Diament i perła: Gwiazdy Ligi Sinnoh", years:"2006–2010", seasons:"sezony 10–13", region:"Sinnoh",
   pl:"Podróż przez Sinnoh z Dawn. Rywal Paul — najzimniejszy przeciwnik Asha — i wątek legend czasu i przestrzeni.", en:"Sinnoh with Dawn. Rival Paul — Ash's coldest opponent — and the legends of time and space."},
- {title:"Pokémon: Black & White", years:"2010–2013", seasons:"sezony 14–16", region:"Unova",
+ {title:"Pokémon: Black & White", titlePl:"Czerń i biel / Czerń i biel: Ścieżki przeznaczenia / Czerń i biel: Przygody w Unovie", years:"2010–2013", seasons:"sezony 14–16", region:"Unova",
   pl:"Ash w Unovie z Iris i Cilanem. Seria „miękkiego restartu” — Ash znów uczy się wszystkiego od nowa.", en:"Ash in Unova with Iris and Cilan. A soft-reboot season — Ash learns everything anew."},
- {title:"Pokémon the Series: XY", years:"2013–2016", seasons:"sezony 17–19", region:"Kalos",
+ {title:"Pokémon the Series: XY", titlePl:"Seria XY / Seria XY: Przygody w Kalos / Seria XYZ", years:"2013–2016", seasons:"sezony 17–19", region:"Kalos",
   pl:"Uznawana przez fanów za najlepiej animowaną i najpoważniejszą serię: Ash-Greninja, Serena i finał ligi, w którym Ash o włos przegrywa.", en:"Widely called the best-animated, most serious series: Ash-Greninja, Serena, and a league final Ash loses by a hair."},
- {title:"Pokémon the Series: Sun & Moon", years:"2016–2019", seasons:"sezony 20–22", region:"Alola",
+ {title:"Pokémon the Series: Sun & Moon", titlePl:"Słońce i księżyc / Słońce i księżyc: Ultra przygody / Słońce i księżyc: Ultra legendy", years:"2016–2019", seasons:"sezony 20–22", region:"Alola",
   pl:"Ash idzie do szkoły na Alola. Luźniejsza kreska i humor — i pierwsze w historii zwycięstwo Asha w lidze!", en:"Ash goes to school in Alola. A looser art style, more comedy — and Ash's first-ever league win!"},
- {title:"Pokémon Journeys", years:"2019–2023", seasons:"sezony 23–25", region:"wszystkie regiony",
+ {title:"Pokémon Journeys", titlePl:"Podróże / Podróże mistrzów / Najwspanialsze podróże", years:"2019–2023", seasons:"sezony 23–25", region:"wszystkie regiony",
   pl:"Ash i Goh podróżują po całym świecie Pokémonów. Finał ćwierćwiecza: Ash pokonuje Leona i zostaje Mistrzem Świata, po czym żegna się z serialem.", en:"Ash and Goh travel the entire Pokémon world. The finale of an era: Ash beats Leon, becomes World Champion, and says goodbye."},
- {title:"Pokémon Horizons", years:"2023–", seasons:"trwa", region:"Paldea i inne",
+ {title:"Pokémon Horizons", titlePl:"Horyzonty / Horyzonty: Sezon 2 – W poszukowaniu Laquy / Horyzonty: Sezon 3 – Wschodząca nadzieja", years:"2023–", seasons:"trwa", region:"Paldea i inne",
   pl:"Pierwsza seria bez Asha: Liko z tajemniczym wisiorkiem, Roy i drużyna sterowca Brave Asagi. To ją oglądają dzisiejsze dzieci — z Pokémonami Gen 9 z aktualnych kart.", en:"The first series without Ash: Liko and her mysterious pendant, Roy, and the airship crew of the Brave Asagi. This is what kids watch today — starring the Gen 9 Pokémon from current cards."}
 ],
 
@@ -78,37 +78,37 @@ sideSeries: [
  {title:"Pokémon Evolutions", year:"2021", pl:"8 odcinków na 25-lecie marki — po jednym na każdy region, od Galar wstecz do Kanto.", en:"8 episodes for the 25th anniversary — one per region, from Galar back to Kanto."},
  {title:"Pokémon: Hisuian Snow", year:"2022", pl:"3 melancholijne odcinki towarzyszące grze Legends: Arceus — czasy, gdy ludzie bali się Pokémonów.", en:"3 melancholy episodes tied to Legends: Arceus — an age when people still feared Pokémon."},
  {title:"Pokémon: Paldean Winds", year:"2023", pl:"Miniserial o uczniach akademii z Paldei, równoległy do gier Scarlet/Violet.", en:"A miniseries about Paldea's academy students, parallel to Scarlet/Violet."},
- {title:"Pokémon Concierge", year:"2023 / 2025", region:"Netflix",
+ {title:"Pokémon Concierge", titlePl:"Konsjerżka Pokémonów", year:"2023 / 2025", region:"Netflix",
   pl:"Poklatkowy (stop-motion!) serial Netflixa o resorcie wakacyjnym dla Pokémonów. Zachwycił świat — filcowe Pokémony i ciepła, dorosła opowieść o odpoczynku.", en:"Netflix's stop-motion series about a holiday resort for Pokémon. Felt-craft Pokémon and a warm, grown-up story about rest — an instant charmer."},
  {title:"Pokémon Chronicles", year:"2002–2004", pl:"Odcinki poboczne o bohaterach drugiego planu: Misty w Cerulean, Zespół R, brat Asha… bez samego Asha.", en:"Side stories about the supporting cast: Misty back in Cerulean, Team Rocket and more — no Ash required."}
 ],
 
 // ---------- FILMY KINOWE ----------
 movies: [
- {n:1, year:1998, title:"Mewtwo Strikes Back / Mewtwo kontratakuje", pl:"Klon Mew pyta, czy kopia może być kimś więcej. Największy hit kinowy serii — i najsłynniejsza scena: Ash skamieniały między Mew a Mewtwo.", en:"Mew's clone asks whether a copy can be more. The series' biggest theatrical hit — with the famous petrified-Ash scene."},
- {n:2, year:1999, title:"The Power of One / Uwierz w swoją siłę", pl:"Lugia i trzy legendarne ptaki. „Świat ocali wybrany trener” — oczywiście Ash.", en:"Lugia and the three legendary birds. 'The chosen trainer shall save the world' — Ash, naturally."},
- {n:3, year:2000, title:"Spell of the Unown / Zaklęcie Unown", pl:"Entei zrodzony z tęsknoty dziewczynki. Najbardziej „psychologiczny” z wczesnych filmów.", en:"An Entei born of a lonely girl's longing. The most psychological of the early films."},
- {n:4, year:2001, title:"Celebi: Voice of the Forest", pl:"Podróż w czasie z Celebi — Ash spotyka chłopca, który okaże się… profesorem Oakiem.", en:"Time travel with Celebi — Ash befriends a boy who turns out to be young Professor Oak."},
- {n:5, year:2002, title:"Pokémon Heroes: Latios i Latias", pl:"Wenecka Alto Mare i para legendarnych smoków-opiekunów miasta.", en:"Venice-like Alto Mare and its guardian dragon duo, Latios and Latias."},
- {n:6, year:2003, title:"Jirachi Wish Maker", pl:"Jirachi budzi się raz na tysiąc lat, by spełniać życzenia.", en:"Jirachi wakes once a millennium to grant wishes."},
- {n:7, year:2004, title:"Destiny Deoxys", pl:"Kosmiczny Deoxys kontra Rayquaza nad futurystycznym miastem.", en:"Space virus Deoxys versus Rayquaza over a futuristic city."},
- {n:8, year:2005, title:"Lucario and the Mystery of Mew", pl:"Rycerska legenda o Lucario i zdradzie sprzed wieków. Fanowski faworyt.", en:"A chivalric tale of Lucario and an ancient betrayal. A fan favourite."},
- {n:9, year:2006, title:"Pokémon Ranger and the Temple of the Sea", pl:"Manaphy, świątynia na dnie morza i pożegnanie, przy którym płakały pokolenia.", en:"Manaphy, an undersea temple, and a farewell that made generations cry."},
- {n:10, year:2007, title:"The Rise of Darkrai", pl:"Darkrai broni miasta przed starciem Dialgi i Palkii. Początek trylogii Sinnoh.", en:"Darkrai defends a town caught between Dialga and Palkia. The Sinnoh trilogy begins."},
- {n:11, year:2008, title:"Giratina and the Sky Warrior", pl:"Świat Odwrócony Giratiny i malutki Shaymin.", en:"Giratina's Reverse World and tiny Shaymin."},
- {n:12, year:2009, title:"Arceus and the Jewel of Life", pl:"Stwórca Pokémonów wraca upomnieć się o dawny dług ludzkości.", en:"The creator of Pokémon returns to collect an ancient debt."},
- {n:13, year:2010, title:"Zoroark: Master of Illusions", pl:"Mistrz iluzji i wielka mistyfikacja w mieście koron.", en:"The master of illusions and a grand deception."},
- {n:14, year:2011, title:"Black: Victini & Reshiram / White: Victini & Zekrom", pl:"Jedyny film wydany w dwóch lustrzanych wersjach — jak same gry.", en:"The only film released in two mirrored versions — just like the games."},
- {n:15, year:2012, title:"Kyurem vs. the Sword of Justice", pl:"Keldeo staje do próby odwagi przeciw lodowemu Kyuremowi.", en:"Keldeo faces a trial of courage against icy Kyurem."},
- {n:16, year:2013, title:"Genesect and the Legend Awakened", pl:"Mewtwo (nowe!) kontra prehistoryczne Genesecty w wielkim mieście.", en:"A new Mewtwo versus the prehistoric Genesect swarm."},
- {n:17, year:2014, title:"Diancie and the Cocoon of Destruction", pl:"Księżniczka-diament szuka mocy, by ocalić swoje królestwo.", en:"A diamond princess seeks the power to save her realm."},
- {n:18, year:2015, title:"Hoopa and the Clash of Ages", pl:"Dżin Hoopa przyzywa przez pierścienie legendy wszystkich er do jednej bitwy.", en:"Hoopa's rings summon legends of every era into one battle."},
- {n:19, year:2016, title:"Volcanion and the Mechanical Marvel", pl:"Parowy Volcanion i mechaniczna Magearna.", en:"Steam-powered Volcanion and the clockwork Magearna."},
- {n:20, year:2017, title:"I Choose You! / Wybieram cię!", pl:"Alternatywne opowiedzenie początku przygody Asha i Pikachu — na 20-lecie anime.", en:"A retelling of Ash and Pikachu's first days — for the anime's 20th anniversary."},
- {n:21, year:2018, title:"The Power of Us / Nasza siła", pl:"Zwykli mieszkańcy miasteczka i festiwal wiatru — film o wspólnocie.", en:"Ordinary townsfolk and a wind festival — a film about community."},
- {n:22, year:2019, title:"Mewtwo Strikes Back — Evolution", pl:"Remake pierwszego filmu w pełnym 3D.", en:"A full-CG remake of the first movie."},
- {n:23, year:2020, title:"Secrets of the Jungle / Sekrety dżungli", pl:"Chłopiec wychowany przez Pokémony — pokémonowy Księga dżungli. Ostatni jak dotąd film anime.", en:"A boy raised by Pokémon — a Pokémon Jungle Book. The last anime film to date."},
- {n:"★", year:2019, title:"Detective Pikachu (aktorski)", pl:"Ryan Reynolds jako mówiący Pikachu w filmie aktorskim — pierwszy hollywoodzki hit na podstawie gry wideo. Sequel w produkcji.", en:"Ryan Reynolds voices a talking Pikachu in live action — the first true Hollywood video-game hit. A sequel is in the works."}
+ {n:1, year:1998, title:"Mewtwo Strikes Back", titlePl:"Pokémon: Film pierwszy – Zemsta Mewtwo", pl:"Klon Mew pyta, czy kopia może być kimś więcej. Największy hit kinowy serii — i najsłynniejsza scena: Ash skamieniały między Mew a Mewtwo.", en:"Mew's clone asks whether a copy can be more. The series' biggest theatrical hit — with the famous petrified-Ash scene."},
+ {n:2, year:1999, title:"The Power of One", titlePl:"Pokémon 2: Uwierz w swoją siłę", pl:"Lugia i trzy legendarne ptaki. „Świat ocali wybrany trener” — oczywiście Ash.", en:"Lugia and the three legendary birds. 'The chosen trainer shall save the world' — Ash, naturally."},
+ {n:3, year:2000, title:"Spell of the Unown", titlePl:"Pokémon 3: Zaklęcie Unown", pl:"Entei zrodzony z tęsknoty dziewczynki. Najbardziej „psychologiczny” z wczesnych filmów.", en:"An Entei born of a lonely girl's longing. The most psychological of the early films."},
+ {n:4, year:2001, title:"Celebi: Voice of the Forest", titlePl:"Pokémon 4: Głos lasu", pl:"Podróż w czasie z Celebi — Ash spotyka chłopca, który okaże się… profesorem Oakiem.", en:"Time travel with Celebi — Ash befriends a boy who turns out to be young Professor Oak."},
+ {n:5, year:2002, title:"Pokémon Heroes: Latios and Latias", titlePl:"Pokémon 5: Bohaterowie", pl:"Wenecka Alto Mare i para legendarnych smoków-opiekunów miasta.", en:"Venice-like Alto Mare and its guardian dragon duo, Latios and Latias."},
+ {n:6, year:2003, title:"Jirachi Wish Maker", titlePl:"Pokémon: Jirachi – Spełnione marzenia", pl:"Jirachi budzi się raz na tysiąc lat, by spełniać życzenia.", en:"Jirachi wakes once a millennium to grant wishes."},
+ {n:7, year:2004, title:"Destiny Deoxys", titlePl:"Pokémon: Cel Deoxys", pl:"Kosmiczny Deoxys kontra Rayquaza nad futurystycznym miastem.", en:"Space virus Deoxys versus Rayquaza over a futuristic city."},
+ {n:8, year:2005, title:"Lucario and the Mystery of Mew", titlePl:"Pokémon: Lucario i tajemnica Mew", pl:"Rycerska legenda o Lucario i zdradzie sprzed wieków. Fanowski faworyt.", en:"A chivalric tale of Lucario and an ancient betrayal. A fan favourite."},
+ {n:9, year:2006, title:"Pokémon Ranger and the Temple of the Sea", titlePl:"Pokémon Ranger i Świątynia Morza", pl:"Manaphy, świątynia na dnie morza i pożegnanie, przy którym płakały pokolenia.", en:"Manaphy, an undersea temple, and a farewell that made generations cry."},
+ {n:10, year:2007, title:"The Rise of Darkrai", titlePl:"Pokémon 10: Wzejście Darkraia", pl:"Darkrai broni miasta przed starciem Dialgi i Palkii. Początek trylogii Sinnoh.", en:"Darkrai defends a town caught between Dialga and Palkia. The Sinnoh trilogy begins."},
+ {n:11, year:2008, title:"Giratina and the Sky Warrior", titlePl:"Pokémon: Giratina i Strażnik Nieba", pl:"Świat Odwrócony Giratiny i malutki Shaymin.", en:"Giratina's Reverse World and tiny Shaymin."},
+ {n:12, year:2009, title:"Arceus and the Jewel of Life", titlePl:"Pokémon: Arceus i Klejnot Życia", pl:"Stwórca Pokémonów wraca upomnieć się o dawny dług ludzkości.", en:"The creator of Pokémon returns to collect an ancient debt."},
+ {n:13, year:2010, title:"Zoroark: Master of Illusions", titlePl:"Pokémon: Zoroark, mistrz iluzji", pl:"Mistrz iluzji i wielka mistyfikacja w mieście koron.", en:"The master of illusions and a grand deception."},
+ {n:14, year:2011, title:"Black: Victini & Reshiram / White: Victini & Zekrom", titlePl:"Pokémon: Czerń – Victini i Reshiram / Pokémon: Biel – Victini i Zekrom", pl:"Jedyny film wydany w dwóch lustrzanych wersjach — jak same gry.", en:"The only film released in two mirrored versions — just like the games."},
+ {n:15, year:2012, title:"Kyurem vs. the Sword of Justice", titlePl:"Pokémon: Kyurem kontra Miecz Sprawiedliwości", pl:"Keldeo staje do próby odwagi przeciw lodowemu Kyuremowi.", en:"Keldeo faces a trial of courage against icy Kyurem."},
+ {n:16, year:2013, title:"Genesect and the Legend Awakened", titlePl:"Pokémon: Genesect i objawiona legenda", pl:"Mewtwo (nowe!) kontra prehistoryczne Genesecty w wielkim mieście.", en:"A new Mewtwo versus the prehistoric Genesect swarm."},
+ {n:17, year:2014, title:"Diancie and the Cocoon of Destruction", titlePl:"Pokémon: Diancie i Kokon Zniszczenia", pl:"Księżniczka-diament szuka mocy, by ocalić swoje królestwo.", en:"A diamond princess seeks the power to save her realm."},
+ {n:18, year:2015, title:"Hoopa and the Clash of Ages", titlePl:"Pokémon: Hoopa i starcie wszech czasów", pl:"Dżin Hoopa przyzywa przez pierścienie legendy wszystkich er do jednej bitwy.", en:"Hoopa's rings summon legends of every era into one battle."},
+ {n:19, year:2016, title:"Volcanion and the Mechanical Marvel", titlePl:"Pokémon: Volcanion i mechaniczny zachwyt", pl:"Parowy Volcanion i mechaniczna Magearna.", en:"Steam-powered Volcanion and the clockwork Magearna."},
+ {n:20, year:2017, title:"I Choose You!", titlePl:"Pokémon: Wybieram cię!", pl:"Alternatywne opowiedzenie początku przygody Asha i Pikachu — na 20-lecie anime.", en:"A retelling of Ash and Pikachu's first days — for the anime's 20th anniversary."},
+ {n:21, year:2018, title:"The Power of Us", titlePl:"Pokémon: Siła jest w nas", pl:"Zwykli mieszkańcy miasteczka i festiwal wiatru — film o wspólnocie.", en:"Ordinary townsfolk and a wind festival — a film about community."},
+ {n:22, year:2019, title:"Mewtwo Strikes Back — Evolution", titlePl:"Pokémon: Zemsta Mewtwo – Ewolucja", pl:"Remake pierwszego filmu w pełnym 3D.", en:"A full-CG remake of the first movie."},
+ {n:23, year:2020, title:"Secrets of the Jungle", titlePl:"Pokémon: Sekrety dżungli", pl:"Chłopiec wychowany przez Pokémony — pokémonowy Księga dżungli. Ostatni jak dotąd film anime.", en:"A boy raised by Pokémon — a Pokémon Jungle Book. The last anime film to date."},
+ {n:"★", year:2019, title:"Detective Pikachu", titlePl:"Pokémon Detektyw Pikachu", pl:"Ryan Reynolds jako mówiący Pikachu w filmie aktorskim — pierwszy hollywoodzki hit na podstawie gry wideo. Sequel w produkcji.", en:"Ryan Reynolds voices a talking Pikachu in live action — the first true Hollywood video-game hit. A sequel is in the works."}
 ],
 
 // ---------- GRY I ZABAWY W RZECZYWISTOŚCI ----------
@@ -174,6 +174,24 @@ rarityGuide: {
    {name:"Trophy Kangaskhan, No. 1–3 Trainer", pl:"karty-trofea z japońskich turniejów lat 90.", en:"trophy cards from 1990s Japanese tournaments"},
    {name:"Moonbreon (Umbreon VMAX alt art, 2021)", pl:"najsłynniejsza droga karta ery współczesnej", en:"the most famous modern-era chase card"}
   ]
+ }
+},
+
+// ---------- ETYKIETY KART (PL) ----------
+cardLabels: {
+ supertype: {"Pokémon":"Pokémon", "Trainer":"Trener", "Energy":"Energia"},
+ subtype: {
+  "Basic":"Podstawowy", "Stage 1":"Etap 1", "Stage 2":"Etap 2", "MEGA":"MEGA",
+  "ex":"ex", "V":"V", "VMAX":"VMAX", "VSTAR":"VSTAR", "Tera":"Tera",
+  "Ancient":"Pradawny", "Future":"Przyszły", "Rapid Strike":"Szybkie Ciosy",
+  "Item":"Przedmiot", "Supporter":"Wsparcie", "Stadium":"Stadion",
+  "Pokémon Tool":"Narzędzie", "Special":"Specjalna", "ACE SPEC":"ACE SPEC"
+ },
+ energy: {
+  "Fire":"Ognista", "Water":"Wodna", "Grass":"Trawiasta", "Lightning":"Elektryczna",
+  "Psychic":"Psychiczna", "Fighting":"Walcząca", "Darkness":"Mroczna",
+  "Metal":"Metalowa", "Colorless":"Bezbarwna", "Fairy":"Wróżkowa",
+  "Dragon":"Smocza", "Free":"bez kosztu"
  }
 },
 
