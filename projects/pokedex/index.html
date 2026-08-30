@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POKÉPEDIA — Wielka Baza Wiedzy o Pokémonach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap&subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%23e3350d'/><path d='M4 50a46 46 0 0 0 92 0z' fill='white'/><rect x='4' y='46' width='92' height='8' fill='%23222'/><circle cx='50' cy='50' r='14' fill='white' stroke='%23222' stroke-width='6'/></svg>">
+</head>
+<body>
+
+<header id="topbar">
+  <div class="logo" onclick="go('start')">
+    <span class="ball"></span>
+    <span class="logo-text">POKÉ<b>PEDIA</b></span>
+  </div>
+  <nav id="mainnav">
+    <button data-sec="start"></button>
+    <button data-sec="dex"></button>
+    <button data-sec="cards"></button>
+    <button data-sec="history"></button>
+    <button data-sec="anime"></button>
+    <button data-sec="play"></button>
+  </nav>
+  <div class="langsw">
+    <button id="btn-pl" onclick="setLang('pl')">PL</button><button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<main>
+  <!-- START -->
+  <section id="sec-start" class="sec">
+    <div class="hero">
+      <h1 id="hero-title"></h1>
+      <p id="hero-sub" class="hero-sub"></p>
+      <div class="statgrid" id="hero-stats"></div>
+      <div class="hero-cta" id="hero-cta"></div>
+    </div>
+    <div id="start-blurbs" class="blurbs"></div>
+  </section>
+
+  <!-- POKÉDEX -->
+  <section id="sec-dex" class="sec">
+    <h2 id="dex-title"></h2>
+    <p class="secdesc" id="dex-desc"></p>
+    <div class="filters">
+      <input type="search" id="f-search" autocomplete="off">
+      <select id="f-gen"></select>
+      <select id="f-type"></select>
+      <select id="f-sort"></select>
+    </div>
+    <div id="dex-count" class="count"></div>
+    <div id="dex-grid" class="dexgrid"></div>
+  </section>
+
+  <!-- KARTY -->
+  <section id="sec-cards" class="sec">
+    <h2 id="cards-title"></h2>
+    <p class="secdesc" id="cards-desc"></p>
+    <div class="subtabs" id="card-tabs">
+      <button data-tab="base"></button>
+      <button data-tab="modern"></button>
+      <button data-tab="rarity"></button>
+    </div>
+    <div id="cards-body"></div>
+  </section>
+
+  <!-- HISTORIA -->
+  <section id="sec-history" class="sec">
+    <h2 id="hist-title"></h2>
+    <p class="secdesc" id="hist-desc"></p>
+    <div id="timeline" class="timeline"></div>
+    <h2 id="gens-title" class="mt"></h2>
+    <div id="gens-grid" class="gensgrid"></div>
+  </section>
+
+  <!-- ANIME I FILMY -->
+  <section id="sec-anime" class="sec">
+    <h2 id="anime-title"></h2>
+    <p class="secdesc" id="anime-desc"></p>
+    <div id="anime-list"></div>
+    <h2 id="side-title" class="mt"></h2>
+    <div id="side-list" class="sidegrid"></div>
+    <h2 id="movies-title" class="mt"></h2>
+    <div id="movies-list"></div>
+  </section>
+
+  <!-- GRY I ZABAWY -->
+  <section id="sec-play" class="sec">
+    <h2 id="play-title"></h2>
+    <p class="secdesc" id="play-desc"></p>
+    <div id="play-list"></div>
+    <h2 id="catch-title" class="mt"></h2>
+    <div id="catch-list" class="catchgrid"></div>
+  </section>
+</main>
+
+<footer>
+  <p id="foot-note"></p>
+</footer>
+
+<!-- MODALE -->
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<script src="data/content.js?v=2"></script>
+<script src="data/data.js?v=3"></script>
+<script src="app.js?v=5"></script>
+</body>
+</html>
