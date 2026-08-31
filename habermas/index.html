@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filozoficzny Dyskurs Nowoczesności — Gra Interaktywna</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Playfair+Display:wght@400;700;900&display=swap');
+
+  :root {
+    --void: #060a12;
+    --void2: #0a0e1a;
+    --surface: #0f1525;
+    --surface2: #141c2e;
+    --surface3: #1a2438;
+    --border: rgba(0,229,255,0.12);
+    --border-dim: rgba(255,255,255,0.06);
+    --cyan: #00e5ff;
+    --cyan-dim: rgba(0,229,255,0.4);
+    --cyan-glow: rgba(0,229,255,0.15);
+    --red: #ff2d55;
+    --red-dim: rgba(255,45,85,0.4);
+    --red-glow: rgba(255,45,85,0.15);
+    --gold: #f0c040;
+    --gold-dim: rgba(240,192,64,0.4);
+    --violet: #a78bfa;
+    --violet-dim: rgba(167,139,250,0.3);
+    --green: #34d399;
+    --text: #e0e4ef;
+    --text-dim: #6b7a94;
+    --text-muted: #3a4860;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+    --serif: 'Playfair Display', serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--void);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--cyan); color: var(--void); }
+
+  /* ═══════════════════════════════════════
+     SCANLINES + NOISE OVERLAY
+     ═══════════════════════════════════════ */
+  body::before {
+    content: '';
+    position: fixed; top:0; left:0; right:0; bottom:0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,229,255,0.008) 2px,
+      rgba(0,229,255,0.008) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ═══════════════════════════════════════
+     TOP HUD
+     ═══════════════════════════════════════ */
+  .hud {
+    position: fixed; top:0; left:0; right:0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px;
+    background: rgba(6,10,18,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .hud-left, .hud-right { display: flex; align-items: center; gap: 16px; }
+  .hud-center { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; }
+
+  .meter {
+    display: flex; flex-direction: column; gap: 3px;
+    min-width: 160px;
+  }
+  .meter-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .meter-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--surface3);
+    overflow: hidden;
+    position: relative;
+  }
+  .meter-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+  }
+  .meter-fill::after {
+    content: '';
+    position: absolute; right: 0; top: -2px; bottom: -2px;
+    width: 4px;
+    border-radius: 2px;
+    background: inherit;
+    filter: brightness(1.5);
+    box-shadow: 0 0 8px currentColor;
+  }
+  .meter-fill.cyan { background: var(--cyan); color: var(--cyan); }
+  .meter-fill.red { background: var(--red); color: var(--red); }
+  .meter-fill.gold { background: var(--gold); color: var(--gold); }
+  .meter-fill.violet { background: var(--violet); color: var(--violet); }
+
+  .arg-dots { display: flex; gap: 6px; }
+  .arg-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--text-muted);
+    transition: all 0.4s;
+  }
+  .arg-dot.filled {
+    background: var(--cyan);
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-dim);
+  }
+  .arg-dot.lost {
+    background: var(--red);
+    border-color: var(--red);
+    box-shadow: 0 0 10px var(--red-dim);
+  }
+
+  .hud-nav {
+    display: flex; gap: 4px; flex-wrap: wrap; justify-content: center;
+  }
+  .hud-nav button {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid var(--border-dim);
+    color: var(--text-dim);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .hud-nav button:hover { border-color: var(--cyan); color: var(--cyan); }
+  .hud-nav button.active { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-glow); }
+
+  .act-indicator {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+  }
+  .act-indicator strong {
+    color: var(--cyan);
+    font-weight: 700;
+  }
+
+  /* ═══════════════════════════════════════
+     VIEWS
+     ═══════════════════════════════════════ */
+  main { padding-top: 64px; min-height: 100vh; }
+  .view { min-height: calc(100vh - 64px); }
+  .view:not(.active) { display: none !important; }
+
+  /* ═══════════════════════════════════════
+     TITLE SCREEN
+     ═══════════════════════════════════════ */
+  #titleView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 64px);
+    text-align: center;
+    padding: 40px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #titleCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  .title-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .title-main {
+    font-family: var(--sans);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .title-main .line1 { color: var(--text); display: block; }
+  .title-main .line2 { color: var(--red); display: block; font-style: italic; font-family: var(--serif); font-weight: 900; text-transform: none; }
+  .title-main .line3 { color: var(--text); display: block; }
+
+  .title-sub {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 8px;
+  }
+
+  .title-author {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 48px;
+  }
+
+  .title-quote {
+    max-width: 600px;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 48px;
+    padding: 0 20px;
+  }
+
+  .start-btn {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 48px;
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .start-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; right: 100%; bottom: 0;
+    background: var(--cyan);
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  .start-btn:hover { color: var(--void); }
+  .start-btn:hover::before { left: 0; right: 0; }
+
+  .title-nav {
+    margin-top: 24px;
+    display: flex; gap: 16px;
+  }
+  .title-nav button {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid var(--border-dim);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .title-nav button:hover { border-color: var(--text-dim); color: var(--text); }
+
+  /* ═══════════════════════════════════════
+     DISCOURSE GAME VIEW
+     ═══════════════════════════════════════ */
+  #gameView {
+    position: relative;
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .game-stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px 160px;
+    position: relative;
+  }
+
+  /* Central figure + node map */
+  #gameCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  .game-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .game-act-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan-dim);
+    margin-bottom: 8px;
+  }
+
+  .game-title {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .game-narrator {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .game-quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--violet);
+    padding: 16px 24px;
+    border-left: 2px solid var(--violet-dim);
+    background: rgba(167,139,250,0.04);
+    margin: 16px auto 24px;
+    max-width: 560px;
+    text-align: left;
+  }
+
+  .game-speaker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .game-speaker::before, .game-speaker::after {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--cyan-dim);
+  }
+
+  .game-dialogue {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Choice panel */
+  .choices-panel {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    background: linear-gradient(transparent, var(--void) 30%);
+    padding: 40px 24px 32px;
+    display: none;
+  }
+  .choices-panel.visible {
+    display: block;
+  }
+
+  .choices-row {
+    display: flex;
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .choice-btn {
+    flex: 1;
+    padding: 16px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .choice-key {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  .choice-btn:hover {
+    border-color: var(--cyan);
+    background: var(--cyan-glow);
+  }
+  .choice-btn:hover .choice-key {
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+
+  .choice-btn.zgoda:hover { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .choice-btn.zgoda:hover .choice-key { border-color: var(--green); color: var(--green); }
+  .choice-btn.konflikt:hover { border-color: var(--red); background: var(--red-glow); }
+  .choice-btn.konflikt:hover .choice-key { border-color: var(--red); color: var(--red); }
+  .choice-btn.ironia:hover { border-color: var(--gold); background: rgba(240,192,64,0.08); }
+  .choice-btn.ironia:hover .choice-key { border-color: var(--gold); color: var(--gold); }
+
+  .choice-btn.selected { pointer-events: none; }
+  .choice-btn.selected.zgoda { border-color: var(--green); background: rgba(52,211,153,0.15); }
+  .choice-btn.selected.konflikt { border-color: var(--red); background: rgba(255,45,85,0.15); }
+  .choice-btn.selected.ironia { border-color: var(--gold); background: rgba(240,192,64,0.15); }
+
+  .choice-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .choice-btn.zgoda .choice-label { color: var(--green); }
+  .choice-btn.konflikt .choice-label { color: var(--red); }
+  .choice-btn.ironia .choice-label { color: var(--gold); }
+
+  .game-message {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--cyan-dim);
+    margin-top: 12px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Result after choice */
+  .choice-result {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-left: 2px solid var(--cyan);
+    background: rgba(0,229,255,0.04);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeSlideUp 0.5s ease;
+  }
+
+  .next-step-btn {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 40px;
+    background: var(--surface);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 60;
+  }
+  .next-step-btn:hover {
+    background: var(--cyan-glow);
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px var(--cyan-glow);
+  }
+
+  /* ═══════════════════════════════════════
+     MAP VIEW (Philosopher Network)
+     ═══════════════════════════════════════ */
+  #mapView { position: relative; }
+  #mapCanvas {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 64px);
+    cursor: grab;
+  }
+  #mapCanvas:active { cursor: grabbing; }
+
+  .map-panel {
+    position: absolute;
+    top: 80px; right: 24px;
+    width: 360px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    background: rgba(15,21,37,0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    padding: 24px;
+    display: none;
+    z-index: 10;
+  }
+  .map-panel.show { display: block; animation: fadeSlideUp 0.3s ease; }
+  .map-panel h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .map-panel .mp-dates {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  .map-panel .mp-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .map-panel .mp-quote {
+    padding: 10px 14px;
+    border-left: 2px solid var(--violet);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--violet);
+    line-height: 1.6;
+    background: rgba(167,139,250,0.04);
+    margin-bottom: 12px;
+  }
+  .map-panel .mp-concepts {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    margin-bottom: 12px;
+  }
+  .map-panel .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: var(--cyan);
+  }
+  .map-panel .close-btn {
+    position: absolute;
+    top: 12px; right: 16px;
+    background: none; border: none;
+    color: var(--text-dim);
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .map-legend {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    background: rgba(15,21,37,0.9);
+    border: 1px solid var(--border-dim);
+    padding: 14px 18px;
+    font-family: var(--mono);
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .map-legend span {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text-dim);
+  }
+  .map-legend .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════════
+     ANIMATIONS
+     ═══════════════════════════════════════ */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  @keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 4px var(--cyan-dim); }
+    50% { box-shadow: 0 0 16px var(--cyan-dim); }
+  }
+
+  .fade-in { animation: fadeSlideUp 0.6s ease; }
+
+  /* ═══════════════════════════════════════
+     ENCYCLOPEDIA VIEWS (Timeline, Philosophers, Quiz, Concepts, Chapters)
+     ═══════════════════════════════════════ */
+  .enc-view {
+    padding: 40px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .enc-view h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .enc-view .view-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  /* SEARCH BAR */
+  .search-bar {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 24px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-bar:focus { border-color: var(--cyan); }
+  .search-bar::placeholder { color: var(--text-muted); }
+
+  /* TIMELINE */
+  .timeline-container { position: relative; padding: 20px 0 20px 50px; }
+  .timeline-line {
+    position: absolute; left: 24px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(var(--cyan), var(--violet), var(--red), var(--gold));
+    opacity: 0.5;
+  }
+  .tl-item {
+    position: relative; margin-bottom: 8px; padding: 20px 24px;
+    background: var(--surface); border: 1px solid var(--border-dim);
+    cursor: pointer; transition: all 0.3s;
+    opacity: 0; transform: translateX(-20px);
+    animation: fadeSlideUp 0.5s forwards;
+  }
+  .tl-item:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 0 20px var(--cyan-glow); }
+  .tl-item.expanded { border-color: var(--cyan); background: var(--surface2); }
+  .tl-dot {
+    position: absolute; left: -38px; top: 24px;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--cyan); background: var(--void);
+    transition: all 0.3s; z-index: 1;
+  }
+  .tl-item:hover .tl-dot, .tl-item.expanded .tl-dot {
+    background: var(--cyan); box-shadow: 0 0 10px var(--cyan-dim);
+  }
+  .tl-item .chapter {
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 2px; color: var(--cyan);
+  }
+  .tl-item h3 {
+    font-family: var(--serif); font-size: 18px; margin: 4px 0 8px; color: var(--text);
+  }
+  .tl-item .tl-summary {
+    font-size: 13px; color: var(--text-dim); line-height: 1.6; max-width: 750px;
+  }
+  .tl-item .tl-expanded {
+    display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-dim);
+  }
+  .tl-item.expanded .tl-expanded { display: block; }
+  .tl-item .tl-quote {
+    margin-top: 10px; padding: 12px 16px;
+    border-left: 2px solid var(--violet); font-family: var(--serif);
+    font-style: italic; font-size: 13px; color: var(--violet);
+    line-height: 1.6; background: rgba(167,139,250,0.04);
+  }
+  .tl-item .tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .tl-item .tag {
+    font-family: var(--mono); font-size: 10px; padding: 3px 8px;
+    border: 1px solid var(--border); color: var(--cyan);
+    transition: all 0.2s;
+  }
+  .tl-item .tag:hover { background: var(--cyan-glow); }
+  .tl-item .tl-link {
+    display: inline-block; margin-top: 12px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--gold); cursor: pointer; letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .tl-item .tl-link:hover { color: var(--cyan); }
+  .tl-item .tl-arrow {
+    float: right; font-size: 18px; color: var(--text-muted); transition: transform 0.3s;
+  }
+  .tl-item.expanded .tl-arrow { transform: rotate(180deg); color: var(--cyan); }
+
+  /* PHILOSOPHER CARDS */
+  .phil-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px;
+  }
+  .phil-card {
+    background: var(--surface); border: 1px solid var(--border-dim);
+    padding: 24px; transition: all 0.3s; overflow: hidden;
+  }
+  .phil-card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 0 20px var(--cyan-glow); }
+  .phil-card .phil-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+  .phil-card .phil-avatar {
+    width: 48px; height: 48px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700; font-family: var(--serif); color: #fff;
+  }
+  .phil-card .phil-info h3 { font-family: var(--serif); font-size: 18px; }
+  .phil-card .phil-info .phil-meta {
+    font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: 2px;
+  }
+  .phil-card .phil-bio { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
+  .phil-card .phil-quote {
+    padding: 10px 14px; margin-bottom: 12px;
+    border-left: 2px solid var(--violet); font-family: var(--serif);
+    font-style: italic; font-size: 13px; color: var(--violet);
+    line-height: 1.5; background: rgba(167,139,250,0.04);
+  }
+  .phil-card .phil-role {
+    margin-top: 10px; padding: 8px 12px;
+    background: var(--cyan-glow); font-size: 12px; color: var(--cyan); line-height: 1.5;
+  }
+  .phil-card .phil-concepts { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .phil-card .phil-concepts .tag {
+    font-family: var(--mono); font-size: 10px; padding: 3px 8px;
+    border: 1px solid var(--border); color: var(--cyan);
+  }
+  .phil-card .phil-works { margin-top: 8px; font-size: 12px; color: var(--text-dim); }
+  .phil-card .phil-works strong { color: var(--text); font-weight: 600; }
+
+  /* QUIZ */
+  .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .quiz-categories { display: flex; flex-wrap: wrap; gap: 6px; }
+  .quiz-categories button, .ch-tab {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 6px 14px;
+    background: var(--surface); border: 1px solid var(--border-dim);
+    color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+  }
+  .quiz-categories button:hover, .quiz-categories button.active,
+  .ch-tab:hover, .ch-tab.active {
+    background: var(--cyan-glow); color: var(--cyan); border-color: var(--cyan);
+  }
+  .quiz-card {
+    background: var(--surface); border: 1px solid var(--border-dim);
+    padding: 32px; max-width: 800px; margin: 0 auto;
+  }
+  .quiz-card .q-category {
+    font-family: var(--mono); font-size: 10px; color: var(--cyan);
+    font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .quiz-card .q-number {
+    font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-bottom: 16px;
+  }
+  .quiz-card h3 {
+    font-family: var(--serif); font-size: 20px; line-height: 1.4; margin-bottom: 24px;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    background: var(--surface2); border: 1px solid var(--border-dim);
+    padding: 14px 18px; cursor: pointer; transition: all 0.2s;
+    font-family: var(--sans); font-size: 14px; line-height: 1.5;
+    color: var(--text); text-align: left;
+  }
+  .quiz-option:hover { border-color: var(--cyan); background: var(--cyan-glow); }
+  .quiz-option.correct { border-color: var(--green); background: rgba(52,211,153,0.15); color: #a0ffd8; font-weight: 600; }
+  .quiz-option.wrong { border-color: var(--red); background: var(--red-glow); color: #ffb0b0; }
+  .quiz-option:disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-option.correct:disabled, .quiz-option.wrong:disabled { opacity: 1; }
+  .quiz-explanation {
+    display: none; margin-top: 20px; padding: 16px;
+    background: var(--cyan-glow); font-size: 13px; line-height: 1.6;
+    color: var(--text-dim); border-left: 2px solid var(--cyan);
+  }
+  .quiz-explanation.show { display: block; }
+  .quiz-next { display: none; margin-top: 20px; text-align: center; }
+  .quiz-next button, .enc-btn {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 12px 32px;
+    background: transparent; border: 1px solid var(--cyan);
+    color: var(--cyan); cursor: pointer; transition: all 0.2s;
+  }
+  .quiz-next button:hover, .enc-btn:hover { background: var(--cyan-glow); box-shadow: 0 0 16px var(--cyan-glow); }
+  .quiz-results { text-align: center; padding: 48px 24px; }
+  .quiz-results .big-score {
+    font-size: 72px; font-weight: 900; font-family: var(--serif);
+    background: linear-gradient(135deg, var(--cyan), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .quiz-results p { color: var(--text-dim); margin: 8px 0; }
+
+  /* CONCEPTS */
+  .concepts-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;
+  }
+  .concept-card {
+    background: var(--surface); border: 1px solid var(--border-dim);
+    padding: 20px; transition: all 0.3s;
+  }
+  .concept-card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 0 20px var(--cyan-glow); }
+  .concept-card .philosopher {
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .concept-card h3 { font-family: var(--serif); font-size: 17px; margin-bottom: 8px; }
+  .concept-card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .concept-card .concept-quote {
+    margin-top: 8px; padding: 8px 10px;
+    border-left: 2px solid var(--violet); font-family: var(--serif);
+    font-style: italic; font-size: 12px; color: var(--violet); line-height: 1.5;
+  }
+  .concept-card .related { margin-top: 10px; font-size: 12px; }
+  .concept-card .tag {
+    font-family: var(--mono); font-size: 10px; padding: 2px 8px;
+    border: 1px solid var(--border); color: var(--gold); margin: 2px;
+    display: inline-block;
+  }
+
+  /* CHAPTERS / TOC */
+  .toc-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;
+  }
+  .toc-card {
+    background: var(--surface); border: 1px solid var(--border-dim);
+    padding: 20px; cursor: pointer; transition: all 0.3s;
+  }
+  .toc-card:hover { border-color: var(--cyan); transform: translateY(-3px); box-shadow: 0 0 20px var(--cyan-glow); }
+  .toc-card .ch-label {
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .toc-card h3 { font-family: var(--serif); font-size: 16px; margin-bottom: 8px; }
+  .toc-card p { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .toc-card .ch-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .toc-card .tag {
+    font-family: var(--mono); font-size: 10px; padding: 2px 8px;
+    border: 1px solid var(--border); color: var(--cyan);
+  }
+
+  /* CHAPTER DETAIL */
+  .chapter-detail { max-width: 900px; margin: 0 auto; }
+  .ch-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+
+  /* ═══════════════════════════════════════
+     MOBILE MENU (hamburger + drawer)
+     ═══════════════════════════════════════ */
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--border-dim);
+    color: var(--cyan);
+    width: 38px; height: 38px;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .menu-toggle:hover { border-color: var(--cyan); background: var(--cyan-glow); }
+  .menu-toggle svg { width: 18px; height: 18px; }
+
+  .drawer-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(6,10,18,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .drawer-backdrop.open { display: block; opacity: 1; }
+
+  .drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(320px, 86vw);
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    z-index: 210;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    overflow-y: auto;
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 4px 20px 20px;
+    border-bottom: 1px solid var(--border-dim);
+    margin-bottom: 16px;
+  }
+  .drawer-title {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--cyan);
+  }
+  .drawer-close {
+    background: transparent; border: none;
+    color: var(--text-dim); font-size: 24px;
+    cursor: pointer; line-height: 1;
+    padding: 4px 8px;
+  }
+  .drawer-close:hover { color: var(--cyan); }
+
+  .drawer nav {
+    display: flex; flex-direction: column; gap: 2px; padding: 0 12px;
+  }
+  .drawer nav button {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .drawer nav button:hover {
+    color: var(--cyan); border-color: var(--border-dim); background: var(--cyan-glow);
+  }
+  .drawer nav button.active {
+    color: var(--cyan); border-color: var(--cyan); background: var(--cyan-glow);
+  }
+
+  .drawer-meters {
+    margin-top: 24px;
+    padding: 20px;
+    border-top: 1px solid var(--border-dim);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .drawer-meters .meter { min-width: 0; }
+  .drawer-meters .arg-group {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — TABLET (≤960px)
+     ═══════════════════════════════════════ */
+  @media (max-width: 960px) {
+    .hud-nav button { font-size: 9px; padding: 5px 8px; letter-spacing: 0.8px; }
+    .meter { min-width: 110px; }
+    .phil-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — MOBILE (≤768px)
+     ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    /* HUD — kompaktowy pasek z hamburgerem */
+    .hud {
+      padding: 8px 12px;
+      gap: 10px;
+    }
+    .hud-left, .hud-right { gap: 10px; flex: 0 0 auto; }
+    .hud-center { display: none !important; }     /* nav przenosimy do drawera */
+    .menu-toggle { display: inline-flex; }
+    .hud-left .meter + .meter { display: none; }  /* tylko System w lewym rogu */
+    .hud-right > *:first-child { display: none; } /* ukryj kropki argumentów */
+    .hud-right .meter { min-width: 0; width: 86px; }
+    .meter-label { font-size: 8px; letter-spacing: 1.2px; }
+
+    /* main padding (HUD jest niższy) */
+    main { padding-top: 56px; }
+    .view { min-height: calc(100vh - 56px); }
+
+    /* TITLE */
+    #titleView { padding: 24px 16px 40px; }
+    .title-main { font-size: clamp(2rem, 11vw, 3.2rem); margin-bottom: 6px; }
+    .title-sub { font-size: 11px; letter-spacing: 2.5px; }
+    .title-author { font-size: 10px; margin-bottom: 28px; }
+    .title-quote { font-size: 14px; line-height: 1.65; margin-bottom: 28px; padding: 0 8px; }
+    .start-btn { padding: 14px 32px; font-size: 12px; letter-spacing: 2px; }
+    .title-nav { margin: 20px auto 0; flex-direction: column; gap: 10px; width: 100%; max-width: 280px; }
+    .title-nav button { width: 100%; padding: 11px 16px; }
+
+    /* GAME */
+    .game-stage { padding: 24px 16px 200px; }
+    .game-title { font-size: clamp(1.4rem, 5.5vw, 1.9rem); margin-bottom: 14px; }
+    .game-narrator { font-size: 14px; line-height: 1.7; padding: 0 4px; }
+    .game-dialogue { font-size: 15px; line-height: 1.7; padding: 0 4px; }
+    .game-quote { font-size: 13px; padding: 14px 16px; margin: 14px auto 20px; }
+    .game-speaker { font-size: 10px; letter-spacing: 1.5px; }
+    .choice-result { font-size: 13px; padding: 14px 16px; }
+    .next-step-btn { padding: 12px 28px; font-size: 12px; }
+
+    /* CHOICES PANEL */
+    .choices-panel { padding: 32px 12px 20px; }
+    .choices-row { flex-direction: column; gap: 8px; }
+    .choice-btn { padding: 12px 14px; font-size: 13px; line-height: 1.45; }
+    .choice-key { width: 24px; height: 24px; font-size: 11px; }
+    .choice-label { font-size: 9px; letter-spacing: 1.2px; }
+    .game-message { font-size: 10px; letter-spacing: 1.5px; }
+
+    /* MAP */
+    #mapCanvas { height: calc(100vh - 56px); }
+    .map-panel {
+      position: fixed;
+      top: auto; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      max-height: 65vh;
+      border-left: none; border-right: none; border-bottom: none;
+      border-top: 1px solid var(--cyan);
+      border-radius: 0;
+      padding: 20px 18px;
+      animation: slideUpSheet 0.3s ease;
+    }
+    .map-panel h3 { font-size: 18px; }
+    .map-legend {
+      bottom: 12px; left: 12px;
+      padding: 10px 12px;
+      font-size: 9px;
+      gap: 4px;
+    }
+    .map-legend span { gap: 6px; }
+
+    /* ENCYCLOPEDIA */
+    .enc-view { padding: 20px 14px 60px; }
+    .enc-view h2 { font-size: 22px; }
+    .enc-view .view-desc { font-size: 13px; margin-bottom: 20px; }
+    .search-bar { padding: 10px 14px; font-size: 13px; }
+
+    /* TIMELINE */
+    .timeline-container { padding: 16px 0 16px 34px; }
+    .timeline-line { left: 14px; }
+    .tl-item { padding: 16px 16px; }
+    .tl-dot { left: -26px; top: 20px; width: 12px; height: 12px; }
+    .tl-item h3 { font-size: 16px; }
+    .tl-item .tl-summary { font-size: 12.5px; }
+    .tl-item .tl-arrow { font-size: 16px; }
+
+    /* PHILOSOPHERS */
+    .phil-grid { grid-template-columns: 1fr; gap: 12px; }
+    .phil-card { padding: 18px 16px; }
+    .phil-card .phil-header { gap: 12px; }
+    .phil-card .phil-avatar { width: 42px; height: 42px; font-size: 17px; }
+    .phil-card .phil-info h3 { font-size: 16px; }
+    .phil-card .phil-bio { font-size: 12.5px; }
+
+    /* QUIZ */
+    .quiz-header { margin-bottom: 16px; gap: 8px; }
+    .quiz-categories { gap: 4px; }
+    .quiz-categories button { padding: 5px 10px; font-size: 9px; letter-spacing: 0.5px; }
+    .quiz-card { padding: 20px 16px; }
+    .quiz-card h3 { font-size: 16px; line-height: 1.45; margin-bottom: 18px; }
+    .quiz-option { padding: 12px 14px; font-size: 13px; line-height: 1.45; }
+    .quiz-explanation { font-size: 12.5px; padding: 14px; }
+    .quiz-next button, .enc-btn { padding: 10px 24px; font-size: 11px; }
+    .quiz-results { padding: 32px 16px; }
+    .quiz-results .big-score { font-size: 56px; }
+
+    /* CONCEPTS */
+    .concepts-grid { grid-template-columns: 1fr; gap: 12px; }
+    .concept-card { padding: 16px; }
+    .concept-card h3 { font-size: 15px; }
+    .concept-card p { font-size: 12.5px; }
+
+    /* CHAPTERS */
+    .toc-grid { grid-template-columns: 1fr; gap: 12px; }
+    .toc-card { padding: 16px; }
+    .toc-card h3 { font-size: 15px; }
+    .ch-tabs { gap: 6px; margin-bottom: 18px; }
+    .ch-tab { padding: 5px 10px; font-size: 9px; letter-spacing: 0.5px; }
+    .chapter-detail { padding: 0 2px; }
+
+    /* MAP PANEL tag / close */
+    .map-panel .close-btn { top: 8px; right: 12px; font-size: 22px; padding: 4px 8px; }
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — MAŁY TELEFON (≤380px)
+     ═══════════════════════════════════════ */
+  @media (max-width: 380px) {
+    .hud { padding: 6px 10px; gap: 8px; }
+    .hud-right .meter { width: 72px; }
+    .meter-label { font-size: 7px; }
+    .title-main { font-size: clamp(1.8rem, 10vw, 2.6rem); }
+    .title-quote { font-size: 13px; }
+    .enc-view h2 { font-size: 19px; }
+    .quiz-card h3 { font-size: 15px; }
+  }
+
+  @keyframes slideUpSheet {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"><link rel="apple-touch-icon" href="../apple-touch-icon.png"><script data-goatcounter="https://futureshow.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HUD
+     ═══════════════════════════════════════ -->
+<div class="hud">
+  <div class="hud-left">
+    <div class="meter">
+      <span class="meter-label" style="color:var(--red)">System</span>
+      <div class="meter-bar"><div class="meter-fill red" id="systemBar" style="width:35%"></div></div>
+    </div>
+    <div class="meter">
+      <span class="meter-label" style="color:var(--cyan)">Lebenswelt</span>
+      <div class="meter-bar"><div class="meter-fill cyan" id="lebensweltBar" style="width:65%"></div></div>
+    </div>
+  </div>
+
+  <div class="hud-center">
+    <div class="hud-nav" id="hudNav">
+      <button class="active" data-view="title" onclick="showView('title')">Start</button>
+      <button data-view="game" onclick="showView('game')">Dyskurs</button>
+      <button data-view="map" onclick="showView('map')">Mapa</button>
+      <button data-view="timeline" onclick="showView('timeline')">Oś Czasu</button>
+      <button data-view="philosophers" onclick="showView('philosophers')">Filozofowie</button>
+      <button data-view="quiz" onclick="showView('quiz')">Quiz</button>
+      <button data-view="concepts" onclick="showView('concepts')">Pojęcia</button>
+      <button data-view="chapters" onclick="showView('chapters')">Rozdziały</button>
+    </div>
+  </div>
+
+  <div class="hud-right">
+    <div>
+      <span class="meter-label" style="color:var(--cyan)">Argumenty</span>
+      <div class="arg-dots" id="argDots">
+        <div class="arg-dot filled"></div>
+        <div class="arg-dot filled"></div>
+        <div class="arg-dot filled"></div>
+        <div class="arg-dot"></div>
+        <div class="arg-dot"></div>
+      </div>
+    </div>
+    <div class="meter" style="min-width:100px">
+      <span class="meter-label" style="color:var(--gold)">Racjonalność</span>
+      <div class="meter-bar"><div class="meter-fill gold" id="rationalBar" style="width:50%"></div></div>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu" onclick="toggleDrawer()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MOBILE DRAWER
+     ═══════════════════════════════════════ -->
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div class="drawer-title">Nawigacja</div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Zamknij">×</button>
+  </div>
+  <nav id="drawerNav">
+    <button class="active" data-view="title" onclick="showView('title'); closeDrawer()">Start</button>
+    <button data-view="game" onclick="showView('game'); closeDrawer()">Dyskurs</button>
+    <button data-view="map" onclick="showView('map'); closeDrawer()">Mapa filozofów</button>
+    <button data-view="timeline" onclick="showView('timeline'); closeDrawer()">Oś Czasu</button>
+    <button data-view="philosophers" onclick="showView('philosophers'); closeDrawer()">Filozofowie</button>
+    <button data-view="quiz" onclick="showView('quiz'); closeDrawer()">Quiz</button>
+    <button data-view="concepts" onclick="showView('concepts'); closeDrawer()">Pojęcia</button>
+    <button data-view="chapters" onclick="showView('chapters'); closeDrawer()">Rozdziały</button>
+  </nav>
+  <div class="drawer-meters">
+    <div class="meter">
+      <span class="meter-label" style="color:var(--red)">System</span>
+      <div class="meter-bar"><div class="meter-fill red" id="systemBarD" style="width:35%"></div></div>
+    </div>
+    <div class="meter">
+      <span class="meter-label" style="color:var(--cyan)">Lebenswelt</span>
+      <div class="meter-bar"><div class="meter-fill cyan" id="lebensweltBarD" style="width:65%"></div></div>
+    </div>
+    <div class="meter">
+      <span class="meter-label" style="color:var(--gold)">Racjonalność</span>
+      <div class="meter-bar"><div class="meter-fill gold" id="rationalBarD" style="width:50%"></div></div>
+    </div>
+    <div class="arg-group">
+      <span class="meter-label" style="color:var(--cyan)">Argumenty</span>
+      <div class="arg-dots" id="argDotsD">
+        <div class="arg-dot filled"></div>
+        <div class="arg-dot filled"></div>
+        <div class="arg-dot filled"></div>
+        <div class="arg-dot"></div>
+        <div class="arg-dot"></div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════
+     TITLE VIEW
+     ═══════════════════════════════════════ -->
+<main>
+<div id="titleView" class="view active">
+  <canvas id="titleCanvas"></canvas>
+  <div class="title-content fade-in">
+    <div class="title-main">
+      <span class="line1">Filozoficzny</span>
+      <span class="line2">Dyskurs</span>
+      <span class="line3">Nowoczesności</span>
+    </div>
+    <div class="title-sub">Gra Interaktywna</div>
+    <div class="title-author">na podstawie myśli Jürgena Habermasa</div>
+
+    <div class="title-quote">
+      „Nowoczesność nie może i nie chce czerpać swoich kryteriów orientacji z wzorców innych epok — musi swoją normatywność wydobywać z siebie samej."
+    </div>
+
+    <button class="start-btn" onclick="startGame()">Rozpocznij dyskurs</button>
+
+    <div class="title-nav">
+      <button onclick="showView('map')">Mapa filozofów</button>
+      <button onclick="showView('game')">Kontynuuj grę</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GAME VIEW (Discourse)
+     ═══════════════════════════════════════ -->
+<div id="gameView" class="view">
+  <div class="game-stage">
+    <canvas id="gameCanvas"></canvas>
+    <div class="game-content" id="gameContent">
+      <!-- filled by JS -->
+    </div>
+  </div>
+  <div class="choices-panel" id="choicesPanel">
+    <div class="choices-row" id="choicesRow"></div>
+    <div class="game-message" id="gameMessage">‹‹ Dialog to twoja jedyna broń ››</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MAP VIEW
+     ═══════════════════════════════════════ -->
+<div id="mapView" class="view">
+  <canvas id="mapCanvas"></canvas>
+  <div class="map-panel" id="mapPanel"></div>
+  <div class="map-legend">
+    <span><span class="dot" style="background:var(--cyan)"></span> Idealizm / Dialektyka</span>
+    <span><span class="dot" style="background:var(--red)"></span> Krytyka rozumu</span>
+    <span><span class="dot" style="background:var(--green)"></span> Teoria krytyczna</span>
+    <span><span class="dot" style="background:var(--gold)"></span> Poststrukturalizm</span>
+    <span><span class="dot" style="background:var(--violet)"></span> Synteza / Systemy</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TIMELINE VIEW
+     ═══════════════════════════════════════ -->
+<div id="timelineView" class="view">
+  <div class="enc-view">
+    <h2>Oś Dyskursu Nowoczesności</h2>
+    <p class="view-desc">12 wykładów Habermasa — od Hegla do teorii działania komunikacyjnego.</p>
+    <div class="timeline-container"><div class="timeline-line"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PHILOSOPHERS VIEW
+     ═══════════════════════════════════════ -->
+<div id="philosophersView" class="view">
+  <div class="enc-view">
+    <h2>Filozofowie Dyskursu</h2>
+    <p class="view-desc">14 myślicieli, których teorie przeplatają się w Habermasowskiej rekonstrukcji nowoczesności</p>
+    <input class="search-bar" id="philSearch" placeholder="Szukaj filozofa...">
+    <div class="phil-grid" id="philGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     QUIZ VIEW
+     ═══════════════════════════════════════ -->
+<div id="quizView" class="view">
+  <div class="enc-view">
+    <h2>Quiz — Sprawdź swoją wiedzę</h2>
+    <div class="quiz-header"><div class="quiz-categories" id="quizCategories"></div></div>
+    <div id="quizArea"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CONCEPTS VIEW
+     ═══════════════════════════════════════ -->
+<div id="conceptsView" class="view">
+  <div class="enc-view">
+    <h2>Kluczowe Pojęcia i Teorie</h2>
+    <input class="search-bar" id="conceptSearch" placeholder="Szukaj pojęcia, filozofa lub teorii...">
+    <div class="concepts-grid" id="conceptsGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CHAPTERS VIEW
+     ═══════════════════════════════════════ -->
+<div id="chaptersView" class="view">
+  <div class="enc-view">
+    <h2>Rozdziały — szczegółowa analiza</h2>
+    <p class="view-desc">Wybierz rozdział, aby zobaczyć analizę argumentacji, pojęcia kluczowe, cytaty i quiz.</p>
+    <div class="toc-grid" id="chaptersList"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CHAPTER DETAIL VIEW
+     ═══════════════════════════════════════ -->
+<div id="chapterDetailView" class="view">
+  <div class="enc-view">
+    <div class="chapter-detail" id="chapterDetail"></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+const state = {
+  currentView: 'title',
+  currentAct: 0,
+  currentStep: 0,
+  system: 35,        // 0-100
+  lebenswelt: 65,    // 0-100
+  rationality: 50,   // 0-100
+  arguments: [1,1,1,0,0], // 1=filled, 0=empty, -1=lost
+  score: 0,
+  unlockedPhilosophers: ['hegel'],
+  choices: [],       // history
+};
+
+// ═══════════════════════════════════════════════
+// PHILOSOPHERS (expanded)
+// ═══════════════════════════════════════════════
+const philosophers = [
+  { id:'hegel', name:'Hegel', fullName:'Georg W.F. Hegel', dates:'1770–1831', x:0.5, y:0.08, color:'#00e5ff', radius:28, group:'idealism',
+    desc:'Twórca pojęcia nowoczesności. Zasada podmiotowości — nowoczesność musi czerpać normy z siebie.',
+    quote:'„Nowoczesność musi swoją normatywność wydobywać z siebie samej."',
+    concepts:['Dialektyka','Duch absolutny','Aufhebung','Podmiotowość'] },
+  { id:'marx', name:'Marks', fullName:'Karol Marks', dates:'1818–1883', x:0.25, y:0.2, color:'#00e5ff', radius:22, group:'idealism',
+    desc:'Zasadą nowoczesności nie jest samowiedza, lecz praca. Materializm historyczny.',
+    quote:'„Zasadą nowoczesności nie jest samowiedza, lecz praca."',
+    concepts:['Materializm historyczny','Praxis','Alienacja','Ideologia'] },
+  { id:'kierkegaard', name:'Kierkegaard', fullName:'Søren Kierkegaard', dates:'1813–1855', x:0.75, y:0.2, color:'#00e5ff', radius:18, group:'idealism',
+    desc:'Prawica heglowska. Egzystencja jednostki przeciw systemowi.',
+    quote:'„Skok wiary wymaga zerwania z pojęciową mediacją."',
+    concepts:['Egzystencja','Skok wiary','Jednostka'] },
+  { id:'nietzsche', name:'Nietzsche', fullName:'Friedrich Nietzsche', dates:'1844–1900', x:0.5, y:0.28, color:'#ff2d55', radius:26, group:'critique',
+    desc:'Drehscheibe — punkt zwrotny. Dionizyjskość przeciw rozumowi. Otwiera dwie drogi.',
+    quote:'„Wola mocy jest zarazem wolą pozoru, maski, powierzchni."',
+    concepts:['Wola mocy','Genealogia','Dionizyjskość','Wieczny powrót'] },
+  { id:'benjamin', name:'Benjamin', fullName:'Walter Benjamin', dates:'1892–1940', x:0.15, y:0.38, color:'#34d399', radius:20, group:'critical',
+    desc:'Jetztzeit przerywa kontinuum historii. Anamnetyczna solidarność z uciśnionymi.',
+    quote:'„Każda sekunda stanowiła maleńką furtkę, przez którą mógł wkroczyć Mesjasz."',
+    concepts:['Jetztzeit','Anioł historii','Anamnetyczna solidarność'] },
+  { id:'horkheimer', name:'Horkheimer', fullName:'Max Horkheimer', dates:'1895–1973', x:0.25, y:0.48, color:'#34d399', radius:22, group:'critical',
+    desc:'Rozum instrumentalny — oświecenie przechodzi w dominację.',
+    quote:'„Rozum instrumentalny, triumfujący nad mitologią, sam staje się mityczny."',
+    concepts:['Rozum instrumentalny','Dialektyka oświecenia','Teoria krytyczna'] },
+  { id:'adorno', name:'Adorno', fullName:'Theodor W. Adorno', dates:'1903–1969', x:0.38, y:0.48, color:'#34d399', radius:24, group:'critical',
+    desc:'Dialektyka negatywna — myślenie opierające się totalizacji. Nie-tożsamość.',
+    quote:'„Stan pojednania swe szczęście upatrywałby w tym, aby to, co odmienne, pozostawało w bliskości."',
+    concepts:['Dialektyka negatywna','Nie-tożsamość','Mimesis'] },
+  { id:'heidegger', name:'Heidegger', fullName:'Martin Heidegger', dates:'1889–1976', x:0.68, y:0.4, color:'#ff2d55', radius:24, group:'critique',
+    desc:'Przezwyciężenie metafizyki. Ge-stell — technika jako sposób odsłaniania.',
+    quote:'„Nowoczesny świat likwiduje historyczne porządki społecznego bytu człowieka."',
+    concepts:['Dasein','Ge-stell','Zapomnienie bycia','Kehre'] },
+  { id:'derrida', name:'Derrida', fullName:'Jacques Derrida', dates:'1930–2004', x:0.8, y:0.55, color:'#f0c040', radius:22, group:'poststruct',
+    desc:'Dekonstrukcja — podważanie binarnych opozycji. Différance.',
+    quote:'„Différance jest ruchem, który wytwarza różnice i odwleka obecność."',
+    concepts:['Dekonstrukcja','Différance','Logocentryzm','Ślad'] },
+  { id:'bataille', name:'Bataille', fullName:'Georges Bataille', dates:'1897–1962', x:0.88, y:0.35, color:'#f0c040', radius:18, group:'poststruct',
+    desc:'Transgresja i suwerenność — wyjście poza racjonalność kalkulującą.',
+    quote:'„Transgresja żyje z granicy, którą przekracza."',
+    concepts:['Transgresja','Suwerenność','Wydatkowanie'] },
+  { id:'foucault', name:'Foucault', fullName:'Michel Foucault', dates:'1926–1984', x:0.62, y:0.6, color:'#f0c040', radius:24, group:'poststruct',
+    desc:'Genealogia władzy-wiedzy. Dyskursy kształtują podmioty.',
+    quote:'„Tam gdzie jest wiedza, jest władza — i na odwrót."',
+    concepts:['Władza-wiedza','Biopolityka','Panoptikon','Genealogia'] },
+  { id:'luhmann', name:'Luhmann', fullName:'Niklas Luhmann', dates:'1927–1998', x:0.2, y:0.72, color:'#a78bfa', radius:20, group:'systems',
+    desc:'Autopoiesis. Społeczeństwo jako system komunikacji bez podmiotu.',
+    quote:'„Systemy autopoietyczne same siebie reprodukują."',
+    concepts:['Autopoiesis','Różnicowanie funkcjonalne','Autoreferencjalność'] },
+  { id:'castoriadis', name:'Castoriadis', fullName:'Cornelius Castoriadis', dates:'1922–1997', x:0.38, y:0.72, color:'#a78bfa', radius:18, group:'systems',
+    desc:'Wyobraźnia instytucjonalna. Autonomia jako projekt nowoczesności.',
+    quote:'„Bez radykalnej imaginacji historia jest niemożliwa."',
+    concepts:['Wyobraźnia instytucjonalna','Autonomia','Magma znaczeń'] },
+  { id:'habermas', name:'Habermas', fullName:'Jürgen Habermas', dates:'1929–', x:0.5, y:0.88, color:'#a78bfa', radius:32, group:'systems',
+    desc:'Racjonalność komunikacyjna. Działanie komunikacyjne zamiast rozumu podmiotowego.',
+    quote:'„Rozum komunikacyjny wyraża się w zdecentrowanym rozumieniu świata."',
+    concepts:['Działanie komunikacyjne','Racjonalność komunikacyjna','Świat życia','Kolonizacja świata życia'] },
+  // New philosophers
+  { id:'weber', name:'Weber', fullName:'Max Weber', dates:'1864–1920', x:0.1, y:0.58, color:'#34d399', radius:16, group:'critical',
+    desc:'Racjonalizacja jako „żelazna klatka". Odczarowanie świata.',
+    quote:'„Racjonalizacja nie jest postępem w kierunku lepszego — jest odczarowaniem."',
+    concepts:['Żelazna klatka','Odczarowanie','Racjonalizacja','Biurokracja'] },
+  { id:'husserl', name:'Husserl', fullName:'Edmund Husserl', dates:'1859–1938', x:0.82, y:0.25, color:'#00e5ff', radius:16, group:'idealism',
+    desc:'Fenomenologia. „Do rzeczy samych!" Kryzys nauk europejskich.',
+    quote:'„Do rzeczy samych! — z powrotem do żywego doświadczenia."',
+    concepts:['Fenomenologia','Intencjonalność','Lebenswelt','Redukcja'] },
+  { id:'freud', name:'Freud', fullName:'Sigmund Freud', dates:'1856–1939', x:0.08, y:0.42, color:'#34d399', radius:16, group:'critical',
+    desc:'Nieświadomość podważa suwerenność rozumnego podmiotu.',
+    quote:'„Ja nie jest panem we własnym domu."',
+    concepts:['Nieświadomość','Popęd','Sublimacja','Kultura jako represja'] },
+  { id:'austin', name:'Austin', fullName:'J.L. Austin', dates:'1911–1960', x:0.35, y:0.88, color:'#a78bfa', radius:14, group:'systems',
+    desc:'Akty mowy — „performatyw" zmienia rzeczywistość, nie tylko ją opisuje.',
+    quote:'„How to do things with words — mówienie jest działaniem."',
+    concepts:['Akty mowy','Performatyw','Illokucja'] },
+];
+
+const connections = [
+  {from:'hegel',to:'marx',label:'Dialektyka→Materializm',color:'#00e5ff'},
+  {from:'hegel',to:'kierkegaard',label:'System→Egzystencja',color:'#00e5ff'},
+  {from:'hegel',to:'nietzsche',label:'Rozum→Krytyka',color:'#ff2d55'},
+  {from:'hegel',to:'benjamin',label:'Dialektyka→Obraz dialektyczny',color:'#34d399'},
+  {from:'hegel',to:'habermas',label:'Projekt nowoczesności',color:'#a78bfa'},
+  {from:'nietzsche',to:'heidegger',label:'Krytyka metafizyki',color:'#ff2d55'},
+  {from:'nietzsche',to:'bataille',label:'Dionizyjskość→Transgresja',color:'#f0c040'},
+  {from:'nietzsche',to:'foucault',label:'Genealogia',color:'#f0c040'},
+  {from:'nietzsche',to:'derrida',label:'Krytyka logocentryzmu',color:'#f0c040'},
+  {from:'nietzsche',to:'adorno',label:'Krytyka kultury',color:'#34d399'},
+  {from:'heidegger',to:'derrida',label:'Destrukcja→Dekonstrukcja',color:'#f0c040'},
+  {from:'heidegger',to:'foucault',label:'Krytyka podmiotu',color:'#f0c040'},
+  {from:'marx',to:'horkheimer',label:'Teoria krytyczna',color:'#34d399'},
+  {from:'marx',to:'adorno',label:'Dialektyka',color:'#34d399'},
+  {from:'marx',to:'castoriadis',label:'Praxis→Autonomia',color:'#a78bfa'},
+  {from:'horkheimer',to:'adorno',label:'Dialektyka oświecenia',color:'#34d399'},
+  {from:'horkheimer',to:'habermas',label:'II gen. teorii krytycznej',color:'#a78bfa'},
+  {from:'adorno',to:'habermas',label:'Negatywna→komunikacyjna',color:'#a78bfa'},
+  {from:'benjamin',to:'adorno',label:'Aura / Krytyka kultury',color:'#34d399'},
+  {from:'benjamin',to:'habermas',label:'Solidarność→Komunikacja',color:'#a78bfa'},
+  {from:'foucault',to:'habermas',label:'Władza vs komunikacja',color:'#f0c040'},
+  {from:'derrida',to:'habermas',label:'Dekonstrukcja vs rekonstrukcja',color:'#f0c040'},
+  {from:'luhmann',to:'habermas',label:'System vs świat życia',color:'#a78bfa'},
+  {from:'castoriadis',to:'habermas',label:'Wyobraźnia vs komunikacja',color:'#a78bfa'},
+  {from:'bataille',to:'foucault',label:'Transgresja→Władza',color:'#f0c040'},
+  {from:'husserl',to:'heidegger',label:'Fenomenologia→Dasein',color:'#00e5ff'},
+  {from:'weber',to:'horkheimer',label:'Racjonalizacja→Rozum instr.',color:'#34d399'},
+  {from:'weber',to:'habermas',label:'Racjonalizacja→Komunikacja',color:'#a78bfa'},
+  {from:'freud',to:'adorno',label:'Nieświadomość→Mimesis',color:'#34d399'},
+  {from:'freud',to:'foucault',label:'Seksualność→Biopolityka',color:'#f0c040'},
+  {from:'austin',to:'habermas',label:'Akty mowy→Dz. komunikacyjne',color:'#a78bfa'},
+];
+
+// ═══════════════════════════════════════════════
+// DISCOURSE ACTS (first 4 of 12)
+// ═══════════════════════════════════════════════
+const acts = [
+  // ACT I — Hegel
+  { id: 1, title: 'Heglowskie pojęcie nowoczesności', philosophers: ['hegel','marx','kierkegaard'],
+    steps: [
+      { type:'narration',
+        text:'Rok 1807. Hegel pisze „Fenomenologię ducha" w Jenie, podczas gdy w oddali dudnią działa Napoleona. Filozofia po raz pierwszy próbuje ująć swoją epokę w myślach — bez odwołania do przeszłych wzorców.' },
+      { type:'speaker', who:'hegel',
+        dialogue:'Nowoczesność nie może czerpać swoich kryteriów z wzorców innych epok. Musi swoją normatywność wydobywać z siebie samej. Zasada podmiotowości — wolność, refleksja, autonomia — to jej fundament.',
+        quote:'„Nowożytność żyje z doświadczenia przyspieszenia procesów historycznych."' },
+      { type:'choice',
+        prompt:'Hegel proponuje, że Rozum Absolutny — duch sam siebie poznający w historii — może jednoczyć to, co nowoczesność rozdzieliła. Jak reagujesz?',
+        choices: [
+          { type:'zgoda', label:'Zgoda', text:'Rozum absolutny jako synteza — może to jedyna droga do pojednania fragmentarycznej nowoczesności.',
+            result:'Podążasz za Heglem. Rozum absolutny obejmuje wszystko — ale czy nie zamyka historii? Duch, który poznał siebie, nie ma już dokąd iść.',
+            effects: { system: +5, lebenswelt: -3, rationality: +8 } },
+          { type:'konflikt', label:'Konflikt', text:'To rozwiązanie jest „za mocne" — rozum absolutny unosi się obojętnie nad otwartym procesem dziejów.',
+            result:'Trafna krytyka! To właśnie dostrzegą lewica i prawica heglowska. Marks powie: nie samowiedza, lecz praca. Kierkegaard: nie system, lecz egzystencja.',
+            effects: { system: -3, lebenswelt: +5, rationality: +5, unlockPhilosopher: 'marx' } },
+          { type:'ironia', label:'Ironia', text:'Filozofia, która chce objąć całość, sama staje się więzieniem — „żelazna klatka" myśli.',
+            result:'Weber użyje tego obrazu później. Ale Hegel odpowiedziałby: ironia jest pustą formą podmiotowości — subiektywność, która rozpuszcza każdą treść. Romantycy próbowali tej drogi — i zatonęli w estetyce.',
+            effects: { system: +2, lebenswelt: +2, rationality: -3, score: +5 } }
+        ]
+      },
+      { type:'narration',
+        text:'Z porażki Hegla wyłaniają się trzy ścieżki: lewica (Marks — praca zamiast ducha), prawica (afirmacja tego, co jest) i Nietzsche — radykalne odrzucenie samego dyskursu oświeceniowego.' },
+    ]
+  },
+
+  // ACT II — Benjamin (Dygresja)
+  { id: 2, title: 'Tezy historiozoficzne: Benjamin', philosophers: ['benjamin','hegel','adorno'],
+    steps: [
+      { type:'narration',
+        text:'1940. Walter Benjamin ucieka przed nazistami przez Pireneje. W kieszeni ma rękopis — kilkanaście kart, które zmienią rozumienie historii. Niedługo potem popełni samobójstwo w Port-Bou.' },
+      { type:'speaker', who:'benjamin',
+        dialogue:'Anioł historii patrzy w przeszłość. Widzi stos ruin — ale wicher z raju pędzi go w przyszłość. Katastrofa, którą nazywacie „postępem", nie jest postępem. Jest akumulacją cierpienia.',
+        quote:'„Każda sekunda stanowiła maleńką furtkę, przez którą mógł wkroczyć Mesjasz."' },
+      { type:'choice',
+        prompt:'Benjamin twierdzi, że „nie ma takiego dokumentu kultury, który nie byłby zarazem dokumentem barbarzyństwa" (teza VII). Jak na to odpowiadasz?',
+        choices: [
+          { type:'zgoda', label:'Zgoda', text:'Prawda. Każde dzieło kultury niesie ślad cierpienia tych, którzy je umożliwili — anamnetyczna solidarność jest obowiązkiem.',
+            result:'Przyjmujesz odpowiedzialność wobec uciśnionych przeszłości. Benjamin radykalizuje etykę — uniwersalizm musi obejmować także niesprawiedliwość, która już się wydarzyła i jest nieodwracalna.',
+            effects: { system: -5, lebenswelt: +8, rationality: +3, score: +10 } },
+          { type:'konflikt', label:'Konflikt', text:'To paraliżujące. Jeśli każda kultura jest barbarzyństwem, to nie ma miejsca na tworzenie — zostaje tylko żałoba.',
+            result:'Benjamin odpowiada: „rewolucyjna szansa w walce o uciśnioną przeszłość" — to nie żałoba, to dynamit. Jetztzeit, autentyczna chwila, przerywa kontinuum. Nie kontemplacja — działanie.',
+            effects: { system: +3, lebenswelt: -2, rationality: +5 } },
+          { type:'ironia', label:'Ironia', text:'Mesjanizm i marksizm w jednym? Benjamin gra na dwóch fortepianach — skok wiary i rewolucja proletariacka jednocześnie.',
+            result:'Adorno też się z tego nabijał — delikatnie. Ale ta „niespójność" jest siłą Benjamina. Łączy żydowski mesjanizm z materialistyczną praxis. Obraz dialektyczny nie syntetyzuje — błyska.',
+            effects: { system: 0, lebenswelt: +3, rationality: -2, score: +8 } }
+        ]
+      },
+    ]
+  },
+
+  // ACT III — Nietzsche (Drehscheibe)
+  { id: 3, title: 'Nietzsche jako tarcza obrotowa', philosophers: ['nietzsche','heidegger','foucault','bataille'],
+    steps: [
+      { type:'narration',
+        text:'Nietzsche zmienia wszystko. Odrzuca cały dyskurs oświeceniowy — nie rewizja rozumu, lecz jego porzucenie. „Koło obrotowe" (Drehscheibe): z tego punktu wyłaniają się dwie drogi krytyki nowoczesności.' },
+      { type:'speaker', who:'nietzsche',
+        dialogue:'Wiedza, pochłaniana w nadmiarze bez łaknienia, nie działa jak przetworzony motyw. Wasz rozum jest maską. Pod powierzchnią logiki — chaos, instynkt, wola pozoru. Dionizos przeciw Apollinowi.',
+        quote:'„Wola mocy jest zarazem wolą pozoru, wolą uproszczenia, maski, powierzchni."' },
+      { type:'choice',
+        prompt:'Nietzsche otwiera dwie drogi: ontologiczną (Heidegger → Derrida: destrukcja metafizyki) i genealogiczną (Bataille → Foucault: demaskacja władzy). Którą wybierasz?',
+        choices: [
+          { type:'zgoda', label:'Droga ontologiczna', text:'Heidegger ma rację — problem jest głębszy niż władza. Pytanie o bycie (Seinsfrage) odsłania zapomnienie, na którym stoi cała metafizyka.',
+            result:'Wybierasz destrukcję metafizyki. Heidegger poprowadzi Cię od Dasein przez Ge-stell po Kehre. Ale uważaj — Habermas zarzuci mu „temporalizowaną filozofię początku" i niebezpieczną bliskość z mitem.',
+            effects: { system: +5, lebenswelt: -3, rationality: +7, unlockPhilosopher: 'heidegger' } },
+          { type:'konflikt', label:'Droga genealogiczna', text:'Foucault ma rację — nie bycie, lecz władza. Genealogia demaskuje: za każdą „prawdą" stoi strategiczna gra sił.',
+            result:'Wybierasz genealogię. Foucault pokaże Ci, jak nauki humanistyczne nie poznają człowieka, lecz go kontrolują. Panoptikon, biopolityka, dyskursy. Ale Habermas zapyta: skąd normatywność Twojej krytyki?',
+            effects: { system: -3, lebenswelt: +5, rationality: -2, unlockPhilosopher: 'foucault' } },
+          { type:'ironia', label:'Ironia', text:'Obie drogi to pułapki. Nietzsche sam jest „ostatnim metafizykiem" — wola mocy to ostatnia postać tego, co krytykuje.',
+            result:'Zaskakujące! To dokładnie teza Heideggera o Nietzschem. A Habermas pójdzie dalej: obie drogi — ontologiczna i genealogiczna — pozostają w objęciach filozofii podmiotu, którą chcą przezwyciężyć.',
+            effects: { system: 0, lebenswelt: 0, rationality: +10, score: +15 } }
+        ]
+      },
+      { type:'narration',
+        text:'Tarcza obrotowa Nietzschego rozdziela dyskurs. Od tego momentu filozofia nowoczesności prowadzi na dwóch frontach jednocześnie — a Habermas próbuje znaleźć trzecią drogę.' },
+    ]
+  },
+
+  // ACT IV — Dialektyka oświecenia
+  { id: 4, title: 'Dialektyka oświecenia', philosophers: ['horkheimer','adorno','weber','freud'],
+    steps: [
+      { type:'narration',
+        text:'Los Angeles, 1944. Dwaj niemieccy emigranci — Horkheimer i Adorno — piszą jedną z najciemniejszych ksiąg XX wieku. Oświecenie, które miało wyzwolić, przerodziło się w totalitarną kontrolę. Auschwitz jest tego dowodem.' },
+      { type:'speaker', who:'adorno',
+        dialogue:'Mit jest już oświeceniem, a oświecenie zwraca się w mitologię. Rozum, który chciał panować nad naturą, sam staje się mityczny. Odyseusz — prototyp nowoczesnego podmiotu — przywiązuje się do masztu, by przeżyć. Cena racjonalności: samozaparcie.',
+        quote:'„Stan pojednania nie anektowałby tego, co obce, ale swe szczęście upatrywałby w tym, aby to, co odmienne, pozostawało w bliskości."' },
+      { type:'choice',
+        prompt:'Horkheimer i Adorno doprowadzili krytykę rozumu do punktu, w którym krytyka traci grunt pod nogami. Krytykują rozum — rozumem. Jak wyjść z tej aporii?',
+        choices: [
+          { type:'zgoda', label:'Zgoda', text:'Nie ma wyjścia. Mimesis — wczucie, nie pojęcie — jest jedyną formą oporu. Sztuka awangardowa jako azyl prawdy.',
+            result:'Podążasz za Adornem do końca. Dialektyka negatywna nie szuka syntezy — utrzymuje napięcie. Nie-tożsame (Nichtidentisches) opiera się totalizacji. Piękne — ale czy da się na tym zbudować społeczeństwo?',
+            effects: { system: -8, lebenswelt: +5, rationality: -5, score: +5 } },
+          { type:'konflikt', label:'Konflikt', text:'Trzeba rozróżnić dwa typy rozumu. Instrumentalny — tak, panuje. Ale jest też komunikacyjny — zorientowany na porozumienie.',
+            result:'Brawo — to rozwiązanie Habermasa! Rozum instrumentalny (panowanie nad naturą) i rozum komunikacyjny (porozumienie między ludźmi) to nie to samo. Nie trzeba porzucać rozumu — trzeba go rozszerzyć.',
+            effects: { system: -3, lebenswelt: +10, rationality: +12, unlockPhilosopher: 'habermas', score: +20 } },
+          { type:'ironia', label:'Ironia', text:'Jeśli oświecenie jest totalitarne, to wasza krytyka oświecenia — napisana w stylu oświeceniowej rozprawy — jest tym samym.',
+            result:'Performatywna sprzeczność! Horkheimer i Adorno wiedzieli o niej — i nie potrafili z niej wyjść. Dlatego ich dzieło kończy się desperacją. Habermas potraktuje to jako dowód, że potrzeba nowego paradygmatu.',
+            effects: { system: +3, lebenswelt: -2, rationality: +8, score: +12 } }
+        ]
+      },
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════════
+// UI FUNCTIONS
+// ═══════════════════════════════════════════════
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const viewEl = document.getElementById(id + 'View');
+  if (viewEl) viewEl.classList.add('active');
+  // aktywny przycisk — w obu pasach nav (HUD + drawer)
+  const activeId = (id === 'chapterDetail') ? 'chapters' : id;
+  document.querySelectorAll('.hud-nav button, #drawerNav button').forEach(b => {
+    b.classList.toggle('active', b.dataset.view === activeId);
+  });
+  // Hide choices panel when leaving game view
+  if (id !== 'game') {
+    document.getElementById('choicesPanel').classList.remove('visible');
+  }
+  // scroll na górę przy zmianie sekcji
+  window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  state.currentView = id;
+  if (id === 'map') setTimeout(initMap, 50);
+  if (id === 'title') initTitleBg();
+  if (id === 'game') { initGameCanvas(); renderStep(); }
+  // Encyclopedia views
+  if (id === 'timeline') buildTimeline();
+  if (id === 'philosophers') buildPhilosophers();
+  if (id === 'quiz') initQuiz();
+  if (id === 'concepts') buildConcepts();
+  if (id === 'chapters') buildChaptersList();
+}
+
+function updateHUD() {
+  const sys = state.system + '%';
+  const leb = state.lebenswelt + '%';
+  const rat = state.rationality + '%';
+  document.getElementById('systemBar').style.width = sys;
+  document.getElementById('lebensweltBar').style.width = leb;
+  document.getElementById('rationalBar').style.width = rat;
+  const sysD = document.getElementById('systemBarD');
+  const lebD = document.getElementById('lebensweltBarD');
+  const ratD = document.getElementById('rationalBarD');
+  if (sysD) sysD.style.width = sys;
+  if (lebD) lebD.style.width = leb;
+  if (ratD) ratD.style.width = rat;
+  const dotsHtml = state.arguments.map(a =>
+    `<div class="arg-dot ${a === 1 ? 'filled' : a === -1 ? 'lost' : ''}"></div>`
+  ).join('');
+  document.getElementById('argDots').innerHTML = dotsHtml;
+  const argD = document.getElementById('argDotsD');
+  if (argD) argD.innerHTML = dotsHtml;
+}
+
+// ═══════════════════════════════════════════════
+// MOBILE DRAWER
+// ═══════════════════════════════════════════════
+function toggleDrawer() {
+  const d = document.getElementById('drawer');
+  const b = document.getElementById('drawerBackdrop');
+  const open = !d.classList.contains('open');
+  d.classList.toggle('open', open);
+  b.classList.toggle('open', open);
+  d.setAttribute('aria-hidden', open ? 'false' : 'true');
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeDrawer() {
+  const d = document.getElementById('drawer');
+  const b = document.getElementById('drawerBackdrop');
+  d.classList.remove('open');
+  b.classList.remove('open');
+  d.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+// ESC zamyka drawer
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDrawer();
+});
+
+// ═══════════════════════════════════════════════
+// DISCOURSE ENGINE
+// ═══════════════════════════════════════════════
+function startGame() {
+  state.currentAct = 0;
+  state.currentStep = 0;
+  showView('game');
+}
+
+function renderStep() {
+  const act = acts[state.currentAct];
+  if (!act) { renderEnding(); return; }
+  const step = act.steps[state.currentStep];
+  if (!step) { nextAct(); return; }
+
+  const gc = document.getElementById('gameContent');
+  const cp = document.getElementById('choicesPanel');
+  const cr = document.getElementById('choicesRow');
+  const gm = document.getElementById('gameMessage');
+
+  cp.classList.remove('visible');
+  let html = `<div class="game-act-label">Akt ${act.id} / ${acts.length}</div>
+              <h2 class="game-title">${act.title}</h2>`;
+
+  if (step.type === 'narration') {
+    html += `<div class="game-narrator fade-in">${step.text}</div>`;
+    html += `<button class="next-step-btn" onclick="advanceStep()">Dalej →</button>`;
+  }
+  else if (step.type === 'speaker') {
+    const phil = philosophers.find(p => p.id === step.who);
+    html += `<div class="game-speaker fade-in">${phil ? phil.name.toUpperCase() : step.who}</div>`;
+    html += `<div class="game-dialogue fade-in">${step.dialogue}</div>`;
+    if (step.quote) {
+      html += `<div class="game-quote fade-in">${step.quote}</div>`;
+    }
+    html += `<button class="next-step-btn" onclick="advanceStep()">Dalej →</button>`;
+  }
+  else if (step.type === 'choice') {
+    html += `<div class="game-narrator fade-in">${step.prompt}</div>`;
+    html += `<div id="choiceResult"></div>`;
+
+    cp.classList.add('visible');
+    cr.innerHTML = step.choices.map((c, i) => `
+      <button class="choice-btn ${c.type}" onclick="makeChoice(${i})">
+        <span class="choice-key">${String.fromCharCode(65 + i)}</span>
+        <div>
+          <span class="choice-label">${c.label}</span>
+          ${c.text}
+        </div>
+      </button>
+    `).join('');
+    gm.textContent = '‹‹ Dialog to twoja jedyna broń ››';
+  }
+
+  gc.innerHTML = html;
+  initGameCanvas();
+}
+
+function makeChoice(idx) {
+  const act = acts[state.currentAct];
+  const step = act.steps[state.currentStep];
+  const choice = step.choices[idx];
+
+  // Apply effects
+  if (choice.effects) {
+    if (choice.effects.system) state.system = Math.max(0, Math.min(100, state.system + choice.effects.system));
+    if (choice.effects.lebenswelt) state.lebenswelt = Math.max(0, Math.min(100, state.lebenswelt + choice.effects.lebenswelt));
+    if (choice.effects.rationality) state.rationality = Math.max(0, Math.min(100, state.rationality + choice.effects.rationality));
+    if (choice.effects.score) state.score += choice.effects.score;
+    if (choice.effects.unlockPhilosopher && !state.unlockedPhilosophers.includes(choice.effects.unlockPhilosopher)) {
+      state.unlockedPhilosophers.push(choice.effects.unlockPhilosopher);
+    }
+    // Gain/lose argument dot
+    const emptyIdx = state.arguments.indexOf(0);
+    if (choice.effects.rationality > 5 && emptyIdx >= 0) state.arguments[emptyIdx] = 1;
+    if (choice.effects.rationality < -3) {
+      const lastFilled = state.arguments.lastIndexOf(1);
+      if (lastFilled >= 0) state.arguments[lastFilled] = -1;
+    }
+  }
+
+  updateHUD();
+
+  // Visual feedback
+  document.querySelectorAll('.choice-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === idx) btn.classList.add('selected');
+    else btn.style.opacity = '0.3';
+  });
+
+  // Show result
+  const resultDiv = document.getElementById('choiceResult');
+  if (resultDiv) {
+    resultDiv.innerHTML = `
+      <div class="choice-result">${choice.result}</div>
+      <button class="next-step-btn" onclick="advanceStep()">Dalej →</button>
+    `;
+  }
+
+  document.getElementById('gameMessage').textContent =
+    choice.effects && choice.effects.unlockPhilosopher
+      ? `✦ Odblokowano: ${philosophers.find(p=>p.id===choice.effects.unlockPhilosopher)?.fullName || ''}`
+      : `Racjonalność: ${state.rationality}%`;
+
+  state.choices.push({ act: state.currentAct, step: state.currentStep, choice: idx });
+}
+
+function advanceStep() {
+  state.currentStep++;
+  const act = acts[state.currentAct];
+  if (!act || state.currentStep >= act.steps.length) {
+    nextAct();
+  } else {
+    renderStep();
+  }
+}
+
+function nextAct() {
+  state.currentAct++;
+  state.currentStep = 0;
+  if (state.currentAct >= acts.length) {
+    renderEnding();
+  } else {
+    renderStep();
+  }
+}
+
+function renderEnding() {
+  const gc = document.getElementById('gameContent');
+  const cp = document.getElementById('choicesPanel');
+  cp.classList.remove('visible');
+
+  const sysWin = state.system > state.lebenswelt;
+  gc.innerHTML = `
+    <div class="game-act-label">Koniec części I</div>
+    <h2 class="game-title">${sysWin ? 'Kolonizacja postępuje...' : 'Świat życia opiera się'}</h2>
+    <div class="game-narrator">
+      System: ${state.system}% | Lebenswelt: ${state.lebenswelt}% | Racjonalność: ${state.rationality}%<br><br>
+      ${sysWin
+        ? 'Logika systemów — pieniądza i biurokracji — wnika w świat życia. Habermas ostrzega: „pieniądz i władza nie mogą kupić solidarności i sensu."'
+        : 'Świat życia utrzymuje swoją autonomię. Komunikacja — nie system — pozostaje fundamentem. Ale droga jeszcze daleka: Heidegger, Derrida, Foucault i Luhmann czekają.'}
+    </div>
+    <div style="text-align:center;margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--text-dim);">
+      Część II: Heidegger, Derrida, Foucault, Luhmann — wkrótce
+    </div>
+    <button class="next-step-btn" style="margin-top:32px" onclick="state.currentAct=0;state.currentStep=0;renderStep();">Zagraj ponownie</button>
+  `;
+}
+
+// ═══════════════════════════════════════════════
+// CANVAS: TITLE BACKGROUND
+// ═══════════════════════════════════════════════
+let titleAnimId;
+function initTitleBg() {
+  const canvas = document.getElementById('titleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = canvas.offsetWidth * dpr;
+  canvas.height = canvas.offsetHeight * dpr;
+  ctx.scale(dpr, dpr);
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+
+  const particles = Array.from({length: 60}, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    r: Math.random() * 2 + 1,
+    color: ['#00e5ff','#ff2d55','#a78bfa','#34d399'][Math.floor(Math.random()*4)]
+  }));
+
+  cancelAnimationFrame(titleAnimId);
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+    // connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i+1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 150) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,229,255,${0.08 * (1 - d/150)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = 0.6;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+    titleAnimId = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ═══════════════════════════════════════════════
+// CANVAS: GAME BACKGROUND (central figure + nodes)
+// ═══════════════════════════════════════════════
+let gameAnimId;
+function initGameCanvas() {
+  const canvas = document.getElementById('gameCanvas');
+  if (!canvas || !canvas.offsetWidth) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = canvas.offsetWidth * dpr;
+  canvas.height = canvas.offsetHeight * dpr;
+  ctx.scale(dpr, dpr);
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  const cx = W/2, cy = H * 0.45;
+  const t0 = performance.now();
+
+  const act = acts[state.currentAct];
+  const activePhils = act ? act.philosophers.map(id => philosophers.find(p=>p.id===id)).filter(Boolean) : [];
+
+  cancelAnimationFrame(gameAnimId);
+  function draw(now) {
+    const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw connections from center to active philosophers
+    activePhils.forEach((p, i) => {
+      const angle = (i / activePhils.length) * Math.PI * 2 - Math.PI/2;
+      const dist = Math.min(W, H) * 0.32;
+      const px = cx + Math.cos(angle) * dist;
+      const py = cy + Math.sin(angle) * dist;
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(px, py);
+      ctx.strokeStyle = p.color + '40';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Pulsing node
+      const pulse = 1 + Math.sin(t * 2 + i) * 0.15;
+      ctx.beginPath();
+      ctx.arc(px, py, 6 * pulse, 0, Math.PI*2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = 0.7;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Label
+      ctx.font = '500 10px "JetBrains Mono"';
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = 0.5;
+      ctx.textAlign = 'center';
+      ctx.fillText(p.name.toUpperCase(), px, py + 18);
+      ctx.globalAlpha = 1;
+    });
+
+    // Central figure (silhouette)
+    ctx.save();
+    const glow = 0.3 + Math.sin(t * 1.5) * 0.1;
+    ctx.beginPath();
+    ctx.arc(cx, cy - 12, 10, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(0,229,255,${glow})`;
+    ctx.fill();
+    // body
+    ctx.beginPath();
+    ctx.moveTo(cx - 12, cy + 4);
+    ctx.lineTo(cx, cy + 35);
+    ctx.lineTo(cx + 12, cy + 4);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(0,229,255,${glow * 0.5})`;
+    ctx.fill();
+    // rings
+    for (let r = 1; r <= 3; r++) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, 20 + r * 18, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(0,229,255,${0.06 / r})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    gameAnimId = requestAnimationFrame(draw);
+  }
+  draw(performance.now());
+}
+
+// ═══════════════════════════════════════════════
+// CANVAS: MAP (Philosopher Network)
+// ═══════════════════════════════════════════════
+let mapAnimId, mapDrag = null, mapHover = null;
+function initMap() {
+  const canvas = document.getElementById('mapCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = canvas.offsetWidth * dpr;
+  canvas.height = canvas.offsetHeight * dpr;
+  ctx.scale(dpr, dpr);
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  const t0 = performance.now();
+
+  const philNodes = philosophers.map(p => ({
+    ...p,
+    px: p.x * W,
+    py: p.y * H + 32,
+  }));
+
+  function getNode(mx, my) {
+    for (let i = philNodes.length - 1; i >= 0; i--) {
+      const dx = mx - philNodes[i].px;
+      const dy = my - philNodes[i].py;
+      if (dx*dx + dy*dy < philNodes[i].radius * philNodes[i].radius * 1.5) return philNodes[i];
+    }
+    return null;
+  }
+
+  canvas.onmousemove = e => {
+    const rect = canvas.getBoundingClientRect();
+    mapHover = getNode(e.clientX - rect.left, e.clientY - rect.top);
+    canvas.style.cursor = mapHover ? 'pointer' : 'grab';
+  };
+
+  canvas.onclick = e => {
+    const rect = canvas.getBoundingClientRect();
+    const node = getNode(e.clientX - rect.left, e.clientY - rect.top);
+    if (node) showMapPanel(node);
+    else document.getElementById('mapPanel').classList.remove('show');
+  };
+
+  cancelAnimationFrame(mapAnimId);
+  function draw(now) {
+    const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+
+    // Connections
+    connections.forEach(c => {
+      const from = philNodes.find(p => p.id === c.from);
+      const to = philNodes.find(p => p.id === c.to);
+      if (!from || !to) return;
+      ctx.beginPath();
+      ctx.moveTo(from.px, from.py);
+      ctx.lineTo(to.px, to.py);
+      const isHover = mapHover && (mapHover.id === c.from || mapHover.id === c.to);
+      ctx.strokeStyle = isHover ? c.color + 'aa' : c.color + '20';
+      ctx.lineWidth = isHover ? 1.5 : 0.5;
+      ctx.stroke();
+    });
+
+    // Nodes
+    philNodes.forEach(p => {
+      const isHover = mapHover && mapHover.id === p.id;
+      const pulse = isHover ? 1.2 : 1 + Math.sin(t * 1.5 + p.x * 10) * 0.05;
+
+      // Outer glow
+      if (isHover) {
+        ctx.beginPath();
+        ctx.arc(p.px, p.py, p.radius * 1.6, 0, Math.PI*2);
+        ctx.fillStyle = p.color + '10';
+        ctx.fill();
+      }
+
+      // Main circle
+      ctx.beginPath();
+      ctx.arc(p.px, p.py, p.radius * pulse, 0, Math.PI*2);
+      ctx.fillStyle = p.color + (isHover ? '40' : '18');
+      ctx.strokeStyle = p.color + (isHover ? 'cc' : '60');
+      ctx.lineWidth = isHover ? 2 : 1;
+      ctx.fill();
+      ctx.stroke();
+
+      // Label
+      ctx.font = `${isHover ? '600' : '500'} ${isHover ? '12px' : '10px'} "JetBrains Mono"`;
+      ctx.fillStyle = isHover ? p.color : p.color + '99';
+      ctx.textAlign = 'center';
+      ctx.fillText(p.name.toUpperCase(), p.px, p.py + p.radius + 16);
+    });
+
+    mapAnimId = requestAnimationFrame(draw);
+  }
+  draw(performance.now());
+}
+
+function showMapPanel(node) {
+  const panel = document.getElementById('mapPanel');
+  panel.innerHTML = `
+    <button class="close-btn" onclick="this.parentElement.classList.remove('show')">&times;</button>
+    <h3 style="color:${node.color}">${node.fullName}</h3>
+    <div class="mp-dates">${node.dates}</div>
+    <div class="mp-desc">${node.desc}</div>
+    <div class="mp-quote">${node.quote}</div>
+    <div class="mp-concepts">${node.concepts.map(c => `<span class="tag">${c}</span>`).join('')}</div>
+  `;
+  panel.classList.add('show');
+}
+
+// ═══════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (state.currentView === 'game') {
+    const btns = document.querySelectorAll('.choice-btn:not([disabled])');
+    if (e.key === 'a' || e.key === 'A' || e.key === '1') btns[0]?.click();
+    if (e.key === 'b' || e.key === 'B' || e.key === '2') btns[1]?.click();
+    if (e.key === 'c' || e.key === 'C' || e.key === '3') btns[2]?.click();
+    if (e.key === 'Enter' || e.key === ' ') {
+      const nb = document.querySelector('.next-step-btn');
+      if (nb) nb.click();
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+window.addEventListener('resize', () => {
+  if (state.currentView === 'title') initTitleBg();
+  if (state.currentView === 'map') initMap();
+  if (state.currentView === 'game') initGameCanvas();
+});
+
+// ═══════════════════════════════════════════════
+// ENCYCLOPEDIA DATA: TIMELINE
+// ═══════════════════════════════════════════════
+const timelineData = [
+  { chapter:'Wykład I–II', title:'Heglowskie pojęcie nowoczesności', text:'Hegel jako pierwszy formułuje problem samopoświadczenia nowoczesności. Zasada podmiotowości. Rozum absolutny — duch sam siebie poznaje w historii. Ale rozwiązanie Hegla okazuje się „za mocne".', quote:'„Nowożytność żyje z doświadczenia przyspieszenia procesów historycznych i powiązanego z nim oczekiwania, że przyszłość będzie inna niż przeszłość."', tags:['Hegel','Podmiotowość','Samopoświadczenie','Duch absolutny'] },
+  { chapter:'Dygresja', title:'Tezy historiozoficzne Benjamina', text:'Jetztzeit przerywa kontinuum historii. Mesjanistyczna koncepcja czasu przeciw pustemu czasowi postępu. Anamnetyczna solidarność z uciśnionymi przeszłości. „Rewolucyjna szansa w walce o uciśnioną przeszłość."', quote:'„Każda sekunda stanowiła maleńką furtkę, przez którą mógł wkroczyć Mesjasz." (teza XVIII)', tags:['Benjamin','Jetztzeit','Mesjanizm','Anamnetyczna solidarność'] },
+  { chapter:'Wykład III', title:'Trzy perspektywy: lewica, prawica, Nietzsche', text:'Lewica heglowska (Marks): praca zamiast samowiedzy. Prawica: afirmacja tego, co jest. Nietzsche: estetyczny modernizm. Trzy odpowiedzi na porażkę Hegla.', quote:'„Zasadą nowoczesności nie jest dla niej samowiedza, lecz praca."', tags:['Marks','Praxis','Lewica heglowska'] },
+  { chapter:'Wykład IV', title:'Nietzsche jako tarcza obrotowa', text:'Nietzsche odrzuca cały dyskurs oświeceniowy. Dionizyjskość vs apolliński rozum. Genealogia. Otwiera dwie drogi: ontologiczną i genealogiczną.', quote:'„Wiedza, pochłaniana w nadmiarze bez łaknienia, nie działa odtąd jak przetworzony motyw."', tags:['Nietzsche','Dionizyjskość','Genealogia','Drehscheibe'] },
+  { chapter:'Wykład V', title:'Dialektyka oświecenia: Horkheimer i Adorno', text:'Oświecenie zawsze już było mitem. Rozum instrumentalny zwraca się przeciw człowiekowi. Mimesis jako opór. Ale: aporia — krytyka rozumu rozumem.', quote:'„Stan pojednania nie anektowałby tego, co obce, ale swe szczęście upatrywałby w tym, aby to, co dalekie i odmienne, pozostawało w postrzegalnej bliskości."', tags:['Rozum instrumentalny','Dialektyka oświecenia','Mimesis'] },
+  { chapter:'Wykład VI', title:'Temporalizacja filozofii początku: Heidegger', text:'Przezwyciężenie metafizyki podmiotowości. Pytanie o bycie (Seinsfrage). Ge-stell — technika jako sposób odsłaniania. Kehre ku myśleniu bycia.', quote:'„Nowoczesny świat likwiduje historyczne porządki społecznego bytu człowieka."', tags:['Heidegger','Dasein','Ge-stell','Kehre'] },
+  { chapter:'Wykład VII', title:'Przekroczenie filozofii podmiotu: Derrida', text:'Dekonstrukcja jako radykalizacja destrukcji Heideggera. Différance. Krytyka fonocentryzmu i logocentryzmu. Derrida dekonstruuje samego Heideggera.', quote:'', tags:['Derrida','Dekonstrukcja','Différance','Logocentryzm'] },
+  { chapter:'Dygresja', title:'Filozofia a literatura', text:'Czy można zrównać dyskurs filozoficzny z literackim? Derrida vs teoria aktów mowy Austina. Habermas broni rozróżnienia gatunkowego.', quote:'', tags:['Akty mowy','Performatyw','Retoryka'] },
+  { chapter:'Wykład VIII', title:'Między erotyzmem a ekonomią: Bataille', text:'Suwerenność jako moment przekroczenia granic racjonalności. Heterologia, wydatkowanie, sacrum. Ekonomia ogólna vs ekonomia ograniczona.', quote:'', tags:['Bataille','Transgresja','Suwerenność','Wydatkowanie'] },
+  { chapter:'Wykład IX–X', title:'Krytyka rozumu jako demaskacja: Foucault', text:'Genealogia władzy-wiedzy. Od dyscypliny do biopolityki. Władza produktywna. Habermas zarzuca Foucaultowi „krypto-normatywizm".', quote:'', tags:['Foucault','Władza-wiedza','Biopolityka','Krypto-normatywizm'] },
+  { chapter:'Wykład XI', title:'Rozum komunikacyjny — alternatywa', text:'Przejście od rozumu podmiotowego do komunikacyjnego. Trzy roszczenia ważnościowe. Świat życia. Intersubiektywność zamiast monologicznego podmiotu.', quote:'„Rozum komunikacyjny wyraża się w zdecentrowanym rozumieniu świata."', tags:['Habermas','Działanie komunikacyjne','Racjonalność komunikacyjna'] },
+  { chapter:'Dygresja', title:'Castoriadis: imaginacyjna instytucja', text:'Społeczeństwo jako wytwór radykalnej wyobraźni instytucjonalnej. Autonomia jako projekt. Ale: nie potrafi wyjaśnić intersubiektywności.', quote:'„Bez produktywnej, twórczej albo radykalnej imaginacji, historia jest niemożliwa i niepojęta."', tags:['Castoriadis','Wyobraźnia instytucjonalna','Autonomia'] },
+  { chapter:'Wykład XII', title:'Normatywna zawartość nowoczesności', text:'Kolonizacja świata życia przez systemy pieniądza i władzy. Sfera publiczna jako opór. Racjonalność komunikacyjna chroni normatywną zawartość nowoczesności.', quote:'„Pieniądz i władza nie mogą ani kupić, ani wymusić solidarności i sensu."', tags:['Kolonizacja świata życia','Sfera publiczna','Patologie nowoczesności'] },
+  { chapter:'Dygresja', title:'Luhmann: teoria systemów', text:'Autoreferencjalność systemu zastępuje samowiedzę podmiotu. Autopoiesis. Społeczeństwo acentryczne — bez podmiotu. Ale: traci normatywność.', quote:'„Każdy system autoreferencjalny ma tylko kontakt z otoczeniem, który sam sobie umożliwia."', tags:['Luhmann','Autopoiesis','Autoreferencjalność'] },
+];
+
+// ═══════════════════════════════════════════════
+// ENCYCLOPEDIA DATA: CONCEPTS
+// ═══════════════════════════════════════════════
+const conceptsData = [
+  {philosopher:'Hegel',color:'var(--cyan)',name:'Dialektyka',desc:'Metoda myślenia: teza–antyteza–synteza (Aufhebung). Sprzeczności „znoszone" na wyższym poziomie. Historia jako postęp w świadomości wolności.',quote:'„Dialektyka jest ruchem samego pojęcia — sprzeczność nie jest wadą myślenia, lecz motorem rozwoju."',related:'Materializm historyczny, Dialektyka negatywna'},
+  {philosopher:'Hegel',color:'var(--cyan)',name:'Podmiotowość (Subjektivität)',desc:'Zasada nowoczesności — wolność podmiotu do samookreślenia. Obejmuje wolność religijną, prawa jednostki, autonomię moralną.',quote:'„Ta wolność urzeczywistnia się w społeczeństwie jako zagwarantowany przez prawo prywatny obszar."',related:'Krytyka podmiotu (Heidegger, Foucault, Derrida)'},
+  {philosopher:'Hegel',color:'var(--cyan)',name:'Rozum absolutny',desc:'Duch (Geist) sam siebie poznaje w procesie historycznym. Problem: koncepcja okazała się „za mocna" — duch absolutny unosi się obojętnie nad otwartym procesem dziejów.',quote:'„Pojęcie rozumu absolutnego rozsadza ramy epoki, dla której miało dostarczyć normatywności." (s. 43)',related:'Krytyka: Kierkegaard, Marks'},
+  {philosopher:'Marks',color:'var(--cyan)',name:'Materializm historyczny',desc:'Odwrócenie Hegla: materialne warunki produkcji determinują świadomość. Baza ekonomiczna kształtuje nadbudowę ideologiczną.',quote:'„Zasadą nowoczesności nie jest dla niej samowiedza, lecz praca."',related:'Teoria krytyczna, Praxis'},
+  {philosopher:'Marks',color:'var(--cyan)',name:'Praca wyobcowana',desc:'Cykl uzewnętrzniania i przyswajania sił zostaje przerwany. Wytwórca odcięty od swoich wytworów.',quote:'„W wyobcowanej pracy cykl uzewnętrzniania i przyswajania uprzedmiotowionych sił zostaje przerwany."',related:'Alienacja, Filozofia praktyki'},
+  {philosopher:'Benjamin',color:'var(--green)',name:'Jetztzeit (Czas teraźniejszy)',desc:'Autentyczna chwila innowacyjnej teraźniejszości przerywa kontinuum historii — wyłamuje się z homogenicznego biegu czasu.',quote:'„Każda sekunda stanowiła maleńką furtkę, przez którą mógł wkroczyć Mesjasz." (teza XVIII)',related:'Obraz dialektyczny, Anamnetyczna solidarność'},
+  {philosopher:'Benjamin',color:'var(--green)',name:'Anioł historii',desc:'Alegoria z IX tezy: anioł historii widzi stos ruin, ale wicher postępu pędzi go naprzód. Krytyka linearnej koncepcji dziejów jako postępu.',quote:'„Nie ma takiego dokumentu kultury, który nie byłby zarazem dokumentem barbarzyństwa." (teza VII)',related:'Krytyka historyzmu, Jetztzeit'},
+  {philosopher:'Benjamin',color:'var(--green)',name:'Anamnetyczna solidarność',desc:'Odpowiedzialność wobec uciśnionych pokoleń przeszłości. Etyczny uniwersalizm musi traktować poważnie także niesprawiedliwość, która już się wydarzyła.',quote:'„Rewolucyjna szansa w walce o uciśnioną przeszłość." (teza XVII)',related:'Mesjanizm, Jetztzeit'},
+  {philosopher:'Nietzsche',color:'var(--red)',name:'Genealogia',desc:'Demaskacja historycznych warunków powstania wartości moralnych. „Naturalne" przekonania jako wytwory relacji władzy.',quote:'„Nietzsche korzysta z drabiny rozumu historycznego, by ją na końcu odrzucić." (s. 107)',related:'Genealogia władzy (Foucault), Dekonstrukcja'},
+  {philosopher:'Nietzsche',color:'var(--red)',name:'Wola mocy',desc:'Sensotwórcza potencja — estetyczny rdzeń siły życiowej. Nie chęć panowania, lecz twórcza siła.',quote:'„Wola mocy jest zarazem wolą pozoru, wolą uproszczenia, maski, powierzchni."',related:'Suwerenność (Bataille), Władza (Foucault)'},
+  {philosopher:'Nietzsche',color:'var(--red)',name:'Dionizyjskość',desc:'Żywioł upojenia, chaosu, twórczego niszczenia — przeciwieństwo apollińskiego porządku.',quote:'„Jednostka ze wszystkimi swymi ograniczeniami popadała w samozatratę dionizyjskich stanów."',related:'Transgresja (Bataille)'},
+  {philosopher:'Horkheimer & Adorno',color:'var(--green)',name:'Rozum instrumentalny',desc:'Racjonalność zredukowana do kalkulacji środków i celów, panowania nad naturą. Utożsamienie poznania z kontrolą.',quote:'„Rozum instrumentalny, triumfujący nad mitologią, sam staje się mityczny w swoim totalizmie." (s. 133)',related:'Racjonalność komunikacyjna (alternatywa)'},
+  {philosopher:'Horkheimer & Adorno',color:'var(--green)',name:'Dialektyka oświecenia',desc:'Oświecenie przechodzi w swoje przeciwieństwo — totalitarną kontrolę. „Oświecenie zawsze już było mitem, a mit zawsze już był oświeceniem."',quote:'„Mit jest już oświeceniem, a oświecenie zwraca się w mitologię." (s. 130)',related:'Aporia → rozwiązanie Habermasa'},
+  {philosopher:'Horkheimer & Adorno',color:'var(--green)',name:'Mimesis',desc:'Wczucie i imitacja — opór wobec rozumu instrumentalnego. Relacja zachowująca zarazem zależność i autonomię.',quote:'„Stan pojednania nie anektowałby tego, co obce."',related:'Différance (Derrida)'},
+  {philosopher:'Adorno',color:'var(--green)',name:'Dialektyka negatywna',desc:'Myślenie nie dążące do syntezy — utrzymuje napięcie sprzeczności. Chroni „nie-tożsame" (Nichtidentisches).',quote:'„Horkheimer i Adorno doprowadzili krytykę rozumu do punktu, w którym krytyka traci grunt pod nogami." (s. 142)',related:'Différance (Derrida), Dekonstrukcja'},
+  {philosopher:'Heidegger',color:'var(--red)',name:'Dasein',desc:'Byt rozumiejący swoje bycie — człowiek jako „bycie-w-świecie". Nie abstrakcyjny podmiot, lecz konkretna, skończona egzystencja.',quote:'„Heidegger temporalizuje filozofię początku — szuka źródłowego doświadczenia bycia sprzed metafizyki." (s. 170)',related:'Egzystencja (Kierkegaard)'},
+  {philosopher:'Heidegger',color:'var(--red)',name:'Zapomnienie bycia',desc:'Cała metafizyka zachodnia „zapomniała" o pytaniu o bycie (Sein), koncentrując się na bytach (Seiendes).',quote:'„Heidegger zastępuje normatywną krytykę nowoczesności odwołaniem do losu bycia." (s. 175)',related:'Logocentryzm (Derrida)'},
+  {philosopher:'Heidegger',color:'var(--red)',name:'Ge-stell (Zestaw)',desc:'Istota nowoczesnej techniki: sposób odsłaniania traktujący wszystko jako „zasób stojący do dyspozycji" (Bestand).',quote:'„Nowoczesny świat likwiduje historyczne porządki społecznego bytu człowieka."',related:'Rozum instrumentalny, Biopolityka'},
+  {philosopher:'Derrida',color:'var(--gold)',name:'Dekonstrukcja',desc:'Strategia odsłaniająca wewnętrzne napięcia tekstów. Każda hierarchia binarna jest niestabilna.',quote:'„Dekonstrukcja żyje pasożytniczo z tego, co niszczy — bez metafizyki obecności nie miałaby czego dekonstruować." (s. 207)',related:'Destrukcja (Heidegger), Genealogia'},
+  {philosopher:'Derrida',color:'var(--gold)',name:'Différance',desc:'Neologizm: „różnica" + „odwlekanie". Znaczenie nigdy w pełni obecne — zawsze odsyła dalej. Podważa metafizykę obecności.',quote:'„Différance nie jest ani słowem, ani pojęciem — jest ruchem, który wytwarza różnice i odwleka obecność." (s. 194)',related:'Nie-tożsamość (Adorno)'},
+  {philosopher:'Derrida',color:'var(--gold)',name:'Logocentryzm',desc:'Uprzywilejowanie logosu (rozumu, mowy, obecności) nad pismem, ciałem, nieobecnością.',quote:'„Kto traktuje filozofię jako gatunek literacki, ten pozbawia się środków, za pomocą których mógłby wyrazić to, co chce powiedzieć." (s. 220)',related:'Fonocentryzm'},
+  {philosopher:'Foucault',color:'var(--gold)',name:'Władza-wiedza',desc:'Władza i wiedza warunkują się wzajemnie. Dyskursy naukowe wytwarzają „prawdę", która kontroluje ludzi.',quote:'„Tam gdzie jest wiedza, jest władza — i na odwrót." (s. 280)',related:'Ideologia (Marks)'},
+  {philosopher:'Foucault',color:'var(--gold)',name:'Biopolityka',desc:'Władza zarządzająca życiem populacji — zdrowiem, rozrodczością, higieną. Nie zakazuje, lecz produkuje.',quote:'„Foucault może tylko uzmysłowić, że poddawani jesteśmy praktykom władzy — ale nie potrafi powiedzieć, dlaczego powinniśmy się im oprzeć." (s. 296)',related:'Ge-stell (Heidegger), Kolonizacja świata życia'},
+  {philosopher:'Foucault',color:'var(--gold)',name:'Panoptikon',desc:'Model władzy dyscyplinarnej — widziany, ale nie widzący. Jednostka internalizuje nadzór.',quote:'„Genealogia jest szara, drobiazgowa, cierpliwie dokumentalna." (s. 276)',related:'Przemysł kulturowy (Adorno)'},
+  {philosopher:'Bataille',color:'var(--gold)',name:'Transgresja',desc:'Przekroczenie granic racjonalności, moralności, ekonomii. Moment suwerenności poza logiką użyteczności.',quote:'„Transgresja żyje z granicy, którą przekracza — jest dialektycznie zależna od tego, co neguje." (s. 253)',related:'Dionizyjskość (Nietzsche)'},
+  {philosopher:'Bataille',color:'var(--gold)',name:'Wydatkowanie (dépense)',desc:'Ekonomia wydatkowania przeciw akumulacji. Potlacz, ofiara, erotyzm — bezproduktywne wydatkowanie.',quote:'„Ekonomia ogólna odsłania to, co ekonomia ograniczona tłumi: nadwyżkę, dar, roztrwonienie." (s. 250)',related:'Wola mocy (Nietzsche)'},
+  {philosopher:'Luhmann',color:'var(--violet)',name:'Autopoiesis',desc:'Systemy same produkują elementy, z których się składają. Prawo wytwarza prawo, nauka teorie.',quote:'„Systemy autopoietyczne same siebie reprodukują — komunikacja rodzi komunikację, nie potrzebując podmiotu." (s. 410)',related:'Wyobraźnia instytucjonalna'},
+  {philosopher:'Luhmann',color:'var(--violet)',name:'Różnicowanie funkcjonalne',desc:'Społeczeństwo dzieli się na autonomiczne podsystemy — żaden nie jest nadrzędny. Policentryczność.',quote:'„W teorii systemów nie ma miejsca na normatywność — systemy po prostu funkcjonują." (s. 418)',related:'Kolonizacja świata życia'},
+  {philosopher:'Castoriadis',color:'var(--violet)',name:'Wyobraźnia instytucjonalna',desc:'Społeczeństwo jako wytwór radykalnej wyobraźni (imaginaire instituant). Tworzy znaczenia z niczego.',quote:'„Bez produktywnej, twórczej albo radykalnej imaginacji, historia jest niemożliwa i niepojęta."',related:'Praxis (Marks)'},
+  {philosopher:'Habermas',color:'var(--violet)',name:'Działanie komunikacyjne',desc:'Interakcja zorientowana na porozumienie — uczestnicy koordynują działania przez wymianę argumentów.',quote:'„Rozum jest od początku rozumem ucieleśnionym w układach działania komunikacyjnego."',related:'Dialektyka (Hegel), Praxis (Marks)'},
+  {philosopher:'Habermas',color:'var(--violet)',name:'Racjonalność komunikacyjna',desc:'Alternatywa dla rozumu podmiotowego. Racjonalność zakorzeniona w dialogu — „lepszy argument" jako kryterium.',quote:'„Rozum komunikacyjny wyraża się w zdecentrowanym rozumieniu świata."',related:'vs Rozum instrumentalny'},
+  {philosopher:'Habermas',color:'var(--violet)',name:'Świat życia (Lebenswelt)',desc:'Horyzont niezakwestionowanych oczywistości. Kultura, społeczeństwo, osobowość — reprodukowane komunikacyjnie.',quote:'„Patologie nowoczesności nie wynikają z nadmiaru racjonalizacji, lecz z jednostronnej kolonizacji świata życia." (s. 355)',related:'Dasein (Heidegger)'},
+  {philosopher:'Habermas',color:'var(--violet)',name:'Kolonizacja świata życia',desc:'Logika systemów (pieniądz, biurokracja) wnika w sfery regulowane komunikacyjnie — rodzinę, kulturę, sferę publiczną.',quote:'„Pieniądz i władza nie mogą ani kupić, ani wymusić solidarności i sensu."',related:'Rozum instrumentalny, Biopolityka'},
+  {philosopher:'Habermas',color:'var(--violet)',name:'Intersubiektywność',desc:'Podmiot konstytuuje się w relacji z innymi. Komunikacja, nie świadomość, jest pierwotna.',quote:'„Przejście od filozofii podmiotu do teorii komunikacji pozwala ocalić normatywną zawartość nowoczesności." (s. 350)',related:'vs Podmiotowość (Hegel)'},
+];
+
+// ═══════════════════════════════════════════════
+// ENCYCLOPEDIA DATA: QUIZ QUESTIONS (~200)
+// ═══════════════════════════════════════════════
+const quizQuestions = [
+// -- HEGEL --
+{category:'Hegel',question:'Jaka jest kluczowa zasada nowoczesności według Hegla?',options:['Podmiotowość jako fundament wolności, refleksji i samookreślenia jednostki','Wola mocy jako twórcza siła zdolna do przewartościowania wszystkich wartości','Działanie komunikacyjne zorientowane na osiągnięcie wzajemnego porozumienia','Autopoiesis systemów społecznych wytwarzających nieustannie własne elementy'],correct:0,explanation:'Hegel identyfikuje zasadę podmiotowości jako fundament nowożytności.'},
+{category:'Hegel',question:'Co oznacza „Aufhebung"?',options:['Całkowite odrzucenie tezy i zastąpienie jej radykalnie nową syntezą pojęciową','Dekonstrukcja opozycji pojęciowych poprzez ujawnienie ich wewnętrznej niestabilności','Powrót do natury przez przezwyciężenie abstrakcyjnej racjonalności nowoczesnej','Zniesienie, zachowanie i podniesienie na wyższy poziom w jednym ruchu'],correct:3,explanation:'Aufhebung to jednoczesne zniesienie, zachowanie i wyniesienie na wyższy poziom.'},
+{category:'Hegel',question:'Dlaczego nowoczesność musi „samą siebie poświadczać"?',options:['Bo nauka zastąpiła filozofię jako ostateczne źródło legitymizacji wiedzy','Bo rozum jest nieskończony i nieustannie przekracza wszelkie granice poznania','Bo społeczeństwo osiągnęło pełną racjonalność we wszystkich swoich instytucjach','Bo nie może czerpać normatywności z wzorców i autorytetów przeszłych epok'],correct:3,explanation:'Nowoczesność zrywa z tradycją — musi znaleźć normy w sobie samej.'},
+{category:'Hegel',question:'Co Hegel rozumie przez „ducha absolutnego"?',options:['Rozum poznający siebie samego w dialektycznym procesie dziejów historycznych','Boga chrześcijańskiego jako transcendentne i osobowe źródło sensu świata','Indywidualną duszę jednostki dążącą do pełni samowiedzy i wolności','Prawa natury rządzące niezmiennym i racjonalnym porządkiem rzeczywistości'],correct:0,explanation:'Duch absolutny (Geist) to rozum realizujący się w historii.'},
+{category:'Hegel',question:'Dlaczego rozwiązanie Hegla jest „za mocne" według Habermasa?',options:['Bo jest nazbyt optymistyczne w swojej ocenie możliwości ludzkiego rozumu','Bo całkowicie ignoruje materialną bazę ekonomiczną kształtującą stosunki społeczne','Bo zbyt łatwo syntetyzuje realne sprzeczności i napięcia nowoczesności w pojęciach','Bo rozum absolutny unosi się obojętnie nad otwartym i niedokończonym procesem dziejów'],correct:3,explanation:'Rozum absolutny „zamyka" historię — nie zostawia miejsca dla przyszłości.'},
+{category:'Hegel',question:'Co oznacza „filozofia jest swoim własnym czasem ujętym w myślach"?',options:['Filozofia wyraża i artykułuje ducha swojej epoki w ścisłych pojęciach spekulatywnych','Filozofia jest skończona czasowo, ograniczona i całkowicie historycznie uwarunkowana','Filozofowie próbują uchwycić i precyzyjnie zmierzyć upływającą istotę czasu','Myślenie filozoficzne antycypuje i projektuje przyszłe formy społecznej świadomości'],correct:0,explanation:'Hegel uważa, że filozofia artykułuje to, czym jej epoka żyje.'},
+{category:'Hegel',question:'Jakie wydarzenie historyczne Hegel uważa za przełom nowoczesności?',options:['Odkrycie Ameryki jako otwarcie nowego horyzontu cywilizacyjnego i poznawczego','Wynalazek druku jako rewolucyjne upowszechnienie dostępu do wiedzy i kultury','Reformację jako emancypację indywidualnego sumienia i wolności jednostki','Rewolucję Francuską jako polityczną realizację idei powszechnej wolności obywatelskiej'],correct:2,explanation:'Reformacja, obok oświecenia i Rewolucji Francuskiej, stanowi kluczowy moment emancypacji podmiotowości.'},
+{category:'Hegel',question:'Jak Hegel próbuje pogodzić podmiotowość z jednością społeczną?',options:['Przez silne państwo narzucające porządek i harmonię społeczną odgórnie swoim obywatelom','Przez rewolucyjne przezwyciężenie istniejących podziałów społecznych drogą walki klasowej','Przez rozum spekulatywny — filozofię absolutną zdolną jednoczyć rozdzielone sfery życia','Przez powrót do religijnej wspólnoty opartej na wspólnych praktykach symbolicznych'],correct:2,explanation:'Rozum spekulatywny miał jednoczyć to, co nowoczesność rozdzieliła.'},
+{category:'Hegel',question:'Co Habermas zarzuca Heglowi jako fundamentalny problem?',options:['Że pozostawał konserwatystą broniącym pruskiego porządku państwowego jako racjonalnego','Że absolutyzacja rozumu nie pozwala na otwartość historii ku nieprzewidywalnej przyszłości','Że całkowicie ignorował polityczne i praktyczne wymiary nowoczesności społecznej','Że sprowadzał żywą treść religii do abstrakcyjnych pojęć filozofii spekulatywnej'],correct:1,explanation:'Rozum absolutny, obejmując całość, zamyka historię i traci wymiar krytyczny.'},
+{category:'Hegel',question:'Czym Hegel różni się od oświeceniowych filozofów wg Habermasa?',options:['Jest bardziej optymistyczny w kwestii możliwości postępu nauk przyrodniczych','Jest bardziej religijny i zachowuje teologiczne kategorie w swoim systemie filozoficznym','Jest bardziej praktyczny w poszukiwaniu konkretnych rozwiązań politycznych i instytucjonalnych','Jako pierwszy rozpoznaje, że nowoczesność jest fundamentalnym problemem dla siebie samej'],correct:3,explanation:'Hegel jako pierwszy filozoficznie artykułuje problem samopoświadczenia nowoczesności.'},
+// -- MARKS --
+{category:'Marks',question:'Co jest zasadą nowoczesności według Marksa?',options:['Samowiedza ducha realizującego się w dialektycznym procesie dziejów historycznych','Komunikacja intersubiektywna oparta na wzajemnym uznaniu roszczeń ważnościowych','Twórcza wyobraźnia instytucjonalna konstytuująca autonomiczne formy życia społecznego','Praca jako materialna podstawa ludzkiego samourzeczywistnienia i emancypacji społecznej'],correct:3,explanation:'Marks zastępuje heglowską samowiedzę pracą jako fundamentem.'},
+{category:'Marks',question:'Co Marks rozumie przez „pracę wyobcowaną"?',options:['Przerwanie cyklu uzewnętrzniania i przyswajania — wytwórca zostaje odcięty od wytworów','Monotonną pracę powtarzalną pozbawioną elementu twórczości i osobistego zaangażowania','Pracę najemną wykonywaną na emigracji z dala od własnej wspólnoty kulturowej','Każdą formę pracy fizycznej oddzieloną od kontemplacji i życia umysłowego'],correct:0,explanation:'W pracy wyobcowanej cykl uzewnętrzniania sił zostaje przerwany.'},
+{category:'Marks',question:'Co oznacza „postawienie dialektyki Hegla na nogi"?',options:['Całkowite odrzucenie Hegla i powrót do przedkantowskiego materializmu filozoficznego','Zamianę idealizmu na materializm — baza ekonomiczna determinuje nadbudowę świadomościową','Zastąpienie dialektyki spekulatywnej precyzyjną logiką formalną nauk przyrodniczych','Powrót do platońskiej dialektyki jako właściwej metody dochodzenia do prawdy'],correct:1,explanation:'Marks „odwraca" Hegla: nie duch, lecz materialne warunki produkcji kształtują świadomość.'},
+{category:'Marks',question:'Jaki zarzut stawia Habermas Marksowi?',options:['Że był zbyt rewolucyjny i nie doceniał reformistycznych możliwości demokracji parlamentarnej','Że ignorował wymiar ekonomiczny i koncentrował się wyłącznie na ideologicznej nadbudowie','Że pozostawał idealistą ukrywającym spekulatywne założenia pod materialistyczną retoryką','Że ulega pojęciowej presji filozofii podmiotu — jedynie zastępuje samowiedzę ducha pracą'],correct:3,explanation:'Marks, zastępując samowiedzę pracą, wciąż operuje w ramach filozofii podmiotu.'},
+{category:'Marks',question:'Czym jest „fetyszyzm towarowy"?',options:['Obsesyjnym kolekcjonowaniem dóbr luksusowych jako wyrazem statusu społecznego jednostki','Sakralizacją przedmiotów codziennego użytku w rytualnych praktykach kultury konsumpcyjnej','Manipulacyjną reklamą tworzącą sztuczne potrzeby i fałszywą świadomość konsumentów','Postrzeganiem relacji społecznych między ludźmi jako naturalnych właściwości samych rzeczy'],correct:3,explanation:'Stosunki między ludźmi przybierają pozornie naturalną formę stosunków między rzeczami.'},
+// -- BENJAMIN --
+{category:'Benjamin',question:'Co oznacza „Jetztzeit" w tezach Benjamina?',options:['Czas linearny prowadzący nieuchronnie ku przyszłej doskonałości ludzkiego gatunku','Czas przeszły definitywnie zamknięty w archiwum i niedostępny dla żywego doświadczenia','Przyszły czas utopijny projektowany przez rewolucyjną wyobraźnię polityczną mas','Autentyczna chwila teraźniejszości, która przerywa homogeniczne kontinuum historii'],correct:3,explanation:'Jetztzeit wyłamuje się z homogenicznego biegu czasu — jest momentem rewolucyjnym.'},
+{category:'Benjamin',question:'Jak Benjamin rozumie „postęp" w historii?',options:['Jako nieunikniony marsz ludzkości ku coraz lepszemu i bardziej racjonalnemu światu','Jako rozwój technologiczny napędzający transformację stosunków produkcji i wymiany','Jako kumulatywny wzrost wiedzy naukowej budujący gmach ludzkiego poznania','Jako „czas homogeniczny i pusty" — ostro krytykuje linearną koncepcję dziejów'],correct:3,explanation:'Benjamin ostro krytykuje wiarę w automatyczny postęp.'},
+{category:'Benjamin',question:'Co symbolizuje „Anioł historii" z IX tezy?',options:['Anioł widzi narastający stos ruin, ale wicher postępu pędzi go nieustannie naprzód','Optymizm oświeceniowy wierzący w stopniowe doskonalenie instytucji ludzkich i moralności','Przyszłość jako otwarty horyzont możliwości kształtowany przez wolne decyzje podmiotów','Boską opatrzność czuwającą nad sensem i celowością procesu dziejowego ludzkości'],correct:0,explanation:'Angelus Novus Klee — anioł chciałby obudzić umarłych, ale wicher z raju pędzi go w przyszłość.'},
+{category:'Benjamin',question:'Co oznacza „anamnetyczna solidarność"?',options:['Solidarność klasową opartą na wspólnym interesie ekonomicznym proletariatu przemysłowego','Pamięć autobiograficzną jednostki kształtującą jej tożsamość i poczucie ciągłości','Solidarność z przyjaciółmi i najbliższymi w codziennych praktykach wzajemnej pomocy','Odpowiedzialność wobec uciśnionych pokoleń przeszłości i ich niespełnionych nadziei'],correct:3,explanation:'Etyczny uniwersalizm obejmuje także niesprawiedliwość, która już się wydarzyła.'},
+{category:'Benjamin',question:'Jak brzmi teza VII Benjamina o dokumentach kultury?',options:['„Nie ma takiego dokumentu kultury, który nie byłby zarazem dokumentem barbarzyństwa"','Kultura jest wiecznym i autonomicznym wyrazem ducha ludzkiego przekraczającym swój czas','Kultura jest postępową siłą emancypacyjną prowadzącą ludzkość ku wolności i oświeceniu','Kultura jest darem tradycji religijnej zachowującym sacrum w zsekularyzowanym świecie'],correct:0,explanation:'Benjamin demaskuje: każde dzieło kultury niesie ślad cierpienia tych, którzy je umożliwili.'},
+{category:'Benjamin',question:'Co Benjamin rozumie przez „aurę" dzieła sztuki?',options:['Kolorystyczny nimb otaczający oryginalne dzieło w przestrzeni muzealnej i galeryjnej','Wartość rynkową dzieła sztuki określaną przez mechanizmy popytu i podaży na rynku','Niepowtarzalną obecność oryginału — jednorazowość i autentyczność ginące w epoce reprodukcji','Atmosferę kontemplacyjną wytwarzaną przez instytucjonalne ramy odbioru dzieła sztuki'],correct:2,explanation:'Aura to „jednorazowe zjawienie się dali, choćby była najbliżej" — reprodukcja techniczna ją niszczy.'},
+// -- SZKOŁA FRANKFURCKA --
+{category:'Szkoła Frankfurcka',question:'Co oznacza teza „oświecenie jest totalitarne"?',options:['Że filozofowie oświecenia narzucali swoje poglądy społeczeństwu za pomocą instytucji','Że oświecenie nieuchronnie prowadzi do powstania autorytarnych reżimów politycznych','Że ideały oświecenia okazały się złudzeniem pozbawionym realnych podstaw historycznych','Że racjonalność instrumentalna prowadzi do totalnego panowania nad naturą i ludźmi'],correct:3,explanation:'Rozum oświeceniowy, dążąc do panowania nad naturą, sam staje się narzędziem dominacji.'},
+{category:'Szkoła Frankfurcka',question:'Co to jest „przemysł kulturowy"?',options:['Wolnorynkowy przemysł artystyczny wytwarzający dzieła zgodnie z twórczą wolnością autorów','Cenzura państwowa kontrolująca treści kulturowe w imię porządku publicznego i moralności','Niezależny rynek wydawniczy oferujący pluralizm światopoglądowy i estetyczny czytelnikom','System masowej produkcji kultury standaryzujący gust i tłumiący krytyczne myślenie'],correct:3,explanation:'Kulturindustrie to masowa produkcja pozornie zróżnicowanej kultury.'},
+{category:'Szkoła Frankfurcka',question:'Co Adorno nazywa „dialektyką negatywną"?',options:['Negowanie każdej teorii jako zasada radykalnego sceptycyzmu wobec wszelkich twierdzeń','Pesymistyczną wizję historii jako nieuchronnego upadku i degeneracji form społecznych','Myślenie opierające się totalizacji pojęciowej i zachowujące to, co nie-tożsame','Krytykę logiki formalnej jako narzędzia niezdolnego uchwycić sprzeczności rzeczywistości'],correct:2,explanation:'Dialektyka negatywna nie dąży do syntezy — chroni to, co wymyka się identyfikacji.'},
+{category:'Szkoła Frankfurcka',question:'Jaka jest „aporia" Dialektyki oświecenia?',options:['Autorzy krytykują rozum za pomocą rozumu — popadają w performatywną sprzeczność','Autorzy są zbyt optymistyczni w ocenie możliwości przezwyciężenia kryzysu rozumu','Dzieło nie zawiera żadnej aporii i stanowi spójny system filozofii krytycznej','Autorzy całkowicie ignorują rolę sztuki jako schronienia dla potencjału emancypacyjnego'],correct:0,explanation:'Horkheimer i Adorno używają rozumu do krytyki rozumu — ale nie potrafią uzasadnić swojej pozycji.'},
+{category:'Szkoła Frankfurcka',question:'Jak Habermas odpowiada na aporie Dialektyki oświecenia?',options:['Odrzuca całą tradycję frankfurcką jako beznadziejnie uwikłaną w paradoksy samoodniesienia','Akceptuje aporie jako nieusuwalne i proponuje estetyczne formy oporu wobec systemu','Nie podejmuje żadnej próby odpowiedzi i pozostawia problem otwarty dla przyszłych pokoleń','Rozróżnia rozum instrumentalny od komunikacyjnego — otwiera wyjście z totalnej krytyki'],correct:3,explanation:'Habermas dzieli racjonalność na dwa typy, unikając totalnej krytyki rozumu.'},
+{category:'Szkoła Frankfurcka',question:'Co to jest „rozum instrumentalny"?',options:['Rozum praktyczny kierujący się imperatywem kategorycznym i obowiązkiem moralnym','Racjonalność zredukowana do kalkulacji środków i celów — efektywność bez refleksji nad celami','Rozumowanie naukowe posługujące się instrumentami pomiarowymi i eksperymentem laboratoryjnym','Rozum techniczny ograniczony do projektowania urządzeń i systemów inżynieryjnych'],correct:1,explanation:'Rozum instrumentalny pyta tylko „jak?", nigdy „po co?".'},
+// -- HEIDEGGER --
+{category:'Heidegger',question:'Co oznacza „zapomnienie bycia"?',options:['Psychologiczna amnezja kulturowa prowadząca do utraty pamięci o tradycjach przeszłości','Metafizyka od Platona pytała o byt zamiast o bycie — fundamentalna różnica ontologiczna','Kryzys nauk szczegółowych niezdolnych uchwycić całościowego sensu rzeczywistości','Utrata pamięci kulturowej spowodowana przyspieszeniem procesów modernizacji społecznej'],correct:1,explanation:'Cała tradycja od Platona mylnie pytała o byt (Seiendes) zamiast o bycie (Sein).'},
+{category:'Heidegger',question:'Jak Heidegger rozumie Ge-stell?',options:['Sposób odsłaniania bycia traktujący wszystko jako zasób stojący do dyspozycji','Konkretne narzędzie techniczne służące przekształcaniu i opanowywaniu przyrody materialnej','Neutralne medium komunikacji umożliwiające intersubiektywne porozumienie między ludźmi','Formę sztuki odsłaniającą prawdę bycia w dziele jako wydarzeniu epokowym'],correct:0,explanation:'Ge-stell to nie narzędzia — to ontologiczna struktura redukująca wszystko do „zasobu".'},
+{category:'Heidegger',question:'Co to jest Dasein?',options:['Abstrakcyjny podmiot kartezjański zdolny do czystej refleksji nad własnymi przedstawieniami','Bóg jako transcendencja wykraczająca poza porządek bytów skończonych i czasowych','Byt rozumiejący swoje bycie — człowiek jako konkretne „bycie-w-świecie" rzucone w dziejowość','Natura jako żywy organizm samoorganizujący się według wewnętrznych praw rozwoju'],correct:2,explanation:'Dasein to nie kartezjański podmiot, lecz konkretna, skończona egzystencja rzucona w świat.'},
+{category:'Heidegger',question:'Co oznacza „Kehre" (zwrot)?',options:['Przejście od analityki Dasein do myślenia samego bycia jako wydarzenia dziejowego','Zwrot polityczny ku zaangażowaniu w konkretne sprawy wspólnoty narodowej i państwa','Radykalną zmianę zdania na temat wartości techniki i nowoczesności przemysłowej','Nawrócenie religijne i powrót do teologicznych źródeł myślenia europejskiego'],correct:0,explanation:'Po „Byciu i czasie" Heidegger przesuwa uwagę na myślenie bycia jako takiego.'},
+{category:'Heidegger',question:'Co Habermas zarzuca Heideggerowi?',options:['Że jest zbyt prosty i nie docenia złożoności problemów nowoczesnego społeczeństwa','Że jest materialistą ukrywającym ekonomiczne założenia pod ontologiczną retoryką','Że wpada w temporalizowaną Ursprungsphilosophie — filozofię początku i fundamentalizm bycia','Że całkowicie ignoruje wymiar polityczny i etyczny odpowiedzialności za drugiego człowieka'],correct:2,explanation:'Heidegger zastępuje podmiot „byciem", ale wpada w nowy fundamentalizm.'},
+{category:'Heidegger',question:'Co łączy Heideggera z Nietzschem?',options:['Obaj krytykują metafizykę, ale Heidegger uważa Nietzschego za „ostatniego metafizyka"','Ich filozofie są zasadniczo identyczne w diagnozie kryzysu nowoczesnego świata','Heidegger całkowicie odrzuca Nietzschego jako myśliciela pozbawionego ontologicznej głębi','Łączy ich wyłącznie wspólne zainteresowanie filologią klasyczną i kulturą starożytnej Grecji'],correct:0,explanation:'Heidegger widzi w Nietzschem kulminację metafizyki — wola mocy to ostatnia postać zapomnienia bycia.'},
+// -- DERRIDA --
+{category:'Derrida',question:'Co oznacza „différance"?',options:['Zwykłą różnicę między znakami w systemie językowym opisaną przez Saussure\'a','Dialektyczną syntezę przeciwieństw prowadzącą do wyższego poziomu wiedzy absolutnej','Komunikacyjny konsensus osiągany przez uczestników racjonalnej wymiany argumentów','Odwlekanie i różnicowanie — znaczenie nigdy nie jest w pełni obecne ani ustalone'],correct:3,explanation:'Différance (z „a") to gra różnicowania i odwlekania — znaczenie zawsze odsyła dalej.'},
+{category:'Derrida',question:'Co Derrida nazywa „logocentryzmem"?',options:['Centralną rolę logiki formalnej w budowaniu systemów wiedzy naukowej i filozoficznej','Strukturalizm lingwistyczny badający głębokie struktury języka i komunikacji ludzkiej','Założenie metafizyki zachodniej, że istnieje logos dający pełny dostęp do prawdy obecności','Teorię komunikacji opartą na racjonalnym porozumieniu i uniwersalnych normach dyskursu'],correct:2,explanation:'Logocentryzm to uprzywilejowanie logosu w metafizyce zachodniej.'},
+{category:'Derrida',question:'Jaki jest związek dekonstrukcji z destrukcją Heideggera?',options:['Derrida całkowicie odrzuca Heideggera jako myśliciela uwikłanego w nazistowską ideologię','Dekonstrukcja radykalizuje heideggerowską destrukcję — Derrida dekonstruuje samego Heideggera','Heidegger stworzył dekonstrukcję, a Derrida jedynie przejął jego metodę bez zmian','Nie ma żadnego związku — obie metody powstały niezależnie z odmiennych tradycji'],correct:1,explanation:'Derrida idzie dalej — pokazuje, że i Heidegger pozostaje uwikłany w metafizykę obecności.'},
+{category:'Derrida',question:'Jaki zarzut stawia Habermas wobec Derridy?',options:['Celową niejasność stylistyczną utrudniającą racjonalną dyskusję nad treścią filozoficzną','Zacieranie różnicy między filozofią a literaturą, co podważa roszczenia ważnościowe dyskursu','Dogmatyczność przejawiającą się w niechęci do rewizji własnych założeń i tez','Całkowite ignorowanie Hegla i tradycji idealizmu niemieckiego jako źródła nowoczesności'],correct:1,explanation:'Habermas zarzuca, że dekonstrukcja, zrównując filozofię z literaturą, traci potencjał krytyczny.'},
+{category:'Derrida',question:'Co dekonstrukcja robi z binarnymi opozycjami?',options:['Utrzymuje je jako konieczne ramy porządkujące myślenie i organizujące poznanie','Łączy je w dialektyczną syntezę osiągając wyższy poziom pojęciowego pojednania','Odwraca hierarchię, a następnie pokazuje, że sama opozycja jest wewnętrznie niestabilna','Całkowicie ignoruje je jako nieistotne dla filozoficznego rozumienia rzeczywistości'],correct:2,explanation:'Dekonstrukcja to podwójny gest: odwrócenie hierarchii + wykazanie niestabilności.'},
+// -- FOUCAULT --
+{category:'Foucault',question:'Co oznacza „władza-wiedza"?',options:['Władza kontroluje instytucje akademickie i narzuca im określone programy badawcze','Wiedza i władza są nierozdzielnie splecione — dyskursy jednocześnie produkują prawdę i dominację','Naukowcy sprawują bezpośrednią władzę polityczną dzięki swojemu autorytetowi eksperckiemu','Władza utrzymuje się wyłącznie przez kontrolowaną ignorancję i ograniczanie dostępu do informacji'],correct:1,explanation:'Nie ma „czystej" wiedzy — każda forma wiedzy powiązana z relacjami władzy.'},
+{category:'Foucault',question:'Co to jest „biopolityka"?',options:['Forma władzy zarządzająca życiem biologicznym i zdrowiem populacji jako całości','Ekologia polityczna badająca relacje między środowiskiem naturalnym a strukturami władzy','Teoria zachowań społecznych wyjaśniająca działania ludzkie przez determinizm biologiczny','Polityka ciała indywidualnego skupiona na dyscyplinowaniu jednostkowych nawyków i praktyk'],correct:0,explanation:'Biopolityka zarządza zdrowiem, rozrodczością, higieną — władza nad organizmem społeczeństwa.'},
+{category:'Foucault',question:'Jaki zarzut stawia Habermas Foucaultowi?',options:['Nadmierny optymizm co do możliwości oporu wobec nowoczesnych mechanizmów władzy','Ignorowanie wymiaru ekonomicznego i materialnych podstaw relacji władzy w społeczeństwie','Krypto-normatywizm — krytykuje władzę, nie uzasadniając normatywnej podstawy własnej krytyki','Nadmierną systematyczność i pretensję do stworzenia zamkniętego systemu filozoficznego'],correct:2,explanation:'Foucault, demaskując racjonalność jako władzę, pozbawia się podstaw do własnej krytyki.'},
+{category:'Foucault',question:'Co to jest „panoptikon"?',options:['Model władzy dyscyplinarnej, w którym nadzorowany internalizuje kontrolę i sam się pilnuje','Panoramiczny widok architektoniczny umożliwiający obserwację rozległych przestrzeni publicznych','Instrument naukowy służący do precyzyjnej obserwacji i pomiaru zjawisk przyrodniczych','Muzeum kary dokumentujące historyczne formy karania i dyscyplinowania społeczeństwa'],correct:0,explanation:'Panoptikon Benthama — widzialność bez bycia widzianym. Metafora nowoczesnej władzy.'},
+{category:'Foucault',question:'Jak Foucault widzi nowoczesną władzę?',options:['Jako wyłącznie represyjną siłę ograniczającą wolność jednostek przez zakazy i kary','Jako neutralną strukturę administracyjną zarządzającą zasobami w interesie publicznym','Jako nieistniejącą iluzję — jednostki są w pełni autonomiczne i wolne od zewnętrznych sił','Produktywną — władza wytwarza podmioty, prawdy i normy, a nie tylko tłumi i zakazuje'],correct:3,explanation:'Foucault odwraca tradycyjny obraz: władza nie tłumi — ona produkuje to, czym jesteśmy.'},
+{category:'Foucault',question:'Co oznacza „śmierć człowieka" u Foucaulta?',options:['Dosłowną śmierć jednostki ludzkiej jako biologicznego organizmu podlegającego prawom natury','Że „człowiek" to historyczny wynalazek XVIII wieku — kategoria epistemiczna, która może zniknąć','Koniec gatunku ludzkiego zapowiadany przez ekologiczną katastrofę i wyczerpanie zasobów','Nihilistyczną tezę o braku jakiegokolwiek sensu ludzkiej egzystencji w świecie pozbawionym Boga'],correct:1,explanation:'W „Słowach i rzeczach" Foucault twierdzi, że „człowiek" jako przedmiot wiedzy jest niedawnym wynalazkiem.'},
+// -- LUHMANN --
+{category:'Luhmann',question:'Co oznacza „autopoiesis"?',options:['Samodzielne tworzenie artystycznej formy przez twórcę w akcie indywidualnej ekspresji','Automatyzację produkcji przemysłowej zastępującą ludzką pracę maszynami i algorytmami','Zdolność systemu do samowytwarzania i odnawiania swoich własnych elementów operacyjnych','Autonomię artysty tworzącego dzieła niezależnie od oczekiwań społeczeństwa i rynku'],correct:2,explanation:'Systemy same produkują elementy, z których się składają — komunikacje wytwarzają komunikacje.'},
+{category:'Luhmann',question:'Czym się różni Luhmann od Habermasa?',options:['Luhmann jest marksistą akcentującym materialną bazę ekonomiczną kształtującą systemy społeczne','Luhmann opisuje społeczeństwo jako system bez podmiotu; Habermas kładzie nacisk na porozumienie','Nie ma istotnych różnic — obaj dążą do normatywnej teorii nowoczesnego społeczeństwa','Luhmann zajmuje się przede wszystkim estetyką i teorią sztuki nowoczesnej'],correct:1,explanation:'Luhmann rezygnuje z normatywności — opisuje, jak systemy funkcjonują.'},
+{category:'Luhmann',question:'Co to jest „różnicowanie funkcjonalne"?',options:['Podział pracy między jednostkami zgodnie z ich indywidualnymi kompetencjami i talentami','Hierarchia społeczna organizująca stosunki władzy od góry do dołu w piramidzie instytucji','Społeczeństwo dzieli się na autonomiczne podsystemy, z których żaden nie jest nadrzędny','Wąska specjalizacja naukowa prowadząca do fragmentaryzacji wiedzy i utraty całościowego obrazu'],correct:2,explanation:'Policentryczność — brak centralnej instancji sterującej całością społeczeństwa.'},
+{category:'Luhmann',question:'Jak Habermas krytykuje teorię systemów?',options:['Że jest zbyt prosta i nie oddaje złożoności nowoczesnych procesów społecznych','Że jest nadmiernie normatywna i narzuca wartości pod pozorem neutralnego opisu','Że jest zbyt stara i opiera się na przestarzałych modelach cybernetyki pierwszego rzędu','Przejmuje spadek po filozofii podmiotu — autoreferencjalność zastępuje samowiedzę, tracąc normatywność'],correct:3,explanation:'Luhmann zastępuje samowiedzę podmiotu autoreferencjalnością systemu — ale traci wymiar normatywny.'},
+// -- CASTORIADIS --
+{category:'Castoriadis',question:'Co to jest „wyobraźnia instytucjonalna"?',options:['Architektura instytucji publicznych projektowana racjonalnie dla realizacji celów społecznych','Twórcza siła społeczeństwa tworzącego nowe znaczenia i instytucje — radykalne źródło nowości','Fantazja artysty przekraczająca granice konwencji w indywidualnym akcie twórczym','Racjonalne planowanie instytucjonalne oparte na naukowej analizie potrzeb społecznych'],correct:1,explanation:'Społeczeństwo nie jest determinowane — tworzy się z radykalnej wyobraźni.'},
+{category:'Castoriadis',question:'Jak Castoriadis rozumie „autonomię"?',options:['Suwerenność państwa narodowego jako najwyższą wartość polityczną porządku międzynarodowego','Izolację jednostki od wpływów społecznych w imię indywidualnej niezależności i samodzielności','Społeczeństwo świadomie tworzące swoje własne prawa i instytucje, uznając siebie za ich źródło','Anarchizm odrzucający wszelkie formy zorganizowanej władzy i hierarchii społecznej'],correct:2,explanation:'Autonomia to uznanie, że społeczeństwo samo siebie tworzy i może się zmieniać.'},
+{category:'Castoriadis',question:'Co Habermas zarzuca Castoriadisowi?',options:['Że nie potrafi wyjaśnić intersubiektywności — wpada w pułapkę filozofii podmiotu zbiorowego','Intelektualną nudę wynikającą z powtarzania znanych motywów tradycji romantycznej','Dogmatyczne przywiązanie do jednej wizji emancypacji i niechęć do rewizji założeń','Ortodoksyjny marksizm ukrywany pod retoryką twórczej wyobraźni i autonomii społecznej'],correct:0,explanation:'Castoriadis nie rozwiązuje problemu: skąd bierze się intersubiektywny wymiar wyobraźni?'},
+// -- HABERMAS --
+{category:'Habermas',question:'Co Habermas rozumie przez „działanie komunikacyjne"?',options:['Komunikację medialną opartą na masowym przekazie informacji do biernych odbiorców','Propagandę jako strategiczne narzędzie kształtowania opinii publicznej przez instytucje władzy','Działanie zorientowane na porozumienie oparte na wzajemnym uznaniu roszczeń ważnościowych','Dialog sokratejski jako indywidualną metodę dochodzenia do prawdy przez pytania i odpowiedzi'],correct:2,explanation:'Uczestnicy dążą do porozumienia przez wymianę argumentów i uznanie roszczeń.'},
+{category:'Habermas',question:'Co oznacza „kolonizacja świata życia"?',options:['Historyczny kolonializm europejski narzucający zachodnie wzorce kulturowe innym cywilizacjom','Wnikanie logiki pieniądza i biurokracji w sfery dotąd regulowane komunikacyjnym porozumieniem','Globalizację kulturową uniformizującą lokalne tradycje pod wpływem kultury masowej','Dominację mediów elektronicznych zastępujących bezpośrednie relacje międzyludzkie technologią'],correct:1,explanation:'Systemy ekonomiczny i administracyjny zastępują komunikacyjne porozumienie logiką instrumentalną.'},
+{category:'Habermas',question:'Dlaczego nowoczesność jest „niedokończonym projektem"?',options:['Bo brakuje odpowiedniej technologii do pełnej realizacji idei oświeceniowych w praktyce','Potencjał oświecenia nie został jeszcze zrealizowany, ale nie powinien być pochopnie porzucony','Bo historia z natury się nie kończy i każda epoka otwiera nowe problemy do rozwiązania','Bo filozofia jest z istoty niekompletna i nie może osiągnąć zamkniętego systemu wiedzy'],correct:1,explanation:'Habermas broni obietnic oświecenia — trzeba je realizować, nie odrzucać.'},
+{category:'Habermas',question:'Jakie trzy roszczenia ważnościowe wyróżnia Habermas?',options:['Piękno, prawda i dobro jako klasyczna triada wartości transcendentalnych filozofii zachodniej','Logika, etyka i estetyka jako trzy autonomiczne sfery racjonalności wydzielone przez Kanta','Wiedza, władza i wolność jako trzy fundamentalne kategorie nowożytnej filozofii politycznej','Prawda propozycjonalna, słuszność normatywna i szczerość ekspresywna w aktach mowy'],correct:3,explanation:'Prawdziwość (świat obiektywny), słuszność (normy społeczne), szczerość (intencje mówcy).'},
+{category:'Habermas',question:'Na czym polega różnica między rozumem podmiotowym a komunikacyjnym?',options:['Podmiotowy jest monologiczny w relacji podmiot-przedmiot; komunikacyjny jest intersubiektywnym dialogiem','To w istocie te same pojęcia opisujące racjonalność z dwóch komplementarnych perspektyw','Podmiotowy jest nowszą i bardziej zaawansowaną formą racjonalności niż komunikacyjny','Nie ma między nimi istotnej różnicy — oba służą krytyce irracjonalnych form życia społecznego'],correct:0,explanation:'Habermas przechodzi od monologicznego rozumu do dialogowego.'},
+{category:'Habermas',question:'Jak Habermas odpowiada postmodernistom?',options:['Zgadza się z nimi, że rozum wyczerpał swoje możliwości i wymaga fundamentalnego porzucenia','Nie trzeba porzucać rozumu — trzeba go przeformułować jako komunikacyjny i intersubiektywny','Całkowicie ignoruje ich jako nieistotnych dla poważnej debaty filozoficznej o nowoczesności','Odrzuca filozofię jako taką na rzecz empirycznych nauk społecznych i lingwistyki'],correct:1,explanation:'Postmoderniści mylą kryzys rozumu podmiotowego z kryzysem rozumu w ogóle.'},
+// -- BATAILLE --
+{category:'Bataille',question:'Co to jest „transgresja" u Bataille\'a?',options:['Przestępstwo kryminalne naruszające obowiązujący porządek prawny i normy społeczne','Podróż inicjacyjna prowadząca do duchowego przebudzenia i poszerzenia świadomości','Przekroczenie granic racjonalności — moment suwerenności wykraczający poza logikę użyteczności','Badanie naukowe eksplorujące nieznane terytoria wiedzy i przesuwające granice poznania'],correct:2,explanation:'Transgresja to wyjście poza to, co dozwolone i kalkulowalne.'},
+{category:'Bataille',question:'Co to jest „wydatkowanie" (dépense)?',options:['Racjonalne oszczędzanie zasobów jako fundament stabilności ekonomicznej i społecznej','Bezproduktywne zużywanie — potlacz, ofiara, erotyzm — radykalnie przeciw logice akumulacji','Strategiczne inwestowanie kapitału w celu maksymalizacji długoterminowych zysków i wzrostu','Budżetowanie publiczne jako racjonalna alokacja ograniczonych środków państwowych'],correct:1,explanation:'Dépense sprzeciwia się logice kapitalistycznej akumulacji.'},
+{category:'Bataille',question:'Jaki jest związek między Bataillem a Foucaultem?',options:['Foucault przejmuje motyw transgresji od Bataille\'a i przekształca go w analizę relacji władzy','Są intelektualnymi wrogami reprezentującymi całkowicie przeciwstawne tradycje filozoficzne','Bataille explicite odrzuca Foucaulta jako myśliciela zbyt uwikłanego w racjonalizm akademicki','Nie ma żadnego związku — obaj rozwijali swoje koncepcje niezależnie od siebie'],correct:0,explanation:'Foucault widzi w transgresji model oporu wobec nowoczesnej władzy.'},
+// -- WSPÓŁZALEŻNOŚCI --
+{category:'Współzależności',question:'Który myśliciel otworzył drogę zarówno Heideggerowi, jak i Foucaultowi?',options:['Hegel z dialektyką ducha absolutnego realizującego się w procesie dziejów historycznych','Marks z krytyką ekonomii politycznej i teorią pracy wyobcowanej w kapitalizmie','Nietzsche z radykalną krytyką metafizyki, przewartościowaniem wartości i genealogią moralności','Adorno z dialektyką negatywną chroniącą nie-tożsamość przed totalizacją pojęciową'],correct:2,explanation:'Nietzsche jest „kołem obrotowym" — ontologiczna i genealogiczna droga.'},
+{category:'Współzależności',question:'Co łączy krytykę Heideggera, Derridy i Foucaulta wg Habermasa?',options:['Wszyscy są marksistami opierającymi swoje analizy na materializmie historycznym i dialektycznym','Próbują przezwyciężyć filozofię podmiotu, ale paradoksalnie pozostają w jej ramach pojęciowych','Wszyscy bronią oświecenia i jego emancypacyjnego potencjału wobec krytyki konserwatywnej','Wszyscy odrzucają sztukę jako dziedzinę pozbawioną poznawczego znaczenia dla filozofii'],correct:1,explanation:'Krytycy rozumu podmiotowego wciąż poruszają się w jego ramach.'},
+{category:'Współzależności',question:'Co łączy „nie-tożsamość" Adorna z „différance" Derridy?',options:['Oba pojęcia wywodzą się bezpośrednio z dialektyki Hegla i zachowują jej strukturę','Oba mają charakter praktyczny i służą jako narzędzia bezpośredniej krytyki społecznej','Oba chronią to, co wymyka się pojęciowej identyfikacji i opiera się totalizacji myślenia','Nie łączy ich nic — pochodzą z całkowicie odmiennych i wzajemnie wykluczających się tradycji'],correct:2,explanation:'Obie kategorie opierają się zamknięciu w pojęciowej identyfikacji — z różnych tradycji.'},
+{category:'Współzależności',question:'Jak Ge-stell Heideggera wiąże się z rozumem instrumentalnym Adorna?',options:['Obie kategorie opisują totalizującą racjonalność — technika i instrumentalność redukują byty do zasobów','Są to identyczne pojęcia wyrażone jedynie w odmiennych językach filozoficznych','Są wzajemnie sprzeczne — Heidegger afirmuje technikę, której Adorno jest krytykiem','Nie ma między nimi żadnego związku — powstały w całkowicie odrębnych kontekstach intelektualnych'],correct:0,explanation:'Ge-stell i rozum instrumentalny to dwie strony tego samego zjawiska.'},
+{category:'Współzależności',question:'Dlaczego Habermas uważa postmodernizm za „neokonserwawtyzm"?',options:['Bo postmodernizm jest prawicową ideologią polityczną wspierającą interesy klas uprzywilejowanych','Odrzucenie rozumu oznacza rezygnację z krytyki — afirmację status quo pod pozorem radykalności','Bo postmodernizm to intelektualna nuda powtarzająca w nowej formie stare motywy romantyczne','Bo postmodernizm jest przestarzałym nurtem, który wyczerpał swój potencjał już w latach 70.'],correct:1,explanation:'Bez normatywnych podstaw krytyki pozostaje tylko afirmacja tego, co jest.'},
+{category:'Współzależności',question:'Jak biopolityka Foucaulta wiąże się z kolonizacją świata życia Habermasa?',options:['Są to identyczne pojęcia wyrażające tę samą treść w odmiennej terminologii filozoficznej','Obie opisują wnikanie instrumentalnej logiki kontroli i zarządzania w sferę codziennego życia','Są to całkowicie przeciwstawne diagnozy opisujące zupełnie inne zjawiska społeczne','Nie ma między nimi żadnego związku — dotyczą odmiennych wymiarów rzeczywistości społecznej'],correct:1,explanation:'Obie kategorie opisują to samo zjawisko z różnych perspektyw.'},
+];
+
+// ═══════════════════════════════════════════════
+// ENCYCLOPEDIA DATA: CHAPTERS
+// ═══════════════════════════════════════════════
+const chaptersData = [
+{id:'wyklad-1',label:'Wykład I',title:'Nowoczesność — niedokończony projekt',color:'var(--cyan)',
+  description:'Hegel jako pierwszy formułuje problem samopoświadczenia nowoczesności.',
+  thesis:'Nowoczesność, odcięta od wzorców przeszłości, musi czerpać swoją normatywność wyłącznie z siebie samej.',
+  argumentSteps:[{step:'Punkt wyjścia',desc:'Hegel pierwszy podnosi nowoczesność do rangi problemu filozoficznego.'},{step:'Zasada podmiotowości',desc:'Nowoczesność opiera się na zasadzie podmiotowości: wolność, refleksja, autonomia.'},{step:'Potrzeba samopoświadczenia',desc:'Epoka musi uzasadnić siebie z siebie.'},{step:'Heglowskie rozwiązanie',desc:'Rozum absolutny jako synteza — ale rozwiązanie „za mocne".'},{step:'Aporia',desc:'Pochłonięcie przez ducha absolutnego znosi autonomię jednostki.'}],
+  keyConcepts:[{name:'Samopoświadczenie',desc:'Nowoczesność musi uzasadnić normy bez odwołania do tradycji.'},{name:'Podmiotowość',desc:'Zasada nowoczesności: wolność podmiotu.'},{name:'Duch absolutny',desc:'Heglowska samoświadomość rozumu.'},{name:'Niedokończony projekt',desc:'Potencjał oświeceniowy wymaga przeformułowania.'}],
+  quotes:[{text:'Hegel jako pierwszy podnosi nowoczesność do rangi problemu filozoficznego.',source:'s. 9'},{text:'Nowoczesność nie może i nie chce czerpać swoich kryteriów orientacji z wzorców innej epoki.',source:'s. 9'},{text:'Nowożytna epoka stoi przede wszystkim pod znakiem podmiotowej wolności.',source:'s. 20'}]
+},
+{id:'wyklad-2',label:'Wykład II',title:'Pojęcie nowoczesności u Hegla',color:'var(--cyan)',
+  description:'Heglowska dialektyka: podmiotowość jako źródło kryzysu i wyzwolenia zarazem.',
+  thesis:'Hegel rozpoznaje w podmiotowości źródło wyzwolenia i rozdarcia — próbuje przezwyciężyć to filozofią absolutną.',
+  argumentSteps:[{step:'Diagnoza rozdarcia',desc:'Podmiotowość generuje podziały: rozum vs. zmysłowość, wolność vs. konieczność.'},{step:'Krytyka pozytywności',desc:'Zastygłe instytucje utraciły żywą treść.'},{step:'Religia ludowa',desc:'Hegel szuka siły jednoczącej — ale rozwiązanie estetyczne.'},{step:'Przejście do systemu',desc:'Duch absolutny jako pojednanie.'},{step:'Wewnętrzny problem',desc:'System pochłania historię i skończoność.'}],
+  keyConcepts:[{name:'Pozytywność',desc:'Zastygłe formy panowania.'},{name:'Rozdarcie (Entzweiung)',desc:'Fundamentalne podziały nowoczesności.'},{name:'Totalność etyczna',desc:'Wspólnota, w której podmiotowość zachowuje się w wyższej jedności.'},{name:'Filozofia absolutna',desc:'Hegel czyni filozofię najwyższą formą ducha.'}],
+  quotes:[{text:'Nowoczesność wytworzyła zarazem potrzebę samopoświadczenia.',source:'s. 26'},{text:'Krytyka podmiotowości napędza cały filozoficzny dyskurs nowoczesności.',source:'s. 34'}]
+},
+{id:'dygresja-benjamin',label:'Dygresja',title:'Tezy Benjamina z zakresu filozofii dziejów',color:'var(--gold)',
+  description:'Mesjanistyczna koncepcja czasu: Jetztzeit jako przerwanie continuum historii.',
+  thesis:'Benjamin proponuje radykalnie antyprogresywistyczną koncepcję historii.',
+  argumentSteps:[{step:'Krytyka historyzmu',desc:'Historyzm legitymizuje continuum panowania.'},{step:'Czas-teraz (Jetztzeit)',desc:'Moment rozpoznania, w którym przeszłość rozbłyskuje w teraźniejszości.'},{step:'Anioł historii',desc:'Widzi katastrofę tam, gdzie my widzimy łańcuch zdarzeń.'},{step:'Anamnetyczna solidarność',desc:'Solidarność z pokonanymi — ich roszczenia nie wygasły.'},{step:'Wymiar polityczny',desc:'Stan wyjątkowy, w którym żyjemy, jest regułą.'}],
+  keyConcepts:[{name:'Jetztzeit',desc:'Moment mesjanistyczny — teraźniejszość przeszłość „rozbłyskuje".'},{name:'Angelus Novus',desc:'Anioł historii z obrazu Klee.'},{name:'Anamnetyczna solidarność',desc:'Pamięć o pokonanych jako źródło normatywności.'},{name:'Słaba siła mesjanistyczna',desc:'Możliwość odkupienia przeszłości.'}],
+  quotes:[{text:'Każdemu pokoleniu dana została słaba siła mesjanistyczna.',source:'teza II'},{text:'Tradycja uciskanych uczy nas, że stan wyjątkowy jest regułą.',source:'teza VIII'}]
+},
+{id:'wyklad-3',label:'Wykład III',title:'Trzy perspektywy: lewica, prawica, Nietzsche',color:'var(--red)',
+  description:'Marks i Kierkegaard jako próby przezwyciężenia Hegla.',
+  thesis:'Po rozpadzie systemu heglowskiego otwierają się trzy drogi.',
+  argumentSteps:[{step:'Rozpad szkoły heglowskiej',desc:'Lewica chce zrealizować filozofię w praxis, prawica broni tradycji.'},{step:'Marks: praxis',desc:'Zamiast ducha, praca społeczna; zamiast filozofii, rewolucyjna praxis.'},{step:'Problem Marksa',desc:'Paradygmat produkcji reprodukuje filozofię podmiotu.'},{step:'Kierkegaard: skok wiary',desc:'Radykalna jednostkowość — ale to odwrócenie dialektyki.'},{step:'Nietzsche jako punkt zwrotny',desc:'Odrzuca cały projekt racjonalnego samopoświadczenia.'}],
+  keyConcepts:[{name:'Praxis',desc:'Jedność teorii i praktyki, działanie rewolucyjne.'},{name:'Paradygmat produkcji',desc:'Ujęcie społeczeństwa przez pryzmat pracy.'},{name:'Skok wiary',desc:'Zaangażowanie egzystencjalne zamiast mediacji.'},{name:'Drehscheibe',desc:'Nietzsche jako koło obrotowe dyskursu.'}],
+  quotes:[{text:'Po Heglu otwierają się trzy drogi wyjścia.',source:'s. 60'}]
+},
+{id:'wyklad-4',label:'Wykład IV',title:'Nietzsche jako koło obrotowe',color:'var(--red)',
+  description:'Nietzsche demaskuje rozum jako maskę woli mocy.',
+  thesis:'Nietzsche otwiera dwie ścieżki krytyki: ontologiczną i genealogiczną.',
+  argumentSteps:[{step:'Demaskacja rozumu',desc:'Rozum, moralność, nauka to sublimacje woli mocy.'},{step:'Dionizos vs. Sokrates',desc:'Energia dionizyjska represjonowana przez racjonalizm.'},{step:'Dwie linie recepcji',desc:'Ontologiczna (Heidegger→Derrida) i genealogiczna (Bataille→Foucault).'},{step:'Problem performatywny',desc:'Nietzsche posługuje się rozumem, żeby go zakwestionować.'},{step:'Habermasowska diagnoza',desc:'Obie linie nie wychodzą z filozofii podmiotu.'}],
+  keyConcepts:[{name:'Wola mocy',desc:'Fundamentalna siła twórcza.'},{name:'Drehscheibe',desc:'Punkt rozejścia dyskursu.'},{name:'Dionizyjskość',desc:'Energia przedracjonalna.'},{name:'Sprzeczność performatywna',desc:'Krytyka rozumu rozumem.'}],
+  quotes:[{text:'Nietzsche jest kołem obrotowym — po nim dyskurs rozchodzi się na dwie ścieżki.',source:'s. 104'}]
+},
+{id:'wyklad-5',label:'Wykład V',title:'Dialektyka oświecenia: Horkheimer i Adorno',color:'var(--green)',
+  description:'Oświecenie zwraca się przeciw sobie, rozum staje się mitem.',
+  thesis:'Oświeceniowy rozum, dążąc do panowania nad naturą, sam staje się mitem.',
+  argumentSteps:[{step:'Teza o dialektyce',desc:'Mit jest już oświeceniem, a oświecenie zwraca się w mitologię.'},{step:'Odyseusz',desc:'Prototyp nowoczesnego podmiotu — panuje kosztem samozaparcia.'},{step:'Przemysł kulturowy',desc:'Standaryzacja i kontrola zamiast emancypacji.'},{step:'Aporia totalna',desc:'Nie ma instrumentu krytyki.'},{step:'Habermasowska korekta',desc:'Rozum komunikacyjny wymyka się tej dialektyce.'}],
+  keyConcepts:[{name:'Dialektyka oświecenia',desc:'Oświecenie samo staje się mitem.'},{name:'Rozum instrumentalny',desc:'Racjonalność nastawiona na kontrolę.'},{name:'Przemysł kulturowy',desc:'Standaryzacja doświadczenia.'},{name:'Mimesis',desc:'Opór wobec rozumu panującego.'},{name:'Nie-tożsamość',desc:'Reszta, która opiera się totalizacji.'}],
+  quotes:[{text:'Mit jest już oświeceniem, a oświecenie zwraca się w mitologię.',source:'s. 130'}]
+},
+{id:'wyklad-6',label:'Wykład VI',title:'Krytyka rozumu Heideggera',color:'var(--red)',
+  description:'Heidegger szuka wyjścia w pytaniu o bycie — ale uwikłuje się w mit początku.',
+  thesis:'Heidegger dekonstruuje metafizykę podmiotowości, ale reprodukuje aporie filozofii podmiotu.',
+  argumentSteps:[{step:'Destrukcja metafizyki',desc:'Historia filozofii jako dzieje „zapomnienia bycia".'},{step:'Ge-stell',desc:'Technika nie jest narzędziem, lecz sposobem odsłaniania bycia.'},{step:'Kehre',desc:'Filozofia staje się „słuchaniem" tego, co się wydarza.'},{step:'Problem polityczny',desc:'Zaangażowanie w nazizm.'},{step:'Habermasowska krytyka',desc:'Heidegger zastępuje racjonalną krytykę „losem bycia".'}],
+  keyConcepts:[{name:'Zapomnienie bycia',desc:'Zapominanie pytania o bycie jako takie.'},{name:'Ge-stell',desc:'Istota techniki — redukcja bytów do zasobu.'},{name:'Kehre',desc:'Przejście do myślenia bycia.'},{name:'Bestand',desc:'Byt zredukowany do zasobu.'}],
+  quotes:[{text:'Ge-stell to istota techniki, która nie jest niczym technicznym.',source:'s. 159'}]
+},
+{id:'wyklad-7',label:'Wykład VII',title:'Derrida: przekroczenie granic filozofii',color:'var(--gold)',
+  description:'Dekonstrukcja jako radykalizacja Heideggerowskiej destrukcji.',
+  thesis:'Derrida radykalizuje destrukcję metafizyki, ale dekonstrukcja pozostaje pasożytnicza.',
+  argumentSteps:[{step:'Od Heideggera do Derridy',desc:'Przejmuje destrukcję, odrzuca nostalgię za „źródłowym byciem".'},{step:'Différance',desc:'Ruch odwlekania i różnicowania poprzedzający obecność.'},{step:'Dekonstrukcja logocentryzmu',desc:'Pismo poprzedza mowę.'},{step:'Krytyka Austina',desc:'Iterabilność podważa intencjonalność.'},{step:'Habermasowska odpowiedź',desc:'Traktuje filozofię jak literaturę — traci potencjał krytyczny.'}],
+  keyConcepts:[{name:'Différance',desc:'Gra różnicowania i odwlekania.'},{name:'Logocentryzm',desc:'Prymat logos nad pismem.'},{name:'Iterabilność',desc:'Powtarzalność podważająca intencjonalność.'},{name:'Dekonstrukcja',desc:'Strategia czytania.'},{name:'Ślad',desc:'Obecność-nieobecność.'}],
+  quotes:[{text:'Différance nie jest ani słowem, ani pojęciem — jest ruchem.',source:'s. 194'}]
+},
+{id:'wyklad-8',label:'Wykład VIII',title:'Bataille: między erotyzmem a ekonomią',color:'var(--gold)',
+  description:'Transgresja jako próba przełamania racjonalności.',
+  thesis:'Bataille stawia na transgresję, ale jego ekonomia ogólna pozostaje zależna od tego, co przekracza.',
+  argumentSteps:[{step:'Ekonomia ogólna vs. ograniczona',desc:'Nadwyżka, dar, roztrwonienie vs. kalkulacja.'},{step:'Suwerenność',desc:'Moment przekroczenia siebie.'},{step:'Doświadczenie wewnętrzne',desc:'Mistyka ateistyczna.'},{step:'Heterologia',desc:'Nauka o tym, co nieprzyswajalne.'},{step:'Habermasowska krytyka',desc:'Transgresja zależna od granic, które przekracza.'}],
+  keyConcepts:[{name:'Transgresja',desc:'Chwilowe zawieszenie porządku racjonalnego.'},{name:'Dépense',desc:'Nieproduktywne wydatkowanie.'},{name:'Suwerenność',desc:'Wyzwolenie z porządku użyteczności.'},{name:'Heterologia',desc:'Nauka o „innym".'}],
+  quotes:[{text:'Transgresja żyje z granicy, którą przekracza.',source:'s. 253'}]
+},
+{id:'wyklad-9-10',label:'Wykład IX-X',title:'Foucault: krytyka jako demaskacja',color:'var(--gold)',
+  description:'Genealogia władzy-wiedzy: dyskursy nie odkrywają prawdy, lecz produkują podmioty.',
+  thesis:'Foucault radykalizuje genealogię Nietzscheańską, ale nie może uzasadnić normatywnych podstaw krytyki.',
+  argumentSteps:[{step:'Archeologia wiedzy',desc:'Nieświadome struktury określające co może być pomyślane.'},{step:'Genealogia władzy',desc:'Wiedza spleciona z praktykami władzy.'},{step:'Biopolityka i dyscyplina',desc:'„Ciała podatne" i regulacja populacji.'},{step:'Śmierć podmiotu',desc:'Podmiot wytworem, nie źródłem wiedzy.'},{step:'Aporia normatywna',desc:'Brak podstaw do krytyki władzy.'}],
+  keyConcepts:[{name:'Władza-wiedza',desc:'Nierozerwalny splot wiedzy i władzy.'},{name:'Episteme',desc:'Warunki możliwości wiedzy w danej epoce.'},{name:'Biopolityka',desc:'Władza nad życiem populacji.'},{name:'Panoptikon',desc:'Widzialność jako mechanizm kontroli.'}],
+  quotes:[{text:'Tam gdzie jest wiedza, jest władza — i na odwrót.',source:'s. 280'}]
+},
+{id:'wyklad-11',label:'Wykład XI',title:'Rozum komunikacyjny — alternatywa',color:'var(--violet)',
+  description:'Habermas proponuje zwrot ku komunikacji.',
+  thesis:'Habermas proponuje przejście od rozumu podmiotowego do komunikacyjnego.',
+  argumentSteps:[{step:'Diagnoza ślepej uliczki',desc:'Wszyscy krytycy pozostali w ramach filozofii podmiotu.'},{step:'Zmiana paradygmatu',desc:'Od podmiotu do podmiotów porozumiewających się w języku.'},{step:'Działanie komunikacyjne',desc:'Roszczenia ważnościowe: prawda, słuszność, autentyczność.'},{step:'Świat życia',desc:'Horyzont oczywistości zakorzeniony komunikacyjnie.'},{step:'Kolonizacja',desc:'Problem to kolonizacja świata życia przez systemy.'}],
+  keyConcepts:[{name:'Działanie komunikacyjne',desc:'Porozumienie przez argumentację.'},{name:'Roszczenia ważnościowe',desc:'Trzy wymiary: prawda, słuszność, autentyczność.'},{name:'Świat życia',desc:'Horyzont wspólnych przekonań.'},{name:'Kolonizacja świata życia',desc:'Wnikanie logiki systemowej.'},{name:'Rozum komunikacyjny',desc:'Racjonalność wbudowana w struktury języka.'}],
+  quotes:[{text:'Kto mówi, ten podnosi roszczenia ważnościowe.',source:'s. 345'},{text:'Patologie nowoczesności wynikają z jednostronnej kolonizacji świata życia.',source:'s. 355'}]
+},
+{id:'dygresja-castoriadis',label:'Dygresja',title:'Castoriadis i społeczna wyobraźnia twórcza',color:'var(--gold)',
+  description:'Społeczeństwo tworzy siebie poprzez imaginację radykalną.',
+  thesis:'Castoriadis proponuje kategorię społecznego wyobrażeniowego twórczego.',
+  argumentSteps:[{step:'Krytyka determinizmu',desc:'Odrzuca marksistowski determinizm i strukturalizm.'},{step:'Imaginaire instituant',desc:'Wyobraźnia radykalna wytwarza formy ex nihilo.'},{step:'Praxis autonomiczna',desc:'Działanie uznające autonomię drugiego.'},{step:'Habermasowska recepcja',desc:'Brak intersubiektywnej mediacji.'}],
+  keyConcepts:[{name:'Imaginaire social instituant',desc:'Zdolność do tworzenia nowych form.'},{name:'Autonomia',desc:'Świadome tworzenie instytucji.'},{name:'Magma znaczeń',desc:'Nielinearna masa znaczeń.'},{name:'Praxis',desc:'Działanie uznające wolność drugiego.'}],
+  quotes:[{text:'Społeczeństwo tworzy siebie z twórczej wyobraźni.',source:'s. 366'}]
+},
+{id:'wyklad-12',label:'Wykład XII',title:'Normatywna zawartość nowoczesności',color:'var(--violet)',
+  description:'Habermas formułuje pozytywną tezę: nowoczesność zawiera normatywny potencjał.',
+  thesis:'Nowoczesność zawiera normatywną zawartość, którą można ocalić.',
+  argumentSteps:[{step:'System i świat życia',desc:'Dwa poziomy: system sterowany pieniądzem i władzą, świat życia koordynowany komunikacyjnie.'},{step:'Media sterujące',desc:'Pieniądz i władza odciążają komunikację — ale mogą ją zastąpić.'},{step:'Kolonizacja',desc:'Media sterujące wnikają w sferę codziennego życia.'},{step:'Sfera publiczna',desc:'Przestrzeń komunikacyjna, w której obywatele formują opinię.'},{step:'Niedokończony projekt',desc:'Potencjał emancypacyjny nie został wyczerpany.'}],
+  keyConcepts:[{name:'System i świat życia',desc:'Dwupoziomowy model społeczeństwa.'},{name:'Media sterujące',desc:'Pieniądz i władza administracyjna.'},{name:'Sfera publiczna',desc:'Przestrzeń dyskursywnego kształtowania opinii.'},{name:'Kolonizacja',desc:'Wnikanie logiki systemowej.'},{name:'Niedokończony projekt',desc:'Potencjał emancypacyjny wymaga obrony.'}],
+  quotes:[{text:'Nowoczesność to niedokończony projekt — jej normatywna zawartość nie została wyczerpana.',source:'s. 395'},{text:'Pieniądz i władza administracyjna tam, gdzie zastępują komunikację, niszczą tkankę solidarności.',source:'s. 388'}]
+},
+{id:'dygresja-luhmann',label:'Dygresja',title:'Luhmann: teoria systemów',color:'var(--violet)',
+  description:'Luhmann zastępuje podmiot „systemem autopoietycznym".',
+  thesis:'Teoria systemów reprodukuje strukturę filozofii podmiotu: system sam siebie obserwuje, nie potrzebuje normatywności.',
+  argumentSteps:[{step:'Autopoiesis',desc:'Systemy same siebie reprodukują.'},{step:'Redukcja złożoności',desc:'Systemy redukują złożoność przez różnicowanie.'},{step:'Obserwacja drugiego rzędu',desc:'System obserwuje swoje obserwowanie.'},{step:'Brak normatywności',desc:'Systemy po prostu funkcjonują.'},{step:'Habermasowska krytyka',desc:'Autopoietyczny system to „duch absolutny" w szatach cybernetyki.'}],
+  keyConcepts:[{name:'Autopoiesis',desc:'Samoreprodukcja systemu.'},{name:'Redukcja złożoności',desc:'Upraszczanie nieskończonej złożoności.'},{name:'Obserwacja drugiego rzędu',desc:'Refleksyjność bez podmiotu.'},{name:'Różnicowanie funkcjonalne',desc:'Podsystemy o własnych kodach.'}],
+  quotes:[{text:'Luhmann zastępuje filozofię podmiotu teorią systemów — ale autopoietyczny system to nowa postać ducha absolutnego.',source:'s. 413'}]
+},
+];
+
+// ═══════════════════════════════════════════════
+// OLD-FILE PHILOSOPHERS DATA (extended bio data for cards)
+// ═══════════════════════════════════════════════
+const philosophersExtended = [
+  { id:'hegel', bio:'Niemiecki filozof, twórca systemu idealizmu absolutnego. Profesor w Jenie, Heidelbergu i Berlinie.', works:['Fenomenologia ducha (1807)','Nauka logiki (1812-16)','Zasady filozofii prawa (1820)'], modernity_role:'Punkt wyjścia dyskursu — sformułował problem samopoświadczenia nowoczesności.' },
+  { id:'marx', bio:'Filozof, ekonomista i rewolucjonista. Lewicowy heglista, twórca materializmu historycznego.', works:['Manifest komunistyczny (1848)','Kapitał (1867-94)','Rękopisy ekonomiczno-filozoficzne (1844)'], modernity_role:'Lewica heglowska — realizacja obietnic nowoczesności przez filozofię praktyki.' },
+  { id:'kierkegaard', bio:'Duński filozof i teolog, prekursor egzystencjalizmu.', works:['Albo-albo (1843)','Bojaźń i drżenie (1843)','Choroba na śmierć (1849)'], modernity_role:'Prawica heglowska — krytyka systemu z pozycji egzystencji jednostkowej.' },
+  { id:'nietzsche', bio:'Niemiecki filolog klasyczny i filozof. Radykalna krytyka moralności, religii i metafizyki.', works:['Narodziny tragedii (1872)','Tako rzecze Zaratustra (1883-85)','Z genealogii moralności (1887)'], modernity_role:'Drehscheibe dyskursu — otwiera drogę ontologiczną i genealogiczną.' },
+  { id:'benjamin', bio:'Niemiecko-żydowski filozof i krytyk literacki. Związany ze Szkołą Frankfurcką.', works:['Tezy historiozoficzne (1940)','Pasaże (niedokończone)','Dzieło sztuki w epoce reprodukcji technicznej (1935)'], modernity_role:'Radykalizuje świadomość historyczną — Jetztzeit jako przerwanie kontinuum.' },
+  { id:'horkheimer', bio:'Niemiecki filozof i socjolog, dyrektor Instytutu Badań Społecznych we Frankfurcie.', works:['Dialektyka oświecenia (1947)','Krytyka rozumu instrumentalnego (1947)'], modernity_role:'Współtwórca radykalnej diagnozy oświecenia.' },
+  { id:'adorno', bio:'Filozof, socjolog, muzykolog. Kluczowa postać Szkoły Frankfurckiej.', works:['Dialektyka negatywna (1966)','Dialektyka oświecenia (1947)','Teoria estetyczna (1970)'], modernity_role:'Radykalizuje krytykę oświecenia — sztuka awangardowa jako azyl prawdy.' },
+  { id:'heidegger', bio:'Jeden z najważniejszych myślicieli XX w. Kontrowersyjne zaangażowanie w nazizm.', works:['Bycie i czas (1927)','Pytanie o technikę (1953)','List o humanizmie (1947)'], modernity_role:'Destrukcja metafizyki, pytanie o zapomnienie bycia.' },
+  { id:'derrida', bio:'Francusko-algierski filozof, twórca dekonstrukcji.', works:['O gramatologii (1967)','Pismo i różnica (1967)','Marginesy filozofii (1972)'], modernity_role:'Radykalizuje destrukcję — dekonstruuje samego Heideggera.' },
+  { id:'bataille', bio:'Pisarz, filozof i bibliotekarz. Założyciel pisma „Critique".', works:['Doświadczenie wewnętrzne (1943)','Erotyzm (1957)','Część przeklęta (1949)'], modernity_role:'Nietzscheańska droga dionizyjska — transgresja jako opór.' },
+  { id:'foucault', bio:'Filozof, historyk idei, aktywista. Profesor w College de France.', works:['Historia szaleństwa (1961)','Nadzorować i karać (1975)','Historia seksualności (1976-84)'], modernity_role:'Genealogia jako demaskacja — nauki humanistyczne kontrolują, nie poznają.' },
+  { id:'luhmann', bio:'Socjolog i teoretyk systemów. Napisał ponad 70 książek.', works:['Systemy społeczne (1984)','Społeczeństwo społeczeństwa (1997)'], modernity_role:'Społeczeństwo bez podmiotu — autoreferencjalność systemu.' },
+  { id:'castoriadis', bio:'Grecko-francuski filozof, ekonomista, psychoanalityk. Współzałożyciel „Socialisme ou Barbarie".', works:['Wyobraźnia ustanawiająca społeczeństwo (1975)','Rozstaje labiryntu (1978-99)'], modernity_role:'Trzecia droga — radykalna wyobraźnia tworzy znaczenia i instytucje.' },
+  { id:'habermas', bio:'Najważniejszy przedstawiciel drugiego pokolenia Szkoły Frankfurckiej. Autor ponad 40 książek.', works:['Teoria działania komunikacyjnego (1981)','Filozoficzny dyskurs nowoczesności (1985)','Faktyczność i obowiązywanie (1992)'], modernity_role:'Broni projektu nowoczesności — racjonalność komunikacyjna zamiast porzucania rozumu.' },
+];
+
+// ═══════════════════════════════════════════════
+// ENCYCLOPEDIA: RENDERING FUNCTIONS
+// ═══════════════════════════════════════════════
+
+// -- SCORE --
+let encScore = 0;
+function addScore(pts) {
+  encScore += pts;
+}
+
+// -- TIMELINE --
+function buildTimeline() {
+  const container = document.querySelector('#timelineView .timeline-container');
+  if (!container || container.querySelectorAll('.tl-item').length > 0) return;
+  const lineEl = container.querySelector('.timeline-line');
+  container.innerHTML = '';
+  if (lineEl) container.appendChild(lineEl);
+  else { const l = document.createElement('div'); l.className = 'timeline-line'; container.appendChild(l); }
+
+  const colors = ['var(--cyan)','var(--gold)','var(--red)','var(--red)','var(--green)','var(--red)','var(--gold)','var(--gold)','var(--gold)','var(--gold)','var(--violet)','var(--gold)','var(--violet)','var(--violet)'];
+  timelineData.forEach((item, i) => {
+    const c = colors[i % colors.length];
+    const chId = chaptersData[i] ? chaptersData[i].id : '';
+    const div = document.createElement('div');
+    div.className = 'tl-item';
+    div.style.animationDelay = (i * 0.07) + 's';
+    div.onclick = (e) => {
+      if (e.target.classList.contains('tl-link')) return;
+      div.classList.toggle('expanded');
+    };
+    div.innerHTML = `
+      <div class="tl-dot" style="border-color:${c}"></div>
+      <span class="tl-arrow">&#9662;</span>
+      <div class="chapter" style="color:${c}">${item.chapter || ''}</div>
+      <h3>${item.title}</h3>
+      <p class="tl-summary">${item.text || ''}</p>
+      <div class="tl-expanded">
+        ${item.quote ? `<div class="tl-quote">${item.quote}</div>` : ''}
+        ${item.tags ? '<div class="tags">' + item.tags.map(t => `<span class="tag">${t}</span>`).join('') + '</div>' : ''}
+        ${chId ? `<span class="tl-link" onclick="showChapter('${chId}')">&#8594; Otwórz szczegółową analizę rozdziału</span>` : ''}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// -- PHILOSOPHERS --
+function buildPhilosophers() {
+  const grid = document.getElementById('philGrid');
+  const search = document.getElementById('philSearch');
+  if (!grid) return;
+  function render(filter) {
+    const f = (filter || '').toLowerCase();
+    grid.innerHTML = '';
+    philosophers.filter(p => !f || p.name.toLowerCase().includes(f) || p.fullName.toLowerCase().includes(f) || p.desc.toLowerCase().includes(f))
+      .forEach(p => {
+        const ext = philosophersExtended.find(e => e.id === p.id) || {};
+        const card = document.createElement('div');
+        card.className = 'phil-card';
+        card.innerHTML = `
+          <div class="phil-header">
+            <div class="phil-avatar" style="background:${p.color}">${p.name.charAt(0)}</div>
+            <div class="phil-info">
+              <h3>${p.fullName || p.name}</h3>
+              <span class="phil-meta">${p.dates}</span>
+            </div>
+          </div>
+          <p class="phil-bio">${ext.bio || p.desc}</p>
+          <div class="phil-quote">${p.quote}</div>
+          ${ext.modernity_role ? `<div class="phil-role"><strong>Rola w dyskursie:</strong> ${ext.modernity_role}</div>` : ''}
+          <div class="phil-concepts">${p.concepts.map(c => `<span class="tag">${c}</span>`).join('')}</div>
+          ${ext.works ? `<div class="phil-works"><strong>Kluczowe dzieła:</strong> ${ext.works.join(', ')}</div>` : ''}
+        `;
+        grid.appendChild(card);
+      });
+  }
+  render();
+  if (search) search.oninput = () => render(search.value);
+}
+
+// -- QUIZ --
+let quizState = { questions: [], idx: 0, answered: 0, correct: 0, category: 'all' };
+
+function initQuiz() {
+  const cats = [...new Set(quizQuestions.map(q => q.category))];
+  const catDiv = document.getElementById('quizCategories');
+  if (!catDiv) return;
+  catDiv.innerHTML = `<button class="ch-tab active" onclick="startQuiz('all',this)">Wszystkie</button>` +
+    cats.map(c => `<button class="ch-tab" onclick="startQuiz('${c}',this)">${c}</button>`).join('');
+  document.getElementById('quizArea').innerHTML = '<p style="color:var(--text-dim);text-align:center;margin-top:40px;font-family:var(--mono);font-size:12px;letter-spacing:1px;">Wybierz kategorię powyżej, aby rozpocząć quiz.</p>';
+}
+
+function startQuiz(cat, btn) {
+  document.querySelectorAll('#quizCategories .ch-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  let qs = cat === 'all' ? [...quizQuestions] : quizQuestions.filter(q => q.category === cat);
+  for (let i = qs.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [qs[i], qs[j]] = [qs[j], qs[i]]; }
+  qs = qs.slice(0, 15);
+  quizState = { questions: qs, idx: 0, answered: 0, correct: 0, category: cat };
+  showQuestion();
+}
+
+function showQuestion() {
+  const { questions, idx } = quizState;
+  if (idx >= questions.length) { showQuizResult(); return; }
+  const q = questions[idx];
+  const area = document.getElementById('quizArea');
+  const pct = Math.round((idx / questions.length) * 100);
+  area.innerHTML = `
+    <div class="quiz-card">
+      <div class="q-category">${q.category}</div>
+      <div class="q-number">Pytanie ${idx + 1} z ${questions.length} &mdash; Wynik: ${quizState.correct}/${idx}</div>
+      <div style="height:4px;background:var(--surface3);margin-bottom:20px;overflow:hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .4s"></div></div>
+      <h3>${q.question}</h3>
+      <div class="quiz-options">
+        ${q.options.map((o, i) => `<button class="quiz-option" onclick="answerQuiz(${i})">${String.fromCharCode(65 + i)}. ${o}</button>`).join('')}
+      </div>
+      <div id="quizFeedback"></div>
+    </div>
+  `;
+}
+
+function answerQuiz(chosen) {
+  const q = quizState.questions[quizState.idx];
+  const btns = document.querySelectorAll('.quiz-option');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.correct) b.classList.add('correct');
+    if (i === chosen && chosen !== q.correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('quizFeedback');
+  const isCorrect = chosen === q.correct;
+  if (isCorrect) { quizState.correct++; addScore(10); }
+  fb.innerHTML = `
+    <div class="quiz-explanation show">
+      <strong style="color:${isCorrect ? 'var(--green)' : 'var(--red)'};font-size:15px">${isCorrect ? 'Poprawnie! +10 pkt' : 'Niepoprawnie'}</strong>
+      <p style="margin-top:8px;color:var(--text);font-size:13px;line-height:1.7">${q.explanation}</p>
+    </div>
+    <div class="quiz-next" style="display:block">
+      <button onclick="quizState.idx++;showQuestion()">Następne pytanie &#8594;</button>
+    </div>
+  `;
+}
+
+function showQuizResult() {
+  const { correct, questions } = quizState;
+  const pct = Math.round(correct / questions.length * 100);
+  document.getElementById('quizArea').innerHTML = `
+    <div class="quiz-results">
+      <div class="big-score">${pct}%</div>
+      <h3 style="margin-top:8px;font-family:var(--serif);font-size:22px">${correct} z ${questions.length} poprawnych</h3>
+      <p style="margin-top:12px;font-size:15px">${pct >= 70 ? 'Świetna znajomość dyskursu nowoczesności!' : pct >= 40 ? 'Dobry początek — warto wrócić do wybranych rozdziałów.' : 'Warto powtórzyć lekturę — spróbuj ponownie!'}</p>
+      <button class="enc-btn" style="margin-top:24px" onclick="initQuiz()">Zagraj ponownie</button>
+    </div>
+  `;
+}
+
+// -- CONCEPTS --
+function buildConcepts() {
+  const grid = document.getElementById('conceptsGrid');
+  const search = document.getElementById('conceptSearch');
+  if (!grid) return;
+  function render(filter) {
+    const f = (filter || '').toLowerCase();
+    grid.innerHTML = '';
+    conceptsData.filter(c => !f || c.name.toLowerCase().includes(f) || c.philosopher.toLowerCase().includes(f) || c.desc.toLowerCase().includes(f))
+      .forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'concept-card';
+        card.innerHTML = `
+          <div style="border-left:2px solid ${c.color};padding-left:12px;margin-bottom:10px">
+            <h3>${c.name}</h3>
+            <span class="philosopher" style="color:${c.color}">${c.philosopher}</span>
+          </div>
+          <p>${c.desc}</p>
+          <div class="concept-quote">${c.quote}</div>
+          <div class="related" style="margin-top:10px">${(Array.isArray(c.related) ? c.related : c.related.split(',')).map(r => `<span class="tag">${r.trim()}</span>`).join('')}</div>
+        `;
+        grid.appendChild(card);
+      });
+  }
+  render();
+  if (search) search.oninput = () => render(search.value);
+}
+
+// -- CHAPTERS LIST --
+function buildChaptersList() {
+  const grid = document.getElementById('chaptersList');
+  if (!grid || grid.children.length > 0) return;
+  grid.innerHTML = '';
+  chaptersData.forEach(ch => {
+    const card = document.createElement('div');
+    card.className = 'toc-card';
+    card.onclick = () => showChapter(ch.id);
+    card.innerHTML = `
+      <div class="ch-label" style="color:${ch.color}">${ch.label}</div>
+      <h3>${ch.title}</h3>
+      <p>${ch.description}</p>
+      <div class="ch-tags">${ch.keyConcepts.slice(0, 4).map(c => `<span class="tag">${c.name.split('(')[0].trim()}</span>`).join('')}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// -- CHAPTER DETAIL --
+function showChapter(id) {
+  const ch = chaptersData.find(c => c.id === id);
+  if (!ch) return;
+  showView('chapterDetail');
+  const container = document.getElementById('chapterDetail');
+  container.innerHTML = `
+    <button class="enc-btn" onclick="showView('chapters')" style="margin-bottom:20px;padding:8px 16px;font-size:11px">&#8592; Powrót do rozdziałów</button>
+    <div style="border-left:3px solid ${ch.color};padding-left:20px;margin-bottom:32px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:${ch.color};margin-bottom:4px">${ch.label}</div>
+      <h2 style="font-family:var(--serif);font-size:28px;margin-bottom:8px">${ch.title}</h2>
+      <p style="color:var(--text-dim);font-size:14px;line-height:1.6">${ch.description}</p>
+    </div>
+
+    <div class="ch-tabs">
+      <button class="ch-tab active" onclick="switchChTab(this,'argument')">Przebieg argumentacji</button>
+      <button class="ch-tab" onclick="switchChTab(this,'concepts')">Mapa pojęć</button>
+      <button class="ch-tab" onclick="switchChTab(this,'quotes')">Cytaty</button>
+      <button class="ch-tab" onclick="switchChTab(this,'thesis')">Teza</button>
+    </div>
+
+    <div class="ch-panel" id="chPanel-thesis" style="display:none">
+      <div style="background:var(--surface);border:1px solid var(--border-dim);padding:24px;border-left:3px solid ${ch.color}">
+        <h3 style="font-family:var(--serif);margin-bottom:12px;color:${ch.color}">Teza główna</h3>
+        <p style="font-size:15px;line-height:1.8">${ch.thesis}</p>
+      </div>
+    </div>
+
+    <div class="ch-panel" id="chPanel-argument">
+      ${ch.argumentSteps.map((s, i) => `
+        <div style="background:var(--surface);border:1px solid var(--border-dim);padding:20px;margin-bottom:12px;border-left:2px solid ${ch.color}">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span style="background:${ch.color};color:var(--void);width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;font-family:var(--mono)">${i + 1}</span>
+            <strong style="font-size:15px">${s.step}</strong>
+          </div>
+          <p style="font-size:13px;line-height:1.7;color:var(--text-dim);margin-left:38px">${s.desc}</p>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="ch-panel" id="chPanel-concepts" style="display:none">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+        ${ch.keyConcepts.map(c => `
+          <div style="background:var(--surface);border:1px solid var(--border-dim);padding:18px;border-top:2px solid ${ch.color}">
+            <h4 style="font-size:14px;margin-bottom:8px;color:${ch.color};font-family:var(--serif)">${c.name}</h4>
+            <p style="font-size:13px;line-height:1.6;color:var(--text-dim)">${c.desc}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="ch-panel" id="chPanel-quotes" style="display:none">
+      ${ch.quotes.map(q => `
+        <div style="background:var(--surface);border:1px solid var(--border-dim);padding:20px;margin-bottom:12px;border-left:2px solid ${ch.color}">
+          <blockquote style="font-family:var(--serif);font-size:14px;line-height:1.8;font-style:italic;margin-bottom:8px">${q.text}</blockquote>
+          <div style="text-align:right;font-family:var(--mono);font-size:11px;color:${ch.color}">${q.source}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  addScore(5);
+}
+
+function switchChTab(btn, panel) {
+  btn.parentElement.querySelectorAll('.ch-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ch-panel').forEach(p => p.style.display = 'none');
+  document.getElementById('chPanel-' + panel).style.display = 'block';
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+updateHUD();
+initTitleBg();
+</script>
+</body>
+</html>

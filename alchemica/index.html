@@ -1,0 +1,1314 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alchemica · Psychoaktywne perfumy botaniczne · Vol. I</title>
+<meta name="description" content="Alchemica — psychoaktywne perfumy botaniczne. Edytorialna prezentacja kolekcji dziesięciu eliksirów." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,800;1,6..96,400;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     ALCHEMICA · EDITORIAL ISSUE No. 01
+     Vogue-style glamour redesign — monochromatic ivory + ink + champagne
+  ============================================================ */
+
+  :root {
+    --ivory: #faf6ec;
+    --ivory-soft: #f3ecdb;
+    --ink: #0a0a0a;
+    --ink-soft: #1f1f1f;
+    --ink-mute: #4a4a4a;
+    --champagne: #a8853f;
+    --champagne-light: #c9a865;
+    --oxblood: #5a1f25;
+    --rule: rgba(10, 10, 10, 0.15);
+
+    --display: "Bodoni Moda", "Didot", "Bodoni 72", serif;
+    --serif: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+    --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection { background: var(--ink); color: var(--ivory); }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--display);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* ============================================================
+     MASTHEAD — top metadata bar like a magazine issue
+  ============================================================ */
+  .masthead-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 40px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .masthead-top span { display: flex; align-items: center; gap: 10px; }
+  .masthead-top .dot {
+    width: 4px; height: 4px; background: var(--champagne); border-radius: 50%;
+  }
+
+  /* ============================================================
+     COVER — magazine cover hero
+  ============================================================ */
+  .cover {
+    position: relative;
+    text-align: center;
+    padding: 70px 40px 90px;
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .cover-logo {
+    width: 130px; height: 130px;
+    display: block; margin: 0 auto 36px;
+    filter: drop-shadow(0 4px 12px rgba(10, 10, 10, 0.08));
+  }
+
+  .cover-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(80px, 16vw, 220px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .cover-title .a-italic {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .cover-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2.2vw, 28px);
+    color: var(--ink-soft);
+    margin-top: 32px;
+    letter-spacing: 0.02em;
+  }
+
+  .cover-features {
+    margin-top: 50px;
+    display: flex; justify-content: center; gap: 36px;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .cover-features span::before {
+    content: "·"; margin-right: 36px; color: var(--champagne);
+  }
+  .cover-features span:first-child::before { content: none; }
+
+  .cover-lead {
+    max-width: 640px;
+    margin: 60px auto 0;
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    font-weight: 300;
+  }
+
+  .cover-cta {
+    display: inline-block;
+    margin-top: 44px;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 18px 44px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    transition: all 0.35s ease;
+    cursor: pointer;
+  }
+  .cover-cta:hover { background: var(--ink); color: var(--ivory); letter-spacing: 0.4em; }
+
+  /* ============================================================
+     NAV — sticky thin
+  ============================================================ */
+  nav.editorial-nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250, 246, 236, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .editorial-nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  .editorial-nav-brand {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  .editorial-nav-links { display: flex; gap: 36px; }
+  .editorial-nav-links a { position: relative; color: var(--ink-soft); }
+  .editorial-nav-links a:hover { color: var(--ink); }
+  .editorial-nav-cart { color: var(--champagne); }
+
+  /* ============================================================
+     SECTION SCAFFOLD
+  ============================================================ */
+  section { padding: 140px 40px; position: relative; }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .wrap-narrow { max-width: 880px; margin: 0 auto; }
+
+  .chapter {
+    display: flex; align-items: center; gap: 18px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 32px;
+  }
+  .chapter-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 28px;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+  .chapter-rule { flex: 1; height: 1px; background: var(--rule); }
+
+  h2.headline {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  h2.headline em { font-weight: 500; }
+
+  .deck {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-mute);
+    max-width: 700px;
+    margin-bottom: 60px;
+    font-weight: 300;
+  }
+
+  /* ============================================================
+     N° 01 — EDITOR'S LETTER (manifest)
+  ============================================================ */
+  .letter {
+    background: var(--ivory);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .letter-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .letter-portrait {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    position: relative;
+  }
+  .letter-portrait img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(0.15) contrast(1.05);
+    transition: filter 1.2s ease;
+  }
+  .letter-portrait:hover img { filter: grayscale(0) contrast(1); }
+  .letter-portrait .caption {
+    position: absolute; left: 0; bottom: -28px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .letter-portrait .caption em { color: var(--champagne); font-style: normal; }
+
+  .letter-body p {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    font-weight: 400;
+  }
+  .letter-body p.dropcap::first-letter {
+    font-family: var(--display);
+    font-size: 88px;
+    line-height: 0.85;
+    float: left;
+    margin: 6px 14px 0 0;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .letter-signature {
+    margin-top: 44px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+  }
+  .letter-signature small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-style: normal;
+    margin-top: 6px;
+  }
+
+  /* ============================================================
+     N° 02 — THE SCIENCE
+  ============================================================ */
+  .science { background: var(--ivory); }
+  .science-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    margin-top: 20px;
+    border-top: 1px solid var(--rule);
+    padding-top: 60px;
+  }
+  .science-card {
+    text-align: left;
+  }
+  .science-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 56px;
+    color: var(--champagne);
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .science-card h3 {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .science-card p {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    margin: 0;
+  }
+
+  .pullquote {
+    margin: 100px auto 0;
+    max-width: 900px;
+    padding: 50px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    text-align: center;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .pullquote::before, .pullquote::after {
+    display: block;
+    font-family: var(--display);
+    font-style: normal;
+    font-size: 14px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin: 0 auto 24px;
+    content: "✦";
+  }
+  .pullquote::after {
+    margin: 24px auto 0;
+    content: "✦";
+  }
+
+  /* ============================================================
+     N° 03 — THE COLLECTION
+  ============================================================ */
+  .collection { background: var(--ivory-soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+
+  .index-list {
+    margin: 0 0 100px;
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 60px;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .index-list a {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule);
+    transition: color 0.2s;
+  }
+  .index-list a:last-child, .index-list a:nth-last-child(2) { border-bottom: none; }
+  .index-list a:hover { color: var(--ink); }
+  .index-list .idx-num {
+    font-family: var(--display);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--champagne);
+    font-size: 14px;
+    margin-right: 14px;
+  }
+  .index-list .idx-name {
+    flex: 1;
+    font-family: var(--display);
+    font-style: normal;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--ink);
+  }
+  .index-list .idx-page { color: var(--ink-mute); }
+
+  .catalog {
+    display: flex;
+    flex-direction: column;
+    gap: 130px;
+  }
+  .feature {
+    display: grid;
+    grid-template-columns: 4fr 7fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .feature:nth-child(even) {
+    grid-template-columns: 7fr 4fr;
+  }
+  .feature:nth-child(even) .feature-bottle-wrap { order: 2; }
+  .feature:nth-child(even) .feature-meta { order: 1; }
+
+  .feature-bottle-wrap {
+    background: var(--ivory);
+    aspect-ratio: 3/4;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    border: 1px solid var(--rule);
+  }
+  .feature-bottle-wrap::before {
+    content: ""; position: absolute; inset: 14px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+  .feature-bottle-wrap svg {
+    height: 70%;
+    z-index: 1;
+  }
+  .feature-bottle-wrap .feature-num {
+    position: absolute; top: 24px; left: 30px;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 52px;
+    color: var(--champagne);
+    line-height: 1;
+    z-index: 2;
+  }
+  .feature-bottle-wrap .feature-tag {
+    position: absolute; bottom: 24px; right: 30px;
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .feature-meta .feature-chapter {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 14px;
+  }
+  .feature-meta h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(54px, 6vw, 84px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  .feature-meta .feature-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink-mute);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+  .feature-meta .feature-desc {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+  .feature-notes {
+    margin-bottom: 40px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .feature-notes .note-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px;
+    padding: 8px 0;
+    font-family: var(--serif);
+    font-size: 16px;
+  }
+  .feature-notes .note-label {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    padding-top: 4px;
+  }
+  .feature-notes .note-val {
+    color: var(--ink-soft);
+    font-style: italic;
+    line-height: 1.55;
+  }
+  .feature-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 30px;
+  }
+  .feature-price {
+    font-family: var(--display);
+    font-size: 32px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .feature-price small {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-left: 8px;
+    font-weight: 400;
+  }
+  .feature-add {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.35s;
+  }
+  .feature-add:hover { background: var(--ink); color: var(--ivory); letter-spacing: 0.4em; }
+
+  /* ============================================================
+     N° 04 — BESPOKE
+  ============================================================ */
+  .bespoke {
+    background: var(--ink);
+    color: var(--ivory);
+    text-align: center;
+    padding: 180px 40px;
+  }
+  .bespoke .chapter { color: var(--champagne-light); }
+  .bespoke .chapter-num { color: var(--ivory); }
+  .bespoke .chapter-rule { background: rgba(255, 255, 255, 0.2); }
+  .bespoke h2 {
+    color: var(--ivory);
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(56px, 9vw, 130px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 40px;
+  }
+  .bespoke h2 em {
+    font-weight: 500;
+    color: var(--champagne-light);
+  }
+  .bespoke-lead {
+    max-width: 720px;
+    margin: 0 auto 50px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.7;
+    color: rgba(250, 246, 236, 0.85);
+  }
+  .bespoke-cta {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    padding: 20px 50px;
+    border: 1px solid var(--champagne-light);
+    color: var(--champagne-light);
+    background: transparent;
+    transition: all 0.35s;
+  }
+  .bespoke-cta:hover {
+    background: var(--champagne-light);
+    color: var(--ink);
+    letter-spacing: 0.44em;
+  }
+
+  /* ============================================================
+     N° 05 — THE HOUSE (trust)
+  ============================================================ */
+  .house { background: var(--ivory); }
+  .house-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    margin-top: 60px;
+    padding-top: 60px;
+    border-top: 1px solid var(--rule);
+  }
+  .house-item {
+    text-align: left;
+  }
+  .house-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 36px;
+    color: var(--champagne);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .house-item h4 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .house-item p {
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink-mute);
+    margin: 0;
+  }
+
+  /* ============================================================
+     COLOPHON (footer)
+  ============================================================ */
+  footer {
+    background: var(--ink);
+    color: var(--ivory);
+    padding: 100px 40px 40px;
+    border-top: 1px solid var(--champagne);
+  }
+  .colophon-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+  .colophon-brand {
+    display: flex; align-items: center; gap: 20px;
+    margin-bottom: 24px;
+  }
+  .colophon-brand img {
+    height: 56px; width: 56px;
+    object-fit: contain;
+  }
+  .colophon-brand .brand-mark {
+    font-family: var(--display);
+    font-size: 36px;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+  }
+  .colophon-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--champagne-light);
+    margin-bottom: 24px;
+  }
+  .colophon-about {
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: rgba(250, 246, 236, 0.7);
+    max-width: 380px;
+  }
+  footer h4.col-head {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--champagne-light);
+    margin-bottom: 24px;
+  }
+  footer ul { list-style: none; padding: 0; margin: 0; }
+  footer li { margin-bottom: 12px; font-family: var(--serif); font-size: 16px; }
+  footer ul a { color: rgba(250, 246, 236, 0.75); transition: color 0.2s; }
+  footer ul a:hover { color: var(--champagne-light); }
+
+  .colophon-credits {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(250, 246, 236, 0.5);
+    margin-bottom: 30px;
+  }
+  .colophon-credits div em {
+    display: block;
+    color: var(--champagne-light);
+    font-style: normal;
+    margin-top: 4px;
+    letter-spacing: 0.2em;
+  }
+  .colophon-allergen {
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(250, 246, 236, 0.45);
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  .colophon-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(250, 246, 236, 0.4);
+  }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 1000px) {
+    .letter-grid, .feature, .feature:nth-child(even) { grid-template-columns: 1fr; gap: 50px; }
+    .feature:nth-child(even) .feature-bottle-wrap { order: 0; }
+    .science-grid { grid-template-columns: 1fr; gap: 50px; }
+    .house-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .colophon-top { grid-template-columns: 1fr 1fr; }
+    .colophon-credits { grid-template-columns: 1fr 1fr; }
+    .editorial-nav-links { display: none; }
+    .index-list { grid-template-columns: 1fr; }
+    section { padding: 100px 26px; }
+    .masthead-top { padding: 12px 22px; flex-wrap: wrap; gap: 10px; font-size: 9.5px; }
+    .cover { padding: 50px 24px 70px; }
+  }
+  @media (max-width: 600px) {
+    .colophon-top, .colophon-credits { grid-template-columns: 1fr; }
+    .colophon-bottom { flex-direction: column; gap: 14px; }
+    .house-grid { grid-template-columns: 1fr; }
+    .cover-features { gap: 18px; font-size: 10px; }
+    .feature-foot { flex-direction: column; align-items: flex-start; gap: 18px; }
+  }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png"><link rel="apple-touch-icon" href="../../apple-touch-icon.png"><script data-goatcounter="https://futureshow.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     MASTHEAD
+============================================================ -->
+<div class="masthead-top">
+  <span>VOL. I &nbsp;·&nbsp; N<sup>o</sup> 01</span>
+  <span><span class="dot"></span> MMXXVI <span class="dot"></span></span>
+  <span>WARSZAWA · PL</span>
+</div>
+
+<!-- ============================================================
+     COVER
+============================================================ -->
+<header class="cover">
+  <img src="assets/logo.png" alt="Alchemica" class="cover-logo">
+  <h1 class="cover-title">Alchemic<span class="a-italic">a</span></h1>
+  <div class="cover-tag">Psychoaktywne perfumy botaniczne</div>
+
+  <div class="cover-features">
+    <span>Eliksiry dla codzienności</span>
+    <span>Dziesięć kompozycji</span>
+    <span>Made by hand</span>
+  </div>
+
+  <p class="cover-lead">
+    Perfumy z przeznaczeniem, wpływające na zmianę nastroju w ciągu kilku minut.
+    Naturalne kompozycje współpracujące z układem węchowym i nerwowym —
+    ukoją, odświeżą umysł, pobudzą do działania albo otulą zmysły.
+  </p>
+
+  <a href="#kolekcja" class="cover-cta">Odkryj kolekcję</a>
+</header>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav class="editorial-nav">
+  <div class="editorial-nav-inner">
+    <span class="editorial-nav-brand">Alchemica</span>
+    <div class="editorial-nav-links">
+      <a href="#kolekcja">The Collection</a>
+      <a href="#manifest">Editor's Letter</a>
+      <a href="#jak-dziala">The Science</a>
+      <a href="#eliksir">Bespoke</a>
+    </div>
+    <a href="#" class="editorial-nav-cart">Cart <span class="count">(0)</span></a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     N° 01 — EDITOR'S LETTER
+============================================================ -->
+<section class="letter" id="manifest">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 01</span>
+      <span>Editor's Letter</span>
+      <span class="chapter-rule"></span>
+      <span>Manifest marki</span>
+    </div>
+
+    <h2 class="headline">Eliksiry <em>dla</em> codzienności</h2>
+
+    <div class="letter-grid">
+      <div class="letter-portrait">
+        <img src="assets/art-woman-crow.jpg" alt="Botaniczny portret">
+        <div class="caption"><em>Fig. I</em> &nbsp; Portret · grafika tymczasowa</div>
+      </div>
+      <div class="letter-body">
+        <p class="dropcap">
+          Zapraszam Cię do świata, w którym piękno całkowicie naturalnych zapachów
+          łączy się z pielęgnacją psychicznego dobrostanu.
+        </p>
+        <p>
+          Perfumy, które tworzę, są jak eliksiry — uzdrawiająca moc roślin została
+          uchwycona w kompozycji zapachowej, aby Cię wspierać, inspirować,
+          dodawać Ci mocy, a także harmonizować i koić system nerwowy.
+        </p>
+        <p>
+          Na co dzień jestem psycholożką — wspieram ludzi w rozwoju, zmianie
+          i wychodzeniu z kryzysu. Łączę współczesną sztukę olfaktoryczną
+          z odwieczną mocą roślin, aby dać Tobie nie tylko wyjątkowy zapach,
+          ale też holistyczne doświadczenie dla zmysłów.
+        </p>
+
+        <div class="letter-signature">
+          Ola
+          <small>Twórczyni Alchemiki · Psycholożka</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     N° 02 — THE SCIENCE
+============================================================ -->
+<section class="science" id="jak-dziala">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 02</span>
+      <span>The Science</span>
+      <span class="chapter-rule"></span>
+      <span>Nauka i tradycja</span>
+    </div>
+
+    <h2 class="headline">Jak działają <em>zapachy</em></h2>
+    <p class="deck">
+      Zapach moduluje pracę układu limbicznego i ma głęboki sens
+      w regulacji samopoczucia.
+    </p>
+
+    <div class="science-grid">
+      <div class="science-card">
+        <div class="science-num">I.</div>
+        <h3>Olejki eteryczne</h3>
+        <p>Najwyższej jakości olejki z upraw organicznych, żywice, absoluty i ekstrakty CO₂ pozyskiwane w zrównoważony i sprawiedliwy sposób.</p>
+      </div>
+      <div class="science-card">
+        <div class="science-num">II.</div>
+        <h3>Układ limbiczny</h3>
+        <p>Molekuły olejków przenikają barierę krew-mózg, wędrują wzdłuż szlaków olfaktorycznych i wpływają na emocje, koncentrację i samopoczucie.</p>
+      </div>
+      <div class="science-card">
+        <div class="science-num">III.</div>
+        <h3>Zmiana nastroju</h3>
+        <p>Formuły działają w ciągu kilku minut — relaksują, koją, dodają odwagi lub uruchamiają proces twórczy. Potwierdzone badaniami klinicznymi.</p>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      Zapach, jaki na siebie nakładasz, może determinować Twój poziom energii i nastrój.
+      Esencje olejowe pomogą Ci w naturalny sposób wzmocnić energię życiową,
+      napełnić się spokojem i radością.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     N° 03 — THE COLLECTION
+============================================================ -->
+<section class="collection" id="kolekcja">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 03</span>
+      <span>The Collection</span>
+      <span class="chapter-rule"></span>
+      <span>Dziesięć eliksirów</span>
+    </div>
+
+    <h2 class="headline">Dziesięć <em>eliksirów</em></h2>
+    <p class="deck">
+      Każda kompozycja to osobny rytuał. Na bazie oleju jojoba lub alkoholu.
+      Wszystkie unisex.
+    </p>
+
+    <!-- Index -->
+    <div class="index-list" id="index-list">
+      <!-- generated by JS -->
+    </div>
+
+    <!-- Catalog -->
+    <div class="catalog" id="catalog">
+      <!-- generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     N° 04 — BESPOKE
+============================================================ -->
+<section class="bespoke" id="eliksir">
+  <div class="wrap-narrow">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 04</span>
+      <span>Bespoke</span>
+      <span class="chapter-rule"></span>
+      <span>Twój osobisty eliksir</span>
+    </div>
+
+    <h2>Skomponuj zapach <em>dla siebie</em></h2>
+
+    <p class="bespoke-lead">
+      Jeśli interesuje Cię stworzenie osobistego eliksiru mocy, który odpowie
+      na Twoje aktualne potrzeby i wyzwania — skontaktuj się ze mną.
+      Taki eliksir komponuję w oparciu o rozmowę nie tylko o zapachach,
+      ale o emocjach, pragnieniach i przeszkodach.
+    </p>
+
+    <a href="#kontakt" class="bespoke-cta">Umów konsultację</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     N° 05 — THE HOUSE
+============================================================ -->
+<section class="house">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter-num">N<sup>o</sup> 05</span>
+      <span>The House</span>
+      <span class="chapter-rule"></span>
+      <span>Dlaczego Alchemica</span>
+    </div>
+
+    <h2 class="headline">Czysty <em>skład</em>, czysta intencja</h2>
+
+    <div class="house-grid">
+      <div class="house-item">
+        <div class="house-num">i.</div>
+        <h4>Organiczne uprawy</h4>
+        <p>Olejki eteryczne i absoluty z certyfikowanych źródeł, badane laboratoryjnie.</p>
+      </div>
+      <div class="house-item">
+        <div class="house-num">ii.</div>
+        <h4>Bez syntetyków</h4>
+        <p>Wyłącznie naturalne składniki — żadnych ftalanów, parabenów, sztucznych barwników.</p>
+      </div>
+      <div class="house-item">
+        <div class="house-num">iii.</div>
+        <h4>Unisex</h4>
+        <p>Wszystkie kompozycje są neutralne płciowo — odpowiednie dla każdego.</p>
+      </div>
+      <div class="house-item">
+        <div class="house-num">iv.</div>
+        <h4>Fair trade</h4>
+        <p>Surowce pozyskiwane w sposób zrównoważony i sprawiedliwy społecznie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COLOPHON
+============================================================ -->
+<footer id="kontakt">
+  <div class="wrap">
+    <div class="colophon-top">
+      <div>
+        <div class="colophon-brand">
+          <img src="assets/logo-light.png" alt="" aria-hidden="true">
+          <span class="brand-mark">Alchemica</span>
+        </div>
+        <div class="colophon-tag">Psychoaktywne perfumy botaniczne</div>
+        <p class="colophon-about">
+          Naturalne kompozycje zapachowe komponowane ręcznie. Każdy eliksir
+          powstaje w małych partiach z najwyższej jakości olejków eterycznych,
+          żywic i absolutów.
+        </p>
+      </div>
+      <div>
+        <h4 class="col-head">The Shop</h4>
+        <ul>
+          <li><a href="#kolekcja">The Collection</a></li>
+          <li><a href="#eliksir">Bespoke Atelier</a></li>
+          <li><a href="#">Karty podarunkowe</a></li>
+          <li><a href="#">Dostawa i zwroty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="col-head">The House</h4>
+        <ul>
+          <li><a href="#manifest">Editor's Letter</a></li>
+          <li><a href="#jak-dziala">The Science</a></li>
+          <li><a href="#">Składniki</a></li>
+          <li><a href="#">Badania</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="col-head">Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@alchemica.pl">hello@alchemica.pl</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="colophon-credits">
+      <div>Editor-in-chief <em>Ola</em></div>
+      <div>Creative direction <em>Alchemica Studio</em></div>
+      <div>Photography <em>Forthcoming</em></div>
+      <div>Issue N<sup>o</sup> 01 <em>MMXXVI</em></div>
+    </div>
+
+    <div class="colophon-allergen">
+      Olejki eteryczne mogą uczulać. W razie wystąpienia reakcji alergicznej zaprzestań używania.
+      Produkty nie są przeznaczone do spożycia. Trzymać z dala od dzieci.
+    </div>
+
+    <div class="colophon-bottom">
+      <div>© MMXXVI Alchemica · All rights reserved</div>
+      <div>Regulamin · Polityka prywatności</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     DATA + RENDERING
+============================================================ -->
+<script>
+  const PERFUMES = [
+    {
+      key: "abramelin",
+      name: "Abramelin",
+      sub: "na podstawie Księgi Świętej Magii Abramelina Maga z XV w.",
+      desc: "Głęboka, wielowymiarowa podróż dla zmysłów, z nutą dekadencji i mistycyzmu. Ziemiste akordy wetywerii i tytoniu Burley zrównoważone nutami cytrusowymi i słodką, kremową wanilią. Drzewno-korzenny charakter, stymuluje kognitywnie i afrodyzyjnie — nie pozwala zasnąć.",
+      head: "tangerynka, grejpfrut, bergamotka",
+      heart: "nerd, cynamon kasja",
+      base: "wetyweria, tytoń Burley, wanilia",
+      price: 280,
+      bottleColor: "#2a3d3a"
+    },
+    {
+      key: "aphrodesia",
+      name: "Aphrodesia",
+      sub: "wibrujący pomruk",
+      desc: "Rozpieszcza owocową słodyczą, a różowy pieprz nadaje jej pikanterii. Działa tonizująco na układ nerwowy, jednocześnie inspirując do działania. Orzeźwia umysł i ducha, porusza kundalini. Afrodyzjak, pobudza emocje i wiele skojarzeń.",
+      head: "pomarańcza, pieprz różowy",
+      heart: "święta bazylia, nasiona kolendry",
+      base: "paczula, sandał biały",
+      price: 280,
+      bottleColor: "#5a1f25"
+    },
+    {
+      key: "cor",
+      name: "Cor Silentii",
+      sub: "łac. serce ciszy",
+      desc: "Intymny rytuał zatrzymania — w codzienności, w emocjach, w myślach. Nie narzuca nastroju, otwiera przestrzeń dla regeneracji psychicznej i świadomej obecności. Olfaktoryczny przewodnik w stronę równowagi emocjonalnej i wewnętrznej klarowności.",
+      head: "drzewo ho, bergamotka, tangerynka",
+      heart: "cynamon kasja",
+      base: "nagarmotha",
+      price: 280,
+      bottleColor: "#1d3a52"
+    },
+    {
+      key: "idun",
+      name: "Idun",
+      sub: "eliksir kobiecej dojrzałości",
+      desc: "Inspirowany nordycką boginią Idun, strażniczką złotych jabłek dających wieczną młodość. Zapach, który łączy świeżość cytrusów z mistycznym ciepłem żywic i zwierzęcą głębią castoreum.",
+      head: "rozmaryn, bergamotka, ho",
+      heart: "szałwia muszkatołowa, opoponax, kocanki",
+      base: "wetiweria, kadzidłowiec carterii i green sacra, mirra, balsam copaiba, castoreum, żywica benzoesowa",
+      price: 320,
+      bottleColor: "#a8853f"
+    },
+    {
+      key: "inspiratio",
+      name: "Inspiratio",
+      sub: "uziemienie i uniesienie",
+      desc: "Połączenie soczystych, ożywczych nut z uziemiającą mocą paczuli wprawia umysł i zmysły w stan przyjemnego podniecenia z jednoczesnym poczuciem osadzenia. Wspiera w poprawie nastroju i leczeniu dolegliwości związanych ze stresem i depresją. Bardzo seksi zapach.",
+      head: "pomarańcza, pieprz różowy",
+      heart: "nasiona kolendry",
+      base: "paczula",
+      price: 280,
+      bottleColor: "#7a3520"
+    },
+    {
+      key: "laloba",
+      name: "La Loba",
+      sub: "Kobieta-Wilk, dzika kobieta",
+      desc: "Zapach tej, która wie. Żywiczne leśne akordy łączą się z instynktem i intuicją. Otrzeźwiająca moc kadzidła wspiera medytację i kontakt z głęboką mądrością. Cytrusowe nuty nadają lekkość roześmianej, wolnej kobiety biegnącej w stronę horyzontu.",
+      head: "cytryna, litsea cubeba, jałowiec, świerk, sosna, jodła biała, daglezja",
+      heart: "tulsi, cynamon",
+      base: "kadzidło",
+      price: 300,
+      bottleColor: "#3d2818"
+    },
+    {
+      key: "metanoia",
+      name: "Metanoia",
+      sub: "gr. przemiana wewnętrzna",
+      desc: "Zapach, który osadza w ciele, oczyszcza umysł, uzdrawia serce. Wspiera kobiece cykle i gospodarkę hormonalną, głęboko rozluźnia. Dominantą tej królewskiej kompozycji jest tulsi — w ajurwedzie „królowa ziół".",
+      head: "jałowiec (igliwie)",
+      heart: "geranium bourbon, tulsi, nasiona kolendry, pączki goździka",
+      base: "kadzidłowiec carterii",
+      price: 300,
+      bottleColor: "#2e3d52"
+    },
+    {
+      key: "radical",
+      name: "Radical Joy",
+      sub: "radosny podmuch wiatru",
+      desc: "Esencja jak radosny podmuch wiatru łechce neurony poprzez powonienie. Liczne cytrusy rozweselają i podnoszą na duchu, jednocześnie kojąco wpływając na system nerwowy. Całość równoważy osładzająca nuta wanilii, a uszlachetnia kadzidło.",
+      head: "bergamotka, tangerynka, biały i różowy grejpfrut, cytryna, pomarańcza, may chang, drzewo ho",
+      heart: "lawenda lekarska, melisa",
+      base: "wanilia, kadzidłowiec zielony — green sacra",
+      price: 280,
+      bottleColor: "#c9a865"
+    },
+    {
+      key: "shinrin",
+      name: "Shinrin'yoku",
+      sub: "jap. 森林浴 · kąpiel leśna",
+      desc: "Kompozycja inspirowana japońską koncepcją kąpieli leśnych i wiedzą naukową o fitoncydach — związkach organicznych wytwarzanych przez drzewa, które poprawiają samopoczucie i koją układ nerwowy. Las zawsze tam, gdzie Ty.",
+      head: "jałowiec, cedr atlaski, jodła biała i syberyjska, czarny świerk, sosna, daglezja, grejpfrut, pomarańcza",
+      heart: "cynamon, goździk, kolendra, cyprys, święta bazylia",
+      base: "wetiweria, copaiba, mech dębowy",
+      price: 320,
+      bottleColor: "#2e4a3a"
+    },
+    {
+      key: "volupia",
+      name: "Volupia",
+      sub: "bogini zmysłowej rozkoszy",
+      desc: "Zapach łączący egzotyczną zmysłowość ylang-ylang z subtelną elegancją róży, tworząc harmonijną podróż do spokoju. Ylang-ylang koi zmysły, róża przynosi ukojenie, a ziemista nuta drzewa sandałowego wprowadza głęboki spokój i medytacyjną ciszę.",
+      head: "ylang-ylang",
+      heart: "róża",
+      base: "drzewo sandałowe",
+      price: 320,
+      bottleColor: "#9a6f3a"
+    }
+  ];
+
+  const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
+  function bottleSVG(color) {
+    const id = "g-" + color.replace('#', '');
+    return `
+      <svg viewBox="0 0 100 160" aria-hidden="true">
+        <defs>
+          <linearGradient id="${id}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="${color}" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="${color}" stop-opacity="0.65"/>
+          </linearGradient>
+        </defs>
+        <!-- kapsel -->
+        <rect x="36" y="6" width="28" height="18" fill="#0a0a0a"/>
+        <rect x="38" y="24" width="24" height="6" fill="#a8853f"/>
+        <!-- szyjka -->
+        <rect x="42" y="30" width="16" height="10" fill="${color}" opacity="0.8"/>
+        <!-- korpus -->
+        <path d="M 22 40 Q 14 46, 14 56 L 14 142 Q 14 154, 26 154 L 74 154 Q 86 154, 86 142 L 86 56 Q 86 46, 78 40 Z"
+              fill="url(#${id})"
+              stroke="#0a0a0a" stroke-width="0.8"/>
+        <!-- etykieta -->
+        <rect x="26" y="74" width="48" height="62" fill="#faf6ec" opacity="0.96" stroke="#a8853f" stroke-width="0.4"/>
+        <!-- detal etykiety -->
+        <line x1="34" y1="86" x2="66" y2="86" stroke="#a8853f" stroke-width="0.4"/>
+        <line x1="38" y1="124" x2="62" y2="124" stroke="#a8853f" stroke-width="0.3"/>
+        <text x="50" y="110" text-anchor="middle" font-family="Bodoni Moda, serif" font-style="italic" font-size="7" fill="#0a0a0a">15 ml</text>
+        <!-- refleks -->
+        <path d="M 22 48 Q 20 60, 22 110" stroke="#faf6ec" stroke-width="2" opacity="0.35" fill="none"/>
+      </svg>
+    `;
+  }
+
+  function renderIndex() {
+    const list = document.getElementById('index-list');
+    // 2 kolumny - dzielimy 10 na pół
+    const half1 = PERFUMES.slice(0, 5);
+    const half2 = PERFUMES.slice(5, 10);
+    // interleave: render in column order (5 + 5)
+    let html = '';
+    PERFUMES.forEach((p, i) => {
+      html += `
+        <a href="#perfume-${p.key}">
+          <span class="idx-num">${ROMAN[i]}.</span>
+          <span class="idx-name">${p.name}</span>
+          <span class="idx-page">N<sup>o</sup> 03 · ${String(i + 1).padStart(2, '0')}</span>
+        </a>
+      `;
+    });
+    list.innerHTML = html;
+  }
+
+  function renderCatalog() {
+    const catalog = document.getElementById('catalog');
+    catalog.innerHTML = PERFUMES.map((p, i) => `
+      <article class="feature" id="perfume-${p.key}">
+        <div class="feature-bottle-wrap">
+          <div class="feature-num">${ROMAN[i]}.</div>
+          ${bottleSVG(p.bottleColor)}
+          <div class="feature-tag">Fig. ${ROMAN[i]} · 15 ml</div>
+        </div>
+        <div class="feature-meta">
+          <div class="feature-chapter">N<sup>o</sup> 03 · ${String(i + 1).padStart(2, '0')} of 10</div>
+          <h3>${p.name}</h3>
+          <div class="feature-sub">${p.sub}</div>
+          <p class="feature-desc">${p.desc}</p>
+          <div class="feature-notes">
+            <div class="note-row"><span class="note-label">Top notes</span><span class="note-val">${p.head}</span></div>
+            <div class="note-row"><span class="note-label">Heart notes</span><span class="note-val">${p.heart}</span></div>
+            <div class="note-row"><span class="note-label">Base notes</span><span class="note-val">${p.base}</span></div>
+          </div>
+          <div class="feature-foot">
+            <div class="feature-price">${p.price} zł<small>15 ml</small></div>
+            <button class="feature-add" data-key="${p.key}">Add to cart</button>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    // licznik koszyka
+    let cart = 0;
+    const cartEl = document.querySelector('.editorial-nav-cart .count');
+    document.querySelectorAll('.feature-add').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cart++;
+        if (cartEl) cartEl.textContent = `(${cart})`;
+        const original = btn.textContent;
+        btn.textContent = "✓ Added";
+        btn.style.background = 'var(--ink)';
+        btn.style.color = 'var(--ivory)';
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 1400);
+      });
+    });
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  renderIndex();
+  renderCatalog();
+</script>
+
+</body>
+</html>
