@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schizoanaliza Deleuze'a i Guattariego — gra i raport | FutureShow</title>
+<meta name="description" content="Gra edukacyjna i raport wprowadzające w schizoanalizę Gillesa Deleuze'a i Félixa Guattariego. Wersje polska i angielska.">
+<link rel="canonical" href="https://futureshow.pl/schizoanaliza/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Schizoanaliza Deleuze'a i Guattariego — gra edukacyjna i raport">
+<meta property="og:description" content="Gra edukacyjna i raport wprowadzające w schizoanalizę Deleuze'a i Guattariego.">
+<meta property="og:url" content="https://futureshow.pl/schizoanaliza/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap&subset=latin-ext" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06080d;
+    --bg2: #0c1018;
+    --border: rgba(255,255,255,0.06);
+    --text: #e5e7eb;
+    --text-dim: #6b7280;
+    --accent: #63b3ff;
+    --accent2: #a78bfa;
+    --white: #f9fafb;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; width: 100%; }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.2s;
+  }
+  .back:hover { color: var(--accent); }
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .lede {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    max-width: 56ch;
+    margin-bottom: 36px;
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .card {
+    display: block;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  }
+  .card:hover {
+    border-color: rgba(99,179,255,0.35);
+    background: #0f141f;
+    transform: translateY(-2px);
+  }
+  .card__kind {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .card--report .card__kind { color: var(--accent2); }
+  .card__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .card__desc { font-size: 0.83rem; color: var(--text-dim); }
+  .card__lang {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 3px 8px;
+  }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">&larr; FutureShow</a>
+
+  <h1>Schizoanaliza Deleuze'a i Guattariego</h1>
+  <p class="lede">
+    Gra edukacyjna i towarzyszący jej raport wprowadzają w aparat pojęciowy
+    <em>Anty-Edypa</em> i <em>Tysiąca plateau</em> — kłącze, ciało bez organów,
+    maszyny pragnące, terytorializacja. Wybierz wersję.
+  </p>
+
+  <div class="grid">
+    <a class="card card--game" href="schizoanaliza-gra.html">
+      <span class="card__kind">Gra edukacyjna</span>
+      <div class="card__title">Schizoanaliza — gra</div>
+      <div class="card__desc">Interaktywne wprowadzenie: mapy pojęć, osie argumentacji, zadania.</div>
+      <span class="card__lang">PL</span>
+    </a>
+    <a class="card card--game" href="schizoanaliza-gra-en.html">
+      <span class="card__kind">Educational game</span>
+      <div class="card__title">Schizoanalysis — the game</div>
+      <div class="card__desc">Interactive introduction: concept maps, argument axes, exercises.</div>
+      <span class="card__lang">EN</span>
+    </a>
+    <a class="card card--report" href="schizoanaliza-raport.html">
+      <span class="card__kind">Raport</span>
+      <div class="card__title">Schizoanaliza — raport</div>
+      <div class="card__desc">Pełne opracowanie tekstowe: konteksty, pojęcia, bibliografia.</div>
+      <span class="card__lang">PL</span>
+    </a>
+    <a class="card card--report" href="schizoanaliza-raport-en.html">
+      <span class="card__kind">Report</span>
+      <div class="card__title">Schizoanalysis — the report</div>
+      <div class="card__desc">Full written study: contexts, concepts, bibliography.</div>
+      <span class="card__lang">EN</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>

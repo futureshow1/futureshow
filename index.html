@@ -784,6 +784,99 @@
       .cta-actions { flex-direction: column; align-items: stretch; }
       .cta-actions .cta-btn { justify-content: center; }
     }
+    /* mini contact form */
+    .cta-form {
+      max-width: 480px;
+      margin: 28px auto 0;
+      text-align: left;
+    }
+    .cta-form__lead {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .cta-form__row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .cta-form input[type="text"] {
+      flex: 1 1 220px;
+      min-width: 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--white);
+      font: inherit;
+      font-size: 0.85rem;
+      padding: 12px 14px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cta-form input[type="text"]::placeholder { color: #5a5f6b; }
+    .cta-form input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(99,179,255,0.06);
+    }
+    .cta-form input:user-invalid { border-color: #f87171; }
+    .cta-form__submit {
+      flex: 1 1 100%;
+      background: var(--accent);
+      color: var(--bg);
+      border: 0;
+      border-radius: 8px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 12px 22px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cta-form__submit:hover:not(:disabled) { background: #8ac7ff; }
+    .cta-form__submit:disabled { opacity: 0.55; cursor: default; }
+    .cta-form__hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .cta-form__note {
+      font-size: 0.7rem;
+      color: #5a5f6b;
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .cta-form__status {
+      display: none;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      line-height: 1.5;
+    }
+    .cta-form__status.is-ok {
+      display: block;
+      color: #4ade80;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.25);
+    }
+    .cta-form__status.is-err {
+      display: block;
+      color: #f87171;
+      background: rgba(248,113,113,0.08);
+      border: 1px solid rgba(248,113,113,0.25);
+    }
+    .cta-form.is-sent .cta-form__row,
+    .cta-form.is-sent .cta-form__note,
+    .cta-form.is-sent .cta-form__lead { display: none; }
+    @media (max-width: 480px) {
+      .cta-form__row { flex-direction: column; }
+      .cta-form__submit { width: 100%; }
+    }
     .cta-links {
       margin-top: 20px;
       display: flex;
@@ -2648,7 +2741,7 @@
 
       <!-- Schizoanaliza -->
       <div class="case">
-        <a class="case__visual" href="schizoanaliza/schizoanaliza-gra.html" target="_blank" rel="noopener">
+        <a class="case__visual" href="schizoanaliza/" target="_blank" rel="noopener">
           <div class="case__bg" style="background:linear-gradient(160deg, #0a0a0a, #0a0d06, #080808);overflow:hidden;">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.35;" xmlns="http://www.w3.org/2000/svg">
               <path d="M5,50 Q15,25 30,42 T55,30 T80,45 T98,38" fill="none" stroke="#ceea36" stroke-width="0.6"/>
@@ -2702,12 +2795,12 @@
             </div>
           </div>
           <div class="case__links" data-lang="en">
-            <a href="schizoanaliza/schizoanaliza-gra.html" target="_blank" class="case__cta">
+            <a href="schizoanaliza/" target="_blank" class="case__cta">
               Play the game <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
           <div class="case__links" data-lang="pl">
-            <a href="schizoanaliza/schizoanaliza-gra.html" target="_blank" class="case__cta">
+            <a href="schizoanaliza/" target="_blank" class="case__cta">
               Zagraj w grę <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
@@ -3325,6 +3418,37 @@
           </span>
         </button>
       </div>
+      <form class="cta-form" id="ctaForm" onsubmit="return sendContact(event)">
+        <div class="cta-form__lead">
+          <span data-lang="en">Or leave your e-mail or phone number and I'll get back to you.</span>
+          <span data-lang="pl">Albo zostaw swój e-mail lub numer telefonu — odezwę się.</span>
+        </div>
+        <input type="hidden" name="access_key" value="WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="subject" value="FutureShow.pl — nowy kontakt ze strony">
+        <input type="hidden" name="from_name" value="futureshow.pl">
+        <div class="cta-form__hp" aria-hidden="true">
+          <label>Nie wypełniaj tego pola<input type="text" name="botcheck" tabindex="-1" autocomplete="off"></label>
+        </div>
+        <div class="cta-form__row">
+          <input type="text" name="kontakt" required maxlength="120"
+                 placeholder="jan@example.com / 600 000 000"
+                 aria-label="E-mail lub telefon">
+          <input type="text" name="temat" maxlength="200"
+                 data-ph-en="What's it about? (optional)"
+                 data-ph-pl="Czego dotyczy? (opcjonalnie)"
+                 aria-label="Czego dotyczy">
+          <button type="submit" class="cta-form__submit">
+            <span data-lang="en">Send</span>
+            <span data-lang="pl">Wyślij</span>
+          </button>
+        </div>
+        <div class="cta-form__note">
+          <span data-lang="en">Goes straight to my inbox. Used only to reply to you — nothing else.</span>
+          <span data-lang="pl">Trafia prosto na moją skrzynkę. Użyję tego wyłącznie, żeby odpisać — do niczego więcej.</span>
+        </div>
+        <div class="cta-form__status" id="ctaStatus" role="status" aria-live="polite"></div>
+      </form>
+
       <div class="cta-links">
         <a href="https://github.com/futureshow1" target="_blank">
           <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -3426,6 +3550,52 @@
     })();
 
     // ====== Language ======
+    // ====== Mini contact form (Web3Forms) ======
+    // Until a real access key is pasted into the access_key input, the form is
+    // removed — better no form than one that silently swallows enquiries.
+    (function guardContactForm() {
+      const form = document.getElementById('ctaForm');
+      if (!form) return;
+      const key = form.querySelector('[name="access_key"]').value;
+      if (!key || key === 'WEB3FORMS_ACCESS_KEY') form.remove();
+    })();
+
+    function sendContact(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('.cta-form__submit');
+      const status = document.getElementById('ctaStatus');
+      const pl = document.documentElement.lang === 'pl';
+
+      status.className = 'cta-form__status';
+      btn.disabled = true;
+      btn.textContent = pl ? 'Wysyłam…' : 'Sending…';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (!data.success) throw new Error(data.message || 'failed');
+          form.classList.add('is-sent');
+          status.className = 'cta-form__status is-ok';
+          status.textContent = pl
+            ? 'Dziękuję — mam Twoje dane i odezwę się najpóźniej w ciągu dwoch dni roboczych.'
+            : 'Thank you — I have your details and will get back to you within two working days.';
+        })
+        .catch(() => {
+          status.className = 'cta-form__status is-err';
+          status.textContent = pl
+            ? 'Nie udało się wysłać. Napisz na futureshow@proton.me albo zadzwoń: 787 878 138.'
+            : 'Could not send. Please write to futureshow@proton.me or call +48 787 878 138.';
+          btn.disabled = false;
+          btn.innerHTML = '<span data-lang="en">Send</span><span data-lang="pl">Wyślij</span>';
+        });
+      return false;
+    }
+
     // ====== Copy e-mail ======
     function copyEmail(btn) {
       const addr = 'futureshow@proton.me';
@@ -3451,6 +3621,13 @@
       }
     }
 
+    function syncPlaceholders() {
+      const pl = document.documentElement.lang === 'pl';
+      document.querySelectorAll('[data-ph-en]').forEach(el => {
+        el.placeholder = pl ? el.dataset.phPl : el.dataset.phEn;
+      });
+    }
+
     function toggleLang() {
       const html = document.documentElement;
       const btn = document.getElementById('langToggle');
@@ -3463,12 +3640,14 @@
         btn.textContent = 'PL';
         localStorage.setItem('lang', 'en');
       }
+      syncPlaceholders();
     }
     const savedLang = localStorage.getItem('lang');
     if (savedLang === 'pl') {
       document.documentElement.lang = 'pl';
       document.getElementById('langToggle').textContent = 'EN';
     }
+    syncPlaceholders();
 
     // ====== Mobile menu ======
     function toggleMenu() {
