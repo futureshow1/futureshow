@@ -3423,7 +3423,7 @@
           <span data-lang="en">Or leave your e-mail or phone number and I'll get back to you.</span>
           <span data-lang="pl">Albo zostaw swój e-mail lub numer telefonu — odezwę się.</span>
         </div>
-        <input type="hidden" name="access_key" value="WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="access_key" value="41c76e7b-9154-4f68-a910-e76ae4d498f4">
         <input type="hidden" name="subject" value="FutureShow.pl — nowy kontakt ze strony">
         <input type="hidden" name="from_name" value="futureshow.pl">
         <div class="cta-form__hp" aria-hidden="true">
@@ -3571,10 +3571,18 @@
       btn.disabled = true;
       btn.textContent = pl ? 'Wysyłam…' : 'Sending…';
 
+      // Web3Forms uses `name` as the sender label and `email` as Reply-To.
+      // The visible field accepts a phone number too, so only promote it to
+      // `email` when it actually looks like an address.
+      const fd = new FormData(form);
+      const kontakt = form.kontakt.value.trim();
+      fd.set('name', kontakt);
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(kontakt)) fd.set('email', kontakt);
+
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
+        body: fd
       })
         .then(r => r.json())
         .then(data => {
