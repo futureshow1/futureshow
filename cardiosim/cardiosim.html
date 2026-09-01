@@ -2084,8 +2084,17 @@ requestAnimationFrame(loop);
 const GS = { c1:240, c2:null, c3:null, c4:220, r3:200, MIN:110, MIN_R:80 };
 
 function gsInit() {
-  const mid = window.innerWidth - GS.c1 - GS.c4;
-  GS.c2 = Math.max(GS.MIN, Math.round(mid / 2));
+  // Opening proportions: the controls column needs room for the drug rows to
+  // keep their effect tags on one line, and the Wiggers/PV column needs enough
+  // width for its axis labels. Vitals are cards of fixed content, so they get
+  // the smallest share of the middle. Clamped so ultrawide screens do not turn
+  // the side panels into billboards.
+  const W = window.innerWidth;
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  GS.c1 = clamp(Math.round(W * 0.37), GS.MIN, 780);
+  GS.c4 = clamp(Math.round(W * 0.12), GS.MIN, 360);
+  const mid = W - GS.c1 - GS.c4;
+  GS.c2 = Math.max(GS.MIN, Math.round(mid * 0.31));
   GS.c3 = Math.max(GS.MIN, mid - GS.c2);
 }
 
