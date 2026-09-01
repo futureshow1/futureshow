@@ -46,6 +46,10 @@ html[lang="pl"] [data-lang="en"]{display:none}
  border-radius:18px;padding:44px;display:grid;grid-template-columns:1.6fr 1fr;gap:44px;
  transition:border-color .3s}
 .dl-card:hover{border-color:var(--border-glow)}
+.dl-shot{grid-column:1/-1;margin:-44px -44px 6px;border-bottom:1px solid var(--border);
+ border-radius:18px 18px 0 0;overflow:hidden;max-height:330px}
+.dl-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.dl-tag.soon{color:var(--accent2)}
 .dl-tag{display:inline-block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
  color:var(--accent3);border:1px solid var(--border);border-radius:999px;padding:6px 14px;margin-bottom:18px}
 .dl-card h2{font-size:1.85rem;font-weight:800;letter-spacing:-.01em;color:var(--white);line-height:1.15}
@@ -109,6 +113,65 @@ html[lang="pl"] [data-lang="en"]{display:none}
     <span data-lang="pl">Narzędzia pracowni do pobrania i uruchomienia na własnym komputerze — bez chmury, bez kont, bez trackingu. Open source, Twoje na zawsze.</span>
   </p>
 
+  <article class="dl-card" id="futureform">
+    <div class="dl-shot"><img src="downloads/futureform.jpg" alt="FutureForm — widok aplikacji" loading="lazy"></div>
+    <div>
+      <span class="dl-tag"><span data-lang="en">Coming soon · 2026</span><span data-lang="pl">Wkrótce · 2026</span></span>
+      <h2><span data-lang="en">Future<span class="g">Form.</span></span>
+          <span data-lang="pl">Future<span class="g">Form.</span></span></h2>
+      <p class="dl-desc">
+        <span data-lang="en">A military-calisthenics coach in your phone — training for the Polish MoD fitness test, with the official score tables built in 1:1. Pull-ups, push-ups, shuttle runs, sit-ups, marches: FutureForm builds a progression towards a target score, converts results into grades (age and sex) and shows how far you are from the next one. Installs from the browser (PWA), works fully offline, needs no account.</span>
+        <span data-lang="pl">Trener kalisteniki wojskowej w telefonie — przygotowanie do sprawdzianu sprawności fizycznej MON, z normami 1:1 z rozporządzenia (Dz.U. 2024 poz. 396). Podciągnięcia, uginania ramion, bieg wahadłowy, brzuszki, marszobieg: FutureForm prowadzi progresję pod konkretny wynik, przelicza rezultaty na oceny (wiek i płeć) i pokazuje, ile brakuje do następnej. Instaluje się z przeglądarki (PWA), działa w pełni offline, nie wymaga konta.</span>
+      </p>
+      <ul class="dl-feats">
+        <li><span data-lang="en">Official MoD test tables, 1:1</span><span data-lang="pl">Normy sprawdzianu MON 1:1</span></li>
+        <li><span data-lang="en">Score → grade converters</span><span data-lang="pl">Przeliczniki wynik → ocena</span></li>
+        <li><span data-lang="en">Progression plans + training log</span><span data-lang="pl">Plany progresji + dziennik treningów</span></li>
+        <li><span data-lang="en">PWA: full offline</span><span data-lang="pl">PWA: pełny offline</span></li>
+        <li><span data-lang="en">No account, no tracking</span><span data-lang="pl">Bez konta, bez trackingu</span></li>
+      </ul>
+    </div>
+    <aside class="dl-aside">
+      <div class="dl-price">0 zł<em>open source</em></div>
+      <div class="dl-meta">
+        <b data-lang="en">Platform</b><b data-lang="pl">Platforma</b><br>
+        <span data-lang="en">browser / phone (PWA)</span><span data-lang="pl">przeglądarka / telefon (PWA)</span><br>
+        <b data-lang="en">Data</b><b data-lang="pl">Dane</b>: <span data-lang="en">stay on your device</span><span data-lang="pl">lokalnie na urządzeniu</span><br>
+        <b>Status:</b> <span data-lang="en">public release soon</span><span data-lang="pl">publikacja wkrótce</span>
+      </div>
+      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20powiadom%20o%20premierze">
+        <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
+        <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
+      </a>
+      <a class="dl-ghost" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20dostep%20testowy">
+        <span data-lang="en">Test access →</span><span data-lang="pl">Dostęp testowy →</span>
+      </a>
+    </aside>
+  </article>
+
+  <article class="dl-card" id="futuretalk">
+    <div class="dl-shot"><img src="downloads/futuretalk.jpg" alt="FutureTalk" loading="lazy"></div>
+    <div>
+      <span class="dl-tag soon"><span data-lang="en">Announced · 2026</span><span data-lang="pl">Zapowiedź · 2026</span></span>
+      <h2><span data-lang="en">Future<span class="g">Talk.</span></span>
+          <span data-lang="pl">Future<span class="g">Talk.</span></span></h2>
+      <p class="dl-desc">
+        <span data-lang="en">A pronunciation and rhetoric coach — diction, voice, pace and pause, then the structure and argument of a speech. From warming up the speech apparatus and tongue-twisters, through work with texts and recordings of your own voice, to building a talk: thesis, arguments, punchline. Speak to be listened to.</span>
+        <span data-lang="pl">Trener wymowy i retoryki — dykcja, emisja, tempo i pauza, a dalej struktura i argumentacja wystąpienia. Od rozgrzewki aparatu mowy i łamańców językowych, przez pracę z tekstem i nagraniami własnego głosu, po budowę wystąpienia: teza, argumenty, pointa. Mów tak, żeby Cię słuchano.</span>
+      </p>
+    </div>
+    <aside class="dl-aside">
+      <div class="dl-price">—<em data-lang="en">in the works</em><em data-lang="pl">w przygotowaniu</em></div>
+      <div class="dl-meta">
+        <b>Status:</b> <span data-lang="en">announced — details at launch</span><span data-lang="pl">zapowiedź — szczegóły przy premierze</span>
+      </div>
+      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureTalk%20-%20powiadom%20o%20premierze">
+        <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
+        <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
+      </a>
+    </aside>
+  </article>
+
   <article class="dl-card" id="anonimizator">
     <div>
       <span class="dl-tag">Beta · 2026</span>
@@ -144,12 +207,6 @@ html[lang="pl"] [data-lang="en"]{display:none}
       </a>
     </aside>
   </article>
-
-  <div class="dl-soon">
-    <b data-lang="en">Coming next:</b><b data-lang="pl">Wkrótce:</b>
-    <span>FutureForm — <span data-lang="en">military calisthenics coach (PWA)</span><span data-lang="pl">trener kalisteniki wojskowej (PWA)</span></span>
-    <span>· FutureTalk — <span data-lang="en">pronunciation &amp; rhetoric coach</span><span data-lang="pl">trener wymowy i retoryki</span></span>
-  </div>
 </main>
 
 <footer class="footer">
