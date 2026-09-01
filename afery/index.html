@@ -16,8 +16,12 @@ html{scroll-behavior:smooth}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
 ::-webkit-scrollbar{width:7px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:#4b5563;border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--amber)}
 
-.hero{position:relative;padding:50px 20px 36px;text-align:center;background:linear-gradient(135deg,#0a0e17,#1a1028 50%,#0a0e17);border-bottom:1px solid var(--border)}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,0.07),transparent 60%);pointer-events:none}
+.hero{position:relative;overflow:hidden;padding:50px 20px 36px;text-align:center;background:linear-gradient(135deg,#0a0e17,#1a1028 50%,#0a0e17);border-bottom:1px solid var(--border)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,0.07),transparent 60%);pointer-events:none;z-index:2}
+/* tlo video — jak w Panama Papers */
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.34;filter:saturate(.85) brightness(.85);pointer-events:none}
+.hero-vignette{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 80% 90% at 50% 45%,transparent 18%,rgba(10,14,23,.72) 100%),linear-gradient(180deg,rgba(10,14,23,.45) 0%,rgba(26,16,40,.2) 45%,rgba(10,14,23,.94) 100%)}
+.hero h1,.hero p,.stats-bar{position:relative;z-index:3}
 .hero h1{font-size:clamp(1.7rem,4vw,3rem);font-weight:900;background:linear-gradient(135deg,#fbbf24,#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
 .hero p{font-size:clamp(.85rem,1.5vw,1.1rem);color:var(--text2);margin-bottom:28px}
 .stats-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
@@ -154,6 +158,11 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 </head>
 <body>
 <header class="hero">
+<!-- tlo: Pexels #34579095 (Pexels License — darmowe, bez atrybucji) -->
+<video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+<source src="assets/afery-bg.mp4" type="video/mp4">
+</video>
+<div class="hero-vignette" aria-hidden="true"></div>
 <h1>40 Największych Afer w Polsce</h1>
 <p>Kompendium afer polityczno-finansowych po 1988 roku — historia, osoby, wyroki, straty</p>
 <div class="stats-bar" id="statsBar"></div>
