@@ -30,7 +30,21 @@
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background: radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+    z-index: 2;
   }
+
+  /* tlo video — jak w Panama Papers: klip pod winieta, tekst nad calosc */
+  .header-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0; opacity: .42;
+    filter: saturate(.85) brightness(.9); pointer-events: none;
+  }
+  .header-vignette {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(ellipse 80% 90% at 50% 45%, transparent 20%, rgba(10,10,15,.7) 100%),
+                linear-gradient(180deg, rgba(26,10,46,.4) 0%, rgba(10,10,15,.2) 45%, rgba(10,10,15,.92) 100%);
+  }
+  .header h1, .header .subtitle, .header .author { position: relative; z-index: 3; }
 
   .header h1 {
     font-size: 3.5rem;
@@ -344,6 +358,11 @@
 <body>
 
 <div class="header">
+  <!-- tlo: Pexels #5473971 (Pexels License — darmowe, bez atrybucji) -->
+  <video class="header-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="assets/mindfck-bg.mp4" type="video/mp4">
+  </video>
+  <div class="header-vignette" aria-hidden="true"></div>
   <h1>MINDF*CK</h1>
   <p class="subtitle">Cambridge Analytica and the Plot to Break America<br>A timeline of evidence from Christopher Wylie's whistleblower account</p>
   <p class="author">Based on the book by Christopher Wylie (2019)</p>
