@@ -114,6 +114,7 @@ button.dl-ghost{border:1px solid var(--border);background:none}
 .ntf__row .dl-btn{flex:1;padding:13px 18px;font-size:.95rem}
 .ntf__x{background:none;border:1px solid var(--border);color:var(--text-dim);border-radius:10px;padding:12px 16px;cursor:pointer;font:inherit}
 .ntf__x:hover{color:var(--text);border-color:var(--border-glow)}
+.ntf[data-mode="notify"] .ntf--gate,.ntf[data-mode="gate"] .ntf--notify{display:none}
 .ntf__fine{font-size:.74rem;color:var(--text-dim);margin:14px 0 0;line-height:1.5}
 .ntf__msg{display:none;margin-top:14px;font-size:.88rem;border-radius:10px;padding:11px 13px}
 .ntf__msg.ok{display:block;color:#4ade80;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25)}
@@ -270,7 +271,7 @@ button.dl-ghost{border:1px solid var(--border);background:none}
         <b data-lang="en">Data</b><b data-lang="pl">Dane</b>: <span data-lang="en">stay on your device</span><span data-lang="pl">lokalnie na urządzeniu</span><br>
         <b>Status:</b> <span data-lang="en">open beta — official launch soon</span><span data-lang="pl">otwarta beta — oficjalna premiera wkrótce</span>
       </div>
-      <a class="dl-btn" href="futureform/" target="_blank" rel="noopener">
+      <a class="dl-btn" href="futureform/" target="_blank" rel="noopener" data-gate="FutureForm">
         <span data-lang="en">Open the app →</span><span data-lang="pl">Otwórz aplikację →</span>
         <small data-lang="en">free · installs from the browser</small><small data-lang="pl">za darmo · instalacja z przeglądarki</small>
       </a>
@@ -298,11 +299,14 @@ const sv=localStorage.getItem('lang');
 if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langToggle').textContent='EN';}
 </script>
 
-<dialog class="ntf" id="notifyDlg">
+<dialog class="ntf" id="notifyDlg" data-mode="notify">
   <form class="ntf__box" id="notifyForm" novalidate>
-    <div class="ntf__kicker"><span data-lang="en">Launch list</span><span data-lang="pl">Lista premierowa</span></div>
-    <h3><span data-lang="en">Tell me when </span><span data-lang="pl">Daj znać, gdy </span><span id="ntfApp">FutureTalk</span><span data-lang="en"> launches</span><span data-lang="pl"> będzie gotowe</span></h3>
-    <p><span data-lang="en">One e-mail at launch, nothing else. No newsletter, no tracking.</span><span data-lang="pl">Jeden e-mail przy premierze i nic więcej. Bez newslettera, bez trackingu.</span></p>
+    <div class="ntf__kicker ntf--notify"><span data-lang="en">Launch list</span><span data-lang="pl">Lista premierowa</span></div>
+    <div class="ntf__kicker ntf--gate"><span data-lang="en">Access</span><span data-lang="pl">Dostęp</span></div>
+    <h3 class="ntf--notify"><span data-lang="en">Tell me when </span><span data-lang="pl">Daj znać, gdy </span><span class="ntfApp">FutureTalk</span><span data-lang="en"> launches</span><span data-lang="pl"> będzie gotowe</span></h3>
+    <h3 class="ntf--gate"><span data-lang="en">Leave your e-mail to open </span><span data-lang="pl">Zostaw e-mail, żeby otworzyć </span><span class="ntfApp">FutureForm</span></h3>
+    <p class="ntf--notify"><span data-lang="en">One e-mail at launch, nothing else. No newsletter, no tracking.</span><span data-lang="pl">Jeden e-mail przy premierze i nic więcej. Bez newslettera, bez trackingu.</span></p>
+    <p class="ntf--gate"><span data-lang="en">The app is free. The address lets me tell you about updates and the official launch — nothing else.</span><span data-lang="pl">Aplikacja jest darmowa. Adres posłuży mi tylko do informacji o aktualizacjach i oficjalnej premierze.</span></p>
     <input type="hidden" name="access_key" value="41c76e7b-9154-4f68-a910-e76ae4d498f4">
     <input type="hidden" name="subject" id="ntfSubject" value="[LISTA] FutureTalk — zapis na premierę">
     <input type="hidden" name="from_name" value="futureshow.pl / lista premierowa">
@@ -310,7 +314,7 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
     <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
     <input type="email" name="email" id="ntfEmail" required placeholder="jan@example.com" autocomplete="email">
     <div class="ntf__row">
-      <button type="submit" class="dl-btn"><span data-lang="en">Add me</span><span data-lang="pl">Zapisz mnie</span></button>
+      <button type="submit" class="dl-btn"><span class="ntf--notify"><span data-lang="en">Add me</span><span data-lang="pl">Zapisz mnie</span></span><span class="ntf--gate"><span data-lang="en">Open the app →</span><span data-lang="pl">Otwórz aplikację →</span></span></button>
       <button type="button" class="ntf__x" id="ntfClose"><span data-lang="en">Close</span><span data-lang="pl">Zamknij</span></button>
     </div>
     <div class="ntf__msg" id="ntfMsg"></div>
@@ -344,14 +348,25 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
     var dlg = document.getElementById('notifyDlg'), form = document.getElementById('notifyForm');
     var msg = document.getElementById('ntfMsg'), email = document.getElementById('ntfEmail');
     var pl = function () { return document.documentElement.lang === 'pl'; };
+    var mode = 'notify', gateHref = null;
+    function open(m, app) {
+      mode = m; dlg.setAttribute('data-mode', m);
+      document.querySelectorAll('.ntfApp').forEach(function (n) { n.textContent = app; });
+      document.getElementById('ntfLista').value = app;
+      document.getElementById('ntfSubject').value = (m === 'gate' ? '[REJESTRACJA] ' : '[LISTA] ') + app + (m === 'gate' ? ' — dostęp do aplikacji' : ' — zapis na premierę');
+      msg.className = 'ntf__msg'; msg.textContent = ''; form.reset();
+      dlg.showModal(); setTimeout(function () { email.focus(); }, 50);
+    }
     document.querySelectorAll('[data-notify]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var app = b.getAttribute('data-notify');
-        document.getElementById('ntfApp').textContent = app;
-        document.getElementById('ntfLista').value = app;
-        document.getElementById('ntfSubject').value = '[LISTA] ' + app + ' — zapis na premierę';
-        msg.className = 'ntf__msg'; msg.textContent = ''; form.reset();
-        dlg.showModal(); setTimeout(function () { email.focus(); }, 50);
+      b.addEventListener('click', function () { open('notify', b.getAttribute('data-notify')); });
+    });
+    // bramka: pierwsze otwarcie aplikacji wymaga e-maila; zapamietane w tej przegladarce
+    document.querySelectorAll('[data-gate]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var app = a.getAttribute('data-gate'), key = 'fs.access.' + app, ok = false;
+        try { ok = !!localStorage.getItem(key); } catch (x) {}
+        if (ok) return;
+        e.preventDefault(); gateHref = a.getAttribute('href'); open('gate', app);
       });
     });
     document.getElementById('ntfClose').addEventListener('click', function () { dlg.close(); });
@@ -369,8 +384,14 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
         .then(function (d) {
           if (!d.success) throw new Error();
           msg.className = 'ntf__msg ok';
-          msg.textContent = pl() ? 'Zapisane. Odezwę się przy premierze.' : 'Saved. I will write when it launches.';
-          setTimeout(function () { dlg.close(); }, 2200);
+          if (mode === 'gate') {
+            try { localStorage.setItem('fs.access.' + document.getElementById('ntfLista').value, email.value.trim()); } catch (x) {}
+            msg.textContent = pl() ? 'Dziękuję — otwieram aplikację.' : 'Thank you — opening the app.';
+            setTimeout(function () { dlg.close(); window.open(gateHref, '_blank', 'noopener'); }, 900);
+          } else {
+            msg.textContent = pl() ? 'Zapisane. Odezwę się przy premierze.' : 'Saved. I will write when it launches.';
+            setTimeout(function () { dlg.close(); }, 2200);
+          }
         })
         .catch(function () {
           msg.className = 'ntf__msg err';
