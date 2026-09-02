@@ -76,6 +76,29 @@ html[lang="pl"] [data-lang="en"]{display:none}
 .footer{border-top:1px solid var(--border);padding:36px 5vw;display:flex;flex-wrap:wrap;
  gap:14px 30px;justify-content:space-between;color:var(--text-dim);font-size:.85rem}
 .footer a:hover{color:var(--text)}
+/* --- rzad dwoch kart obok siebie --- */
+.dl-row{margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.dl-row .dl-card{margin-top:0;display:flex;flex-direction:column;padding:34px;gap:26px}
+.dl-row .dl-shot{margin:-34px -34px 2px}
+.dl-row .dl-aside{border-left:0;padding-left:0;border-top:1px solid var(--border);padding-top:24px}
+.dl-row .dl-card h2{font-size:1.5rem}
+.dl-row .dl-feats{grid-template-columns:1fr}
+
+/* --- pokaz slajdow --- */
+.dl-shot{position:relative}
+.dl-slides{position:relative;width:100%;height:100%;min-height:250px}
+.dl-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+ opacity:0;transition:opacity .6s ease}
+.dl-slides img.on{opacity:1}
+.dl-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:7px;z-index:2}
+.dl-dots button{width:7px;height:7px;padding:0;border-radius:50%;border:0;cursor:pointer;
+ background:rgba(255,255,255,.35);transition:all .25s}
+.dl-dots button:hover{background:rgba(255,255,255,.65)}
+.dl-dots button.on{background:var(--accent);width:20px;border-radius:4px}
+.dl-shot::after{content:'';position:absolute;left:0;right:0;bottom:0;height:70px;pointer-events:none;
+ background:linear-gradient(180deg,transparent,rgba(6,8,13,.55));z-index:1}
+
+@media(max-width:900px){.dl-row{grid-template-columns:1fr;gap:34px}}
 @media(max-width:820px){.dl-card{grid-template-columns:1fr}
  .dl-aside{border-left:0;padding-left:0;border-top:1px solid var(--border);padding-top:26px}}
 </style>
@@ -113,65 +136,6 @@ html[lang="pl"] [data-lang="en"]{display:none}
     <span data-lang="pl">Narzędzia pracowni do pobrania i uruchomienia na własnym komputerze — bez chmury, bez kont, bez trackingu. Open source, Twoje na zawsze.</span>
   </p>
 
-  <article class="dl-card" id="futureform">
-    <div class="dl-shot"><img src="downloads/futureform.jpg" alt="FutureForm — widok aplikacji" loading="lazy"></div>
-    <div>
-      <span class="dl-tag"><span data-lang="en">Mobile app · coming soon</span><span data-lang="pl">Aplikacja mobilna · wkrótce</span></span>
-      <h2><span data-lang="en">Future<span class="g">Form.</span></span>
-          <span data-lang="pl">Future<span class="g">Form.</span></span></h2>
-      <p class="dl-desc">
-        <span data-lang="en">A mobile app: a military-calisthenics coach in your phone — training for the Polish MoD fitness test, with the official score tables built in 1:1. Pull-ups, push-ups, shuttle runs, sit-ups, marches: FutureForm builds a progression towards a target score, converts results into grades (age and sex) and shows how far you are from the next one. Installs from the browser (PWA), works fully offline, needs no account.</span>
-        <span data-lang="pl">Aplikacja mobilna: trener kalisteniki wojskowej w Twoim telefonie — przygotowanie do sprawdzianu sprawności fizycznej MON, z normami 1:1 z rozporządzenia (Dz.U. 2024 poz. 396). Podciągnięcia, uginania ramion, bieg wahadłowy, brzuszki, marszobieg: FutureForm prowadzi progresję pod konkretny wynik, przelicza rezultaty na oceny (wiek i płeć) i pokazuje, ile brakuje do następnej. Instaluje się z przeglądarki (PWA), działa w pełni offline, nie wymaga konta.</span>
-      </p>
-      <ul class="dl-feats">
-        <li><span data-lang="en">Official MoD test tables, 1:1</span><span data-lang="pl">Normy sprawdzianu MON 1:1</span></li>
-        <li><span data-lang="en">Score → grade converters</span><span data-lang="pl">Przeliczniki wynik → ocena</span></li>
-        <li><span data-lang="en">Progression plans + training log</span><span data-lang="pl">Plany progresji + dziennik treningów</span></li>
-        <li><span data-lang="en">PWA: full offline</span><span data-lang="pl">PWA: pełny offline</span></li>
-        <li><span data-lang="en">No account, no tracking</span><span data-lang="pl">Bez konta, bez trackingu</span></li>
-      </ul>
-    </div>
-    <aside class="dl-aside">
-      <div class="dl-price">0 zł<em>open source</em></div>
-      <div class="dl-meta">
-        <b data-lang="en">Platform</b><b data-lang="pl">Platforma</b><br>
-        <span data-lang="en">phone — mobile PWA (installs from the browser)</span><span data-lang="pl">telefon — mobilna PWA (instalacja z przeglądarki)</span><br>
-        <b data-lang="en">Data</b><b data-lang="pl">Dane</b>: <span data-lang="en">stay on your device</span><span data-lang="pl">lokalnie na urządzeniu</span><br>
-        <b>Status:</b> <span data-lang="en">public release soon</span><span data-lang="pl">publikacja wkrótce</span>
-      </div>
-      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20powiadom%20o%20premierze">
-        <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
-        <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
-      </a>
-      <a class="dl-ghost" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20dostep%20testowy">
-        <span data-lang="en">Test access →</span><span data-lang="pl">Dostęp testowy →</span>
-      </a>
-    </aside>
-  </article>
-
-  <article class="dl-card" id="futuretalk">
-    <div class="dl-shot"><img src="downloads/futuretalk.jpg" alt="FutureTalk" loading="lazy"></div>
-    <div>
-      <span class="dl-tag soon"><span data-lang="en">Announced · 2026</span><span data-lang="pl">Zapowiedź · 2026</span></span>
-      <h2><span data-lang="en">Future<span class="g">Talk.</span></span>
-          <span data-lang="pl">Future<span class="g">Talk.</span></span></h2>
-      <p class="dl-desc">
-        <span data-lang="en">A pronunciation and rhetoric coach — diction, voice, pace and pause, then the structure and argument of a speech. From warming up the speech apparatus and tongue-twisters, through work with texts and recordings of your own voice, to building a talk: thesis, arguments, punchline. Speak to be listened to.</span>
-        <span data-lang="pl">Trener wymowy i retoryki — dykcja, emisja, tempo i pauza, a dalej struktura i argumentacja wystąpienia. Od rozgrzewki aparatu mowy i łamańców językowych, przez pracę z tekstem i nagraniami własnego głosu, po budowę wystąpienia: teza, argumenty, pointa. Mów tak, żeby Cię słuchano.</span>
-      </p>
-    </div>
-    <aside class="dl-aside">
-      <div class="dl-price">—<em data-lang="en">in the works</em><em data-lang="pl">w przygotowaniu</em></div>
-      <div class="dl-meta">
-        <b>Status:</b> <span data-lang="en">announced — details at launch</span><span data-lang="pl">zapowiedź — szczegóły przy premierze</span>
-      </div>
-      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureTalk%20-%20powiadom%20o%20premierze">
-        <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
-        <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
-      </a>
-    </aside>
-  </article>
-
   <article class="dl-card" id="anonimizator">
     <div>
       <span class="dl-tag">Beta · 2026</span>
@@ -207,6 +171,95 @@ html[lang="pl"] [data-lang="en"]{display:none}
       </a>
     </aside>
   </article>
+
+  <div class="dl-row">
+  <article class="dl-card" id="futuretalk">
+    <div class="dl-shot">
+      <div class="dl-slides">
+        <img src="downloads/futuretalk.jpg" alt="FutureTalk" class="on" loading="lazy">
+        <img src="downloads/ft-photo-1.jpg" alt="Mikrofon przed salą" loading="lazy">
+        <img src="downloads/ft-photo-2.jpg" alt="Mikrofony na konferencji prasowej" loading="lazy">
+        <img src="downloads/ft-photo-3.jpg" alt="Mikrofon w audytorium" loading="lazy">
+      </div>
+      <div class="dl-dots">
+        <button type="button" aria-label="Slajd 1" class="on"></button>
+        <button type="button" aria-label="Slajd 2"></button>
+        <button type="button" aria-label="Slajd 3"></button>
+        <button type="button" aria-label="Slajd 4"></button>
+      </div>
+    </div>
+    <div>
+      <span class="dl-tag soon"><span data-lang="en">Announced · 2026</span><span data-lang="pl">Zapowiedź · 2026</span></span>
+      <h2><span data-lang="en">Future<span class="g">Talk.</span></span>
+          <span data-lang="pl">Future<span class="g">Talk.</span></span></h2>
+      <p class="dl-desc">
+        <span data-lang="en">A pronunciation and rhetoric coach — diction, voice, pace and pause, then the structure and argument of a speech. From warming up the speech apparatus and tongue-twisters, through work with texts and recordings of your own voice, to building a talk: thesis, arguments, punchline. Speak to be listened to.</span>
+        <span data-lang="pl">Trener wymowy i retoryki — dykcja, emisja, tempo i pauza, a dalej struktura i argumentacja wystąpienia. Od rozgrzewki aparatu mowy i łamańców językowych, przez pracę z tekstem i nagraniami własnego głosu, po budowę wystąpienia: teza, argumenty, pointa. Mów tak, żeby Cię słuchano.</span>
+      </p>
+    </div>
+    <aside class="dl-aside">
+      <div class="dl-price">—<em data-lang="en">in the works</em><em data-lang="pl">w przygotowaniu</em></div>
+      <div class="dl-meta">
+        <b>Status:</b> <span data-lang="en">announced — details at launch</span><span data-lang="pl">zapowiedź — szczegóły przy premierze</span>
+      </div>
+      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureTalk%20-%20powiadom%20o%20premierze">
+        <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
+        <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
+      </a>
+    </aside>
+  </article>
+
+  <article class="dl-card" id="futureform">
+    <div class="dl-shot">
+      <div class="dl-slides">
+        <img src="downloads/ff-app-1.jpg" alt="FutureForm — punktacja sprawdzianu" class="on" loading="lazy">
+        <img src="downloads/ff-photo-1.jpg" alt="Podciąganie na drążku" loading="lazy">
+        <img src="downloads/ff-app-2.jpg" alt="FutureForm — plan treningowy" loading="lazy">
+        <img src="downloads/ff-photo-2.jpg" alt="Trening na drążku" loading="lazy">
+        <img src="downloads/ff-app-3.jpg" alt="FutureForm — zdrowie i dieta" loading="lazy">
+      </div>
+      <div class="dl-dots">
+        <button type="button" aria-label="Slajd 1" class="on"></button>
+        <button type="button" aria-label="Slajd 2"></button>
+        <button type="button" aria-label="Slajd 3"></button>
+        <button type="button" aria-label="Slajd 4"></button>
+        <button type="button" aria-label="Slajd 5"></button>
+      </div>
+    </div>
+    <div>
+      <span class="dl-tag"><span data-lang="en">Mobile app · coming soon</span><span data-lang="pl">Aplikacja mobilna · wkrótce</span></span>
+      <h2><span data-lang="en">Future<span class="g">Form.</span></span>
+          <span data-lang="pl">Future<span class="g">Form.</span></span></h2>
+      <p class="dl-desc">
+        <span data-lang="en">A mobile app: a military-calisthenics coach in your phone — training for the Polish MoD fitness test, with the official score tables built in 1:1. Pull-ups, push-ups, shuttle runs, sit-ups, marches: FutureForm builds a progression towards a target score, converts results into grades (age and sex) and shows how far you are from the next one. Installs from the browser (PWA), works fully offline, needs no account.</span>
+        <span data-lang="pl">Aplikacja mobilna: trener kalisteniki wojskowej w Twoim telefonie — przygotowanie do sprawdzianu sprawności fizycznej MON, z normami 1:1 z rozporządzenia (Dz.U. 2024 poz. 396). Podciągnięcia, uginania ramion, bieg wahadłowy, brzuszki, marszobieg: FutureForm prowadzi progresję pod konkretny wynik, przelicza rezultaty na oceny (wiek i płeć) i pokazuje, ile brakuje do następnej. Instaluje się z przeglądarki (PWA), działa w pełni offline, nie wymaga konta.</span>
+      </p>
+      <ul class="dl-feats">
+        <li><span data-lang="en">Official MoD test tables, 1:1</span><span data-lang="pl">Normy sprawdzianu MON 1:1</span></li>
+        <li><span data-lang="en">Score → grade converters</span><span data-lang="pl">Przeliczniki wynik → ocena</span></li>
+        <li><span data-lang="en">Progression plans + training log</span><span data-lang="pl">Plany progresji + dziennik treningów</span></li>
+        <li><span data-lang="en">PWA: full offline</span><span data-lang="pl">PWA: pełny offline</span></li>
+        <li><span data-lang="en">No account, no tracking</span><span data-lang="pl">Bez konta, bez trackingu</span></li>
+      </ul>
+    </div>
+    <aside class="dl-aside">
+      <div class="dl-price">0 zł<em>open source</em></div>
+      <div class="dl-meta">
+        <b data-lang="en">Platform</b><b data-lang="pl">Platforma</b><br>
+        <span data-lang="en">phone — mobile PWA (installs from the browser)</span><span data-lang="pl">telefon — mobilna PWA (instalacja z przeglądarki)</span><br>
+        <b data-lang="en">Data</b><b data-lang="pl">Dane</b>: <span data-lang="en">stay on your device</span><span data-lang="pl">lokalnie na urządzeniu</span><br>
+        <b>Status:</b> <span data-lang="en">public release soon</span><span data-lang="pl">publikacja wkrótce</span>
+      </div>
+      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20powiadom%20o%20premierze">
+        <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
+        <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
+      </a>
+      <a class="dl-ghost" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20dostep%20testowy">
+        <span data-lang="en">Test access →</span><span data-lang="pl">Dostęp testowy →</span>
+      </a>
+    </aside>
+  </article>
+  </div>
 </main>
 
 <footer class="footer">
@@ -223,6 +276,28 @@ if(h.lang==='en'){h.lang='pl';b.textContent='EN';localStorage.setItem('lang','pl
 else{h.lang='en';b.textContent='PL';localStorage.setItem('lang','en');}}
 const sv=localStorage.getItem('lang');
 if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langToggle').textContent='EN';}
+</script>
+
+<script>
+  document.querySelectorAll('.dl-shot').forEach(function (shot) {
+    var imgs = shot.querySelectorAll('.dl-slides img');
+    var dots = shot.querySelectorAll('.dl-dots button');
+    if (imgs.length < 2) return;
+    var i = 0, timer;
+    function show(n) {
+      i = (n + imgs.length) % imgs.length;
+      imgs.forEach(function (im, k) { im.classList.toggle('on', k === i); });
+      dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+    }
+    function start() { timer = setInterval(function () { show(i + 1); }, 4200); }
+    function stop() { clearInterval(timer); }
+    dots.forEach(function (d, k) {
+      d.addEventListener('click', function () { stop(); show(k); start(); });
+    });
+    shot.addEventListener('mouseenter', stop);
+    shot.addEventListener('mouseleave', start);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) start();
+  });
 </script>
 </body>
 </html>
