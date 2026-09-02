@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata VIII · Słowo — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);--panel-2:#191527;
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--gold-deep:#a9801f;
+  --ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#scene{position:fixed;inset:0;z-index:0}
+canvas{display:block}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(125% 95% at 50% 42%,transparent 48%,rgba(0,0,0,.62) 100%)}
+
+/* topbar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;letter-spacing:.04em;color:var(--mute);text-decoration:none;
+  padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);
+  backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+/* info panel */
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:10;width:344px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;
+  padding:24px 24px 22px;box-shadow:0 30px 80px -40px #000;transition:opacity .4s,transform .4s;
+  max-height:calc(100vh - 48px);overflow-y:auto}
+.panel .el{display:flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel .el .glyph{font-size:14px}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:32px;margin:8px 0 2px;line-height:1.04}
+.panel .gloss{font-size:12.5px;color:var(--mute);font-style:italic;margin-bottom:16px}
+.panel .nums{display:flex;gap:8px;margin-bottom:16px}
+.panel .nums .n{flex:1;text-align:center;border:1px solid var(--line-soft);border-radius:10px;padding:9px 4px;background:rgba(0,0,0,.2)}
+.panel .nums .n b{font-family:"Fraunces",serif;font-size:21px;color:var(--gold-br);display:block;line-height:1}
+.panel .nums .n span{font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-top:4px;display:block}
+.panel .quote{font-family:"Spectral",Georgia,serif;font-style:italic;font-size:15px;line-height:1.5;color:var(--ivory);
+  border-left:2px solid var(--gold);padding-left:14px;margin:0 0 6px}
+.panel .quote .src{display:block;font-style:normal;font-family:Inter;font-size:10.5px;letter-spacing:.05em;color:var(--faint);margin-top:7px}
+.panel .note{font-size:12.5px;line-height:1.62;color:#c2bbcf;margin-top:14px}
+.panel .note b{color:var(--ivory)}
+.panel .note .gd{color:var(--gold-br)}
+/* amber-accented mixed-verdict note */
+.panel .note.mix{border-left:2px solid var(--amber);padding:11px 0 4px 14px;margin-top:16px;
+  background:linear-gradient(90deg,rgba(224,145,58,.08),transparent 80%);border-radius:0 8px 8px 0}
+.panel .note.mix b{color:var(--amber)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;margin-top:16px}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%}
+.chip.rygor{color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip.rygor::before{background:var(--gold)}
+.chip.mat{color:var(--verd);background:rgba(95,184,163,.1);border:1px solid rgba(95,184,163,.3)}
+.chip.mat::before{background:var(--verd)}
+.chip.mix{color:var(--amber);background:rgba(224,145,58,.12);border:1px solid rgba(224,145,58,.35)}
+.chip.mix::before{background:var(--amber)}
+
+/* live readout */
+.nowplaying{margin:16px 0 2px;border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px;
+  background:rgba(0,0,0,.22);min-height:62px;transition:border-color .3s,box-shadow .3s}
+.nowplaying.lit{border-color:var(--gold);box-shadow:0 0 22px -8px rgba(227,178,60,.55)}
+.nowplaying.warm{border-color:var(--amber);box-shadow:0 0 22px -8px rgba(224,145,58,.55)}
+.nowplaying .lab{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.nowplaying .ratio{font-family:"Fraunces",serif;font-size:24px;color:var(--gold-br);line-height:1.05;margin-top:3px}
+.nowplaying.warm .ratio{color:var(--amber)}
+.nowplaying .name{font-size:12px;color:var(--mute);margin-top:2px;line-height:1.45}
+.nowplaying .hz{font-size:10px;color:var(--faint);margin-top:5px;letter-spacing:.04em}
+
+/* dock */
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:12px;width:max-content;max-width:94vw}
+.ctx{min-height:0;display:flex;align-items:center;justify-content:center}
+.ctlbox{display:none;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;
+  background:rgba(8,7,13,.6);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:12px;
+  padding:9px 15px;font-size:12px;color:var(--mute);max-width:92vw}
+.ctlbox.on{display:flex}
+.ctlbox b{color:var(--gold-br);font-family:"Fraunces",serif;font-variant-numeric:tabular-nums}
+.mini{font-family:"Inter";font-size:11.5px;color:var(--mute);background:var(--panel-2);border:1px solid var(--line-soft);
+  border-radius:9px;padding:8px 13px;cursor:pointer;transition:.2s}
+.mini:hover{color:var(--ivory);border-color:var(--gold)}
+.mini.gold{color:#1a1305;background:var(--gold);border-color:var(--gold)}
+.mini.gold:hover{background:var(--gold-br)}
+.mini.warm{color:#1a1305;background:var(--amber);border-color:var(--amber)}
+.mini.warm:hover{filter:brightness(1.1)}
+.mini.playing{box-shadow:0 0 18px -6px rgba(227,178,60,.7)}
+.mini:disabled{opacity:.45;pointer-events:none}
+.rows{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.rows button{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:90px;
+  background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 8px;cursor:pointer;transition:.22s;color:var(--mute)}
+.rows button .rt{font-family:"Fraunces",serif;font-size:16px;color:var(--gold-br);line-height:1}
+.rows button b{font-size:11px;letter-spacing:.02em;font-weight:500;color:var(--ivory)}
+.rows button span{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.rows button:hover{background:rgba(255,255,255,.04)}
+.rows button.lit{background:rgba(227,178,60,.14);border-color:var(--gold)}
+.rows button.lit span{color:var(--gold)}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:10;font-size:10.5px;letter-spacing:.04em;color:var(--faint);max-width:210px;line-height:1.7}
+.hint b{color:var(--mute)}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:760px){
+  .panel{top:auto;bottom:196px;right:50%;transform:translateX(50%);width:min(420px,92vw);max-height:42vh}
+  .hint{display:none}
+  .rows button{min-width:0;padding:8px 10px}
+  .rows button b{display:none}
+}
+@media(max-width:400px){
+  .topbar{padding:12px 14px}
+  .rows{gap:5px;padding:6px}
+  .ctlbox{padding:8px 11px;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata VIII · Słowo</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"><!-- filled by JS --></aside>
+
+<div class="dock">
+  <div class="ctx">
+    <!-- mode 1: kulminacja -->
+    <div class="ctlbox" id="ctlClimax">
+      <button class="mini" id="climHalf"><span style="color:var(--mute)">▶</span> Kulminacja w ½</button>
+      <button class="mini warm" id="climPhi"><span style="color:#1a1305">▶</span> Kulminacja w φ</button>
+    </div>
+    <!-- mode 2: bartók -->
+    <div class="ctlbox" id="ctlBartok">
+      <button class="mini gold" id="bartokPlay">▶ Przejdź łuk (89 taktów)</button>
+      <span>kulminacja: takt <b id="bartokBar">55</b> / 89</span>
+    </div>
+    <!-- mode 3: rytm mowy -->
+    <div class="ctlbox" id="ctlSpeech">
+      <button class="mini gold" id="tapBtn">● Wystukaj rytm</button>
+      <span>ostatni iloraz: <b id="tapRatio">—</b></span>
+      <button class="mini" id="tapReset">↺ od nowa</button>
+    </div>
+  </div>
+  <div class="rows" id="rows"><!-- mode buttons by JS --></div>
+</div>
+
+<div class="hint" id="hint">φ działa w <b>czasie</b>, nie w przestrzeni<br><b>przeciągnij</b> = obróć · <b>scroll</b> = przybliż</div>
+
+<div id="loading"><div class="ph">Φ</div><p>odmierzam czas</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const PHI=(1+Math.sqrt(5))/2;          // 1,6180339887…
+const INVPHI=1/PHI;                     // 0,6180339887… — złoty punkt na osi
+const C={gold:0xf2d27a,goldDim:0xe3b23c,verd:0x5fb8a3,ivory:0xece6d6,crimson:0xd2553f,amber:0xe0913a,faint:0x3a3450};
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const fmt=(x,n=3)=>x.toFixed(n).replace('.',',');
+
+/* ---------- renderer / scene / camera ---------- */
+const host=document.getElementById('scene');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(2,devicePixelRatio));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.15;
+host.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x08070d);
+scene.fog=new THREE.FogExp2(0x08070d,0.06);
+
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,100);
+camera.position.set(0.0,1.4,8.4);
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=0.06;
+controls.autoRotate=!reduce;controls.autoRotateSpeed=0.4;
+controls.minDistance=5.0;controls.maxDistance=14;
+controls.enablePan=false;
+controls.target.set(0,0.1,0);
+controls.minPolarAngle=0.7;controls.maxPolarAngle=2.1;
+
+/* environment for subtle reflections */
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+
+/* lights */
+scene.add(new THREE.AmbientLight(0xffffff,0.28));
+const key=new THREE.DirectionalLight(0xffe9c0,1.4);key.position.set(4,6,5);scene.add(key);
+const rim=new THREE.DirectionalLight(0x88b8ff,0.6);rim.position.set(-6,-2,-4);scene.add(rim);
+
+/* ---------- starfield ---------- */
+const stars=(()=>{
+  const N=1500,pos=new Float32Array(N*3);
+  for(let i=0;i<N;i++){
+    const r=7+Math.random()*16,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph);
+  }
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const m=new THREE.PointsMaterial({color:0xe3b23c,size:0.035,transparent:true,opacity:0.5,
+    sizeAttenuation:true,blending:THREE.AdditiveBlending,depthWrite:false});
+  const p=new THREE.Points(g,m);scene.add(p);return p;
+})();
+
+/* ---------- post-processing (bloom) ---------- */
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.8,0.6,0.8);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+/* ====================================================================
+   OŚ CZASU — elegancka belka reprezentująca trwanie frazy.
+   Świecący znacznik w 0,618 długości (złoty punkt). Druga, blada
+   ryska w połowie (½) dla porównania. Pod belką — schemat fali.
+   ==================================================================== */
+const BARLEN=7.4, BARY=0.1, BARZ=0;
+const X0=-BARLEN/2;                                   // start (t=0)
+const xAt=t=>X0+t*BARLEN;                             // t∈[0,1] → x
+const timeGroup=new THREE.Group();scene.add(timeGroup);
+
+/* tor belki */
+const track=new THREE.Mesh(
+  new THREE.BoxGeometry(BARLEN,0.06,0.06),
+  new THREE.MeshPhysicalMaterial({color:0x2a2438,emissive:0x161226,emissiveIntensity:0.6,
+    metalness:0.1,roughness:0.5,clearcoat:0.6}));
+track.position.set(0,BARY,BARZ);timeGroup.add(track);
+
+/* wypełnienie postępu (świeci do markera) */
+const fill=new THREE.Mesh(
+  new THREE.BoxGeometry(1,0.07,0.07),
+  new THREE.MeshBasicMaterial({color:C.amber,transparent:true,opacity:0.0,
+    blending:THREE.AdditiveBlending,depthWrite:false}));
+fill.position.set(X0,BARY,BARZ+0.001);timeGroup.add(fill);
+function setFill(t){
+  const w=Math.max(0.0001,t*BARLEN);
+  fill.scale.x=w; fill.position.x=X0+w/2;
+}
+
+/* znaczniki: ½ (blady) i φ=0,618 (złoty słup) */
+function marker(t,col,h,op){
+  const g=new THREE.Group();
+  const post=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.026,0.026,h,18),
+    new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op,
+      blending:THREE.AdditiveBlending,depthWrite:false}));
+  post.position.y=BARY+h/2; g.add(post);
+  const bead=new THREE.Mesh(
+    new THREE.SphereGeometry(0.085,28,28),
+    new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op*1.0,
+      blending:THREE.AdditiveBlending,depthWrite:false}));
+  bead.position.y=BARY+h; g.add(bead);
+  g.position.x=xAt(t); g.userData={bead,post,h};
+  timeGroup.add(g); return g;
+}
+const mHalf=marker(0.5,C.faint,0.9,0.5);
+const mPhi =marker(INVPHI,C.amber,1.6,0.95);
+
+/* etykiety osi (½ i φ) jako drobne ryski w torze */
+function tick(t,col){
+  const m=new THREE.Mesh(new THREE.BoxGeometry(0.02,0.18,0.09),
+    new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.6}));
+  m.position.set(xAt(t),BARY,BARZ);timeGroup.add(m);
+}
+tick(0,0x6b6478);tick(0.5,C.faint);tick(INVPHI,C.amber);tick(1,0x6b6478);
+
+/* przesuwający się „kursor odtwarzania” */
+const cursor=new THREE.Mesh(
+  new THREE.SphereGeometry(0.07,24,24),
+  new THREE.MeshBasicMaterial({color:C.ivory,transparent:true,opacity:0.0,
+    blending:THREE.AdditiveBlending,depthWrite:false}));
+cursor.position.set(X0,BARY,BARZ);timeGroup.add(cursor);
+
+/* schemat fali pod belką — punkty modulowane obwiednią */
+const WAVEN=180;
+const waveGeo=new THREE.BufferGeometry();
+const wavePos=new Float32Array(WAVEN*3);
+for(let i=0;i<WAVEN;i++){wavePos[i*3]=xAt(i/(WAVEN-1));wavePos[i*3+1]=BARY-0.95;wavePos[i*3+2]=BARZ;}
+waveGeo.setAttribute('position',new THREE.BufferAttribute(wavePos,3));
+const wave=new THREE.Line(waveGeo,new THREE.LineBasicMaterial({color:C.amber,transparent:true,opacity:0.0}));
+timeGroup.add(wave);
+/* obwiednia fali: gdzie kulminacja, tam amplituda max */
+let wavePeak=INVPHI, waveAmp=0;
+function shapeWave(){
+  const p=wave.geometry.attributes.position;
+  for(let i=0;i<WAVEN;i++){
+    const t=i/(WAVEN-1);
+    const env=Math.exp(-Math.pow((t-wavePeak)/0.20,2));      // dzwon wokół kulminacji
+    const carrier=Math.sin(t*Math.PI*38);
+    p.array[i*3+1]=BARY-0.95+carrier*0.42*env*waveAmp;
+  }
+  p.needsUpdate=true;
+}
+
+/* schematyczna oś taktów (tryb Bartók) — drobne słupki 1..89 */
+const barsGroup=new THREE.Group();barsGroup.visible=false;timeGroup.add(barsGroup);
+const NBARS=89;
+for(let i=0;i<NBARS;i++){
+  const t=i/(NBARS-1);
+  const isPhi=(i===54);                                       // takt 55 (indeks 54) ≈ φ
+  const h=isPhi?0.5:0.16;
+  const m=new THREE.Mesh(new THREE.BoxGeometry(0.024,h,0.05),
+    new THREE.MeshBasicMaterial({color:isPhi?C.amber:0x4a4360,transparent:true,
+      opacity:isPhi?0.95:0.4,blending:THREE.AdditiveBlending,depthWrite:false}));
+  m.position.set(xAt(t),BARY+0.34+h/2,BARZ-0.18);
+  m.userData={base:isPhi?0.95:0.4,isPhi};
+  barsGroup.add(m);
+}
+
+/* ====================================================================
+   WEB AUDIO — tworzony/wznawiany WYŁĄCZNIE w geście użytkownika.
+   ==================================================================== */
+let actx=null, master=null;
+function ensureAudio(){
+  if(!actx){
+    const AC=window.AudioContext||window.webkitAudioContext;
+    actx=new AC();
+    master=actx.createGain();
+    master.gain.value=0.85;
+    master.connect(actx.destination);
+  }
+  if(actx.state==='suspended') actx.resume();
+  return actx;
+}
+/* łagodny ton: sinus + miękka obwiednia (bez kliknięć) */
+function playTone(freq,{dur=0.4,peak=0.22,when=0,wave='sine'}={}){
+  const ac=ensureAudio();
+  const t0=ac.currentTime+when;
+  const osc=ac.createOscillator();
+  osc.type=wave;
+  osc.frequency.setValueAtTime(freq,t0);
+  const g=ac.createGain();
+  g.gain.setValueAtTime(0.00001,t0);
+  g.gain.exponentialRampToValueAtTime(peak,t0+0.03);
+  g.gain.exponentialRampToValueAtTime(peak*0.55,t0+dur*0.6);
+  g.gain.exponentialRampToValueAtTime(0.00001,t0+dur);
+  osc.connect(g);g.connect(master);
+  osc.start(t0);osc.stop(t0+dur+0.04);
+}
+
+/* ====================================================================
+   TRYB 1 — „Punkt kulminacji”
+   Krótka wznosząca fraza melodyczna; jej SZCZYT (najwyższy, najgłośniejszy
+   ton) ląduje w ½ albo w φ=0,618 trwania frazy. A/B na ucho.
+   ==================================================================== */
+const SCALE=[0,2,4,5,7,9,11,12,14];                          // stopnie diatoniczne (półtony)
+const ROOT=294;                                              // D4
+const semi=n=>ROOT*Math.pow(2,n/12);
+let phraseLock=false;
+
+/* buduje frazę tak, by szczyt wypadł w peakPos∈[0,1] długości */
+function buildPhrase(peakPos){
+  const N=9, span=2.9;                                       // 9 nut, ~2,9 s
+  const peakIdx=Math.round(peakPos*(N-1));                   // która nuta jest szczytem
+  const seq=[];
+  for(let i=0;i<N;i++){
+    // wznosi do szczytu, potem opada — szczyt = najwyższy stopień + najgłośniejszy
+    let deg;
+    if(i<=peakIdx) deg=Math.round(i/Math.max(1,peakIdx)*7);
+    else deg=Math.round(7-(i-peakIdx)/Math.max(1,N-1-peakIdx)*5);
+    const isPeak=(i===peakIdx);
+    seq.push({
+      t:i/(N-1)*span,
+      freq:semi(SCALE[Math.max(0,Math.min(SCALE.length-1,deg))]),
+      peak:isPeak?0.34:0.18,
+      dur:isPeak?0.66:0.34,
+      isPeak
+    });
+  }
+  return {seq,span,peakPos,peakIdx};
+}
+function playPhrase(peakPos,{warm=false}={}){
+  if(phraseLock) return;
+  const ac=ensureAudio();
+  phraseLock=true;
+  const ph=buildPhrase(peakPos);
+  wavePeak=peakPos; waveAmp=1; shapeWave();
+  // animacja kursora wzdłuż osi
+  startCursor(ph.span, peakPos);
+  ph.seq.forEach(n=>{
+    playTone(n.freq,{dur:n.dur,peak:n.peak,when:n.t});
+    setTimeout(()=>{ if(n.isPeak) flashPeak(peakPos,warm); },n.t*1000);
+  });
+  showNow(warm?'φ ≈ 0,618':'½ = 0,500',
+    warm?'kulminacja w złotym podziale':'kulminacja w połowie frazy',
+    warm?'szczyt później — bardziej dramatycznie':'szczyt pośrodku — spokojnie',warm);
+  setTimeout(()=>{phraseLock=false;},(ph.span+0.8)*1000);
+}
+/* kursor odtwarzania */
+let cursorAnim=null;
+function startCursor(span,peakPos){
+  const t0=performance.now();
+  cancelAnimationFrame(cursorAnim);
+  (function step(){
+    const e=(performance.now()-t0)/(span*1000);
+    if(e>=1){cursor.material.opacity=0;setFill(0);return;}
+    cursor.position.x=xAt(e); cursor.material.opacity=0.9;
+    setFill(e);
+    cursorAnim=requestAnimationFrame(step);
+  })();
+}
+let peakFlash=0,peakFlashWarm=true;
+function flashPeak(t,warm){
+  const tgt=warm?mPhi:mHalf;
+  peakFlash=1; peakFlashWarm=warm;
+  tgt.userData.bead.scale.setScalar(1.7);
+  spawnRing(tgt.position.x, BARY+tgt.userData.h, warm?C.amber:C.ivory);
+}
+
+/* pierścień rozchodzący się od szczytu */
+const rings=[];
+function spawnRing(x,y,col){
+  const g=new THREE.RingGeometry(0.1,0.13,48);
+  const m=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9,
+    side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false});
+  const r=new THREE.Mesh(g,m);r.position.set(x,y,BARZ);
+  r.quaternion.copy(camera.quaternion);
+  timeGroup.add(r);rings.push({r,t:0});
+}
+
+/* ====================================================================
+   TRYB 2 — „Bartók” (Lendvai)
+   Przejście łuku 89 taktów, kulminacja ~takt 55 (kolejne liczby Fibonacciego).
+   Belka wypełnia się do φ; ton kulminacyjny w złotym punkcie.
+   ==================================================================== */
+let bartokLock=false;
+function playBartok(){
+  if(bartokLock) return;
+  const ac=ensureAudio();
+  bartokLock=true;
+  document.getElementById('bartokPlay').classList.add('playing');
+  wavePeak=INVPHI; waveAmp=1; shapeWave();
+  // 12 punktów wznoszenia napięcia do taktu 55/89, potem 3 opadające
+  const climb=12, span=4.2, peakT=INVPHI*span;
+  for(let i=0;i<climb;i++){
+    const frac=i/(climb-1);
+    const when=frac*peakT;
+    const deg=Math.round(frac*7);
+    playTone(semi(SCALE[deg]),{dur:0.4,peak:0.14+frac*0.2,when});
+  }
+  // ton kulminacyjny — najwyższy, najgłośniejszy — dokładnie w φ
+  playTone(semi(SCALE[8]),{dur:0.95,peak:0.36,when:peakT});
+  setTimeout(()=>flashBartokPeak(),peakT*1000);
+  // rozwiązanie (opadanie) w pozostałej 1/φ części
+  [5,4,2].forEach((d,i)=>playTone(semi(SCALE[d]),{dur:0.6,peak:0.18,when:peakT+0.45+i*0.5}));
+  startCursor(span,INVPHI);
+  showNow('takt 55 / 89','φ ≈ 0,618 · liczby Fibonacciego','wg Ernő Lendvaia (analiza SPORNA)',true);
+  setTimeout(()=>{bartokLock=false;document.getElementById('bartokPlay').classList.remove('playing');},(span+0.9)*1000);
+}
+function flashBartokPeak(){
+  const bar=barsGroup.children[54];
+  if(bar){bar.scale.y=1.6;}
+  mPhi.userData.bead.scale.setScalar(1.8);
+  spawnRing(xAt(INVPHI),BARY+1.6,C.amber);
+}
+
+/* ====================================================================
+   TRYB 3 — „Rytm mowy” (Pius Servien)
+   Użytkownik wystukuje rytm (spacja / przycisk). Pokazujemy ilorazy
+   odstępów. Najnaturalniejszy rytm ląduje na 2:1 / 3:2 — NIE na φ.
+   ==================================================================== */
+let taps=[], tapRatios=[];
+function doTap(){
+  ensureAudio();
+  const now=performance.now();
+  playTone(660,{dur:0.12,peak:0.3,wave:'triangle'});
+  spawnRing(xAt(Math.random()*0.9+0.05),BARY+0.3+Math.random()*0.6,C.gold);
+  if(taps.length){
+    const dtPrev=taps.length>=2?taps[taps.length-1]-taps[taps.length-2]:null;
+    const dt=now-taps[taps.length-1];
+    if(dtPrev){
+      const r=dt/dtPrev; const rr=r>=1?r:1/r;                // znormalizuj ≥1
+      tapRatios.push(rr);
+      const el=document.getElementById('tapRatio');
+      el.textContent=fmt(rr,2)+' : 1';
+      // który „cel” najbliżej? 1:1, 3:2=1,5, 2:1=2, φ=1,618
+      const targets=[{v:1,n:'1:1 · równo'},{v:1.5,n:'3:2 · muzyczny'},{v:2,n:'2:1 · muzyczny'},{v:PHI,n:'φ · złoty'}];
+      let best=targets[0],bd=9;
+      for(const t of targets){const d=Math.abs(rr-t.v);if(d<bd){bd=d;best=t;}}
+      const musical=(best.v!==PHI);
+      showNow(fmt(rr,2)+' : 1', 'najbliżej: '+best.n,
+        musical?'naturalny rytm = proste stosunki':'φ w rytmie mowy zdarza się rzadko', !musical);
+    }
+  }
+  taps.push(now);
+  if(window.SA&&taps.length>=4&&!window._tapdone){window._tapdone=1;SA.add(2,'Wystukany rytm mowy');}
+}
+function resetTaps(){taps=[];tapRatios=[];document.getElementById('tapRatio').textContent='—';}
+addEventListener('keydown',e=>{
+  if(e.code==='Space' && mode===2){e.preventDefault();doTap();}
+});
+
+/* ====================================================================
+   DOCK — 3 tryby (wzorzec proporcja.html), przyciski + konteksty
+   ==================================================================== */
+const MODES=[
+  {key:'climax',rt:'½ ↔ φ',t:'Punkt kulminacji',sub:'A / B na ucho'},
+  {key:'bartok',rt:'55/89',t:'Bartók',sub:'Lendvai · sporne'},
+  {key:'speech',rt:'2:1',t:'Rytm mowy',sub:'Servien · wystukaj'}
+];
+let mode=0;
+const seen=[false,false,false];
+const rowsEl=document.getElementById('rows');
+MODES.forEach((m,i)=>{
+  const b=document.createElement('button');b.dataset.i=i;
+  b.innerHTML=`<span class="rt">${m.rt}</span><b>${m.t}</b><span>${m.sub}</span>`;
+  b.addEventListener('click',()=>setMode(i));
+  rowsEl.appendChild(b);
+});
+/* czysta zmiana widoku — bez logiki złota (używane też na starcie) */
+function applyMode(i){
+  mode=i;
+  document.querySelectorAll('#rows button').forEach((b,j)=>b.classList.toggle('lit',j===i));
+  document.getElementById('ctlClimax').classList.toggle('on',i===0);
+  document.getElementById('ctlBartok').classList.toggle('on',i===1);
+  document.getElementById('ctlSpeech').classList.toggle('on',i===2);
+  // widoczność elementów sceny
+  barsGroup.visible=(i===1);
+  mHalf.visible=(i===0);                                     // ryska ½ tylko w trybie A/B
+  wave.material.opacity=(i===1)?0.55:0.0;
+  renderPanel();
+  document.getElementById('hint').innerHTML=
+    i===0?'Posłuchaj obu kulminacji<br><b>½</b> brzmi spokojnie · <b>φ</b> — później, dramatyczniej':
+    i===1?'Łuk napięcia rośnie do<br>taktu <b>55 z 89</b> (φ)':
+          'Wystukaj rytm: <b>spacja</b> lub przycisk<br>naturalnie wpada w 2:1 / 3:2';
+}
+/* klik użytkownika w zakładkę trybu — z naliczaniem złota i odznaki */
+function setMode(i){
+  applyMode(i);
+  if(!seen[i]){seen[i]=true;                           // eksploracja trybów → odznaka (bez osobnego złota)
+    if(seen[0]&&seen[1]&&seen[2]&&window.SA&&!window._allmodes){
+      window._allmodes=1;SA.award('prozodyk');         // integrator zarejestruje odznakę (+20 ✦)
+    }
+  }
+}
+
+/* ====================================================================
+   PANEL
+   ==================================================================== */
+const panelEl=document.getElementById('panel');
+const PANELS=[
+ {el:'Prozodia · kulminacja',h:'Złota kulminacja',
+  gloss:'gdzie postawić szczyt frazy — w połowie czy w 0,618?',
+  body:`Wielu kompozytorów i poetów stawia <b class="gd">punkt kulminacyjny</b> nie pośrodku, lecz później — około <b class="gd">0,618</b> trwania. Szczyt, który nadchodzi „za późno”, buduje większe napięcie. To realny chwyt warsztatowy: ucho słyszy różnicę. Posłuchaj obu wersji tej samej frazy.`},
+ {el:'Muzyka · Béla Bartók',h:'Łuk 55 / 89',
+  gloss:'Ernő Lendvai: Bartók komponował na φ i Fibonaccim',
+  body:`Węgierski teoretyk <b>Ernő Lendvai</b> twierdził, że Bartók budował formy na <b class="gd">złotym podziale</b> — np. kulminacja około <b class="gd">taktu 55 z 89</b> (kolejne liczby Fibonacciego). Bartók znał matematykę, więc brzmi to wiarygodnie. <b>Uczciwie jednak:</b> analiza Lendvaia jest <b class="gd">sporna</b> — jednych przekonuje, inni mówią o dopasowaniu liczb po fakcie.`},
+ {el:'Język · Pius Servien',h:'Rytm mowy',
+  gloss:'czy w rytmie zdania mieszka φ?',
+  body:`<b>Pius Servien</b> szukał mierzalnych proporcji w rytmie mowy i wiersza. Wystukaj naturalny rytm — zobaczysz, że odstępy układają się w proste stosunki: <b class="gd">2:1</b>, <b class="gd">3:2</b> (jak w muzyce), a nie w <b class="gd">φ</b>. φ w języku to najczęściej romantyczna projekcja.`}
+];
+function renderPanel(){
+  const p=PANELS[mode];
+  panelEl.innerHTML=`
+    <div class="el"><span class="glyph">⏱</span> ${p.el}</div>
+    <h1>${p.h}</h1>
+    <div class="gloss">${p.gloss}</div>
+    <div class="nums">
+      <div class="n"><b>0,618</b><span>złoty punkt</span></div>
+      <div class="n"><b>55 / 89</b><span>Fibonacci</span></div>
+      <div class="n"><b>2:1</b><span>rytm mowy</span></div>
+    </div>
+    <p class="quote">„Czas jest tworzywem muzyki i wiersza — a proporcja czasu bywa złota.”<span class="src">parafraza prozodii dynamicznej</span></p>
+    <div class="note">${p.body}</div>
+    <div class="nowplaying" id="now">
+      <div class="lab">teraz brzmi</div>
+      <div class="ratio" id="nowRatio">—</div>
+      <div class="name" id="nowName">wybierz tryb i posłuchaj</div>
+      <div class="hz" id="nowHz"></div>
+    </div>
+    <div class="note mix"><b>Werdykt — MIESZANY.</b> W czasie φ bywa <b>PRAWDZIWE</b> — gdy twórca świadomie je wstawia (Bartók, i to sporne). „Złota” kulminacja działa na ucho. Ale „φ w każdym wierszu” to już numerologia.</div>
+    <span class="chip mix">◆ — Mieszany werdykt</span>`;
+}
+
+/* live readout */
+let nowTimer=null;
+function showNow(ratio,name,sub,warm){
+  const nowEl=document.getElementById('now'); if(!nowEl)return;
+  document.getElementById('nowRatio').textContent=ratio;
+  document.getElementById('nowName').textContent=name;
+  document.getElementById('nowHz').textContent=sub||'';
+  nowEl.classList.toggle('warm',!!warm);
+  nowEl.classList.toggle('lit',!warm);
+  clearTimeout(nowTimer);
+  nowTimer=setTimeout(()=>{nowEl.classList.remove('lit','warm');},2600);
+}
+
+/* ---------- dock buttons: actions ---------- */
+document.getElementById('climHalf').addEventListener('click',()=>{
+  playPhrase(0.5,{warm:false});
+  if(window.SA&&!window._climhalf){window._climhalf=1;SA.add(2,'Kulminacja w połowie');}
+});
+document.getElementById('climPhi').addEventListener('click',()=>{
+  playPhrase(INVPHI,{warm:true});
+  if(window.SA&&!window._climphi){window._climphi=1;SA.add(3,'Złota kulminacja');}
+});
+document.getElementById('bartokPlay').addEventListener('click',()=>{
+  playBartok();
+  if(window.SA&&!window._bartok){window._bartok=1;SA.add(2,'Łuk Bartóka');}
+});
+document.getElementById('tapBtn').addEventListener('click',doTap);
+document.getElementById('tapReset').addEventListener('click',resetTaps);
+
+/* odblokuj audio przy pierwszym geście na scenie */
+renderer.domElement.addEventListener('pointerdown',()=>{ensureAudio();});
+
+/* ---------- resize ---------- */
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);
+});
+
+/* ---------- animate ---------- */
+let appearT=0;
+function animate(){
+  requestAnimationFrame(animate);
+  appearT=Math.min(1,appearT+0.04);
+  const e=1-Math.pow(1-appearT,3);
+  timeGroup.scale.setScalar(0.7+0.3*e);
+  timeGroup.position.y=(1-e)*-0.4;
+
+  const now=performance.now();
+  // pulsowanie złotego markera
+  const pulse=reduce?0:Math.sin(now*0.0022)*0.12;
+  mPhi.userData.bead.material.opacity=0.85+pulse;
+  // relaks skali beadów po flashu
+  [mHalf,mPhi].forEach(mk=>{
+    const s=mk.userData.bead.scale.x;
+    if(s>1.001) mk.userData.bead.scale.setScalar(s+(1-s)*0.12);
+  });
+  // relaks słupka Bartóka
+  if(barsGroup.visible){
+    const b=barsGroup.children[54];
+    if(b&&b.scale.y>1.001)b.scale.y+=(1-b.scale.y)*0.1;
+  }
+  // pierścienie
+  for(let i=rings.length-1;i>=0;i--){
+    const rp=rings[i];rp.t+=reduce?0.07:0.04;
+    rp.r.scale.setScalar(1+rp.t*6);
+    rp.r.material.opacity=Math.max(0,0.9*(1-rp.t));
+    rp.r.quaternion.copy(camera.quaternion);
+    if(rp.t>=1){timeGroup.remove(rp.r);rp.r.geometry.dispose();rp.r.material.dispose();rings.splice(i,1);}
+  }
+  // wygaszanie fali, gdy nic nie gra
+  if(!phraseLock && !bartokLock && waveAmp>0.001){waveAmp*=0.96;shapeWave();}
+  // fala lekko faluje w trybie Bartók nawet w spoczynku
+  if(barsGroup.visible && !bartokLock){
+    waveAmp=0.35+Math.sin(now*0.001)*0.05; wavePeak=INVPHI; shapeWave();
+  }
+  stars.rotation.y+=0.0003;
+  controls.update();
+  composer.render();
+}
+
+/* ---------- go ---------- */
+shapeWave();
+applyMode(0);           // domyślny widok bez naliczania złota; tryby liczą się po kliknięciu zakładki
+animate();
+setTimeout(()=>document.getElementById('loading').classList.add('gone'),600);
+if(window.SA){SA.mountHUD();SA.visit('slowo');}
+</script>
+</body>
+</html>

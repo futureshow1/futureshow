@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata X · Loża — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --core:#f2d27a;--build:#5fb8a3;--eso:#c9b6e0;--sci:#7db4e8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#scene{position:fixed;inset:0;z-index:0}canvas{display:block}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(135% 100% at 50% 46%,transparent 52%,rgba(0,0,0,.62) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;letter-spacing:.04em;color:var(--mute);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:15;width:330px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 80px -40px #000;transition:opacity .3s}
+.panel .ph{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:25px;margin:7px 0 3px;line-height:1.08}
+.panel .meta{font-size:11.5px;letter-spacing:.04em;color:var(--mute);margin-bottom:14px}
+.panel .blurb{font-size:13.5px;line-height:1.62;color:#c2bbcf}
+.panel.idle .blurb{color:var(--mute)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-top:14px;color:var(--ivory);border:1px solid var(--line-soft)}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
+.legend{position:fixed;bottom:24px;left:24px;z-index:15;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.legend .lg{display:flex;align-items:center;gap:9px;font-size:11px;color:var(--mute)}
+.legend .lg i{width:9px;height:9px;border-radius:50%}
+.timebar{position:fixed;bottom:66px;left:50%;transform:translateX(-50%);z-index:15;font-size:10.5px;letter-spacing:.06em;color:var(--faint);pointer-events:none}
+.timebar b{color:var(--gold-br);font-family:"Fraunces",serif}
+
+#labels{position:fixed;inset:0;z-index:10;pointer-events:none;overflow:hidden}
+.nl{position:absolute;transform:translate(-50%,-140%);white-space:nowrap;font-family:"Fraunces",serif;font-size:12.5px;color:var(--ivory);text-shadow:0 1px 6px #000;transition:opacity .2s;letter-spacing:.01em}
+.nl .yr{font-family:"Inter";font-size:9.5px;color:var(--faint);margin-left:6px;opacity:0}
+.nl.hot{font-size:15px;color:var(--gold-br)}.nl.hot .yr{opacity:1}
+
+.hint{position:fixed;top:74px;left:50%;transform:translateX(-50%);z-index:15;font-size:11px;color:var(--faint);letter-spacing:.04em;pointer-events:none;transition:opacity .5s;text-align:center}
+.hint.hide{opacity:0}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gamebar{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:18;display:flex;align-items:center;gap:13px}
+.gbtn{font-family:"Inter",sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;color:#1a1305;background:var(--gold);border:none;border-radius:999px;padding:10px 20px;cursor:pointer;transition:.2s}
+.gbtn:hover{background:var(--gold-br)}
+.gamebar .gprog,.gamebar .gexit{display:none}
+.gamebar .gprog{font-size:12px;color:var(--mute);letter-spacing:.05em}.gamebar .gprog b{color:var(--gold-br);font-family:"Fraunces",serif}
+.gamebar .gexit{font-size:11.5px;color:var(--faint);background:rgba(8,7,13,.5);border:1px solid var(--line-soft);border-radius:999px;padding:9px 15px;cursor:pointer;backdrop-filter:blur(8px)}
+.gamebar .gexit:hover{color:var(--ivory);border-color:var(--gold)}
+.gamebar.playing #gameStart{display:none}
+.gamebar.playing .gprog,.gamebar.playing .gexit{display:inline-flex}
+@media(max-width:820px){.panel{top:auto;bottom:120px;right:50%;transform:translateX(50%);width:min(420px,92vw)}.legend{display:none}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<div id="scene"></div><div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata X · Loża</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<div class="hint" id="hint">Światło pod korcem — jak złota liczba wędrowała przez 2500 lat. Obróć i najedź na węzeł.</div>
+<div id="labels"></div>
+
+<aside class="panel idle" id="panel">
+  <div class="ph" id="pPh">Konstelacja przekazu</div>
+  <h1 class="serif" id="pTtl">Loża</h1>
+  <div class="meta" id="pMeta"></div>
+  <div class="blurb" id="pBlurb">Pitagorejska wiedza o liczbie i proporcji nie zniknęła z katastrofą bractwa — przepływała przez Akademię, Aleksandrię, rzymskie korporacje, średniowieczne loże katedralne, aż po fizykę quasikryształów. Najedź na świetlny węzeł, by poznać ogniwo.</div>
+  <span class="chip" id="pChip" style="display:none"></span>
+</aside>
+
+<div class="legend">
+  <div class="lg"><i style="background:var(--core)"></i>Pitagorejski rdzeń</div>
+  <div class="lg"><i style="background:var(--build)"></i>Budowniczowie / loże</div>
+  <div class="lg"><i style="background:var(--eso)"></i>Ezoteryka</div>
+  <div class="lg"><i style="background:var(--sci)"></i>Nauka</div>
+</div>
+<div class="timebar">Konstelacja na <b>złotej spirali czasu</b> · −530 → 1982</div>
+<div class="gamebar" id="gamebar">
+  <button class="gbtn" id="gameStart">▶ Prześledź przekaz w czasie</button>
+  <span class="gprog">ogniwa <b id="gameInfo">0 / 17</b></span>
+  <button class="gexit" id="gameExit">✕ zakończ grę</button>
+</div>
+
+<div id="loading"><div class="ph">Φ</div><p>zapalam konstelację</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const COL={core:0xf2d27a,build:0x5fb8a3,eso:0xc9b6e0,sci:0x7db4e8};
+const TAU=Math.PI*2;
+
+/* ---------- data: 17 ogniw przekazu ---------- */
+const NODES=[
+ {n:'Pitagoras',pl:'Kroton',y:-530,br:'core',hl:1,b:'Bractwo pitagorejskie. Liczba jako zasada bytu; pentagram (pentalfa) — tajny znak rozpoznawczy wtajemniczonych.',src:[]},
+ {n:'Filolaos i Archytas',pl:'Tarent',y:-400,br:'core',b:'Pitagorejczycy ocaleni po spaleniu szkoły w Metaponcie. Archytas — przyjaciel Platona, żywy most do Akademii.',src:[0]},
+ {n:'Platon',pl:'Akademia, Ateny',y:-387,br:'core',hl:1,b:'„Niech nie wchodzi, kto nie zna geometrii." Timajos: pięć brył = żywioły, dwunastościan = kosmos.',src:[1]},
+ {n:'Euklides',pl:'Aleksandria',y:-300,br:'core',hl:1,b:'Elementy — pierwsza ścisła definicja „podziału w skrajnej i średniej proporcji", czyli złotego cięcia.',src:[2]},
+ {n:'Witruwiusz',pl:'Rzym',y:-25,br:'core',b:'De architectura: proporcje ciała jako moduł kosmiczny — źródło późniejszego „człowieka witruwiańskiego".',src:[2]},
+ {n:'Nikomachos',pl:'Geraza',y:100,br:'core',b:'Wstęp do arytmetyki: neopitagorejska teologia liczb — tetraktys, dekada, harmonia.',src:[0,3]},
+ {n:'Collegia fabrorum',pl:'Cesarstwo rzymskie',y:200,br:'build',b:'Rzymskie korporacje budowniczych — wg Ghyki ogniwo przekazu geometrii warsztatowej do średniowiecza.',src:[4]},
+ {n:'Boecjusz',pl:'Rzym',y:520,br:'core',b:'Przekazuje quadrivium (arytmetyka, geometria, muzyka, astronomia) całemu łacińskiemu średniowieczu.',src:[5]},
+ {n:'Loże katedralne',pl:'Chartres · Reims',y:1200,br:'build',hl:1,b:'„Światło pod korcem": Bauhütte i strzechy. Pentagram na rozetach gotyckich, gmerki kamieniarzy (Rziha).',src:[6,7]},
+ {n:'Pacioli i Leonardo',pl:'Mediolan',y:1509,br:'core',hl:1,b:'De divina proportione, ilustrowane przez Leonarda — złota proporcja ochrzczona jako „boska".',src:[3,8]},
+ {n:'Johannes Kepler',pl:'Praga',y:1596,br:'sci',b:'„Dwa skarby geometrii": twierdzenie Pitagorasa i złoty podział. Bryły platońskie w modelu kosmosu.',src:[2,9]},
+ {n:'Różokrzyżowcy',pl:'Europa',y:1614,br:'eso',b:'Manifesty różokrzyżowe — ezoteryczna synteza geometrii, alchemii i kabały liczb.',src:[8]},
+ {n:'Wielka Loża',pl:'Londyn',y:1717,br:'eso',b:'Masoneria spekulatywna: cech budowniczych staje się bractwem symbolicznym. Pitagoras jako patron sztuki.',src:[8,11]},
+ {n:'Adolf Zeising',pl:'Lipsk',y:1854,br:'eso',b:'Kanon złotego podziału w ciele i sztuce — i początek nowożytnej numerologii φ (często naciąganej).',src:[9]},
+ {n:'Jay Hambidge',pl:'Nowy Jork',y:1920,br:'core',b:'Dynamic symmetry: prostokąty √2…√5 i φ jako rzekomy klucz do sztuki greckiej.',src:[4,13]},
+ {n:'Matila Ghyka',pl:'Paryż',y:1931,br:'core',hl:2,b:'Le Nombre d\'Or — wielka synteza całej tej tradycji. Nasz przewodnik i jeden z filarów portalu.',src:[9,10,13,14]},
+ {n:'Penrose → Shechtman',pl:'Oxford · Technion',y:1974,br:'sci',hl:1,b:'Kafle Penrose\'a i quasikryształy: 5-krotna symetria i φ w materii. Nobel 2011 — naukowa pointa tradycji.',src:[3,10,15]},
+];
+const Y0=-530,Y1=1982,TURNS=2.95;
+function place(y){
+  const t=(y-Y0)/(Y1-Y0);
+  const ang=t*TURNS*TAU;
+  const rad=3.0+t*4.6;
+  return new THREE.Vector3(rad*Math.cos(ang), -3.6+t*7.2, rad*Math.sin(ang));
+}
+NODES.forEach(d=>{d.pos=place(d.y);});
+
+/* ---------- renderer / scene ---------- */
+const host=$id('scene');
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(2,devicePixelRatio));renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+host.appendChild(renderer.domElement);
+function $id(i){return document.getElementById(i);}
+
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x08070d);scene.fog=new THREE.FogExp2(0x08070d,0.045);
+const camera=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,0.1,100);camera.position.set(0.5,1.8,15.5);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=0.06;controls.autoRotate=true;controls.autoRotateSpeed=0.45;
+controls.minDistance=6;controls.maxDistance=24;controls.target.set(0,0.2,0);
+const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+scene.add(new THREE.AmbientLight(0xffffff,0.35));
+
+/* stars */
+(()=>{const N=1500,p=new Float32Array(N*3);for(let i=0;i<N;i++){const r=10+Math.random()*20,th=Math.random()*TAU,ph=Math.acos(2*Math.random()-1);p[i*3]=r*Math.sin(ph)*Math.cos(th);p[i*3+1]=r*Math.sin(ph)*Math.sin(th);p[i*3+2]=r*Math.cos(ph);}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xe3b23c,size:0.03,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false})));})();
+
+/* bloom */
+const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.5,0.5,0.82);composer.addPass(bloom);composer.addPass(new OutputPass());
+
+const root=new THREE.Group();scene.add(root);
+
+/* ---------- backbone: golden spiral of time ---------- */
+(()=>{
+  const pts=[];for(let i=0;i<=200;i++){pts.push(place(Y0+(Y1-Y0)*i/200));}
+  const g=new THREE.BufferGeometry().setFromPoints(pts);
+  root.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x6b5a2a,transparent:true,opacity:0.5})));
+})();
+
+/* ---------- threads ---------- */
+const threads=[];
+NODES.forEach((d,i)=>{
+  d.src.forEach(si=>{
+    const a=NODES[si].pos, b=d.pos;
+    const mid=a.clone().add(b).multiplyScalar(0.5);
+    mid.add(mid.clone().setY(0).normalize().multiplyScalar(0.9)); // bow outward
+    const curve=new THREE.QuadraticBezierCurve3(a,mid,b);
+    const g=new THREE.BufferGeometry().setFromPoints(curve.getPoints(28));
+    const m=new THREE.LineBasicMaterial({color:COL[d.br],transparent:true,opacity:0.18});
+    const line=new THREE.Line(g,m);root.add(line);
+    threads.push({line,a:si,b:i,base:0.18});
+  });
+});
+
+/* ---------- nodes ---------- */
+const nodeMeshes=[];
+NODES.forEach((d,i)=>{
+  const rad=d.hl===2?0.30:d.hl?0.20:0.145;
+  const geo=new THREE.SphereGeometry(rad,28,28);
+  const mat=new THREE.MeshStandardMaterial({color:COL[d.br],emissive:COL[d.br],emissiveIntensity:d.hl?0.6:0.38,roughness:0.35,metalness:0.1});
+  const m=new THREE.Mesh(geo,mat);m.position.copy(d.pos);m.userData.i=i;root.add(m);
+  // halo
+  const halo=new THREE.Mesh(new THREE.SphereGeometry(rad*1.8,20,20),new THREE.MeshBasicMaterial({color:COL[d.br],transparent:true,opacity:0.05,depthWrite:false}));
+  m.add(halo);
+  nodeMeshes.push(m);d.mesh=m;d.baseEmis=d.hl?0.6:0.38;
+});
+
+/* ---------- labels ---------- */
+const labelsEl=$id('labels');
+const labels=NODES.map(d=>{const el=document.createElement('div');el.className='nl';
+  el.innerHTML=`${d.n}<span class="yr">${d.y<0?Math.abs(d.y)+' p.n.e.':d.y}</span>`;labelsEl.appendChild(el);return el;});
+
+/* ---------- panel ---------- */
+const panel=$id('panel');
+function showNode(i){
+  const d=NODES[i];panel.classList.remove('idle');
+  $id('pPh').textContent={core:'Pitagorejski rdzeń',build:'Budowniczowie',eso:'Ezoteryka',sci:'Nauka'}[d.br];
+  $id('pTtl').textContent=d.n;
+  $id('pMeta').textContent=d.pl+' · '+(d.y<0?Math.abs(d.y)+' p.n.e.':d.y+' n.e.');
+  $id('pBlurb').textContent=d.b;
+  const chip=$id('pChip');chip.style.display='inline-flex';chip.textContent=d.hl===2?'Filar / przewodnik':'Ogniwo przekazu';
+}
+
+/* ---------- raycast ---------- */
+const ray=new THREE.Raycaster(),ndc=new THREE.Vector2();let hover=-1,pinned=-1;
+let gameMode=false,nextExp=0,mistakes=0;const visited=new Set(),order=[];
+function pick(ev){ndc.x=ev.clientX/innerWidth*2-1;ndc.y=-(ev.clientY/innerHeight*2-1);
+  ray.setFromCamera(ndc,camera);const h=ray.intersectObjects(nodeMeshes,false);return h.length?h[0].object.userData.i:-1;}
+function setHover(i){
+  if(i===hover)return;hover=i;
+  threads.forEach(t=>{const on=(i>=0&&(t.a===i||t.b===i));t.line.material.opacity=on?(gameMode?0.3:0.85):(gameMode?0.06:t.base);});
+  NODES.forEach((d,k)=>{d.mesh.material.emissiveIntensity=(i>=0&&k===i)?1.1:(visited.has(k)?1.25:d.baseEmis);});
+  labels.forEach((el,k)=>el.classList.toggle('hot',k===i));
+  renderer.domElement.style.cursor=i>=0?'pointer':'grab';
+  controls.autoRotateSpeed=i>=0?0.1:0.45;
+  if(gameMode)return;                                   // w grze panel pokazuje stan rozgrywki
+  if(i>=0){showNode(i);$id('hint').classList.add('hide');}
+  else if(pinned>=0){showNode(pinned);}
+  else{panel.classList.add('idle');$id('pPh').textContent='Konstelacja przekazu';$id('pTtl').textContent='Loża';$id('pMeta').textContent='';$id('pChip').style.display='none';
+    $id('pBlurb').textContent='Pitagorejska wiedza o liczbie i proporcji nie zniknęła z katastrofą bractwa — przepływała przez Akademię, Aleksandrię, rzymskie korporacje, średniowieczne loże katedralne, aż po fizykę quasikryształów. Najedź na świetlny węzeł, by poznać ogniwo.';}
+}
+let downXY=null;
+renderer.domElement.addEventListener('pointermove',e=>setHover(pick(e)));
+renderer.domElement.addEventListener('pointerdown',e=>downXY=[e.clientX,e.clientY]);
+renderer.domElement.addEventListener('pointerup',e=>{if(!downXY)return;const mv=Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1]);downXY=null;if(mv>6)return;const i=pick(e);if(gameMode)gameClick(i);else pinned=i;});
+
+/* ---------- gra: prześledź przekaz w czasie ---------- */
+const pathGroup=new THREE.Group();root.add(pathGroup);
+function yrStr(d){return d.y<0?Math.abs(d.y)+' p.n.e.':d.y+' n.e.';}
+function clearPath(){while(pathGroup.children.length){const c=pathGroup.children.pop();if(c.geometry)c.geometry.dispose();}}
+function gameStart(){
+  gameMode=true;nextExp=0;mistakes=0;order.length=0;visited.clear();clearPath();
+  NODES.forEach(d=>d.mesh.material.emissiveIntensity=d.baseEmis);
+  threads.forEach(t=>t.line.material.opacity=0.06);
+  $id('gamebar').classList.add('playing');$id('hint').classList.add('hide');hover=-1;
+  panel.classList.remove('idle');
+  $id('pPh').textContent='Gra · prześledź przekaz';$id('pTtl').textContent='Od Pitagorasa po dziś';
+  $id('pMeta').textContent='0 / '+NODES.length+' ogniw';$id('pChip').style.display='none';
+  $id('pBlurb').innerHTML='Klikaj węzły <b>od najstarszego do najnowszego</b>. Świetlista nić poprowadzi 2500 lat przekazu złotej liczby. Nie znasz dat? Zgaduj — przy pomyłce podpowiem.';
+  $id('gameInfo').textContent='0 / '+NODES.length;
+}
+function gameExit(){
+  gameMode=false;visited.clear();order.length=0;clearPath();
+  NODES.forEach(d=>d.mesh.material.emissiveIntensity=d.baseEmis);
+  threads.forEach(t=>t.line.material.opacity=t.base);
+  $id('gamebar').classList.remove('playing');hover=-2;setHover(-1);
+}
+function addSeg(a,b){const g=new THREE.BufferGeometry().setFromPoints([NODES[a].pos,NODES[b].pos]);
+  pathGroup.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xf2d27a,transparent:true,opacity:0.95})));}
+function gameClick(i){
+  if(i<0||visited.has(i))return;
+  if(i===nextExp){
+    visited.add(i);if(order.length)addSeg(order[order.length-1],i);order.push(i);
+    NODES[i].mesh.material.emissiveIntensity=1.25;nextExp++;
+    $id('gameInfo').textContent=nextExp+' / '+NODES.length;
+    panel.classList.remove('idle');$id('pPh').textContent='✓ ogniwo '+nextExp+' / '+NODES.length;
+    $id('pTtl').textContent=NODES[i].n;$id('pMeta').textContent=NODES[i].pl+' · '+yrStr(NODES[i]);
+    $id('pBlurb').textContent=NODES[i].b;$id('pChip').style.display='none';
+    if(nextExp>=NODES.length)gameWin();
+  }else{
+    mistakes++;
+    $id('pPh').textContent='✗ jeszcze nie teraz';$id('pTtl').textContent=NODES[i].n;
+    $id('pMeta').textContent=yrStr(NODES[i])+' — szukasz wcześniejszego';
+    $id('pBlurb').textContent='Kliknij najstarsze jeszcze nieodwiedzone ogniwo. Przekaz biegnie od Pitagorasa naprzód w czasie.';
+    const m=NODES[i].mesh.material,oc=m.emissive.getHex();m.emissive.setHex(0xd2553f);m.emissiveIntensity=1.5;
+    setTimeout(()=>{m.emissive.setHex(oc);m.emissiveIntensity=visited.has(i)?1.25:NODES[i].baseEmis;},340);
+  }
+}
+function gameWin(){
+  if(window.SA){SA.add(25,'Przekaz prześledzony');if(mistakes===0)SA.add(15,'Bez pomyłki');SA.award('pitagorejczyk');}
+  $id('pPh').textContent='✓ Ukończone';$id('pTtl').textContent='2500 lat przekazu';
+  $id('pMeta').textContent=NODES.length+' / '+NODES.length+' · pomyłek: '+mistakes;
+  $id('pBlurb').innerHTML=mistakes===0?'Bezbłędnie — prześledziłeś całą nić od Pitagorasa po Shechtmana.':'Cała nić odsłonięta. Spróbuj raz jeszcze bez pomyłek.';
+}
+$id('gameStart').addEventListener('click',gameStart);
+$id('gameExit').addEventListener('click',gameExit);
+
+/* ---------- animate ---------- */
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const v=new THREE.Vector3();
+function animate(t){
+  requestAnimationFrame(animate);
+  controls.update();
+  // pulse Ghyka
+  const g=NODES[15];if(g)g.mesh.material.emissiveIntensity=(hover===15?1.1:0.62)+Math.sin(t*0.003)*0.2;
+  // labels
+  NODES.forEach((d,k)=>{
+    v.copy(d.pos).applyMatrix4(root.matrixWorld);const dist=v.distanceTo(camera.position);
+    const behind=v.clone().project(camera);const el=labels[k];
+    if(behind.z>1){el.style.opacity='0';return;}
+    const x=(behind.x*0.5+0.5)*innerWidth,y=(-behind.y*0.5+0.5)*innerHeight;
+    el.style.left=x+'px';el.style.top=y+'px';
+    el.style.opacity=String(el.classList.contains('hot')?1:Math.max(0.16,Math.min(0.55,(22-dist)/18)));
+  });
+  composer.render();
+}
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
+setHover(-1);requestAnimationFrame(animate);
+setTimeout(()=>$id('loading').classList.add('gone'),650);
+if(window.SA){SA.mountHUD();SA.visit('loza');}
+</script>
+</body>
+</html>

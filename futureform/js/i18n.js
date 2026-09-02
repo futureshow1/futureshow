@@ -1,0 +1,122 @@
+// FutureForm — słownik PL/EN
+const I18N = {
+  pl: {
+    app_tag: 'Trener sprawdzianu sprawności fizycznej',
+    nav_today: 'Dziś', nav_plan: 'Plan', nav_test: 'Test', nav_progress: 'Postępy', nav_health: 'Zdrowie', nav_info: 'Info',
+    // onboarding
+    ob_welcome: 'Witaj w FutureForm', ob_intro: 'Osobisty trener kalisteniki wojskowej. Punktacja 1:1 według oficjalnych tabel MON (Dz.U. 2024 poz. 396). Plan dostosowuje się do tego, co realnie trenujesz — nie do deklaracji.',
+    ob_step_profile: 'Profil', ob_step_test: 'Sprawdzian', ob_step_baseline: 'Test bazowy', ob_step_plan: 'Plan',
+    ob_name: 'Imię (opcjonalnie)', ob_sex: 'Płeć', ob_sex_m: 'Mężczyzna', ob_sex_f: 'Kobieta',
+    ob_birth: 'Rok urodzenia', ob_height: 'Wzrost (cm)', ob_weight: 'Waga (kg)',
+    ob_activity: 'Aktywność poza treningiem', act_low: 'Siedząca', act_mid: 'Umiarkowana', act_high: 'Wysoka',
+    ob_sleep: 'Typowy sen (h)', ob_injuries: 'Ograniczenia / kontuzje (opcjonalnie)',
+    ob_category: 'Kategoria sprawdzianu', cat1: 'I — zespoły bojowe / wojska specjalne', cat2: 'II — dowódcy, spadochroniarze, rozpoznanie, WF', cat3: 'III — personel latający', cat4: 'IV — pozostali (kat. Z)', cat5: 'V — kategoria Z/O (3 konkurencje)',
+    ob_ev_endurance: 'Wytrzymałość', ob_ev_strength: 'Siła ramion', ob_ev_agility: 'Szybkość i zwinność',
+    ev_run3000: 'Marszobieg 3000 m', ev_swim12: 'Pływanie 12 min', ev_pullups: 'Podciąganie na drążku', ev_pushups: 'Ugięcia ramion na ławeczce', ev_shuttle10x10: 'Bieg wahadłowy 10×10 m', ev_koperta: 'Bieg po kopercie', ev_situps: 'Skłony tułowia (2 min)',
+    ob_testdate: 'Data sprawdzianu (lub cel)', ob_target: 'Cel', target_pass: 'Zaliczyć (3)', target_db: 'Dobra (4)', target_bdb: 'Bardzo dobra (5)',
+    ob_sessions: 'Sesje w tygodniu',
+    ob_baseline_hint: 'Wpisz AKTUALNE, zmierzone wyniki. To one — nie samoocena — budują plan. Jeśli któregoś nie znasz, zmierz w tym tygodniu i uzupełnij w zakładce Test.',
+    ob_start: 'Start', next: 'Dalej', back: 'Wstecz', save: 'Zapisz', cancel: 'Anuluj', close: 'Zamknij',
+    // dashboard
+    d_days_to_test: 'dni do sprawdzianu', d_total: 'Suma punktów', d_grade: 'Ocena', d_pass: 'ZALICZONY', d_fail: 'NIEZALICZONY',
+    d_grade5: 'bardzo dobra (5)', d_grade4: 'dobra (4)', d_grade3: 'dostateczna (3)', d_grade2: 'niedostateczna (2)',
+    d_min_missing: 'poniżej minimum!', d_event_pts: 'pkt', d_needed: 'próg', d_age_group: 'Grupa wiekowa',
+    d_today_session: 'Dzisiejsza sesja', d_no_session: 'Dziś regeneracja. Następna sesja wg planu tygodnia.',
+    d_readiness: 'Gotowość dzienna', d_sleep: 'Sen (h)', d_soreness: 'Zakwasy/ból (1–5)', d_energy: 'Energia (1–5)',
+    d_check: 'Sprawdź', r_full: 'Pełna moc — trenuj wg planu.', r_reduced: 'Obniżona — dziś 70% objętości.', r_recovery: 'Regeneracja — tylko lekki ruch, spacer, mobilność.',
+    d_log_session: 'Zaloguj sesję', d_no_baseline: 'Brak testu bazowego — wpisz wyniki w zakładce Test.',
+    d_weakest: 'Najsłabsze ogniwo', d_trajectory_ok: 'Na kursie do celu.', d_trajectory_bad: 'Poniżej kursu — plan zwiększa nacisk na najsłabsze konkurencje.',
+    // plan
+    p_week: 'Tydzień', p_of: 'z', p_type_build: 'budowa', p_type_deload: 'deload (regeneracyjny)', p_type_taper: 'taper przed testem', p_session: 'Sesja',
+    p_emph: 'Nacisk planu', p_done: 'wykonana', p_log: 'zaloguj', p_review: 'Przegląd tygodnia',
+    review_ok: 'Dobra zgodność z planem. Progresja idzie do przodu.', review_mid: 'Wykonujesz ~połowę planu. Plan zmniejszy objętość, żeby był realny.', review_low: 'Mało zalogowanych sesji. Lepszy krótszy plan robiony naprawdę niż idealny na papierze — zmniejsz liczbę sesji w ustawieniach albo loguj wszystko.', review_hard: 'Średni RPE wysoki — plan przyhamuje progresję.',
+    p_compliance: 'Zgodność', p_avg_rpe: 'śr. RPE',
+    // session kinds
+    k_STR_PULL: 'Siła — ciągnięcie + core', k_STR_PUSH: 'Siła — pchanie + core', k_RUN_INT: 'Bieg — interwały + zwinność', k_RUN_TEMPO: 'Bieg — tempo', k_MOBILITY: 'Lekko — ruch + mobilność', k_TEST: 'RETEST — pełny sprawdzian próbny',
+    // exercises
+    ex_pullups: 'Podciąganie nachwytem', ex_negatives: 'Podciąganie negatywne (zeskok w 3–5 s)', ex_rows: 'Wiosłowanie poziome (stół/drążek nisko)', ex_hangs: 'Zwis na drążku', ex_pushups_dense: 'Pompki — serie gęstościowe', ex_pushups_var: 'Pompki wariant (diamentowe/szerokie)', ex_pullups_easy: 'Podciąganie lekkie (technika)', ex_pike: 'Pompki pike', ex_situps_int: 'Skłony tułowia — interwały', ex_plank: 'Deska', ex_hollow: 'Hollow body', ex_warmup_run: 'Rozgrzewka biegowa + przebieżki', ex_int400: 'Interwały 400 m', ex_shuttle: 'Bieg wahadłowy 10×10 — powtórzenia', ex_koperta: 'Koperta — powtórzenia techniczne', ex_cooldown: 'Trucht + rozciąganie', ex_tempo: 'Bieg w tempie progowym', ex_strides: 'Przebieżki', ex_easy_run: 'Bieg spokojny / marszobieg', ex_mobility: 'Mobilność: biodra, barki, nadgarstki', ex_test_full: 'Pełny sprawdzian próbny — wszystkie konkurencje, z rozgrzewką, wyniki wpisz w zakładce Test',
+    note_rest_pull: 'przerwy 2–3 min; ostatnia seria do 1 powt. zapasu', note_negatives: 'akcent na fazę opuszczania; przerwa 90 s', note_rows: 'ciało proste, łopatki ściągnięte', note_hangs: 'buduje chwyt do podciągania', note_pushpace: 'stałe tempo, przerwy 60–90 s', note_pushvar: 'wybierz wariant słabszy technicznie', note_easy: 'daleko od upadku mięśniowego', note_situps: '45 s pracy / 45 s przerwy — jak na sprawdzianie', note_int_rest: 'przerwa: trucht 90 s', note_agility: 'pełna przerwa między przebiegami; start jak na teście', note_tempo: '„komfortowo ciężko" — możesz mówić pojedyncze słowa', note_strides: 'luźne przyspieszenia, nie sprint', note_easy_run: 'rozmowa możliwa przez cały czas', note_mobility: 'po bieganiu, na spokojnie', note_test: 'wykonaj w kolejności jak na sprawdzianie; to punkt kalibracji planu',
+    // log dialog
+    l_title: 'Log sesji', l_kind: 'Rodzaj sesji', l_ratio: 'Ile planu wykonano?', l_ratio_all: 'całość (100%)', l_ratio_most: 'większość (~85%)', l_ratio_half: 'około połowy (~50%)', l_ratio_little: 'niewiele (~25%)', l_rpe: 'RPE — jak ciężko było? (1–10)', l_pain: 'Ból ostry podczas treningu', l_notes: 'Notatki', l_saved: 'Sesja zapisana. Plan zaktualizowany.',
+    l_pain_warn: 'Ból ostry = sygnał stop. Odpuść bolesne ćwiczenie, wróć do niego po 2–3 dniach; jeśli ból wraca — skonsultuj z fizjoterapeutą.',
+    // test tab
+    t_title: 'Sprawdzian — wyniki', t_new: 'Nowy wynik / retest', t_hint: 'Wpisz wyniki, które faktycznie osiągasz (np. z próbnego sprawdzianu). Czasy jako mm:ss, wahadłowy/koperta w sekundach z dziesiętną.',
+    t_history: 'Historia testów', t_date: 'Data', t_save: 'Zapisz test', t_calc: 'Punktacja na żywo', t_tables: 'Tabele norm (podgląd)', t_tables_hint: 'Oficjalne tabele punktowe dla Twojej grupy wiekowej.', t_result: 'Wynik', t_pts: 'Punkty', t_min_req: 'minimum',
+    t_baseline: 'test bazowy', t_delete: 'usuń',
+    // progress
+    g_title: 'Postępy', g_total_pts: 'Suma punktów w czasie', g_events: 'Konkurencje — wyniki', g_weight: 'Masa ciała', g_sessions: 'Sesje w tygodniach', g_none: 'Za mało danych — zaloguj testy i sesje.',
+    // health
+    h_title: 'Zdrowie i dieta', h_bmr: 'Podstawowa przemiana (BMR)', h_tdee: 'Dzienne zapotrzebowanie (TDEE)', h_kcal: 'Cel kaloryczny', h_protein: 'Białko dziennie', h_fat: 'Tłuszcze (min.)', h_water: 'Woda', h_bmi: 'BMI',
+    h_goal: 'Cel sylwetkowy', goal_cut: 'Redukcja', goal_maintain: 'Utrzymanie', goal_gain: 'Budowa',
+    h_weight_log: 'Dziennik wagi', h_add_weight: 'Dodaj pomiar', h_weight_hint: 'Waż się rano, na czczo. Licz się z trendem 7-dniowym, nie pojedynczym pomiarem.',
+    h_sleep_title: 'Sen i regeneracja', h_sleep_tips: 'Progresja dzieje się w nocy: 7–9 h snu; stałe pory; bez ekranów 60 min przed snem; ciemno i chłodno (18–19°C). Trening ciężki maks. 3 h przed snem.',
+    h_disclaimer: 'To wsparcie treningowe, nie porada medyczna. Skonsultuj się z lekarzem przed rozpoczęciem intensywnego programu — zwłaszcza przy chorobach przewlekłych, po 40. r.ż. przy braku aktywności, lub gdy podczas wysiłku pojawia się ból w klatce, zawroty głowy albo duszność nieproporcjonalna do wysiłku.',
+    // info
+    i_title: 'O aplikacji', i_sources: 'Źródła i metodologia',
+    i_evidence: 'Podstawy naukowe', i_evidence_sub: 'Każda zasada działania aplikacji ma źródło: przepis prawa, podręcznik metodyczny albo badanie recenzowane. Poniżej pełna lista.',
+    i_norms: 'Normy: Rozporządzenie MON z 7.03.2024 r. (Dz.U. 2024 poz. 396) — tabele punktowe odwzorowane 1:1 z załączników 3–4. Ocena: suma punktów + minima konkurencji, progi wg kategorii.',
+    i_method: 'Metodyka: progresje kalisteniczne (S. Low, „Overcoming Gravity"), autoregulacja RPE i podwójna progresja (NSCA), objętość wg landmarków MEV/MRV (Renaissance Periodization), kondycja pod test wojskowy (K. Black, „Tactical Barbell II"; S. Smith; M. Lauren), screening zdrowotny wg ACSM.',
+    i_privacy: 'Dane zostają na Twoim urządzeniu (localStorage). Eksport/import w Ustawieniach.',
+    // settings
+    s_title: 'Ustawienia', s_lang: 'Język', s_edit_profile: 'Edytuj profil i plan', s_export: 'Eksport danych (JSON)', s_import: 'Import danych', s_reset: 'Wyczyść wszystko', s_reset_confirm: 'Na pewno usunąć wszystkie dane aplikacji?',
+    // misc
+    m_reps: 'powt.', m_meters: 'm', m_min: 'min', m_sec: 's', m_kg: 'kg', m_today: 'dziś',
+    err_required: 'Uzupełnij wymagane pola.', err_import: 'Nieprawidłowy plik.',
+    grade_names: { 5: 'bdb (5)', 4: 'db (4)', 3: 'dst (3)', 2: 'ndst (2)' }
+  },
+  en: {
+    app_tag: 'Military fitness test coach',
+    nav_today: 'Today', nav_plan: 'Plan', nav_test: 'Test', nav_progress: 'Progress', nav_health: 'Health', nav_info: 'Info',
+    ob_welcome: 'Welcome to FutureForm', ob_intro: 'A personal military calisthenics coach. Scoring mirrors the official Polish MoD tables 1:1 (Journal of Laws 2024 item 396). The plan adapts to what you actually train — not to declarations.',
+    ob_step_profile: 'Profile', ob_step_test: 'The test', ob_step_baseline: 'Baseline', ob_step_plan: 'Plan',
+    ob_name: 'Name (optional)', ob_sex: 'Sex', ob_sex_m: 'Male', ob_sex_f: 'Female',
+    ob_birth: 'Birth year', ob_height: 'Height (cm)', ob_weight: 'Weight (kg)',
+    ob_activity: 'Activity outside training', act_low: 'Sedentary', act_mid: 'Moderate', act_high: 'High',
+    ob_sleep: 'Typical sleep (h)', ob_injuries: 'Limitations / injuries (optional)',
+    ob_category: 'Test category', cat1: 'I — combat / special forces teams', cat2: 'II — commanders, paratroopers, recon, PT staff', cat3: 'III — flight personnel', cat4: 'IV — others (cat. Z)', cat5: 'V — category Z/O (3 events)',
+    ob_ev_endurance: 'Endurance', ob_ev_strength: 'Upper-body strength', ob_ev_agility: 'Speed & agility',
+    ev_run3000: '3000 m run', ev_swim12: '12-min swim', ev_pullups: 'Pull-ups', ev_pushups: 'Bench push-ups', ev_shuttle10x10: '10×10 m shuttle run', ev_koperta: '"Envelope" zigzag run', ev_situps: 'Sit-ups (2 min)',
+    ob_testdate: 'Test date (or goal date)', ob_target: 'Goal', target_pass: 'Pass (3)', target_db: 'Good (4)', target_bdb: 'Very good (5)',
+    ob_sessions: 'Sessions per week',
+    ob_baseline_hint: 'Enter CURRENT, measured results. These — not self-assessment — build the plan. If you don\'t know one, measure it this week and add it in the Test tab.',
+    ob_start: 'Start', next: 'Next', back: 'Back', save: 'Save', cancel: 'Cancel', close: 'Close',
+    d_days_to_test: 'days to the test', d_total: 'Total points', d_grade: 'Grade', d_pass: 'PASS', d_fail: 'FAIL',
+    d_grade5: 'very good (5)', d_grade4: 'good (4)', d_grade3: 'satisfactory (3)', d_grade2: 'unsatisfactory (2)',
+    d_min_missing: 'below event minimum!', d_event_pts: 'pts', d_needed: 'threshold', d_age_group: 'Age group',
+    d_today_session: 'Today\'s session', d_no_session: 'Recovery day. Next session per the weekly plan.',
+    d_readiness: 'Daily readiness', d_sleep: 'Sleep (h)', d_soreness: 'Soreness (1–5)', d_energy: 'Energy (1–5)',
+    d_check: 'Check', r_full: 'Full power — train as planned.', r_reduced: 'Reduced — 70% volume today.', r_recovery: 'Recovery — light movement, walk, mobility only.',
+    d_log_session: 'Log a session', d_no_baseline: 'No baseline test — enter results in the Test tab.',
+    d_weakest: 'Weakest link', d_trajectory_ok: 'On course for the goal.', d_trajectory_bad: 'Below course — the plan shifts emphasis to the weakest events.',
+    p_week: 'Week', p_of: 'of', p_type_build: 'build', p_type_deload: 'deload (recovery)', p_type_taper: 'pre-test taper', p_session: 'Session',
+    p_emph: 'Plan emphasis', p_done: 'done', p_log: 'log', p_review: 'Weekly review',
+    review_ok: 'Good plan compliance. Progression moves forward.', review_mid: 'You complete ~half the plan. Volume will be reduced to stay realistic.', review_low: 'Few logged sessions. A shorter plan actually done beats a perfect one on paper — reduce weekly sessions in settings, or log everything.', review_hard: 'Average RPE is high — progression slows down.',
+    p_compliance: 'Compliance', p_avg_rpe: 'avg RPE',
+    k_STR_PULL: 'Strength — pull + core', k_STR_PUSH: 'Strength — push + core', k_RUN_INT: 'Run — intervals + agility', k_RUN_TEMPO: 'Run — tempo', k_MOBILITY: 'Easy — movement + mobility', k_TEST: 'RETEST — full mock test',
+    ex_pullups: 'Pull-ups (overhand)', ex_negatives: 'Negative pull-ups (3–5 s descent)', ex_rows: 'Horizontal rows (table/low bar)', ex_hangs: 'Bar hang', ex_pushups_dense: 'Push-ups — density sets', ex_pushups_var: 'Push-up variant (diamond/wide)', ex_pullups_easy: 'Easy pull-ups (technique)', ex_pike: 'Pike push-ups', ex_situps_int: 'Sit-ups — intervals', ex_plank: 'Plank', ex_hollow: 'Hollow body hold', ex_warmup_run: 'Running warm-up + strides', ex_int400: '400 m intervals', ex_shuttle: '10×10 m shuttle — repeats', ex_koperta: 'Envelope run — technique repeats', ex_cooldown: 'Jog + stretching', ex_tempo: 'Threshold tempo run', ex_strides: 'Strides', ex_easy_run: 'Easy run / run-walk', ex_mobility: 'Mobility: hips, shoulders, wrists', ex_test_full: 'Full mock test — all events, warmed up; enter results in the Test tab',
+    note_rest_pull: 'rest 2–3 min; last set to 1 rep in reserve', note_negatives: 'emphasize the lowering phase; rest 90 s', note_rows: 'body straight, shoulder blades set', note_hangs: 'builds grip for pull-ups', note_pushpace: 'steady tempo, rest 60–90 s', note_pushvar: 'pick your technically weaker variant', note_easy: 'far from muscular failure', note_situps: '45 s work / 45 s rest — like the test', note_int_rest: 'recovery: 90 s jog', note_agility: 'full rest between runs; start like on the test', note_tempo: '"comfortably hard" — single words possible', note_strides: 'relaxed accelerations, not sprints', note_easy_run: 'conversation possible throughout', note_mobility: 'after the run, easy pace', note_test: 'do events in test order; this calibrates the plan',
+    l_title: 'Session log', l_kind: 'Session type', l_ratio: 'How much of the plan was done?', l_ratio_all: 'all of it (100%)', l_ratio_most: 'most (~85%)', l_ratio_half: 'about half (~50%)', l_ratio_little: 'a little (~25%)', l_rpe: 'RPE — how hard was it? (1–10)', l_pain: 'Sharp pain during training', l_notes: 'Notes', l_saved: 'Session saved. Plan updated.',
+    l_pain_warn: 'Sharp pain = stop signal. Drop the painful exercise, retry in 2–3 days; if pain returns — see a physiotherapist.',
+    t_title: 'Test — results', t_new: 'New result / retest', t_hint: 'Enter results you actually achieve (e.g., from a mock test). Times as mm:ss; shuttle/envelope in seconds with a decimal.',
+    t_history: 'Test history', t_date: 'Date', t_save: 'Save test', t_calc: 'Live scoring', t_tables: 'Norm tables (preview)', t_tables_hint: 'Official point tables for your age group.', t_result: 'Result', t_pts: 'Points', t_min_req: 'minimum',
+    t_baseline: 'baseline', t_delete: 'delete',
+    g_title: 'Progress', g_total_pts: 'Total points over time', g_events: 'Events — results', g_weight: 'Body weight', g_sessions: 'Sessions per week', g_none: 'Not enough data — log tests and sessions.',
+    h_title: 'Health & diet', h_bmr: 'Basal metabolic rate (BMR)', h_tdee: 'Daily energy needs (TDEE)', h_kcal: 'Calorie target', h_protein: 'Daily protein', h_fat: 'Fat (min.)', h_water: 'Water', h_bmi: 'BMI',
+    h_goal: 'Body goal', goal_cut: 'Cut', goal_maintain: 'Maintain', goal_gain: 'Gain',
+    h_weight_log: 'Weight log', h_add_weight: 'Add measurement', h_weight_hint: 'Weigh in the morning, fasted. Watch the 7-day trend, not single readings.',
+    h_sleep_title: 'Sleep & recovery', h_sleep_tips: 'Progress happens at night: 7–9 h sleep; consistent times; no screens 60 min before bed; dark and cool (18–19°C). Hard training no later than ~3 h before sleep.',
+    h_disclaimer: 'This is training support, not medical advice. Consult a doctor before starting an intense program — especially with chronic conditions, if inactive and over 40, or if you experience chest pain, dizziness, or disproportionate breathlessness during effort.',
+    i_title: 'About', i_sources: 'Sources & methodology',
+    i_evidence: 'Evidence base', i_evidence_sub: 'Every rule the app follows has a source: a legal act, a methodological manual, or a peer-reviewed study. Full list below.',
+    i_norms: 'Norms: Polish MoD Regulation of 7 Mar 2024 (Journal of Laws 2024, item 396) — point tables mirrored 1:1 from annexes 3–4. Grading: total points + per-event minimums, thresholds by category.',
+    i_method: 'Methodology: calisthenics progressions (S. Low, "Overcoming Gravity"), RPE autoregulation & double progression (NSCA), volume per MEV/MRV landmarks (Renaissance Periodization), military test conditioning (K. Black, "Tactical Barbell II"; S. Smith; M. Lauren), health screening per ACSM.',
+    i_privacy: 'Data stays on your device (localStorage). Export/import in Settings.',
+    s_title: 'Settings', s_lang: 'Language', s_edit_profile: 'Edit profile & plan', s_export: 'Export data (JSON)', s_import: 'Import data', s_reset: 'Delete everything', s_reset_confirm: 'Really delete all app data?',
+    m_reps: 'reps', m_meters: 'm', m_min: 'min', m_sec: 's', m_kg: 'kg', m_today: 'today',
+    err_required: 'Fill in the required fields.', err_import: 'Invalid file.',
+    grade_names: { 5: 'very good (5)', 4: 'good (4)', 3: 'satisf. (3)', 2: 'unsatisf. (2)' }
+  }
+};
+let LANG = localStorage.getItem('futureform.lang') || localStorage.getItem('poligon.lang') || 'pl';
+function t(key) { return (I18N[LANG] && I18N[LANG][key]) ?? I18N.pl[key] ?? key; }
+function setLang(l) { LANG = l; localStorage.setItem('futureform.lang', l); }

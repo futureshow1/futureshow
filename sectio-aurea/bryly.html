@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata IV · Bryły — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);--panel-2:#191527;
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--gold-deep:#a9801f;
+  --ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#scene{position:fixed;inset:0;z-index:0}
+canvas{display:block}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(125% 95% at 50% 42%,transparent 48%,rgba(0,0,0,.62) 100%)}
+
+/* topbar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;letter-spacing:.04em;color:var(--mute);text-decoration:none;
+  padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);
+  backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+/* info panel */
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:10;width:330px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;
+  padding:24px 24px 22px;box-shadow:0 30px 80px -40px #000;transition:opacity .4s,transform .4s}
+.panel .el{display:flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel .el .glyph{font-size:14px}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:34px;margin:8px 0 2px;line-height:1.02}
+.panel .gloss{font-size:12.5px;color:var(--mute);font-style:italic;margin-bottom:16px}
+.panel .nums{display:flex;gap:8px;margin-bottom:16px}
+.panel .nums .n{flex:1;text-align:center;border:1px solid var(--line-soft);border-radius:10px;padding:9px 4px;background:rgba(0,0,0,.2)}
+.panel .nums .n b{font-family:"Fraunces",serif;font-size:22px;color:var(--gold-br);display:block;line-height:1}
+.panel .nums .n span{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:4px;display:block}
+.panel .quote{font-family:"Fraunces",serif;font-style:italic;font-size:15px;line-height:1.5;color:var(--ivory);
+  border-left:2px solid var(--gold);padding-left:14px;margin:0 0 6px}
+.panel .quote .src{display:block;font-style:normal;font-family:Inter;font-size:10.5px;letter-spacing:.05em;color:var(--faint);margin-top:7px}
+.panel .note{font-size:12.5px;line-height:1.62;color:#c2bbcf;margin-top:14px}
+.panel .note b{color:var(--ivory)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;margin-top:16px}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%}
+.chip.rygor{color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip.rygor::before{background:var(--gold)}
+.chip.mat{color:var(--verd);background:rgba(95,184,163,.1);border:1px solid rgba(95,184,163,.3)}
+.chip.mat::before{background:var(--verd)}
+
+/* dock */
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:12px;width:max-content;max-width:94vw}
+.solids{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.solids button{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:70px;
+  background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 8px;cursor:pointer;transition:.22s;color:var(--mute)}
+.solids button svg{width:26px;height:26px;opacity:.7;transition:.22s}
+.solids button b{font-size:10px;letter-spacing:.02em;font-weight:500;color:var(--ivory)}
+.solids button span{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.solids button:hover{background:rgba(255,255,255,.04)}
+.solids button:hover svg{opacity:1}
+.solids button.active{background:rgba(227,178,60,.12);border-color:var(--gold)}
+.solids button.active svg{opacity:1}
+.solids button.active span{color:var(--gold)}
+.toggles{display:flex;gap:8px}
+.tg{font-size:11px;color:var(--mute);background:rgba(8,7,13,.55);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);border-radius:999px;padding:8px 14px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:.22s}
+.tg .sw{width:26px;height:14px;border-radius:999px;background:rgba(255,255,255,.12);position:relative;transition:.22s}
+.tg .sw::after{content:"";position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:50%;background:var(--mute);transition:.22s}
+.tg.on{color:var(--ivory);border-color:var(--gold)}
+.tg.on .sw{background:var(--gold)}.tg.on .sw::after{left:14px;background:#1a1305}
+.tg.disabled{opacity:.35;pointer-events:none}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:10;font-size:10.5px;letter-spacing:.04em;color:var(--faint);max-width:200px;line-height:1.7}
+.hint b{color:var(--mute)}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.quiz{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:16;width:330px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--gold);border-radius:18px;padding:22px;box-shadow:0 30px 80px -40px #000;display:none}
+.quiz.on{display:block}
+.quiz .qstep{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.quiz .qstep b{color:var(--gold-br);font-family:"Fraunces",serif}
+.quiz h1{font-family:"Fraunces",serif;font-weight:400;font-size:21px;line-height:1.18;margin:9px 0 14px}
+.quiz .qopts{display:flex;flex-direction:column;gap:8px}
+.quiz .qopts button{font-family:"Inter",sans-serif;font-size:13px;color:var(--ivory);background:var(--panel-2);border:1px solid var(--line-soft);border-radius:10px;padding:11px 14px;text-align:left;cursor:pointer;transition:.18s}
+.quiz .qopts button:hover:not(:disabled){border-color:var(--gold)}
+.quiz .qopts button.ok{border-color:var(--verd);background:rgba(95,184,163,.14)}
+.quiz .qopts button.no{border-color:var(--crimson);background:rgba(210,85,63,.14)}
+.quiz .qopts button:disabled{cursor:default}
+.quiz .qfeed{font-size:12.5px;line-height:1.55;margin-top:13px;display:none}
+.quiz .qfeed.on{display:block}
+.quiz .qfeed .v{font-weight:700;letter-spacing:.04em}.quiz .qfeed .v.ok{color:var(--verd)}.quiz .qfeed .v.no{color:var(--crimson)}
+.quiz .qfeed p{margin:6px 0 0;color:#c2bbcf}
+.quiz .qnext{display:none;width:100%;margin-top:13px;font-family:"Inter",sans-serif;font-weight:600;font-size:12.5px;color:#1a1305;background:var(--gold);border:none;border-radius:10px;padding:11px;cursor:pointer}
+.quiz .qnext.on{display:block}.quiz .qnext:hover{background:var(--gold-br)}
+.quiz .qexit{width:100%;margin-top:8px;font-family:"Inter",sans-serif;font-size:11px;color:var(--faint);background:transparent;border:none;cursor:pointer}
+.quiz .qexit:hover{color:var(--ivory)}
+.quizBtn{font-family:"Inter",sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.03em;color:#1a1305;background:var(--gold);border:none;border-radius:999px;padding:0 16px;cursor:pointer;transition:.2s;margin-left:4px}
+.quizBtn:hover{background:var(--gold-br)}
+@media(max-width:760px){
+  .panel{top:auto;bottom:150px;right:50%;transform:translateX(50%);width:min(420px,92vw)}
+  .quiz{top:auto;bottom:150px;right:50%;transform:translateX(50%);width:min(420px,92vw)}
+  .hint{display:none}
+}
+@media(max-width:600px){
+  .panel{background:rgba(12,10,20,.95);bottom:164px;max-height:56vh;overflow-y:auto;z-index:50}
+  .solids button{min-width:0;padding:8px 9px}
+  .solids button b,.solids button span{display:none}
+}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata IV · Bryły</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"><!-- filled by JS --></aside>
+<aside class="quiz" id="quiz"><!-- quiz by JS --></aside>
+
+<div class="dock">
+  <div class="toggles">
+    <button class="tg" id="tgGold"><span class="sw"></span>3 złote prostokąty</button>
+    <button class="tg" id="tgWire"><span class="sw"></span>Szkielet</button>
+    <button class="quizBtn" id="startQuiz">▶ Próba wiedzy</button>
+  </div>
+  <div class="solids" id="solids"><!-- buttons by JS --></div>
+</div>
+
+<div class="hint">Przeciągnij, by obrócić<br><b>scroll</b> = przybliż · idle obraca sam</div>
+
+<div id="loading"><div class="ph">Φ</div><p>buduję bryły</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const PHI=(1+Math.sqrt(5))/2;
+const R=1.65;                       // common circumradius
+const C={gold:0xf2d27a,goldDim:0xe3b23c,verd:0x5fb8a3,ivory:0xece6d6,crimson:0xd2553f};
+
+/* ---------- renderer / scene / camera ---------- */
+const host=document.getElementById('scene');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(2,devicePixelRatio));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.15;
+host.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x08070d);
+scene.fog=new THREE.FogExp2(0x08070d,0.10);
+
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,100);
+camera.position.set(3.5,2.3,5.2);            // oblique 3/4 view reads the 3D far better
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=0.06;
+controls.autoRotate=true;controls.autoRotateSpeed=0.7;
+controls.minDistance=3.4;controls.maxDistance=11;
+controls.enablePan=false;
+
+/* environment for subtle reflections */
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+
+/* lights */
+scene.add(new THREE.AmbientLight(0xffffff,0.25));
+const key=new THREE.DirectionalLight(0xffe9c0,1.5);key.position.set(4,6,5);scene.add(key);
+const rim=new THREE.DirectionalLight(0x88b8ff,0.7);rim.position.set(-6,-2,-4);scene.add(rim);
+const core=new THREE.PointLight(0xf2d27a,2.2,12);core.position.set(0,0,0);scene.add(core);
+
+/* ---------- starfield ---------- */
+const stars=(()=>{
+  const N=1800,pos=new Float32Array(N*3);
+  for(let i=0;i<N;i++){
+    const r=6+Math.random()*16,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph);
+  }
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const m=new THREE.PointsMaterial({color:0xe3b23c,size:0.035,transparent:true,opacity:0.55,
+    sizeAttenuation:true,blending:THREE.AdditiveBlending,depthWrite:false});
+  const p=new THREE.Points(g,m);scene.add(p);return p;
+})();
+
+/* ---------- post-processing (bloom) ---------- */
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.78,0.55,0.82);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+/* ---------- solids data ---------- */
+const SOLIDS={
+  tetra:{name:'Czworościan',el:'Ogień',glyph:'🜂',geo:()=>new THREE.TetrahedronGeometry(R),
+    V:4,E:6,F:4,phi:false,
+    gloss:'cztery trójkąty — najostrzejsza z brył',
+    quote:'Ogniowi przypiszmy czworościan, jako bryłę najbardziej ruchliwą i tnącą.',
+    src:'Platon, Timajos (56a)',
+    note:'<b>Bez Φ.</b> Bryła ognia jest sama dla siebie dualna. Złota proporcja zacznie się dopiero przy pięciokącie.'},
+  cube:{name:'Sześcian',el:'Ziemia',glyph:'🜃',geo:()=>new THREE.BoxGeometry(R*1.15,R*1.15,R*1.15),
+    V:8,E:12,F:6,phi:false,
+    gloss:'sześć kwadratów — najtrwalszy fundament',
+    quote:'Ziemi dajmy sześcian, bo ziemia jest z rodzajów najtrudniej ruchoma.',
+    src:'Platon, Timajos (55d–56a)',
+    note:'<b>Figura materii nieożywionej.</b> U Ghyki sześcian i sześciokąt to świat krystaliczny — porządek bez wzrostu. Przeciwieństwo pięciokąta „figury życia".'},
+  octa:{name:'Ośmiościan',el:'Powietrze',glyph:'🜁',geo:()=>new THREE.OctahedronGeometry(R),
+    V:6,E:12,F:8,phi:false,
+    gloss:'osiem trójkątów — dualny do sześcianu',
+    quote:'Powietrzu — ośmiościan, pośredni między ogniem a wodą.',
+    src:'Platon, Timajos',
+    note:'<b>Dualny do sześcianu:</b> środki ścian jednego są wierzchołkami drugiego. Wciąż świat „materialny", bez Φ.'},
+  dodeca:{name:'Dwunastościan',el:'Kosmos · Eter',glyph:'✦',geo:()=>new THREE.DodecahedronGeometry(R),
+    V:20,E:30,F:12,phi:true,
+    gloss:'dwanaście pięciokątów — w każdym mieszka Φ',
+    quote:'Pozostał jeszcze jeden, piąty układ — tego bóg użył dla wszechświata, kreśląc na nim obrazy.',
+    src:'Platon, Timajos (55c)',
+    note:'<b>Bryła Φ.</b> Każda z 12 pięciokątnych ścian niesie złoty podział (przekątna ÷ bok = φ). Dlatego u Ghyki dwunastościan to <b>kosmos</b> — i dlatego stanie się nawigatorem całego portalu: 12 ścian = 12 modułów.'},
+  icosa:{name:'Dwudziestościan',el:'Woda',glyph:'🜄',geo:()=>new THREE.IcosahedronGeometry(R),
+    V:12,E:30,F:20,phi:true,
+    gloss:'dwadzieścia trójkątów — wierzchołki to czyste φ',
+    quote:'Dwa skarby geometrii: twierdzenie Pitagorasa i podział odcinka w proporcji skrajnej i średniej.',
+    src:'Johannes Kepler (1596)',
+    note:'<b>Dowód Φ w 3D.</b> 12 wierzchołków to dokładnie naroża <b>trzech prostopadłych złotych prostokątów</b> 1×φ: współrzędne (0, ±1, ±φ) i cykliczne. Włącz „3 złote prostokąty", by je zobaczyć.'}
+};
+const ORDER=['tetra','cube','octa','dodeca','icosa'];
+
+/* mini SVG glyphs for dock buttons */
+const ICONS={
+  tetra:'<polygon points="13,2 24,22 2,22" fill="none" stroke="currentColor" stroke-width="1.4"/><line x1="13" y1="2" x2="13" y2="22" stroke="currentColor" stroke-width="1"/>',
+  cube:'<rect x="4" y="7" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M4 7 L9 2 L23 2 L18 7 M18 21 L23 16 L23 2" fill="none" stroke="currentColor" stroke-width="1.1"/>',
+  octa:'<polygon points="13,1 24,13 13,25 2,13" fill="none" stroke="currentColor" stroke-width="1.4"/><line x1="2" y1="13" x2="24" y2="13" stroke="currentColor" stroke-width="1"/>',
+  dodeca:'<polygon points="13,2 22,9 18,21 8,21 4,9" fill="none" stroke="currentColor" stroke-width="1.4"/><polygon points="13,8 17,11 15,16 11,16 9,11" fill="none" stroke="currentColor" stroke-width=".9"/>',
+  icosa:'<polygon points="13,1 24,8 24,18 13,25 2,18 2,8" fill="none" stroke="currentColor" stroke-width="1.4"/><line x1="13" y1="1" x2="13" y2="25" stroke="currentColor" stroke-width=".8"/><line x1="2" y1="8" x2="24" y2="18" stroke="currentColor" stroke-width=".8"/><line x1="24" y1="8" x2="2" y2="18" stroke="currentColor" stroke-width=".8"/>'
+};
+
+/* ---------- materials ---------- */
+function faceMat(tint){return new THREE.MeshPhysicalMaterial({
+  color:tint,metalness:0.0,roughness:0.18,transmission:0.0,
+  transparent:true,opacity:0.16,side:THREE.DoubleSide,
+  clearcoat:1.0,clearcoatRoughness:0.25,reflectivity:0.6});}
+const edgeMat=new THREE.LineBasicMaterial({color:C.gold,transparent:true,opacity:0.95});
+const vertMat=new THREE.MeshBasicMaterial({color:C.gold});
+
+/* ---------- solid group ---------- */
+const solidGroup=new THREE.Group();scene.add(solidGroup);
+let faces,edges,verts,current='dodeca';
+let wire=false;
+
+function buildSolid(key){
+  // clear
+  while(solidGroup.children.length) {
+    const c=solidGroup.children.pop();
+    if(c.geometry)c.geometry.dispose();
+  }
+  const d=SOLIDS[key];
+  const geo=d.geo();
+  faces=new THREE.Mesh(geo,faceMat(d.phi?0xffe2a0:0xbfd8ff));
+  edges=new THREE.LineSegments(new THREE.EdgesGeometry(geo,1),edgeMat.clone());
+  solidGroup.add(faces);solidGroup.add(edges);
+  // vertices
+  verts=new THREE.Group();
+  const vg=new THREE.SphereGeometry(0.045,16,16);
+  const posAttr=geo.getAttribute('position');
+  const seen=new Set();
+  for(let i=0;i<posAttr.count;i++){
+    const x=posAttr.getX(i),y=posAttr.getY(i),z=posAttr.getZ(i);
+    const k=x.toFixed(3)+','+y.toFixed(3)+','+z.toFixed(3);
+    if(seen.has(k))continue;seen.add(k);
+    const s=new THREE.Mesh(vg,vertMat);s.position.set(x,y,z);verts.add(s);
+  }
+  solidGroup.add(verts);
+  faces.visible=!wire;
+  current=key;
+  appearT=0;
+  updateGolden();
+  updatePanel(key);
+  updateDock(key);
+}
+
+/* ---------- three golden rectangles (icosa) ---------- */
+const goldenGroup=new THREE.Group();goldenGroup.visible=false;scene.add(goldenGroup);
+(function buildGolden(){
+  const norm=Math.hypot(1,PHI),s=R/norm,t=PHI;
+  const rects=[
+    {c:[[1,t,0],[-1,t,0],[-1,-t,0],[1,-t,0]],col:C.gold},
+    {c:[[0,1,t],[0,-1,t],[0,-1,-t],[0,1,-t]],col:C.verd},
+    {c:[[t,0,1],[t,0,-1],[-t,0,-1],[-t,0,1]],col:C.ivory}
+  ];
+  rects.forEach(r=>{
+    const pts=r.c.map(p=>new THREE.Vector3(p[0]*s,p[1]*s,p[2]*s));
+    pts.push(pts[0].clone());
+    const g=new THREE.BufferGeometry().setFromPoints(pts);
+    const line=new THREE.Line(g,new THREE.LineBasicMaterial({color:r.col,transparent:true,opacity:0.9}));
+    goldenGroup.add(line);
+    // translucent fill
+    const fg=new THREE.PlaneGeometry(1,1);
+    const fill=new THREE.Mesh(new THREE.BufferGeometry().setFromPoints([pts[0],pts[1],pts[2],pts[0],pts[2],pts[3]]),
+      new THREE.MeshBasicMaterial({color:r.col,transparent:true,opacity:0.07,side:THREE.DoubleSide}));
+    goldenGroup.add(fill);
+    // corner nodes
+    const cg=new THREE.SphereGeometry(0.06,16,16);
+    r.c.forEach(p=>{const m=new THREE.Mesh(cg,new THREE.MeshBasicMaterial({color:r.col}));
+      m.position.set(p[0]*s,p[1]*s,p[2]*s);goldenGroup.add(m);});
+  });
+})();
+let showGold=false;
+function updateGolden(){goldenGroup.visible=showGold&&current==='icosa';}
+
+/* ---------- panel + dock ---------- */
+const panelEl=document.getElementById('panel');
+function updatePanel(key){
+  const d=SOLIDS[key];
+  panelEl.innerHTML=`
+    <div class="el"><span class="glyph">${d.glyph}</span> ${d.el}</div>
+    <h1>${d.name}</h1>
+    <div class="gloss">${d.gloss}</div>
+    <div class="nums">
+      <div class="n"><b>${d.V}</b><span>wierzch.</span></div>
+      <div class="n"><b>${d.E}</b><span>kraw.</span></div>
+      <div class="n"><b>${d.F}</b><span>ścian</span></div>
+    </div>
+    <p class="quote">„${d.quote}"<span class="src">${d.src}</span></p>
+    <div class="note">${d.note}</div>
+    <span class="chip ${d.phi?'rygor':'mat'}">${d.phi?'Φ — Rygor':'Bez Φ — materia'}</span>`;
+  // fade via opacity only — never touch transform (it carries the responsive centering)
+  panelEl.style.opacity='0';
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{panelEl.style.opacity='1';});});
+}
+const solidsEl=document.getElementById('solids');
+ORDER.forEach(key=>{
+  const d=SOLIDS[key];
+  const b=document.createElement('button');b.dataset.k=key;
+  b.innerHTML=`<svg viewBox="0 0 26 26">${ICONS[key]}</svg><b>${d.name}</b><span>${d.el.split(' ')[0]}</span>`;
+  b.addEventListener('click',()=>buildSolid(key));
+  solidsEl.appendChild(b);
+});
+function updateDock(key){
+  document.querySelectorAll('#solids button').forEach(b=>b.classList.toggle('active',b.dataset.k===key));
+  const tg=document.getElementById('tgGold');
+  tg.classList.toggle('disabled',key!=='icosa');
+}
+
+/* toggles */
+const tgGold=document.getElementById('tgGold');
+tgGold.addEventListener('click',()=>{
+  if(current!=='icosa'){buildSolid('icosa');}  // jump to icosa so the reveal makes sense
+  showGold=!showGold;tgGold.classList.toggle('on',showGold);updateGolden();
+});
+const tgWire=document.getElementById('tgWire');
+tgWire.addEventListener('click',()=>{
+  wire=!wire;tgWire.classList.toggle('on',wire);if(faces)faces.visible=!wire;
+});
+
+/* ---------- Próba wiedzy (quiz) ---------- */
+const QUIZ=[
+  {solid:'dodeca',q:'Dwunastościan — ile ma ścian?',opts:['12','8','20','6'],a:0,e:'Dwanaście pięciokątów — i dlatego 12 ścian = 12 komnat portalu.'},
+  {solid:'tetra',q:'Którą bryłę Platon przypisał OGNIOWI?',opts:['Czworościan','Sześcian','Dwudziestościan','Dwunastościan'],a:0,e:'Najostrzejsza, najbardziej „tnąca" — stąd ogień (Timajos).'},
+  {solid:'cube',q:'Wzór Eulera dla bryły platońskiej: W − K + Ś = ?',opts:['2','0','1','5'],a:0,e:'Zawsze 2. Sześcian: 8 − 12 + 6 = 2.'},
+  {solid:'icosa',q:'Ile prostopadłych złotych prostokątów kryje dwudziestościan?',opts:['3','1','5','12'],a:0,e:'Trzy prostokąty 1×φ — ich 12 naroży to 12 wierzchołków: (0, ±1, ±φ).',reveal:true},
+  {solid:'octa',q:'Która bryła jest dualna do sześcianu?',opts:['Ośmiościan','Czworościan','Dwudziestościan','Dwunastościan'],a:0,e:'Środki ścian sześcianu = wierzchołki ośmiościanu (i odwrotnie).'},
+  {solid:'dodeca',q:'Które bryły są zbudowane z φ?',opts:['Dwunasto- i dwudziestościan','Czworo- i sześcian','Sześcian i ośmiościan','Wszystkie pięć'],a:0,e:'Pięciokąt niesie złoty podział; ikosaedr ma współrzędne z φ.'},
+];
+const quizEl=document.getElementById('quiz');
+let qi=0,qScore=0,qAnswered=false;
+function startQuiz(){qi=0;qScore=0;panelEl.style.display='none';quizEl.classList.add('on');showQ();}
+function showQ(){
+  qAnswered=false;const q=QUIZ[qi];
+  if(q.solid&&q.solid!==current)buildSolid(q.solid);
+  if(!q.reveal&&showGold){showGold=false;updateGolden();tgGold.classList.remove('on');}
+  quizEl.innerHTML=`
+    <div class="qstep">Próba · <b>${qi+1}</b>/${QUIZ.length} · wynik <b>${qScore}</b></div>
+    <h1>${q.q}</h1>
+    <div class="qopts">${q.opts.map((o,i)=>`<button data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="qfeed" id="qFeed"></div>
+    <button class="qnext" id="qNext">${qi<QUIZ.length-1?'Dalej →':'Zakończ próbę'}</button>
+    <button class="qexit" id="qExit">✕ wyjdź z próby</button>`;
+  quizEl.querySelectorAll('.qopts button').forEach(b=>b.addEventListener('click',()=>answer(+b.dataset.i)));
+  document.getElementById('qNext').addEventListener('click',nextQ);
+  document.getElementById('qExit').addEventListener('click',endQuiz);
+}
+function answer(i){
+  if(qAnswered)return;qAnswered=true;const q=QUIZ[qi],ok=(i===q.a);if(ok){qScore++;if(window.SA)SA.add(8,'Trafione w Próbie Brył');}
+  quizEl.querySelectorAll('.qopts button').forEach((b,k)=>{b.disabled=true;if(k===q.a)b.classList.add('ok');else if(k===i)b.classList.add('no');});
+  if(q.reveal){if(current!=='icosa')buildSolid('icosa');showGold=true;updateGolden();tgGold.classList.add('on');}
+  const f=document.getElementById('qFeed');f.classList.add('on');
+  f.innerHTML=`<span class="v ${ok?'ok':'no'}">${ok?'✓ Dobrze':'✗ Niezupełnie'}</span><p>${q.e}</p>`;
+  document.getElementById('qNext').classList.add('on');
+  quizEl.querySelector('.qstep').innerHTML=`Próba · <b>${qi+1}</b>/${QUIZ.length} · wynik <b>${qScore}</b>`;
+}
+function nextQ(){if(qi<QUIZ.length-1){qi++;showQ();}else finishQuiz();}
+function finishQuiz(){
+  if(window.SA&&qScore===QUIZ.length)SA.award('geometra');
+  const msg=qScore===QUIZ.length?'Komplet — bryły platońskie nie mają przed Tobą tajemnic.':(qScore>=QUIZ.length/2?'Solidnie. Wróć i dopracuj resztę.':'Pokręć jeszcze bryłami i spróbuj znów.');
+  quizEl.innerHTML=`<div class="qstep">Próba ukończona</div><h1>Wynik: ${qScore} / ${QUIZ.length}</h1>
+    <div class="qfeed on"><p>${msg}</p></div>
+    <button class="qnext on" id="qAgain">Zagraj znów</button>
+    <button class="qexit" id="qExit">✕ wróć do zwiedzania</button>`;
+  document.getElementById('qAgain').addEventListener('click',startQuiz);
+  document.getElementById('qExit').addEventListener('click',endQuiz);
+}
+function endQuiz(){quizEl.classList.remove('on');panelEl.style.display='';
+  if(showGold){showGold=false;updateGolden();tgGold.classList.remove('on');}
+  updatePanel(current);}
+document.getElementById('startQuiz').addEventListener('click',startQuiz);
+
+/* ---------- resize ---------- */
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);
+});
+
+/* ---------- animate ---------- */
+let appearT=0;
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function animate(){
+  requestAnimationFrame(animate);
+  appearT=Math.min(1,appearT+0.045);
+  const e=1-Math.pow(1-appearT,3);             // easeOutCubic
+  const sc=0.2+0.8*e;
+  solidGroup.scale.setScalar(sc);
+  solidGroup.rotation.y+=reduce?0:0.0016;
+  goldenGroup.scale.setScalar(sc);
+  goldenGroup.rotation.copy(solidGroup.rotation);
+  stars.rotation.y+=0.0004;
+  core.intensity=1.8+Math.sin(performance.now()*0.0012)*0.5;
+  controls.update();
+  composer.render();
+}
+
+/* ---------- go ---------- */
+buildSolid('dodeca');
+animate();
+setTimeout(()=>document.getElementById('loading').classList.add('gone'),600);
+if(window.SA){SA.mountHUD();SA.visit('bryly');}
+</script>
+</body>
+</html>

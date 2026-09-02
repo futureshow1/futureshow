@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata II · Proporcja — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);--panel-2:#191527;
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--gold-deep:#a9801f;--ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#c{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(130% 100% at 42% 46%,transparent 50%,rgba(0,0,0,.6) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;color:var(--mute);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:15;width:322px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 80px -40px #000}
+.panel .step{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:27px;margin:7px 0 8px;line-height:1.05}
+.panel .line{font-size:13.5px;color:var(--mute);line-height:1.62;margin:0 0 13px}
+.panel .fact{font-family:"Fraunces",serif;font-style:italic;font-size:14.5px;color:var(--ivory);border-left:2px solid var(--gold);padding-left:13px;line-height:1.5}
+.panel .fact b{font-style:normal;color:var(--gold-br)}
+.panel .eq{font-family:"Fraunces",serif;font-size:18px;color:var(--gold-br);margin-top:14px;font-variant-numeric:tabular-nums;line-height:1.4}
+.panel .eq .x{color:var(--ivory)} .panel .eq.match{color:var(--verd)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-top:15px;color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:11px;width:max-content;max-width:94vw}
+.ctx{min-height:0;display:flex;align-items:center;gap:13px}
+.ctlbox{display:none;align-items:center;gap:13px;background:rgba(8,7,13,.6);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:12px;padding:9px 16px;font-size:12px;color:var(--mute)}
+.ctlbox.on{display:flex}
+.ctlbox b{color:var(--gold-br);font-family:"Fraunces",serif;font-variant-numeric:tabular-nums}
+.ctlbox input[type=range]{-webkit-appearance:none;width:230px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));outline:none}
+.ctlbox input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+.mini{font-family:"Inter";font-size:11.5px;color:var(--mute);background:var(--panel-2);border:1px solid var(--line-soft);border-radius:9px;padding:8px 13px;cursor:pointer;transition:.2s}
+.mini:hover{color:var(--ivory);border-color:var(--gold)}
+.mini.gold{color:#1a1305;background:var(--gold);border-color:var(--gold)}.mini.gold:hover{background:var(--gold-br)}
+.moves{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.moves button{display:flex;align-items:center;gap:9px;background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 14px;cursor:pointer;transition:.22s;color:var(--mute)}
+.moves button .nb{font-family:"Fraunces",serif;font-size:13px;color:var(--gold-br);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%}
+.moves button b{font-size:11.5px;font-weight:500;color:var(--ivory)}
+.moves button:hover{background:rgba(255,255,255,.04)}
+.moves button.active{background:rgba(227,178,60,.12);border-color:var(--gold)}
+.moves button.active .nb{background:var(--gold);color:#1a1305;border-color:var(--gold)}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:15;font-size:10px;letter-spacing:.04em;color:var(--faint);line-height:1.7;pointer-events:none;max-width:200px}
+@media(max-width:820px){.panel{top:auto;bottom:150px;right:50%;transform:translateX(50%);width:min(420px,92vw)}.hint{display:none}.moves button b{display:none}.ctlbox input[type=range]{width:150px}}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata II · Proporcja</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"></aside>
+
+<div class="dock">
+  <div class="ctx">
+    <div class="ctlbox" id="ctlPhi">
+      <span>x =</span><input type="range" id="xSlider" min="1" max="2.2" step="0.001" value="1.35">
+      <span><b id="xVal">1,350</b></span>
+    </div>
+    <div class="ctlbox" id="ctlWhirl">
+      <button class="mini gold" id="cut">✂ Odetnij kwadrat</button>
+      <span>poziom <b id="wLvl">1</b></span>
+      <button class="mini" id="wReset">↺ od nowa</button>
+    </div>
+    <div class="ctlbox" id="ctlFib">
+      <button class="mini gold" id="addFib">+ Dodaj następną</button>
+      <span>iloraz <b id="fRatio">—</b></span>
+      <button class="mini" id="fReset">↺ od nowa</button>
+    </div>
+  </div>
+  <div class="moves" id="moves"></div>
+</div>
+
+<div class="hint" id="hint"></div>
+<div id="loading"><div class="ph">Φ</div><p>kreślę proporcję</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script>
+"use strict";
+const PHI=(1+Math.sqrt(5))/2, TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const $=s=>document.querySelector(s);
+const fmt=(x,n=3)=>x.toFixed(n).replace('.',',');
+
+const MOVES=[
+ {n:'❶',t:'Odkryj φ',line:'Jest dokładnie jedna liczba dodatnia, której kwadrat równa się jej samej plus jeden. Przesuwaj x, aż dwa słupki — x·x oraz x+1 — zrównają się. To, co znajdziesz, to φ.',
+  fact:'x² = x + 1 &nbsp;⟹&nbsp; x = <b>φ ≈ 1,618</b> — liczba, która zawiera samą siebie',hintTxt:'Przesuwaj suwak, aż słupki się zrównają.'},
+ {n:'❷',t:'Złoty prostokąt',line:'Odetnij od złotego prostokąta kwadrat o krótszym boku — zostaje znowu złoty prostokąt, mniejszy o 1/φ i obrócony o 90°. Powtarzaj: z naroży kwadratów wyłania się złota spirala.',
+  fact:'każde cięcie zostawia <b>ten sam kształt</b> · ćwiartki kół = złota spirala',hintTxt:'Klikaj „Odetnij kwadrat" i patrz, jak rośnie spirala.'},
+ {n:'❸',t:'Fibonacci',line:'Zacznij od 1, 1 i dodawaj dwa ostatnie: 1, 2, 3, 5, 8, 13… Iloraz kolejnych wyrazów drga coraz bliżej φ. Natura liczy w Fibonaccim — a Fibonacci dąży do złotej liczby.',
+  fact:'F<sub>n+1</sub>/F<sub>n</sub> → <b>φ</b> · 8/5=1,6 · 13/8=1,625 · 21/13=1,615…',hintTxt:'Dodawaj kolejne wyrazy i patrz na iloraz.'}
+];
+
+/* ---------- canvas ---------- */
+const cv=$('#c'),ctx=cv.getContext('2d');let W,H,DPR;
+function resize(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);draw();}
+addEventListener('resize',resize);
+function stage(){return {cx:W*0.42,cy:H*0.5};}
+
+/* ---------- state ---------- */
+let move=0, xv=1.35, phiFound=false, wLevel=1, fib=[1,1];
+
+/* =========== M0 — discover φ =========== */
+function drawPhi(){
+  ctx.clearRect(0,0,W,H);
+  const {cx,cy}=stage();
+  const x2=xv*xv, xp1=xv+1, diff=Math.abs(x2-xp1);
+  const near=diff<0.02;
+  const maxV=5.2, bh=Math.min(H*0.5,360), bw=72, gap=46, scale=bh/maxV;
+  const baseY=cy+bh*0.5;
+  const bars=[{v:xp1,lab:'x + 1',cxx:cx-gap-bw/2},{v:x2,lab:'x · x',cxx:cx+gap+bw/2}];
+  bars.forEach(b=>{
+    const h=b.v*scale;
+    const g=ctx.createLinearGradient(0,baseY-h,0,baseY);
+    if(near){g.addColorStop(0,'#f2d27a');g.addColorStop(1,'#a9801f');}
+    else{g.addColorStop(0,'rgba(236,230,214,.5)');g.addColorStop(1,'rgba(236,230,214,.12)');}
+    ctx.fillStyle=g;ctx.fillRect(b.cxx-bw/2,baseY-h,bw,h);
+    ctx.strokeStyle=near?'#f2d27a':'rgba(236,230,214,.4)';ctx.lineWidth=1.4;ctx.strokeRect(b.cxx-bw/2,baseY-h,bw,h);
+    ctx.fillStyle=near?'#f2d27a':'var(--ivory)';ctx.fillStyle=near?'#f2d27a':'#ece6d6';
+    ctx.font='600 13px Inter';ctx.textAlign='center';ctx.fillText(b.lab,b.cxx,baseY+22);
+    ctx.font='600 16px Inter';ctx.fillStyle=near?'#f2d27a':'#ece6d6';ctx.fillText(fmt(b.v,3),b.cxx,baseY-h-12);
+  });
+  // baseline
+  ctx.strokeStyle='rgba(236,230,214,.15)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx-gap-bw-20,baseY);ctx.lineTo(cx+gap+bw+20,baseY);ctx.stroke();
+  // "equal" marker line at the meeting height when near
+  if(near){
+    const yLine=baseY-((x2+xp1)/2)*scale;
+    ctx.strokeStyle='rgba(95,184,163,.6)';ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(cx-gap-bw-20,yLine);ctx.lineTo(cx+gap+bw+20,yLine);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#f2d27a';ctx.font='italic 600 15px Fraunces';ctx.textAlign='center';ctx.fillText('✦ φ',cx,yLine-12);
+  }
+  // number line
+  const nlY=baseY+60, nlX0=cx-gap-bw-20, nlX1=cx+gap+bw+20, nlLo=1.0,nlHi=2.2;
+  ctx.strokeStyle='rgba(236,230,214,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(nlX0,nlY);ctx.lineTo(nlX1,nlY);ctx.stroke();
+  const px=v=>nlX0+(v-nlLo)/(nlHi-nlLo)*(nlX1-nlX0);
+  // phi tick
+  ctx.strokeStyle='var(--gold)';ctx.strokeStyle='#e3b23c';ctx.beginPath();ctx.moveTo(px(PHI),nlY-7);ctx.lineTo(px(PHI),nlY+7);ctx.stroke();
+  ctx.fillStyle='#e3b23c';ctx.font='11px Inter';ctx.textAlign='center';ctx.fillText('φ',px(PHI),nlY+22);
+  // current x marker
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(px(xv),nlY,5,0,TAU);ctx.fill();
+  ctx.fillStyle='rgba(236,230,214,.7)';ctx.fillText('x = '+fmt(xv,3),px(xv),nlY-13);
+}
+
+/* =========== square spiral (M2 golden + M3 fibonacci) =========== */
+function buildSpiral(sides){ // sides smallest→largest
+  const sq=[];let x=0,y=0,w=0,h=0;
+  for(let i=0;i<sides.length;i++){
+    const s=sides[i];
+    if(i===0){sq.push({x:0,y:0,s,d:0});x=0;y=0;w=s;h=s;continue;}
+    const d=(i-1)%4;
+    if(d===0){sq.push({x:x+w,y:y+h-s,s,d});w+=s;}
+    else if(d===1){sq.push({x:x+w-s,y:y-s,s,d});y-=s;h+=s;}
+    else if(d===2){sq.push({x:x-s,y:y,s,d});x-=s;w+=s;}
+    else{sq.push({x:x,y:y+h,s,d});h+=s;}
+  }
+  return {sq,box:{x,y,w,h}};
+}
+function drawSquareSpiral(sides,opts){
+  opts=opts||{};
+  const {sq,box}=buildSpiral(sides);
+  const cx=W*0.36, cy=H*0.49;
+  const fit=Math.min(W*0.46,H*0.60)/Math.max(box.w,box.h);
+  const ox=cx-(box.x+box.w/2)*fit, oy=cy-(box.y+box.h/2)*fit;
+  const T=(px,py)=>[ox+px*fit, oy+py*fit];
+  // squares
+  sq.forEach((q,idx)=>{
+    const [sx,sy]=T(q.x,q.y);const ss=q.s*fit;
+    ctx.strokeStyle='rgba(227,178,60,'+(opts.dimSquares?0.3:0.5)+')';ctx.lineWidth=1.1;
+    ctx.strokeRect(sx,sy,ss,ss);
+    if(opts.labelSquares){ctx.fillStyle='rgba(236,230,214,.5)';ctx.font='600 '+Math.max(9,Math.min(20,ss*0.22))+'px Inter';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(opts.labelSquares[idx]||'',sx+ss/2,sy+ss/2);ctx.textBaseline='alphabetic';}
+  });
+  // spiral arcs (quarter circle per square)
+  ctx.strokeStyle='#f2d27a';ctx.lineWidth=2;ctx.beginPath();
+  sq.forEach(q=>{
+    const s=q.s*fit;let ccx,ccy,a0;
+    // arc centered at a corner depending on placement direction d (CCW spiral)
+    if(q.d===0){[ccx,ccy]=T(q.x,q.y);a0=0;}            // center TL, sweep 0→90 (down-right)
+    else if(q.d===1){[ccx,ccy]=T(q.x,q.y+q.s);a0=1.5*Math.PI;} // center BL, sweep 270→360
+    else if(q.d===2){[ccx,ccy]=T(q.x+q.s,q.y+q.s);a0=Math.PI;} // center BR, sweep 180→270
+    else{[ccx,ccy]=T(q.x+q.s,q.y);a0=0.5*Math.PI;}     // center TR, sweep 90→180
+    ctx.arc(ccx,ccy,s,a0,a0+Math.PI/2);
+  });
+  ctx.stroke();
+}
+
+/* M2 golden whirling squares: sides = 1/φ^k, smallest first */
+function drawWhirl(){
+  ctx.clearRect(0,0,W,H);
+  const N=wLevel;const sides=[];for(let k=N-1;k>=0;k--)sides.push(Math.pow(1/PHI,k));
+  drawSquareSpiral(sides,{});
+  const cx=W*0.36;ctx.fillStyle='rgba(227,178,60,.8)';ctx.font='italic 13px Inter';ctx.textAlign='center';
+  ctx.fillText('złoty prostokąt → kwadrat + mniejszy złoty prostokąt',cx,H*0.12);
+}
+/* M3 fibonacci squares */
+function drawFib(){
+  ctx.clearRect(0,0,W,H);
+  const sides=fib.slice();const labels=fib.map(f=>String(f));
+  drawSquareSpiral(sides,{labelSquares:labels});
+  // ratio convergence strip (top)
+  const cx=W*0.36;const yy=H*0.11;
+  ctx.fillStyle='rgba(236,230,214,.85)';ctx.font='600 13px Inter';ctx.textAlign='center';
+  ctx.fillText('iloraz kolejnych: '+fib.slice(-5).map((f,i,a)=>i?fmt(a[i]/a[i-1],3):null).filter(Boolean).join('  ·  ')+'  → φ',cx,yy);
+}
+
+/* ---------- panel + dock ---------- */
+function renderPanel(){
+  const m=MOVES[move];
+  let extra='';
+  if(move===0){
+    const x2=xv*xv,xp1=xv+1,near=Math.abs(x2-xp1)<0.02;
+    extra=`<div class="eq${near?' match':''}"><span class="x">${fmt(xv,3)}</span>² = ${fmt(x2,3)} ${near?'=':'≟'} ${fmt(xv,3)} + 1 = ${fmt(xp1,3)}${near?' ✓':''}</div>`;
+  }
+  $('#panel').innerHTML=`<div class="step">Ruch ${move+1} / 3</div><h1 class="serif">${m.t}</h1>
+    <p class="line">${m.line}</p><p class="fact">${m.fact}</p>${extra}
+    <span class="chip">Rygor — czysta geometria</span>`;
+  $('#hint').textContent=m.hintTxt;
+  document.querySelectorAll('#moves button').forEach((b,i)=>b.classList.toggle('active',i===move));
+  $('#ctlPhi').classList.toggle('on',move===0);
+  $('#ctlWhirl').classList.toggle('on',move===1);
+  $('#ctlFib').classList.toggle('on',move===2);
+}
+function draw(){ if(move===0)drawPhi(); else if(move===1)drawWhirl(); else drawFib(); }
+const movesEl=$('#moves');
+MOVES.forEach((m,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="nb">${i+1}</span><b>${m.t}</b>`;
+  b.addEventListener('click',()=>{move=i;renderPanel();draw();});movesEl.appendChild(b);});
+
+/* ---------- controls ---------- */
+const xSlider=$('#xSlider');
+xSlider.addEventListener('input',()=>{
+  xv=parseFloat(xSlider.value);$('#xVal').textContent=fmt(xv,3);
+  if(Math.abs(xv*xv-(xv+1))<0.02 && !phiFound){phiFound=true;if(window.SA){SA.award('odkrywca');SA.add(10,'φ odkryte');}}
+  renderPanel();draw();
+});
+$('#cut').addEventListener('click',()=>{wLevel=Math.min(12,wLevel+1);$('#wLvl').textContent=wLevel;if(window.SA&&wLevel>=5&&!window._wdone){window._wdone=1;SA.add(6,'Złota spirala');}draw();});
+$('#wReset').addEventListener('click',()=>{wLevel=1;$('#wLvl').textContent=1;draw();});
+$('#addFib').addEventListener('click',()=>{if(fib.length<14)fib.push(fib[fib.length-1]+fib[fib.length-2]);
+  const r=fib[fib.length-1]/fib[fib.length-2];$('#fRatio').textContent=fmt(r,4);
+  if(window.SA&&fib.length>=8&&!window._fdone){window._fdone=1;SA.add(6,'Fibonacci → φ');}draw();});
+$('#fReset').addEventListener('click',()=>{fib=[1,1];$('#fRatio').textContent='—';draw();});
+
+/* ---------- go ---------- */
+resize();renderPanel();
+setTimeout(()=>$('#loading').classList.add('gone'),500);
+if(window.SA){SA.mountHUD();SA.visit('proporcja');}
+</script>
+</body>
+</html>

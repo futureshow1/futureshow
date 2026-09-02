@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata I · Liczba — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);--panel-2:#191527;
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--gold-deep:#a9801f;
+  --ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#scene{position:fixed;inset:0;z-index:0}
+canvas{display:block}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(125% 95% at 50% 42%,transparent 48%,rgba(0,0,0,.62) 100%)}
+
+/* topbar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;letter-spacing:.04em;color:var(--mute);text-decoration:none;
+  padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);
+  backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+/* info panel */
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:10;width:340px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;
+  padding:24px 24px 22px;box-shadow:0 30px 80px -40px #000;transition:opacity .4s,transform .4s;
+  max-height:calc(100vh - 48px);overflow-y:auto}
+.panel .el{display:flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel .el .glyph{font-size:14px}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:34px;margin:8px 0 2px;line-height:1.02}
+.panel .gloss{font-size:12.5px;color:var(--mute);font-style:italic;margin-bottom:16px}
+.panel .nums{display:flex;gap:8px;margin-bottom:16px}
+.panel .nums .n{flex:1;text-align:center;border:1px solid var(--line-soft);border-radius:10px;padding:9px 4px;background:rgba(0,0,0,.2)}
+.panel .nums .n b{font-family:"Fraunces",serif;font-size:22px;color:var(--gold-br);display:block;line-height:1}
+.panel .nums .n span{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:4px;display:block}
+.panel .quote{font-family:"Fraunces",serif;font-style:italic;font-size:15px;line-height:1.5;color:var(--ivory);
+  border-left:2px solid var(--gold);padding-left:14px;margin:0 0 6px}
+.panel .quote .src{display:block;font-style:normal;font-family:Inter;font-size:10.5px;letter-spacing:.05em;color:var(--faint);margin-top:7px}
+.panel .note{font-size:12.5px;line-height:1.62;color:#c2bbcf;margin-top:14px}
+.panel .note b{color:var(--ivory)}
+/* crimson-accented romance-check note (φ) */
+.panel .note.romance{border-left:2px solid var(--crimson);padding:11px 0 4px 14px;margin-top:16px;
+  background:linear-gradient(90deg,rgba(210,85,63,.07),transparent 80%);border-radius:0 8px 8px 0}
+.panel .note.romance b{color:var(--crimson)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;margin-top:16px}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%}
+.chip.rygor{color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip.rygor::before{background:var(--gold)}
+.chip.mat{color:var(--verd);background:rgba(95,184,163,.1);border:1px solid rgba(95,184,163,.3)}
+.chip.mat::before{background:var(--verd)}
+
+/* live "now sounding" readout */
+.nowplaying{margin:16px 0 2px;border:1px solid var(--line-soft);border-radius:12px;padding:12px 14px;
+  background:rgba(0,0,0,.22);min-height:62px;transition:border-color .3s,box-shadow .3s}
+.nowplaying.lit{border-color:var(--gold);box-shadow:0 0 22px -8px rgba(227,178,60,.55)}
+.nowplaying.romance{border-color:var(--crimson);box-shadow:0 0 22px -8px rgba(210,85,63,.55)}
+.nowplaying .lab{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.nowplaying .ratio{font-family:"Fraunces",serif;font-size:26px;color:var(--gold-br);line-height:1.05;margin-top:3px}
+.nowplaying.romance .ratio{color:var(--crimson)}
+.nowplaying .name{font-size:12px;color:var(--mute);margin-top:2px}
+.nowplaying .hz{font-size:10px;color:var(--faint);margin-top:5px;letter-spacing:.04em}
+
+/* dock */
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:12px;width:max-content;max-width:94vw}
+.rows{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.rows button{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:74px;
+  background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 8px;cursor:pointer;transition:.22s;color:var(--mute)}
+.rows button .rt{font-family:"Fraunces",serif;font-size:18px;color:var(--gold-br);line-height:1}
+.rows button b{font-size:10px;letter-spacing:.02em;font-weight:500;color:var(--ivory)}
+.rows button span{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.rows button:hover{background:rgba(255,255,255,.04)}
+.rows button.lit{background:rgba(227,178,60,.14);border-color:var(--gold)}
+.rows button.lit span{color:var(--gold)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.btn{font-size:11.5px;color:var(--ivory);background:rgba(8,7,13,.55);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);border-radius:999px;padding:9px 16px;display:inline-flex;align-items:center;gap:8px;
+  cursor:pointer;transition:.22s;letter-spacing:.02em;font-family:inherit}
+.btn:hover{border-color:var(--gold);color:var(--gold-br)}
+.btn .g{font-family:"Fraunces",serif;font-size:13px;color:var(--gold)}
+.btn.romance{border-color:rgba(210,85,63,.4)}
+.btn.romance .g{color:var(--crimson)}
+.btn.romance:hover{border-color:var(--crimson);color:#f0a08e}
+.btn.playing{border-color:var(--gold);color:var(--gold-br);box-shadow:0 0 18px -6px rgba(227,178,60,.6)}
+.btn:disabled{opacity:.4;pointer-events:none}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:10;font-size:10.5px;letter-spacing:.04em;color:var(--faint);max-width:210px;line-height:1.7}
+.hint b{color:var(--mute)}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:760px){
+  .panel{top:auto;bottom:182px;right:50%;transform:translateX(50%);width:min(420px,92vw);max-height:46vh}
+  .hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata I · Liczba</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"><!-- filled by JS --></aside>
+
+<div class="dock">
+  <div class="acts">
+    <button class="btn" id="btnPlay"><span class="g">▶</span> Zagraj Tetraktys</button>
+    <button class="btn romance" id="btnPhi"><span class="g">φ</span> φ : 1 — posłuchaj</button>
+  </div>
+  <div class="rows" id="rows"><!-- buttons by JS --></div>
+</div>
+
+<div class="hint">Kliknij sferę, by usłyszeć dźwięk<br><b>przeciągnij</b> = obróć · <b>scroll</b> = przybliż</div>
+
+<div id="loading"><div class="ph">Φ</div><p>stroję tetraktys</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const PHI=(1+Math.sqrt(5))/2;
+const C={gold:0xf2d27a,goldDim:0xe3b23c,verd:0x5fb8a3,ivory:0xece6d6,crimson:0xd2553f};
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ---------- renderer / scene / camera ---------- */
+const host=document.getElementById('scene');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(2,devicePixelRatio));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.15;
+host.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x08070d);
+scene.fog=new THREE.FogExp2(0x08070d,0.085);
+
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,100);
+camera.position.set(0.4,0.9,7.2);
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=0.06;
+controls.autoRotate=!reduce;controls.autoRotateSpeed=0.55;
+controls.minDistance=4.2;controls.maxDistance=13;
+controls.enablePan=false;
+controls.target.set(0,0.15,0);
+
+/* environment for subtle reflections */
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+
+/* lights */
+scene.add(new THREE.AmbientLight(0xffffff,0.25));
+const key=new THREE.DirectionalLight(0xffe9c0,1.5);key.position.set(4,6,5);scene.add(key);
+const rim=new THREE.DirectionalLight(0x88b8ff,0.7);rim.position.set(-6,-2,-4);scene.add(rim);
+const core=new THREE.PointLight(0xf2d27a,2.0,14);core.position.set(0,0,0);scene.add(core);
+
+/* ---------- starfield ---------- */
+const stars=(()=>{
+  const N=1800,pos=new Float32Array(N*3);
+  for(let i=0;i<N;i++){
+    const r=6+Math.random()*16,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph);
+  }
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const m=new THREE.PointsMaterial({color:0xe3b23c,size:0.035,transparent:true,opacity:0.55,
+    sizeAttenuation:true,blending:THREE.AdditiveBlending,depthWrite:false});
+  const p=new THREE.Points(g,m);scene.add(p);return p;
+})();
+
+/* ---------- post-processing (bloom) ---------- */
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.85,0.6,0.78);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+/* ====================================================================
+   TETRAKTYS — 10 spheres, 4 rows (1+2+3+4)
+   Row → Pythagorean interval relative to base note.
+   row1 = 1:1 unison · row2 = 2:1 octave · row3 = 3:2 fifth · row4 = 4:3 fourth
+   ==================================================================== */
+const BASE=220;                                  // Hz — base note (A3)
+const ROWS=[
+  {r:0,num:'1:1',name:'Unison · jednia',mul:1,    col:C.gold,  desc:'Monada — punkt, źródło wszystkiego.'},
+  {r:1,num:'2:1',name:'Oktawa · diapason',mul:2,  col:C.gold,  desc:'Podwojenie struny — ten sam ton, wyżej.'},
+  {r:2,num:'3:2',name:'Kwinta · diapente',mul:3/2,col:C.gold,  desc:'Najczystsza współbrzmiąca konsonansja.'},
+  {r:3,num:'4:3',name:'Kwarta · diatessaron',mul:4/3,col:C.gold,desc:'Dopełnienie kwinty do oktawy.'}
+];
+
+const tetra=new THREE.Group();scene.add(tetra);
+const spheres=[];                                // {mesh,row,glow,baseY,clickT}
+const sphGeo=new THREE.SphereGeometry(0.30,40,40);
+
+const GAP=0.92, ROWH=0.86, TOP=ROWH*1.5;
+for(const row of ROWS){
+  const count=row.r+1;
+  const y=TOP-row.r*ROWH;
+  const xoff=(count-1)*GAP/2;
+  for(let i=0;i<count;i++){
+    const x=i*GAP-xoff;
+    const mat=new THREE.MeshPhysicalMaterial({
+      color:0x4a3a12,emissive:row.col,emissiveIntensity:0.55,
+      metalness:0.0,roughness:0.28,clearcoat:1.0,clearcoatRoughness:0.3,reflectivity:0.5});
+    const m=new THREE.Mesh(sphGeo,mat);
+    m.position.set(x,y,0);
+    // soft halo sprite-ish glow shell
+    const glow=new THREE.Mesh(
+      new THREE.SphereGeometry(0.30,32,32),
+      new THREE.MeshBasicMaterial({color:row.col,transparent:true,opacity:0.0,
+        blending:THREE.AdditiveBlending,depthWrite:false}));
+    m.add(glow);
+    tetra.add(m);
+    spheres.push({mesh:m,glow,row,baseY:y,clickT:0,pulse:0});
+  }
+}
+
+/* faint connective edges of the triangle (outline) for structure */
+(function frame(){
+  const top=new THREE.Vector3(0,TOP,0);
+  const bl=new THREE.Vector3(-(3*GAP)/2,TOP-3*ROWH,0);
+  const br=new THREE.Vector3((3*GAP)/2,TOP-3*ROWH,0);
+  const pts=[top,bl,br,top];
+  const g=new THREE.BufferGeometry().setFromPoints(pts);
+  const line=new THREE.Line(g,new THREE.LineBasicMaterial({color:C.gold,transparent:true,opacity:0.16}));
+  tetra.add(line);
+})();
+
+/* expanding ripple rings pool */
+const ripples=[];
+function spawnRipple(pos,colHex){
+  const g=new THREE.RingGeometry(0.30,0.345,64);
+  const m=new THREE.MeshBasicMaterial({color:colHex,transparent:true,opacity:0.85,
+    side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false});
+  const ring=new THREE.Mesh(g,m);
+  ring.position.copy(pos);
+  ring.quaternion.copy(camera.quaternion);     // always face camera
+  tetra.add(ring);
+  ripples.push({ring,t:0,faceCam:true});
+}
+
+/* ====================================================================
+   WEB AUDIO — created/resumed on first user gesture only
+   ==================================================================== */
+let actx=null, master=null;
+function ensureAudio(){
+  if(!actx){
+    const AC=window.AudioContext||window.webkitAudioContext;
+    actx=new AC();
+    master=actx.createGain();
+    master.gain.value=0.9;
+    master.connect(actx.destination);
+  }
+  if(actx.state==='suspended') actx.resume();
+  return actx;
+}
+/* soft pure tone: sine + gentle attack/release envelope (no clicks/pops) */
+function playTone(freq,{dur=1.1,peak=0.26,when=0,wave='sine'}={}){
+  const ac=ensureAudio();
+  const t0=ac.currentTime+when;
+  const osc=ac.createOscillator();
+  osc.type=wave;
+  osc.frequency.setValueAtTime(freq,t0);
+  const g=ac.createGain();
+  g.gain.setValueAtTime(0.00001,t0);
+  g.gain.exponentialRampToValueAtTime(peak,t0+0.045);      // attack
+  g.gain.exponentialRampToValueAtTime(peak*0.6,t0+dur*0.55);
+  g.gain.exponentialRampToValueAtTime(0.00001,t0+dur);     // release
+  osc.connect(g);g.connect(master);
+  osc.start(t0);osc.stop(t0+dur+0.05);
+}
+
+/* light up a row's spheres + ripple + panel readout */
+function fireRow(rowDef,{romance=false}={}){
+  const freq=BASE*rowDef.mul;
+  const members=spheres.filter(s=>s.row===rowDef);
+  for(const s of members){
+    s.pulse=1; s.clickT=performance.now();
+    spawnRipple(s.mesh.position.clone(),rowDef.col);
+  }
+  litRow(rowDef.r);
+  showNow(rowDef.num,rowDef.name,freq,romance);
+}
+
+/* play a single sphere (its row's interval) */
+function playSphere(s){
+  playTone(BASE*s.row.mul,{dur:1.15,peak:0.26});
+  if(window.SA&&!window._lfirst){window._lfirst=1;SA.add(5,'Pierwszy dźwięk Tetraktysu');}
+  s.pulse=1; s.clickT=performance.now();
+  spawnRipple(s.mesh.position.clone(),s.row.col);
+  litRow(s.row.r);
+  showNow(s.row.num,s.row.name,BASE*s.row.mul,false);
+}
+
+/* ---------- raycast clicks on spheres ---------- */
+const ray=new THREE.Raycaster();
+const ndc=new THREE.Vector2();
+let downXY=null;
+renderer.domElement.addEventListener('pointerdown',e=>{downXY=[e.clientX,e.clientY];});
+renderer.domElement.addEventListener('pointerup',e=>{
+  ensureAudio();                                   // gesture → unlock audio
+  if(!downXY) return;
+  const moved=Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1]);
+  downXY=null;
+  if(moved>6) return;                              // was a drag, not a click
+  ndc.x=(e.clientX/innerWidth)*2-1;
+  ndc.y=-(e.clientY/innerHeight)*2+1;
+  ray.setFromCamera(ndc,camera);
+  const hits=ray.intersectObjects(spheres.map(s=>s.mesh),false);
+  if(hits.length){
+    const s=spheres.find(o=>o.mesh===hits[0].object);
+    if(s) playSphere(s);
+  }
+});
+
+/* ---------- dock: per-row buttons ---------- */
+const rowsEl=document.getElementById('rows');
+ROWS.forEach(rd=>{
+  const b=document.createElement('button');b.dataset.r=rd.r;
+  b.innerHTML=`<span class="rt">${rd.num}</span><b>${rd.name.split(' · ')[0]}</b><span>rząd ${rd.r+1}</span>`;
+  b.addEventListener('click',()=>{
+    playTone(BASE*rd.mul,{dur:1.15,peak:0.26});
+    fireRow(rd);
+  });
+  rowsEl.appendChild(b);
+});
+let litTimer=null;
+function litRow(r){
+  document.querySelectorAll('#rows button').forEach(b=>b.classList.toggle('lit',+b.dataset.r===r));
+  clearTimeout(litTimer);
+  litTimer=setTimeout(()=>document.querySelectorAll('#rows button').forEach(b=>b.classList.remove('lit')),1300);
+}
+
+/* ---------- "Zagraj Tetraktys" — arpeggio of the four rows ---------- */
+const btnPlay=document.getElementById('btnPlay');
+let arpLock=false;
+btnPlay.addEventListener('click',()=>{
+  if(arpLock) return;
+  const ac=ensureAudio();
+  arpLock=true; btnPlay.classList.add('playing');
+  if(window.SA)SA.award('konsonans');
+  const step=0.62;
+  ROWS.forEach((rd,i)=>{
+    playTone(BASE*rd.mul,{dur:0.9,peak:0.24,when:i*step});
+    setTimeout(()=>fireRow(rd), i*step*1000);
+  });
+  // gentle final chord (1:1 + 3:2 + 2:1) to resolve
+  const tail=ROWS.length*step;
+  playTone(BASE*1,   {dur:1.6,peak:0.16,when:tail});
+  playTone(BASE*1.5, {dur:1.6,peak:0.14,when:tail});
+  playTone(BASE*2,   {dur:1.6,peak:0.12,when:tail});
+  const total=(tail+1.7)*1000;
+  setTimeout(()=>{arpLock=false;btnPlay.classList.remove('playing');},total);
+});
+
+/* ---------- φ : 1 — the romance check (dissonant!) ---------- */
+const btnPhi=document.getElementById('btnPhi');
+btnPhi.addEventListener('click',()=>{
+  const ac=ensureAudio();
+  const fPhi=BASE*PHI;                              // 220 × 1.6180339887…
+  // play base and φ together so the beating/dissonance is obvious
+  playTone(BASE,   {dur:2.0,peak:0.20});
+  playTone(fPhi,   {dur:2.0,peak:0.20});
+  showNow('φ : 1','złoty podział — NIE konsonansja',fPhi,true);
+  // pulse no specific row; ripple from the apex in crimson
+  spawnRipple(new THREE.Vector3(0,TOP,0),C.crimson);
+  document.querySelectorAll('#rows button').forEach(b=>b.classList.remove('lit'));
+});
+
+/* ====================================================================
+   PANEL
+   ==================================================================== */
+const panelEl=document.getElementById('panel');
+panelEl.innerHTML=`
+  <div class="el"><span class="glyph">∴</span> Arytmetyka · Pitagoras</div>
+  <h1>Tetraktys</h1>
+  <div class="gloss">1 + 2 + 3 + 4 = 10 — liczba, która stała się słyszalna</div>
+  <div class="nums">
+    <div class="n"><b>10</b><span>sfer</span></div>
+    <div class="n"><b>4</b><span>rzędy</span></div>
+    <div class="n"><b>3</b><span>konsonanse</span></div>
+  </div>
+  <p class="quote">„Na tego, który przekazał naszemu pokoleniu tetraktys — źródło i korzeń wiecznie żywej natury."<span class="src">Przysięga pitagorejska (Złote wersety)</span></p>
+  <div class="note">Pierwsze cztery liczby zawierają w sobie całą <b>harmonię</b>: stosunek <b>2:1</b> daje oktawę, <b>3:2</b> kwintę, <b>4:3</b> kwartę. Pitagorejczycy odkryli, że <b>współbrzmienie rodzi się z prostych stosunków małych liczb całkowitych</b> — liczba okazała się prawem dźwięku. Kliknij sfery, by usłyszeć kolejne rzędy.</div>
+  <div class="nowplaying" id="now">
+    <div class="lab">teraz brzmi</div>
+    <div class="ratio" id="nowRatio">—</div>
+    <div class="name" id="nowName">kliknij sferę lub rząd</div>
+    <div class="hz" id="nowHz"></div>
+  </div>
+  <div class="note romance"><b>φ — sprawdzian romansu.</b> Złoty podział (≈ 1,618) <b>nie jest</b> interwałem muzycznym. Posłuchaj „φ : 1": dwa tony w proporcji φ <b>dudnią i brzmią obco</b> — bo to liczba niewymierna, nie da się jej sprowadzić do prostego stosunku. Harmonia mieszka w małych liczbach całkowitych, nie w φ.</div>
+  <span class="chip rygor">∴ — Rygor</span>`;
+
+const nowEl=document.getElementById('now');
+const nowRatio=document.getElementById('nowRatio');
+const nowName=document.getElementById('nowName');
+const nowHz=document.getElementById('nowHz');
+let nowTimer=null;
+function showNow(ratio,name,freq,romance){
+  nowRatio.textContent=ratio;
+  nowName.textContent=name;
+  nowHz.textContent=`${BASE} Hz  ×  →  ${Math.round(freq)} Hz`;
+  nowEl.classList.toggle('romance',!!romance);
+  nowEl.classList.toggle('lit',!romance);
+  clearTimeout(nowTimer);
+  nowTimer=setTimeout(()=>{nowEl.classList.remove('lit','romance');},2200);
+}
+
+/* ---------- resize ---------- */
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);
+});
+
+/* ---------- animate ---------- */
+let appearT=0;
+function animate(){
+  requestAnimationFrame(animate);
+  appearT=Math.min(1,appearT+0.04);
+  const e=1-Math.pow(1-appearT,3);
+  tetra.scale.setScalar(0.45+0.55*e);
+
+  const now=performance.now();
+  // sphere idle shimmer + click pulse
+  for(const s of spheres){
+    if(s.pulse>0) s.pulse=Math.max(0,s.pulse-(reduce?0.06:0.028));
+    const base=0.55;
+    const shimmer=reduce?0:Math.sin(now*0.0016+s.baseY*2.0)*0.10;
+    s.mesh.material.emissiveIntensity=base+shimmer+s.pulse*1.9;
+    const sc=1+s.pulse*0.18;
+    s.mesh.scale.setScalar(sc);
+    s.glow.material.opacity=0.12+s.pulse*0.55;
+    s.glow.scale.setScalar(1.0+s.pulse*0.9);
+  }
+  // ripples expand & fade
+  for(let i=ripples.length-1;i>=0;i--){
+    const rp=ripples[i];
+    rp.t+=reduce?0.06:0.03;
+    const sc=1+rp.t*5.5;
+    rp.ring.scale.setScalar(sc);
+    rp.ring.material.opacity=Math.max(0,0.85*(1-rp.t));
+    if(rp.faceCam) rp.ring.quaternion.copy(camera.quaternion);
+    if(rp.t>=1){tetra.remove(rp.ring);rp.ring.geometry.dispose();rp.ring.material.dispose();ripples.splice(i,1);}
+  }
+  stars.rotation.y+=0.0004;
+  core.intensity=1.7+Math.sin(now*0.0012)*0.5;
+  controls.update();
+  composer.render();
+}
+
+/* ---------- go ---------- */
+animate();
+setTimeout(()=>document.getElementById('loading').classList.add('gone'),600);
+if(window.SA){SA.mountHUD();SA.visit('liczba');}
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SECTIO AUREA · Dwunastościan-nawigator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;--violet:#c9b6e0;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#scene{position:fixed;inset:0;z-index:0}
+canvas{display:block}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(130% 100% at 50% 46%,transparent 46%,rgba(0,0,0,.66) 100%)}
+
+/* topbar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.toplink{pointer-events:auto;font-size:12px;letter-spacing:.04em;color:var(--mute);text-decoration:none;
+  padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.toplink:hover{color:var(--gold-br);border-color:var(--gold)}
+
+/* intro eyebrow */
+.intro{position:fixed;top:74px;left:50%;transform:translateX(-50%);z-index:15;text-align:center;pointer-events:none;
+  transition:opacity .6s;width:max-content;max-width:90vw}
+.intro .eb{font-size:10.5px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.intro h1{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(22px,3.4vw,34px);margin:10px 0 0;letter-spacing:-.01em}
+.intro p{font-size:13px;color:var(--mute);margin:8px 0 0}
+.intro.hide{opacity:0}
+
+/* face labels */
+#labels{position:fixed;inset:0;z-index:10;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;white-space:nowrap;
+  transition:opacity .2s}
+.lbl .rom{font-family:"Fraunces",serif;font-size:15px;color:var(--gold-br);letter-spacing:.06em;
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);border-radius:50%;background:rgba(8,7,13,.42);backdrop-filter:blur(4px);transition:.2s}
+.lbl .ttl{font-family:"Fraunces",serif;font-size:16px;color:var(--ivory);opacity:0;transform:translateX(-6px);transition:.25s}
+.lbl .dot{position:absolute;left:14px;top:14px;width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:0}
+.lbl.hot .rom{background:var(--gold);color:#1a1305;border-color:var(--gold);box-shadow:0 0 22px -2px rgba(242,210,122,.7);transform:scale(1.12)}
+.lbl.hot .ttl{opacity:1;transform:none}
+.lbl.done .rom{border-color:var(--verd)}
+.lbl.earned .rom{background:rgba(227,178,60,.22);border-color:var(--gold);color:var(--gold-br);box-shadow:0 0 16px -3px rgba(242,210,122,.75)}
+.lbl.earned .dot{opacity:1;background:var(--verd);left:21px;top:-1px;width:7px;height:7px;box-shadow:0 0 8px var(--verd)}
+
+/* info card */
+.card{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:20;width:min(560px,92vw);
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:16px;
+  padding:16px 22px;display:flex;align-items:center;gap:18px;box-shadow:0 30px 80px -40px #000;transition:border-color .3s,transform .12s}
+.card.pulse{transform:translateX(-50%) scale(1.015)}
+.card .rom{font-family:"Fraunces",serif;font-size:30px;color:var(--gold-br);min-width:48px;text-align:center;line-height:1}
+.card .body{flex:1;min-width:0}
+.card .ttlrow{display:flex;align-items:baseline;gap:12px}
+.card .ttlrow h2{font-family:"Fraunces",serif;font-weight:400;font-size:21px;margin:0}
+.card .ttlrow .ch{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.card .line{font-size:13px;color:var(--mute);margin:3px 0 0;line-height:1.5;white-space:normal}
+.card .right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.chip{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%}
+.chip.rygor{color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}.chip.rygor::before{background:var(--gold)}
+.chip.mix{color:var(--amber);background:rgba(224,145,58,.1);border:1px solid rgba(224,145,58,.3)}.chip.mix::before{background:var(--amber)}
+.chip.rom{color:var(--crimson);background:rgba(210,85,63,.1);border:1px solid rgba(210,85,63,.3)}.chip.rom::before{background:var(--crimson)}
+.chip.ezo{color:var(--verd);background:rgba(95,184,163,.1);border:1px solid rgba(95,184,163,.3)}.chip.ezo::before{background:var(--verd)}
+.chip.meta{color:var(--violet);background:rgba(201,182,224,.1);border:1px solid rgba(201,182,224,.3)}.chip.meta::before{background:var(--violet)}
+.status{font-size:10.5px;letter-spacing:.04em}
+.status.go{color:var(--verd)} .status.soon{color:var(--faint)}
+.card.idle .right,.card.idle .rom{opacity:.5}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:15;font-size:10px;letter-spacing:.04em;color:var(--faint);line-height:1.7;pointer-events:none}
+@media(max-width:680px){.hint{display:none}.card{flex-wrap:wrap;gap:10px}.card .right{width:100%;flex-direction:row;justify-content:space-between}}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>dwunastościan · nawigator</small></div>
+  <div style="display:flex;gap:8px;pointer-events:auto">
+    <a class="toplink" href="filary.html">Filary</a>
+    <a class="toplink" href="atlas.html#atlas">Atlas (lista) →</a>
+  </div>
+</div>
+
+<div class="intro" id="intro">
+  <div class="eb">Wejdź przez bryłę Φ</div>
+  <h1 class="serif">Dwanaście komnat, jedna bryła</h1>
+  <p>Każdy z 12 pięciokątów niesie złoty podział. Obróć kosmos i wybierz drogę.</p>
+</div>
+
+<div id="labels"></div>
+
+<div class="card idle" id="card">
+  <div class="rom serif" id="cRom">Φ</div>
+  <div class="body">
+    <div class="ttlrow"><h2 class="serif" id="cTtl">Najedź na ścianę</h2><span class="ch" id="cCh"></span></div>
+    <p class="line" id="cLine">Dwunastościan to nawigator portalu — 12 ścian odpowiada 12 komnatom traktatu Ghyki.</p>
+  </div>
+  <div class="right">
+    <span class="chip rygor" id="cChip" style="display:none"></span>
+    <span class="status" id="cStatus"></span>
+  </div>
+</div>
+
+<div class="hint">Przeciągnij — obróć<br>Kliknij ścianę — wejdź</div>
+<div id="loading"><div class="ph">Φ</div><p>składam dwunastościan</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const PHI=(1+Math.sqrt(5))/2, INV=1/PHI, R=1.9;
+
+/* ---------- 12 komnat (kolejność = bieg książki) ---------- */
+const MODULES=[
+ {rom:'I',t:'Liczba',ch:'Tom I · r. I',vk:'rygor',line:'Tetraktys i harmonia liczb — pitagorejskie sacrum 1+2+3+4=10.',status:'gotowe',href:'liczba.html',room:'liczba'},
+ {rom:'II',t:'Proporcja',ch:'Tom I · r. II',vk:'rygor',line:'Boska proporcja: φ, złoty prostokąt, liczba która zawiera siebie.',status:'gotowe',href:'proporcja.html',room:'proporcja'},
+ {rom:'III',t:'Pentada',ch:'Tom I · r. II',vk:'rygor',line:'Pentagram — figura życia. Nieskończony zoom w samopodobieństwo.',status:'gotowe',href:'pentada.html',room:'pentada'},
+ {rom:'IV',t:'Bryły',ch:'Tom I · r. II',vk:'rygor',line:'Pięć brył platońskich i trzy złote prostokąty w dwudziestościanie.',status:'gotowe',href:'bryly.html',room:'bryly'},
+ {rom:'V',t:'Ciało',ch:'Tom I · r. II',vk:'rom',line:'Człowiek Witruwiański, kanon Zeisinga, Modulor — i jego krytyka.',status:'gotowe',href:'cialo.html',room:'cialo'},
+ {rom:'VI',t:'Świątynia',ch:'Tom I · r. III',vk:'mix',line:'Partenon, Notre-Dame, prostokąty dynamiczne Hambidge’a.',status:'gotowe',href:'swiatynia.html',room:'swiatynia'},
+ {rom:'VII',t:'Eurytmia',ch:'Tom I · r. IV',vk:'rom',line:'Złota proporcja w malarstwie: Botticelli, Leonardo, Dürer.',status:'gotowe',href:'eurytmia.html',room:'eurytmia'},
+ {rom:'VIII',t:'Słowo',ch:'Tom I · r. V',vk:'mix',line:'Rytmy mowy. Notacja Serviena; metafora jako analogía A:B::C:D.',status:'gotowe',href:'slowo.html',room:'slowo'},
+ {rom:'IX',t:'Ogród',ch:'poza księgą',vk:'rygor',line:'Filotaksja: złoty kąt 137,5° jako fizyczne optimum upakowania.',status:'gotowe',href:'atlas.html#garden',room:'ogrod'},
+ {rom:'X',t:'Loża',ch:'Tom II · r. I–II',vk:'ezo',line:'„Światło pod korcem": Pitagoras, loże katedralne, transmisja wiedzy.',status:'gotowe',href:'loza.html',room:'loza'},
+ {rom:'XI',t:'Nauka',ch:'Tom II · r. IV–V',vk:'mix',line:'Powrót do Pitagorasa: Schrödinger, de Broglie, Bergsonowskie trwanie.',status:'gotowe',href:'nauka.html',room:'nauka'},
+ {rom:'XII',t:'Probierz',ch:'Tom II · r. VI',vk:'meta',line:'Kamień probierczy: zmierz sam słynne mity — nautilus, Partenon, Mona Lisa — i odróżnij prawdziwe φ od pobożnych życzeń.',status:'gotowe',href:'probierz.html',room:'probierz'}
+];
+
+/* ---------- renderer / scene ---------- */
+const host=document.getElementById('scene');
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(2,devicePixelRatio));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
+host.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x08070d);
+scene.fog=new THREE.FogExp2(0x08070d,0.085);
+
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,100);
+camera.position.set(2.4,1.5,5.8);
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=0.06;
+controls.autoRotate=true;controls.autoRotateSpeed=0.55;
+controls.minDistance=4;controls.maxDistance=11;controls.enablePan=false;
+
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+
+scene.add(new THREE.AmbientLight(0xffffff,0.25));
+const key=new THREE.DirectionalLight(0xffe9c0,1.4);key.position.set(4,6,5);scene.add(key);
+const rim=new THREE.DirectionalLight(0x88b8ff,0.6);rim.position.set(-6,-2,-4);scene.add(rim);
+const core=new THREE.PointLight(0xf2d27a,2.0,14);scene.add(core);
+
+/* stars */
+let star;
+(()=>{const N=1600,pos=new Float32Array(N*3);
+  for(let i=0;i<N;i++){const r=7+Math.random()*15,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph);}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const p=new THREE.Points(g,new THREE.PointsMaterial({color:0xe3b23c,size:0.032,transparent:true,opacity:0.5,
+    sizeAttenuation:true,blending:THREE.AdditiveBlending,depthWrite:false}));scene.add(p);star=p;})();
+
+/* bloom */
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.7,0.5,0.82);
+composer.addPass(bloom);composer.addPass(new OutputPass());
+
+/* ---------- dodecahedron ---------- */
+const dode=new THREE.Group();scene.add(dode);
+const geo=new THREE.DodecahedronGeometry(R);
+const faceMat=new THREE.MeshPhysicalMaterial({color:0xffe2a0,metalness:0,roughness:0.16,
+  transparent:true,opacity:0.14,side:THREE.DoubleSide,clearcoat:1,clearcoatRoughness:0.22,reflectivity:0.6});
+dode.add(new THREE.Mesh(geo,faceMat));
+dode.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo,1),
+  new THREE.LineBasicMaterial({color:0xf2d27a,transparent:true,opacity:0.92})));
+
+/* analytic faces → hotspots + centers */
+const dverts=(()=>{
+  let V=[];[-1,1].forEach(a=>[-1,1].forEach(b=>[-1,1].forEach(c=>V.push([a,b,c]))));
+  [-1,1].forEach(s=>[-1,1].forEach(t=>{V.push([0,s*INV,t*PHI]);V.push([s*INV,t*PHI,0]);V.push([s*PHI,0,t*INV]);}));
+  return V.map(v=>{const L=Math.hypot(...v);return new THREE.Vector3(v[0]/L*R,v[1]/L*R,v[2]/L*R);});
+})();
+const facedirs=(()=>{
+  let F=[];[-1,1].forEach(s=>[-1,1].forEach(t=>{F.push([0,s*PHI,t]);F.push([s*PHI,t,0]);F.push([s,0,t*PHI]);}));
+  return F.map(v=>new THREE.Vector3(...v).normalize());
+})();
+// stable order: sort facedirs by (y desc, then angle) so module assignment is deterministic
+facedirs.sort((a,b)=> (b.y-a.y) || (Math.atan2(a.z,a.x)-Math.atan2(b.z,b.x)) );
+
+const hotspots=[], faceCenters=[];
+const hotMat=()=>new THREE.MeshBasicMaterial({color:0xf2d27a,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false});
+facedirs.forEach((dir,i)=>{
+  const ring=dverts.map(v=>({v,d:v.dot(dir)})).sort((a,b)=>b.d-a.d).slice(0,5).map(o=>o.v);
+  // order around dir
+  let u=new THREE.Vector3(0,1,0);if(Math.abs(dir.y)>0.9)u.set(1,0,0);
+  u.crossVectors(u,dir).normalize();
+  const w=new THREE.Vector3().crossVectors(dir,u).normalize();
+  const c=ring.reduce((a,v)=>a.add(v.clone()),new THREE.Vector3()).multiplyScalar(1/5);
+  const ord=ring.slice().sort((a,b)=>
+    Math.atan2(a.clone().sub(c).dot(w),a.clone().sub(c).dot(u))-
+    Math.atan2(b.clone().sub(c).dot(w),b.clone().sub(c).dot(u)));
+  const P=[];for(let k=0;k<5;k++){const a=ord[k],b=ord[(k+1)%5];P.push(c.x,c.y,c.z,a.x,a.y,a.z,b.x,b.y,b.z);}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
+  const m=new THREE.Mesh(g,hotMat());m.userData.idx=i;m.position.copy(dir).multiplyScalar(0.006);
+  dode.add(m);hotspots.push(m);
+  faceCenters.push({center:c.clone(),dir:dir.clone(),anchor:c.clone().multiplyScalar(1.2)});
+});
+
+/* ---------- HTML labels ---------- */
+const labelsEl=document.getElementById('labels');
+const labelDivs=facedirs.map((_,i)=>{
+  const m=MODULES[i];const el=document.createElement('div');el.className='lbl'+(m.status==='gotowe'?' done':'');
+  el.innerHTML=`<span class="rom serif">${m.rom}</span><span class="ttl">${m.t}</span>`;
+  labelsEl.appendChild(el);return el;
+});
+
+/* ---------- info card ---------- */
+const card=document.getElementById('card');
+function showCard(i,soon){
+  const m=MODULES[i];card.classList.remove('idle');
+  document.getElementById('cRom').textContent=m.rom;
+  document.getElementById('cTtl').textContent=m.t;
+  document.getElementById('cCh').textContent=m.ch;
+  document.getElementById('cLine').textContent=m.line;
+  const chip=document.getElementById('cChip');chip.style.display='inline-flex';chip.className='chip '+m.vk;
+  chip.textContent={rygor:'Rygor',mix:'Mieszany',rom:'Romantyzm',ezo:'Ezoteryka',meta:'Krytyka'}[m.vk];
+  const st=document.getElementById('cStatus');
+  if(m.status==='gotowe'){st.className='status go';st.textContent='GRYWALNE →';}
+  else{st.className='status soon';st.textContent=soon?'w przygotowaniu…':'wkrótce';}
+}
+function idleCard(){card.classList.add('idle');
+  document.getElementById('cRom').textContent='Φ';document.getElementById('cTtl').textContent='Najedź na ścianę';
+  document.getElementById('cCh').textContent='';document.getElementById('cChip').style.display='none';
+  document.getElementById('cStatus').textContent='';
+  document.getElementById('cLine').textContent='Dwunastościan to nawigator portalu — 12 ścian odpowiada 12 komnatom traktatu Ghyki.';}
+
+/* ---------- raycast hover + click ---------- */
+const ray=new THREE.Raycaster();const ndc=new THREE.Vector2();
+let hover=-1, downXY=null;
+function pick(ev){
+  ndc.x=(ev.clientX/innerWidth)*2-1;ndc.y=-(ev.clientY/innerHeight)*2+1;
+  ray.setFromCamera(ndc,camera);
+  const hits=ray.intersectObjects(hotspots,false);
+  // nearest front-facing
+  for(const h of hits){
+    const idx=h.object.userData.idx;
+    const wn=faceCenters[idx].dir.clone().applyQuaternion(dode.quaternion);
+    const toCam=camera.position.clone().sub(h.point).normalize();
+    if(wn.dot(toCam)>0)return idx;
+  }
+  return -1;
+}
+renderer.domElement.addEventListener('pointermove',ev=>{
+  const i=pick(ev);
+  if(i!==hover){
+    if(hover>=0){labelDivs[hover].classList.remove('hot');hotspots[hover].material.opacity=hotspots[hover].userData.earned?0.14:0;}
+    hover=i;
+    if(i>=0){labelDivs[i].classList.add('hot');hotspots[i].material.opacity=0.17;showCard(i,false);
+      document.getElementById('intro').classList.add('hide');
+      renderer.domElement.style.cursor='pointer';controls.autoRotateSpeed=0.12;}
+    else{idleCard();renderer.domElement.style.cursor='grab';controls.autoRotateSpeed=0.55;}
+  }
+});
+renderer.domElement.addEventListener('pointerdown',ev=>{downXY=[ev.clientX,ev.clientY];});
+renderer.domElement.addEventListener('pointerup',ev=>{
+  if(!downXY)return;const moved=Math.hypot(ev.clientX-downXY[0],ev.clientY-downXY[1]);downXY=null;
+  if(moved>6)return;                       // was a drag, not a click
+  const i=pick(ev);if(i<0)return;
+  const m=MODULES[i];
+  if(m.href){document.getElementById('loading').classList.remove('gone');document.querySelector('#loading p').textContent='wchodzę do komnaty '+m.rom;
+    setTimeout(()=>location.href=m.href,260);}
+  else{showCard(i,true);card.classList.add('pulse');setTimeout(()=>card.classList.remove('pulse'),140);}
+});
+
+/* ---------- animate ---------- */
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const tmp=new THREE.Vector3();
+function animate(){
+  requestAnimationFrame(animate);
+  controls.update();
+  core.intensity=1.7+Math.sin(performance.now()*0.0012)*0.5;
+  if(star)star.rotation.y+=0.0003;
+  // project labels
+  faceCenters.forEach((f,i)=>{
+    tmp.copy(f.anchor).applyMatrix4(dode.matrixWorld);
+    const wn=f.dir.clone().applyQuaternion(dode.quaternion);
+    const facing=wn.dot(camera.position.clone().sub(tmp).normalize());
+    const el=labelDivs[i];
+    if(facing<=0.04){el.style.opacity='0';el.style.pointerEvents='none';return;}
+    tmp.project(camera);
+    const x=(tmp.x*0.5+0.5)*innerWidth, y=(-tmp.y*0.5+0.5)*innerHeight;
+    el.style.left=x+'px';el.style.top=y+'px';
+    el.style.opacity=String(Math.min(1,(facing-0.04)/0.4)*(el.classList.contains('hot')?1:0.82));
+  });
+  composer.render();
+}
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
+
+idleCard();animate();
+setTimeout(()=>document.getElementById('loading').classList.add('gone'),650);
+if(window.SA){SA.mountHUD();
+  (function applyProgress(){const rooms=(SA.get().rooms)||{};
+    MODULES.forEach((m,i)=>{if(m.room&&rooms[m.room]&&hotspots[i]){hotspots[i].userData.earned=true;hotspots[i].material.opacity=0.14;labelDivs[i].classList.add('earned');}});})();
+}
+</script>
+</body>
+</html>

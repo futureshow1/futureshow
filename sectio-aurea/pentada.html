@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata III · Pentada — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#scene{position:fixed;inset:0;z-index:0}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#cgl{z-index:0}#c2d{z-index:1}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(130% 100% at 50% 46%,transparent 50%,rgba(0,0,0,.6) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;letter-spacing:.04em;color:var(--mute);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:15;width:320px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 80px -40px #000;transition:opacity .35s}
+.panel .step{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:28px;margin:7px 0 8px;line-height:1.05}
+.panel .line{font-size:13.5px;color:var(--mute);line-height:1.6;margin:0 0 14px}
+.panel .fact{font-family:"Fraunces",serif;font-style:italic;font-size:14.5px;color:var(--ivory);border-left:2px solid var(--gold);padding-left:13px;line-height:1.5}
+.panel .fact b{font-style:normal;color:var(--gold-br)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-top:15px;color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.chip.val{color:var(--verd);background:rgba(95,184,163,.1);border-color:rgba(95,184,163,.3)}.chip.val::before{background:var(--verd)}
+
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:12px;width:max-content;max-width:94vw}
+.ctx{min-height:0;display:flex;align-items:center;gap:14px}
+.ctx .ctlbox{display:none;align-items:center;gap:13px;background:rgba(8,7,13,.6);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:12px;padding:9px 16px;font-size:12px;color:var(--mute)}
+.ctx .ctlbox.on{display:flex}
+.ctx .ctlbox b{color:var(--gold-br);font-family:"Fraunces",serif;font-variant-numeric:tabular-nums}
+.moves{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.moves button{display:flex;align-items:center;gap:9px;background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 14px;cursor:pointer;transition:.22s;color:var(--mute)}
+.moves button .nb{font-family:"Fraunces",serif;font-size:13px;color:var(--gold-br);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%}
+.moves button b{font-size:11.5px;font-weight:500;color:var(--ivory);letter-spacing:.01em}
+.moves button:hover{background:rgba(255,255,255,.04)}
+.moves button.active{background:rgba(227,178,60,.12);border-color:var(--gold)}
+.moves button.active .nb{background:var(--gold);color:#1a1305;border-color:var(--gold)}
+button.mini{font-family:"Inter";font-size:11px;color:var(--mute);background:var(--ink);border:1px solid var(--line-soft);border-radius:8px;padding:6px 11px;cursor:pointer;transition:.2s}
+button.mini:hover{color:var(--ivory);border-color:var(--gold)}
+input[type=range]{-webkit-appearance:none;width:130px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-deep,#a9801f),var(--gold));outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:15;font-size:10px;letter-spacing:.04em;color:var(--faint);line-height:1.7;pointer-events:none;max-width:180px}
+@media(max-width:820px){.panel{top:auto;bottom:150px;right:50%;transform:translateX(50%);width:min(420px,92vw)}.hint{display:none}.moves button b{display:none}}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="cgl"></canvas>
+<canvas id="c2d"></canvas>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata III · Pentada</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"></aside>
+
+<div class="dock">
+  <div class="ctx">
+    <div class="ctlbox" id="ctlZoom">
+      <button class="mini" id="zPause">⏸ pauza</button>
+      <span>tempo</span><input type="range" id="zSpeed" min="0" max="100" value="42">
+      <span>głębokość <b id="zDepth">×1</b></span>
+    </div>
+    <div class="ctlbox" id="ctlQC">
+      <span>fale</span><input type="range" id="qN" min="2" max="12" step="1" value="5">
+      <span>symetria <b id="qSym">10-krotna</b></span>
+    </div>
+    <div class="ctlbox" id="ctlPhi"><span>Przeciągnij figurę, by ją obrócić · <b id="phiRead">φ = 1.6180</b></span></div>
+  </div>
+  <div class="moves" id="moves"></div>
+</div>
+
+<div class="hint" id="hint"></div>
+<div id="loading"><div class="ph">Φ</div><p>kreślę pentagram</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script>
+"use strict";
+const PHI=(1+Math.sqrt(5))/2, PHI2=PHI*PHI, TAU=Math.PI*2, D2R=Math.PI/180, TH=Math.PI/5; // 36°
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const $=s=>document.querySelector(s);
+
+const MOVES=[
+ {n:'❶',t:'Maszyna φ',line:'Połącz przekątnymi wszystkie wierzchołki pięciokąta — powstaje pentagram. Każde przecięcie tnie odcinek w złotej proporcji.',
+  fact:'przekątna ÷ bok = <b>φ</b> &nbsp;·&nbsp; wewnętrzny pięciokąt = <b>1/φ²</b> zewnętrznego',verdict:'Rygor'},
+ {n:'❷',t:'Nieskończone zejście',line:'Wewnętrzny pięciokąt to ten sam pięciokąt — mniejszy o 1/φ² i obrócony o 36°. Operację można powtarzać bez końca. Dlatego Ghyka zwał pięciokąt „figurą życia": sam się reprodukuje.',
+  fact:'każdy poziom = <b>1/φ²</b> poprzedniego, obrót <b>36°</b> — nieskończoność w skończonym kształcie',verdict:'Rygor'},
+ {n:'❸',t:'Pięć kontra sześć',line:'Dlaczego pięciokąt jest wyjątkowy? Trzy sześciokąty wokół punktu domykają się idealnie (kryształ). Trzy pięciokąty zostawiają lukę 36° — φ jest niewymierne, więc nie ma okresowego kafelkowania.',
+  fact:'sześciokąt 3×120° = <b>360°</b> (kryształ) &nbsp;·&nbsp; pięciokąt 3×108° = <b>324°</b>, luka 36°',verdict:'Rygor'},
+ {n:'❹',t:'Quasikryształ',line:'Skoro 5-krotna symetria nie tworzy kryształu — czy może istnieć w materii? Penrose (1974) ją wykafelkował aperiodycznie; Shechtman (1982) znalazł ją w stopie glinu. Nobel 2011. φ jest w każdym quasikrysztale.',
+  fact:'suma fal o symetrii 2N-krotnej · <b>N=5 → 10-krotna</b>, jak w stopie Al-Mn Shechtmana',verdict:'Rygor + walidacja'},
+];
+const HINTS=['Przeciągnij, by obrócić','idzie samo — zwolnij lub zatrzymaj','3 sześciokąty vs 3 pięciokąty','przesuń „fale" — 6-krotna to kryształ, 10-krotna to quasikryształ'];
+
+/* ---------- canvases ---------- */
+const c2d=$('#c2d'), ctx=c2d.getContext('2d');
+const cgl=$('#cgl');
+let W,H,DPR;
+function resize(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;
+  [c2d,cgl].forEach(cv=>{cv.width=W*DPR;cv.height=H*DPR;});
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  if(gl)gl.viewport(0,0,cgl.width,cgl.height);}
+addEventListener('resize',resize);
+
+/* ---------- WebGL quasicrystal ---------- */
+let gl=cgl.getContext('webgl')||cgl.getContext('experimental-webgl');
+let glProg,uRes,uTime,uN,qN=5;
+const FRAG=`precision highp float;
+uniform vec2 uRes; uniform float uTime; uniform float uN;
+const float PI=3.14159265359;
+void main(){
+  vec2 uv=(gl_FragCoord.xy-0.5*uRes)/min(uRes.x,uRes.y);
+  uv*=38.0;
+  float v=0.0;
+  for(int i=0;i<24;i++){
+    if(float(i)>=uN) break;
+    float a=PI*float(i)/uN;
+    v+=cos(cos(a)*uv.x+sin(a)*uv.y+uTime);
+  }
+  float t=0.5+0.5*sin(v);
+  vec3 base=vec3(0.031,0.027,0.055);
+  vec3 gold=vec3(0.86,0.68,0.23);
+  vec3 col=mix(base,gold,smoothstep(0.28,0.95,t));
+  col+=vec3(0.98,0.88,0.60)*pow(t,7.0)*0.55;
+  gl_FragColor=vec4(col,1.0);
+}`;
+function initGL(){
+  if(!gl){console.error('WebGL niedostępny');return;}
+  const vs=gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vs,'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}');gl.compileShader(vs);
+  const fs=gl.createShader(gl.FRAGMENT_SHADER);gl.shaderSource(fs,FRAG);gl.compileShader(fs);
+  if(!gl.getShaderParameter(fs,gl.COMPILE_STATUS)){console.error('FRAG:',gl.getShaderInfoLog(fs));return;}
+  glProg=gl.createProgram();gl.attachShader(glProg,vs);gl.attachShader(glProg,fs);gl.linkProgram(glProg);
+  if(!gl.getProgramParameter(glProg,gl.LINK_STATUS)){console.error('LINK:',gl.getProgramInfoLog(glProg));return;}
+  gl.useProgram(glProg);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(glProg,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  uRes=gl.getUniformLocation(glProg,'uRes');uTime=gl.getUniformLocation(glProg,'uTime');uN=gl.getUniformLocation(glProg,'uN');
+}
+function renderGL(t){
+  if(!glProg)return;
+  gl.useProgram(glProg);
+  gl.uniform2f(uRes,cgl.width,cgl.height);
+  gl.uniform1f(uTime,t*0.0009);
+  gl.uniform1f(uN,qN);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+}
+
+/* ---------- pentagram drawing ---------- */
+function starPath(cx,cy,R,rot){
+  const idx=[0,2,4,1,3];ctx.beginPath();
+  for(let j=0;j<5;j++){const k=idx[j];const a=rot-Math.PI/2+k*TAU/5;
+    const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);j?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+  ctx.closePath();
+}
+function polyPath(cx,cy,R,rot,n){
+  ctx.beginPath();for(let k=0;k<n;k++){const a=rot-Math.PI/2+k*TAU/n;
+    const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);k?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+  ctx.closePath();
+}
+
+/* M0 — Maszyna φ */
+let rot0=0, dragRot=null;
+function drawPhi(){
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)*0.32;
+  // outer pentagon
+  polyPath(cx,cy,R,rot0,5);ctx.lineWidth=1;ctx.strokeStyle='rgba(236,230,214,.25)';ctx.stroke();
+  // golden gnomon highlight (one star point triangle)
+  const aTop=rot0-Math.PI/2;
+  // star + glow
+  ctx.save();ctx.shadowBlur=18;ctx.shadowColor='rgba(227,178,60,.55)';
+  starPath(cx,cy,R,rot0);ctx.lineWidth=2;ctx.strokeStyle='#f2d27a';ctx.stroke();
+  ctx.restore();
+  // inner pentagon = 1/φ², rotated 36°
+  polyPath(cx,cy,R/PHI2,rot0+TH,5);ctx.lineWidth=1.4;ctx.strokeStyle='rgba(227,178,60,.5)';ctx.stroke();
+  // vertices
+  for(let k=0;k<5;k++){const a=rot0-Math.PI/2+k*TAU/5;
+    ctx.beginPath();ctx.arc(cx+R*Math.cos(a),cy+R*Math.sin(a),3.5,0,TAU);ctx.fillStyle='#f2d27a';ctx.fill();}
+  // labels
+  ctx.font='600 12px Inter';ctx.fillStyle='rgba(236,230,214,.8)';ctx.textAlign='center';
+  ctx.fillText('przekątna ÷ bok = φ', cx, cy-R-22);
+  ctx.fillStyle='rgba(227,178,60,.85)';
+  ctx.fillText('wewnętrzny pięciokąt = 1/φ² ≈ 0,382', cx, cy+R+30);
+}
+
+/* M1 — infinite descent */
+let zoomP=0, zoomSpeed=0.42, zoomPaused=false;
+function drawDescent(t){
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H/2, base=Math.min(W,H)*0.62;
+  const Z=Math.pow(PHI2,zoomP), GR=-TH*zoomP;
+  const mid=Math.min(W,H)*0.34;
+  for(let i=-2;i<=15;i++){
+    const sr=base*Math.pow(1/PHI2,i)*Z;
+    if(sr<0.6||sr>Math.max(W,H)*2.4)continue;
+    const rot=-TH*i+GR;
+    const d=Math.log(sr/mid);
+    const al=0.9*Math.exp(-d*d/1.6);
+    if(al<0.012)continue;
+    ctx.globalAlpha=al;ctx.lineWidth=1.3;ctx.strokeStyle='#f2d27a';
+    starPath(cx,cy,sr,rot);ctx.stroke();
+    ctx.globalAlpha=al*0.5;ctx.strokeStyle='rgba(227,178,60,.6)';
+    polyPath(cx,cy,sr,rot,5);ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* M2 — five vs six */
+let m2t=0;
+function drawFiveSix(){
+  ctx.clearRect(0,0,W,H);
+  const yc=H*0.46, R=Math.min(W,H)*0.15, gap=Math.min(W*0.26,300);
+  drawCluster(W/2-gap, yc, R, 5, '#d2553f');
+  drawCluster(W/2+gap, yc, R, 6, '#5fb8a3');
+  ctx.font='600 13px Inter';ctx.textAlign='center';
+  ctx.fillStyle='rgba(210,85,63,.95)';ctx.fillText('PIĘCIOKĄT · 3 × 108° = 324°', W/2-gap, yc+R+58);
+  ctx.fillStyle='rgba(236,230,214,.6)';ctx.font='12px Inter';ctx.fillText('luka 36° — nie kafelkuje', W/2-gap, yc+R+78);
+  ctx.fillStyle='rgba(95,184,163,.95)';ctx.font='600 13px Inter';ctx.fillText('SZEŚCIOKĄT · 3 × 120° = 360°', W/2+gap, yc+R+58);
+  ctx.fillStyle='rgba(236,230,214,.6)';ctx.font='12px Inter';ctx.fillText('domyka się — kryształ', W/2+gap, yc+R+78);
+}
+function drawCluster(cx,cy,R,n,col){
+  // three regular n-gons sharing the vertex (cx,cy), fanned by the interior angle
+  const ia=(n-2)*Math.PI/n, U=-Math.PI/2;   // U = fan points upward
+  // 36° gap wedge for pentagon (drawn first, behind)
+  if(n===5){
+    const g0=U+1.5*ia, g1=g0+(TAU-3*ia);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R*0.62,g0,g1);ctx.closePath();
+    ctx.globalAlpha=0.32*Math.min(1,m2t);ctx.fillStyle=col;ctx.fill();ctx.globalAlpha=1;
+  }
+  for(let k=0;k<3;k++){
+    const bis=U-1.5*ia+(k+0.5)*ia;            // direction shared-vertex → polygon centre
+    const ox=cx+R*Math.cos(bis), oy=cy+R*Math.sin(bis);  // centre at circumradius R
+    const rot=Math.atan2(cy-oy,cx-ox)+Math.PI/2;          // so a vertex lands on (cx,cy)
+    polyPath(ox,oy,R,rot,n);
+    ctx.globalAlpha=0.09*Math.min(1,m2t);ctx.fillStyle=col;ctx.fill();
+    ctx.globalAlpha=Math.min(1,m2t);ctx.lineWidth=1.7;ctx.strokeStyle=col;ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  ctx.beginPath();ctx.arc(cx,cy,4,0,TAU);ctx.fillStyle='#fff';ctx.fill();
+}
+
+/* ---------- panel + dock ---------- */
+let move=0;
+function renderPanel(){
+  const m=MOVES[move];
+  $('#panel').innerHTML=`<div class="step">Ruch ${move+1} / 4</div><h1 class="serif">${m.t}</h1>
+    <p class="line">${m.line}</p><p class="fact">${m.fact}</p>
+    <span class="chip ${move===3?'val':''}">${m.verdict}</span>`;
+  $('#hint').textContent=HINTS[move];
+  document.querySelectorAll('#moves button').forEach((b,i)=>b.classList.toggle('active',i===move));
+  $('#ctlZoom').classList.toggle('on',move===1);
+  $('#ctlQC').classList.toggle('on',move===3);
+  $('#ctlPhi').classList.toggle('on',move===0);
+  cgl.style.opacity=(move===3)?'1':'0';
+  c2d.style.opacity=(move===3)?'0':'1';
+}
+const movesEl=$('#moves');
+MOVES.forEach((m,i)=>{const b=document.createElement('button');
+  b.innerHTML=`<span class="nb">${i+1}</span><b>${m.t}</b>`;
+  b.addEventListener('click',()=>{move=i;if(i===2)m2t=0;if(i===3&&window.SA&&!window._pqc){window._pqc=1;SA.add(8,'Quasikryształ ujrzany');}renderPanel();});movesEl.appendChild(b);});
+
+/* controls */
+$('#zPause').addEventListener('click',()=>{zoomPaused=!zoomPaused;$('#zPause').textContent=zoomPaused?'▶ wznów':'⏸ pauza';});
+$('#zSpeed').addEventListener('input',e=>{zoomSpeed=0.05+ (e.target.value/100)*1.1;});
+$('#qN').addEventListener('input',e=>{qN=+e.target.value;const sym=2*qN;
+  $('#qSym').textContent=sym+'-krotna'+(qN<=3?' · kryształ':' · quasikryształ');});
+
+/* M0 drag-to-rotate */
+let dragX=null;
+c2d.addEventListener('pointerdown',e=>{if(move===0){dragX=e.clientX;}});
+addEventListener('pointermove',e=>{if(dragX!==null){rot0+=(e.clientX-dragX)*0.01;dragX=e.clientX;}});
+addEventListener('pointerup',()=>{dragX=null;});
+
+/* ---------- loop ---------- */
+let last=0;
+function frame(t){
+  const dt=Math.min(0.05,(t-last)/1000);last=t;
+  if(move===0){ if(dragX===null) rot0+=dt*0.12; drawPhi(); }
+  else if(move===1){ if(!zoomPaused){zoomP=(zoomP+dt*zoomSpeed)%1;} drawDescent(t);
+    $('#zDepth').textContent='×'+Math.pow(PHI2,zoomP).toFixed(2); }
+  else if(move===2){ m2t=Math.min(1,m2t+dt*1.2); drawFiveSix(); }
+  else if(move===3){ renderGL(t); }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- go ---------- */
+resize();initGL();renderPanel();requestAnimationFrame(frame);
+setTimeout(()=>$('#loading').classList.add('gone'),550);
+if(window.SA){SA.mountHUD();SA.visit('pentada');}
+</script>
+</body>
+</html>

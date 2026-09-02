@@ -98,6 +98,26 @@ html[lang="pl"] [data-lang="en"]{display:none}
 .dl-shot::after{content:'';position:absolute;left:0;right:0;bottom:0;height:70px;pointer-events:none;
  background:linear-gradient(180deg,transparent,rgba(6,8,13,.55));z-index:1}
 
+button.dl-btn,button.dl-ghost{width:100%;cursor:pointer;font-family:inherit;border:0}
+button.dl-ghost{border:1px solid var(--border);background:none}
+/* --- okienko zapisu na liste --- */
+.ntf{border:0;padding:0;background:transparent;max-width:440px;width:calc(100% - 32px)}
+.ntf::backdrop{background:rgba(6,8,13,.72);backdrop-filter:blur(6px)}
+.ntf__box{background:var(--surface);border:1px solid var(--border-glow);border-radius:16px;padding:30px 30px 26px;color:var(--text)}
+.ntf__kicker{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.ntf__box h3{font-size:1.35rem;font-weight:800;color:var(--white);margin:0 0 8px;letter-spacing:-.01em}
+.ntf__box p{color:var(--text-dim);font-size:.9rem;line-height:1.6;margin:0 0 18px}
+.ntf__box input[type=email]{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+ padding:13px 14px;color:var(--text);font:inherit;font-size:.95rem;margin-bottom:12px}
+.ntf__box input[type=email]:focus{outline:none;border-color:var(--accent)}
+.ntf__row{display:flex;gap:10px;align-items:center}
+.ntf__row .dl-btn{flex:1;padding:13px 18px;font-size:.95rem}
+.ntf__x{background:none;border:1px solid var(--border);color:var(--text-dim);border-radius:10px;padding:12px 16px;cursor:pointer;font:inherit}
+.ntf__x:hover{color:var(--text);border-color:var(--border-glow)}
+.ntf__fine{font-size:.74rem;color:var(--text-dim);margin:14px 0 0;line-height:1.5}
+.ntf__msg{display:none;margin-top:14px;font-size:.88rem;border-radius:10px;padding:11px 13px}
+.ntf__msg.ok{display:block;color:#4ade80;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25)}
+.ntf__msg.err{display:block;color:#fbbf24;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25)}
 @media(max-width:900px){.dl-row{grid-template-columns:1fr;gap:34px}}
 @media(max-width:820px){.dl-card{grid-template-columns:1fr}
  .dl-aside{border-left:0;padding-left:0;border-top:1px solid var(--border);padding-top:26px}}
@@ -155,7 +175,7 @@ html[lang="pl"] [data-lang="en"]{display:none}
       </ul>
     </div>
     <aside class="dl-aside">
-      <div class="dl-price">0 zł<em>open source · MIT</em></div>
+      <div class="dl-price"><span data-lang="en">Free</span><span data-lang="pl">Za darmo</span><em>open source · MIT</em></div>
       <div class="dl-meta">
         <b data-lang="en">Requirements</b><b data-lang="pl">Wymagania</b><br>
         macOS / Linux · Python 3.10+ · 8 GB RAM<br>
@@ -202,10 +222,10 @@ html[lang="pl"] [data-lang="en"]{display:none}
       <div class="dl-meta">
         <b>Status:</b> <span data-lang="en">announced — details at launch</span><span data-lang="pl">zapowiedź — szczegóły przy premierze</span>
       </div>
-      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureTalk%20-%20powiadom%20o%20premierze">
+      <button type="button" class="dl-btn" data-notify="FutureTalk">
         <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
         <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
-      </a>
+      </button>
     </aside>
   </article>
 
@@ -227,7 +247,7 @@ html[lang="pl"] [data-lang="en"]{display:none}
       </div>
     </div>
     <div>
-      <span class="dl-tag"><span data-lang="en">Mobile app · coming soon</span><span data-lang="pl">Aplikacja mobilna · wkrótce</span></span>
+      <span class="dl-tag"><span data-lang="en">Web app · beta live</span><span data-lang="pl">Aplikacja webowa · beta online</span></span>
       <h2><span data-lang="en">Future<span class="g">Form.</span></span>
           <span data-lang="pl">Future<span class="g">Form.</span></span></h2>
       <p class="dl-desc">
@@ -243,20 +263,20 @@ html[lang="pl"] [data-lang="en"]{display:none}
       </ul>
     </div>
     <aside class="dl-aside">
-      <div class="dl-price">0 zł<em>open source</em></div>
+      <div class="dl-price"><span data-lang="en">Free</span><span data-lang="pl">Za darmo</span><em>open source</em></div>
       <div class="dl-meta">
         <b data-lang="en">Platform</b><b data-lang="pl">Platforma</b><br>
         <span data-lang="en">phone — mobile PWA (installs from the browser)</span><span data-lang="pl">telefon — mobilna PWA (instalacja z przeglądarki)</span><br>
         <b data-lang="en">Data</b><b data-lang="pl">Dane</b>: <span data-lang="en">stay on your device</span><span data-lang="pl">lokalnie na urządzeniu</span><br>
-        <b>Status:</b> <span data-lang="en">public release soon</span><span data-lang="pl">publikacja wkrótce</span>
+        <b>Status:</b> <span data-lang="en">open beta — official launch soon</span><span data-lang="pl">otwarta beta — oficjalna premiera wkrótce</span>
       </div>
-      <a class="dl-btn" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20powiadom%20o%20premierze">
-        <span data-lang="en">Notify me →</span><span data-lang="pl">Powiadom mnie →</span>
-        <small data-lang="en">at launch</small><small data-lang="pl">przy premierze</small>
+      <a class="dl-btn" href="futureform/" target="_blank" rel="noopener">
+        <span data-lang="en">Open the app →</span><span data-lang="pl">Otwórz aplikację →</span>
+        <small data-lang="en">free · installs from the browser</small><small data-lang="pl">za darmo · instalacja z przeglądarki</small>
       </a>
-      <a class="dl-ghost" href="mailto:futureshow@proton.me?subject=FutureForm%20-%20dostep%20testowy">
-        <span data-lang="en">Test access →</span><span data-lang="pl">Dostęp testowy →</span>
-      </a>
+      <button type="button" class="dl-ghost" data-notify="FutureForm">
+        <span data-lang="en">Notify me at launch →</span><span data-lang="pl">Powiadom mnie o premierze →</span>
+      </button>
     </aside>
   </article>
   </div>
@@ -278,6 +298,26 @@ const sv=localStorage.getItem('lang');
 if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langToggle').textContent='EN';}
 </script>
 
+<dialog class="ntf" id="notifyDlg">
+  <form class="ntf__box" id="notifyForm" novalidate>
+    <div class="ntf__kicker"><span data-lang="en">Launch list</span><span data-lang="pl">Lista premierowa</span></div>
+    <h3><span data-lang="en">Tell me when </span><span data-lang="pl">Daj znać, gdy </span><span id="ntfApp">FutureTalk</span><span data-lang="en"> launches</span><span data-lang="pl"> będzie gotowe</span></h3>
+    <p><span data-lang="en">One e-mail at launch, nothing else. No newsletter, no tracking.</span><span data-lang="pl">Jeden e-mail przy premierze i nic więcej. Bez newslettera, bez trackingu.</span></p>
+    <input type="hidden" name="access_key" value="41c76e7b-9154-4f68-a910-e76ae4d498f4">
+    <input type="hidden" name="subject" id="ntfSubject" value="[LISTA] FutureTalk — zapis na premierę">
+    <input type="hidden" name="from_name" value="futureshow.pl / lista premierowa">
+    <input type="hidden" name="lista" id="ntfLista" value="FutureTalk">
+    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="email" name="email" id="ntfEmail" required placeholder="jan@example.com" autocomplete="email">
+    <div class="ntf__row">
+      <button type="submit" class="dl-btn"><span data-lang="en">Add me</span><span data-lang="pl">Zapisz mnie</span></button>
+      <button type="button" class="ntf__x" id="ntfClose"><span data-lang="en">Close</span><span data-lang="pl">Zamknij</span></button>
+    </div>
+    <div class="ntf__msg" id="ntfMsg"></div>
+    <p class="ntf__fine"><span data-lang="en">The address goes straight to my inbox and is used only for this one message.</span><span data-lang="pl">Adres trafia prosto na moją skrzynkę i posłuży wyłącznie do tej jednej wiadomości.</span></p>
+  </form>
+</dialog>
+
 <script>
   document.querySelectorAll('.dl-shot').forEach(function (shot) {
     var imgs = shot.querySelectorAll('.dl-slides img');
@@ -298,6 +338,47 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
     shot.addEventListener('mouseleave', start);
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) start();
   });
+
+  // --- lista premierowa: przycisk "Powiadom mnie" otwiera okienko, wpis leci na skrzynke ---
+  (function () {
+    var dlg = document.getElementById('notifyDlg'), form = document.getElementById('notifyForm');
+    var msg = document.getElementById('ntfMsg'), email = document.getElementById('ntfEmail');
+    var pl = function () { return document.documentElement.lang === 'pl'; };
+    document.querySelectorAll('[data-notify]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var app = b.getAttribute('data-notify');
+        document.getElementById('ntfApp').textContent = app;
+        document.getElementById('ntfLista').value = app;
+        document.getElementById('ntfSubject').value = '[LISTA] ' + app + ' — zapis na premierę';
+        msg.className = 'ntf__msg'; msg.textContent = ''; form.reset();
+        dlg.showModal(); setTimeout(function () { email.focus(); }, 50);
+      });
+    });
+    document.getElementById('ntfClose').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        msg.className = 'ntf__msg err';
+        msg.textContent = pl() ? 'Wpisz poprawny adres e-mail.' : 'Please enter a valid e-mail address.';
+        return;
+      }
+      var btn = form.querySelector('[type=submit]'); btn.disabled = true;
+      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (!d.success) throw new Error();
+          msg.className = 'ntf__msg ok';
+          msg.textContent = pl() ? 'Zapisane. Odezwę się przy premierze.' : 'Saved. I will write when it launches.';
+          setTimeout(function () { dlg.close(); }, 2200);
+        })
+        .catch(function () {
+          msg.className = 'ntf__msg err';
+          msg.textContent = pl() ? 'Nie udało się zapisać. Napisz na futureshow@proton.me.' : 'Could not save. Write to futureshow@proton.me.';
+        })
+        .finally(function () { btn.disabled = false; });
+    });
+  })();
 </script>
 </body>
 </html>

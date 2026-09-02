@@ -1,0 +1,13 @@
+{
+  "name": "FutureForm — trener sprawdzianu sprawności",
+  "short_name": "FutureForm",
+  "description": "Osobisty trener kalisteniki wojskowej. Punktacja wg oficjalnych tabel MON (Dz.U. 2024 poz. 396).",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#14170f",
+  "theme_color": "#181c14",
+  "lang": "pl",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

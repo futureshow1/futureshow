@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata XII · Probierz — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(19,17,29,.9);--panel-2:#191527;
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--gold-deep:#a9801f;
+  --ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#c{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:none}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(130% 100% at 38% 46%,transparent 50%,rgba(0,0,0,.6) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;color:var(--mute);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+.score{pointer-events:auto;font-size:11px;letter-spacing:.05em;color:var(--mute);background:rgba(8,7,13,.5);border:1px solid var(--line-soft);border-radius:999px;padding:8px 14px;backdrop-filter:blur(8px)}
+.score b{color:var(--gold-br);font-family:"Fraunces",serif}
+
+/* right panel */
+.panel{position:fixed;top:50%;right:24px;transform:translateY(-50%);z-index:15;width:344px;max-width:88vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 80px -40px #000}
+.panel .step{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:26px;margin:6px 0 3px;line-height:1.05}
+.panel .claim{font-size:13.5px;color:var(--mute);line-height:1.6;font-style:italic;margin:8px 0 14px}
+.panel .claim b{color:var(--ivory);font-style:normal}
+
+/* phi-meter */
+.meter{margin:14px 0 4px}
+.meter .lab{display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+.meter .lab b{color:var(--gold-br);font-family:"Fraunces",serif;font-size:15px;letter-spacing:0}
+.meter .track{position:relative;height:8px;border-radius:6px;background:rgba(255,255,255,.06);overflow:visible}
+.meter .phiMark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--gold);left:61.8%}
+.meter .phiMark::after{content:"φ";position:absolute;top:-16px;left:-4px;font-family:"Fraunces";font-size:11px;color:var(--gold-br)}
+.meter .needle{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--crimson);transform:translateX(-50%);transition:left .12s,border-color .2s;left:0}
+.meter .scale{display:flex;justify-content:space-between;font-size:9px;color:var(--faint);margin-top:9px}
+
+/* guess */
+.guess{margin-top:16px}
+.guess .q{font-size:12px;color:var(--ivory);margin-bottom:9px}
+.gbtns{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.gbtns button{font-family:"Inter";font-size:12px;color:var(--mute);background:var(--panel-2);border:1px solid var(--line-soft);border-radius:9px;padding:9px;cursor:pointer;transition:.2s}
+.gbtns button:hover{color:var(--ivory);border-color:var(--gold)}
+.gbtns button.pick{border-color:var(--gold);color:var(--gold-br);background:rgba(227,178,60,.1)}
+.reveal-btn{width:100%;margin-top:10px;font-family:"Inter";font-weight:600;font-size:12.5px;letter-spacing:.04em;color:#1a1305;background:var(--gold);border:none;border-radius:10px;padding:11px;cursor:pointer;transition:.2s}
+.reveal-btn:hover{background:var(--gold-br)}
+.reveal-btn:disabled{opacity:.4;cursor:default}
+
+/* reveal */
+.reveal{margin-top:15px;border-top:1px solid var(--line-soft);padding-top:14px;display:none}
+.reveal.on{display:block;animation:fade .4s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+.verdict{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border-radius:999px}
+.verdict::before{content:"";width:7px;height:7px;border-radius:50%}
+.verdict.mit{color:var(--crimson);background:rgba(210,85,63,.12);border:1px solid rgba(210,85,63,.35)}.verdict.mit::before{background:var(--crimson)}
+.verdict.prawie{color:var(--amber);background:rgba(224,145,58,.12);border:1px solid rgba(224,145,58,.35)}.verdict.prawie::before{background:var(--amber)}
+.verdict.zalezy{color:var(--amber);background:rgba(224,145,58,.12);border:1px solid rgba(224,145,58,.35)}.verdict.zalezy::before{background:var(--amber)}
+.verdict.prawda{color:var(--verd);background:rgba(95,184,163,.12);border:1px solid rgba(95,184,163,.35)}.verdict.prawda::before{background:var(--verd)}
+.reveal .judge{font-size:11.5px;margin-left:9px}.reveal .judge.ok{color:var(--verd)}.reveal .judge.no{color:var(--crimson)}
+.reveal p{font-size:13px;line-height:1.62;color:#c4bdcf;margin:11px 0 0}
+.reveal p b{color:var(--gold-br)}
+
+/* dock */
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:11px;width:max-content;max-width:94vw}
+.tools{display:flex;gap:10px;align-items:center;min-height:20px}
+.tools .tg{display:none;align-items:center;gap:9px;background:rgba(8,7,13,.6);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:11px;padding:8px 14px;font-size:11.5px;color:var(--mute);cursor:pointer}
+.tools .tg.show{display:inline-flex}
+.tools .tg .sw{width:24px;height:13px;border-radius:999px;background:rgba(255,255,255,.12);position:relative}
+.tools .tg .sw::after{content:"";position:absolute;left:2px;top:2px;width:9px;height:9px;border-radius:50%;background:var(--mute);transition:.2s}
+.tools .tg.on{color:var(--ivory);border-color:var(--gold)}.tools .tg.on .sw{background:var(--gold)}.tools .tg.on .sw::after{left:13px;background:#1a1305}
+.tools input[type=range]{-webkit-appearance:none;width:150px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));outline:none}
+.tools input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+.cases{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.cases button{display:flex;align-items:center;gap:8px;background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 13px;cursor:pointer;transition:.2s;color:var(--mute)}
+.cases button b{font-size:11.5px;font-weight:500;color:var(--ivory)}
+.cases button .dn{width:6px;height:6px;border-radius:50%;background:var(--verd);opacity:0}
+.cases button.done .dn{opacity:1}
+.cases button:hover{background:rgba(255,255,255,.04)}
+.cases button.active{background:rgba(227,178,60,.12);border-color:var(--gold)}
+.cases button.active b{color:var(--gold-br)}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:15;font-size:10.5px;color:var(--faint);line-height:1.7;pointer-events:none;max-width:230px}
+.hint b{color:var(--mute)}
+@media(max-width:900px){.panel{top:auto;bottom:150px;right:50%;transform:translateX(50%);width:min(420px,92vw)}.hint{display:none}}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata XII · Probierz</small></div>
+  <div class="score" id="score" style="display:none">Sprawdzone <b id="sDone">0</b>/4 · trafione <b id="sHit">0</b></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"></aside>
+
+<div class="dock">
+  <div class="tools">
+    <button class="tg" id="tgGold"><span class="sw"></span>nałóż złoty prostokąt</button>
+    <button class="tg" id="tgSpiral"><span class="sw"></span>nałóż złotą spiralę</button>
+    <span class="tg" id="growthBox" style="cursor:default">wzrost muszli na obrót <b id="growthVal" style="color:var(--gold-br);font-family:Fraunces">1,33×</b></span>
+  </div>
+  <div class="cases" id="cases"></div>
+</div>
+
+<div class="hint" id="hint">Przeciągnij po obrazie, by zmierzyć prostokąt. Igła pokazuje, jak blisko φ jesteś.</div>
+<div id="loading"><div class="ph">Φ</div><p>rozgrzewam probierz</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script>
+"use strict";
+const PHI=1.6180339887, TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const $=s=>document.querySelector(s);
+const fmt=x=>x.toFixed(3).replace('.',',');
+
+const CASES=[
+ {id:'parthenon',name:'Partenon',tool:'measure',verdict:'zalezy',
+  claim:'„Fasada Partenonu jest wpisana w idealny <b>złoty prostokąt</b> — Grecy projektowali wedle φ."',
+  reveal:'Zmierz różne krawędzie — i sam zobacz problem: zależnie od tego, gdzie postawisz linijkę, wychodzi 1,6, 1,7, a nawet 2,0. Nie ma <b>żadnego dokumentu</b>, że Fidiasz celował w φ; samo słowo „φ" ukuto 2300 lat później. To klasyczna <b>apofenia</b>: dobierasz punkty, aż liczba się zgodzi (Markowsky 1992).'},
+ {id:'nautilus',name:'Łodzik',tool:'spiral',verdict:'mit',
+  claim:'„Muszla łodzika to żywa <b>złota spirala</b> — natura rośnie wedle φ."',
+  reveal:'Muszla to spirala logarytmiczna — owszem. Ale jej komory poszerzają się o <b>≈1,33 na obrót</b>, nie o φ. Nałóż złotą spiralę (φ na ćwierć obrotu = ~6,85 na pełny obrót) — <b>rozjeżdża się natychmiast</b>. „Logarytmiczna" pomylono ze „złotą". Piękna, ale inna liczba.'},
+ {id:'monalisa',name:'Mona Lisa',tool:'measure',verdict:'mit',
+  claim:'„Twarz Mony Lisy zbudowana jest na <b>złotej proporcji</b> — Leonardo zaszył w niej φ."',
+  reveal:'Leonardo ilustrował „De divina proportione" Pacioliego — znał φ. Ale w obrazie <b>nie ma jej śladu</b>: prostokąty „φ" rysuje się po dowolnie wybranych punktach twarzy. Przesuń pomiar — φ „znajdziesz" wszędzie i nigdzie. Dowodu brak.'},
+ {id:'card',name:'Karta',tool:'measure',verdict:'prawie',
+  claim:'„Karta płatnicza to <b>złoty prostokąt</b> — dlatego tak dobrze leży w dłoni."',
+  reveal:'Zmierz ją: 85,6 × 53,98 mm → <b>1,586</b>. Blisko, ale to norma <b>ISO 7810</b>, nie φ — różnica ~2%. Wpadła w okolicę φ przypadkiem (i dla wygody produkcji), nie z projektu wedle złotej liczby.'}
+];
+const VLABEL={prawda:'Prawda',prawie:'Prawie',zalezy:'Zależy',mit:'Mit'};
+
+/* ---------- canvas ---------- */
+const cv=$('#c'),ctx=cv.getContext('2d');let W,H,DPR;
+function resize(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);draw();}
+addEventListener('resize',resize);
+function stage(){return {cx:W*0.42,cy:H*0.5,s:Math.min(W*0.5,H*0.62)};}
+
+/* ---------- state ---------- */
+let cur=0, rect=null, dragging=false, ds=null, showGold=false, showSpiral=false, growth=1.33, guess=null;
+const state={}; CASES.forEach(c=>state[c.id]={done:false,hit:false});
+
+/* ---------- exhibit drawings (schematic line-art) ---------- */
+function drawParthenon(cx,cy,s){
+  ctx.strokeStyle='rgba(236,230,214,.32)';ctx.lineWidth=1.4;ctx.fillStyle='rgba(227,178,60,.04)';
+  const w=s*1.15,h=s*0.62, x=cx-w/2, yTop=cy-h*0.62;
+  // pediment
+  ctx.beginPath();ctx.moveTo(x-8,yTop+h*0.34);ctx.lineTo(cx,yTop);ctx.lineTo(x+w+8,yTop+h*0.34);ctx.closePath();ctx.fill();ctx.stroke();
+  // entablature
+  ctx.strokeRect(x,yTop+h*0.34,w,h*0.13);
+  // columns
+  const ny=yTop+h*0.47, nh=h*0.5;ctx.beginPath();
+  for(let i=0;i<8;i++){const cxx=x+w*0.06+ (w*0.88)*i/7;ctx.moveTo(cxx,ny);ctx.lineTo(cxx,ny+nh);}
+  ctx.stroke();
+  // stylobate
+  ctx.strokeRect(x-6,ny+nh,w+12,h*0.06);
+}
+function drawCard(cx,cy,s){
+  ctx.strokeStyle='rgba(236,230,214,.34)';ctx.lineWidth=1.5;ctx.fillStyle='rgba(227,178,60,.05)';
+  const w=s*1.05,h=w/1.586, x=cx-w/2,y=cy-h/2,r=14;
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();ctx.fill();ctx.stroke();
+  // chip
+  ctx.strokeRect(x+w*0.1,y+h*0.32,w*0.13,h*0.2);
+  ctx.beginPath();for(let i=0;i<3;i++){ctx.moveTo(x+w*0.1,y+h*0.62+i*8);ctx.lineTo(x+w*0.55,y+h*0.62+i*8);}ctx.strokeStyle='rgba(236,230,214,.18)';ctx.stroke();
+}
+function drawMona(cx,cy,s){
+  ctx.strokeStyle='rgba(236,230,214,.3)';ctx.lineWidth=1.4;ctx.fillStyle='rgba(227,178,60,.04)';
+  const w=s*0.78,h=s*1.04,x=cx-w/2,y=cy-h/2;
+  ctx.strokeRect(x,y,w,h);                       // frame
+  // head oval
+  ctx.beginPath();ctx.ellipse(cx,y+h*0.32,w*0.22,h*0.17,0,0,TAU);ctx.fill();ctx.stroke();
+  // shoulders
+  ctx.beginPath();ctx.moveTo(cx-w*0.34,y+h);ctx.quadraticCurveTo(cx,y+h*0.46,cx+w*0.34,y+h);ctx.stroke();
+  // hint of features
+  ctx.strokeStyle='rgba(236,230,214,.16)';ctx.beginPath();
+  ctx.moveTo(cx-w*0.09,y+h*0.30);ctx.lineTo(cx-w*0.03,y+h*0.30);ctx.moveTo(cx+w*0.03,y+h*0.30);ctx.lineTo(cx+w*0.09,y+h*0.30);
+  ctx.moveTo(cx-w*0.05,y+h*0.40);ctx.quadraticCurveTo(cx,y+h*0.42,cx+w*0.05,y+h*0.40);ctx.stroke();
+}
+function logSpiral(cx,cy,growthPerTurn,turns,col,lw,a0,r0){
+  const b=Math.log(growthPerTurn)/TAU;
+  ctx.beginPath();let first=true;
+  for(let th=0;th<=turns*TAU;th+=0.04){
+    const r=(r0||3)*Math.exp(b*th);const x=cx+r*Math.cos(th+a0),y=cy+r*Math.sin(th+a0);
+    if(first){ctx.moveTo(x,y);first=false;}else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.stroke();
+}
+
+/* ---------- draw ---------- */
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const {cx,cy,s}=stage();const c=CASES[cur];
+  if(c.id==='parthenon')drawParthenon(cx,cy,s);
+  else if(c.id==='card')drawCard(cx,cy,s);
+  else if(c.id==='monalisa')drawMona(cx,cy,s);
+  else if(c.id==='nautilus'){
+    const ncx=W*0.36, ncy=H*0.46;
+    logSpiral(ncx,ncy,growth,3.6,'rgba(242,210,122,.95)',2.4,0,46);              // nautilus (your dial)
+    if(showSpiral){
+      logSpiral(ncx,ncy,Math.pow(PHI,4),1.12,'rgba(210,85,63,.9)',1.8,0,46);     // golden spiral — diverges fast
+      ctx.fillStyle='rgba(210,85,63,.9)';ctx.font='italic 12px Inter';
+      ctx.fillText('złota spirala — ucieka z kadru', ncx+90, ncy-120);
+    }
+    ctx.fillStyle='rgba(242,210,122,.85)';ctx.font='italic 12px Inter';
+    ctx.fillText('muszla łodzika', ncx-30, ncy+8);
+  }
+  // measurement rectangle
+  if(c.tool==='measure'&&rect){
+    const {x,y,w,h}=rect;
+    ctx.strokeStyle='#f2d27a';ctx.lineWidth=1.8;ctx.setLineDash([6,4]);ctx.strokeRect(x,y,w,h);ctx.setLineDash([]);
+    // golden-rectangle ghost (same shorter side)
+    if(showGold){
+      const mn=Math.min(Math.abs(w),Math.abs(h)),mj=mn*PHI;
+      const gw=Math.abs(w)>=Math.abs(h)?mj*Math.sign(w||1):mn*Math.sign(w||1);
+      const gh=Math.abs(h)>Math.abs(w)?mj*Math.sign(h||1):mn*Math.sign(h||1);
+      ctx.strokeStyle='rgba(95,184,163,.7)';ctx.lineWidth=1.4;ctx.strokeRect(x,y,gw,gh);
+      ctx.fillStyle='rgba(95,184,163,.8)';ctx.font='11px Inter';ctx.fillText('złoty prostokąt',x+4,y-6);
+    }
+    // live ratio label next to the rectangle
+    const ratio=measRatio();
+    if(ratio){
+      ctx.font='600 14px Inter';const txt=fmt(ratio);const tw=ctx.measureText(txt).width+20;
+      const lx=x+w/2, ly=y+h+(h>=0?20:-20);
+      ctx.fillStyle='rgba(8,7,13,.85)';ctx.fillRect(lx-tw/2,ly-13,tw,24);
+      const near=Math.abs(ratio-PHI)<0.04;
+      ctx.fillStyle=near?'#f2d27a':(Math.abs(ratio-PHI)<0.12?'#e0913a':'#d2553f');
+      ctx.textAlign='center';ctx.fillText(txt,lx,ly+4);ctx.textAlign='left';
+    }
+  }
+}
+
+function measRatio(){if(!rect)return 0;const a=Math.abs(rect.w),b=Math.abs(rect.h);if(!a||!b)return 0;return Math.max(a,b)/Math.min(a,b);}
+
+/* ---------- meter + panel ---------- */
+function updateMeter(){
+  const c=CASES[cur];let r;
+  if(c.tool==='spiral'){r=growth;} else {r=measRatio();}
+  const lo=1.0,hi= c.tool==='spiral'?2.2:2.4;
+  const pos=clamp((r-lo)/(hi-lo),0,1)*100;
+  const meterR=$('#mVal'),needle=$('#needle');
+  if(meterR)meterR.textContent=r?fmt(r):'—';
+  if(needle){needle.style.left=pos+'%';
+    const near=Math.abs(r-PHI)<0.04;needle.style.borderColor=near?'var(--gold)':(Math.abs(r-PHI)<0.12?'var(--amber)':'var(--crimson)');}
+}
+function renderPanel(){
+  const c=CASES[cur],st=state[c.id];
+  const hi=c.tool==='spiral'?'2,2':'2,4';
+  $('#panel').innerHTML=`
+    <div class="step">Eksponat ${cur+1} / 4 · ${c.tool==='spiral'?'dopasuj spiralę':'zmierz prostokąt'}</div>
+    <h1 class="serif">${c.name}</h1>
+    <div class="claim">${c.claim}</div>
+    <div class="meter">
+      <div class="lab"><span>twój pomiar</span><b id="mVal">—</b></div>
+      <div class="track"><div class="phiMark"></div><div class="needle" id="needle"></div></div>
+      <div class="scale"><span>1,0</span><span style="color:var(--gold-br)">φ = 1,618</span><span>${hi}</span></div>
+    </div>
+    <div class="guess" id="guessBox">
+      <div class="q">Twój werdykt?</div>
+      <div class="gbtns" id="gbtns">
+        <button data-v="prawda">Prawdziwe φ</button>
+        <button data-v="prawie">Prawie φ</button>
+        <button data-v="zalezy">Zależy od pomiaru</button>
+        <button data-v="mit">Mit</button>
+      </div>
+      <button class="reveal-btn" id="revealBtn" disabled>Odsłoń werdykt</button>
+    </div>
+    <div class="reveal ${st.done?'on':''}" id="reveal">
+      <span class="verdict ${c.verdict}">${VLABEL[c.verdict]}</span><span class="judge ${st.hit?'ok':'no'}" id="judge">${st.done?(st.hit?'✓ trafione':'✗ pudło'):''}</span>
+      <p>${c.reveal}</p>
+    </div>`;
+  // wire guess
+  guess=st.done?c.verdict:null;
+  document.querySelectorAll('#gbtns button').forEach(b=>{
+    if(st.done){b.disabled=true;if(b.dataset.v===c.verdict)b.classList.add('pick');}
+    b.addEventListener('click',()=>{if(st.done)return;guess=b.dataset.v;
+      document.querySelectorAll('#gbtns button').forEach(x=>x.classList.toggle('pick',x===b));
+      $('#revealBtn').disabled=false;});
+  });
+  $('#revealBtn').disabled = st.done || !guess; if(st.done)$('#revealBtn').style.display='none';
+  $('#revealBtn').addEventListener('click',()=>{
+    if(state[c.id].done)return;state[c.id].done=true;state[c.id].hit=(guess===c.verdict);
+    if(window.SA){SA.add(6,'Eksponat zbadany');if(state[c.id].hit)SA.add(8,'Trafny werdykt');}
+    renderPanel();updateScore();
+  });
+  // tools visibility
+  $('#tgGold').classList.toggle('show',c.tool==='measure');
+  $('#tgSpiral').classList.toggle('show',c.tool==='spiral');
+  $('#growthBox').classList.toggle('show',c.tool==='spiral');
+  $('#hint').innerHTML = c.tool==='spiral'
+    ? 'Pokręć suwakiem <b>wzrostu</b>, aż spirala obejmie muszlę. Potem nałóż złotą spiralę.'
+    : 'Przeciągnij po obrazie, by zmierzyć prostokąt. Przesuwaj go — zobacz, jak zmienia się wynik.';
+  updateMeter();
+}
+function updateScore(){
+  let d=0,h=0;CASES.forEach(c=>{if(state[c.id].done){d++;if(state[c.id].hit)h++;}});
+  $('#sDone').textContent=d;$('#sHit').textContent=h;
+  if(window.SA){if(d===CASES.length)SA.award('zlotnik');if(d===CASES.length&&h===CASES.length)SA.award('sceptyk');}
+  document.querySelectorAll('#cases button').forEach((b,i)=>b.classList.toggle('done',state[CASES[i].id].done));
+}
+
+/* ---------- cases dock ---------- */
+const casesEl=$('#cases');
+CASES.forEach((c,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="dn"></span><b>${c.name}</b>`;
+  b.addEventListener('click',()=>{cur=i;rect=null;guess=null;showGold=showSpiral=false;
+    $('#tgGold').classList.remove('on');$('#tgSpiral').classList.remove('on');
+    document.querySelectorAll('#cases button').forEach((x,k)=>x.classList.toggle('active',k===i));
+    renderPanel();draw();});
+  casesEl.appendChild(b);});
+
+/* ---------- measure interaction ---------- */
+cv.addEventListener('pointerdown',e=>{if(CASES[cur].tool!=='measure')return;dragging=true;ds={x:e.clientX,y:e.clientY};rect={x:e.clientX,y:e.clientY,w:0,h:0};});
+cv.addEventListener('pointermove',e=>{if(!dragging)return;rect.w=e.clientX-ds.x;rect.h=e.clientY-ds.y;
+  // normalize for display but keep sign for ghost
+  draw();updateMeter();});
+addEventListener('pointerup',()=>{if(dragging){dragging=false;updateMeter();}});
+
+/* ---------- toggles + slider ---------- */
+$('#tgGold').addEventListener('click',()=>{showGold=!showGold;$('#tgGold').classList.toggle('on',showGold);draw();});
+$('#tgSpiral').addEventListener('click',()=>{showSpiral=!showSpiral;$('#tgSpiral').classList.toggle('on',showSpiral);draw();});
+// growth slider lives in tools as a range we inject
+const gr=document.createElement('input');gr.type='range';gr.min='1.05';gr.max='2.0';gr.step='0.01';gr.value='1.33';gr.id='growth';
+$('#growthBox').insertBefore(gr,$('#growthVal'));
+gr.addEventListener('input',()=>{growth=+gr.value;$('#growthVal').textContent=fmt(growth)+'×';draw();updateMeter();});
+
+/* ---------- go ---------- */
+document.querySelectorAll('#cases button')[0].classList.add('active');
+resize();renderPanel();
+setTimeout(()=>$('#loading').classList.add('gone'),500);
+if(window.SA){SA.mountHUD();SA.visit('probierz');}
+</script>
+</body>
+</html>

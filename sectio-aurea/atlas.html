@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SECTIO AUREA · Interaktywny atlas Złotej Liczby Matili Ghyki</title>
+<meta name="description" content="Złota Liczba Matili Ghyki — i poza nią. Interaktywny atlas, w którym rygor matematyczny oddzielono od romantycznej numerologii.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d; --ink:#0c0b14; --panel:#13111d; --panel-2:#191527;
+  --line:rgba(227,178,60,.16); --line-soft:rgba(236,230,214,.08);
+  --gold:#e3b23c; --gold-br:#f2d27a; --gold-deep:#a9801f;
+  --ivory:#ece6d6; --mute:#9a93a6; --faint:#6b6478;
+  --verd:#5fb8a3; --verd-deep:#2f6f63;
+  --crimson:#d2553f; --amber:#e0913a;
+  --phi:1.6180339887;
+  --maxw:1180px;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--void);color:var(--ivory);
+  font-family:"Spectral",Georgia,serif;font-weight:400;line-height:1.62;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+::selection{background:rgba(227,178,60,.28);color:#fff}
+h1,h2,h3,.disp{font-family:"Fraunces","Spectral",Georgia,serif;font-weight:400;line-height:1.04;letter-spacing:-.01em;font-optical-sizing:auto}
+.ui{font-family:"Inter",system-ui,sans-serif}
+.mono{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+a{color:var(--gold);text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{font-family:"Inter",sans-serif;font-size:11px;font-weight:600;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--gold);opacity:.92}
+
+/* grain + vignette */
+#grain{position:fixed;inset:0;pointer-events:none;z-index:200;mix-blend-mode:overlay;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(120% 90% at 50% 8%,transparent 40%,rgba(0,0,0,.55) 100%)}
+
+/* ---------- top bar ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:120;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;background:linear-gradient(var(--void),rgba(8,7,13,0));
+  transition:background .4s,backdrop-filter .4s}
+header.solid{background:rgba(8,7,13,.82);backdrop-filter:blur(11px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:11px}
+.brand .phi{font-family:"Fraunces",serif;font-size:22px;color:var(--gold);line-height:1}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:16px;letter-spacing:.14em;color:var(--ivory)}
+.brand small{font-family:"Inter",sans-serif;font-size:9.5px;letter-spacing:.28em;color:var(--faint);text-transform:uppercase}
+nav.toc{display:flex;gap:4px}
+nav.toc a{font-family:"Inter",sans-serif;font-size:11.5px;letter-spacing:.05em;color:var(--mute);
+  padding:7px 11px;border-radius:7px;transition:color .25s,background .25s}
+nav.toc a:hover{color:var(--ivory);background:rgba(255,255,255,.04)}
+@media(max-width:760px){nav.toc{display:none}}
+
+/* ---------- hero ---------- */
+#hero{position:relative;height:100svh;min-height:640px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-inner{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:880px}
+.hero-inner .eyebrow{display:block;margin-bottom:26px;animation:rise 1s var(--ease) both}
+#hero h1{font-size:clamp(46px,9vw,118px);font-weight:300;margin:0;letter-spacing:-.02em;
+  background:linear-gradient(180deg,#fff 0%,var(--gold-br) 60%,var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rise 1.1s .08s var(--ease) both}
+#hero h1 em{font-style:italic;font-weight:300}
+.hero-sub{margin:22px auto 0;max-width:600px;font-size:clamp(16px,2.1vw,20px);color:var(--ivory);
+  opacity:.92;line-height:1.55;animation:rise 1.1s .18s var(--ease) both}
+.hero-sub .b{color:var(--gold-br);font-style:italic}
+.phi-strip{margin-top:34px;font-family:"Inter",sans-serif;font-size:12.5px;letter-spacing:.06em;
+  color:var(--mute);display:inline-flex;align-items:center;gap:14px;animation:rise 1.1s .28s var(--ease) both}
+.phi-strip .num{color:var(--gold-br);font-variant-numeric:tabular-nums;font-weight:600}
+.phi-strip i{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.6}
+.cta{margin-top:42px;display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:rise 1.1s .36s var(--ease) both}
+.btn{font-family:"Inter",sans-serif;font-size:13px;font-weight:600;letter-spacing:.04em;
+  padding:13px 26px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ivory);
+  transition:.3s var(--ease);display:inline-flex;align-items:center;gap:9px}
+.btn.fill{background:var(--gold);color:#1a1305;border-color:var(--gold)}
+.btn.fill:hover{background:var(--gold-br);box-shadow:0 0 40px -8px rgba(227,178,60,.6);transform:translateY(-1px)}
+.btn:hover{border-color:var(--gold);color:var(--gold-br)}
+.scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;
+  font-family:"Inter",sans-serif;font-size:10px;letter-spacing:.3em;color:var(--faint);text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:9px;animation:rise 1.4s .6s var(--ease) both}
+.scrollcue .ln{width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{0%,100%{opacity:.3;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* ---------- generic section ---------- */
+section.band{position:relative;z-index:2;padding:110px 0;border-top:1px solid var(--line-soft)}
+.band-head{max-width:720px;margin-bottom:8px}
+.band-head h2{font-size:clamp(30px,4.6vw,52px);font-weight:300;margin:14px 0 0}
+.band-head h2 em{font-style:italic;color:var(--gold-br)}
+.lead{font-size:clamp(16px,1.9vw,19px);color:var(--mute);margin-top:20px;max-width:640px;line-height:1.7}
+.lead b{color:var(--ivory);font-weight:500}
+
+/* thesis: rygor vs romantyzm */
+.thesis{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:46px}
+@media(max-width:680px){.thesis{grid-template-columns:1fr}}
+.thesis .card{padding:26px 26px 24px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(160deg,var(--panel),var(--ink))}
+.thesis .card h3{font-size:20px;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+.thesis .card.rig h3{color:var(--gold-br)} .thesis .card.rom h3{color:var(--crimson)}
+.thesis .card p{font-size:14.5px;color:var(--mute);margin:0;line-height:1.66}
+.thesis .dot{width:9px;height:9px;border-radius:50%}
+.thesis .rig .dot{background:var(--gold)} .thesis .rom .dot{background:var(--crimson)}
+
+/* ---------- atlas grid ---------- */
+.atlas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+@media(max-width:880px){.atlas{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.atlas{grid-template-columns:1fr}}
+.ch{position:relative;border:1px solid var(--line);border-radius:15px;padding:24px 22px 20px;
+  background:linear-gradient(165deg,var(--panel),var(--ink));overflow:hidden;cursor:pointer;
+  transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;min-height:208px;display:flex;flex-direction:column}
+.ch:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 24px 60px -30px rgba(227,178,60,.5)}
+.ch .rom-num{font-family:"Fraunces",serif;font-size:13px;letter-spacing:.2em;color:var(--gold);opacity:.8}
+.ch h3{font-size:24px;font-weight:400;margin:8px 0 4px}
+.ch .tag{font-family:"Inter",sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.ch p{font-size:13.5px;color:var(--mute);margin:13px 0 0;line-height:1.6;flex:1}
+.ch .foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.chip{font-family:"Inter",sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%}
+.chip.rygor{color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip.rygor::before{background:var(--gold)}
+.chip.mix{color:var(--amber);background:rgba(224,145,58,.1);border:1px solid rgba(224,145,58,.3)}
+.chip.mix::before{background:var(--amber)}
+.chip.rom{color:var(--crimson);background:rgba(210,85,63,.1);border:1px solid rgba(210,85,63,.3)}
+.chip.rom::before{background:var(--crimson)}
+.chip.meta{color:#c9b6e0;background:rgba(201,182,224,.1);border:1px solid rgba(201,182,224,.3)}
+.chip.meta::before{background:#c9b6e0}
+.ch .open{font-family:"Inter",sans-serif;font-size:11px;color:var(--mute);transition:color .3s,transform .3s}
+.ch:hover .open{color:var(--gold-br);transform:translateX(3px)}
+.ch.live::after{content:"NA ŻYWO";position:absolute;top:14px;right:-30px;transform:rotate(45deg);
+  background:var(--verd);color:#04130f;font-family:"Inter",sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:.14em;padding:4px 36px}
+.ch.live{border-color:rgba(95,184,163,.4)}
+.ch.live:hover{border-color:var(--verd);box-shadow:0 24px 60px -30px rgba(95,184,163,.5)}
+.ch.room::after{content:"WEJDŹ · 3D";background:var(--gold);color:#1a1305}
+.ch.room{border-color:rgba(227,178,60,.45)}
+.ch.room:hover{border-color:var(--gold);box-shadow:0 24px 60px -30px rgba(227,178,60,.55)}
+html[lang="en"] .ch.live::after{content:"LIVE"}
+html[lang="en"] .ch.room::after{content:"ENTER · 3D"}
+.ch .glyph{position:absolute;right:-18px;bottom:-22px;width:120px;height:120px;opacity:.07;pointer-events:none}
+
+/* ---------- THE GARDEN module ---------- */
+#garden{background:linear-gradient(180deg,var(--void),#0a0911 60%,var(--void))}
+.gard-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:34px;align-items:stretch;margin-top:42px}
+@media(max-width:920px){.gard-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.gard-grid>*{min-width:0}.stage{max-width:100%}#gardenCanvas{max-width:100%}}
+.stage{position:relative;border-radius:18px;border:1px solid var(--line);overflow:hidden;
+  background:radial-gradient(120% 120% at 50% 30%,#15121f,#08070d 75%);min-height:520px;aspect-ratio:1/1}
+#gardenCanvas{position:absolute;inset:0;width:100%;height:100%}
+.stage .hud{position:absolute;left:16px;top:14px;z-index:3;font-family:"Inter",sans-serif;font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.stage .badge{position:absolute;right:14px;top:13px;z-index:3;font-family:"Inter",sans-serif;font-size:10px;
+  letter-spacing:.1em;color:var(--verd);background:rgba(95,184,163,.1);border:1px solid rgba(95,184,163,.3);
+  padding:5px 11px;border-radius:999px}
+
+/* readouts */
+.panel{display:flex;flex-direction:column;gap:18px}
+.read{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.read .cell{border:1px solid var(--line-soft);border-radius:12px;padding:13px 15px;background:var(--panel)}
+.read .cell .k{font-family:"Inter",sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.read .cell .v{font-family:"Fraunces",serif;font-size:27px;color:var(--gold-br);margin-top:5px;font-variant-numeric:tabular-nums}
+.read .cell .v small{font-size:13px;color:var(--mute);font-family:"Inter",sans-serif;margin-left:4px}
+.read .cell.wide{grid-column:1/3}
+.evenbar{height:7px;border-radius:4px;background:rgba(255,255,255,.06);margin-top:9px;overflow:hidden}
+.evenbar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--crimson),var(--amber) 55%,var(--verd));transition:width .5s var(--ease)}
+
+/* controls */
+.ctl{border:1px solid var(--line);border-radius:14px;padding:18px;background:linear-gradient(160deg,var(--panel),var(--ink))}
+.ctl .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ctl label{font-family:"Inter",sans-serif;font-size:12px;letter-spacing:.04em;color:var(--ivory)}
+.ctl .val{font-family:"Fraunces",serif;font-size:18px;color:var(--gold-br);font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold));outline:none;margin:4px 0 2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:#fff;border:3px solid var(--gold);box-shadow:0 2px 10px rgba(0,0,0,.5);cursor:pointer;transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+.nudge{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
+.nudge button,.preset button{font-family:"Inter",sans-serif;font-size:11px;letter-spacing:.02em;color:var(--mute);
+  background:var(--panel-2);border:1px solid var(--line-soft);border-radius:8px;padding:7px 11px;transition:.25s}
+.nudge button:hover,.preset button:hover{color:var(--ivory);border-color:var(--gold);background:rgba(227,178,60,.08)}
+.preset{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.preset button.gold{color:var(--gold-br);border-color:rgba(227,178,60,.4);background:rgba(227,178,60,.08)}
+.preset button.active{color:#1a1305;background:var(--gold);border-color:var(--gold)}
+.toggles{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.tg{font-family:"Inter",sans-serif;font-size:11px;color:var(--mute);background:var(--panel-2);
+  border:1px solid var(--line-soft);border-radius:999px;padding:7px 13px;display:inline-flex;align-items:center;gap:8px;transition:.25s}
+.tg .sw{width:26px;height:14px;border-radius:999px;background:rgba(255,255,255,.12);position:relative;transition:.25s}
+.tg .sw::after{content:"";position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:50%;background:var(--mute);transition:.25s}
+.tg.on{color:var(--ivory);border-color:var(--gold)}
+.tg.on .sw{background:var(--gold)} .tg.on .sw::after{left:14px;background:#1a1305}
+
+/* explainer / honest note */
+.explain{border:1px solid var(--line-soft);border-radius:14px;padding:20px 22px;background:var(--panel)}
+.explain h4{font-family:"Fraunces",serif;font-weight:500;font-size:17px;margin:0 0 9px;color:var(--ivory)}
+.explain p{font-size:14px;color:var(--mute);margin:0 0 10px;line-height:1.66}
+.explain .k{color:var(--gold-br);font-style:italic}
+.note{border-left:2px solid var(--crimson);background:linear-gradient(90deg,rgba(210,85,63,.08),transparent);
+  padding:15px 18px;border-radius:0 12px 12px 0;margin-top:16px}
+.note .lab{font-family:"Inter",sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--crimson);display:inline-block;margin-bottom:7px}
+.note p{font-size:13.5px;color:var(--ivory);opacity:.9;margin:0;line-height:1.62}
+.note p b{color:var(--gold-br)}
+
+/* ---------- modal ---------- */
+#modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px}
+#modal.on{display:flex}
+#modal .scrim{position:absolute;inset:0;background:rgba(4,3,8,.78);backdrop-filter:blur(8px);animation:fade .3s}
+#modal .box{position:relative;max-width:620px;width:100%;max-height:86vh;overflow:auto;border-radius:18px;
+  border:1px solid var(--line);background:linear-gradient(165deg,var(--panel-2),var(--ink));
+  padding:34px 34px 30px;animation:pop .42s var(--ease)}
+@keyframes fade{from{opacity:0}} @keyframes pop{from{opacity:0;transform:scale(.94) translateY(14px)}}
+#modal .x{position:absolute;top:16px;right:18px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);
+  background:transparent;color:var(--mute);font-size:18px;line-height:1;transition:.25s}
+#modal .x:hover{color:var(--ivory);border-color:var(--gold);transform:rotate(90deg)}
+#modal .m-num{font-family:"Fraunces",serif;color:var(--gold);letter-spacing:.2em;font-size:14px}
+#modal h3{font-size:34px;font-weight:300;margin:6px 0 2px}
+#modal .m-tag{font-family:"Inter",sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
+#modal .blk{margin:18px 0}
+#modal .blk h5{font-family:"Inter",sans-serif;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 7px}
+#modal .blk p{font-size:14.5px;color:var(--ivory);opacity:.88;margin:0;line-height:1.66}
+#modal .verdict{display:flex;align-items:flex-start;gap:12px;border-radius:12px;padding:15px 17px;margin-top:8px;
+  border:1px solid var(--line)}
+#modal .verdict.rygor{background:rgba(227,178,60,.07)} #modal .verdict.mix{background:rgba(224,145,58,.07)}
+#modal .verdict.rom{background:rgba(210,85,63,.08)}
+#modal .verdict.meta{background:rgba(201,182,224,.08)}
+#modal .verdict p{font-size:13.5px;color:var(--mute);margin:0;line-height:1.6}
+#modal .verdict p b{color:var(--ivory)}
+
+/* ---------- footer ---------- */
+footer{position:relative;z-index:2;border-top:1px solid var(--line-soft);padding:64px 0 70px;background:var(--ink)}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px}
+@media(max-width:760px){footer .cols{grid-template-columns:1fr}}
+footer h4{font-family:"Fraunces",serif;font-weight:500;font-size:17px;margin:0 0 14px;color:var(--ivory)}
+footer p,footer li{font-size:13px;color:var(--mute);line-height:1.7}
+footer ul{list-style:none;padding:0;margin:0}
+footer li{padding:3px 0}
+footer .src{font-style:italic}
+footer .colophon{margin-top:46px;padding-top:24px;border-top:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:"Inter",sans-serif;font-size:11px;color:var(--faint)}
+footer .colophon .phi{color:var(--gold)}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div id="vig"></div><div id="grain"></div>
+
+<header id="top">
+  <div class="brand">
+    <span class="phi">Φ</span>
+    <b>SECTIO&nbsp;AUREA</b>
+    <small>atlas złotej liczby</small>
+  </div>
+  <nav class="toc ui">
+    <a href="#teza">Teza</a>
+    <a href="#atlas">Atlas</a>
+    <a href="#garden">Ogród</a>
+    <a href="#proba">Próba</a>
+    <a href="filary.html">Filary</a>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-inner">
+    <span class="eyebrow">Od Pitagorasa do quasikryształów</span>
+    <h1>Złota Liczba,<br><em>od liczby do życia</em></h1>
+    <p class="hero-sub">Interaktywny atlas najsłynniejszej liczby świata — od pitagorejskiej geometrii po fizykę quasikryształów. <span class="b">Poznaj ją w działaniu</span> i naucz się odróżniać prawdę od <span class="b">pięknego złudzenia</span>.</p>
+    <div class="phi-strip">
+      <span>φ =</span><span class="num" id="phiTick">1.6180339887</span><i></i><span>φ² = φ + 1</span><i></i><span>1/φ = φ − 1</span>
+    </div>
+    <div class="cta">
+      <a href="index.html" class="btn fill">✦ Wejdź przez Dwunastościan</a>
+      <a href="#garden" class="btn">↯ Ogród Złotego Kąta</a>
+      <a href="#atlas" class="btn">Atlas komnat</a>
+    </div>
+  </div>
+  <div class="scrollcue"><span>przewiń</span><span class="ln"></span></div>
+</section>
+
+<!-- ============ THESIS ============ -->
+<section class="band" id="teza">
+  <div class="wrap">
+    <div class="band-head">
+      <span class="eyebrow">Dlaczego ten portal</span>
+      <h2>Najsłynniejsza liczba świata — i <em>najczęściej nadużywana</em>.</h2>
+      <p class="lead">φ jest jednym z najgłębszych obiektów matematyki i przyrody — i zarazem liczbą, którą popkultura widzi wszędzie, także tam, gdzie jej nie ma. Ten portal pozwala <b>dotknąć tej prawdziwej</b> i daje Ci <b>radar</b>, który odróżnia odkrycie od złudzenia. Naszym przewodnikiem jest Matila Ghyka — uwodzicielski erudyta, który w 1931 zebrał całą tę tradycję — właśnie dlatego, że ucieleśnia obie strony.</p>
+    </div>
+    <div class="thesis">
+      <div class="card rig">
+        <h3><span class="dot"></span>Co jest prawdą</h3>
+        <p>Teoria liczb (φ jako „najbardziej niewymierna” — tw. Hurwitza), filotaksja (złoty kąt jako fizyczne <i>optimum</i> — Douady &amp; Couder, 1992), quasikryształy (Penrose → Shechtman, Nobel 2011), samopodobny wzrost gnomoniczny i spirala logarytmiczna. To matematyka, nie metafora — i to jej dotkniesz w komnatach.</p>
+      </div>
+      <div class="card rom">
+        <h3><span class="dot"></span>Co jest mitem</h3>
+        <p>Partenon „zaprojektowany na φ”, muszla łodzika jako „złota spirala” (naprawdę ≈ 1,33), Mona Lisa, karta kredytowa, kanon ciała Zeisinga. Pomiary dobierane tak długo, aż wyjdzie 1,618 (Markowsky, Neveux, Livio). Komnata <i>Feniks</i> uczy ten odruch <b>rozpoznawać</b> — to umiejętność, nie oskarżenie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ATLAS ============ -->
+<section class="band" id="atlas">
+  <div class="wrap">
+    <div class="band-head">
+      <span class="eyebrow">Architektura · 12 komnat</span>
+      <h2>Atlas Złotej Liczby</h2>
+      <p class="lead">Cały korpus Ghyki, rozpisany na dwanaście interaktywnych komnat. Każda kończy się <b>werdyktem</b> — rygor, mieszany czy romantyzm. Kliknij kartę — <span style="color:var(--verd)">wszystkie dwanaście komnat</span> jest już grywalnych.</p>
+    </div>
+    <div class="atlas" id="atlasGrid"><!-- cards injected --></div>
+  </div>
+</section>
+
+<!-- ============ GARDEN (flagship) ============ -->
+<section class="band" id="garden">
+  <div class="wrap">
+    <div class="band-head">
+      <span class="eyebrow">Komnata V · na żywo</span>
+      <h2>Ogród Złotego Kąta</h2>
+      <p class="lead">Roślina, która chce rozłożyć liście tak, by jak najmniej się zasłaniały, musi obracać każdy kolejny o ten sam kąt. Pytanie brzmi: <b>który kąt jest najlepszy?</b> Pokręć suwakiem i przekonaj się sam — odpowiedź to złoty kąt, <span class="mono" style="color:var(--gold-br)">137,507°</span>.</p>
+    </div>
+
+    <div class="gard-grid">
+      <!-- LEFT: stage -->
+      <div class="stage">
+        <div class="hud ui">Model Vogla · <span id="seedCount">0</span> kwiatków</div>
+        <div class="badge ui" id="spiralBadge">spirale: —</div>
+        <canvas id="gardenCanvas"></canvas>
+      </div>
+
+      <!-- RIGHT: panel -->
+      <div class="panel">
+        <div class="read">
+          <div class="cell">
+            <div class="k">Kąt rozbieżności Δ</div>
+            <div class="v"><span id="rAngle">137.51</span><small>°</small></div>
+          </div>
+          <div class="cell">
+            <div class="k">Ułamek obrotu</div>
+            <div class="v mono"><span id="rFrac">0.382</span></div>
+          </div>
+          <div class="cell wide">
+            <div class="k">Równomierność upakowania <span id="rDist" style="color:var(--mute);font-family:Inter;font-size:11px;letter-spacing:0">— od złotego kąta</span></div>
+            <div class="evenbar"><i id="evenFill"></i></div>
+          </div>
+        </div>
+
+        <div class="ctl">
+          <div class="row">
+            <label for="angle">Obracaj każdy kwiatek o…</label>
+            <span class="val mono"><span id="angleVal">137.507</span>°</span>
+          </div>
+          <input type="range" id="angle" min="0" max="180" step="0.001" value="137.507">
+          <div class="nudge ui">
+            <button data-nudge="-1">−1°</button>
+            <button data-nudge="-0.1">−0,1°</button>
+            <button data-nudge="-0.01">−0,01°</button>
+            <button data-nudge="0.01">+0,01°</button>
+            <button data-nudge="0.1">+0,1°</button>
+            <button data-nudge="1">+1°</button>
+          </div>
+          <div class="preset ui" id="presets"></div>
+          <div class="toggles ui">
+            <button class="tg on" id="tgSpiral"><span class="sw"></span>Pokaż spirale (parastychy)</button>
+            <button class="tg" id="tgGrow"><span class="sw"></span>Wzrost od środka</button>
+          </div>
+        </div>
+
+        <div class="explain">
+          <h4>Dlaczego akurat 137,507°?</h4>
+          <p>Bo to <span class="k">360° ÷ φ²</span>. Złoty kąt dzieli pełny obrót w złotej proporcji. A że φ jest „najbardziej niewymierną” z liczb — jej rozwinięcie w ułamek łańcuchowy to same jedynki — <b>żaden kwiatek nigdy nie trafi dokładnie na ślad poprzedniego</b>. Każdy inny kąt prędzej czy później się „zapętla” w szprychy i zostawia puste luki.</p>
+          <p>Spirale, które widzisz (<span class="k">parastychy</span>), liczą się zawsze do <b>kolejnych liczb Fibonacciego</b> — 21, 34, 55… To nie ozdoba: to mianowniki najlepszych wymiernych przybliżeń złotego kąta.</p>
+          <div class="note">
+            <span class="lab">Mit vs matematyka</span>
+            <p>Muszla łodzika — ikona „złotej spirali” — <b>nie rośnie według φ</b>: jej spirala logarytmiczna ma współczynnik ≈ 1,33, nie 1,618. Ale złoty kąt w roślinach to twarda fizyka: Douady i Couder (1992) odtworzyli go z samego <b>minimum energii</b> w eksperymencie z kroplami cieczy na talerzu. Ghyka przeczuł rzecz prawdziwą — choć podpierał się błędnym przykładem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRÓBA / footer ============ -->
+<section class="band" id="proba">
+  <div class="wrap">
+    <div class="band-head">
+      <span class="eyebrow">Komnata IX · sedno podniesienia na wyższy poziom</span>
+      <h2>Próba — <em>rachunek sumienia</em></h2>
+      <p class="lead">To komnata, której u Ghyki brakuje. Bierze jego najsłynniejsze przykłady i sprawdza je liczbą: <b>nautilus, Partenon, Mona Lisa, karta kredytowa</b>. Nie po to, by ośmieszyć — lecz by nauczyć odruchu, który odróżnia naukę od pięknej opowieści. Plan tej komnaty otwiera ostatnia karta w Atlasie.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>O atlasie</h4>
+        <p>Portal edukacyjny budujący intuicję wobec φ i geometrii proporcji. Rygor oddzielony od romantyzmu — bo dopiero wtedy Złota Liczba robi się naprawdę ciekawa.</p>
+      </div>
+      <div>
+        <h4>Źródła Ghyki</h4>
+        <ul class="src">
+          <li>Esthétique des proportions (1927)</li>
+          <li>Le Nombre d'Or, t. I–II (1931)</li>
+          <li>The Geometry of Art and Life (1946)</li>
+          <li>A Practical Handbook… (1952)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Aparat krytyczny</h4>
+        <ul class="src">
+          <li>Markowsky, <i>Misconceptions about the Golden Ratio</i> (1992)</li>
+          <li>Douady &amp; Couder, <i>Phyllotaxis…</i> (1992)</li>
+          <li>Falbo, <i>The Golden Ratio — a Contrary Viewpoint</i> (2005)</li>
+          <li>Shechtman i in., quasikryształy (Nobel 2011)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>Atlas kompletny · dwanaście grywalnych komnat · od rygoru po romantyzm</span>
+      <span><span class="phi">Φ</span> &nbsp;1,618033988749895…</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MODAL ============ -->
+<div id="modal">
+  <div class="scrim" data-close></div>
+  <div class="box">
+    <button class="x" data-close>×</button>
+    <div class="m-num" id="mNum"></div>
+    <h3 id="mTitle"></h3>
+    <div class="m-tag" id="mTag"></div>
+    <div class="blk"><h5>Idea</h5><p id="mIdea"></p></div>
+    <div class="blk"><h5>Co robisz w tej komnacie</h5><p id="mDo"></p></div>
+    <div class="blk"><h5>Matematyka pod spodem</h5><p id="mMath"></p></div>
+    <div class="verdict" id="mVerdictBox"><p id="mVerdict"></p></div>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script>
+"use strict";
+const PHI=(1+Math.sqrt(5))/2;
+const GOLDEN=360*(2-PHI);          // 137.50776…°
+const D2R=Math.PI/180, TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const $=s=>document.querySelector(s);
+
+/* ---------- header solidify ---------- */
+const hdr=$("#top");
+addEventListener("scroll",()=>hdr.classList.toggle("solid",scrollY>80),{passive:true});
+
+/* ---------- φ tick flourish ---------- */
+(function(){const el=$("#phiTick");const full="1.6180339887";let i=2,dir=1;
+  setInterval(()=>{i+=dir;if(i>=full.length||i<=4)dir*=-1;el.textContent=full.slice(0,i);},220);
+})();
+
+/* ================= CHAMBER DATA ================= */
+const CHAMBERS=[
+ {n:"I",t:"Liczba",tag:"Teoria liczb · audio",verdict:"rygor",
+  card:"Tetraktys 1+2+3+4=10 i harmonia liczb. Liczba, którą da się usłyszeć.",
+  idea:"Zanim φ stało się estetyką, było słyszalne: proste stosunki długości struny dają współbrzmienia. Liczba zamienia się w harmonię.",
+  doo:"Grywalne: klikasz świecące kule tetraktysu i słyszysz pitagorejskie interwały — oktawę 2:1, kwintę 3:2, kwartę 4:3. Słyszysz też, że φ brzmi obco.",
+  math:"Tetraktys=10. Oktawa 1:2, kwinta 2:3, kwarta 3:4. φ nie jest interwałem.",
+  vk:"rygor",vt:"Akustyka stosunków jest twarda; „muzyka sfer” to metafora.",
+  room:true,href:"liczba.html"},
+
+ {n:"II",t:"Proporcja",tag:"Geometria konstrukcyjna",verdict:"rygor",
+  card:"Boska proporcja: φ, złoty prostokąt, liczba, która zawiera samą siebie.",
+  idea:"Złoty prostokąt ma cudowną własność: odetnij od niego kwadrat, a zostanie mniejszy złoty prostokąt — i tak bez końca. To samopodobieństwo rysuje złotą spiralę.",
+  doo:"Grywalne: odkrywasz φ suwakiem (x²=x+1), odcinasz kwadraty rodzące spiralę i patrzysz, jak ilorazy Fibonacciego gonią φ.",
+  math:"φ=(1+√5)/2; φ²=φ+1; 1/φ=φ−1. Fₙ₊₁/Fₙ → φ.",
+  vk:"rygor",vt:"Czysta geometria — tu Ghyka stoi na granicie.",
+  room:true,href:"proporcja.html"},
+
+ {n:"III",t:"Pentada",tag:"Symetria pięciokrotna",verdict:"rygor",
+  card:"Pentagram jako maszyna φ — każde przecięcie tnie w złotej proporcji. Aż po quasikryształy.",
+  idea:"W pięcioramiennej gwieździe φ jest wszędzie; w środku rodzi się mniejszy pentagram — i tak w nieskończoność. Pięciokąt sam się reprodukuje.",
+  doo:"Grywalne: pentagram, nieskończone zejście, dowód „pięciokąt nie kafelkuje” i żywy shader quasikryształu (Penrose → Shechtman).",
+  math:"Przekątna/bok pięciokąta = φ. Kafle Penrose'a; dyfrakcja Shechtmana (1982).",
+  vk:"rygor",vt:"Mistykę pięciokąta fizyka potwierdziła Noblem 2011.",
+  room:true,href:"pentada.html"},
+
+ {n:"IV",t:"Bryły",tag:"Geometria przestrzenna · 3D",verdict:"rygor",
+  card:"„Dwa skarby geometrii” Keplera. Pięć brył platońskich; trzy złote prostokąty w dwudziestościanie.",
+  idea:"Dwunasto- i dwudziestościan są zbudowane z φ. Trzy złote prostokąty wpięte prostopadle dają 12 wierzchołków ikosaedru.",
+  doo:"Grywalne 3D: obracasz pięć brył, odsłaniasz trzy złote prostokąty, sprawdzasz współrzędne (0,±1,±φ); quiz na koniec.",
+  math:"Wierzchołki ikosaedru: cykliczne (0,±1,±φ). Kepler: tw. Pitagorasa i złoty podział.",
+  vk:"rygor",vt:"Współrzędne zgadzają się co do cyfry — żelazny rdzeń.",
+  room:true,href:"bryly.html"},
+
+ {n:"V",t:"Ciało",tag:"Proporcja w ciele i sztuce",verdict:"rom",
+  card:"Człowiek Witruwiański, kanon Zeisinga, Modulor. Tu Ghyka najczęściej się myli.",
+  idea:"Marzenie o jednej proporcji rządzącej ciałem jest stare i piękne — i właśnie dlatego niebezpieczne. Łatwo zobaczyć φ tam, gdzie go nie ma.",
+  doo:"Grywalne: przeciągasz linię pomiarową po figurze (pępek ≈ 0,61–0,63, nie dokładnie φ), włączasz kwadrat i koło Witruwiusza, oglądasz φ-serię Modulora.",
+  math:"Zeising (1854); Modulor (φ + Fibonacci). Krytyka: Markowsky (1992).",
+  vk:"rom",vt:"Serce romantycznej numerologii. Komnata uczy zachwyt sprawdzać.",
+  room:true,href:"cialo.html"},
+
+ {n:"VI",t:"Świątynia",tag:"Architektura · dynamiczna symetria",verdict:"mix",
+  card:"Partenon, Notre-Dame, prostokąty dynamiczne Hambidge'a (√2…√5, φ).",
+  idea:"Czy Grecy projektowali wedle φ? Pomiary bywają dobierane tak długo, aż liczba się zgodzi.",
+  doo:"Grywalne 3D: obracasz fasadę świątyni doryckiej i nakładasz prostokąt φ (mit, który nie pasuje), prostokąty pierwiastkowe Hambidge'a (√2·√3·√5) oraz współmierną siatkę 9:4.",
+  math:"Stosunki √2, √3, √5, φ. Hambidge (1920); krytyka Neveux/Markowsky.",
+  vk:"mix",vt:"Geometria prostokątów realna; „dynamiczna symetria” jako metoda — naciągana.",
+  room:true,href:"swiatynia.html"},
+
+ {n:"VII",t:"Eurytmia",tag:"Proporcja w malarstwie",verdict:"rom",
+  card:"Złota proporcja w malarstwie i rzeźbie: Botticelli, Leonardo, Dürer.",
+  idea:"Eurytmia — „dobry rytm” — to marzenie o φ jako tajnym kluczu kompozycji. Częściej to my dorysowujemy φ niż artysta.",
+  doo:"Grywalne: przesuwasz i obracasz złotą spiralę po kompozycji (trafia niemal wszędzie), porównujesz siatkę φ z trójpodziałem i dzielisz figurę na moduły głowy Dürera.",
+  math:"Kanon Polikleta; studia proporcji Dürera. Brak dowodu intencji φ.",
+  vk:"rom",vt:"Piękne, ale w większości dorysowane po fakcie.",
+  room:true,href:"eurytmia.html"},
+
+ {n:"VIII",t:"Słowo",tag:"Złoty podział w czasie",verdict:"mix",
+  card:"Proporcja w czasie: kulminacja muzyczna w φ, łuk Bartóka, rytm mowy Serviena.",
+  idea:"Czy ten sam Logos działa w geometrii świątyni i w biegu zdania? W czasie φ bywa prawdziwe — gdy twórca świadomie je wstawia.",
+  doo:"Grywalne (audio): słuchasz kulminacji w ½ i w φ, oglądasz łuk Bartóka (takt 55 z 89 — sporne), wystukujesz rytm mowy i widzisz jego proporcje.",
+  math:"Pius Servien (1930): formalizacja rytmu. Bartók/Lendvai: φ i Fibonacci w formie (sporne).",
+  vk:"mix",vt:"Złota kulminacja działa na ucho; „φ w każdym wierszu” — już numerologia.",
+  room:true,href:"slowo.html"},
+
+ {n:"IX",t:"Ogród",tag:"Filotaksja · NA ŻYWO",verdict:"rygor",live:true,
+  card:"Złoty kąt 137,5°. Dlaczego słonecznik i szyszka liczą spiralami Fibonacciego.",
+  idea:"Złoty kąt to jedyny sposób rozłożenia nasion bez zasłaniania i bez luk. Natura znalazła to, minimalizując energię.",
+  doo:"Grywalne niżej: kręcisz kątem rozbieżności i patrzysz, jak głowa kwiatu przeskakuje między idealnym upakowaniem a szprychami.",
+  math:"Model Vogla: θ=n·137,507°, r=c·√n. Parastychy = zbieżne ułamka łańcuchowego.",
+  vk:"rygor",vt:"Twarda nauka — Douady & Couder (1992) wyprowadzili kąt z dynamiki."},
+
+ {n:"X",t:"Loża",tag:"Transmisja wiedzy · 3D",verdict:"mix",
+  card:"„Światło pod korcem”: Pitagoras, loże katedralne, masoneria. 2500 lat przekazu.",
+  idea:"Pitagorejska wiedza o proporcji nie zniknęła z katastrofą bractwa — przepływała przez Akademię, Aleksandrię, strzechy katedralne, aż po fizykę quasikryształów.",
+  doo:"Grywalne 3D: konstelacja 17 ogniw na złotej spirali czasu; gra „prześledź przekaz w kolejności” rysuje świetlistą nić.",
+  math:"Kroton → Aleksandria → Bauhütte → 1717. Pentagram jako symbolon.",
+  vk:"mix",vt:"Twój ezoteryczny rdzeń — historia transmisji, czytana z dystansem.",
+  room:true,href:"loza.html"},
+
+ {n:"XI",t:"Nauka",tag:"Najbardziej niewymierna liczba",verdict:"mix",
+  card:"Ułamek łańcuchowy, optymalne upakowanie, quasikryształy Penrose'a i Shechtmana.",
+  idea:"Tu φ jest prawdziwe i głębokie — nie przez mistykę, lecz przez matematykę: liczba najtrudniejsza do przybliżenia ułamkiem rządzi upakowaniem liści i aperiodycznym ładem kryształów.",
+  doo:"Grywalne: budujesz ułamek łańcuchowy φ=[1;1,1,…], kręcisz kątem rozbieżności (równe upakowanie tylko przy 137,5°) i deflujesz parkietaż Penrose'a.",
+  math:"Ułamek [1;1,1,…]; tw. Hurwitza; złoty kąt 137,5° (Douady-Couder 1992); parkietaż Penrose'a; quasikryształy (Shechtman, Nobel 2011).",
+  vk:"mix",vt:"Twardy rdzeń matematyczny; margines mieszany — „liczba życia” Bergsona to filozofia, nie dowód.",
+  room:true,href:"nauka.html"},
+
+ {n:"XII",t:"Probierz",tag:"Kamień probierczy · gra",verdict:"meta",
+  card:"Zmierz sam słynne mity — nautilus, Partenon, Mona Lisa — i odróżnij φ od pobożnych życzeń.",
+  idea:"Najważniejsza komnata, której u Ghyki nie ma. Uczy odruchu: skąd wiemy, że to naprawdę φ, a nie nasza chęć, by je zobaczyć?",
+  doo:"Grywalne: przeciągasz prostokąt pomiarowy, nakładasz złotą spiralę, zgadujesz werdykt i odsłaniasz prawdę z danymi. Nautilus ≈1,33; karta 1,586.",
+  math:"Test: rozkład zmierzonych stosunków vs 1,618. Bias potwierdzenia, dobór punktów.",
+  vk:"meta",vt:"Paradoksalnie najbardziej pro-Ghykowa komnata: ratuje to, co u niego prawdziwe.",
+  room:true,href:"probierz.html"},
+];
+
+/* ---------- render atlas ---------- */
+const glyphFor=v=>`<svg class="glyph" viewBox="0 0 100 100" fill="none" stroke="${v==='rom'?'#d2553f':v==='mix'?'#e0913a':v==='meta'?'#c9b6e0':'#e3b23c'}" stroke-width="1.4">
+  <circle cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="24"/><path d="M50 10 L50 90 M10 50 L90 50"/></svg>`;
+const grid=$("#atlasGrid");
+CHAMBERS.forEach((c,i)=>{
+  const el=document.createElement("div");
+  el.className="ch"+(c.live?" live":"")+(c.room?" live room":"");
+  el.innerHTML=`${glyphFor(c.vk)}
+    <div class="rom-num">KOMNATA ${c.n}</div>
+    <h3>${c.t}</h3>
+    <div class="tag">${c.tag}</div>
+    <p>${c.card}</p>
+    <div class="foot">
+      <span class="chip ${c.vk==='rom'?'rom':c.vk==='mix'?'mix':c.vk==='meta'?'meta':'rygor'}">${c.vk==='rom'?'Romantyzm':c.vk==='mix'?'Mieszany':c.vk==='meta'?'Krytyka':'Rygor'}</span>
+      <span class="open ui">${c.room?'otwórz 3D ↗':c.live?'graj ↓':'plan →'}</span>
+    </div>`;
+  el.addEventListener("click",()=>{
+    if(c.href){location.href=c.href;}
+    else if(c.live){$("#garden").scrollIntoView({behavior:"smooth"});}
+    else{openModal(c);}
+  });
+  grid.appendChild(el);
+});
+
+/* ---------- modal ---------- */
+function openModal(c){
+  $("#mNum").textContent="KOMNATA "+c.n;
+  $("#mTitle").textContent=c.t;
+  $("#mTag").textContent=c.tag;
+  $("#mIdea").textContent=c.idea;
+  $("#mDo").textContent=c.doo;
+  $("#mMath").textContent=c.math;
+  $("#mVerdict").innerHTML="<b>Werdykt — "+(c.vk==='rom'?'Romantyzm':c.vk==='mix'?'Mieszany':c.vk==='meta'?'Krytyka':'Rygor')+".</b> "+c.vt;
+  const box=$("#mVerdictBox");box.className="verdict "+(c.vk==='rom'?'rom':c.vk==='mix'?'mix':c.vk==='meta'?'meta':'rygor');
+  $("#modal").classList.add("on");
+}
+document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>$("#modal").classList.remove("on")));
+addEventListener("keydown",e=>{if(e.key==="Escape")$("#modal").classList.remove("on");});
+
+/* ================= HERO CANVAS — drifting phyllotaxis ================= */
+(function(){
+  const cv=$("#heroCanvas"),ctx=cv.getContext("2d");let W,H,DPR;
+  function size(){DPR=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
+  size();addEventListener("resize",size);
+  const N=620;let t=0;
+  const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function frame(){
+    t+=reduce?0:0.0016;
+    ctx.clearRect(0,0,W,H);
+    const cx=W*0.5,cy=H*0.46,scale=Math.min(W,H)*0.012;
+    for(let i=0;i<N;i++){
+      const a=i*GOLDEN*D2R + t;
+      const r=scale*Math.sqrt(i);
+      const x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+      const f=i/N;
+      const rad=lerp(0.6,2.4,f);
+      ctx.beginPath();ctx.arc(x,y,rad,0,TAU);
+      ctx.fillStyle=`rgba(${lerp(227,242,f)|0},${lerp(178,210,f)|0},${lerp(60,122,f)|0},${lerp(.05,.5,f)})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ================= GARDEN ENGINE ================= */
+const G=(function(){
+  const cv=$("#gardenCanvas"),ctx=cv.getContext("2d");
+  let W,H,DPR,cx,cy,scale;
+  const MAX=1500;
+  let angle=GOLDEN;          // current divergence (deg)
+  let target=GOLDEN;         // eased target
+  let grown=MAX;             // how many seeds currently shown (grow anim)
+  let growing=false;
+  let showSpiral=true;
+  const pos=new Float32Array(MAX*2);
+  let parA=34,parB=55;
+  let isSpoke=false,spokeQ=0;
+  let evenness=0;
+
+  function size(){DPR=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    cx=W/2;cy=H/2;scale=Math.min(W,H)*0.0118;layout();}
+
+  function layout(){
+    const ar=angle*D2R;
+    for(let i=0;i<MAX;i++){
+      const a=i*ar, r=scale*Math.sqrt(i);
+      pos[i*2]=cx+r*Math.cos(a);
+      pos[i*2+1]=cy+r*Math.sin(a);
+    }
+  }
+
+  /* continued-fraction convergent denominators of f=angle/360 */
+  function convergents(x){
+    const dens=[];let h1=1,h0=0,k1=0,k0=1,v=x;
+    for(let s=0;s<25;s++){
+      const a=Math.floor(v);
+      const h=a*h1+h0, k=a*k1+k0;
+      h0=h1;h1=h;k0=k1;k1=k;
+      if(k>1)dens.push(k);
+      const fr=v-a;
+      if(fr<1e-9||k>MAX)break;
+      v=1/fr;
+    }
+    return dens;
+  }
+  function pickParastichy(){
+    const x=((angle/360)%1+1)%1;
+    // Spokes: angle ≈ p/q (small q) ⇒ florets stack on q radial rays, not spirals.
+    // Criterion: accumulated angular drift over all florets stays below half a gap.
+    // Only SMALL q (<21, below Fibonacci 21/34/55) makes visible spokes-with-gaps;
+    // large near-rationals are just the high-order Fibonacci parastichy spirals.
+    isSpoke=false;spokeQ=0;
+    for(let q=2;q<=16;q++){
+      const p=Math.round(x*q);
+      if(grown*Math.abs(x-p/q)<0.5){isSpoke=true;spokeQ=q;break;}
+    }
+    if(isSpoke){parA=spokeQ;parB=0;return;}
+    const dens=convergents(x).filter(d=>d>=2&&d<=grown/2);
+    if(!dens.length){parA=parB=0;return;}
+    const targetN=Math.sqrt(grown)*1.05;      // visible arm count scales ~√N
+    let bi=0;for(let i=0;i<dens.length;i++){if(Math.abs(dens[i]-targetN)<Math.abs(dens[bi]-targetN))bi=i;}
+    parA=dens[bi];
+    parB=dens[bi+1]||dens[bi-1]||0;
+    if(parB&&parB<parA){const t=parA;parA=parB;parB=t;}
+  }
+
+  /* evenness metric: coeff. of variation of nearest-neighbour distances (sampled) */
+  function computeEven(){
+    const lo=Math.floor(grown*0.22),hi=Math.floor(grown*0.95);
+    if(hi-lo<40){evenness=0;return;}
+    const step=Math.max(1,Math.floor((hi-lo)/170));
+    const ds=[];
+    for(let i=lo;i<hi;i+=step){                // true nearest neighbour over ALL florets
+      const xi=pos[i*2],yi=pos[i*2+1];let best=1e9;
+      for(let j=0;j<grown;j++){
+        if(j===i)continue;
+        const dx=pos[j*2]-xi,dy=pos[j*2+1]-yi,d=dx*dx+dy*dy;
+        if(d<best)best=d;
+      }
+      ds.push(Math.sqrt(best));
+    }
+    const m=ds.reduce((a,b)=>a+b,0)/ds.length;
+    const va=ds.reduce((a,b)=>a+(b-m)*(b-m),0)/ds.length;
+    const cv2=Math.sqrt(va)/m;                 // golden ⇒ lowest CV; spokes ⇒ high CV
+    evenness=clamp(1-(cv2-0.03)/0.62,0,1);
+  }
+
+  function recompute(){layout();pickParastichy();computeEven();paintReadout();}
+
+  function paintReadout(){
+    $("#rAngle").textContent=angle.toFixed(2);
+    $("#rFrac").textContent=(((angle/360)%1+1)%1).toFixed(3);
+    $("#angleVal").textContent=angle.toFixed(3);
+    $("#angle").value=angle;
+    const d=Math.abs(angle-GOLDEN);
+    $("#rDist").textContent="· "+(d<0.0005?"= złoty kąt":((angle>GOLDEN?"+":"−")+d.toFixed(3)+"° od złotego"));
+    if(window.SA&&window._ogrodTouched&&d<0.01)SA.award('ogrodnik');
+    $("#evenFill").style.width=(evenness*100).toFixed(0)+"%";
+    $("#seedCount").textContent=grown;
+    const fib=new Set([1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,1597]);
+    const isFib=fib.has(parA)&&fib.has(parB);
+    const badge=$("#spiralBadge");
+    if(isSpoke){
+      badge.style.color="var(--crimson)";
+      badge.innerHTML=`szprychy: <b style="color:#d2553f">${spokeQ} ramion</b> · układ wymierny`;
+    }else if(parA&&parB&&(isFib||parB<=parA*3)){
+      badge.style.color="var(--verd)";
+      badge.innerHTML=`spirale: <b style="color:${isFib?'#f2d27a':'#9a93a6'}">${parA} / ${parB}</b>${isFib?' · Fibonacci':''}`;
+    }else if(parA){
+      badge.style.color="var(--amber)";
+      badge.innerHTML=`spirale: <b style="color:#e0913a">≈ ${parA}</b> · poza złotym kątem`;
+    }else{
+      badge.style.color="var(--mute)";
+      badge.innerHTML="spirale: —";
+    }
+    // preset active state
+    document.querySelectorAll("#presets button").forEach(b=>{
+      b.classList.toggle("active",Math.abs(parseFloat(b.dataset.a)-angle)<0.004);
+    });
+  }
+
+  function draw(){
+    // ease angle
+    if(Math.abs(target-angle)>0.0003){angle=lerp(angle,target,0.18);recompute();}
+    if(growing){grown=Math.min(MAX,grown+22);if(grown>=MAX){growing=false;}recompute();}
+
+    ctx.clearRect(0,0,W,H);
+    const dimDots=showSpiral?0.5:1;
+
+    // spiral arms
+    if(showSpiral&&parA){
+      drawFamily(parA,"rgba(227,178,60,",0.5);
+      if(parB)drawFamily(parB,"rgba(95,184,163,",0.42);
+    }
+    // florets
+    for(let i=0;i<grown;i++){
+      const x=pos[i*2],y=pos[i*2+1];const f=i/grown;
+      const r=lerp(1.1,4.2,f);
+      ctx.beginPath();ctx.arc(x,y,r,0,TAU);
+      const g=ctx.createRadialGradient(x-r*.3,y-r*.3,0,x,y,r);
+      g.addColorStop(0,`rgba(${lerp(245,255,f)|0},${lerp(220,200,f)|0},${lerp(150,90,f)|0},${dimDots})`);
+      g.addColorStop(1,`rgba(${lerp(200,120,f)|0},${lerp(150,60,f)|0},${lerp(40,20,f)|0},${dimDots})`);
+      ctx.fillStyle=g;ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  function drawFamily(q,rgb,al){
+    ctx.lineWidth=1.1;
+    for(let i=0;i+q<grown;i++){
+      const f=i/grown;
+      ctx.strokeStyle=rgb+(al*f).toFixed(3)+")";
+      ctx.beginPath();ctx.moveTo(pos[i*2],pos[i*2+1]);ctx.lineTo(pos[(i+q)*2],pos[(i+q)*2+1]);ctx.stroke();
+    }
+  }
+
+  function setAngle(a,ease=true){target=clamp(a,0,180);if(!ease){angle=target;}recompute();}
+  function startGrow(){grown=1;growing=true;}
+
+  // init
+  size();addEventListener("resize",size);recompute();draw();
+
+  return {setAngle,
+    get angle(){return angle;},
+    toggleSpiral(v){showSpiral=v;},
+    grow(v){if(v){startGrow();}else{grown=MAX;growing=false;recompute();}},
+  };
+})();
+
+/* ---------- garden UI wiring ---------- */
+function _gtouch(){if(window.SA){window._ogrodTouched=1;if(!window._ogrodV){window._ogrodV=1;SA.visit('ogrod');}}}
+const slider=$("#angle");
+slider.addEventListener("input",()=>{_gtouch();G.setAngle(parseFloat(slider.value),false);});
+document.querySelectorAll(".nudge button").forEach(b=>{
+  b.addEventListener("click",()=>{_gtouch();G.setAngle(G.angle+parseFloat(b.dataset.nudge),false);});
+});
+const PRESETS=[
+  {a:GOLDEN,label:"Złoty kąt",gold:true},
+  {a:137.6,label:"+0,1°"},
+  {a:137.3,label:"−0,2°"},
+  {a:144,label:"2/5 (144°)"},
+  {a:120,label:"1/3 (120°)"},
+  {a:90,label:"1/4 (90°)"},
+];
+const presetWrap=$("#presets");
+PRESETS.forEach(p=>{
+  const b=document.createElement("button");
+  b.dataset.a=p.a;b.textContent=p.label;if(p.gold)b.className="gold";
+  b.addEventListener("click",()=>{_gtouch();G.setAngle(p.a,true);});
+  presetWrap.appendChild(b);
+});
+const tgS=$("#tgSpiral");tgS.addEventListener("click",()=>{const on=tgS.classList.toggle("on");G.toggleSpiral(on);});
+const tgG=$("#tgGrow");tgG.addEventListener("click",()=>{const on=tgG.classList.toggle("on");G.grow(on);});
+if(window.SA)SA.mountHUD();
+</script>
+</body>
+</html>

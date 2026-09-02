@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata VII · Eurytmia — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);--panel-2:#191527;
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--gold-deep:#a9801f;--ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#c{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:none}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(130% 100% at 42% 46%,transparent 50%,rgba(0,0,0,.6) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;color:var(--mute);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:15;width:322px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 80px -40px #000}
+.panel .step{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:27px;margin:7px 0 8px;line-height:1.05}
+.panel .line{font-size:13.5px;color:var(--mute);line-height:1.62;margin:0 0 13px}
+.panel .fact{font-family:"Fraunces",serif;font-style:italic;font-size:14.5px;color:var(--ivory);border-left:2px solid var(--gold);padding-left:13px;line-height:1.5}
+.panel .fact b{font-style:normal;color:var(--gold-br)}
+.panel .eq{font-family:"Fraunces",serif;font-size:16px;color:var(--gold-br);margin-top:14px;font-variant-numeric:tabular-nums;line-height:1.4}
+.panel .eq .x{color:var(--ivory)} .panel .eq.match{color:var(--verd)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-top:15px;color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.chip.rom{color:var(--crimson);background:rgba(210,85,63,.12);border-color:rgba(210,85,63,.35)}
+.chip.rom::before{background:var(--crimson)}
+
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:11px;width:max-content;max-width:94vw}
+.ctx{min-height:0;display:flex;align-items:center;gap:13px}
+.ctlbox{display:none;align-items:center;gap:13px;background:rgba(8,7,13,.6);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:12px;padding:9px 16px;font-size:12px;color:var(--mute)}
+.ctlbox.on{display:flex}
+.ctlbox b{color:var(--gold-br);font-family:"Fraunces",serif;font-variant-numeric:tabular-nums}
+.ctlbox input[type=range]{-webkit-appearance:none;width:150px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));outline:none}
+.ctlbox input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+.tg{display:inline-flex;align-items:center;gap:9px;background:transparent;border:none;font-size:12px;color:var(--mute);cursor:pointer}
+.tg .sw{width:24px;height:13px;border-radius:999px;background:rgba(255,255,255,.12);position:relative}
+.tg .sw::after{content:"";position:absolute;left:2px;top:2px;width:9px;height:9px;border-radius:50%;background:var(--mute);transition:.2s}
+.tg.on{color:var(--ivory)}.tg.on .sw{background:var(--gold)}.tg.on .sw::after{left:13px;background:#1a1305}
+.mini{font-family:"Inter";font-size:11.5px;color:var(--mute);background:var(--panel-2);border:1px solid var(--line-soft);border-radius:9px;padding:8px 13px;cursor:pointer;transition:.2s}
+.mini:hover{color:var(--ivory);border-color:var(--gold)}
+.mini.gold{color:#1a1305;background:var(--gold);border-color:var(--gold)}.mini.gold:hover{background:var(--gold-br)}
+.moves{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.moves button{display:flex;align-items:center;gap:9px;background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 14px;cursor:pointer;transition:.22s;color:var(--mute)}
+.moves button .nb{font-family:"Fraunces",serif;font-size:13px;color:var(--gold-br);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%}
+.moves button b{font-size:11.5px;font-weight:500;color:var(--ivory)}
+.moves button:hover{background:rgba(255,255,255,.04)}
+.moves button.active{background:rgba(227,178,60,.12);border-color:var(--gold)}
+.moves button.active .nb{background:var(--gold);color:#1a1305;border-color:var(--gold)}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:15;font-size:10px;letter-spacing:.04em;color:var(--faint);line-height:1.7;pointer-events:none;max-width:210px}
+.hint b{color:var(--mute)}
+@media(max-width:820px){.panel{top:auto;bottom:150px;right:50%;transform:translateX(50%);width:min(420px,92vw)}.hint{display:none}.moves button b{display:none}.ctlbox input[type=range]{width:120px}.ctlbox{padding:8px 12px;gap:9px}}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata VII · Eurytmia</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"></aside>
+
+<div class="dock">
+  <div class="ctx">
+    <div class="ctlbox" id="ctlSpiral">
+      <span>obrót</span><input type="range" id="rotSlider" min="0" max="360" step="1" value="20">
+      <button class="mini" id="mirrorBtn">⇄ odbij</button>
+      <span>trafień <b id="hitCount">0</b>/6</span>
+    </div>
+    <div class="ctlbox" id="ctlGrid">
+      <button class="tg on" id="tgPhi"><span class="sw"></span>siatka φ</button>
+      <button class="tg" id="tgThirds"><span class="sw"></span>trójpodział</button>
+      <span>różnica <b id="diffVal">4,9%</b></span>
+    </div>
+    <div class="ctlbox" id="ctlDurer">
+      <span>moduł głowy</span><input type="range" id="headSlider" min="6" max="10" step="1" value="8">
+      <span><b id="headVal">8</b> głów</span>
+      <button class="tg" id="tgSubdiv"><span class="sw"></span>podziałki</button>
+    </div>
+  </div>
+  <div class="moves" id="moves"></div>
+</div>
+
+<div class="hint" id="hint"></div>
+<div id="loading"><div class="ph">Φ</div><p>naciągam siatkę</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script>
+"use strict";
+const PHI=(1+Math.sqrt(5))/2, TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const $=s=>document.querySelector(s);
+const fmt=(x,n=3)=>x.toFixed(n).replace('.',',');
+
+const MOVES=[
+ {n:'❶',t:'Złota spirala na płótnie',line:'Przeciągnij i obróć złotą spiralę po schematycznej kompozycji. Zobaczysz, że przy odrobinie swobody potrafi „trafić” w niemal każdy element — bo to TY wybierasz, gdzie ją zaczepić. Niemal każdy obraz da „dopasowanie” do φ.',
+  fact:'wolny wybór zaczepienia ⟹ <b>prawie każda kompozycja</b> „pasuje” do φ · to dobieranie pod tezę',hintTxt:'Przeciągnij spiralę po obrazie, obracaj suwakiem. Patrz, ile cech „dotyka”.'},
+ {n:'❷',t:'Φ kontra trójpodział',line:'Na ten sam obraz nałóż siatkę φ (linie w 0,382 i 0,618) ORAZ siatkę trójpodziału (0,333 i 0,667). Włącz obie naraz — leżą niemal na sobie. Deklarowane „φ w sztuce” zwykle nie da się odróżnić od zwykłej reguły trójpodziału.',
+  fact:'0,618 vs 0,667 — różnica <b>~4,9%</b> · w skali obrazu mieści się w błędzie pomiaru',hintTxt:'Włącz obie siatki naraz. Zobacz, jak blisko siebie leżą linie φ i trójpodziału.'},
+ {n:'❸',t:'Dürer naprawdę',line:'Dürer w „Czterech księgach o proporcjach człowieka” dzielił figurę na MODUŁY głowy (zwykle 8 głów wzrostu) i ich ułamki — 1/2, 1/3, 1/4. Nie używał φ. Prawdziwi mistrzowie mieli SYSTEMY proporcji — tyle że nie złoty podział.',
+  fact:'system modularny: <b>wzrost = N × głowa</b> + ułamki · u Dürera ani śladu φ',hintTxt:'Zmień liczbę „głów” wzrostu i włącz podziałki. To realny system Dürera.'}
+];
+
+/* ---------- canvas ---------- */
+const cv=$('#c'),ctx=cv.getContext('2d');let W,H,DPR;
+function resize(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);draw();}
+addEventListener('resize',resize);
+/* the framed "canvas-within-canvas" the artwork lives in */
+function frame(){
+  const fw=Math.min(W*0.46,360), fh=fw*1.32;
+  const cx=W*0.40, cy=H*0.50;
+  return {x:cx-fw/2,y:cy-fh/2,w:fw,h:fh};
+}
+
+/* ---------- state ---------- */
+let move=0;
+let spiral={x:0,y:0,scale:1,rot:20*Math.PI/180,mirror:false,placed:false};
+let showPhi=true, showThirds=false;
+let heads=8, showSub=false;
+
+/* ---------- schematic compositions (original line-art only) ---------- */
+function drawFrameBox(f){
+  ctx.save();
+  ctx.fillStyle='rgba(20,17,30,.55)';ctx.fillRect(f.x,f.y,f.w,f.h);
+  ctx.strokeStyle='rgba(227,178,60,.35)';ctx.lineWidth=2;ctx.strokeRect(f.x,f.y,f.w,f.h);
+  ctx.restore();
+}
+/* a generic standing-nude silhouette — stand-in for a "Wenus" */
+function drawVenus(f){
+  const cx=f.x+f.w*0.5, top=f.y+f.h*0.07, bot=f.y+f.h*0.94, bh=bot-top;
+  ctx.save();
+  ctx.strokeStyle='rgba(236,230,214,.4)';ctx.lineWidth=1.6;
+  ctx.fillStyle='rgba(236,230,214,.05)';
+  // head
+  const hr=bh*0.055;
+  ctx.beginPath();ctx.ellipse(cx,top+hr,hr*0.78,hr,0,0,TAU);ctx.fill();ctx.stroke();
+  // body outline (very stylised contrapposto torso)
+  const sh=top+hr*2;                  // shoulders
+  const waist=top+bh*0.42, hip=top+bh*0.52, knee=top+bh*0.74;
+  ctx.beginPath();
+  ctx.moveTo(cx-bh*0.085,sh);
+  ctx.quadraticCurveTo(cx-bh*0.13,waist, cx-bh*0.10,hip);   // left side in
+  ctx.quadraticCurveTo(cx-bh*0.135,hip+bh*0.04, cx-bh*0.06,knee);
+  ctx.lineTo(cx-bh*0.05,bot);                                // left leg
+  ctx.lineTo(cx-bh*0.005,bot);
+  ctx.lineTo(cx-bh*0.01,knee);
+  ctx.lineTo(cx+bh*0.01,knee);
+  ctx.lineTo(cx+bh*0.02,bot);                                // right leg
+  ctx.lineTo(cx+bh*0.07,bot);
+  ctx.lineTo(cx+bh*0.07,knee);
+  ctx.quadraticCurveTo(cx+bh*0.14,hip+bh*0.03, cx+bh*0.10,hip);
+  ctx.quadraticCurveTo(cx+bh*0.12,waist, cx+bh*0.085,sh);
+  ctx.closePath();ctx.fill();ctx.stroke();
+  // arms
+  ctx.beginPath();
+  ctx.moveTo(cx-bh*0.08,sh+bh*0.01);ctx.quadraticCurveTo(cx-bh*0.17,waist-bh*0.02,cx-bh*0.12,hip+bh*0.02);
+  ctx.moveTo(cx+bh*0.08,sh+bh*0.01);ctx.quadraticCurveTo(cx+bh*0.16,waist-bh*0.04,cx+bh*0.10,hip-bh*0.01);
+  ctx.stroke();
+  // feature markers the spiral can "hit"
+  ctx.fillStyle='rgba(227,178,60,.55)';
+  FEATURES=[
+    {x:cx,y:top+hr,lab:'głowa'},
+    {x:cx,y:sh,lab:'barki'},
+    {x:cx-bh*0.12,y:hip+bh*0.02,lab:'dłoń'},
+    {x:cx,y:waist,lab:'talia'},
+    {x:cx,y:knee,lab:'kolana'},
+    {x:cx,y:hip,lab:'biodra'}
+  ];
+  FEATURES.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,3,0,TAU);ctx.fill();});
+  ctx.restore();
+}
+let FEATURES=[];
+
+/* ---------- M1: golden spiral over the Venus ---------- */
+function goldenSpiralPath(cx,cy,scale,rot,mirror){
+  // logarithmic golden spiral: r grows by PHI each quarter-turn
+  const b=Math.log(PHI)/(Math.PI/2);
+  const pts=[];const r0=2.4*scale;
+  for(let th=0;th<=4.3*TAU;th+=0.05){
+    const r=r0*Math.exp(b*th);
+    let dx=r*Math.cos(th),dy=r*Math.sin(th);
+    if(mirror)dx=-dx;
+    const ca=Math.cos(rot),sa=Math.sin(rot);
+    pts.push([cx+dx*ca-dy*sa, cy+dx*sa+dy*ca]);
+    if(r>Math.max(W,H))break;
+  }
+  return pts;
+}
+function spiralHits(){
+  // count how many feature dots the spiral curve passes "near"
+  if(!FEATURES.length)return 0;
+  const pts=goldenSpiralPath(spiral.x,spiral.y,spiral.scale,spiral.rot,spiral.mirror);
+  let hit=0;const tol=14;
+  FEATURES.forEach(p=>{
+    let near=false;
+    for(let i=0;i<pts.length;i++){const dx=pts[i][0]-p.x,dy=pts[i][1]-p.y;if(dx*dx+dy*dy<tol*tol){near=true;break;}}
+    p._hit=near;if(near)hit++;
+  });
+  return hit;
+}
+function drawSpiralMode(){
+  ctx.clearRect(0,0,W,H);
+  const f=frame();drawFrameBox(f);drawVenus(f);
+  if(!spiral.placed){spiral.x=f.x+f.w*0.62;spiral.y=f.y+f.h*0.40;spiral.scale=f.h/170;spiral.placed=true;}
+  const hits=spiralHits();
+  // re-tint feature dots by hit
+  FEATURES.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p._hit?5:3,0,TAU);
+    ctx.fillStyle=p._hit?'#f2d27a':'rgba(227,178,60,.45)';ctx.fill();});
+  // the spiral
+  const pts=goldenSpiralPath(spiral.x,spiral.y,spiral.scale,spiral.rot,spiral.mirror);
+  ctx.strokeStyle='rgba(210,85,63,.92)';ctx.lineWidth=2.2;ctx.beginPath();
+  pts.forEach((p,i)=>{i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);});ctx.stroke();
+  // golden-rectangle bounding the spiral eye
+  const r0=2.4*spiral.scale, eye=r0*Math.exp(Math.log(PHI)/(Math.PI/2)*1.6*TAU);
+  // grab handle at the spiral's pole
+  ctx.beginPath();ctx.arc(spiral.x,spiral.y,6,0,TAU);ctx.fillStyle='#fff';ctx.fill();
+  ctx.strokeStyle='rgba(210,85,63,.95)';ctx.lineWidth=2;ctx.stroke();
+  // readout
+  ctx.fillStyle='rgba(210,85,63,.92)';ctx.font='italic 12px Inter';ctx.textAlign='left';
+  ctx.fillText('złota spirala — przesuwasz ją swobodnie', f.x, f.y-12);
+  ctx.fillStyle=hits>=4?'#f2d27a':'rgba(236,230,214,.8)';ctx.font='600 13px Inter';
+  ctx.fillText('„trafień” w cechy: '+hits+' / 6', f.x, f.y+f.h+22);
+  $('#hitCount').textContent=hits;
+  if(window.SA&&hits>=5&&!window._spiralWow){window._spiralWow=1;SA.add(8,'Spirala „trafia” wszędzie');}
+}
+
+/* ---------- M2: phi grid vs rule-of-thirds on a landscape ---------- */
+function drawLandscape(f){
+  // a simple landscape with a horizon line — original schematic
+  ctx.save();
+  // sky / ground split (purely decorative, neutral)
+  const horizon=f.y+f.h*0.5;
+  ctx.fillStyle='rgba(95,184,163,.06)';ctx.fillRect(f.x,f.y,f.w,horizon-f.y);
+  ctx.fillStyle='rgba(227,178,60,.05)';ctx.fillRect(f.x,horizon,f.w,f.y+f.h-horizon);
+  ctx.strokeStyle='rgba(236,230,214,.3)';ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(f.x,horizon);ctx.lineTo(f.x+f.w,horizon);ctx.stroke();
+  // a lone tree near a "power point"
+  const tx=f.x+f.w*0.63, ty=horizon;
+  ctx.strokeStyle='rgba(236,230,214,.4)';
+  ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx,ty-f.h*0.22);ctx.stroke();
+  ctx.fillStyle='rgba(236,230,214,.08)';ctx.beginPath();ctx.ellipse(tx,ty-f.h*0.24,f.w*0.07,f.h*0.07,0,0,TAU);ctx.fill();ctx.stroke();
+  // distant hills
+  ctx.strokeStyle='rgba(236,230,214,.16)';ctx.beginPath();
+  ctx.moveTo(f.x,horizon);ctx.quadraticCurveTo(f.x+f.w*0.25,horizon-f.h*0.07,f.x+f.w*0.5,horizon);
+  ctx.quadraticCurveTo(f.x+f.w*0.75,horizon-f.h*0.05,f.x+f.w,horizon);ctx.stroke();
+  ctx.restore();
+}
+function gridLines(f,fracs,col,lab,dash){
+  ctx.save();ctx.strokeStyle=col;ctx.lineWidth=1.4;if(dash)ctx.setLineDash(dash);
+  ctx.font='10px Inter';ctx.fillStyle=col;ctx.textAlign='left';
+  fracs.forEach(fr=>{
+    const lx=f.x+f.w*fr;ctx.beginPath();ctx.moveTo(lx,f.y);ctx.lineTo(lx,f.y+f.h);ctx.stroke();
+    const ly=f.y+f.h*fr;ctx.beginPath();ctx.moveTo(f.x,ly);ctx.lineTo(f.x+f.w,ly);ctx.stroke();
+  });
+  ctx.restore();
+}
+function drawGridMode(){
+  ctx.clearRect(0,0,W,H);
+  const f=frame();drawFrameBox(f);drawLandscape(f);
+  if(showThirds)gridLines(f,[1/3,2/3],'rgba(95,184,163,.85)',null,[5,4]);
+  if(showPhi)gridLines(f,[1-0.618,0.618],'rgba(242,210,122,.95)',null,null);
+  // labels + the tell-tale gap
+  ctx.textAlign='left';ctx.font='11px Inter';
+  if(showPhi){ctx.fillStyle='rgba(242,210,122,.95)';ctx.fillText('φ: 0,382 · 0,618', f.x, f.y-12);}
+  if(showThirds){ctx.fillStyle='rgba(95,184,163,.9)';ctx.fillText('trójpodział: 0,333 · 0,667', f.x+f.w*0.42, f.y-12);}
+  // zoom-in on the gap between the 0.618 and 0.667 vertical lines
+  if(showPhi&&showThirds){
+    const x1=f.x+f.w*0.618, x2=f.x+f.w*0.667;
+    ctx.fillStyle='rgba(8,7,13,.85)';ctx.fillRect(x1-2,f.y+f.h+8,x2-x1+90,22);
+    ctx.fillStyle='#ece6d6';ctx.font='600 12px Inter';
+    ctx.fillText('Δ ≈ '+fmt((0.667-0.618)*100,1)+'% szerokości — gołym okiem nie do rozróżnienia', f.x, f.y+f.h+24);
+    ctx.strokeStyle='rgba(236,230,214,.5)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x1,f.y+f.h+6);ctx.lineTo(x1,f.y+f.h-6+f.h*0);ctx.stroke();
+    if(window.SA&&!window._gridSeen){window._gridSeen=1;SA.add(8,'φ ≈ trójpodział');}
+  } else {
+    ctx.fillStyle='rgba(236,230,214,.6)';ctx.font='italic 12px Inter';
+    ctx.fillText('Włącz OBIE siatki, by porównać linie φ i trójpodziału.', f.x, f.y+f.h+24);
+  }
+}
+
+/* ---------- M3: Dürer head-modules ---------- */
+function drawDurerFigure(f){
+  // schematic standing figure, divided into N head-heights
+  const cx=f.x+f.w*0.5, top=f.y+f.h*0.06, bot=f.y+f.h*0.96, bh=bot-top;
+  const headH=bh/heads;
+  ctx.save();
+  ctx.strokeStyle='rgba(236,230,214,.38)';ctx.lineWidth=1.6;ctx.fillStyle='rgba(236,230,214,.05)';
+  // head
+  ctx.beginPath();ctx.ellipse(cx,top+headH*0.5,headH*0.34,headH*0.5,0,0,TAU);ctx.fill();ctx.stroke();
+  // torso + legs as a simple frontal mannequin
+  const shoulder=top+headH, hip=top+headH*(heads*0.46), crotch=top+headH*(heads*0.5);
+  ctx.beginPath();
+  ctx.moveTo(cx-headH*0.62,shoulder);
+  ctx.lineTo(cx-headH*0.5,hip);
+  ctx.lineTo(cx-headH*0.46,crotch);
+  ctx.lineTo(cx-headH*0.42,bot);                 // left leg out
+  ctx.lineTo(cx-headH*0.08,bot);
+  ctx.lineTo(cx-headH*0.05,crotch);
+  ctx.lineTo(cx+headH*0.05,crotch);
+  ctx.lineTo(cx+headH*0.08,bot);
+  ctx.lineTo(cx+headH*0.42,bot);                 // right leg out
+  ctx.lineTo(cx+headH*0.46,crotch);
+  ctx.lineTo(cx+headH*0.5,hip);
+  ctx.lineTo(cx+headH*0.62,shoulder);
+  ctx.closePath();ctx.fill();ctx.stroke();
+  // arms straight down
+  ctx.beginPath();
+  ctx.moveTo(cx-headH*0.6,shoulder+headH*0.05);ctx.lineTo(cx-headH*0.74,hip);
+  ctx.moveTo(cx+headH*0.6,shoulder+headH*0.05);ctx.lineTo(cx+headH*0.74,hip);
+  ctx.stroke();
+  // head-module rulings
+  ctx.strokeStyle='rgba(227,178,60,.55)';ctx.lineWidth=1;
+  ctx.font='10px Inter';ctx.textAlign='right';ctx.fillStyle='rgba(242,210,122,.9)';
+  for(let i=0;i<=heads;i++){
+    const y=top+headH*i;
+    ctx.setLineDash(i%1?[]:[]);ctx.beginPath();ctx.moveTo(f.x+10,y);ctx.lineTo(f.x+f.w-10,y);
+    ctx.globalAlpha=0.5;ctx.stroke();ctx.globalAlpha=1;
+    if(i<heads)ctx.fillText((i+1)+'.', f.x+f.w-14, y+headH*0.5+3);
+  }
+  // sub-fraction marks within head-modules (1/2, 1/3) — Dürer's real method
+  if(showSub){
+    ctx.strokeStyle='rgba(95,184,163,.7)';ctx.lineWidth=0.9;ctx.setLineDash([3,3]);
+    for(let i=0;i<heads;i++){
+      const y0=top+headH*i;
+      [1/3,1/2,2/3].forEach(fr=>{const y=y0+headH*fr;ctx.beginPath();ctx.moveTo(f.x+f.w*0.30,y);ctx.lineTo(f.x+f.w*0.70,y);ctx.stroke();});
+    }
+    ctx.setLineDash([]);
+    ctx.fillStyle='rgba(95,184,163,.85)';ctx.font='italic 11px Inter';ctx.textAlign='left';
+    ctx.fillText('podziałki 1/3 · 1/2 · 2/3 wewnątrz głów', f.x, f.y+f.h+24);
+  } else {
+    ctx.fillStyle='rgba(236,230,214,.6)';ctx.font='italic 12px Inter';ctx.textAlign='left';
+    ctx.fillText('wzrost = '+heads+' × wysokość głowy — system modularny, nie φ', f.x, f.y+f.h+24);
+  }
+  ctx.restore();
+  // title
+  ctx.fillStyle='rgba(227,178,60,.85)';ctx.font='italic 12px Inter';ctx.textAlign='left';
+  ctx.fillText('kanon Dürera: figura w modułach głowy', f.x, f.y-12);
+}
+function drawDurerMode(){ctx.clearRect(0,0,W,H);const f=frame();drawFrameBox(f);drawDurerFigure(f);}
+
+/* ---------- panel + dock ---------- */
+function renderPanel(){
+  const m=MOVES[move];
+  let extra='';
+  if(move===1){
+    extra=`<div class="eq"><span class="x">0,618</span> &nbsp;vs&nbsp; <span class="x">0,667</span> &nbsp;⟹&nbsp; Δ ≈ 4,9%</div>`;
+  } else if(move===2){
+    extra=`<div class="eq">wzrost = <span class="x">${heads}</span> × głowa &nbsp;·&nbsp; ułamki ½, ⅓, ¼</div>`;
+  }
+  $('#panel').innerHTML=`<div class="step">Ruch ${move+1} / 3</div><h1 class="serif">${m.t}</h1>
+    <p class="line">${m.line}</p><p class="fact">${m.fact}</p>${extra}
+    <span class="chip rom">Romantyzm — siatka po fakcie</span>`;
+  $('#hint').innerHTML=m.hintTxt;
+  document.querySelectorAll('#moves button').forEach((b,i)=>b.classList.toggle('active',i===move));
+  $('#ctlSpiral').classList.toggle('on',move===0);
+  $('#ctlGrid').classList.toggle('on',move===1);
+  $('#ctlDurer').classList.toggle('on',move===2);
+}
+function draw(){ if(move===0)drawSpiralMode(); else if(move===1)drawGridMode(); else drawDurerMode(); }
+
+const movesEl=$('#moves');
+const seen={0:false,1:false,2:false};
+function markSeen(i){
+  if(seen[i])return;seen[i]=true;
+  if(window.SA)SA.add(4,'Tryb zbadany: '+MOVES[i].t.split(' ')[0]);
+  if(seen[0]&&seen[1]&&seen[2]&&window.SA&&!window._allModes){window._allModes=1;SA.award('esteta');SA.add(6,'Wszystkie tryby Eurytmii');}
+}
+MOVES.forEach((m,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="nb">${i+1}</span><b>${m.t}</b>`;
+  b.addEventListener('click',()=>{move=i;markSeen(i);renderPanel();draw();});movesEl.appendChild(b);});
+
+/* ---------- M1 controls: drag + rotate the spiral ---------- */
+let dragging=false;
+cv.addEventListener('pointerdown',e=>{if(move!==0)return;dragging=true;spiral.x=e.clientX;spiral.y=e.clientY;draw();});
+cv.addEventListener('pointermove',e=>{if(!dragging||move!==0)return;spiral.x=e.clientX;spiral.y=e.clientY;draw();});
+addEventListener('pointerup',()=>{if(dragging){dragging=false;if(window.SA&&!window._spiralMoved){window._spiralMoved=1;SA.add(4,'Spirala przesunięta');}}});
+$('#rotSlider').addEventListener('input',()=>{spiral.rot=(+$('#rotSlider').value)*Math.PI/180;draw();});
+$('#mirrorBtn').addEventListener('click',()=>{spiral.mirror=!spiral.mirror;draw();});
+
+/* ---------- M2 controls: grid toggles ---------- */
+$('#tgPhi').addEventListener('click',()=>{showPhi=!showPhi;$('#tgPhi').classList.toggle('on',showPhi);draw();});
+$('#tgThirds').addEventListener('click',()=>{showThirds=!showThirds;$('#tgThirds').classList.toggle('on',showThirds);
+  if(window.SA&&showThirds&&!window._thirdsOn){window._thirdsOn=1;SA.add(4,'Trójpodział nałożony');}draw();});
+
+/* ---------- M3 controls: head count + subdivisions ---------- */
+$('#headSlider').addEventListener('input',()=>{heads=+$('#headSlider').value;$('#headVal').textContent=heads;
+  if(window.SA&&!window._headMoved){window._headMoved=1;SA.add(4,'Zmieniono kanon głów');}renderPanel();draw();});
+$('#tgSubdiv').addEventListener('click',()=>{showSub=!showSub;$('#tgSubdiv').classList.toggle('on',showSub);
+  if(window.SA&&showSub&&!window._subOn){window._subOn=1;SA.add(4,'Podziałki Dürera');}draw();});
+
+/* ---------- go ---------- */
+document.querySelectorAll('#moves button')[0].classList.add('active');
+seen[0]=true; // first mode is shown on load
+resize();renderPanel();
+setTimeout(()=>$('#loading').classList.add('gone'),500);
+if(window.SA){SA.mountHUD();SA.visit('eurytmia');}
+</script>
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata V · Ciało — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);--panel-2:#191527;
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--gold-deep:#a9801f;--ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;--blue:#5a86b8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#c{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(130% 100% at 42% 46%,transparent 50%,rgba(0,0,0,.6) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;color:var(--mute);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:15;width:322px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 80px -40px #000}
+.panel .step{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:27px;margin:7px 0 8px;line-height:1.05}
+.panel .line{font-size:13.5px;color:var(--mute);line-height:1.62;margin:0 0 13px}
+.panel .fact{font-family:"Fraunces",serif;font-style:italic;font-size:14.5px;color:var(--ivory);border-left:2px solid var(--gold);padding-left:13px;line-height:1.5}
+.panel .fact b{font-style:normal;color:var(--gold-br)}
+.panel .eq{font-family:"Fraunces",serif;font-size:18px;color:var(--gold-br);margin-top:14px;font-variant-numeric:tabular-nums;line-height:1.4}
+.panel .eq .x{color:var(--ivory)} .panel .eq.match{color:var(--verd)} .panel .eq.off{color:var(--crimson)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-top:15px;color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.chip.rom{color:var(--crimson);background:rgba(210,85,63,.1);border:1px solid rgba(210,85,63,.3)}
+.chip.rom::before{background:var(--crimson)}
+
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:11px;width:max-content;max-width:94vw}
+.ctx{min-height:0;display:flex;align-items:center;gap:13px}
+.ctlbox{display:none;align-items:center;gap:13px;background:rgba(8,7,13,.6);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:12px;padding:9px 16px;font-size:12px;color:var(--mute)}
+.ctlbox.on{display:flex}
+.ctlbox b{color:var(--gold-br);font-family:"Fraunces",serif;font-variant-numeric:tabular-nums}
+.ctlbox .sep{width:1px;height:16px;background:var(--line-soft)}
+.ctlbox input[type=range]{-webkit-appearance:none;width:200px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));outline:none}
+.ctlbox input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+.ctlbox input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+.mini{font-family:"Inter";font-size:11.5px;color:var(--mute);background:var(--panel-2);border:1px solid var(--line-soft);border-radius:9px;padding:8px 13px;cursor:pointer;transition:.2s}
+.mini:hover{color:var(--ivory);border-color:var(--gold)}
+.mini.gold{color:#1a1305;background:var(--gold);border-color:var(--gold)}.mini.gold:hover{background:var(--gold-br)}
+.mini.act{color:#1a1305;background:var(--gold);border-color:var(--gold)}
+.moves{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.moves button{display:flex;align-items:center;gap:9px;background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 14px;cursor:pointer;transition:.22s;color:var(--mute)}
+.moves button .nb{font-family:"Fraunces",serif;font-size:13px;color:var(--gold-br);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%}
+.moves button b{font-size:11.5px;font-weight:500;color:var(--ivory)}
+.moves button:hover{background:rgba(255,255,255,.04)}
+.moves button.active{background:rgba(227,178,60,.12);border-color:var(--gold)}
+.moves button.active .nb{background:var(--gold);color:#1a1305;border-color:var(--gold)}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:15;font-size:10px;letter-spacing:.04em;color:var(--faint);line-height:1.7;pointer-events:none;max-width:200px}
+@media(max-width:820px){.panel{top:auto;bottom:150px;right:50%;transform:translateX(50%);width:min(420px,92vw)}.hint{display:none}.moves button b{display:none}.ctlbox input[type=range]{width:140px}}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata V · Ciało</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"></aside>
+
+<div class="dock">
+  <div class="ctx">
+    <div class="ctlbox" id="ctlNavel">
+      <span>górny : dolny</span><span><b id="ratioVal">—</b></span>
+      <span class="sep"></span>
+      <span>od φ</span><span><b id="phiDist">—</b></span>
+      <span class="sep"></span>
+      <button class="mini" id="navelReset">↺ pępek</button>
+    </div>
+    <div class="ctlbox" id="ctlVitr">
+      <button class="mini act" id="tgSquare">▦ Kwadrat</button>
+      <button class="mini act" id="tgCircle">◯ Koło</button>
+      <span class="sep"></span>
+      <span>wzrost : rozpiętość = <b>1 : 1</b></span>
+    </div>
+    <div class="ctlbox" id="ctlMod">
+      <span>seria</span>
+      <button class="mini act" id="tgRed">czerwona</button>
+      <button class="mini" id="tgBlue">niebieska</button>
+      <span class="sep"></span>
+      <span>podniesiona ręka <b>226 cm</b></span>
+    </div>
+  </div>
+  <div class="moves" id="moves"></div>
+</div>
+
+<div class="hint" id="hint"></div>
+<div id="loading"><div class="ph">Φ</div><p>kreślę ciało</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script>
+"use strict";
+const PHI=(1+Math.sqrt(5))/2, TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const $=s=>document.querySelector(s);
+const fmt=(x,n=3)=>x.toFixed(n).replace('.',',');
+
+const MOVES=[
+ {n:'❶',t:'Pępek i złoty podział',
+  line:'Przesuwaj poziomą linijkę po sylwetce. Odczyt pokazuje stosunek odcinka górnego do dolnego. Pępek leży około 0,61–0,63 wysokości — blisko φ, ale nie w punkt, i u każdego człowieka inaczej.',
+  fact:'Zeising twierdził, że pępek dzieli ciało <b>dokładnie</b> w φ. To dobór pod tezę — realne ciała dają <b>1,5–1,7</b>.',
+  hintTxt:'Przeciągnij linijkę w górę i w dół po sylwetce.'},
+ {n:'❷',t:'Witruwiusz',
+  line:'Nałóż kwadrat (wzrost ≈ rozpiętość ramion) i koło o środku w pępku. To jest faktyczne twierdzenie Witruwiusza z „O architekturze” — proporcje proste, współmierne, kwadrat 1:1. Nie φ.',
+  fact:'Witruwiusz <b>nigdy</b> nie wspomniał φ. „Człowiek φ-witruwiański” to <b>współczesna dorobiona</b> nakładka.',
+  hintTxt:'Włączaj i wyłączaj kwadrat oraz koło.'},
+ {n:'❸',t:'Modulor',
+  line:'Le Corbusier (1948) celowo wpisał φ w skalę człowieka: postać 183 cm, pępek w φ, podniesiona ręka na 226 cm. Czerwona i niebieska seria miar wspina się po ciele jak Fibonacci.',
+  fact:'Tu φ jest <b>prawdziwe</b> — bo architekt je <b>zaprojektował</b>, a nie dlatego, że ciało samo z siebie jest złote.',
+  hintTxt:'Przełączaj serię czerwoną i niebieską.'}
+];
+
+/* ---------- canvas ---------- */
+const cv=$('#c'),ctx=cv.getContext('2d');let W,H,DPR;
+function resize(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);layout();draw();}
+addEventListener('resize',resize);
+
+/* ---------- state ---------- */
+let move=0;
+let navelT=0.62;            // fraction of body height from top where the measuring line sits (0=head top)
+let dragging=false;
+let showSquare=true, showCircle=true;
+let modSeries='red';
+const explored={navel:false,vitr:false,mod:false};
+// gold guards
+let gNavelClose=false, gNavelTaught=false, gVitr=false, gMod=false;
+
+/* ---------- figure geometry (computed on layout) ----------
+   The figure is drawn front-facing, arms raised slightly out (Vitruvius pose at rest).
+   We anchor a "body box": topY = crown of head, botY = soles. armspan ~= height. */
+let FIG={};
+function layout(){
+  const cx=W*0.40;
+  const h=Math.min(H*0.74,560);
+  const topY=H*0.5-h*0.5;
+  const botY=topY+h;
+  const u=h/8;            // head-unit (8-heads canon) — shared by draw + hit-test
+  const shW=u*0.92;      // shoulder half-width — used by nearLine()/handleX()
+  FIG={cx,h,topY,botY,u,shW,
+       // anatomical landmark fractions (from crown, of total height)
+       chin:0.13, shoulder:0.20, navelTrue:0.62, hip:0.48, knee:0.74, crotch:0.50};
+}
+
+/* draw the stylized human figure (original line-art) */
+function drawFigure(opts){
+  opts=opts||{};
+  const {cx,h,topY}=FIG;
+  const Y=f=>topY+f*h;                  // landmark y
+  const u=h/8;                          // ~head unit (8 heads tall canon)
+  const col=opts.dim?'rgba(236,230,214,.34)':'rgba(236,230,214,.62)';
+  const lw=Math.max(1.6,h*0.004);
+  ctx.lineJoin='round';ctx.lineCap='round';
+
+  // proportions
+  const headTop=Y(0), headBot=Y(0.125), headR=u*0.46;
+  const neckY=Y(0.155);
+  const shY=Y(0.205), shW=u*0.92;        // shoulder half-width
+  const waistY=Y(0.46), waistW=u*0.52;
+  const hipY=Y(0.52), hipW=u*0.70;
+  const crotchY=Y(0.50);
+  const kneeY=Y(0.745), ankleY=Y(0.97), footY=Y(1.0);
+  const handY=Y(0.62);                   // fingertips hang near navel level
+  const elbowY=Y(0.42);
+
+  ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=lw;
+
+  // head
+  ctx.beginPath();ctx.ellipse(cx,(headTop+headBot)/2,headR*0.84,headR,0,0,TAU);ctx.stroke();
+  // neck
+  ctx.beginPath();ctx.moveTo(cx-u*0.18,headBot);ctx.lineTo(cx-u*0.20,neckY);
+  ctx.moveTo(cx+u*0.18,headBot);ctx.lineTo(cx+u*0.20,neckY);ctx.stroke();
+
+  // torso outline (shoulders -> waist -> hips)
+  ctx.beginPath();
+  ctx.moveTo(cx-shW*0.55,neckY);                       // left shoulder top
+  ctx.quadraticCurveTo(cx-shW,shY,cx-shW*0.9,shY+u*0.1);// shoulder cap L
+  ctx.lineTo(cx-waistW,waistY);                        // down to waist L
+  ctx.lineTo(cx-hipW,hipY);                            // out to hip L
+  ctx.lineTo(cx-u*0.16,crotchY);                       // to crotch
+  ctx.lineTo(cx+u*0.16,crotchY);
+  ctx.lineTo(cx+hipW,hipY);                            // hip R
+  ctx.lineTo(cx+waistW,waistY);                        // waist R
+  ctx.lineTo(cx+shW*0.9,shY+u*0.1);                    // shoulder cap R
+  ctx.quadraticCurveTo(cx+shW,shY,cx+shW*0.55,neckY);  // right shoulder top
+  ctx.stroke();
+
+  // arms (from shoulder to hand, slightly out)
+  ctx.beginPath();
+  ctx.moveTo(cx-shW*0.92,shY+u*0.06);ctx.quadraticCurveTo(cx-shW*1.12,elbowY,cx-shW*1.0,handY);
+  ctx.moveTo(cx+shW*0.92,shY+u*0.06);ctx.quadraticCurveTo(cx+shW*1.12,elbowY,cx+shW*1.0,handY);
+  ctx.stroke();
+  // hands
+  ctx.beginPath();ctx.ellipse(cx-shW*1.0,handY+u*0.06,u*0.12,u*0.20,0,0,TAU);
+  ctx.ellipse(cx+shW*1.0,handY+u*0.06,u*0.12,u*0.20,0,0,TAU);ctx.stroke();
+
+  // legs (crotch -> knees -> ankles), centred stance
+  const legX=u*0.34;
+  ctx.beginPath();
+  ctx.moveTo(cx-u*0.10,crotchY);ctx.lineTo(cx-legX,kneeY);ctx.lineTo(cx-legX*0.86,ankleY);
+  ctx.moveTo(cx+u*0.10,crotchY);ctx.lineTo(cx+legX,kneeY);ctx.lineTo(cx+legX*0.86,ankleY);
+  ctx.stroke();
+  // feet
+  ctx.beginPath();
+  ctx.moveTo(cx-legX*0.86,ankleY);ctx.lineTo(cx-legX*0.86-u*0.36,footY);ctx.lineTo(cx-legX*0.86+u*0.06,footY);
+  ctx.moveTo(cx+legX*0.86,ankleY);ctx.lineTo(cx+legX*0.86+u*0.36,footY);ctx.lineTo(cx+legX*0.86-u*0.06,footY);
+  ctx.stroke();
+
+  // navel dot
+  if(opts.navelDot){
+    ctx.fillStyle='rgba(227,178,60,.85)';
+    ctx.beginPath();ctx.arc(cx,Y(FIG.navelTrue),u*0.07,0,TAU);ctx.fill();
+  }
+  return {Y,u,shW,handY};
+}
+
+/* =========== M1 — navel & golden section =========== */
+function drawNavel(){
+  ctx.clearRect(0,0,W,H);
+  const f=drawFigure({navelDot:true});
+  const {cx,h,topY,botY}=FIG;
+  const u=f.u;
+  const lineY=topY+navelT*h;
+  const upper=navelT, lower=1-navelT;
+  const ratio=upper/lower;
+  const span=Math.max(f.shW*1.5,u*1.9);
+
+  // upper segment bracket (crown -> line) on the left
+  const bx=cx-span-u*0.6;
+  drawBracket(bx,topY,lineY,'rgba(95,184,163,.7)','górny');
+  drawBracket(bx,lineY,botY,'rgba(210,85,63,.7)','dolny');
+
+  // measuring line (draggable)
+  ctx.strokeStyle='#f2d27a';ctx.lineWidth=2;ctx.setLineDash([7,5]);
+  ctx.beginPath();ctx.moveTo(cx-span,lineY);ctx.lineTo(cx+span,lineY);ctx.stroke();ctx.setLineDash([]);
+  // grab handle
+  ctx.fillStyle='#fff';ctx.strokeStyle='#e3b23c';ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(cx+span,lineY,8,0,TAU);ctx.fill();ctx.stroke();
+  // small up/down chevrons on handle
+  ctx.strokeStyle='#1a1305';ctx.lineWidth=1.6;
+  ctx.beginPath();ctx.moveTo(cx+span-3,lineY-2);ctx.lineTo(cx+span,lineY-5);ctx.lineTo(cx+span+3,lineY-2);
+  ctx.moveTo(cx+span-3,lineY+2);ctx.lineTo(cx+span,lineY+5);ctx.lineTo(cx+span+3,lineY+2);ctx.stroke();
+
+  // ratio label near line
+  ctx.fillStyle='#f2d27a';ctx.font='600 15px Inter';ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText(fmt(ratio,3),cx+span+18,lineY);
+  ctx.textBaseline='alphabetic';
+
+  // φ-meter (vertical gauge on the right side of scene)
+  drawPhiMeter(ratio);
+}
+function drawBracket(x,y0,y1,col,label){
+  const u=FIG.u, tick=u*0.16;
+  ctx.strokeStyle=col;ctx.lineWidth=1.4;
+  ctx.beginPath();
+  ctx.moveTo(x+tick,y0);ctx.lineTo(x,y0);ctx.lineTo(x,y1);ctx.lineTo(x+tick,y1);
+  ctx.stroke();
+  ctx.save();ctx.translate(x-6,(y0+y1)/2);ctx.rotate(-Math.PI/2);
+  ctx.fillStyle=col;ctx.font='11px Inter';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(label,0,0);ctx.restore();ctx.textBaseline='alphabetic';
+}
+function drawPhiMeter(ratio){
+  const x=Math.min(W*0.82,FIG.cx+FIG.h*0.62), y0=FIG.topY+FIG.h*0.06, y1=FIG.topY+FIG.h*0.94;
+  const lo=1.30, hi=1.90;
+  const py=v=>y1-(clamp(v,lo,hi)-lo)/(hi-lo)*(y1-y0);
+  // track
+  ctx.strokeStyle='rgba(236,230,214,.18)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(x,y0);ctx.lineTo(x,y1);ctx.stroke();
+  // ticks 1.4 1.5 1.6 1.7 1.8
+  ctx.font='10px Inter';ctx.textAlign='right';ctx.textBaseline='middle';
+  [1.4,1.5,1.6,1.7,1.8].forEach(v=>{
+    ctx.strokeStyle='rgba(236,230,214,.22)';ctx.beginPath();ctx.moveTo(x-4,py(v));ctx.lineTo(x+4,py(v));ctx.stroke();
+    ctx.fillStyle='rgba(236,230,214,.45)';ctx.fillText(fmt(v,1),x-9,py(v));
+  });
+  // "typical bodies" band 1.5–1.7
+  ctx.fillStyle='rgba(210,85,63,.14)';
+  ctx.fillRect(x+6,py(1.7),22,py(1.5)-py(1.7));
+  ctx.fillStyle='rgba(210,85,63,.7)';ctx.font='9px Inter';ctx.textAlign='left';
+  ctx.fillText('typowe',x+10,(py(1.5)+py(1.7))/2-7);
+  ctx.fillText('ciała',x+10,(py(1.5)+py(1.7))/2+5);
+  // φ marker
+  ctx.strokeStyle='#e3b23c';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(x-7,py(PHI));ctx.lineTo(x+7,py(PHI));ctx.stroke();
+  ctx.fillStyle='#e3b23c';ctx.font='italic 600 13px Fraunces';ctx.textAlign='right';
+  ctx.fillText('φ',x-12,py(PHI)+4);
+  // current value pointer
+  const near=Math.abs(ratio-PHI)<0.015;
+  ctx.fillStyle=near?'#5fb8a3':'#fff';
+  const cy=py(ratio);
+  ctx.beginPath();ctx.moveTo(x+5,cy);ctx.lineTo(x+13,cy-5);ctx.lineTo(x+13,cy+5);ctx.closePath();ctx.fill();
+  ctx.textAlign='left';ctx.font='600 12px Inter';ctx.fillStyle=near?'#5fb8a3':'rgba(236,230,214,.85)';
+  ctx.fillText(fmt(ratio,3),x+16,cy+4);
+  ctx.textBaseline='alphabetic';
+}
+
+/* =========== M2 — Vitruvius =========== */
+function drawVitr(){
+  ctx.clearRect(0,0,W,H);
+  const f=drawFigure({navelDot:true});
+  const {cx,h,topY,botY}=FIG;
+  const u=f.u;
+  const navelY=topY+FIG.navelTrue*h;
+  // The square: side = height. Centred horizontally on figure, base at soles.
+  const side=h;
+  const sx=cx-side/2, sy=botY-side;
+  if(showSquare){
+    ctx.strokeStyle='rgba(227,178,60,.75)';ctx.lineWidth=1.6;
+    ctx.strokeRect(sx,sy,side,side);
+    // arm-span markers (fingertips touch the verticals)
+    ctx.strokeStyle='rgba(227,178,60,.35)';ctx.lineWidth=1;ctx.setLineDash([3,4]);
+    ctx.beginPath();ctx.moveTo(sx,f.handY-u*0.1);ctx.lineTo(sx+side,f.handY-u*0.1);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(227,178,60,.8)';ctx.font='11px Inter';ctx.textAlign='center';
+    ctx.fillText('bok = wzrost = rozpiętość ramion  ·  1 : 1',cx,sy-12);
+  }
+  // The circle: centre at navel, radius reaches fingertips/soles (Vitruvius: spread limbs touch circle).
+  if(showCircle){
+    const r=botY-navelY;   // navel to soles
+    ctx.strokeStyle='rgba(90,134,184,.8)';ctx.lineWidth=1.6;
+    ctx.beginPath();ctx.arc(cx,navelY,r,0,TAU);ctx.stroke();
+    // navel centre cross
+    ctx.strokeStyle='rgba(90,134,184,.6)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx-8,navelY);ctx.lineTo(cx+8,navelY);ctx.moveTo(cx,navelY-8);ctx.lineTo(cx,navelY+8);ctx.stroke();
+    ctx.fillStyle='rgba(90,134,184,.85)';ctx.font='11px Inter';ctx.textAlign='center';
+    ctx.fillText('koło · środek = pępek',cx,navelY+r+18);
+  }
+  // verdict note
+  ctx.fillStyle='rgba(236,230,214,.5)';ctx.font='italic 12px Fraunces';ctx.textAlign='center';
+  ctx.fillText('proporcje proste, współmierne — bez φ',cx,topY-6);
+}
+
+/* =========== M3 — Modulor =========== */
+function drawMod(){
+  ctx.clearRect(0,0,W,H);
+  const f=drawFigure({dim:true});
+  const {cx,h,topY,botY}=FIG;
+  const u=f.u;
+  // raised-hand height = 2.26 m on a 1.83 m figure => extends above crown by (2.26-1.83)/1.83 of height
+  const raise=h*((2.26-1.83)/1.83);
+  const raisedY=topY-raise;
+  const navelY=topY+FIG.navelTrue*h;
+
+  // draw raised arm (one hand up) — schematic, from shoulder to raised point
+  const shY=topY+0.205*h;
+  ctx.strokeStyle='rgba(236,230,214,.5)';ctx.lineWidth=Math.max(1.6,h*0.004);ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(cx+f.shW*0.8,shY+u*0.05);ctx.quadraticCurveTo(cx+f.shW*0.5,topY-raise*0.3,cx,raisedY+u*0.2);ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,raisedY+u*0.05,u*0.13,0,TAU);ctx.stroke();
+
+  // key heights
+  const marks=[
+    {y:raisedY, lab:'226 cm · podniesiona ręka', c:'#e3b23c', big:true},
+    {y:topY,    lab:'183 cm · czubek głowy', c:'rgba(236,230,214,.7)'},
+    {y:navelY,  lab:'113 cm · pępek (φ)', c:'#e3b23c', big:true},
+    {y:botY,    lab:'0 · stopy', c:'rgba(236,230,214,.5)'}
+  ];
+  const gx=cx+f.shW*1.5;
+  marks.forEach(m=>{
+    ctx.strokeStyle=m.c;ctx.lineWidth=m.big?1.6:1;ctx.setLineDash(m.big?[]:[3,4]);
+    ctx.beginPath();ctx.moveTo(cx-f.shW*1.4,m.y);ctx.lineTo(gx+8,m.y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=m.c;ctx.font=(m.big?'600 ':'')+'11px Inter';ctx.textAlign='left';
+    ctx.fillText(m.lab,gx+14,m.y+4);
+  });
+
+  // 183 = 113 + 70 ; 113/70 ≈ φ ; the navel splits standing height in φ by design
+  // red series: descending from raised hand (226) by /φ ; blue from doubled values
+  const ax=cx-f.shW*1.9;   // axis x for the climbing scale bars
+  const totalTopY=raisedY, totalBotY=botY;
+  const fullCm=226;
+  const pxPerCm=(totalBotY-totalTopY)/fullCm;
+  function cmY(cm){return totalBotY-cm*pxPerCm;}
+
+  // Modulor red series (≈ heights in cm) and blue series — Fibonacci-like, ratio φ
+  const red=[226,140,86,53,33,20];     // each ≈ previous /φ
+  const blue=[183,113,70,43,27,17];    // blue ≈ red shifted
+  const series=modSeries==='red'?red:blue;
+  const sCol=modSeries==='red'?'#d2553f':'#5a86b8';
+  const sFaint=modSeries==='red'?'rgba(210,85,63,.16)':'rgba(90,134,184,.16)';
+
+  // draw nested segment bars climbing the figure (each segment = a measure)
+  ctx.textAlign='right';ctx.textBaseline='middle';
+  for(let i=0;i<series.length;i++){
+    const top=cmY(series[i]);
+    const bot=i===0?totalBotY:cmY(series[i]); // we draw markers, plus connecting brace from 0
+    // tick at this height
+    ctx.strokeStyle=sCol;ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(ax-10,top);ctx.lineTo(ax+10,top);ctx.stroke();
+    ctx.fillStyle=sCol;ctx.font='600 10.5px Inter';
+    ctx.fillText(series[i]+'',ax-15,top);
+  }
+  // vertical axis
+  ctx.strokeStyle='rgba(236,230,214,.2)';ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(ax,cmY(series[0]));ctx.lineTo(ax,totalBotY);ctx.stroke();
+  // brace segments between consecutive measures, alternating fill, to show the climbing rhythm
+  for(let i=0;i<series.length-1;i++){
+    const yA=cmY(series[i]), yB=cmY(series[i+1]);
+    if(i%2===0){ctx.fillStyle=sFaint;ctx.fillRect(ax-7,yA,14,yB-yA);}
+    // ratio between neighbours
+    const r=series[i]/series[i+1];
+    ctx.fillStyle=sCol;ctx.font='italic 9.5px Inter';ctx.textAlign='left';
+    ctx.fillText('×φ',ax+12,(yA+yB)/2);
+    ctx.textAlign='right';
+  }
+  ctx.textBaseline='alphabetic';
+
+  // header
+  ctx.fillStyle='rgba(227,178,60,.85)';ctx.font='italic 13px Fraunces';ctx.textAlign='center';
+  ctx.fillText('Modulor Le Corbusiera — φ wstawione ręką architekta',cx,topY-raise-10>20?topY-raise-10:18);
+  ctx.fillStyle=sCol;ctx.font='600 11px Inter';
+  ctx.fillText('seria '+(modSeries==='red'?'czerwona':'niebieska')+' · iloraz sąsiadów ≈ φ',cx,botY+24);
+}
+
+/* ---------- panel + dock ---------- */
+function renderPanel(){
+  const m=MOVES[move];
+  let extra='';
+  if(move===0){
+    const upper=navelT, lower=1-navelT, ratio=upper/lower;
+    const d=Math.abs(ratio-PHI);
+    const near=d<0.015;
+    const cls=near?' match':(d>0.08?' off':'');
+    extra=`<div class="eq${cls}"><span class="x">${fmt(ratio,3)}</span> ${near?'≈':'≠'} φ <span style="font-size:13px;color:var(--mute)"> (Δ ${fmt(d,3)})</span></div>`;
+  }
+  $('#panel').innerHTML=`<div class="step">Ruch ${move+1} / 3</div><h1 class="serif">${m.t}</h1>
+    <p class="line">${m.line}</p><p class="fact">${m.fact}</p>${extra}
+    <span class="chip rom">Romantyzm — serce numerologii</span>`;
+  $('#hint').textContent=m.hintTxt;
+  document.querySelectorAll('#moves button').forEach((b,i)=>b.classList.toggle('active',i===move));
+  $('#ctlNavel').classList.toggle('on',move===0);
+  $('#ctlVitr').classList.toggle('on',move===1);
+  $('#ctlMod').classList.toggle('on',move===2);
+  if(move===0)updateNavelReadout();
+}
+function updateNavelReadout(){
+  const upper=navelT, lower=1-navelT, ratio=upper/lower, d=Math.abs(ratio-PHI);
+  $('#ratioVal').textContent=fmt(ratio,3);
+  $('#phiDist').textContent=(d<0.0005?'0':'±'+fmt(d,3));
+}
+function draw(){ if(move===0)drawNavel(); else if(move===1)drawVitr(); else drawMod(); }
+
+const movesEl=$('#moves');
+MOVES.forEach((m,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="nb">${i+1}</span><b>${m.t}</b>`;
+  b.addEventListener('click',()=>{move=i;markExplored();renderPanel();draw();});movesEl.appendChild(b);});
+
+function markExplored(){
+  if(move===0&&!explored.navel){explored.navel=true;}
+  if(move===1&&!explored.vitr){explored.vitr=true; if(window.SA&&!gVitr){gVitr=true;SA.add(7,'Witruwiusz: proporcje proste, bez φ');}}
+  if(move===2&&!explored.mod){explored.mod=true; if(window.SA&&!gMod){gMod=true;SA.add(7,'Modulor: φ wstawione ręką architekta');}}
+  checkBadge();
+}
+function checkBadge(){
+  if(explored.navel&&explored.vitr&&explored.mod&&window.SA){SA.award('mierniczy');}
+}
+
+/* ---------- M1 dragging interaction ---------- */
+function lineYpx(){return FIG.topY+navelT*FIG.h;}
+function handleX(){return FIG.cx+Math.max(FIG.shW*1.5,FIG.u*1.9);}
+function nearLine(px,py){
+  const ly=lineYpx();
+  const span=Math.max(FIG.shW*1.5,FIG.u*1.9);
+  // grab if near the dashed line band OR the handle
+  const onBand=px>FIG.cx-span-30 && px<FIG.cx+span+40 && Math.abs(py-ly)<22;
+  return onBand;
+}
+function setNavelFromY(py){
+  navelT=clamp((py-FIG.topY)/FIG.h, 0.34, 0.80);
+  if(move===0){updateNavelReadout();renderPanel();draw();}
+  // dragging the line counts as exploring mode 1 (its button starts already-active)
+  if(!explored.navel){explored.navel=true;checkBadge();}
+  // gold: reach close to φ once
+  const ratio=navelT/(1-navelT);
+  if(window.SA){
+    if(Math.abs(ratio-PHI)<0.015 && !gNavelClose){gNavelClose=true;SA.add(6,'Trafiony złoty podział ciała');}
+  }
+  // gold: explored the spread (moved far enough both above and below) -> understood variability
+  trackSpread();
+}
+let spreadLo=navelT, spreadHi=navelT;
+function trackSpread(){
+  spreadLo=Math.min(spreadLo,navelT);spreadHi=Math.max(spreadHi,navelT);
+  if(window.SA && !gNavelTaught && (spreadHi-spreadLo)>0.14){gNavelTaught=true;SA.add(6,'Ciała różnią się: 1,5–1,7');}
+}
+function evPos(e){
+  const t=e.touches?e.touches[0]:e;
+  // map client coords into the canvas LOGICAL space (the space draw() uses: 0..W, 0..H).
+  // robust to any CSS display size of the canvas vs its bitmap.
+  const r=cv.getBoundingClientRect();
+  const sx=r.width?W/r.width:1, sy=r.height?H/r.height:1;
+  return {x:(t.clientX-r.left)*sx, y:(t.clientY-r.top)*sy};
+}
+cv.addEventListener('pointerdown',e=>{
+  if(move!==0)return;
+  const p=evPos(e);
+  if(nearLine(p.x,p.y)){
+    dragging=true;
+    try{if(cv.setPointerCapture&&e.pointerId!=null)cv.setPointerCapture(e.pointerId);}catch(_){}
+    setNavelFromY(p.y);
+  }
+});
+cv.addEventListener('pointermove',e=>{
+  if(move!==0)return;
+  const p=evPos(e);
+  cv.style.cursor=(dragging||nearLine(p.x,p.y))?'ns-resize':'default';
+  if(dragging){setNavelFromY(p.y);e.preventDefault&&e.preventDefault();}
+});
+function endDrag(){dragging=false;}
+cv.addEventListener('pointerup',endDrag);
+cv.addEventListener('pointercancel',endDrag);
+addEventListener('pointerup',endDrag);
+
+/* ---------- controls ---------- */
+$('#navelReset').addEventListener('click',()=>{navelT=0.62;updateNavelReadout();renderPanel();draw();});
+
+$('#tgSquare').addEventListener('click',()=>{showSquare=!showSquare;$('#tgSquare').classList.toggle('act',showSquare);draw();});
+$('#tgCircle').addEventListener('click',()=>{showCircle=!showCircle;$('#tgCircle').classList.toggle('act',showCircle);draw();});
+
+$('#tgRed').addEventListener('click',()=>{modSeries='red';$('#tgRed').classList.add('act');$('#tgBlue').classList.remove('act');draw();});
+$('#tgBlue').addEventListener('click',()=>{modSeries='blue';$('#tgBlue').classList.add('act');$('#tgRed').classList.remove('act');draw();});
+
+/* ---------- go ---------- */
+resize();renderPanel();
+setTimeout(()=>$('#loading').classList.add('gone'),500);
+if(window.SA){SA.mountHUD();SA.visit('cialo');}
+</script>
+</body>
+</html>

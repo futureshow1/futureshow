@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Komnata XI · Nauka — SECTIO AUREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08070d;--ink:#0c0b14;--panel:rgba(17,15,26,.9);
+  --line:rgba(227,178,60,.18);--line-soft:rgba(236,230,214,.1);
+  --gold:#e3b23c;--gold-br:#f2d27a;--ivory:#ece6d6;--mute:#9a93a6;--faint:#6b6478;
+  --verd:#5fb8a3;--crimson:#d2553f;--amber:#e0913a;
+  --ease:cubic-bezier(.4,.01,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--ivory);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+#scene{position:fixed;inset:0;z-index:0}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#cgl{z-index:0}#c2d{z-index:1}
+.serif{font-family:"Fraunces",Georgia,serif}
+#vig{position:fixed;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(130% 100% at 50% 46%,transparent 50%,rgba(0,0,0,.6) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;pointer-events:none}
+.brand{display:flex;align-items:baseline;gap:10px;pointer-events:auto}
+.brand .phi{font-family:"Fraunces",serif;font-size:21px;color:var(--gold)}
+.brand b{font-family:"Fraunces",serif;font-weight:500;font-size:15px;letter-spacing:.13em}
+.brand small{font-size:9.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+.back{pointer-events:auto;font-size:12px;letter-spacing:.04em;color:var(--mute);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,13,.5);backdrop-filter:blur(8px);transition:.25s}
+.back:hover{color:var(--gold-br);border-color:var(--gold)}
+
+.panel{position:fixed;top:50%;right:26px;transform:translateY(-50%);z-index:15;width:330px;max-width:86vw;
+  background:var(--panel);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 80px -40px #000;transition:opacity .35s}
+.panel .step{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.panel h1{font-family:"Fraunces",serif;font-weight:400;font-size:27px;margin:7px 0 8px;line-height:1.05}
+.panel .line{font-size:13.5px;color:var(--mute);line-height:1.6;margin:0 0 14px}
+.panel .fact{font-family:"Fraunces",serif;font-style:italic;font-size:14.5px;color:var(--ivory);border-left:2px solid var(--gold);padding-left:13px;line-height:1.5}
+.panel .fact b{font-style:normal;color:var(--gold-br)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-top:15px;color:var(--gold-br);background:rgba(227,178,60,.1);border:1px solid rgba(227,178,60,.3)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.chip.val{color:var(--verd);background:rgba(95,184,163,.1);border-color:rgba(95,184,163,.3)}.chip.val::before{background:var(--verd)}
+.chip.mix{color:var(--amber);background:rgba(224,145,58,.1);border-color:rgba(224,145,58,.3)}.chip.mix::before{background:var(--amber)}
+
+.dock{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:12px;width:max-content;max-width:94vw}
+.ctx{min-height:0;display:flex;align-items:center;gap:14px}
+.ctx .ctlbox{display:none;align-items:center;gap:13px;background:rgba(8,7,13,.6);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:12px;padding:9px 16px;font-size:12px;color:var(--mute);flex-wrap:wrap;justify-content:center}
+.ctx .ctlbox.on{display:flex}
+.ctx .ctlbox b{color:var(--gold-br);font-family:"Fraunces",serif;font-variant-numeric:tabular-nums}
+.moves{display:flex;gap:7px;background:rgba(8,7,13,.55);backdrop-filter:blur(12px);border:1px solid var(--line-soft);border-radius:14px;padding:7px}
+.moves button{display:flex;align-items:center;gap:9px;background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 14px;cursor:pointer;transition:.22s;color:var(--mute)}
+.moves button .nb{font-family:"Fraunces",serif;font-size:13px;color:var(--gold-br);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%}
+.moves button b{font-size:11.5px;font-weight:500;color:var(--ivory);letter-spacing:.01em}
+.moves button:hover{background:rgba(255,255,255,.04)}
+.moves button.active{background:rgba(227,178,60,.12);border-color:var(--gold)}
+.moves button.active .nb{background:var(--gold);color:#1a1305;border-color:var(--gold)}
+button.mini{font-family:"Inter";font-size:11px;color:var(--mute);background:var(--ink);border:1px solid var(--line-soft);border-radius:8px;padding:6px 11px;cursor:pointer;transition:.2s;white-space:nowrap}
+button.mini:hover{color:var(--ivory);border-color:var(--gold)}
+input[type=range]{-webkit-appearance:none;width:140px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-deep,#a9801f),var(--gold));outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);cursor:pointer}
+
+.hint{position:fixed;bottom:26px;left:24px;z-index:15;font-size:10px;letter-spacing:.04em;color:var(--faint);line-height:1.7;pointer-events:none;max-width:190px}
+@media(max-width:820px){.panel{top:auto;bottom:154px;right:50%;transform:translateX(50%);width:min(420px,92vw)}.hint{display:none}.moves button b{display:none}}
+@media(max-width:390px){.dock{max-width:100vw;padding:0 6px}.moves{gap:4px;padding:5px}.moves button{padding:8px 11px}.ctx .ctlbox{font-size:11px;gap:9px;padding:8px 11px}input[type=range]{width:108px}.panel{padding:18px}}
+
+#loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--void);transition:opacity .8s}
+#loading.gone{opacity:0;pointer-events:none}
+#loading .ph{font-family:"Fraunces",serif;font-size:60px;color:var(--gold);animation:spin 3s linear infinite}
+#loading p{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#loading .ph{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="cgl"></canvas>
+<canvas id="c2d"></canvas>
+<div id="vig"></div>
+
+<div class="topbar">
+  <div class="brand"><span class="phi">Φ</span><b>SECTIO&nbsp;AUREA</b><small>Komnata XI · Nauka</small></div>
+  <a class="back" href="atlas.html#atlas">← Atlas</a>
+</div>
+
+<aside class="panel" id="panel"></aside>
+
+<div class="dock">
+  <div class="ctx">
+    <div class="ctlbox" id="ctlFrac">
+      <button class="mini" id="fPrev">‹ wstecz</button>
+      <span>przybliżenie <b id="fConv">1/1</b></span>
+      <button class="mini" id="fNext">dalej ›</button>
+      <button class="mini" id="fAuto">▶ auto</button>
+    </div>
+    <div class="ctlbox" id="ctlLeaf">
+      <span>kąt rozbieżności <b id="lAng">137,5°</b></span>
+      <input type="range" id="lSlider" min="110000" max="150000" step="1" value="137507">
+      <button class="mini" id="lGold">↺ złoty kąt</button>
+    </div>
+    <div class="ctlbox" id="ctlPen">
+      <button class="mini" id="pDeflate">↗ podziel (deflacja)</button>
+      <span>poziom <b id="pLevel">0</b></span>
+      <button class="mini" id="pDNA">o krysztale życia</button>
+    </div>
+  </div>
+  <div class="moves" id="moves"></div>
+</div>
+
+<div class="hint" id="hint"></div>
+<div id="loading"><div class="ph">Φ</div><p>liczę zbieżność φ</p></div>
+
+<script src="i18n.js"></script>
+<script src="progress.js"></script>
+<script src="menu.js"></script>
+<script>
+"use strict";
+const PHI=(1+Math.sqrt(5))/2, INVPHI=1/PHI, TAU=Math.PI*2, D2R=Math.PI/180;
+const SQ5=Math.sqrt(5);
+const GOLDEN_ANGLE=360*(2-PHI); // 137.5077640500...
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const $=s=>document.querySelector(s);
+const fmt=(x,n)=>x.toFixed(n).replace('.',',');
+
+/* Fibonacci convergents of [1;1,1,1,...] = F(n+1)/F(n) */
+const FIB=[1,1]; for(let i=2;i<24;i++)FIB.push(FIB[i-1]+FIB[i-2]);
+function convergent(k){ // k>=1 -> FIB[k+1]/FIB[k]; e.g. k=1 -> 1/1, k=2 -> 2/1, k=3 -> 3/2
+  const p=FIB[k+1], q=FIB[k];
+  return {p,q,val:p/q,err:Math.abs(p/q-PHI)};
+}
+/* pi convergents [3;7,15,1,292,...] — for the comparison readout */
+const PI_CONV=[[3,1],[22,7],[333,106],[355,113],[103993,33102]];
+
+const MOVES=[
+ {n:'❶',t:'Ułamek łańcuchowy',
+  line:'φ = 1 + 1/(1 + 1/(1 + …)) — same jedynki, w nieskończoność. Ucinając go, dostajesz iloraz kolejnych liczb Fibonacciego: 1/1, 2/1, 3/2, 5/3, 8/5, 13/8 … Ponieważ każdy współczynnik to najmniejsza możliwa jedynka, φ przybliża się ułamkami najtrudniej ze wszystkich liczb.',
+  fact:'φ = [1; 1, 1, 1, …] &nbsp;·&nbsp; zbieżne = <b>Fₙ₊₁ / Fₙ</b> &nbsp;·&nbsp; błąd · q² → <b>1/√5</b> (tw. Hurwitza)',
+  verdict:'mix'},
+ {n:'❷',t:'Dlaczego liście',
+  line:'Skoro φ opiera się przybliżeniu ułamkiem, złoty kąt 137,5° nigdy nie ustawia nasion w równe rzędy — żaden obrót nie domyka się okresowo. Efekt: upakowanie bez luk, fizyczne optimum. To wynik (Douady i Couder, 1992 — minimalizacja energii), nie magia.',
+  fact:'złoty kąt = 360° · (2 − φ) = <b>137,5°</b> &nbsp;·&nbsp; tylko tu spirala wypełnia się równomiernie',
+  verdict:'mix'},
+ {n:'❸',t:'Penrose i Schrödinger',
+  line:'Te same φ rządzą niperiodycznym kafelkowaniem Penrose’a (dwa romby o stosunku przekątnych φ) i prawdziwymi quasikryształami (Shechtman, Nobel 2011) — uporządkowanie dalekiego zasięgu bez powtarzalności. Schrödinger (1944) przewidział, że życie potrzebuje „kryształu aperiodycznego” — później okazało się nim DNA.',
+  fact:'romby Penrose’a: cienki <b>36°/144°</b>, gruby <b>72°/108°</b> &nbsp;·&nbsp; aperiodyczny porządek = quasikryształ',
+  verdict:'val'},
+];
+const HINTS=[
+ 'krok po kroku — patrz, jak błąd maleje (wolniej niż dla π)',
+ 'pokrętło kąta — równo pakuje się tylko przy 137,5°',
+ 'podziel romby (deflacja) — wzór nigdy się nie powtarza',
+];
+
+/* ---------- canvases ---------- */
+const c2d=$('#c2d'), ctx=c2d.getContext('2d');
+const cgl=$('#cgl');
+let W,H,DPR;
+function resize(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;
+  [c2d,cgl].forEach(cv=>{cv.width=W*DPR;cv.height=H*DPR;});
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  if(gl)gl.viewport(0,0,cgl.width,cgl.height);}
+addEventListener('resize',resize);
+
+/* ---------- WebGL ambient gold field (subtle backdrop, like pentada's GL layer) ---------- */
+let gl=cgl.getContext('webgl')||cgl.getContext('experimental-webgl');
+let glProg,uRes,uTime;
+const FRAG=`precision highp float;
+uniform vec2 uRes; uniform float uTime;
+const float PI=3.14159265359;
+void main(){
+  vec2 uv=(gl_FragCoord.xy-0.5*uRes)/min(uRes.x,uRes.y);
+  float r=length(uv);
+  float a=atan(uv.y,uv.x);
+  // faint logarithmic-spiral shimmer, golden-angle stepped
+  float v=0.0;
+  for(int i=0;i<5;i++){
+    float fi=float(i);
+    v+=cos(a*(fi+1.0)*2.39996 + log(r+0.04)*6.2832 - uTime*0.6);
+  }
+  float t=0.5+0.5*sin(v*0.5);
+  vec3 base=vec3(0.031,0.027,0.055);
+  vec3 gold=vec3(0.55,0.43,0.16);
+  vec3 col=mix(base,gold,smoothstep(0.55,1.0,t)*0.5);
+  col*=smoothstep(1.25,0.1,r);
+  gl_FragColor=vec4(col,1.0);
+}`;
+function initGL(){
+  if(!gl){console.warn('WebGL niedostępny — tło pominięte');return;}
+  const vs=gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vs,'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}');gl.compileShader(vs);
+  const fs=gl.createShader(gl.FRAGMENT_SHADER);gl.shaderSource(fs,FRAG);gl.compileShader(fs);
+  if(!gl.getShaderParameter(fs,gl.COMPILE_STATUS)){console.warn('FRAG:',gl.getShaderInfoLog(fs));gl=null;return;}
+  glProg=gl.createProgram();gl.attachShader(glProg,vs);gl.attachShader(glProg,fs);gl.linkProgram(glProg);
+  if(!gl.getProgramParameter(glProg,gl.LINK_STATUS)){console.warn('LINK:',gl.getProgramInfoLog(glProg));gl=null;return;}
+  gl.useProgram(glProg);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(glProg,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  uRes=gl.getUniformLocation(glProg,'uRes');uTime=gl.getUniformLocation(glProg,'uTime');
+}
+function renderGL(t){
+  if(!glProg)return;
+  gl.useProgram(glProg);
+  gl.uniform2f(uRes,cgl.width,cgl.height);
+  gl.uniform1f(uTime,t*0.001);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+}
+
+/* ============================================================
+   MODE 0 — Ułamek łańcuchowy / continued fraction + error plot
+   ============================================================ */
+let fK=1;               // current convergent index (1..N)
+let fAuto=false, fAccum=0;
+const F_MAX=11;         // up to 144/89
+function drawFraction(){
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2, cy=H/2;
+  const narrow=W<720;
+
+  // ---- left: the nested fraction, built up to fK levels ----
+  const fx=narrow? W*0.5 : W*0.30;
+  const ftop=narrow? H*0.16 : cy-150;
+  ctx.textAlign='center';
+  ctx.fillStyle='rgba(236,230,214,.55)';ctx.font='600 12px Inter';
+  ctx.fillText('φ  =  1 +  1/(1 +  1/(1 +  …))', fx, ftop-14);
+
+  // current convergent value, big
+  const c=convergent(fK);
+  ctx.fillStyle='#f2d27a';ctx.font='400 46px Fraunces';
+  ctx.fillText(c.p+' / '+c.q, fx, ftop+38);
+  ctx.fillStyle='rgba(236,230,214,.85)';ctx.font='400 26px Fraunces';
+  ctx.fillText('= '+fmt(c.val,6), fx, ftop+78);
+  ctx.fillStyle='rgba(154,147,166,.9)';ctx.font='12px Inter';
+  ctx.fillText('zbieżna nr '+fK+'  ·  Fibonacci '+c.p+' i '+c.q, fx, ftop+104);
+
+  // a visual stack of the convergents so far (climbing toward phi)
+  const sx=fx, sy0=ftop+150, rowH=narrow?0:20;
+  if(!narrow){
+    ctx.textAlign='center';
+    for(let k=1;k<=fK;k++){
+      const cc=convergent(k);
+      const yy=sy0+(k-1)*rowH;
+      const on=(k===fK);
+      ctx.font=(on?'600 ':'400 ')+'13px Inter';
+      ctx.fillStyle=on?'#f2d27a':'rgba(154,147,166,.55)';
+      ctx.fillText(cc.p+'/'+cc.q+'  =  '+fmt(cc.val,5), sx, yy);
+    }
+  }
+
+  // ---- right: error vs q² plot (the Hurwitz ceiling) ----
+  const plotX=narrow? W*0.10 : W*0.56;
+  const plotY=narrow? H*0.50 : cy-150;
+  const plotW=narrow? W*0.80 : Math.min(380,W*0.36);
+  const plotH=narrow? H*0.30 : 300;
+  drawErrorPlot(plotX,plotY,plotW,plotH,c);
+}
+function drawErrorPlot(x,y,w,h,cur){
+  // y-axis: q²·|err| in [0..0.5]; bars per convergent of phi + a pi reference curve
+  ctx.save();
+  // frame
+  ctx.strokeStyle='rgba(236,230,214,.18)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+h);ctx.lineTo(x+w,y+h);ctx.stroke();
+  ctx.textAlign='left';ctx.font='10px Inter';ctx.fillStyle='rgba(154,147,166,.8)';
+  ctx.fillText('q² · błąd', x+2, y-8);
+  ctx.textAlign='right';
+  // Hurwitz ceiling line 1/sqrt5
+  const yCeil=y+h-(1/SQ5)/0.5*h;
+  ctx.strokeStyle='rgba(224,145,58,.7)';ctx.setLineDash([5,4]);ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(x,yCeil);ctx.lineTo(x+w,yCeil);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(224,145,58,.95)';ctx.font='10px Inter';ctx.textAlign='left';
+  ctx.fillText('1/√5 ≈ 0,447 — granica Hurwitza', x+6, yCeil-5);
+
+  const N=Math.min(F_MAX,9);
+  const bw=w/(N+1);
+  // phi bars (hug the ceiling -> worst case / slowest)
+  for(let k=1;k<=N;k++){
+    const cc=convergent(k);
+    const q2e=cc.err*cc.q*cc.q; // ->0.447
+    const bx=x+ (k-0.5)*bw;
+    const bh=q2e/0.5*h;
+    const on=(k<=fK);
+    ctx.globalAlpha=on?1:0.18;
+    ctx.fillStyle='#e3b23c';
+    ctx.fillRect(bx-bw*0.32, y+h-bh, bw*0.64, bh);
+  }
+  ctx.globalAlpha=1;
+  // pi reference: q²·err is far below & erratic (fast convergence)
+  ctx.strokeStyle='rgba(95,184,163,.85)';ctx.lineWidth=1.6;
+  ctx.beginPath();
+  for(let i=0;i<PI_CONV.length;i++){
+    const [p,q]=PI_CONV[i];
+    const e=Math.abs(p/q-Math.PI), q2e=Math.min(0.5,e*q*q);
+    const px=x+(i+0.7)*bw, py=y+h-q2e/0.5*h;
+    i?ctx.lineTo(px,py):ctx.moveTo(px,py);
+    ctx.fillStyle='rgba(95,184,163,.9)';
+  }
+  ctx.stroke();
+  for(let i=0;i<PI_CONV.length;i++){
+    const [p,q]=PI_CONV[i];
+    const e=Math.abs(p/q-Math.PI), q2e=Math.min(0.5,e*q*q);
+    const px=x+(i+0.7)*bw, py=y+h-q2e/0.5*h;
+    ctx.beginPath();ctx.arc(px,py,2.6,0,TAU);ctx.fillStyle='#5fb8a3';ctx.fill();
+  }
+  // legend
+  ctx.textAlign='left';ctx.font='11px Inter';
+  ctx.fillStyle='#e3b23c';ctx.fillText('■ φ — stoi pod sufitem (najwolniej)', x, y+h+20);
+  ctx.fillStyle='#5fb8a3';ctx.fillText('● π — nurkuje nisko (zbiega szybko)', x, y+h+36);
+  // current absolute error readout
+  ctx.fillStyle='rgba(236,230,214,.85)';ctx.font='600 12px Inter';
+  ctx.fillText('|błąd| = '+cur.err.toExponential(3).replace('.',','), x, y+h+56);
+  ctx.restore();
+}
+
+/* ============================================================
+   MODE 1 — Dlaczego liście / phyllotaxis spiral (Vogel)
+   ============================================================ */
+let leafAngle=GOLDEN_ANGLE; // degrees
+let leafGrow=0;             // 0..1 reveal
+function drawLeaves(){
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2, cy=H*0.47;
+  const N=420;
+  const shown=Math.floor(N*Math.min(1,leafGrow));
+  const scale=Math.min(W,H)*0.020;
+  const aRad=leafAngle*D2R;
+  // closeness to golden angle drives the "evenness" hue
+  const dist=Math.abs(leafAngle-GOLDEN_ANGLE);
+  const even=clamp(1-dist/2.4,0,1); // ~within a couple degrees => packed
+  for(let i=0;i<shown;i++){
+    const r=scale*Math.sqrt(i);
+    const th=i*aRad;
+    const x=cx+r*Math.cos(th), y=cy+r*Math.sin(th);
+    const rad=clamp(1.4+r*0.018,1.4,4.6);
+    // colour: even packing => warm gold; spokes/gaps => cool crimson
+    const g=lerp(0.33,0.89,even), rr=lerp(0.82,0.95,even), b=lerp(0.25,0.24,even);
+    ctx.beginPath();ctx.arc(x,y,rad,0,TAU);
+    ctx.fillStyle=`rgba(${(rr*255)|0},${(g*255)|0},${(b*255)|0},0.9)`;ctx.fill();
+  }
+  // labels
+  ctx.textAlign='center';
+  ctx.font='600 13px Inter';
+  ctx.fillStyle=even>0.6?'rgba(227,178,60,.95)':'rgba(210,85,63,.95)';
+  ctx.fillText(even>0.6?'UPAKOWANIE BEZ LUK — fizyczne optimum':'WIDOCZNE PROMIENIE I LUKI — układ okresowy', cx, cy+Math.min(W,H)*0.40);
+  ctx.fillStyle='rgba(236,230,214,.6)';ctx.font='12px Inter';
+  ctx.fillText('kąt = '+fmt(leafAngle,3)+'°   (złoty: 137,508°)', cx, cy+Math.min(W,H)*0.40+22);
+}
+
+/* ============================================================
+   MODE 2 — Penrose (P3 rhombi) deflation patch + Schrödinger note
+   ============================================================ */
+let penLevel=0;            // deflation depth 0..4
+let penTris=[];            // Robinson half-rhombus triangles
+let penShowDNA=false, penNoteT=0;
+// Robinson triangle deflation. type 0 = thin (acute "small"), type 1 = thick (fat).
+// Each triangle = {ty, a,b,c} complex points (b is apex with the special angle).
+function cpx(x,y){return {x,y};}
+function mid(p,q,t){return {x:p.x+(q.x-p.x)*t, y:p.y+(q.y-p.y)*t};}
+function buildPenroseSeed(R){
+  // 10 thick (type 1) triangles fanned around centre -> a decagon "sun"
+  const c=cpx(0,0);
+  const tris=[];
+  for(let i=0;i<10;i++){
+    let b=cpx(Math.cos((2*i-1)*Math.PI/10)*R, Math.sin((2*i-1)*Math.PI/10)*R);
+    let a=cpx(Math.cos((2*i+1)*Math.PI/10)*R, Math.sin((2*i+1)*Math.PI/10)*R);
+    if(i%2===0){const t=a;a=b;b=t;}
+    tris.push({ty:1, a:c, b:a, c:b});
+  }
+  return tris;
+}
+function deflate(tris){
+  const out=[];
+  for(const T of tris){
+    const {ty,a,b,c}=T;
+    if(ty===0){ // thin (type 0)
+      const P=mid(a,b,INVPHI); // divide a->b at 1/phi
+      out.push({ty:0, a:c, b:P, c:b});
+      out.push({ty:1, a:P, b:c, c:a});
+    } else { // thick (type 1)
+      const Q=mid(b,a,INVPHI);
+      const R=mid(b,c,INVPHI);
+      out.push({ty:1, a:R, b:c, c:a});
+      out.push({ty:1, a:Q, b:R, c:b});
+      out.push({ty:0, a:R, b:Q, c:a});
+    }
+  }
+  return out;
+}
+function rebuildPenrose(){
+  const R=Math.min(W,H)*0.42;
+  let t=buildPenroseSeed(R);
+  for(let i=0;i<penLevel;i++)t=deflate(t);
+  penTris=t;
+}
+function drawPenrose(){
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2, cy=H*0.47;
+  ctx.save();ctx.translate(cx,cy);
+  // fill half-rhombi: type1 (thick) warm gold, type0 (thin) deep amber
+  for(const T of penTris){
+    ctx.beginPath();
+    ctx.moveTo(T.a.x,T.a.y);ctx.lineTo(T.b.x,T.b.y);ctx.lineTo(T.c.x,T.c.y);ctx.closePath();
+    if(T.ty===1){ctx.fillStyle='rgba(227,178,60,.16)';}
+    else{ctx.fillStyle='rgba(224,145,58,.10)';}
+    ctx.fill();
+  }
+  // draw rhombus edges (skip the internal a-c cut so pairs read as rhombi)
+  ctx.lineWidth=1;ctx.strokeStyle='rgba(242,210,122,.55)';
+  for(const T of penTris){
+    ctx.beginPath();
+    ctx.moveTo(T.a.x,T.a.y);ctx.lineTo(T.b.x,T.b.y);ctx.lineTo(T.c.x,T.c.y);
+    ctx.stroke();
+  }
+  ctx.restore();
+  // legend
+  ctx.textAlign='center';ctx.font='600 12px Inter';
+  ctx.fillStyle='rgba(236,230,214,.7)';
+  ctx.fillText('Kafelkowanie Penrose’a (P3) — dwa romby, stosunek przekątnych = φ', cx, cy+Math.min(W,H)*0.46);
+  ctx.fillStyle='rgba(154,147,166,.85)';ctx.font='11px Inter';
+  ctx.fillText('wzór nigdy się nie powtarza — porządek aperiodyczny', cx, cy+Math.min(W,H)*0.46+20);
+
+  // Schrödinger / DNA note card (fades in)
+  penNoteT=clamp(penNoteT+(penShowDNA?0.05:-0.07),0,1);
+  if(penNoteT>0.01){
+    const bw=Math.min(360,W*0.8), bx=cx-bw/2, by=cy-Math.min(W,H)*0.46-96;
+    ctx.globalAlpha=penNoteT;
+    ctx.fillStyle='rgba(12,11,20,.92)';ctx.strokeStyle='rgba(95,184,163,.5)';ctx.lineWidth=1;
+    roundRect(bx,by,bw,82,12);ctx.fill();ctx.stroke();
+    ctx.textAlign='left';
+    ctx.fillStyle='#5fb8a3';ctx.font='600 11px Inter';
+    ctx.fillText('Schrödinger, 1944 — „Czym jest życie?”', bx+16, by+24);
+    ctx.fillStyle='rgba(236,230,214,.82)';ctx.font='12px Inter';
+    wrap('Życie potrzebuje „kryształu aperiodycznego” — porządku bez powtórzeń. Dekadę później odczytano w nim DNA.', bx+16, by+44, bw-32, 16);
+    ctx.globalAlpha=1;
+  }
+}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function wrap(text,x,y,maxW,lh){const words=text.split(' ');let line='',yy=y;
+  for(const w of words){const test=line+w+' ';if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line,x,yy);line=w+' ';yy+=lh;}else line=test;}
+  ctx.fillText(line,x,yy);}
+
+/* ---------- panel + dock ---------- */
+let move=0;
+const vClass={mix:'mix',val:'val'};
+const vLabel={mix:'MIESZANY',val:'RYGOR · NOBEL'};
+function renderPanel(){
+  const m=MOVES[move];
+  $('#panel').innerHTML=`<div class="step">Ruch ${move+1} / 3 · Nauka</div><h1 class="serif">${m.t}</h1>
+    <p class="line">${m.line}</p><p class="fact">${m.fact}</p>
+    <span class="chip ${vClass[m.verdict]||''}">${vLabel[m.verdict]||''}</span>`;
+  $('#hint').textContent=HINTS[move];
+  document.querySelectorAll('#moves button').forEach((b,i)=>b.classList.toggle('active',i===move));
+  $('#ctlFrac').classList.toggle('on',move===0);
+  $('#ctlLeaf').classList.toggle('on',move===1);
+  $('#ctlPen').classList.toggle('on',move===2);
+  cgl.style.opacity=(move===1)?'0':'0.85';
+  c2d.style.opacity='1';
+}
+const movesEl=$('#moves');
+MOVES.forEach((m,i)=>{const b=document.createElement('button');
+  b.innerHTML=`<span class="nb">${i+1}</span><b>${m.t}</b>`;
+  b.addEventListener('click',()=>{ move=i; onEnterMode(i); renderPanel(); });
+  movesEl.appendChild(b);});
+
+/* explored-modes tracking -> badge after all 3 */
+const explored=[false,false,false];
+function onEnterMode(i){
+  explored[i]=true;
+  if(i===1){ leafGrow=0; }
+  if(i===2){ penNoteT=0; rebuildPenrose(); }
+  // per-mode first-entry gold (guarded once each)
+  if(i===0 && !onEnterMode._g0){onEnterMode._g0=1; if(window.SA)SA.add(4,'Ułamek łańcuchowy φ');}
+  if(i===1 && !onEnterMode._g1){onEnterMode._g1=1; if(window.SA)SA.add(4,'Filotaksja: dlaczego liście');}
+  if(i===2 && !onEnterMode._g2){onEnterMode._g2=1; if(window.SA)SA.add(4,'Penrose i quasikryształy');}
+  maybeMaster();
+}
+function maybeMaster(){
+  if(explored[0]&&explored[1]&&explored[2] && !maybeMaster._done){
+    maybeMaster._done=1;
+    if(window.SA){SA.add(8,'Trzy oblicza prawdziwego φ'); SA.award('matematyk');}
+  }
+}
+
+/* ---------- controls: MODE 0 ---------- */
+function setConv(k){
+  fK=clamp(k,1,F_MAX);
+  const c=convergent(fK);
+  $('#fConv').textContent=c.p+'/'+c.q;
+  // reward reaching the deep convergents (guard once)
+  if(fK>=8 && !setConv._deep){setConv._deep=1; if(window.SA)SA.add(6,'Zbieżność φ doliczona — 1/√5');}
+}
+$('#fPrev').addEventListener('click',()=>{fAuto=false;$('#fAuto').textContent='▶ auto';setConv(fK-1);});
+$('#fNext').addEventListener('click',()=>{fAuto=false;$('#fAuto').textContent='▶ auto';setConv(fK+1);});
+$('#fAuto').addEventListener('click',()=>{fAuto=!fAuto;$('#fAuto').textContent=fAuto?'⏸ stop':'▶ auto';
+  if(fAuto&&fK>=F_MAX)setConv(1);
+  if(fAuto&&!$('#fAuto')._g){$('#fAuto')._g=1;if(window.SA)SA.add(3,'Zbieżność w ruchu');}});
+
+/* ---------- controls: MODE 1 ---------- */
+$('#lSlider').addEventListener('input',e=>{
+  leafAngle=(+e.target.value)/1000;
+  $('#lAng').textContent=fmt(leafAngle,3)+'°';
+  if(Math.abs(leafAngle-GOLDEN_ANGLE)<0.05 && !$('#lSlider')._gFound){
+    $('#lSlider')._gFound=1; if(window.SA)SA.add(6,'Złoty kąt 137,5° — upakowanie bez luk');
+  }
+});
+$('#lGold').addEventListener('click',()=>{
+  leafAngle=GOLDEN_ANGLE; $('#lSlider').value=Math.round(GOLDEN_ANGLE*1000);
+  $('#lAng').textContent=fmt(leafAngle,3)+'°';
+  if(!$('#lSlider')._gFound){$('#lSlider')._gFound=1; if(window.SA)SA.add(6,'Złoty kąt 137,5° — upakowanie bez luk');}
+});
+
+/* ---------- controls: MODE 2 ---------- */
+$('#pDeflate').addEventListener('click',()=>{
+  penLevel=Math.min(4,penLevel+1); $('#pLevel').textContent=penLevel; rebuildPenrose();
+  if(penLevel>=3 && !$('#pDeflate')._g){$('#pDeflate')._g=1; if(window.SA)SA.add(5,'Deflacja Penrose’a — porządek aperiodyczny');}
+});
+$('#pDNA').addEventListener('click',()=>{
+  penShowDNA=!penShowDNA;
+  if(penShowDNA && !$('#pDNA')._g){$('#pDNA')._g=1; if(window.SA)SA.add(5,'Kryształ aperiodyczny — Schrödinger → DNA');}
+});
+
+/* ---------- loop ---------- */
+let last=0;
+function frame(t){
+  const dt=Math.min(0.05,(t-last)/1000);last=t;
+  renderGL(t);
+  if(move===0){
+    if(fAuto){fAccum+=dt; if(fAccum>0.85){fAccum=0; setConv(fK>=F_MAX?1:fK+1);} }
+    drawFraction();
+  } else if(move===1){
+    leafGrow=Math.min(1,leafGrow+dt*0.9);
+    drawLeaves();
+  } else if(move===2){
+    drawPenrose();
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- go ---------- */
+resize();initGL();rebuildPenrose();
+explored[0]=true; onEnterMode._g0=1; // first mode shown on load; count its gold once
+if(window.SA)SA.add(4,'Ułamek łańcuchowy φ');
+setConv(1);
+renderPanel();
+requestAnimationFrame(frame);
+setTimeout(()=>$('#loading').classList.add('gone'),550);
+if(window.SA){SA.mountHUD();SA.visit('nauka');}
+</script>
+</body>
+</html>
