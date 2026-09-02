@@ -320,6 +320,14 @@
     .projects--gated { padding-top: 40px; }
     .projects--gated .case { opacity: 0.88; }
     .gated-note { color: var(--text-dim); font-size: 0.92rem; max-width: 640px; margin: -8px 0 28px; line-height: 1.6; }
+    .group-label { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin: 34px 0 14px; padding-left: 2px; }
+    .group-label:first-of-type { margin-top: 10px; }
+    .projects--selected { padding-top: 30px; }
+    .mini { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; }
+    .mini__row { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: 0.92rem; transition: all 0.2s; }
+    .mini__row:hover { border-color: var(--border-glow); color: var(--accent); transform: translateX(2px); }
+    .mini__g { color: var(--text-dim); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    @media (max-width: 760px) { .mini { grid-template-columns: 1fr; } .mini__g { display: none; } }
     .projects__more { margin-top: 28px; text-align: center; }
     .projects__more a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 10px; padding: 14px 28px; color: var(--text-dim); font-size: 0.92rem; font-weight: 600; transition: all 0.2s; text-decoration: none; }
     .projects__more a:hover { color: var(--accent); border-color: var(--border-glow); transform: translateY(-1px); }
@@ -1142,114 +1150,15 @@
   <!-- Hero -->
   <section class="projects" id="projects" style="padding-top:140px">
     <div class="section-label">
-      <span data-lang="en">All projects · 28</span>
-      <span data-lang="pl">Wszystkie projekty · 28</span>
+      <span data-lang="en">More projects · 11</span>
+      <span data-lang="pl">Więcej projektów · 11</span>
     </div>
+    <p class="gated-note">
+      <span data-lang="en">Everything that did not make the front page, grouped by theme. The 17 selected case studies are listed at the bottom.</span>
+      <span data-lang="pl">Wszystko, co nie zmieściło się na stronie głównej, pogrupowane tematycznie. 17 wybranych realizacji jest spisanych na dole.</span>
+    </p>
+    <h3 class="group-label"><span data-lang="en">Data, science, simulations</span><span data-lang="pl">Dane, nauka, symulacje</span></h3>
     <div class="projects__grid">
-      <!-- Matryca / Big Tech Files (latest) -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/matryca/" target="_blank">
-          <div style="width:100%;height:100%;background:linear-gradient(180deg,#100808 0%,#060606 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- paper texture -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
-              <filter id="matrycaPaper">
-                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"/>
-                <feColorMatrix values="0 0 0 0 0.64  0 0 0 0 0.18  0 0 0 0 0.18  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#matrycaPaper)"/>
-            </svg>
-            <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(163,45,45,0.7);text-transform:uppercase;z-index:2;">
-              <span>Akta · Dossier</span>
-              <span>Big Tech Files</span>
-            </div>
-            <!-- broken seal -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
-              <defs>
-                <radialGradient id="matrycaWax" cx="40%" cy="35%" r="65%">
-                  <stop offset="0%" stop-color="#d04040"/>
-                  <stop offset="60%" stop-color="#A32D2D"/>
-                  <stop offset="100%" stop-color="#5a1414"/>
-                </radialGradient>
-                <path id="matrycaSealArc" d="M 180 180 m -110 0 a 110 110 0 0 1 220 0"/>
-              </defs>
-              <!-- left half of broken seal -->
-              <g>
-                <path d="M 180 30 A 150 150 0 0 0 30 180 L 168 180 Z M 30 180 A 150 150 0 0 0 165 328 L 174 188 Z" fill="url(#matrycaWax)"/>
-                <path d="M 168 30 L 162 80 L 175 130 L 165 165 L 170 195 L 158 230 L 172 270 L 162 310 L 174 340" stroke="#1a0303" stroke-width="3" fill="none" stroke-opacity="0.4"/>
-              </g>
-              <!-- right half, slightly offset (broken apart) -->
-              <g transform="translate(18, 8) rotate(4 180 180)">
-                <path d="M 180 30 A 150 150 0 0 1 330 180 L 192 180 Z M 330 180 A 150 150 0 0 1 195 328 L 186 188 Z" fill="url(#matrycaWax)"/>
-              </g>
-              <!-- text on left half -->
-              <text font-family="'JetBrains Mono', monospace" font-size="13" letter-spacing="5" fill="#f2c4c4" fill-opacity="0.95">
-                <textPath href="#matrycaSealArc" startOffset="6%">PRIVACY · CONFIDENTIAL · PRIVACY</textPath>
-              </text>
-              <!-- shadow at break -->
-              <line x1="170" y1="0" x2="195" y2="360" stroke="#0a0202" stroke-width="2" stroke-opacity="0.7"/>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d4c8c8;letter-spacing:0.01em;">
-              Matryca · Big Tech Files
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Investigative / Reference base</span>
-            <span data-lang="pl">Dziennikarstwo śledcze / Baza referencyjna</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Matryca · Big Tech Files</div>
-            <div class="case__desc">33 cases, with the paperwork. Cambridge Analytica, Pegasus, Project Dragonfly, the DMA fines, Clearview AI, the 533M Meta data leak, the Facebook Files, Uber's God View. Not a headline collection — each case reconstructed from primary sources: DPC, EDPB, FTC, ICO decisions, court filings, whistleblower disclosures. Every claim linked to a document. Plus 12 whistleblower profiles, a 16-scene narrative timeline, four opening essays, 33 sixty-second silent animated explainers. No cookies, no analytics, no tracking — a portal about surveillance doesn't surveil.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Matryca · Sprawy Big Techu</div>
-            <div class="case__desc">33 sprawy z dokumentami w ręku. Cambridge Analytica, Pegasus, Project Dragonfly, kary DMA, Clearview AI, wyciek 533 milionów kont Meta, „Facebook Files", Uber God View. Nie zbiór nagłówków — rekonstrukcja każdej sprawy ze źródeł pierwotnych: decyzji DPC, EROD, FTC, ICO, akt sądowych, raportów sygnalistów. Każdy fakt z linkiem do dokumentu. Plus 12 biografii ludzi, którzy te sprawy ujawnili, narracyjna oś czasu w 16 scenach, cztery eseje wstępne, 33 sześćdziesięciosekundowe animacje bez dźwięku. Bez ciasteczek, statystyk i śledzenia — portal o nadzorze nie nadzoruje.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">33</div>
-              <div class="case__metric-label">
-                <span data-lang="en">documented cases</span>
-                <span data-lang="pl">udokumentowanych spraw</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">12</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Big Tech companies</span>
-                <span data-lang="pl">firm Big Techu</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">480+</div>
-              <div class="case__metric-label">
-                <span data-lang="en">primary sources</span>
-                <span data-lang="pl">źródeł pierwotnych</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">PL/EN</div>
-              <div class="case__metric-label">
-                <span data-lang="en">bilingual</span>
-                <span data-lang="pl">dwujęzyczny</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow1.github.io/matryca/" target="_blank" class="case__cta">
-              Open portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow1.github.io/matryca/" target="_blank" class="case__cta">
-              Otwórz portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
       <div class="case">
         <a class="case__visual" href="klimat/">
           <div style="width:100%;height:100%;background:linear-gradient(120deg,#06182a 0%,#0a2233 38%,#2a160e 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
@@ -1336,1824 +1245,90 @@
           </div>
         </div>
       </div>
-      <!-- Global Oil & Gas Atlas -->
       <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/oil-gas-atlas/" target="_blank">
-          <div style="width:100%;height:100%;background:#060a10;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 600 340" style="position:absolute;width:100%;height:100%;" xmlns="http://www.w3.org/2000/svg">
-              <!-- Glow background -->
-              <radialGradient id="ogg1" cx="50%" cy="48%" r="45%"><stop offset="0%" stop-color="#0e1e2e" stop-opacity=".8"/><stop offset="100%" stop-color="#060a10" stop-opacity="0"/></radialGradient>
-              <rect width="600" height="340" fill="url(#ogg1)"/>
-              <!-- Grid -->
-              <line x1="0" y1="68" x2="600" y2="68" stroke="#112030" stroke-width=".4"/><line x1="0" y1="136" x2="600" y2="136" stroke="#112030" stroke-width=".4"/><line x1="0" y1="204" x2="600" y2="204" stroke="#112030" stroke-width=".4"/><line x1="0" y1="272" x2="600" y2="272" stroke="#112030" stroke-width=".4"/>
-              <line x1="120" y1="0" x2="120" y2="340" stroke="#112030" stroke-width=".4"/><line x1="240" y1="0" x2="240" y2="340" stroke="#112030" stroke-width=".4"/><line x1="360" y1="0" x2="360" y2="340" stroke="#112030" stroke-width=".4"/><line x1="480" y1="0" x2="480" y2="340" stroke="#112030" stroke-width=".4"/>
-              <!-- N America -->
-              <path d="M68,52 L85,42 L105,38 L125,40 L140,48 L148,60 L145,75 L138,88 L130,95 L135,102 L140,108 L138,118 L128,128 L118,132 L110,138 L105,148 L98,155 L88,158 L80,155 L75,148 L72,138 L75,128 L80,118 L82,108 L78,98 L72,90 L65,80 L62,68Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.5"/>
-              <!-- S America -->
-              <path d="M118,168 L128,162 L138,165 L145,175 L144,188 L140,200 L135,212 L128,222 L120,230 L112,235 L108,230 L105,218 L102,205 L105,192 L108,180Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.5"/>
-              <!-- Europe -->
-              <path d="M265,55 L272,48 L282,45 L290,48 L295,55 L292,65 L286,72 L280,78 L275,82 L272,75 L268,65Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.5"/>
-              <!-- Iberia -->
-              <path d="M250,82 L258,78 L266,80 L268,88 L262,94 L254,92 L250,86Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.2"/>
-              <!-- UK -->
-              <path d="M248,58 L252,52 L256,55 L255,62 L250,65Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1"/>
-              <!-- Scandinavia -->
-              <path d="M280,28 L285,22 L292,25 L295,35 L290,45 L285,42 L282,35Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.2"/>
-              <!-- Central/E Europe + Russia -->
-              <path d="M295,48 L310,38 L335,35 L358,40 L375,50 L380,65 L375,80 L365,92 L350,100 L335,105 L320,100 L308,92 L300,82 L295,70Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.5"/>
-              <!-- Africa -->
-              <path d="M255,105 L268,100 L282,98 L295,102 L302,112 L305,125 L302,140 L295,155 L285,168 L272,178 L260,182 L252,175 L248,162 L245,148 L242,135 L240,122 L242,112Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.5"/>
-              <!-- Middle East -->
-              <path d="M320,100 L335,95 L345,100 L348,112 L342,122 L332,128 L322,125 L318,115 L315,108Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.2"/>
-              <!-- India -->
-              <path d="M370,105 L380,100 L388,108 L390,122 L385,138 L378,148 L370,145 L365,132 L365,118Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.2"/>
-              <!-- Central/East Asia -->
-              <path d="M380,50 L405,42 L435,38 L465,42 L490,50 L505,62 L510,78 L502,90 L490,98 L475,102 L458,98 L442,92 L428,88 L415,82 L402,78 L392,72 L385,62Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.5"/>
-              <!-- SE Asia islands -->
-              <path d="M440,118 L455,115 L465,120 L462,130 L450,132 L442,128Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1"/>
-              <path d="M470,125 L485,122 L492,130 L485,138 L472,135Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1"/>
-              <!-- Australia -->
-              <path d="M445,178 L465,172 L488,170 L508,175 L518,188 L515,205 L505,218 L490,225 L475,222 L462,215 L452,205 L448,192Z" fill="#0e1e28" stroke="#2a6888" stroke-width="1.5"/>
-              <!-- NZ -->
-              <path d="M535,215 L540,210 L542,220 L538,225Z" fill="#0e1e28" stroke="#2a6888" stroke-width=".8"/>
-
-              <!-- ===== PIPELINES ===== -->
-              <!-- Nord Stream -->
-              <line x1="340" y1="48" x2="280" y2="60" stroke="#e86a20" stroke-width="1.8" stroke-dasharray="5,3"/>
-              <!-- Druzhba -->
-              <polyline points="350,55 320,68 295,75 275,80" fill="none" stroke="#e86a20" stroke-width="1.4" stroke-dasharray="4,3"/>
-              <!-- Southern Gas Corridor -->
-              <polyline points="340,100 320,95 300,88 280,85" fill="none" stroke="#2a9aba" stroke-width="1.5" stroke-dasharray="5,3"/>
-              <!-- TurkStream -->
-              <line x1="345" y1="65" x2="310" y2="85" stroke="#2a9aba" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <!-- Langeled -->
-              <line x1="282" y1="30" x2="252" y2="55" stroke="#2a9aba" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <!-- Keystone -->
-              <polyline points="95,52 100,75 108,98 115,118" fill="none" stroke="#e86a20" stroke-width="1.5" stroke-dasharray="5,3"/>
-              <!-- Transmed -->
-              <line x1="262" y1="95" x2="275" y2="82" stroke="#2a9aba" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <!-- EACOP -->
-              <line x1="290" y1="142" x2="298" y2="128" stroke="#e86a20" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <!-- Power of Siberia -->
-              <polyline points="380,58 420,55 460,52 500,60" fill="none" stroke="#2a9aba" stroke-width="1.4" stroke-dasharray="5,3"/>
-              <!-- Trans-Andean -->
-              <polyline points="108,180 118,175 128,172" fill="none" stroke="#e86a20" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <!-- NW Shelf -->
-              <polyline points="445,178 455,188 465,195" fill="none" stroke="#2a9aba" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <!-- Middle East pipelines -->
-              <polyline points="335,105 350,112 370,110" fill="none" stroke="#e86a20" stroke-width="1.4" stroke-dasharray="4,3"/>
-
-              <!-- ===== FIELDS ===== -->
-              <!-- Troll/Johan Sverdrup -->
-              <circle cx="278" cy="38" r="4" fill="#e8b830"/><circle cx="278" cy="38" r="4" fill="#e8b830" opacity=".3"><animate attributeName="r" values="4;9;4" dur="2.5s" repeatCount="indefinite"/></circle>
-              <!-- Urengoy -->
-              <circle cx="355" cy="42" r="4" fill="#2a9aba"/><circle cx="355" cy="42" r="4" fill="#2a9aba" opacity=".3"><animate attributeName="r" values="4;9;4" dur="3s" repeatCount="indefinite"/></circle>
-              <!-- Ghawar -->
-              <circle cx="335" cy="110" r="5" fill="#e8b830"/><circle cx="335" cy="110" r="5" fill="#e8b830" opacity=".3"><animate attributeName="r" values="5;11;5" dur="2s" repeatCount="indefinite"/></circle>
-              <!-- Permian -->
-              <circle cx="95" cy="118" r="4" fill="#e8b830" opacity=".9"/>
-              <!-- Hassi R'Mel -->
-              <circle cx="260" cy="108" r="3.5" fill="#2a9aba" opacity=".85"/>
-              <!-- Pre-Salt -->
-              <circle cx="138" cy="195" r="3.5" fill="#e8b830" opacity=".85"/>
-              <!-- Nigeria -->
-              <circle cx="258" cy="148" r="3" fill="#e86a20" opacity=".8"/>
-              <!-- Kashagan -->
-              <circle cx="370" cy="58" r="3" fill="#e8b830" opacity=".8"/>
-              <!-- Gorgon -->
-              <circle cx="448" cy="180" r="3.5" fill="#2a9aba" opacity=".85"/>
-              <!-- Daqing -->
-              <circle cx="488" cy="55" r="3" fill="#e8b830" opacity=".75"/>
-              <!-- Athabasca -->
-              <circle cx="88" cy="48" r="3" fill="#e8b830" opacity=".75"/>
-
-              <!-- ===== LNG ===== -->
-              <rect x="248" y="52" width="5" height="5" fill="#40c060" transform="rotate(45,250.5,54.5)"/>
-              <rect x="110" y="130" width="4" height="4" fill="#40c060" transform="rotate(45,112,132)"/>
-              <rect x="498" y="60" width="4" height="4" fill="#40c060" transform="rotate(45,500,62)"/>
-              <rect x="462" y="192" width="5" height="5" fill="#40c060" transform="rotate(45,464.5,194.5)"/>
-              <rect x="328" y="122" width="4" height="4" fill="#40c060" transform="rotate(45,330,124)"/>
-              <rect x="255" y="140" width="4" height="4" fill="#40c060" transform="rotate(45,257,142)"/>
-              <rect x="128" y="160" width="4" height="4" fill="#40c060" transform="rotate(45,130,162)"/>
-
-              <!-- ===== CHOKEPOINTS ===== -->
-              <circle cx="318" cy="118" r="6" fill="none" stroke="#e04040" stroke-width="1.2" stroke-dasharray="2,2"/>
-              <circle cx="318" cy="118" r="6" fill="none" stroke="#e04040" stroke-width=".8" opacity=".3"><animate attributeName="r" values="6;12;6" dur="3s" repeatCount="indefinite"/></circle>
-              <circle cx="432" cy="128" r="5" fill="none" stroke="#e04040" stroke-width="1" stroke-dasharray="2,2"/>
+        <a class="case__visual" href="psychedelic/" target="_blank">
+          <div style="width:100%;height:100%;background:radial-gradient(130% 120% at 50% 40%,#33156a 0%,#1d0c44 50%,#080318 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint field texture -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
+              <filter id="neuronField">
+                <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.62  0 0 0 0 0.45  0 0 0 0 0.92  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#neuronField)"/>
             </svg>
-            <div style="position:relative;z-index:1;text-align:center;">
-              <div style="font-family:'JetBrains Mono',monospace;color:#e8b830;font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:700;letter-spacing:0.12em;line-height:1.2;text-transform:uppercase;text-shadow:0 0 30px rgba(232,184,48,.3);">Oil & Gas</div>
-              <div style="color:rgba(99,179,255,0.6);font-size:clamp(0.7rem,1.2vw,0.9rem);letter-spacing:0.25em;text-transform:uppercase;margin-top:6px;text-shadow:0 0 20px rgba(99,179,255,.2);">Infrastructure Atlas</div>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(178,150,240,0.72);text-transform:uppercase;z-index:2;">
+              <span>Receptors · 5-HT</span>
+              <span>Brain in 3D</span>
             </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Data Visualization / Geopolitics</span>
-            <span data-lang="pl">Wizualizacja danych / Geopolityka</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Global Oil & Gas Infrastructure Atlas</div>
-            <div class="case__desc">Interactive atlas of the world's energy infrastructure — pipelines, extraction fields, LNG terminals, and strategic chokepoints across 6 continents. Hover tooltips, animated flows, real production data, and geopolitical context.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Globalny Atlas Infrastruktury Naftowo-Gazowej</div>
-            <div class="case__desc">Interaktywny atlas światowej infrastruktury energetycznej — rurociągi, pola wydobywcze, terminale LNG i strategiczne punkty na 6 kontynentach. Podpowiedzi, animowane przepływy, rzeczywiste dane produkcyjne i kontekst geopolityczny.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">240+</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Infrastructure elements</span>
-                <span data-lang="pl">Elementów infrastruktury</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">6</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Continental maps</span>
-                <span data-lang="pl">Map kontynentalnych</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">90+</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Pipelines mapped</span>
-                <span data-lang="pl">Zmapowanych rurociągów</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow1.github.io/oil-gas-atlas/" target="_blank" class="case__cta">
-              Explore Atlas <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow1.github.io/oil-gas-atlas/" target="_blank" class="case__cta">
-              Otwórz Atlas <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Kino Awangardy -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/kino-awangardy/" target="_blank">
-          <div style="width:100%;height:100%;background:#0c0b09;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;">
-              <circle cx="500" cy="70" r="150" fill="none" stroke="#2a2620" stroke-width="1"/>
-              <line x1="470" y1="0" x2="560" y2="340" stroke="#e6392e" stroke-width="2" transform="skewX(-6)"/>
-              <g fill="#f2ecdd">
-                <rect x="34" y="60" width="70" height="70"/>
+            <!-- single neuron with waveform -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <radialGradient id="neuronSoma" cx="40%" cy="38%" r="70%">
+                  <stop offset="0%" stop-color="#e6d8ff"/>
+                  <stop offset="55%" stop-color="#9a72e8"/>
+                  <stop offset="100%" stop-color="#4a2a9a"/>
+                </radialGradient>
+                <linearGradient id="neuronWave" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#7d5fe0" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#c9b6ff"/>
+                  <stop offset="100%" stop-color="#7d5fe0" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="neuronGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#8f6fe8" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#3a2080" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <!-- soft glow behind soma -->
+              <circle cx="180" cy="176" r="120" fill="url(#neuronGlow)"/>
+              <!-- dendrites -->
+              <g stroke="#b7a2f0" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-opacity="0.9">
+                <path d="M150 150 C 116 120 104 86 96 56 M126 132 C 100 120 78 122 60 110 M132 110 C 120 80 96 70 74 64"/>
+                <path d="M150 200 C 118 222 108 256 100 286 M128 214 C 100 226 80 252 66 268"/>
+                <path d="M210 150 C 244 122 262 96 280 78 M218 134 C 248 124 270 128 290 120"/>
               </g>
-              <polygon points="150,60 186,60 120,270 84,270" fill="#e6392e"/>
-              <text x="40" y="215" font-family="'Archivo Black','Arial Black',sans-serif" font-size="150" font-weight="900" fill="#f2ecdd">K</text>
-            </svg>
-            <div style="position:absolute;bottom:18px;left:28px;right:28px;text-align:center;font-family:'Courier New',monospace;font-size:clamp(0.85rem,1.3vw,1.05rem);color:#e6392e;letter-spacing:0.28em;text-transform:uppercase;">
-              Kino Awangardy
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Film history / Streaming portal</span>
-            <span data-lang="pl">Historia filmu / Portal streamingowy</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Kino Awangardy — a century of experimental film</div>
-            <div class="case__desc">A hundred years of cinema you could usually only read about. The film avant-garde is scattered — across archives, footnotes and dead links — and this portal puts it back together: 564 films by 119 artists in 30 chapters, from the Dadaists and Surrealists, through the city symphonies, Maya Deren and Fluxus, the Polish Workshop of the Film Form and the Central European animation of Švankmajer, Trnka, Borowczyk and the Quay Brothers, up to post-internet art. From the 2K restoration of "Ballet mécanique" to Warhol's eight-hour "Empire" — over 260 hours of film, every title one click from a screening. Composed like a well-built lecture and working like a screening room: for the lecturer assembling a syllabus, the curator chasing context, the filmmaker tracing their lineage — and anyone who would rather watch than merely know.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Kino Awangardy — stulecie filmu eksperymentalnego</div>
-            <div class="case__desc">Sto lat kina, o którym zwykle można było tylko przeczytać. Awangarda filmowa jest rozproszona — po archiwach, przypisach i martwych linkach — a ten portal składa ją z powrotem w całość: 564 filmy 119 twórców w 30 rozdziałach, od dadaistów i surrealistów, przez symfonie wielkomiejskie, Mayę Deren i Fluxus, Warsztat Formy Filmowej i środkowoeuropejską animację Švankmajera, Trnki, Borowczyka i braci Quay, po sztukę post-internetową. Od rekonstrukcji 2K „Ballet mécanique" po ośmiogodzinne „Empire" Warhola — ponad 260 godzin filmu, każdy tytuł jedno kliknięcie od seansu. Skomponowany jak dobrze ułożony wykład, a działający jak sala projekcyjna: dla wykładowczyni budującej sylabus, kuratora szukającego kontekstu, filmowca śledzącego swoje korzenie — i dla każdego, kto woli zobaczyć, niż tylko wiedzieć.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">564</div>
-              <div class="case__metric-label">
-                <span data-lang="en">films</span>
-                <span data-lang="pl">filmów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">119</div>
-              <div class="case__metric-label">
-                <span data-lang="en">artists</span>
-                <span data-lang="pl">artystów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">30</div>
-              <div class="case__metric-label">
-                <span data-lang="en">chapters</span>
-                <span data-lang="pl">rozdziałów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">PL/EN</div>
-              <div class="case__metric-label">
-                <span data-lang="en">bilingual</span>
-                <span data-lang="pl">dwujęzyczny</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow.pl/kino-awangardy/" target="_blank" class="case__cta">
-              Open portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow.pl/kino-awangardy/" target="_blank" class="case__cta">
-              Otwórz portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Habermas -->
-      <div class="case">
-        <a class="case__visual" href="habermas/" target="_blank" rel="noopener">
-          <div class="case__bg" style="background:linear-gradient(160deg, #0a0a12, #13131a, #1a1028);overflow:hidden;">
-            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12;" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30%" cy="35%" r="55" fill="none" stroke="#6c63ff" stroke-width="0.8"/><circle cx="65%" cy="55%" r="40" fill="none" stroke="#a78bfa" stroke-width="0.8"/><circle cx="50%" cy="22%" r="30" fill="none" stroke="#ff6b6b" stroke-width="0.8"/><circle cx="48%" cy="68%" r="25" fill="none" stroke="#4ecdc4" stroke-width="0.8"/>
-              <line x1="30%" y1="35%" x2="65%" y2="55%" stroke="#6c63ff" stroke-width="0.4" opacity="0.5"/><line x1="65%" y1="55%" x2="50%" y2="22%" stroke="#a78bfa" stroke-width="0.4" opacity="0.5"/><line x1="50%" y1="22%" x2="30%" y2="35%" stroke="#ff6b6b" stroke-width="0.4" opacity="0.5"/><line x1="48%" y1="68%" x2="30%" y2="35%" stroke="#4ecdc4" stroke-width="0.4" opacity="0.3"/>
-            </svg>
-            <div style="position:relative;z-index:1;text-align:center;">
-              <div style="font-family:Georgia,serif;color:#6c63ff;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:700;letter-spacing:-0.5px;line-height:1.2;">Filozoficzny Dyskurs</div>
-              <div style="color:#a78bfa;font-size:clamp(0.9rem,1.5vw,1.2rem);font-family:Georgia,serif;opacity:0.6;margin-top:2px;">Nowoczesności</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">EdTech / Philosophy</span>
-            <span data-lang="pl">Edukacja / Filozofia</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Habermas — Educational Game</div>
-            <div class="case__desc">The "Philosophical Discourse of Modernity" as an interactive experience. Knowledge graph, chapter quizzes, concept connections — philosophy made navigable.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Habermas — Gra edukacyjna</div>
-            <div class="case__desc">„Filozoficzny Dyskurs Nowoczesności" jako interaktywne doświadczenie. Graf wiedzy, quizy do rozdziałów, powiązania pojęć — filozofia, po której można nawigować.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">12</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Chapters</span>
-                <span data-lang="pl">Rozdziałów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">60+</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Concepts mapped</span>
-                <span data-lang="pl">Pojęć zmapowanych</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="habermas/" target="_blank" class="case__cta">
-              Play the game <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="habermas/" target="_blank" class="case__cta">
-              Zagraj w grę <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- CardioSim Pro -->
-      <div class="case">
-        <a class="case__visual" href="cardiosim/" target="_blank" rel="noopener">
-          <div style="width:100%;height:100%;background:linear-gradient(135deg, #050a12 0%, #0a1020 50%, #0d0520 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 100 80" style="position:absolute;width:100%;height:100%;opacity:0.6;">
-              <!-- ECG line -->
-              <polyline points="5,45 15,45 20,45 22,45 24,20 26,60 28,45 35,45 45,45 50,45 52,45 54,20 56,60 58,45 65,45 75,45 80,45 82,45 84,20 86,60 88,45 95,45" fill="none" stroke="rgba(0,230,118,0.4)" stroke-width="1.2"/>
-              <!-- Heartbeat dots -->
-              <circle cx="24" cy="20" r="2" fill="rgba(0,230,118,0.6)"/>
-              <circle cx="54" cy="20" r="2" fill="rgba(0,230,118,0.6)"/>
-              <circle cx="84" cy="20" r="2" fill="rgba(0,230,118,0.6)"/>
-              <!-- Blood flow particles -->
-              <circle cx="30" cy="55" r="1.5" fill="rgba(255,23,68,0.5)"/>
-              <circle cx="50" cy="60" r="1.2" fill="rgba(41,121,255,0.4)"/>
-              <circle cx="70" cy="52" r="1.3" fill="rgba(255,82,82,0.5)"/>
-              <circle cx="40" cy="65" r="1" fill="rgba(68,138,255,0.35)"/>
-            </svg>
-            <div style="position:relative;z-index:1;text-align:center;">
-              <div style="font-family:'JetBrains Mono',monospace;background:linear-gradient(90deg,#00e5ff,#2979ff,#d500f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">CardioSim</div>
-              <div style="color:rgba(0,230,118,0.5);font-size:clamp(0.6rem,1vw,0.8rem);letter-spacing:0.25em;text-transform:uppercase;margin-top:4px;font-family:'JetBrains Mono',monospace;">Pro v2.0</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Medical / Simulation</span>
-            <span data-lang="pl">Medycyna / Symulacja</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">CardioSim Pro — Cardiovascular Simulation</div>
-            <div class="case__desc">Real-time cardiovascular simulation with 10 pharmacodynamic drugs, animated blood flow, ECG/SpO2/ABP waveforms, PV loops, and Wiggers diagrams. Titrate beta-blockers, inotropes, vasopressors, and diuretics — observe onset dynamics, drug interactions, and hemodynamic response. 8 clinical scenarios. Resizable panels. A medical education tool in the browser.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">CardioSim Pro — Symulacja kardiologiczna</div>
-            <div class="case__desc">Symulacja układu sercowo-naczyniowego w czasie rzeczywistym z 10 lekami farmakodynamicznymi, animowanym przepływem krwi, przebiegami EKG/SpO2/ABP, pętlami PV i diagramami Wiggersa. Miareczkuj beta-blokery, inotropowe, wazopresory i diuretyki — obserwuj dynamikę wchłaniania, interakcje leków i odpowiedź hemodynamiczną. 8 scenariuszy klinicznych. Skalowalne panele. Narzędzie edukacji medycznej w przeglądarce.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">8</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Live waveforms</span>
-                <span data-lang="pl">Przebiegów na żywo</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">10</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Drugs</span>
-                <span data-lang="pl">Leków</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="cardiosim/" target="_blank" class="case__cta">
-              Launch simulation <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="cardiosim/" target="_blank" class="case__cta">
-              Uruchom symulację <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- 40 Afer -->
-      <div class="case">
-        <a class="case__visual" href="afery/" target="_blank" rel="noopener">
-          <div class="case__bg" style="background:linear-gradient(135deg,#0a0e17 0%,#1a1028 50%,#0a0e17 100%);overflow:hidden;">
-            <!-- radial amber glow (left-weighted) -->
-            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(245,158,11,0.12),transparent 55%);pointer-events:none;z-index:1;"></div>
-            <!-- network graph: 200+ people connected -->
-            <svg viewBox="0 0 600 340" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;">
-              <!-- connections -->
-              <g stroke="rgba(245,158,11,0.18)" stroke-width="0.6" fill="none">
-                <line x1="80" y1="120" x2="180" y2="80"/>
-                <line x1="80" y1="120" x2="160" y2="200"/>
-                <line x1="180" y1="80" x2="280" y2="100"/>
-                <line x1="180" y1="80" x2="250" y2="180"/>
-                <line x1="160" y1="200" x2="250" y2="180"/>
-                <line x1="250" y1="180" x2="350" y2="160"/>
-                <line x1="250" y1="180" x2="320" y2="240"/>
-                <line x1="320" y1="240" x2="420" y2="220"/>
-                <line x1="350" y1="160" x2="430" y2="120"/>
-                <line x1="420" y1="220" x2="520" y2="200"/>
-                <line x1="430" y1="120" x2="520" y2="100"/>
-                <line x1="430" y1="120" x2="520" y2="200"/>
-                <line x1="280" y1="100" x2="350" y2="160"/>
-                <line x1="80" y1="240" x2="160" y2="200"/>
-                <line x1="80" y1="240" x2="180" y2="280"/>
-                <line x1="180" y1="280" x2="320" y2="240"/>
+              <!-- dendrite tip nodes -->
+              <g fill="#d9ccff">
+                <circle cx="96" cy="56" r="4"/>
+                <circle cx="60" cy="110" r="3.4"/>
+                <circle cx="74" cy="64" r="3"/>
+                <circle cx="100" cy="286" r="4"/>
+                <circle cx="66" cy="268" r="3.2"/>
+                <circle cx="280" cy="78" r="3.6"/>
+                <circle cx="290" cy="120" r="3"/>
               </g>
-              <!-- amber halos -->
-              <g fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.5">
-                <circle cx="250" cy="180" r="14"/>
-                <circle cx="180" cy="80" r="11"/>
-                <circle cx="430" cy="120" r="12"/>
+              <!-- axon to synapse -->
+              <path d="M212 196 C 256 214 286 232 312 250" stroke="#b7a2f0" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <g fill="#d9ccff">
+                <circle cx="312" cy="250" r="5"/>
+                <circle cx="328" cy="262" r="2.4"/>
+                <circle cx="322" cy="276" r="2.0"/>
               </g>
-              <!-- big amber nodes (key figures) -->
-              <g fill="#fbbf24">
-                <circle cx="180" cy="80" r="6"/>
-                <circle cx="250" cy="180" r="7"/>
-                <circle cx="350" cy="160" r="5"/>
-                <circle cx="430" cy="120" r="6"/>
-                <circle cx="320" cy="240" r="5"/>
-              </g>
-              <!-- small grey nodes -->
-              <g fill="#cbd5e1" opacity="0.65">
-                <circle cx="80" cy="120" r="2.5"/>
-                <circle cx="160" cy="200" r="3"/>
-                <circle cx="280" cy="100" r="2.5"/>
-                <circle cx="520" cy="200" r="2.5"/>
-                <circle cx="420" cy="220" r="2.5"/>
-                <circle cx="180" cy="280" r="2.5"/>
-                <circle cx="120" cy="60" r="2"/>
-                <circle cx="380" cy="60" r="2"/>
-                <circle cx="470" cy="260" r="2"/>
-                <circle cx="240" cy="40" r="2"/>
-              </g>
-              <!-- red edge nodes (skazani/uciekinierzy) -->
-              <circle cx="520" cy="100" r="4" fill="#ef4444"/>
-              <circle cx="80" cy="240" r="4" fill="#ef4444"/>
-            </svg>
-            <!-- top label bar -->
-            <div style="position:absolute;top:18px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;z-index:3;">
-              <span style="color:#fbbf24;display:flex;align-items:center;gap:6px;">
-                <span style="width:6px;height:6px;border-radius:50%;background:#fbbf24;box-shadow:0 0 8px #fbbf24;"></span>
-                FUTURESHOW · sieć powiązań
-              </span>
-              <span style="color:#94a3b8;">1988 — 2026</span>
-            </div>
-            <!-- title block, bottom-aligned -->
-            <div style="position:absolute;bottom:24px;left:24px;right:24px;z-index:3;">
-              <div style="font-family:'Segoe UI',system-ui,sans-serif;font-weight:900;font-size:clamp(2.4rem,6.5vw,4.4rem);line-height:0.95;background:linear-gradient(135deg,#fbbf24 0%,#f87171 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;letter-spacing:-0.02em;">40 AFER</div>
-              <div style="font-family:Georgia,serif;font-style:italic;font-size:clamp(0.85rem,1.25vw,1.05rem);color:#cbd5e1;letter-spacing:0.01em;margin-top:6px;">kto kogo i z kim, przez cztery dekady</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Interactive Report</span>
-            <span data-lang="pl">Interaktywny raport</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">40 Biggest Scandals in Poland</div>
-            <div class="case__desc">Four decades of political, financial, and social scandals — mapped, analyzed, and cross-referenced. Timeline, network analysis, financial impact, and involvement graphs.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">40 Największych Afer w Polsce</div>
-            <div class="case__desc">Cztery dekady afer politycznych, finansowych i społecznych — zmapowane, przeanalizowane i porównane. Oś czasu, analiza sieci, skutki finansowe i grafy powiązań.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">40</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Scandals mapped</span>
-                <span data-lang="pl">Afer zmapowanych</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">38yr</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Time span</span>
-                <span data-lang="pl">Zakres lat</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">200+</div>
-              <div class="case__metric-label">
-                <span data-lang="en">People linked</span>
-                <span data-lang="pl">Osób powiązanych</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="afery/" target="_blank" class="case__cta">
-              Open report <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="afery/" target="_blank" class="case__cta">
-              Otwórz raport <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Mondrian/Malewicz -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/mondrian-malewicz/" target="_blank">
-          <div style="width:100%;height:100%;background:#f4f1ea;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;">
-              <!-- Mondrian colored fields -->
-              <rect x="0" y="0" width="146" height="115" fill="#d32b1e"/>
-              <rect x="476" y="246" width="124" height="94" fill="#1d4e9e"/>
-              <rect x="476" y="0" width="124" height="78" fill="#f0c808"/>
-              <!-- neoplastic black grid -->
-              <g fill="#141414">
-                <rect x="140" y="0" width="11" height="340"/>
-                <rect x="470" y="0" width="11" height="340"/>
-                <rect x="0" y="110" width="600" height="11"/>
-                <rect x="0" y="240" width="600" height="11"/>
-              </g>
-              <!-- Malevich black square, in suprematist drift -->
-              <g transform="rotate(-11 318 172)">
-                <rect x="296" y="150" width="150" height="150" fill="#141414" opacity="0.12"/>
-                <rect x="248" y="102" width="150" height="150" fill="#141414"/>
-              </g>
+              <!-- soma -->
+              <circle cx="180" cy="176" r="52" fill="url(#neuronSoma)" stroke="#e8def" stroke-width="2" stroke-opacity="0.4"/>
+              <circle cx="166" cy="162" r="16" fill="#c9b6ff" fill-opacity="0.55"/>
+              <!-- soft waveform across the soma -->
+              <path d="M108 176 Q 130 150 150 176 T 192 176 T 234 176 T 270 176"
+                stroke="url(#neuronWave)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
             </svg>
             <!-- footer -->
-            <div style="position:absolute;bottom:18px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#141414;letter-spacing:0.01em;">
-              Mondrian/Malewicz
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d8ccf2;letter-spacing:0.01em;">
+              Psychedelic Brain Simulation
             </div>
           </div>
         </a>
         <div class="case__info">
           <div class="case__tag">
-            <span data-lang="en">Art history / Interactive 3D</span>
-            <span data-lang="pl">Historia sztuki / Interaktywne 3D</span>
+            <span data-lang="en">3D neuroscience</span>
+            <span data-lang="pl">Neuronauka 3D</span>
           </div>
           <div data-lang="en">
-            <div class="case__title">Mondrian/Malewicz — Composition in Space</div>
-            <div class="case__desc">Two avant-gardes that never met, locked in one apartment. Three spaces: a ROOM where procedurally generated Mondrian walls argue with Malevich's drifting forms; a CITY — Broadway Boogie Woogie unfolded into a yellow street grid, with staccato traffic and a generative bass line; and the WHITE — an infinity in fog where even the void thinks. Touch a form and a comic-style thought cloud opens: 42 quotes from both artists' writings, letters and interviews — source-verified, in canonical translations — annotated with today's commentary, from the attention economy to the right to the city. Three thoughts stay hidden, found by play, not by clicking. Abstract art here is not decoration — it is an early-warning system.</div>
+            <div class="case__title">Psychedelic Brain Simulation</div>
+            <div class="case__desc">A 3D brain under seven psychedelic and dissociative substances — dose levels, a timeline from ingestion to comedown, clickable regions, default-mode-network connectivity, sound that follows the model. Two builds on the same engine: version 3 with a built-in video recorder, version 4 with a lighter, redesigned interface. A small landing page lets you pick.</div>
           </div>
           <div data-lang="pl">
-            <div class="case__title">Mondrian/Malewicz — Composition in Space</div>
-            <div class="case__desc">Dwie awangardy, które nigdy się nie spotkały, zamknięte w jednym mieszkaniu. Trzy przestrzenie: POKÓJ, gdzie proceduralnie generowane ściany Mondriana spierają się z dryfującymi formami Malewicza; MIASTO — „Broadway Boogie Woogie" rozwinięte w żółtą siatkę ulic, ze staccato ruchu ulicznego i generatywnym basem; BIEL — nieskończoność we mgle, w której myśli nawet pustka. Dotknięcie formy otwiera komiksową chmurę myśli: 42 cytaty z pism, listów i wywiadów obu artystów — zweryfikowane źródłowo, w kanonicznych przekładach — z dzisiejszym komentarzem: od ekonomii uwagi po prawo do miasta. Trzy myśli ukryte, do znalezienia zabawą, nie kliknięciem. Sztuka abstrakcyjna nie jest tu dekoracją — jest systemem wczesnego ostrzegania.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">3</div>
-              <div class="case__metric-label">
-                <span data-lang="en">spaces (ROOM/CITY/WHITE)</span>
-                <span data-lang="pl">przestrzenie (POKÓJ/MIASTO/BIEL)</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">42</div>
-              <div class="case__metric-label">
-                <span data-lang="en">sourced quotes</span>
-                <span data-lang="pl">cytaty ze źródłami</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">PL/EN</div>
-              <div class="case__metric-label">
-                <span data-lang="en">bilingual</span>
-                <span data-lang="pl">dwujęzyczny</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">1</div>
-              <div class="case__metric-label">
-                <span data-lang="en">self-contained file</span>
-                <span data-lang="pl">samodzielny plik</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow.pl/mondrian-malewicz/" target="_blank" class="case__cta">
-              Enter the space <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow.pl/mondrian-malewicz/" target="_blank" class="case__cta">
-              Wejdź do przestrzeni <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Sejm Symulator (GH Pages demo, client-side password gate) -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/sejm/" target="_blank" rel="noopener">
-          <div class="case__bg" style="background:linear-gradient(180deg, #0c1018 0%, #0a0e17 60%, #050810 100%);overflow:hidden;">
-            <!-- subtle grid backdrop -->
-            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.04;" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><pattern id="hemi-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M 32 0 L 0 0 0 32" fill="none" stroke="#63b3ff" stroke-width="0.4"/></pattern></defs><rect width="100%" height="100%" fill="url(#hemi-grid)"/></svg>
-            <!-- 460-seat hemicycle, X kadencja composition -->
-            <svg viewBox="0 0 600 376" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="position:absolute;inset:0;width:100%;height:100%;">
-<g transform="translate(300, 310)">
-  <circle cx="-69.9" cy="-3.1" r="3.0" fill="#c92942"/>
-  <circle cx="-69.4" cy="-9.4" r="3.0" fill="#c92942"/>
-  <circle cx="-68.2" cy="-15.6" r="3.0" fill="#c92942"/>
-  <circle cx="-66.6" cy="-21.6" r="3.0" fill="#c92942"/>
-  <circle cx="-64.4" cy="-27.5" r="3.0" fill="#c92942"/>
-  <circle cx="-61.6" cy="-33.2" r="3.0" fill="#c92942"/>
-  <circle cx="-58.4" cy="-38.6" r="3.0" fill="#c92942"/>
-  <circle cx="-54.7" cy="-43.6" r="3.0" fill="#c92942"/>
-  <circle cx="-50.6" cy="-48.4" r="3.0" fill="#c92942"/>
-  <circle cx="-46.1" cy="-52.7" r="3.0" fill="#c92942"/>
-  <circle cx="-41.1" cy="-56.6" r="3.0" fill="#c92942"/>
-  <circle cx="-35.9" cy="-60.1" r="3.0" fill="#c92942"/>
-  <circle cx="-30.4" cy="-63.1" r="3.0" fill="#c92942"/>
-  <circle cx="-24.6" cy="-65.5" r="3.0" fill="#c92942"/>
-  <circle cx="-18.6" cy="-67.5" r="3.0" fill="#c92942"/>
-  <circle cx="-12.5" cy="-68.9" r="3.0" fill="#c92942"/>
-  <circle cx="-6.3" cy="-69.7" r="3.0" fill="#c92942"/>
-  <circle cx="0.0" cy="-70.0" r="3.0" fill="#c92942"/>
-  <circle cx="6.3" cy="-69.7" r="3.0" fill="#c92942"/>
-  <circle cx="12.5" cy="-68.9" r="3.0" fill="#c92942"/>
-  <circle cx="18.6" cy="-67.5" r="3.0" fill="#c92942"/>
-  <circle cx="24.6" cy="-65.5" r="3.0" fill="#c92942"/>
-  <circle cx="30.4" cy="-63.1" r="3.0" fill="#c92942"/>
-  <circle cx="35.9" cy="-60.1" r="3.0" fill="#c92942"/>
-  <circle cx="41.1" cy="-56.6" r="3.0" fill="#c92942"/>
-  <circle cx="46.1" cy="-52.7" r="3.0" fill="#c92942"/>
-  <circle cx="50.6" cy="-48.4" r="3.0" fill="#4ea534"/>
-  <circle cx="54.7" cy="-43.6" r="3.0" fill="#4ea534"/>
-  <circle cx="58.4" cy="-38.6" r="3.0" fill="#4ea534"/>
-  <circle cx="61.6" cy="-33.2" r="3.0" fill="#4ea534"/>
-  <circle cx="64.4" cy="-27.5" r="3.0" fill="#4ea534"/>
-  <circle cx="66.6" cy="-21.6" r="3.0" fill="#4ea534"/>
-  <circle cx="68.2" cy="-15.6" r="3.0" fill="#4ea534"/>
-  <circle cx="69.4" cy="-9.4" r="3.0" fill="#4ea534"/>
-  <circle cx="69.9" cy="-3.1" r="3.0" fill="#4ea534"/>
-  <circle cx="-89.9" cy="-3.1" r="3.0" fill="#4ea534"/>
-  <circle cx="-89.5" cy="-9.4" r="3.0" fill="#4ea534"/>
-  <circle cx="-88.6" cy="-15.6" r="3.0" fill="#4ea534"/>
-  <circle cx="-87.3" cy="-21.8" r="3.0" fill="#4ea534"/>
-  <circle cx="-85.6" cy="-27.8" r="3.0" fill="#4ea534"/>
-  <circle cx="-83.4" cy="-33.7" r="3.0" fill="#4ea534"/>
-  <circle cx="-80.9" cy="-39.5" r="3.0" fill="#4ea534"/>
-  <circle cx="-77.9" cy="-45.0" r="3.0" fill="#4ea534"/>
-  <circle cx="-74.6" cy="-50.3" r="3.0" fill="#4ea534"/>
-  <circle cx="-70.9" cy="-55.4" r="3.0" fill="#4ea534"/>
-  <circle cx="-66.9" cy="-60.2" r="3.0" fill="#4ea534"/>
-  <circle cx="-62.5" cy="-64.7" r="3.0" fill="#4ea534"/>
-  <circle cx="-57.9" cy="-68.9" r="3.0" fill="#4ea534"/>
-  <circle cx="-52.9" cy="-72.8" r="3.0" fill="#4ea534"/>
-  <circle cx="-47.7" cy="-76.3" r="3.0" fill="#4ea534"/>
-  <circle cx="-42.3" cy="-79.5" r="3.0" fill="#4ea534"/>
-  <circle cx="-36.6" cy="-82.2" r="3.0" fill="#4ea534"/>
-  <circle cx="-30.8" cy="-84.6" r="3.0" fill="#4ea534"/>
-  <circle cx="-24.8" cy="-86.5" r="3.0" fill="#4ea534"/>
-  <circle cx="-18.7" cy="-88.0" r="3.0" fill="#4ea534"/>
-  <circle cx="-12.5" cy="-89.1" r="3.0" fill="#4ea534"/>
-  <circle cx="-6.3" cy="-89.8" r="3.0" fill="#4ea534"/>
-  <circle cx="0.0" cy="-90.0" r="3.0" fill="#4ea534"/>
-  <circle cx="6.3" cy="-89.8" r="3.0" fill="#f5d04e"/>
-  <circle cx="12.5" cy="-89.1" r="3.0" fill="#f5d04e"/>
-  <circle cx="18.7" cy="-88.0" r="3.0" fill="#f5d04e"/>
-  <circle cx="24.8" cy="-86.5" r="3.0" fill="#f5d04e"/>
-  <circle cx="30.8" cy="-84.6" r="3.0" fill="#f5d04e"/>
-  <circle cx="36.6" cy="-82.2" r="3.0" fill="#f5d04e"/>
-  <circle cx="42.3" cy="-79.5" r="3.0" fill="#f5d04e"/>
-  <circle cx="47.7" cy="-76.3" r="3.0" fill="#f5d04e"/>
-  <circle cx="52.9" cy="-72.8" r="3.0" fill="#f5d04e"/>
-  <circle cx="57.9" cy="-68.9" r="3.0" fill="#f5d04e"/>
-  <circle cx="62.5" cy="-64.7" r="3.0" fill="#f5d04e"/>
-  <circle cx="66.9" cy="-60.2" r="3.0" fill="#f5d04e"/>
-  <circle cx="70.9" cy="-55.4" r="3.0" fill="#f5d04e"/>
-  <circle cx="74.6" cy="-50.3" r="3.0" fill="#f5d04e"/>
-  <circle cx="77.9" cy="-45.0" r="3.0" fill="#f5d04e"/>
-  <circle cx="80.9" cy="-39.5" r="3.0" fill="#f5d04e"/>
-  <circle cx="83.4" cy="-33.7" r="3.0" fill="#f5d04e"/>
-  <circle cx="85.6" cy="-27.8" r="3.0" fill="#f5d04e"/>
-  <circle cx="87.3" cy="-21.8" r="3.0" fill="#f5d04e"/>
-  <circle cx="88.6" cy="-15.6" r="3.0" fill="#f5d04e"/>
-  <circle cx="89.5" cy="-9.4" r="3.0" fill="#f5d04e"/>
-  <circle cx="89.9" cy="-3.1" r="3.0" fill="#f5d04e"/>
-  <circle cx="-110.0" cy="-3.1" r="3.0" fill="#f5d04e"/>
-  <circle cx="-109.6" cy="-9.2" r="3.0" fill="#f5d04e"/>
-  <circle cx="-108.9" cy="-15.4" r="3.0" fill="#f5d04e"/>
-  <circle cx="-107.9" cy="-21.5" r="3.0" fill="#f5d04e"/>
-  <circle cx="-106.5" cy="-27.5" r="3.0" fill="#f5d04e"/>
-  <circle cx="-104.8" cy="-33.4" r="3.0" fill="#f5d04e"/>
-  <circle cx="-102.8" cy="-39.2" r="3.0" fill="#f5d04e"/>
-  <circle cx="-100.4" cy="-44.9" r="3.0" fill="#f5d04e"/>
-  <circle cx="-97.7" cy="-50.5" r="3.0" fill="#f5d04e"/>
-  <circle cx="-94.7" cy="-55.9" r="3.0" fill="#f5d04e"/>
-  <circle cx="-91.5" cy="-61.1" r="3.0" fill="#f5d04e"/>
-  <circle cx="-87.9" cy="-66.1" r="3.0" fill="#f48024"/>
-  <circle cx="-84.0" cy="-71.0" r="3.0" fill="#f48024"/>
-  <circle cx="-79.9" cy="-75.6" r="3.0" fill="#f48024"/>
-  <circle cx="-75.6" cy="-79.9" r="3.0" fill="#f48024"/>
-  <circle cx="-71.0" cy="-84.0" r="3.0" fill="#f48024"/>
-  <circle cx="-66.1" cy="-87.9" r="3.0" fill="#f48024"/>
-  <circle cx="-61.1" cy="-91.5" r="3.0" fill="#f48024"/>
-  <circle cx="-55.9" cy="-94.7" r="3.0" fill="#f48024"/>
-  <circle cx="-50.5" cy="-97.7" r="3.0" fill="#f48024"/>
-  <circle cx="-44.9" cy="-100.4" r="3.0" fill="#f48024"/>
-  <circle cx="-39.2" cy="-102.8" r="3.0" fill="#f48024"/>
-  <circle cx="-33.4" cy="-104.8" r="3.0" fill="#f48024"/>
-  <circle cx="-27.5" cy="-106.5" r="3.0" fill="#f48024"/>
-  <circle cx="-21.5" cy="-107.9" r="3.0" fill="#f48024"/>
-  <circle cx="-15.4" cy="-108.9" r="3.0" fill="#f48024"/>
-  <circle cx="-9.2" cy="-109.6" r="3.0" fill="#f48024"/>
-  <circle cx="-3.1" cy="-110.0" r="3.0" fill="#f48024"/>
-  <circle cx="3.1" cy="-110.0" r="3.0" fill="#f48024"/>
-  <circle cx="9.2" cy="-109.6" r="3.0" fill="#f48024"/>
-  <circle cx="15.4" cy="-108.9" r="3.0" fill="#f48024"/>
-  <circle cx="21.5" cy="-107.9" r="3.0" fill="#f48024"/>
-  <circle cx="27.5" cy="-106.5" r="3.0" fill="#f48024"/>
-  <circle cx="33.4" cy="-104.8" r="3.0" fill="#f48024"/>
-  <circle cx="39.2" cy="-102.8" r="3.0" fill="#f48024"/>
-  <circle cx="44.9" cy="-100.4" r="3.0" fill="#f48024"/>
-  <circle cx="50.5" cy="-97.7" r="3.0" fill="#f48024"/>
-  <circle cx="55.9" cy="-94.7" r="3.0" fill="#f48024"/>
-  <circle cx="61.1" cy="-91.5" r="3.0" fill="#f48024"/>
-  <circle cx="66.1" cy="-87.9" r="3.0" fill="#f48024"/>
-  <circle cx="71.0" cy="-84.0" r="3.0" fill="#f48024"/>
-  <circle cx="75.6" cy="-79.9" r="3.0" fill="#f48024"/>
-  <circle cx="79.9" cy="-75.6" r="3.0" fill="#f48024"/>
-  <circle cx="84.0" cy="-71.0" r="3.0" fill="#f48024"/>
-  <circle cx="87.9" cy="-66.1" r="3.0" fill="#f48024"/>
-  <circle cx="91.5" cy="-61.1" r="3.0" fill="#f48024"/>
-  <circle cx="94.7" cy="-55.9" r="3.0" fill="#f48024"/>
-  <circle cx="97.7" cy="-50.5" r="3.0" fill="#f48024"/>
-  <circle cx="100.4" cy="-44.9" r="3.0" fill="#f48024"/>
-  <circle cx="102.8" cy="-39.2" r="3.0" fill="#f48024"/>
-  <circle cx="104.8" cy="-33.4" r="3.0" fill="#f48024"/>
-  <circle cx="106.5" cy="-27.5" r="3.0" fill="#f48024"/>
-  <circle cx="107.9" cy="-21.5" r="3.0" fill="#f48024"/>
-  <circle cx="108.9" cy="-15.4" r="3.0" fill="#f48024"/>
-  <circle cx="109.6" cy="-9.2" r="3.0" fill="#f48024"/>
-  <circle cx="110.0" cy="-3.1" r="3.0" fill="#f48024"/>
-  <circle cx="-130.0" cy="-3.1" r="3.0" fill="#f48024"/>
-  <circle cx="-129.7" cy="-9.3" r="3.0" fill="#f48024"/>
-  <circle cx="-129.1" cy="-15.4" r="3.0" fill="#f48024"/>
-  <circle cx="-128.2" cy="-21.6" r="3.0" fill="#f48024"/>
-  <circle cx="-127.0" cy="-27.6" r="3.0" fill="#f48024"/>
-  <circle cx="-125.6" cy="-33.6" r="3.0" fill="#f48024"/>
-  <circle cx="-123.8" cy="-39.6" r="3.0" fill="#f48024"/>
-  <circle cx="-121.8" cy="-45.4" r="3.0" fill="#f48024"/>
-  <circle cx="-119.5" cy="-51.2" r="3.0" fill="#f48024"/>
-  <circle cx="-116.9" cy="-56.8" r="3.0" fill="#f48024"/>
-  <circle cx="-114.1" cy="-62.3" r="3.0" fill="#f48024"/>
-  <circle cx="-111.0" cy="-67.7" r="3.0" fill="#f48024"/>
-  <circle cx="-107.7" cy="-72.9" r="3.0" fill="#f48024"/>
-  <circle cx="-104.1" cy="-77.9" r="3.0" fill="#f48024"/>
-  <circle cx="-100.2" cy="-82.8" r="3.0" fill="#f48024"/>
-  <circle cx="-96.2" cy="-87.4" r="3.0" fill="#f48024"/>
-  <circle cx="-91.9" cy="-91.9" r="3.0" fill="#f48024"/>
-  <circle cx="-87.4" cy="-96.2" r="3.0" fill="#f48024"/>
-  <circle cx="-82.8" cy="-100.2" r="3.0" fill="#f48024"/>
-  <circle cx="-77.9" cy="-104.1" r="3.0" fill="#f48024"/>
-  <circle cx="-72.9" cy="-107.7" r="3.0" fill="#f48024"/>
-  <circle cx="-67.7" cy="-111.0" r="3.0" fill="#f48024"/>
-  <circle cx="-62.3" cy="-114.1" r="3.0" fill="#f48024"/>
-  <circle cx="-56.8" cy="-116.9" r="3.0" fill="#f48024"/>
-  <circle cx="-51.2" cy="-119.5" r="3.0" fill="#f48024"/>
-  <circle cx="-45.4" cy="-121.8" r="3.0" fill="#f48024"/>
-  <circle cx="-39.6" cy="-123.8" r="3.0" fill="#f48024"/>
-  <circle cx="-33.6" cy="-125.6" r="3.0" fill="#f48024"/>
-  <circle cx="-27.6" cy="-127.0" r="3.0" fill="#f48024"/>
-  <circle cx="-21.6" cy="-128.2" r="3.0" fill="#f48024"/>
-  <circle cx="-15.4" cy="-129.1" r="3.0" fill="#f48024"/>
-  <circle cx="-9.3" cy="-129.7" r="3.0" fill="#f48024"/>
-  <circle cx="-3.1" cy="-130.0" r="3.0" fill="#f48024"/>
-  <circle cx="3.1" cy="-130.0" r="3.0" fill="#f48024"/>
-  <circle cx="9.3" cy="-129.7" r="3.0" fill="#f48024"/>
-  <circle cx="15.4" cy="-129.1" r="3.0" fill="#f48024"/>
-  <circle cx="21.6" cy="-128.2" r="3.0" fill="#f48024"/>
-  <circle cx="27.6" cy="-127.0" r="3.0" fill="#f48024"/>
-  <circle cx="33.6" cy="-125.6" r="3.0" fill="#f48024"/>
-  <circle cx="39.6" cy="-123.8" r="3.0" fill="#f48024"/>
-  <circle cx="45.4" cy="-121.8" r="3.0" fill="#f48024"/>
-  <circle cx="51.2" cy="-119.5" r="3.0" fill="#f48024"/>
-  <circle cx="56.8" cy="-116.9" r="3.0" fill="#f48024"/>
-  <circle cx="62.3" cy="-114.1" r="3.0" fill="#f48024"/>
-  <circle cx="67.7" cy="-111.0" r="3.0" fill="#f48024"/>
-  <circle cx="72.9" cy="-107.7" r="3.0" fill="#f48024"/>
-  <circle cx="77.9" cy="-104.1" r="3.0" fill="#f48024"/>
-  <circle cx="82.8" cy="-100.2" r="3.0" fill="#f48024"/>
-  <circle cx="87.4" cy="-96.2" r="3.0" fill="#f48024"/>
-  <circle cx="91.9" cy="-91.9" r="3.0" fill="#f48024"/>
-  <circle cx="96.2" cy="-87.4" r="3.0" fill="#f48024"/>
-  <circle cx="100.2" cy="-82.8" r="3.0" fill="#f48024"/>
-  <circle cx="104.1" cy="-77.9" r="3.0" fill="#f48024"/>
-  <circle cx="107.7" cy="-72.9" r="3.0" fill="#f48024"/>
-  <circle cx="111.0" cy="-67.7" r="3.0" fill="#f48024"/>
-  <circle cx="114.1" cy="-62.3" r="3.0" fill="#f48024"/>
-  <circle cx="116.9" cy="-56.8" r="3.0" fill="#f48024"/>
-  <circle cx="119.5" cy="-51.2" r="3.0" fill="#f48024"/>
-  <circle cx="121.8" cy="-45.4" r="3.0" fill="#f48024"/>
-  <circle cx="123.8" cy="-39.6" r="3.0" fill="#f48024"/>
-  <circle cx="125.6" cy="-33.6" r="3.0" fill="#f48024"/>
-  <circle cx="127.0" cy="-27.6" r="3.0" fill="#f48024"/>
-  <circle cx="128.2" cy="-21.6" r="3.0" fill="#f48024"/>
-  <circle cx="129.1" cy="-15.4" r="3.0" fill="#f48024"/>
-  <circle cx="129.7" cy="-9.3" r="3.0" fill="#f48024"/>
-  <circle cx="130.0" cy="-3.1" r="3.0" fill="#f48024"/>
-  <circle cx="-150.0" cy="-3.1" r="3.0" fill="#f48024"/>
-  <circle cx="-149.7" cy="-9.3" r="3.0" fill="#f48024"/>
-  <circle cx="-149.2" cy="-15.5" r="3.0" fill="#f48024"/>
-  <circle cx="-148.4" cy="-21.6" r="3.0" fill="#f48024"/>
-  <circle cx="-147.4" cy="-27.7" r="3.0" fill="#f48024"/>
-  <circle cx="-146.1" cy="-33.8" r="3.0" fill="#f48024"/>
-  <circle cx="-144.6" cy="-39.8" r="3.0" fill="#f48024"/>
-  <circle cx="-142.8" cy="-45.8" r="3.0" fill="#f48024"/>
-  <circle cx="-140.8" cy="-51.6" r="3.0" fill="#f48024"/>
-  <circle cx="-138.6" cy="-57.4" r="3.0" fill="#f48024"/>
-  <circle cx="-136.1" cy="-63.1" r="3.0" fill="#f48024"/>
-  <circle cx="-133.4" cy="-68.7" r="3.0" fill="#f48024"/>
-  <circle cx="-130.4" cy="-74.1" r="3.0" fill="#f48024"/>
-  <circle cx="-127.2" cy="-79.4" r="3.0" fill="#f48024"/>
-  <circle cx="-123.9" cy="-84.6" r="3.0" fill="#f48024"/>
-  <circle cx="-120.2" cy="-89.7" r="3.0" fill="#f48024"/>
-  <circle cx="-116.4" cy="-94.6" r="3.0" fill="#f48024"/>
-  <circle cx="-112.4" cy="-99.3" r="3.0" fill="#f48024"/>
-  <circle cx="-108.2" cy="-103.9" r="3.0" fill="#f48024"/>
-  <circle cx="-103.9" cy="-108.2" r="3.0" fill="#f48024"/>
-  <circle cx="-99.3" cy="-112.4" r="3.0" fill="#f48024"/>
-  <circle cx="-94.6" cy="-116.4" r="3.0" fill="#f48024"/>
-  <circle cx="-89.7" cy="-120.2" r="3.0" fill="#f48024"/>
-  <circle cx="-84.6" cy="-123.9" r="3.0" fill="#f48024"/>
-  <circle cx="-79.4" cy="-127.2" r="3.0" fill="#f48024"/>
-  <circle cx="-74.1" cy="-130.4" r="3.0" fill="#f48024"/>
-  <circle cx="-68.7" cy="-133.4" r="3.0" fill="#f48024"/>
-  <circle cx="-63.1" cy="-136.1" r="3.0" fill="#f48024"/>
-  <circle cx="-57.4" cy="-138.6" r="3.0" fill="#f48024"/>
-  <circle cx="-51.6" cy="-140.8" r="3.0" fill="#f48024"/>
-  <circle cx="-45.8" cy="-142.8" r="3.0" fill="#f48024"/>
-  <circle cx="-39.8" cy="-144.6" r="3.0" fill="#f48024"/>
-  <circle cx="-33.8" cy="-146.1" r="3.0" fill="#f48024"/>
-  <circle cx="-27.7" cy="-147.4" r="3.0" fill="#f48024"/>
-  <circle cx="-21.6" cy="-148.4" r="3.0" fill="#f48024"/>
-  <circle cx="-15.5" cy="-149.2" r="3.0" fill="#f48024"/>
-  <circle cx="-9.3" cy="-149.7" r="3.0" fill="#f48024"/>
-  <circle cx="-3.1" cy="-150.0" r="3.0" fill="#f48024"/>
-  <circle cx="3.1" cy="-150.0" r="3.0" fill="#f48024"/>
-  <circle cx="9.3" cy="-149.7" r="3.0" fill="#f48024"/>
-  <circle cx="15.5" cy="-149.2" r="3.0" fill="#f48024"/>
-  <circle cx="21.6" cy="-148.4" r="3.0" fill="#f48024"/>
-  <circle cx="27.7" cy="-147.4" r="3.0" fill="#f48024"/>
-  <circle cx="33.8" cy="-146.1" r="3.0" fill="#f48024"/>
-  <circle cx="39.8" cy="-144.6" r="3.0" fill="#f48024"/>
-  <circle cx="45.8" cy="-142.8" r="3.0" fill="#f48024"/>
-  <circle cx="51.6" cy="-140.8" r="3.0" fill="#9a9a9a"/>
-  <circle cx="57.4" cy="-138.6" r="3.0" fill="#9a9a9a"/>
-  <circle cx="63.1" cy="-136.1" r="3.0" fill="#9a9a9a"/>
-  <circle cx="68.7" cy="-133.4" r="3.0" fill="#9a9a9a"/>
-  <circle cx="74.1" cy="-130.4" r="3.0" fill="#9a9a9a"/>
-  <circle cx="79.4" cy="-127.2" r="3.0" fill="#9a9a9a"/>
-  <circle cx="84.6" cy="-123.9" r="3.0" fill="#1648a8"/>
-  <circle cx="89.7" cy="-120.2" r="3.0" fill="#1648a8"/>
-  <circle cx="94.6" cy="-116.4" r="3.0" fill="#1648a8"/>
-  <circle cx="99.3" cy="-112.4" r="3.0" fill="#1648a8"/>
-  <circle cx="103.9" cy="-108.2" r="3.0" fill="#1648a8"/>
-  <circle cx="108.2" cy="-103.9" r="3.0" fill="#1648a8"/>
-  <circle cx="112.4" cy="-99.3" r="3.0" fill="#1648a8"/>
-  <circle cx="116.4" cy="-94.6" r="3.0" fill="#1648a8"/>
-  <circle cx="120.2" cy="-89.7" r="3.0" fill="#1648a8"/>
-  <circle cx="123.9" cy="-84.6" r="3.0" fill="#1648a8"/>
-  <circle cx="127.2" cy="-79.4" r="3.0" fill="#1648a8"/>
-  <circle cx="130.4" cy="-74.1" r="3.0" fill="#1648a8"/>
-  <circle cx="133.4" cy="-68.7" r="3.0" fill="#1648a8"/>
-  <circle cx="136.1" cy="-63.1" r="3.0" fill="#1648a8"/>
-  <circle cx="138.6" cy="-57.4" r="3.0" fill="#1648a8"/>
-  <circle cx="140.8" cy="-51.6" r="3.0" fill="#1648a8"/>
-  <circle cx="142.8" cy="-45.8" r="3.0" fill="#1648a8"/>
-  <circle cx="144.6" cy="-39.8" r="3.0" fill="#1648a8"/>
-  <circle cx="146.1" cy="-33.8" r="3.0" fill="#1648a8"/>
-  <circle cx="147.4" cy="-27.7" r="3.0" fill="#1648a8"/>
-  <circle cx="148.4" cy="-21.6" r="3.0" fill="#1648a8"/>
-  <circle cx="149.2" cy="-15.5" r="3.0" fill="#1648a8"/>
-  <circle cx="149.7" cy="-9.3" r="3.0" fill="#1648a8"/>
-  <circle cx="150.0" cy="-3.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-170.0" cy="-3.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-169.7" cy="-9.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-169.3" cy="-15.5" r="3.0" fill="#1648a8"/>
-  <circle cx="-168.6" cy="-21.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-167.7" cy="-27.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-166.6" cy="-33.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-165.2" cy="-40.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-163.7" cy="-46.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-161.9" cy="-51.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-159.9" cy="-57.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-157.6" cy="-63.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-155.2" cy="-69.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-152.6" cy="-75.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-149.7" cy="-80.5" r="3.0" fill="#1648a8"/>
-  <circle cx="-146.7" cy="-85.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-143.5" cy="-91.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-140.0" cy="-96.4" r="3.0" fill="#1648a8"/>
-  <circle cx="-136.4" cy="-101.4" r="3.0" fill="#1648a8"/>
-  <circle cx="-132.6" cy="-106.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-128.7" cy="-111.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-124.5" cy="-115.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-120.2" cy="-120.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-115.7" cy="-124.5" r="3.0" fill="#1648a8"/>
-  <circle cx="-111.1" cy="-128.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-106.3" cy="-132.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-101.4" cy="-136.4" r="3.0" fill="#1648a8"/>
-  <circle cx="-96.4" cy="-140.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-91.2" cy="-143.5" r="3.0" fill="#1648a8"/>
-  <circle cx="-85.9" cy="-146.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-80.5" cy="-149.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-75.0" cy="-152.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-69.3" cy="-155.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-63.6" cy="-157.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-57.8" cy="-159.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-51.9" cy="-161.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-46.0" cy="-163.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-40.0" cy="-165.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-33.9" cy="-166.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-27.8" cy="-167.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-21.7" cy="-168.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-15.5" cy="-169.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-9.3" cy="-169.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-3.1" cy="-170.0" r="3.0" fill="#1648a8"/>
-  <circle cx="3.1" cy="-170.0" r="3.0" fill="#1648a8"/>
-  <circle cx="9.3" cy="-169.7" r="3.0" fill="#1648a8"/>
-  <circle cx="15.5" cy="-169.3" r="3.0" fill="#1648a8"/>
-  <circle cx="21.7" cy="-168.6" r="3.0" fill="#1648a8"/>
-  <circle cx="27.8" cy="-167.7" r="3.0" fill="#1648a8"/>
-  <circle cx="33.9" cy="-166.6" r="3.0" fill="#1648a8"/>
-  <circle cx="40.0" cy="-165.2" r="3.0" fill="#1648a8"/>
-  <circle cx="46.0" cy="-163.7" r="3.0" fill="#1648a8"/>
-  <circle cx="51.9" cy="-161.9" r="3.0" fill="#1648a8"/>
-  <circle cx="57.8" cy="-159.9" r="3.0" fill="#1648a8"/>
-  <circle cx="63.6" cy="-157.6" r="3.0" fill="#1648a8"/>
-  <circle cx="69.3" cy="-155.2" r="3.0" fill="#1648a8"/>
-  <circle cx="75.0" cy="-152.6" r="3.0" fill="#1648a8"/>
-  <circle cx="80.5" cy="-149.7" r="3.0" fill="#1648a8"/>
-  <circle cx="85.9" cy="-146.7" r="3.0" fill="#1648a8"/>
-  <circle cx="91.2" cy="-143.5" r="3.0" fill="#1648a8"/>
-  <circle cx="96.4" cy="-140.0" r="3.0" fill="#1648a8"/>
-  <circle cx="101.4" cy="-136.4" r="3.0" fill="#1648a8"/>
-  <circle cx="106.3" cy="-132.6" r="3.0" fill="#1648a8"/>
-  <circle cx="111.1" cy="-128.7" r="3.0" fill="#1648a8"/>
-  <circle cx="115.7" cy="-124.5" r="3.0" fill="#1648a8"/>
-  <circle cx="120.2" cy="-120.2" r="3.0" fill="#1648a8"/>
-  <circle cx="124.5" cy="-115.7" r="3.0" fill="#1648a8"/>
-  <circle cx="128.7" cy="-111.1" r="3.0" fill="#1648a8"/>
-  <circle cx="132.6" cy="-106.3" r="3.0" fill="#1648a8"/>
-  <circle cx="136.4" cy="-101.4" r="3.0" fill="#1648a8"/>
-  <circle cx="140.0" cy="-96.4" r="3.0" fill="#1648a8"/>
-  <circle cx="143.5" cy="-91.2" r="3.0" fill="#1648a8"/>
-  <circle cx="146.7" cy="-85.9" r="3.0" fill="#1648a8"/>
-  <circle cx="149.7" cy="-80.5" r="3.0" fill="#1648a8"/>
-  <circle cx="152.6" cy="-75.0" r="3.0" fill="#1648a8"/>
-  <circle cx="155.2" cy="-69.3" r="3.0" fill="#1648a8"/>
-  <circle cx="157.6" cy="-63.6" r="3.0" fill="#1648a8"/>
-  <circle cx="159.9" cy="-57.8" r="3.0" fill="#1648a8"/>
-  <circle cx="161.9" cy="-51.9" r="3.0" fill="#1648a8"/>
-  <circle cx="163.7" cy="-46.0" r="3.0" fill="#1648a8"/>
-  <circle cx="165.2" cy="-40.0" r="3.0" fill="#1648a8"/>
-  <circle cx="166.6" cy="-33.9" r="3.0" fill="#1648a8"/>
-  <circle cx="167.7" cy="-27.8" r="3.0" fill="#1648a8"/>
-  <circle cx="168.6" cy="-21.7" r="3.0" fill="#1648a8"/>
-  <circle cx="169.3" cy="-15.5" r="3.0" fill="#1648a8"/>
-  <circle cx="169.7" cy="-9.3" r="3.0" fill="#1648a8"/>
-  <circle cx="170.0" cy="-3.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-190.0" cy="-3.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-189.8" cy="-9.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-189.4" cy="-15.5" r="3.0" fill="#1648a8"/>
-  <circle cx="-188.8" cy="-21.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-187.9" cy="-27.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-186.9" cy="-34.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-185.7" cy="-40.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-184.3" cy="-46.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-182.7" cy="-52.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-180.9" cy="-58.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-178.9" cy="-64.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-176.7" cy="-69.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-174.3" cy="-75.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-171.8" cy="-81.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-169.0" cy="-86.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-166.1" cy="-92.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-163.0" cy="-97.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-159.7" cy="-103.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-156.2" cy="-108.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-152.6" cy="-113.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-148.8" cy="-118.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-144.9" cy="-122.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-140.8" cy="-127.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-136.5" cy="-132.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-132.1" cy="-136.5" r="3.0" fill="#1648a8"/>
-  <circle cx="-127.6" cy="-140.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-122.9" cy="-144.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-118.1" cy="-148.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-113.2" cy="-152.6" r="3.0" fill="#1648a8"/>
-  <circle cx="-108.1" cy="-156.2" r="3.0" fill="#1648a8"/>
-  <circle cx="-103.0" cy="-159.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-97.7" cy="-163.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-92.3" cy="-166.1" r="3.0" fill="#1648a8"/>
-  <circle cx="-86.8" cy="-169.0" r="3.0" fill="#1648a8"/>
-  <circle cx="-81.2" cy="-171.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-75.6" cy="-174.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-69.8" cy="-176.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-64.0" cy="-178.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-58.1" cy="-180.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-52.2" cy="-182.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-46.2" cy="-184.3" r="3.0" fill="#1648a8"/>
-  <circle cx="-40.1" cy="-185.7" r="3.0" fill="#1648a8"/>
-  <circle cx="-34.0" cy="-186.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-27.9" cy="-187.9" r="3.0" fill="#1648a8"/>
-  <circle cx="-21.7" cy="-188.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-15.5" cy="-189.4" r="3.0" fill="#1648a8"/>
-  <circle cx="-9.3" cy="-189.8" r="3.0" fill="#1648a8"/>
-  <circle cx="-3.1" cy="-190.0" r="3.0" fill="#1648a8"/>
-  <circle cx="3.1" cy="-190.0" r="3.0" fill="#1648a8"/>
-  <circle cx="9.3" cy="-189.8" r="3.0" fill="#1648a8"/>
-  <circle cx="15.5" cy="-189.4" r="3.0" fill="#1648a8"/>
-  <circle cx="21.7" cy="-188.8" r="3.0" fill="#1648a8"/>
-  <circle cx="27.9" cy="-187.9" r="3.0" fill="#1648a8"/>
-  <circle cx="34.0" cy="-186.9" r="3.0" fill="#1648a8"/>
-  <circle cx="40.1" cy="-185.7" r="3.0" fill="#1648a8"/>
-  <circle cx="46.2" cy="-184.3" r="3.0" fill="#1648a8"/>
-  <circle cx="52.2" cy="-182.7" r="3.0" fill="#1648a8"/>
-  <circle cx="58.1" cy="-180.9" r="3.0" fill="#1648a8"/>
-  <circle cx="64.0" cy="-178.9" r="3.0" fill="#1648a8"/>
-  <circle cx="69.8" cy="-176.7" r="3.0" fill="#1648a8"/>
-  <circle cx="75.6" cy="-174.3" r="3.0" fill="#1648a8"/>
-  <circle cx="81.2" cy="-171.8" r="3.0" fill="#1648a8"/>
-  <circle cx="86.8" cy="-169.0" r="3.0" fill="#1648a8"/>
-  <circle cx="92.3" cy="-166.1" r="3.0" fill="#1648a8"/>
-  <circle cx="97.7" cy="-163.0" r="3.0" fill="#1648a8"/>
-  <circle cx="103.0" cy="-159.7" r="3.0" fill="#1648a8"/>
-  <circle cx="108.1" cy="-156.2" r="3.0" fill="#1648a8"/>
-  <circle cx="113.2" cy="-152.6" r="3.0" fill="#1648a8"/>
-  <circle cx="118.1" cy="-148.8" r="3.0" fill="#1648a8"/>
-  <circle cx="122.9" cy="-144.9" r="3.0" fill="#1648a8"/>
-  <circle cx="127.6" cy="-140.8" r="3.0" fill="#1648a8"/>
-  <circle cx="132.1" cy="-136.5" r="3.0" fill="#1648a8"/>
-  <circle cx="136.5" cy="-132.1" r="3.0" fill="#1648a8"/>
-  <circle cx="140.8" cy="-127.6" r="3.0" fill="#1648a8"/>
-  <circle cx="144.9" cy="-122.9" r="3.0" fill="#1648a8"/>
-  <circle cx="148.8" cy="-118.1" r="3.0" fill="#1648a8"/>
-  <circle cx="152.6" cy="-113.2" r="3.0" fill="#1648a8"/>
-  <circle cx="156.2" cy="-108.1" r="3.0" fill="#1648a8"/>
-  <circle cx="159.7" cy="-103.0" r="3.0" fill="#2d2a26"/>
-  <circle cx="163.0" cy="-97.7" r="3.0" fill="#2d2a26"/>
-  <circle cx="166.1" cy="-92.3" r="3.0" fill="#2d2a26"/>
-  <circle cx="169.0" cy="-86.8" r="3.0" fill="#2d2a26"/>
-  <circle cx="171.8" cy="-81.2" r="3.0" fill="#2d2a26"/>
-  <circle cx="174.3" cy="-75.6" r="3.0" fill="#2d2a26"/>
-  <circle cx="176.7" cy="-69.8" r="3.0" fill="#2d2a26"/>
-  <circle cx="178.9" cy="-64.0" r="3.0" fill="#2d2a26"/>
-  <circle cx="180.9" cy="-58.1" r="3.0" fill="#2d2a26"/>
-  <circle cx="182.7" cy="-52.2" r="3.0" fill="#2d2a26"/>
-  <circle cx="184.3" cy="-46.2" r="3.0" fill="#2d2a26"/>
-  <circle cx="185.7" cy="-40.1" r="3.0" fill="#2d2a26"/>
-  <circle cx="186.9" cy="-34.0" r="3.0" fill="#2d2a26"/>
-  <circle cx="187.9" cy="-27.9" r="3.0" fill="#2d2a26"/>
-  <circle cx="188.8" cy="-21.7" r="3.0" fill="#2d2a26"/>
-  <circle cx="189.4" cy="-15.5" r="3.0" fill="#2d2a26"/>
-  <circle cx="189.8" cy="-9.3" r="3.0" fill="#2d2a26"/>
-  <circle cx="190.0" cy="-3.1" r="3.0" fill="#2d2a26"/>
-</g>
-              <!-- center marker -->
-              <line x1="300" y1="305" x2="300" y2="318" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-              <!-- floor line -->
-              <line x1="80" y1="316" x2="520" y2="316" stroke="rgba(255,255,255,0.12)" stroke-width="0.6"/>
-              <!-- wordmark -->
-              <text x="300" y="68" text-anchor="middle"
-                    style="font-family: Inter, sans-serif; font-weight: 800; font-size: 36px; letter-spacing: -1.4px; fill: #f4f5f7;">Sejm Symulator</text>
-              <text x="300" y="92" text-anchor="middle"
-                    style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 4px; fill: rgba(255,255,255,0.45); text-transform: uppercase;">Pulpit wpływów politycznych</text>
-              <!-- footer mono -->
-              <text x="300" y="354" text-anchor="middle"
-                    style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 3px; fill: rgba(255,255,255,0.4); text-transform: uppercase;">Kad. X · 460 mandatów · 1.76M głosów</text>
-            </svg>
-            <!-- Status pill: gated demo -->
-            <div style="position:absolute;top:14px;right:16px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:4px 9px;background:rgba(232,184,48,0.14);border:0.5px solid rgba(232,184,48,0.55);color:#f5cc55;border-radius:3px;">
-              <span data-lang="en">Beta · password</span>
-              <span data-lang="pl">Beta · za hasłem</span>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Political Database — gated demo</span>
-            <span data-lang="pl">Baza polityczna — demo za hasłem</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Sejm Symulator — Polish Parliament Power Map</div>
-            <div class="case__desc">Full database of the 10th Polish Parliament: 3,834 floor votes, 1.76M individual MP decisions, 460 MPs across 12 clubs, all 40 standing committees with 3,706 meetings, 1,392 legislative bills. Interactive hemicycle, behavioral simulator on 23 policy topics, club×club agreement heatmap, loyalty rankings, top rebels, career-path graph for 1,979 politicians from 8 parliamentary terms.</div>
-            <p style="font-size:0.75rem;line-height:1.5;color:rgba(245,204,85,0.85);margin-top:8px;border-left:2px solid rgba(245,204,85,0.5);padding-left:10px;">
-              <strong style="color:#f5cc55;">Beta, password-gated.</strong> Now includes "Słowność" — a word-vs-vote consistency pilot: AI extracts stances from official floor transcripts (verbatim-quote-verified) and links them to the MP's actual votes. Plus the TF-IDF vote-similarity simulator, decision-maker scoring and floor-speech analysis. Ask for the password.
-            </p>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Sejm Symulator — mapa wpływów politycznych</div>
-            <div class="case__desc">Pełna baza X kadencji Sejmu RP: 3 834 głosowań, 1,76 mln indywidualnych głosów, 460 posłów w 12 klubach, wszystkie 40 komisji stałych z 3 706 posiedzeniami, 1 392 inicjatywy ustawodawcze. Interaktywny hemicykl, symulator zachowań na 23 tematach, heatmapa zgodności klubów, ranking lojalności, top buntownicy, graf karier 1 979 polityków z 8 kadencji.</div>
-            <p style="font-size:0.75rem;line-height:1.5;color:rgba(245,204,85,0.85);margin-top:8px;border-left:2px solid rgba(245,204,85,0.5);padding-left:10px;">
-              <strong style="color:#f5cc55;">Beta, za hasłem.</strong> Nowość: „Słowność" — pilotaż zgodności słów z głosami: AI wyciąga stanowiska z oficjalnych stenogramów (cytaty weryfikowane znak w znak) i zestawia je z faktycznymi głosami posłów. Do tego symulator podobieństwa TF-IDF do 3 834 głosowań, scoring decyzyjności i analiza wystąpień. Hasło na życzenie.
-            </p>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">3 834</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Floor votes</span>
-                <span data-lang="pl">Głosowań</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">1,76M</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Individual votes</span>
-                <span data-lang="pl">Indyw. głosów</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow1.github.io/sejm/" target="_blank" class="case__cta">
-              Enter (password) <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="https://futureshow1.github.io/sejm/slownosc/" target="_blank" class="case__sublink">
-              Słowność: words vs votes &rarr;
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow1.github.io/sejm/" target="_blank" class="case__cta">
-              Wejdź (hasło) <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="https://futureshow1.github.io/sejm/slownosc/" target="_blank" class="case__sublink">
-              Słowność: słowa vs głosy &rarr;
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Historia Animacji -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/historia-animacji/" target="_blank">
-          <div style="width:100%;height:100%;background:#0f0e13;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;">
-              <!-- perforacja taśmy filmowej -->
-              <g fill="#2a2833">
-                <rect x="548" y="8" width="22" height="16" rx="4"/>
-                <rect x="548" y="44" width="22" height="16" rx="4"/>
-                <rect x="548" y="80" width="22" height="16" rx="4"/>
-                <rect x="548" y="116" width="22" height="16" rx="4"/>
-                <rect x="548" y="152" width="22" height="16" rx="4"/>
-                <rect x="548" y="188" width="22" height="16" rx="4"/>
-                <rect x="548" y="224" width="22" height="16" rx="4"/>
-                <rect x="548" y="260" width="22" height="16" rx="4"/>
-                <rect x="548" y="296" width="22" height="16" rx="4"/>
-              </g>
-              <!-- zoetrop -->
-              <circle cx="470" cy="260" r="130" fill="none" stroke="#2a2833" stroke-width="1.5"/>
-              <circle cx="470" cy="260" r="6" fill="#2a2833"/>
-              <!-- bursztynowy skos -->
-              <polygon points="452,0 458,0 386,340 380,340" fill="#ffb320"/>
-              <!-- HA: pełne H + konturowe A -->
-              <text x="36" y="212" font-family="'Archivo Black','Arial Black',sans-serif" font-size="170" font-weight="900" fill="#f3efe6">H</text>
-              <text x="180" y="212" font-family="'Archivo Black','Arial Black',sans-serif" font-size="170" font-weight="900" fill="none" stroke="#ffb320" stroke-width="4">A</text>
-            </svg>
-            <div style="position:absolute;bottom:18px;left:28px;right:28px;text-align:center;font-family:'Courier New',monospace;font-size:clamp(0.85rem,1.3vw,1.05rem);color:#ffb320;letter-spacing:0.28em;text-transform:uppercase;">
-              Historia Animacji
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Animation history / Streaming portal</span>
-            <span data-lang="pl">Historia animacji / Portal streamingowy</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Historia Animacji — animation from 1833 to today</div>
-            <div class="case__desc">The whole history of animation in one place — to watch, not just to read about: 430 films by 231 artists in 30 chapters, from optical toys and chronophotography, through Starewicz, the golden age of Disney and the Fleischers, the Polish School, Norstein and the Zagreb School, to Pixar, music videos and the internet generation. The chapter structure comes not from an algorithm but from the scholarly canon — Bendazzi, Furniss, Sitkiewicz, Giżycki — and every film was verified and sourced from the most official channel available: the NFB, MoMA, Soyuzmultfilm, Studio Miniatur Filmowych, Blender and GOBELINS. Plus a Marathon mode: every film back to back, each introduced by a two-second title card — over 40 hours of screening, 1833 to today.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Historia Animacji — animacja od 1833 do dziś</div>
-            <div class="case__desc">Cała historia animacji w jednym miejscu — do oglądania, nie tylko do czytania: 430 filmów 231 twórców w 30 rozdziałach, od zabawek optycznych i chronofotografii, przez Starewicza, złotą erę Disneya i Fleischerów, polską szkołę animacji, Norsteina i szkołę zagrzebską, po Pixara, teledyski i pokolenie internetu. Układ rozdziałów nie wziął się z algorytmu, lecz z kanonu literatury — Bendazziego, Furniss, Sitkiewicza i Giżyckiego — a każdy film zweryfikowano i podpięto z możliwie oficjalnego źródła: NFB, MoMA, Sojuzmultfilmu, Studia Miniatur Filmowych, Blendera i GOBELINS. Do tego tryb Maraton: wszystkie filmy jeden po drugim, każdy zapowiedziany dwusekundową planszą — ponad 40 godzin projekcji, od 1833 roku do dziś.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">430</div>
-              <div class="case__metric-label">
-                <span data-lang="en">films</span>
-                <span data-lang="pl">filmów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">231</div>
-              <div class="case__metric-label">
-                <span data-lang="en">artists</span>
-                <span data-lang="pl">twórców</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">30</div>
-              <div class="case__metric-label">
-                <span data-lang="en">chapters</span>
-                <span data-lang="pl">rozdziałów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">40+ h</div>
-              <div class="case__metric-label">
-                <span data-lang="en">marathon mode</span>
-                <span data-lang="pl">tryb maraton</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow.pl/historia-animacji/" target="_blank" class="case__cta">
-              Open portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow.pl/historia-animacji/" target="_blank" class="case__cta">
-              Otwórz portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- MNEMO -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/mnemo/" target="_blank">
-          <div style="width:100%;height:100%;background:radial-gradient(circle at center, #1a1612 0%, #0e0e0d 70%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 400 400" style="position:absolute;width:100%;height:100%;opacity:0.55;">
-              <g fill="none" stroke="#b8924a" stroke-width="0.5">
-                <circle cx="200" cy="200" r="190"/>
-                <circle cx="200" cy="200" r="150"/>
-                <circle cx="200" cy="200" r="110"/>
-                <circle cx="200" cy="200" r="70"/>
-              </g>
-              <g font-family="Cormorant Garamond, serif" font-size="14" text-anchor="middle" fill="#b8924a">
-                <text x="200" y="20" dy="0.35em">A</text>
-                <text x="290" y="40" dy="0.35em">B</text>
-                <text x="360" y="110" dy="0.35em">C</text>
-                <text x="380" y="200" dy="0.35em">D</text>
-                <text x="360" y="290" dy="0.35em">E</text>
-                <text x="290" y="360" dy="0.35em">F</text>
-                <text x="200" y="380" dy="0.35em">G</text>
-                <text x="110" y="360" dy="0.35em">H</text>
-                <text x="40" y="290" dy="0.35em">I</text>
-                <text x="20" y="200" dy="0.35em">L</text>
-                <text x="40" y="110" dy="0.35em">M</text>
-                <text x="110" y="40" dy="0.35em">N</text>
-              </g>
-              <g font-family="serif" font-size="22" text-anchor="middle" fill="#c8401f">
-                <text x="200" y="80" dy="0.35em">☉</text>
-                <text x="320" y="200" dy="0.35em">☽</text>
-                <text x="200" y="320" dy="0.35em">♀</text>
-                <text x="80" y="200" dy="0.35em">♂</text>
-              </g>
-              <text x="200" y="200" dy="0.35em" text-anchor="middle" font-family="serif" font-size="44" fill="#c8401f">∞</text>
-            </svg>
-            <div style="position:relative;z-index:1;text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif;color:#f5f1e8;font-size:clamp(2.4rem,6vw,4rem);font-weight:500;letter-spacing:0.1em;line-height:1;">MNEMO</div>
-              <div style="color:#b8924a;font-size:clamp(0.6rem,1vw,0.78rem);letter-spacing:0.3em;text-transform:uppercase;margin-top:10px;font-family:'JetBrains Mono',monospace;">Theatrum memoriae</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Memory / Education / Game</span>
-            <span data-lang="pl">Pamięć / Edukacja / Gra</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">MNEMO — The Art of Memory</div>
-            <div class="case__desc">A bilingual portal, a 14-chapter compendium and 9 solo browser exercises on the art of memory and mnemonics. From Simonides and Cicero, through the Renaissance memory theatres of Camillo and Bruno, to Polish SuperMemo and the World Memory Championships of the 21st century. A separate monograph dedicated to Giordano Bruno, an interactive memory wheel (rota memoriae), and trainers for the PAO system, π recall, name-and-face association, and memory palace. No login, no tracking, no ads.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">MNEMO — Sztuka pamięci</div>
-            <div class="case__desc">Dwujęzyczny portal, 14-rozdziałowe kompendium oraz 9 ćwiczeń pamięciowych w przeglądarce. Od Symonidesa i Cycerona, przez renesansowe teatry pamięci Camilla i Bruna, po polski SuperMemo i mistrzostwa świata XXI wieku. Osobna monografia poświęcona Giordanowi Brunowi, interaktywne koło pamięci (rota memoriae) oraz ćwiczenia z systemu PAO, recytacji liczby π, kojarzenia imion z twarzami i budowania pałacu pamięci. Bez logowania, bez śledzenia, bez reklam.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">9</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Solo games</span>
-                <span data-lang="pl">Gier solo</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">23</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Chapters PL+EN</span>
-                <span data-lang="pl">Rozdziałów PL+EN</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">2500+</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Years of tradition</span>
-                <span data-lang="pl">Lat tradycji</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow1.github.io/mnemo/" target="_blank" class="case__cta">
-              Enter MNEMO <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="https://futureshow1.github.io/mnemo/kompendium/bruno.html" target="_blank" class="case__sublink">Bruno monograph →</a>
-            <a href="https://github.com/futureshow1/mnemo" target="_blank" class="case__sublink">Source on GitHub →</a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow1.github.io/mnemo/" target="_blank" class="case__cta">
-              Wejdź do MNEMO <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="https://futureshow1.github.io/mnemo/kompendium/bruno.html" target="_blank" class="case__sublink">Monografia Bruno →</a>
-            <a href="https://github.com/futureshow1/mnemo" target="_blank" class="case__sublink">Źródło na GitHubie →</a>
-          </div>
-        </div>
-      </div>
-      <!-- Panama Papers -->
-      <div class="case">
-        <a class="case__visual" href="panama/" target="_blank" rel="noopener">
-          <div class="case__bg" style="background:linear-gradient(180deg,#0a1828 0%,#06121e 45%,#020a14 80%,#000408 100%);overflow:hidden;">
-            <!-- iceberg metaphor: small visible tip, massive hidden bulk -->
-            <svg viewBox="0 0 600 340" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
-              <!-- waterline -->
-              <line x1="0" y1="130" x2="600" y2="130" stroke="rgba(190,210,230,0.4)" stroke-width="0.6"/>
-              <line x1="0" y1="133" x2="600" y2="133" stroke="rgba(190,210,230,0.15)" stroke-width="0.4"/>
-              <!-- iceberg tip above water -->
-              <polygon points="300,55 240,130 370,130" fill="#e8eef5" opacity="0.96"/>
-              <polygon points="320,75 300,130 370,130" fill="#cdd6e1" opacity="0.8"/>
-              <polygon points="280,85 300,130 240,130" fill="#dde4ed" opacity="0.55"/>
-              <!-- massive bulk below water (faded into deep water) -->
-              <polygon points="240,130 195,155 165,200 175,255 220,300 295,328 370,330 430,302 460,255 470,210 445,165 405,140 370,130" fill="rgba(140,170,195,0.42)"/>
-              <polygon points="265,130 225,170 235,225 275,285 340,315 400,300 425,250 410,205 385,160 350,130" fill="rgba(170,195,215,0.22)"/>
-              <!-- shimmer points in deep water -->
-              <circle cx="100" cy="240" r="0.8" fill="rgba(190,210,230,0.35)"/>
-              <circle cx="520" cy="260" r="0.8" fill="rgba(190,210,230,0.35)"/>
-              <circle cx="140" cy="295" r="0.6" fill="rgba(190,210,230,0.25)"/>
-              <circle cx="500" cy="305" r="0.6" fill="rgba(190,210,230,0.25)"/>
-            </svg>
-            <!-- top mono label -->
-            <div style="position:absolute;top:18px;left:24px;right:24px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.24em;text-transform:uppercase;z-index:3;color:rgba(205,214,225,0.7);">
-              <span>Mossack Fonseca · ICIJ</span>
-              <span><span data-lang="en">3 Apr 2016</span><span data-lang="pl">3 IV 2016</span></span>
-            </div>
-            <!-- number floating above the tip -->
-            <div style="position:absolute;top:7%;left:0;right:0;text-align:center;z-index:3;">
-              <div style="font-family:Georgia,serif;font-size:clamp(1.5rem,2.8vw,2.2rem);color:#e8eef5;font-weight:400;letter-spacing:-0.005em;line-height:1;"><span data-lang="en">11.5M</span><span data-lang="pl">11,5 mln</span></div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.3em;color:rgba(205,214,225,0.55);text-transform:uppercase;margin-top:3px;"><span data-lang="en">documents</span><span data-lang="pl">dokumentów</span></div>
-            </div>
-            <!-- bottom italic tagline -->
-            <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center;z-index:3;">
-              <div style="font-family:Georgia,serif;font-style:italic;font-size:clamp(0.85rem,1.2vw,1.05rem);color:rgba(232,238,245,0.82);letter-spacing:0.005em;"><span data-lang="en">what leaked is just the tip</span><span data-lang="pl">to co wyciekło to wierzchołek</span></div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Data Visualization / OSINT</span>
-            <span data-lang="pl">Wizualizacja / OSINT</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Panama Papers Visualization</div>
-            <div class="case__desc">The largest financial leak in history, turned into an interactive investigation. Network maps, entity analysis, and hidden connections between shell companies, politicians, and offshore accounts.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Panama Papers — Wizualizacja</div>
-            <div class="case__desc">Największy wyciek finansowy w historii jako interaktywne śledztwo. Mapy sieci, analiza podmiotów i ukryte powiązania między firmami-słupami, politykami i kontami offshore.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">11.5M</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Documents</span>
-                <span data-lang="pl">Dokumentów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">214K</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Shell entities</span>
-                <span data-lang="pl">Podmiotów</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="panama/" target="_blank" class="case__cta">
-              Explore data <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="panama/" target="_blank" class="case__cta">
-              Eksploruj dane <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Polski Jazz -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/polski-jazz/" target="_blank">
-          <div style="width:100%;height:100%;background:#111013;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;">
-              <!-- winyl -->
-              <circle cx="468" cy="150" r="148" fill="#1a181c"/>
-              <circle cx="468" cy="150" r="147" fill="none" stroke="#2c2830" stroke-width="1.5"/>
-              <circle cx="468" cy="150" r="126" fill="none" stroke="#26222a" stroke-width="1"/>
-              <circle cx="468" cy="150" r="108" fill="none" stroke="#2c2830" stroke-width="1"/>
-              <circle cx="468" cy="150" r="90" fill="none" stroke="#26222a" stroke-width="1"/>
-              <circle cx="468" cy="150" r="52" fill="#e03a2f"/>
-              <text x="468" y="127" text-anchor="middle" font-family="'Archivo Black','Arial Black',sans-serif" font-size="15" fill="#f2e9d8">POLISH</text>
-              <text x="468" y="144" text-anchor="middle" font-family="'Archivo Black','Arial Black',sans-serif" font-size="15" fill="#111013">JAZZ</text>
-              <circle cx="468" cy="155" r="4.5" fill="#111013"/>
-              <text x="468" y="177" text-anchor="middle" font-family="'Courier New',monospace" font-size="8.5" fill="#f2e9d8" letter-spacing="1.5">POLSKIE NAGRANIA</text>
-              <!-- złota linia i nadtytuł -->
-              <text x="38" y="64" font-family="'Courier New',monospace" font-size="13" fill="#d9a441" letter-spacing="3">200 PŁYT · 1962–2023</text>
-              <line x1="38" y1="78" x2="252" y2="78" stroke="#d9a441" stroke-width="1"/>
-              <!-- typografia -->
-              <text x="34" y="164" font-family="'Archivo Black','Arial Black',sans-serif" font-size="72" fill="#f2e9d8" letter-spacing="-1">POLSKI</text>
-              <text x="34" y="238" font-family="'Archivo Black','Arial Black',sans-serif" font-size="72" fill="#e03a2f" letter-spacing="-1">JAZZ</text>
-              <!-- badge serii -->
-              <rect x="38" y="262" width="118" height="26" fill="#e03a2f"/>
-              <text x="50" y="280" font-family="'Courier New',monospace" font-size="13" font-weight="bold" fill="#f2e9d8" letter-spacing="2">VOL. 1–89</text>
-              <text x="170" y="280" font-family="'Courier New',monospace" font-size="12" fill="#b8ae9c" letter-spacing="1">+ Decca · ECM · MPS · yass</text>
-            </svg>
-            <div style="position:absolute;bottom:18px;left:28px;right:28px;text-align:center;font-family:'Courier New',monospace;font-size:clamp(0.85rem,1.3vw,1.05rem);color:#e03a2f;letter-spacing:0.28em;text-transform:uppercase;">
-              Polski Jazz
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Music history / Record catalogue</span>
-            <span data-lang="pl">Historia muzyki / Katalog płyt</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Polski Jazz — a history told in records</div>
-            <div class="case__desc">The history of Polish jazz arranged the way it was actually written down — on records. Two hundred albums with their real covers: the complete Polish Jazz series of Polskie Nagrania (vol. 1–89, from the Warsaw Stompers to the series' revival), the London-made "Lola" — the first Polish jazz LP recorded in the West — Komeda's "Astigmatic", the ECM years of Stańko and the Wasilewski trio, Seifert on MPS, the yass revolt of Miłość and Kury, up to EABS and the Astigmatic Records generation. Every album gets its story in a few sentences and a button that simply plays it — 198 of the 200 stream from YouTube on the spot. One button plays the whole catalogue in sequence, so the history can simply run in the background. Add a wall of sleeves — six decades of Polish record design in one grid — a cinematheque of 40 documentaries and archival finds, a canon of 14 books, and a full Polish/English edition. From the catacombs of Stalinism to a Grammy: half a century of improvised freedom, one click from listening.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Polski Jazz — historia opowiedziana płytami</div>
-            <div class="case__desc">Historia polskiego jazzu ułożona tak, jak ją naprawdę zapisano — na płytach. Dwieście albumów z prawdziwymi okładkami: kompletna seria Polish Jazz Polskich Nagrań (vol. 1–89, od Warsaw Stompers po reaktywację), londyńska „Lola" — pierwsza polska płyta jazzowa nagrana na Zachodzie — „Astigmatic" Komedy, ECM-owskie lata Stańki i tria Wasilewskiego, Seifert w MPS, yassowa rewolta Miłości i Kur, aż po EABS i pokolenie Astigmatic Records. Każda płyta ma swoją historię w kilku zdaniach i przycisk, który po prostu ją włącza — 198 z 200 gra z YouTube od ręki. Jeden przycisk włącza cały katalog po kolei, więc historii można po prostu słuchać w tle. Do tego ściana okładek — sześć dekad polskiego projektowania w jednej siatce — filmoteka 40 dokumentów i archiwaliów, kanon 14 opracowań i pełna wersja polsko-angielska. Od katakumb stalinizmu po Grammy: pół wieku wolności improwizowanej, jedno kliknięcie od słuchania.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">200</div>
-              <div class="case__metric-label">
-                <span data-lang="en">albums with covers</span>
-                <span data-lang="pl">płyt z okładkami</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">89</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Polish Jazz volumes</span>
-                <span data-lang="pl">woluminów serii</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">198</div>
-              <div class="case__metric-label">
-                <span data-lang="en">recordings on click</span>
-                <span data-lang="pl">nagrań na klik</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">PL/EN</div>
-              <div class="case__metric-label">
-                <span data-lang="en">bilingual</span>
-                <span data-lang="pl">dwujęzyczny</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow.pl/polski-jazz/" target="_blank" class="case__cta">
-              Open portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow.pl/polski-jazz/" target="_blank" class="case__cta">
-              Otwórz portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Schizoanaliza -->
-      <div class="case">
-        <a class="case__visual" href="schizoanaliza/schizoanaliza-gra.html" target="_blank" rel="noopener">
-          <div class="case__bg" style="background:linear-gradient(160deg, #0a0a0a, #0a0d06, #080808);overflow:hidden;">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.35;" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5,50 Q15,25 30,42 T55,30 T80,45 T98,38" fill="none" stroke="#ceea36" stroke-width="0.6"/>
-              <path d="M2,68 Q18,58 32,62 T58,55 T85,65" fill="none" stroke="#ceea36" stroke-width="0.5" opacity="0.7"/>
-              <path d="M12,30 Q28,15 48,28 T78,20" fill="none" stroke="#ceea36" stroke-width="0.5" opacity="0.5"/>
-              <path d="M30,42 L38,72 Q50,82 62,74 L55,30" fill="none" stroke="#ceea36" stroke-width="0.4" opacity="0.6"/>
-              <path d="M32,62 L48,28" fill="none" stroke="#ceea36" stroke-width="0.3" opacity="0.4"/>
-              <path d="M58,55 L52,22" fill="none" stroke="#ceea36" stroke-width="0.3" opacity="0.35"/>
-              <path d="M15,78 Q30,70 38,72" fill="none" stroke="#ceea36" stroke-width="0.4" opacity="0.5"/>
-              <path d="M80,45 Q88,52 96,44" fill="none" stroke="#ceea36" stroke-width="0.4" opacity="0.5"/>
-              <path d="M62,74 Q72,80 82,72 L85,65" fill="none" stroke="#ceea36" stroke-width="0.3" opacity="0.4"/>
-              <path d="M48,28 Q42,12 55,8" fill="none" stroke="#ceea36" stroke-width="0.3" opacity="0.3"/>
-              <circle cx="30" cy="42" r="1.8" fill="#ceea36" opacity="0.7"/><circle cx="55" cy="30" r="1.5" fill="#ceea36" opacity="0.6"/>
-              <circle cx="80" cy="45" r="1.5" fill="#ceea36" opacity="0.5"/><circle cx="32" cy="62" r="1.3" fill="#ceea36" opacity="0.5"/>
-              <circle cx="58" cy="55" r="1.3" fill="#ceea36" opacity="0.45"/><circle cx="38" cy="72" r="1.5" fill="#ceea36" opacity="0.5"/>
-              <circle cx="48" cy="28" r="1.2" fill="#ceea36" opacity="0.4"/><circle cx="62" cy="74" r="1.3" fill="#ceea36" opacity="0.45"/>
-            </svg>
-            <div style="position:relative;z-index:1;text-align:center;">
-              <div style="font-family:Georgia,serif;color:#ceea36;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:700;letter-spacing:0.15em;line-height:1.2;text-transform:uppercase;">Schizoanaliza</div>
-              <div style="color:#ceea36;font-size:clamp(0.75rem,1.3vw,1rem);font-family:Georgia,serif;opacity:0.5;margin-top:4px;letter-spacing:0.2em;text-transform:uppercase;">Deleuze &amp; Guattari</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">EdTech / Philosophy</span>
-            <span data-lang="pl">Edukacja / Filozofia</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Schizoanalysis — Educational Game</div>
-            <div class="case__desc">An alternative to psychoanalysis — not another therapeutic school, but an analytical practice spanning all social fields. Anti-Oedipus and A Thousand Plateaus as interactive experience: concept constellation, argumentative axis, quizzes, three social machines.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Schizoanaliza — Gra edukacyjna</div>
-            <div class="case__desc">Alternatywa dla psychoanalizy — nie kolejna szkoła terapeutyczna, lecz praktyka analityczna obejmująca wszystkie pola społeczne. Anty-Edyp i Tysiąc plateau jako interaktywne doświadczenie: konstelacja pojęć, oś argumentacji, quizy, trzy maszyny społeczne.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">45</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Key concepts</span>
-                <span data-lang="pl">Kluczowych pojęć</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">50+</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Quiz questions</span>
-                <span data-lang="pl">Pytań quizowych</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="schizoanaliza/schizoanaliza-gra.html" target="_blank" class="case__cta">
-              Play the game <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="schizoanaliza/schizoanaliza-gra.html" target="_blank" class="case__cta">
-              Zagraj w grę <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Cambridge Analytica -->
-      <div class="case">
-        <a class="case__visual" href="cambridge-analytica/" target="_blank" rel="noopener">
-          <div class="case__bg" style="background:linear-gradient(135deg, #1a0a2e, #0a0a0f);overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.18) 0%, transparent 60%);"></div>
-            <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="g1" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#a78bfa" stroke-width="0.4"/></pattern></defs><rect width="100%" height="100%" fill="url(#g1)"/></svg>
-            <div style="position:relative;z-index:1;text-align:center;">
-              <div style="color:#a78bfa;font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-2px;line-height:1;">MINDF*CK</div>
-              <div style="color:rgba(167,139,250,0.3);font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;margin-top:8px;">Cambridge Analytica</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Data Investigation</span>
-            <span data-lang="pl">Śledztwo danych</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Cambridge Analytica Timeline</div>
-            <div class="case__desc">Interactive chronology of the data scandal that shook democracy. Based on Christopher Wylie's whistleblower account — every event, every player, every manipulation mapped out.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Cambridge Analytica — Oś czasu</div>
-            <div class="case__desc">Interaktywna chronologia skandalu danych, który wstrząsnął demokracją. Na podstawie relacji Christophera Wylie'a — każde wydarzenie, każdy gracz, każda manipulacja.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">87M</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Users affected</span>
-                <span data-lang="pl">Użytkowników</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">2013-19</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Timeline span</span>
-                <span data-lang="pl">Zakres lat</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="cambridge-analytica/" target="_blank" class="case__cta">
-              Explore timeline <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="digital-life/" target="_blank" class="case__sublink">
-              App mockup &rarr;
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="cambridge-analytica/" target="_blank" class="case__cta">
-              Otwórz oś czasu <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="digital-life/" target="_blank" class="case__sublink">
-              Mockup aplikacji &rarr;
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Legendarne Dobranocki -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/dobranocki/" target="_blank">
-          <div style="width:100%;height:100%;background:#0b0d17;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;">
-              <!-- gwiazdy -->
-              <g fill="#a9adc4">
-                <circle cx="70" cy="40" r="1.6"/><circle cx="180" cy="70" r="1.1"/>
-                <circle cx="300" cy="30" r="1.4"/><circle cx="520" cy="60" r="1.2"/>
-                <circle cx="120" cy="300" r="1.3"/><circle cx="340" cy="290" r="1.1"/>
-                <circle cx="560" cy="250" r="1.5"/><circle cx="420" cy="120" r="1.2"/>
-              </g>
-              <g fill="#b9a5ff">
-                <circle cx="240" cy="55" r="1.8"/><circle cx="470" cy="300" r="1.6"/>
-                <circle cx="60" cy="180" r="1.4"/>
-              </g>
-              <!-- sierp księżyca -->
-              <circle cx="500" cy="90" r="58" fill="#ffd98a"/>
-              <circle cx="474" cy="80" r="58" fill="#0b0d17"/>
-              <!-- lawendowy skos -->
-              <polygon points="452,0 458,0 386,340 380,340" fill="#b9a5ff"/>
-              <!-- LD: pełne L + konturowe D -->
-              <text x="60" y="226" font-family="'Archivo Black','Arial Black',sans-serif" font-size="170" font-weight="900" fill="#eef0f8">L</text>
-              <text x="180" y="226" font-family="'Archivo Black','Arial Black',sans-serif" font-size="170" font-weight="900" fill="none" stroke="#b9a5ff" stroke-width="4">D</text>
-            </svg>
-            <div style="position:absolute;bottom:18px;left:28px;right:28px;text-align:center;font-family:'Courier New',monospace;font-size:clamp(0.85rem,1.3vw,1.05rem);color:#b9a5ff;letter-spacing:0.28em;text-transform:uppercase;">
-              Legendarne Dobranocki
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Bedtime TV heritage / Streaming portal</span>
-            <span data-lang="pl">Dobranocki / Portal streamingowy</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Legendarne Dobranocki — bedtime cartoons 1980–2000</div>
-            <div class="case__desc">The cartoons that put Poland to bed for two decades, gathered in one place and ready to watch: 322 verified episodes of 53 bedtime shows in 9 chapters — from Bolek &amp; Lolek, Reksio and Teddy Bear Uszatek, through the Mole, Rumcajs and Nu Pogodi, to the Smurfs, Gummi Bears and Moomins. Every show is a set of episodes sourced from the most official channels available — the Bielsko-Biała animation studio, Soyuzmultfilm, Czech Bonton or the official Polish Smurfs channel — with a "binge" mode that plays a whole set in sequence, like the old TV evening slot. The night edition of FutureShow's film-portal family: twinkling and shooting stars, a moon that turns into a sun in day mode, and a title that dissolves and re-emerges at a bedtime pace.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Legendarne Dobranocki — bajki na dobranoc 1980–2000</div>
-            <div class="case__desc">Kreskówki, które przez dwie dekady kładły Polskę spać — zebrane w jednym miejscu i gotowe do oglądania: 322 zweryfikowane odcinki 53 dobranocek w 9 rozdziałach, od Bolka i Lolka, Reksia i Misia Uszatka, przez Krecika, Rumcajsa i Wilka z Zającem, po Smerfy, Gumisie i Muminki. Każda bajka to zestaw odcinków z możliwie oficjalnych kanałów — Studia Filmów Rysunkowych, Sojuzmultfilmu, czeskiego Bontonu czy „Smerfy • Po Polsku" — z trybem „Oglądaj ciągiem", który odtwarza cały zestaw jak dawne wieczorne pasmo TVP. Nocna odsłona rodziny portali filmowych FutureShow: mrugające i spadające gwiazdy, księżyc zamieniający się w trybie dziennym w słońce oraz tytuł, który rozpływa się i wyłania w usypiającym rytmie.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">322</div>
-              <div class="case__metric-label">
-                <span data-lang="en">episodes</span>
-                <span data-lang="pl">odcinki</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">53</div>
-              <div class="case__metric-label">
-                <span data-lang="en">shows</span>
-                <span data-lang="pl">dobranocki</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">9</div>
-              <div class="case__metric-label">
-                <span data-lang="en">chapters</span>
-                <span data-lang="pl">rozdziałów</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">PL/EN</div>
-              <div class="case__metric-label">
-                <span data-lang="en">bilingual</span>
-                <span data-lang="pl">dwujęzyczny</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow.pl/dobranocki/" target="_blank" class="case__cta">
-              Open portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow.pl/dobranocki/" target="_blank" class="case__cta">
-              Otwórz portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Hinton AI Portal -->
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/hinton-ai-portal/" target="_blank">
-          <div class="case__bg" style="background:radial-gradient(ellipse at top, #0c0a1a 0%, #06060c 60%, #000 100%);overflow:hidden;">
-            <!-- Animated glow halo behind icosahedron -->
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(124,58,237,0.25) 0%, rgba(0,212,255,0.08) 30%, transparent 60%);"></div>
-            <!-- Subtle grid -->
-            <div style="position:absolute;inset:0;opacity:0.06;background-image:linear-gradient(rgba(0,212,255,0.4) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.4) 1px,transparent 1px);background-size:40px 40px;"></div>
-            <!-- Scanlines -->
-            <div style="position:absolute;inset:0;opacity:0.04;background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,#00d4ff 2px,#00d4ff 3px);pointer-events:none;"></div>
-            <!-- Neural network SVG: icosahedron-inspired wireframe -->
-            <svg viewBox="0 0 400 240" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.9;" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <radialGradient id="nodeGlowGreen"><stop offset="0%" stop-color="#00ff88" stop-opacity="1"/><stop offset="100%" stop-color="#00ff88" stop-opacity="0"/></radialGradient>
-                <radialGradient id="nodeGlowCyan"><stop offset="0%" stop-color="#00d4ff" stop-opacity="1"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/></radialGradient>
-                <radialGradient id="nodeGlowPurple"><stop offset="0%" stop-color="#a78bfa" stop-opacity="1"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
-                <linearGradient id="lineGradCyan" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d4ff" stop-opacity="0.5"/><stop offset="100%" stop-color="#7c3aed" stop-opacity="0.5"/></linearGradient>
-              </defs>
-              <!-- Wireframe edges of an icosahedron projected to 2D -->
-              <g stroke="url(#lineGradCyan)" stroke-width="0.7" fill="none" opacity="0.55">
-                <line x1="200" y1="50" x2="120" y2="100"/><line x1="200" y1="50" x2="280" y2="100"/><line x1="200" y1="50" x2="160" y2="80"/><line x1="200" y1="50" x2="240" y2="80"/>
-                <line x1="120" y1="100" x2="100" y2="170"/><line x1="120" y1="100" x2="160" y2="80"/><line x1="120" y1="100" x2="160" y2="160"/>
-                <line x1="280" y1="100" x2="300" y2="170"/><line x1="280" y1="100" x2="240" y2="80"/><line x1="280" y1="100" x2="240" y2="160"/>
-                <line x1="160" y1="80" x2="240" y2="80"/><line x1="160" y1="80" x2="200" y2="120"/><line x1="240" y1="80" x2="200" y2="120"/>
-                <line x1="200" y1="120" x2="160" y2="160"/><line x1="200" y1="120" x2="240" y2="160"/><line x1="200" y1="120" x2="200" y2="190"/>
-                <line x1="100" y1="170" x2="160" y2="160"/><line x1="100" y1="170" x2="200" y2="190"/>
-                <line x1="300" y1="170" x2="240" y2="160"/><line x1="300" y1="170" x2="200" y2="190"/>
-                <line x1="160" y1="160" x2="200" y2="190"/><line x1="240" y1="160" x2="200" y2="190"/>
-              </g>
-              <!-- Vertex glow halos -->
-              <circle cx="200" cy="50" r="10" fill="url(#nodeGlowGreen)"/>
-              <circle cx="120" cy="100" r="10" fill="url(#nodeGlowCyan)"/>
-              <circle cx="280" cy="100" r="10" fill="url(#nodeGlowCyan)"/>
-              <circle cx="100" cy="170" r="10" fill="url(#nodeGlowPurple)"/>
-              <circle cx="300" cy="170" r="10" fill="url(#nodeGlowPurple)"/>
-              <circle cx="200" cy="190" r="10" fill="url(#nodeGlowGreen)"/>
-              <!-- Solid vertex dots -->
-              <g fill="#00ff88"><circle cx="200" cy="50" r="2.2"/><circle cx="200" cy="190" r="2.2"/></g>
-              <g fill="#00d4ff"><circle cx="120" cy="100" r="2.2"/><circle cx="280" cy="100" r="2.2"/><circle cx="200" cy="120" r="2.5"/></g>
-              <g fill="#a78bfa"><circle cx="160" cy="80" r="1.8"/><circle cx="240" cy="80" r="1.8"/><circle cx="160" cy="160" r="1.8"/><circle cx="240" cy="160" r="1.8"/><circle cx="100" cy="170" r="2"/><circle cx="300" cy="170" r="2"/></g>
-              <!-- Floating ambient particles -->
-              <g fill="#00d4ff" opacity="0.7"><circle cx="60" cy="60" r="0.8"/><circle cx="350" cy="50" r="1"/><circle cx="40" cy="200" r="0.9"/><circle cx="370" cy="210" r="0.7"/><circle cx="80" cy="130" r="0.6"/><circle cx="340" cy="120" r="0.8"/><circle cx="180" cy="220" r="0.7"/><circle cx="220" cy="20" r="0.6"/></g>
-              <g fill="#7c3aed" opacity="0.5"><circle cx="30" cy="100" r="0.6"/><circle cx="380" cy="80" r="0.7"/><circle cx="50" cy="220" r="0.5"/><circle cx="20" cy="150" r="0.4"/></g>
-            </svg>
-            <!-- HUD corner brackets -->
-            <div style="position:absolute;top:8px;left:8px;width:18px;height:18px;border-top:1px solid rgba(0,212,255,0.5);border-left:1px solid rgba(0,212,255,0.5);"></div>
-            <div style="position:absolute;top:8px;right:8px;width:18px;height:18px;border-top:1px solid rgba(0,212,255,0.5);border-right:1px solid rgba(0,212,255,0.5);"></div>
-            <div style="position:absolute;bottom:8px;left:8px;width:18px;height:18px;border-bottom:1px solid rgba(0,212,255,0.5);border-left:1px solid rgba(0,212,255,0.5);"></div>
-            <div style="position:absolute;bottom:8px;right:8px;width:18px;height:18px;border-bottom:1px solid rgba(0,212,255,0.5);border-right:1px solid rgba(0,212,255,0.5);"></div>
-            <!-- HUD readout top -->
-            <div style="position:absolute;top:14px;left:36px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(0,212,255,0.5);text-transform:uppercase;">NEURAL.NET // ONLINE</div>
-            <div style="position:absolute;top:14px;right:36px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(0,212,255,0.5);text-transform:uppercase;">REV 2.4</div>
-            <!-- Title -->
-            <div style="position:relative;z-index:2;text-align:center;padding:0 20px;">
-              <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.05;letter-spacing:-0.02em;background:linear-gradient(120deg,#fff 0%,#a78bfa 35%,#00d4ff 70%,#00ff88 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 40px rgba(124,58,237,0.4);">The Grandfather<br>of AI</div>
-              <div style="color:rgba(0,212,255,0.65);font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;margin-top:14px;font-family:'JetBrains Mono',monospace;">Hinton &middot; Nobel &middot; 2024</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Interactive Education</span>
-            <span data-lang="pl">Edukacja interaktywna</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">AI Explained — Hinton Portal</div>
-            <div class="case__desc">Interactive educational portal based on Nobel laureate Geoffrey Hinton's step-by-step explanations of how AI works. Neural network visualizations, backpropagation animations, 15 topic sections from foundations to existential risks. Three editions.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">AI według Hintona</div>
-            <div class="case__desc">Interaktywny portal edukacyjny na podstawie wyjaśnień noblisty Geoffrey'a Hintona. Wizualizacje sieci neuronowych, animacje propagacji wstecznej, 15 sekcji tematycznych od podstaw po ryzyka egzystencjalne. Trzy edycje.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">15</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Interactive sections</span>
-                <span data-lang="pl">Sekcji interaktywnych</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">3</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Visual editions</span>
-                <span data-lang="pl">Edycje wizualne</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">EN/PL</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Languages</span>
-                <span data-lang="pl">Wersje językowe</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="https://futureshow1.github.io/hinton-ai-portal/" target="_blank" class="case__cta">
-              Explore portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="https://futureshow1.github.io/hinton-ai-portal/" target="_blank" class="case__cta">
-              Otwórz portal <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- N-Body Simulation -->
-      <div class="case">
-        <a class="case__visual" href="nbody/" target="_blank" rel="noopener">
-          <div style="width:100%;height:100%;background:radial-gradient(ellipse at 40% 45%, rgba(160,80,255,0.2) 0%, transparent 50%), radial-gradient(ellipse at 65% 55%, rgba(255,120,60,0.15) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(100,160,255,0.1) 0%, transparent 60%), #050510;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 100 80" style="position:absolute;width:100%;height:100%;opacity:0.7;">
-              <circle cx="20" cy="25" r="1" fill="#e8a0ff" opacity="0.8"/><circle cx="35" cy="18" r="0.7" fill="#e8a0ff" opacity="0.5"/>
-              <circle cx="50" cy="40" r="1.5" fill="#ffb060" opacity="0.7"/><circle cx="65" cy="30" r="0.8" fill="#80d0ff" opacity="0.6"/>
-              <circle cx="30" cy="50" r="0.9" fill="#90ff90" opacity="0.5"/><circle cx="75" cy="55" r="1.2" fill="#a0a0ff" opacity="0.6"/>
-              <circle cx="45" cy="60" r="0.7" fill="#ff8080" opacity="0.5"/><circle cx="58" cy="22" r="0.8" fill="#e8a0ff" opacity="0.4"/>
-              <circle cx="22" cy="65" r="1" fill="#80d0ff" opacity="0.4"/><circle cx="80" cy="40" r="0.9" fill="#ffb060" opacity="0.5"/>
-              <circle cx="40" cy="35" r="1.3" fill="#fff" opacity="0.3"/><circle cx="60" cy="50" r="0.6" fill="#90ff90" opacity="0.4"/>
-              <circle cx="50" cy="40" r="12" fill="none" stroke="rgba(232,160,255,0.15)" stroke-width="0.3"/>
-              <circle cx="50" cy="40" r="20" fill="none" stroke="rgba(128,208,255,0.1)" stroke-width="0.2"/>
-              <circle cx="50" cy="40" r="28" fill="none" stroke="rgba(160,160,255,0.06)" stroke-width="0.2"/>
-            </svg>
-            <div style="position:relative;z-index:1;text-align:center;">
-              <div style="font-family:'Space Grotesk',sans-serif;color:#e8a0ff;font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:700;letter-spacing:0.1em;line-height:1.2;text-transform:uppercase;">N-Body</div>
-              <div style="color:rgba(128,208,255,0.5);font-size:clamp(0.65rem,1.1vw,0.85rem);letter-spacing:0.2em;text-transform:uppercase;margin-top:4px;">Gravitational Simulation</div>
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Physics / Simulation</span>
-            <span data-lang="pl">Fizyka / Symulacja</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">N-Body Gravitational Simulation</div>
-            <div class="case__desc">Real-time Barnes-Hut gravitational simulation running up to 28,000 particles. Six cosmic scenarios: galaxy collisions, dark matter halos, supernovae, protoplanetary disks, cosmic web formation, and chaotic triple systems.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Symulacja grawitacyjna N-Ciał</div>
-            <div class="case__desc">Symulacja grawitacyjna Barnes-Hut w czasie rzeczywistym z 28 000 cząsteczek. Sześć scenariuszy kosmicznych: zderzenia galaktyk, halo ciemnej materii, supernowe, dyski protoplanetarne, kosmiczna sieć i chaotyczny układ potrójny.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">28K</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Particles</span>
-                <span data-lang="pl">Cząsteczek</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">6</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Cosmic scenarios</span>
-                <span data-lang="pl">Scenariuszy</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="nbody/" target="_blank" class="case__cta">
-              Launch simulation <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="nbody/" target="_blank" class="case__cta">
-              Uruchom symulację <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <div class="case__title">Psychedelic Brain Simulation</div>
+            <div class="case__desc">Trójwymiarowy mózg pod wpływem siedmiu substancji psychodelicznych i dysocjacyjnych — poziomy dawki, oś czasu od przyjęcia do zejścia, klikalne regiony, łączność sieci stanu spoczynkowego, dźwięk podążający za modelem. Dwie wersje na tym samym silniku: trzecia z wbudowanym rejestratorem wideo, czwarta z lżejszym, przeprojektowanym interfejsem. Mała strona wejściowa pozwala wybrać.</div>
           </div>
         </div>
       </div>
@@ -3330,164 +1505,9 @@
           </div>
         </div>
       </div>
-      <div class="case">
-        <a class="case__visual" href="psychedelic/" target="_blank">
-          <div style="width:100%;height:100%;background:radial-gradient(130% 120% at 50% 40%,#33156a 0%,#1d0c44 50%,#080318 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- faint field texture -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
-              <filter id="neuronField">
-                <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2"/>
-                <feColorMatrix values="0 0 0 0 0.62  0 0 0 0 0.45  0 0 0 0 0.92  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#neuronField)"/>
-            </svg>
-            <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(178,150,240,0.72);text-transform:uppercase;z-index:2;">
-              <span>Receptors · 5-HT</span>
-              <span>Brain in 3D</span>
-            </div>
-            <!-- single neuron with waveform -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
-              <defs>
-                <radialGradient id="neuronSoma" cx="40%" cy="38%" r="70%">
-                  <stop offset="0%" stop-color="#e6d8ff"/>
-                  <stop offset="55%" stop-color="#9a72e8"/>
-                  <stop offset="100%" stop-color="#4a2a9a"/>
-                </radialGradient>
-                <linearGradient id="neuronWave" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#7d5fe0" stop-opacity="0"/>
-                  <stop offset="50%" stop-color="#c9b6ff"/>
-                  <stop offset="100%" stop-color="#7d5fe0" stop-opacity="0"/>
-                </linearGradient>
-                <radialGradient id="neuronGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#8f6fe8" stop-opacity="0.5"/>
-                  <stop offset="100%" stop-color="#3a2080" stop-opacity="0"/>
-                </radialGradient>
-              </defs>
-              <!-- soft glow behind soma -->
-              <circle cx="180" cy="176" r="120" fill="url(#neuronGlow)"/>
-              <!-- dendrites -->
-              <g stroke="#b7a2f0" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-opacity="0.9">
-                <path d="M150 150 C 116 120 104 86 96 56 M126 132 C 100 120 78 122 60 110 M132 110 C 120 80 96 70 74 64"/>
-                <path d="M150 200 C 118 222 108 256 100 286 M128 214 C 100 226 80 252 66 268"/>
-                <path d="M210 150 C 244 122 262 96 280 78 M218 134 C 248 124 270 128 290 120"/>
-              </g>
-              <!-- dendrite tip nodes -->
-              <g fill="#d9ccff">
-                <circle cx="96" cy="56" r="4"/>
-                <circle cx="60" cy="110" r="3.4"/>
-                <circle cx="74" cy="64" r="3"/>
-                <circle cx="100" cy="286" r="4"/>
-                <circle cx="66" cy="268" r="3.2"/>
-                <circle cx="280" cy="78" r="3.6"/>
-                <circle cx="290" cy="120" r="3"/>
-              </g>
-              <!-- axon to synapse -->
-              <path d="M212 196 C 256 214 286 232 312 250" stroke="#b7a2f0" stroke-width="4" fill="none" stroke-linecap="round"/>
-              <g fill="#d9ccff">
-                <circle cx="312" cy="250" r="5"/>
-                <circle cx="328" cy="262" r="2.4"/>
-                <circle cx="322" cy="276" r="2.0"/>
-              </g>
-              <!-- soma -->
-              <circle cx="180" cy="176" r="52" fill="url(#neuronSoma)" stroke="#e8def" stroke-width="2" stroke-opacity="0.4"/>
-              <circle cx="166" cy="162" r="16" fill="#c9b6ff" fill-opacity="0.55"/>
-              <!-- soft waveform across the soma -->
-              <path d="M108 176 Q 130 150 150 176 T 192 176 T 234 176 T 270 176"
-                stroke="url(#neuronWave)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d8ccf2;letter-spacing:0.01em;">
-              Psychedelic Brain Simulation
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">3D neuroscience</span>
-            <span data-lang="pl">Neuronauka 3D</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Psychedelic Brain Simulation</div>
-            <div class="case__desc">A 3D brain under seven psychedelic and dissociative substances — dose levels, a timeline from ingestion to comedown, clickable regions, default-mode-network connectivity, sound that follows the model. Two builds on the same engine: version 3 with a built-in video recorder, version 4 with a lighter, redesigned interface. A small landing page lets you pick.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Psychedelic Brain Simulation</div>
-            <div class="case__desc">Trójwymiarowy mózg pod wpływem siedmiu substancji psychodelicznych i dysocjacyjnych — poziomy dawki, oś czasu od przyjęcia do zejścia, klikalne regiony, łączność sieci stanu spoczynkowego, dźwięk podążający za modelem. Dwie wersje na tym samym silniku: trzecia z wbudowanym rejestratorem wideo, czwarta z lżejszym, przeprojektowanym interfejsem. Mała strona wejściowa pozwala wybrać.</div>
-          </div>
-        </div>
-      </div>
-      <div class="case">
-        <a class="case__visual" href="zlota-liczba-kompendium/" target="_blank">
-          <div style="width:100%;height:100%;background:#efe4c8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- paper grain -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.09;">
-              <filter id="kompPaper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 1 0"/></filter>
-              <rect width="600" height="340" filter="url(#kompPaper)"/>
-            </svg>
-            <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(43,36,24,0.55);text-transform:uppercase;z-index:2;">
-              <span>Kompendium</span>
-              <span>Ghyka · 1931</span>
-            </div>
-            <!-- a typeset spread: running head, drop cap, two columns of text, marginal note, footnote rule -->
-            <svg viewBox="0 0 600 340" style="position:relative;z-index:1;width:100%;height:100%;" font-family="Georgia,'Times New Roman',serif">
-              <g fill="#2b2418">
-                <text x="70" y="78" font-size="9" letter-spacing="3" fill="#7a5a1e">ROZDZIAŁ II · PROPORCJA I RYTM</text>
-                <text x="70" y="126" font-size="64" font-style="italic" fill="#2b2418">G</text>
-                <g fill="#3a3122" font-size="8.5">
-                  <text x="112" y="100">hyka rozróżnia proporcję, która jest</text>
-                  <text x="112" y="113">stosunkiem wielkości, od rytmu, który</text>
-                  <text x="112" y="126">jest ich następstwem w czasie —</text>
-                  <text x="70" y="142">stąd złoty podział traktuje jako narzędzie,</text>
-                  <text x="70" y="155">nie jako objawienie. Kompendium zbiera</text>
-                  <text x="70" y="168">źródła, tłumaczy pojęcia i oddziela to,</text>
-                  <text x="70" y="181">co u Ghyki mierzalne, od tego, co jest</text>
-                  <text x="70" y="194">poezją liczby.</text>
-                </g>
-              </g>
-              <!-- second column: rendered as measured rules -->
-              <g stroke="#3a3122" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round">
-                <line x1="330" y1="97" x2="520" y2="97"/><line x1="330" y1="110" x2="530" y2="110"/><line x1="330" y1="123" x2="505" y2="123"/>
-                <line x1="330" y1="136" x2="528" y2="136"/><line x1="330" y1="149" x2="470" y2="149"/>
-                <line x1="330" y1="171" x2="525" y2="171"/>
-                <line x1="330" y1="184" x2="440" y2="184"/>
-              </g>
-              <!-- figure in the second column: a golden rectangle with its square, plainly drawn -->
-              <g fill="none" stroke="#7a5a1e" stroke-width="1.2">
-                <rect x="360" y="200" width="130" height="80"/><line x1="440" y1="200" x2="440" y2="280"/>
-                <path d="M440 280 A80 80 0 0 1 360 200" stroke-dasharray="3 3" stroke-opacity="0.7"/>
-              </g>
-              <text x="362" y="292" font-size="7.5" fill="#7a5a1e" font-style="italic">ryc. 4 — prostokąt złoty i jego kwadrat</text>
-              <!-- marginal note -->
-              <g font-size="7.5" fill="#7a5a1e" font-style="italic">
-                <text x="70" y="240">¹ M. C. Ghyka, Le Nombre d’or,</text>
-                <text x="70" y="252">Paris 1931, t. I, s. 27.</text>
-              </g>
-              <line x1="70" y1="222" x2="200" y2="222" stroke="#7a5a1e" stroke-width="1"/>
-              <!-- folio -->
-              <text x="540" y="78" text-anchor="end" font-size="8" fill="rgba(43,36,24,0.55)">27</text>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#2b2418;letter-spacing:0.01em;background:rgba(239,228,200,0.85);">
-              Złota liczba — kompendium
-            </div>
-          </div></a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Editorial / compendium</span>
-            <span data-lang="pl">Redakcja / kompendium</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Złota liczba — kompendium</div>
-            <div class="case__desc">A static, editorial compendium of Matila C. Ghyka's „Golden Number" with annexes — the careful written groundwork that preceded the interactive SECTIO AUREA portal. Here the sources, the critique and the context are laid out in measured prose: the scholarship before the spectacle. It is the reference layer beneath the φ project — where every later claim is grounded.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Złota liczba — kompendium</div>
-            <div class="case__desc">Statyczne, redakcyjne kompendium „Złotej liczby" Matili C. Ghyki wraz z aneksami — starannie opracowany fundament tekstowy, który poprzedził interaktywny portal SECTIO AUREA. Źródła, krytyka i kontekst rozłożone są tu w wyważonej prozie: rzetelność przed widowiskiem. To warstwa referencyjna pod projektem φ, w której ugruntowana jest każda późniejsza teza.</div>
-          </div>
-        </div>
-      </div>
+    </div>
+    <h3 class="group-label"><span data-lang="en">The Golden Number · φ</span><span data-lang="pl">Złota liczba · φ</span></h3>
+    <div class="projects__grid">
       <div class="case">
         <a class="case__visual" href="sectio-aurea/" target="_blank">
           <div style="width:100%;height:100%;background:radial-gradient(ellipse at 50% 42%,#0e0e0e 0%,#070707 55%,#020202 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
@@ -3574,142 +1594,79 @@
         </div>
       </div>
       <div class="case">
-        <a class="case__visual" href="switkowski/" target="_blank">
-          <div style="width:100%;height:100%;background:linear-gradient(165deg,#2b2418 0%,#1c1710 48%,#080604 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- aged paper texture -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08;">
-              <filter id="switPaper">
-                <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="3"/>
-                <feColorMatrix values="0 0 0 0 0.76  0 0 0 0 0.62  0 0 0 0 0.40  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#switPaper)"/>
+        <a class="case__visual" href="zlota-liczba-kompendium/" target="_blank">
+          <div style="width:100%;height:100%;background:#efe4c8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- paper grain -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.09;">
+              <filter id="kompPaper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 1 0"/></filter>
+              <rect width="600" height="340" filter="url(#kompPaper)"/>
             </svg>
             <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(196,160,108,0.7);text-transform:uppercase;z-index:2;">
-              <span>Parapsychologja</span>
-              <span>1939</span>
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(43,36,24,0.55);text-transform:uppercase;z-index:2;">
+              <span>Kompendium</span>
+              <span>Ghyka · 1931</span>
             </div>
-            <!-- alchemical / occult sigil, engraving line style -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
-              <defs>
-                <linearGradient id="switInk" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#e7d3a6"/>
-                  <stop offset="55%" stop-color="#bb9763"/>
-                  <stop offset="100%" stop-color="#7c5e34"/>
-                </linearGradient>
-              </defs>
-              <!-- faint engraved year behind the sigil -->
-              <text x="180" y="208" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="118" font-style="italic" fill="#c4a06c" fill-opacity="0.08">1939</text>
-              <g fill="none" stroke="url(#switInk)" stroke-linejoin="round" stroke-linecap="round">
-                <!-- outer ring -->
-                <circle cx="180" cy="180" r="150" stroke-width="2.2"/>
-                <circle cx="180" cy="180" r="140" stroke-width="1" stroke-opacity="0.6"/>
-                <!-- tick marks around the ring (engraving feel) -->
-                <g stroke-width="1.2" stroke-opacity="0.55">
-                  <line x1="180" y1="30" x2="180" y2="44"/>
-                  <line x1="330" y1="180" x2="316" y2="180"/>
-                  <line x1="180" y1="330" x2="180" y2="316"/>
-                  <line x1="30" y1="180" x2="44" y2="180"/>
-                  <line x1="74" y1="74" x2="84" y2="84"/>
-                  <line x1="286" y1="74" x2="276" y2="84"/>
-                  <line x1="286" y1="286" x2="276" y2="276"/>
-                  <line x1="74" y1="286" x2="84" y2="276"/>
+            <!-- a typeset spread: running head, drop cap, two columns of text, marginal note, footnote rule -->
+            <svg viewBox="0 0 600 340" style="position:relative;z-index:1;width:100%;height:100%;" font-family="Georgia,'Times New Roman',serif">
+              <g fill="#2b2418">
+                <text x="70" y="78" font-size="9" letter-spacing="3" fill="#7a5a1e">ROZDZIAŁ II · PROPORCJA I RYTM</text>
+                <text x="70" y="126" font-size="64" font-style="italic" fill="#2b2418">G</text>
+                <g fill="#3a3122" font-size="8.5">
+                  <text x="112" y="100">hyka rozróżnia proporcję, która jest</text>
+                  <text x="112" y="113">stosunkiem wielkości, od rytmu, który</text>
+                  <text x="112" y="126">jest ich następstwem w czasie —</text>
+                  <text x="70" y="142">stąd złoty podział traktuje jako narzędzie,</text>
+                  <text x="70" y="155">nie jako objawienie. Kompendium zbiera</text>
+                  <text x="70" y="168">źródła, tłumaczy pojęcia i oddziela to,</text>
+                  <text x="70" y="181">co u Ghyki mierzalne, od tego, co jest</text>
+                  <text x="70" y="194">poezją liczby.</text>
                 </g>
-                <!-- downward triangle (alchemical water) -->
-                <polygon points="180,300 56,96 304,96" stroke-width="2.2"/>
-                <!-- upward triangle (fire) faint, forming a hexagram -->
-                <polygon points="180,60 304,264 56,264" stroke-width="1.6" stroke-opacity="0.5"/>
-                <!-- central star (pentagram) -->
-                <polygon points="180,108 207,176 281,176 221,219 244,288 180,245 116,288 139,219 79,176 153,176" stroke-width="1.8"/>
-                <!-- inner circle with a dot (sol) -->
-                <circle cx="180" cy="190" r="30" stroke-width="1.6"/>
-                <circle cx="180" cy="190" r="4.5" fill="url(#switInk)" stroke="none"/>
               </g>
+              <!-- second column: rendered as measured rules -->
+              <g stroke="#3a3122" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round">
+                <line x1="330" y1="97" x2="520" y2="97"/><line x1="330" y1="110" x2="530" y2="110"/><line x1="330" y1="123" x2="505" y2="123"/>
+                <line x1="330" y1="136" x2="528" y2="136"/><line x1="330" y1="149" x2="470" y2="149"/>
+                <line x1="330" y1="171" x2="525" y2="171"/>
+                <line x1="330" y1="184" x2="440" y2="184"/>
+              </g>
+              <!-- figure in the second column: a golden rectangle with its square, plainly drawn -->
+              <g fill="none" stroke="#7a5a1e" stroke-width="1.2">
+                <rect x="360" y="200" width="130" height="80"/><line x1="440" y1="200" x2="440" y2="280"/>
+                <path d="M440 280 A80 80 0 0 1 360 200" stroke-dasharray="3 3" stroke-opacity="0.7"/>
+              </g>
+              <text x="362" y="292" font-size="7.5" fill="#7a5a1e" font-style="italic">ryc. 4 — prostokąt złoty i jego kwadrat</text>
+              <!-- marginal note -->
+              <g font-size="7.5" fill="#7a5a1e" font-style="italic">
+                <text x="70" y="240">¹ M. C. Ghyka, Le Nombre d’or,</text>
+                <text x="70" y="252">Paris 1931, t. I, s. 27.</text>
+              </g>
+              <line x1="70" y1="222" x2="200" y2="222" stroke="#7a5a1e" stroke-width="1"/>
+              <!-- folio -->
+              <text x="540" y="78" text-anchor="end" font-size="8" fill="rgba(43,36,24,0.55)">27</text>
             </svg>
             <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#dcc6a0;letter-spacing:0.01em;">
-              Okultyzm i magja (1939)
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#2b2418;letter-spacing:0.01em;background:rgba(239,228,200,0.85);">
+              Złota liczba — kompendium
             </div>
-          </div>
-        </a>
+          </div></a>
         <div class="case__info">
           <div class="case__tag">
-            <span data-lang="en">Historical / compendium</span>
-            <span data-lang="pl">Historia / kompendium</span>
+            <span data-lang="en">Editorial / compendium</span>
+            <span data-lang="pl">Redakcja / kompendium</span>
           </div>
           <div data-lang="en">
-            <div class="case__title">Okultyzm i magja (1939)</div>
-            <div class="case__desc">A compendium of Józef Świtkowski's „Okultyzm i magja w świetle parapsychologji" (1939) — a careful reworking of a historical Polish text on parapsychology and the occult. The original is preserved but framed critically: its claims situated in their era, read with a modern eye rather than taken at face value. A document of how the interwar mind reached for the unseen.</div>
+            <div class="case__title">Złota liczba — kompendium</div>
+            <div class="case__desc">A static, editorial compendium of Matila C. Ghyka's „Golden Number" with annexes — the careful written groundwork that preceded the interactive SECTIO AUREA portal. Here the sources, the critique and the context are laid out in measured prose: the scholarship before the spectacle. It is the reference layer beneath the φ project — where every later claim is grounded.</div>
           </div>
           <div data-lang="pl">
-            <div class="case__title">Okultyzm i magja (1939)</div>
-            <div class="case__desc">Kompendium dzieła Józefa Świtkowskiego „Okultyzm i magja w świetle parapsychologji" (1939) — staranne opracowanie historycznego polskiego tekstu o parapsychologii i okultyzmie. Oryginał zostaje zachowany, lecz ujęty krytycznie: jego tezy osadzone w swojej epoce, czytane współczesnym okiem, a nie przyjmowane bezkrytycznie. Świadectwo tego, jak międzywojenny umysł sięgał po niewidzialne.</div>
+            <div class="case__title">Złota liczba — kompendium</div>
+            <div class="case__desc">Statyczne, redakcyjne kompendium „Złotej liczby" Matili C. Ghyki wraz z aneksami — starannie opracowany fundament tekstowy, który poprzedził interaktywny portal SECTIO AUREA. Źródła, krytyka i kontekst rozłożone są tu w wyważonej prozie: rzetelność przed widowiskiem. To warstwa referencyjna pod projektem φ, w której ugruntowana jest każda późniejsza teza.</div>
           </div>
         </div>
       </div>
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/pokedex/" target="_blank">
-          <div style="width:100%;height:100%;background:linear-gradient(180deg,#ffe0ef 0%,#d7f0ff 48%,#fff6cf 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- pastel clouds -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.75;">
-              <g fill="#ffffff">
-                <ellipse cx="92" cy="54" rx="54" ry="24"/>
-                <ellipse cx="140" cy="62" rx="66" ry="28"/>
-                <ellipse cx="486" cy="44" rx="48" ry="22"/>
-                <ellipse cx="528" cy="54" rx="62" ry="26"/>
-              </g>
-            </svg>
-            <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(91,100,194,0.75);text-transform:uppercase;z-index:2;">
-              <span>256 Pokémon</span>
-              <span>730 kart · PL / EN</span>
-            </div>
-            <!-- poké ball -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:44%;max-width:178px;transform:translateY(-10px);">
-              <defs>
-                <linearGradient id="ppTop" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#ff8fbf"/>
-                  <stop offset="100%" stop-color="#ff5f9e"/>
-                </linearGradient>
-                <linearGradient id="ppBot" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="100%" stop-color="#eaf4ff"/>
-                </linearGradient>
-              </defs>
-              <circle cx="180" cy="180" r="128" fill="url(#ppBot)"/>
-              <path d="M52 180a128 128 0 0 1 256 0z" fill="url(#ppTop)"/>
-              <circle cx="180" cy="180" r="128" fill="none" stroke="#5b64c2" stroke-width="8"/>
-              <rect x="52" y="169" width="256" height="22" rx="8" fill="#5b64c2"/>
-              <circle cx="180" cy="180" r="42" fill="#ffffff" stroke="#5b64c2" stroke-width="8"/>
-              <circle cx="180" cy="180" r="19" fill="#ffd94a" stroke="#5b64c2" stroke-width="5"/>
-              <!-- sparkles -->
-              <g fill="#ffd94a" opacity="0.9">
-                <circle cx="70" cy="96" r="5"/>
-                <circle cx="296" cy="118" r="4"/>
-                <circle cx="286" cy="268" r="5"/>
-              </g>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#5b64c2;letter-spacing:0.01em;">
-              Poképedia
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Knowledge base / for kids &amp; collectors</span>
-            <span data-lang="pl">Baza wiedzy / dla dzieci i kolekcjonerów</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Poképedia</div>
-            <div class="case__desc">A bilingual knowledge base for anyone learning the Pokémon universe from scratch: 256 Pokémon across all nine generations with artwork, stats, evolution lines and real in-game catch rates, plus 730 actual trading cards ranked from rarest to most common — the complete 1999 Base Set beside the sets played today. Around the catalogue sits the story: where Pokémon came from, every anime era and film, and above all the games played offline — how the card game actually works, leagues and tournaments, collecting, Pokémon GO and schoolyard play.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Poképedia</div>
-            <div class="case__desc">Dwujęzyczna baza wiedzy dla każdego, kto poznaje świat Pokémonów od zera: 256 Pokémonów ze wszystkich dziewięciu generacji — z grafikami, statystykami, liniami ewolucji i prawdziwymi współczynnikami łowności z gier — oraz 730 istniejących kart ułożonych od najrzadszych do najpospolitszych: komplet Base Setu z 1999 roku obok setów, w które gra się dzisiaj. Wokół katalogu opowieść: skąd wzięły się Pokémony, wszystkie ery anime i filmy, a przede wszystkim gry poza ekranem — jak naprawdę działa karcianka, ligi i turnieje, kolekcjonowanie, Pokémon GO i zabawy podwórkowe.</div>
-          </div>
-        </div>
-      </div>
+    </div>
+    <h3 class="group-label"><span data-lang="en">Culture, editions, archives</span><span data-lang="pl">Kultura, edycje, archiwa</span></h3>
+    <div class="projects__grid">
       <div class="case">
         <a class="case__visual" href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(165deg,#13110d 0%,#0a0908 60%,#050504 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
@@ -3854,6 +1811,146 @@
         </div>
       </div>
       <div class="case">
+        <a class="case__visual" href="switkowski/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(165deg,#2b2418 0%,#1c1710 48%,#080604 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- aged paper texture -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08;">
+              <filter id="switPaper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="3"/>
+                <feColorMatrix values="0 0 0 0 0.76  0 0 0 0 0.62  0 0 0 0 0.40  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#switPaper)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(196,160,108,0.7);text-transform:uppercase;z-index:2;">
+              <span>Parapsychologja</span>
+              <span>1939</span>
+            </div>
+            <!-- alchemical / occult sigil, engraving line style -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="switInk" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#e7d3a6"/>
+                  <stop offset="55%" stop-color="#bb9763"/>
+                  <stop offset="100%" stop-color="#7c5e34"/>
+                </linearGradient>
+              </defs>
+              <!-- faint engraved year behind the sigil -->
+              <text x="180" y="208" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="118" font-style="italic" fill="#c4a06c" fill-opacity="0.08">1939</text>
+              <g fill="none" stroke="url(#switInk)" stroke-linejoin="round" stroke-linecap="round">
+                <!-- outer ring -->
+                <circle cx="180" cy="180" r="150" stroke-width="2.2"/>
+                <circle cx="180" cy="180" r="140" stroke-width="1" stroke-opacity="0.6"/>
+                <!-- tick marks around the ring (engraving feel) -->
+                <g stroke-width="1.2" stroke-opacity="0.55">
+                  <line x1="180" y1="30" x2="180" y2="44"/>
+                  <line x1="330" y1="180" x2="316" y2="180"/>
+                  <line x1="180" y1="330" x2="180" y2="316"/>
+                  <line x1="30" y1="180" x2="44" y2="180"/>
+                  <line x1="74" y1="74" x2="84" y2="84"/>
+                  <line x1="286" y1="74" x2="276" y2="84"/>
+                  <line x1="286" y1="286" x2="276" y2="276"/>
+                  <line x1="74" y1="286" x2="84" y2="276"/>
+                </g>
+                <!-- downward triangle (alchemical water) -->
+                <polygon points="180,300 56,96 304,96" stroke-width="2.2"/>
+                <!-- upward triangle (fire) faint, forming a hexagram -->
+                <polygon points="180,60 304,264 56,264" stroke-width="1.6" stroke-opacity="0.5"/>
+                <!-- central star (pentagram) -->
+                <polygon points="180,108 207,176 281,176 221,219 244,288 180,245 116,288 139,219 79,176 153,176" stroke-width="1.8"/>
+                <!-- inner circle with a dot (sol) -->
+                <circle cx="180" cy="190" r="30" stroke-width="1.6"/>
+                <circle cx="180" cy="190" r="4.5" fill="url(#switInk)" stroke="none"/>
+              </g>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#dcc6a0;letter-spacing:0.01em;">
+              Okultyzm i magja (1939)
+            </div>
+          </div>
+        </a>
+        <div class="case__info">
+          <div class="case__tag">
+            <span data-lang="en">Historical / compendium</span>
+            <span data-lang="pl">Historia / kompendium</span>
+          </div>
+          <div data-lang="en">
+            <div class="case__title">Okultyzm i magja (1939)</div>
+            <div class="case__desc">A compendium of Józef Świtkowski's „Okultyzm i magja w świetle parapsychologji" (1939) — a careful reworking of a historical Polish text on parapsychology and the occult. The original is preserved but framed critically: its claims situated in their era, read with a modern eye rather than taken at face value. A document of how the interwar mind reached for the unseen.</div>
+          </div>
+          <div data-lang="pl">
+            <div class="case__title">Okultyzm i magja (1939)</div>
+            <div class="case__desc">Kompendium dzieła Józefa Świtkowskiego „Okultyzm i magja w świetle parapsychologji" (1939) — staranne opracowanie historycznego polskiego tekstu o parapsychologii i okultyzmie. Oryginał zostaje zachowany, lecz ujęty krytycznie: jego tezy osadzone w swojej epoce, czytane współczesnym okiem, a nie przyjmowane bezkrytycznie. Świadectwo tego, jak międzywojenny umysł sięgał po niewidzialne.</div>
+          </div>
+        </div>
+      </div>
+      <div class="case">
+        <a class="case__visual" href="https://futureshow.pl/pokedex/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(180deg,#ffe0ef 0%,#d7f0ff 48%,#fff6cf 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- pastel clouds -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.75;">
+              <g fill="#ffffff">
+                <ellipse cx="92" cy="54" rx="54" ry="24"/>
+                <ellipse cx="140" cy="62" rx="66" ry="28"/>
+                <ellipse cx="486" cy="44" rx="48" ry="22"/>
+                <ellipse cx="528" cy="54" rx="62" ry="26"/>
+              </g>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(91,100,194,0.75);text-transform:uppercase;z-index:2;">
+              <span>256 Pokémon</span>
+              <span>730 kart · PL / EN</span>
+            </div>
+            <!-- poké ball -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:44%;max-width:178px;transform:translateY(-10px);">
+              <defs>
+                <linearGradient id="ppTop" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ff8fbf"/>
+                  <stop offset="100%" stop-color="#ff5f9e"/>
+                </linearGradient>
+                <linearGradient id="ppBot" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#eaf4ff"/>
+                </linearGradient>
+              </defs>
+              <circle cx="180" cy="180" r="128" fill="url(#ppBot)"/>
+              <path d="M52 180a128 128 0 0 1 256 0z" fill="url(#ppTop)"/>
+              <circle cx="180" cy="180" r="128" fill="none" stroke="#5b64c2" stroke-width="8"/>
+              <rect x="52" y="169" width="256" height="22" rx="8" fill="#5b64c2"/>
+              <circle cx="180" cy="180" r="42" fill="#ffffff" stroke="#5b64c2" stroke-width="8"/>
+              <circle cx="180" cy="180" r="19" fill="#ffd94a" stroke="#5b64c2" stroke-width="5"/>
+              <!-- sparkles -->
+              <g fill="#ffd94a" opacity="0.9">
+                <circle cx="70" cy="96" r="5"/>
+                <circle cx="296" cy="118" r="4"/>
+                <circle cx="286" cy="268" r="5"/>
+              </g>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#5b64c2;letter-spacing:0.01em;">
+              Poképedia
+            </div>
+          </div>
+        </a>
+        <div class="case__info">
+          <div class="case__tag">
+            <span data-lang="en">Knowledge base / for kids &amp; collectors</span>
+            <span data-lang="pl">Baza wiedzy / dla dzieci i kolekcjonerów</span>
+          </div>
+          <div data-lang="en">
+            <div class="case__title">Poképedia</div>
+            <div class="case__desc">A bilingual knowledge base for anyone learning the Pokémon universe from scratch: 256 Pokémon across all nine generations with artwork, stats, evolution lines and real in-game catch rates, plus 730 actual trading cards ranked from rarest to most common — the complete 1999 Base Set beside the sets played today. Around the catalogue sits the story: where Pokémon came from, every anime era and film, and above all the games played offline — how the card game actually works, leagues and tournaments, collecting, Pokémon GO and schoolyard play.</div>
+          </div>
+          <div data-lang="pl">
+            <div class="case__title">Poképedia</div>
+            <div class="case__desc">Dwujęzyczna baza wiedzy dla każdego, kto poznaje świat Pokémonów od zera: 256 Pokémonów ze wszystkich dziewięciu generacji — z grafikami, statystykami, liniami ewolucji i prawdziwymi współczynnikami łowności z gier — oraz 730 istniejących kart ułożonych od najrzadszych do najpospolitszych: komplet Base Setu z 1999 roku obok setów, w które gra się dzisiaj. Wokół katalogu opowieść: skąd wzięły się Pokémony, wszystkie ery anime i filmy, a przede wszystkim gry poza ekranem — jak naprawdę działa karcianka, ligi i turnieje, kolekcjonowanie, Pokémon GO i zabawy podwórkowe.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 class="group-label"><span data-lang="en">For clients</span><span data-lang="pl">Dla klientów</span></h3>
+    <div class="projects__grid">
+      <div class="case">
         <a class="case__visual" href="https://izabelachamczyk.com" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(150deg,#1a0b10 0%,#0c0608 55%,#060405 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint canvas grain -->
@@ -3926,7 +2023,85 @@
     </div>
   </section>
 
-  <section class="projects projects--gated" id="na-haslo">
+  <section class="projects projects--selected" id="wybrane">
+    <div class="section-label">
+      <span data-lang="en">Selected on the front page · 17</span>
+      <span data-lang="pl">Wybrane na stronie głównej · 17</span>
+    </div>
+    <div class="mini">
+      <a class="mini__row" href="https://futureshow1.github.io/matryca/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Matryca · Big Tech Files</span><span data-lang="pl">Matryca · Sprawy Big Techu</span></span>
+        <span class="mini__g"><span data-lang="en">Investigative / Reference base Dziennikarstwo śledcze / Baza referencyjna</span><span data-lang="pl">Investigative / Reference base Dziennikarstwo śledcze / Baza referencyjna</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow1.github.io/oil-gas-atlas/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Global Oil &amp; Gas Infrastructure Atlas</span><span data-lang="pl">Globalny Atlas Infrastruktury Naftowo-Gazowej</span></span>
+        <span class="mini__g"><span data-lang="en">Data Visualization / Geopolitics Wizualizacja danych / Geopolityka</span><span data-lang="pl">Data Visualization / Geopolitics Wizualizacja danych / Geopolityka</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow.pl/kino-awangardy/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Kino Awangardy — a century of experimental film</span><span data-lang="pl">Kino Awangardy — stulecie filmu eksperymentalnego</span></span>
+        <span class="mini__g"><span data-lang="en">Film history / Streaming portal Historia filmu / Portal streamingowy</span><span data-lang="pl">Film history / Streaming portal Historia filmu / Portal streamingowy</span></span>
+      </a>
+      <a class="mini__row" href="habermas/">
+        <span class="mini__t"><span data-lang="en">Habermas — Educational Game</span><span data-lang="pl">Habermas — Gra edukacyjna</span></span>
+        <span class="mini__g"><span data-lang="en">EdTech / Philosophy Edukacja / Filozofia</span><span data-lang="pl">EdTech / Philosophy Edukacja / Filozofia</span></span>
+      </a>
+      <a class="mini__row" href="cardiosim/">
+        <span class="mini__t"><span data-lang="en">CardioSim Pro — Cardiovascular Simulation</span><span data-lang="pl">CardioSim Pro — Symulacja kardiologiczna</span></span>
+        <span class="mini__g"><span data-lang="en">Medical / Simulation Medycyna / Symulacja</span><span data-lang="pl">Medical / Simulation Medycyna / Symulacja</span></span>
+      </a>
+      <a class="mini__row" href="afery/">
+        <span class="mini__t"><span data-lang="en">40 Biggest Scandals in Poland</span><span data-lang="pl">40 Największych Afer w Polsce</span></span>
+        <span class="mini__g"><span data-lang="en">Interactive Report Interaktywny raport</span><span data-lang="pl">Interactive Report Interaktywny raport</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow.pl/mondrian-malewicz/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Mondrian/Malewicz — Composition in Space</span><span data-lang="pl">Mondrian/Malewicz — Composition in Space</span></span>
+        <span class="mini__g"><span data-lang="en">Art history / Interactive 3D Historia sztuki / Interaktywne 3D</span><span data-lang="pl">Art history / Interactive 3D Historia sztuki / Interaktywne 3D</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow1.github.io/sejm/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Sejm Symulator — Polish Parliament Power Map</span><span data-lang="pl">Sejm Symulator — mapa wpływów politycznych</span></span>
+        <span class="mini__g"><span data-lang="en">Political Database — gated demo Baza polityczna — demo za hasłem</span><span data-lang="pl">Political Database — gated demo Baza polityczna — demo za hasłem</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow.pl/historia-animacji/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Historia Animacji — animation from 1833 to today</span><span data-lang="pl">Historia Animacji — animacja od 1833 do dziś</span></span>
+        <span class="mini__g"><span data-lang="en">Animation history / Streaming portal Historia animacji / Portal streamingowy</span><span data-lang="pl">Animation history / Streaming portal Historia animacji / Portal streamingowy</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow1.github.io/mnemo/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">MNEMO — The Art of Memory</span><span data-lang="pl">MNEMO — Sztuka pamięci</span></span>
+        <span class="mini__g"><span data-lang="en">Memory / Education / Game Pamięć / Edukacja / Gra</span><span data-lang="pl">Memory / Education / Game Pamięć / Edukacja / Gra</span></span>
+      </a>
+      <a class="mini__row" href="panama/">
+        <span class="mini__t"><span data-lang="en">Panama Papers Visualization</span><span data-lang="pl">Panama Papers — Wizualizacja</span></span>
+        <span class="mini__g"><span data-lang="en">Data Visualization / OSINT Wizualizacja / OSINT</span><span data-lang="pl">Data Visualization / OSINT Wizualizacja / OSINT</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow.pl/polski-jazz/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Polski Jazz — a history told in records</span><span data-lang="pl">Polski Jazz — historia opowiedziana płytami</span></span>
+        <span class="mini__g"><span data-lang="en">Music history / Record catalogue Historia muzyki / Katalog płyt</span><span data-lang="pl">Music history / Record catalogue Historia muzyki / Katalog płyt</span></span>
+      </a>
+      <a class="mini__row" href="schizoanaliza/schizoanaliza-gra.html">
+        <span class="mini__t"><span data-lang="en">Schizoanalysis — Educational Game</span><span data-lang="pl">Schizoanaliza — Gra edukacyjna</span></span>
+        <span class="mini__g"><span data-lang="en">EdTech / Philosophy Edukacja / Filozofia</span><span data-lang="pl">EdTech / Philosophy Edukacja / Filozofia</span></span>
+      </a>
+      <a class="mini__row" href="cambridge-analytica/">
+        <span class="mini__t"><span data-lang="en">Cambridge Analytica Timeline</span><span data-lang="pl">Cambridge Analytica — Oś czasu</span></span>
+        <span class="mini__g"><span data-lang="en">Data Investigation Śledztwo danych</span><span data-lang="pl">Data Investigation Śledztwo danych</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow.pl/dobranocki/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Legendarne Dobranocki — bedtime cartoons 1980–2000</span><span data-lang="pl">Legendarne Dobranocki — bajki na dobranoc 1980–2000</span></span>
+        <span class="mini__g"><span data-lang="en">Bedtime TV heritage / Streaming portal Dobranocki / Portal streamingowy</span><span data-lang="pl">Bedtime TV heritage / Streaming portal Dobranocki / Portal streamingowy</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow1.github.io/hinton-ai-portal/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">AI Explained — Hinton Portal</span><span data-lang="pl">AI według Hintona</span></span>
+        <span class="mini__g"><span data-lang="en">Interactive Education Edukacja interaktywna</span><span data-lang="pl">Interactive Education Edukacja interaktywna</span></span>
+      </a>
+      <a class="mini__row" href="nbody/">
+        <span class="mini__t"><span data-lang="en">N-Body Gravitational Simulation</span><span data-lang="pl">Symulacja grawitacyjna N-Ciał</span></span>
+        <span class="mini__g"><span data-lang="en">Physics / Simulation Fizyka / Symulacja</span><span data-lang="pl">Physics / Simulation Fizyka / Symulacja</span></span>
+      </a>
+    </div>
+    <div class="projects__more"><a href="index.html#projects"><span data-lang="en">See them as case studies on the front page →</span><span data-lang="pl">Zobacz je jako realizacje na stronie głównej →</span></a></div>
+  </section>
+
+<section class="projects projects--gated" id="na-haslo" style="padding-top:0">
     <div class="section-label">
       <span data-lang="en">Password-protected · 2</span>
       <span data-lang="pl">Na hasło · 2</span>
