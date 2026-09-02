@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Future Show</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script>
+/* Przekierowania ze starych adresów (repo "futureshow" sprzed migracji na domenę).
+   Stare:  futureshow.pl/futureshow/projects/X  ->  Nowe: futureshow.pl/projects/X
+   Stare:  futureshow.pl/futureshow/films.html  ->  Nowe: futureshow.pl/films.html  itd. */
+(function () {
+  var p = location.pathname;
+  var m = p.match(/^\/futureshow\/(.+)$/);
+  if (m && m[1] !== 'index.html' && m[1] !== 'pl.html') {
+    location.replace('/' + m[1] + location.search + location.hash);
+  }
+})();
+</script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:#0c0b09; color:#f2ecdd;
+    font-family:'Helvetica Neue', Arial, sans-serif; text-align:center; padding:2rem;
+  }
+  .box { max-width:520px; }
+  h1 { font-size:5rem; color:#e6392e; letter-spacing:-.02em; }
+  p { margin:1.2rem 0 2rem; color:#b8b0a0; line-height:1.6; }
+  a {
+    display:inline-block; padding:.8rem 1.6rem; color:#f2ecdd; text-decoration:none;
+    border:1px solid #e6392e; letter-spacing:.08em; text-transform:uppercase; font-size:.85rem;
+  }
+  a:hover { background:#e6392e; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <h1>404</h1>
+    <p>Ta strona nie istnieje albo zmieniła adres.<br>
+       This page does not exist or has moved.</p>
+    <a href="/">futureshow.pl</a>
+  </div>
+</body>
+</html>
