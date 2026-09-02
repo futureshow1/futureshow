@@ -320,14 +320,10 @@
     .projects--gated { padding-top: 40px; }
     .projects--gated .case { opacity: 0.88; }
     .gated-note { color: var(--text-dim); font-size: 0.92rem; max-width: 640px; margin: -8px 0 28px; line-height: 1.6; }
+    .note-link { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(99,179,255,0.35); }
+    .note-link:hover { border-bottom-color: var(--accent); }
     .group-label { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin: 34px 0 14px; padding-left: 2px; }
     .group-label:first-of-type { margin-top: 10px; }
-    .projects--selected { padding-top: 30px; }
-    .mini { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; }
-    .mini__row { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: 0.92rem; transition: all 0.2s; }
-    .mini__row:hover { border-color: var(--border-glow); color: var(--accent); transform: translateX(2px); }
-    .mini__g { color: var(--text-dim); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
-    @media (max-width: 760px) { .mini { grid-template-columns: 1fr; } .mini__g { display: none; } }
     .projects__more { margin-top: 28px; text-align: center; }
     .projects__more a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 10px; padding: 14px 28px; color: var(--text-dim); font-size: 0.92rem; font-weight: 600; transition: all 0.2s; text-decoration: none; }
     .projects__more a:hover { color: var(--accent); border-color: var(--border-glow); transform: translateY(-1px); }
@@ -1154,8 +1150,8 @@
       <span data-lang="pl">Więcej projektów · 11</span>
     </div>
     <p class="gated-note">
-      <span data-lang="en">Everything that did not make the front page, grouped by theme. The 17 selected case studies are listed at the bottom.</span>
-      <span data-lang="pl">Wszystko, co nie zmieściło się na stronie głównej, pogrupowane tematycznie. 17 wybranych realizacji jest spisanych na dole.</span>
+      <span data-lang="en">Everything beyond the front page, grouped by theme. The 17 selected case studies live on the <a class="note-link" href="index.html#projects">front page →</a></span>
+      <span data-lang="pl">Wszystko spoza strony głównej, pogrupowane tematycznie. 17 wybranych realizacji jest na <a class="note-link" href="index.html#projects">stronie głównej →</a></span>
     </p>
     <h3 class="group-label"><span data-lang="en">Data, science, simulations</span><span data-lang="pl">Dane, nauka, symulacje</span></h3>
     <div class="projects__grid">
@@ -1999,85 +1995,8 @@
     </div>
   </section>
 
-  <section class="projects projects--selected" id="wybrane">
-    <div class="section-label">
-      <span data-lang="en">Selected on the front page · 17</span>
-      <span data-lang="pl">Wybrane na stronie głównej · 17</span>
-    </div>
-    <div class="mini">
-      <a class="mini__row" href="https://futureshow1.github.io/matryca/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Matryca · Big Tech Files</span><span data-lang="pl">Matryca · Sprawy Big Techu</span></span>
-        <span class="mini__g"><span data-lang="en">Investigative / Reference base Dziennikarstwo śledcze / Baza referencyjna</span><span data-lang="pl">Investigative / Reference base Dziennikarstwo śledcze / Baza referencyjna</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow1.github.io/oil-gas-atlas/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Global Oil &amp; Gas Infrastructure Atlas</span><span data-lang="pl">Globalny Atlas Infrastruktury Naftowo-Gazowej</span></span>
-        <span class="mini__g"><span data-lang="en">Data Visualization / Geopolitics Wizualizacja danych / Geopolityka</span><span data-lang="pl">Data Visualization / Geopolitics Wizualizacja danych / Geopolityka</span></span>
-      </a>
-      <a class="mini__row" href="habermas/">
-        <span class="mini__t"><span data-lang="en">Habermas — Educational Game</span><span data-lang="pl">Habermas — Gra edukacyjna</span></span>
-        <span class="mini__g"><span data-lang="en">EdTech / Philosophy Edukacja / Filozofia</span><span data-lang="pl">EdTech / Philosophy Edukacja / Filozofia</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow.pl/kino-awangardy/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Kino Awangardy — a century of experimental film</span><span data-lang="pl">Kino Awangardy — stulecie filmu eksperymentalnego</span></span>
-        <span class="mini__g"><span data-lang="en">Film history / Streaming portal Historia filmu / Portal streamingowy</span><span data-lang="pl">Film history / Streaming portal Historia filmu / Portal streamingowy</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow1.github.io/sejm/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Sejm Symulator — Polish Parliament Power Map</span><span data-lang="pl">Sejm Symulator — mapa wpływów politycznych</span></span>
-        <span class="mini__g"><span data-lang="en">Political Database — launch preparations Baza polityczna — przygotowania do launchu</span><span data-lang="pl">Political Database — launch preparations Baza polityczna — przygotowania do launchu</span></span>
-      </a>
-      <a class="mini__row" href="cardiosim/">
-        <span class="mini__t"><span data-lang="en">CardioSim Pro — Cardiovascular Simulation</span><span data-lang="pl">CardioSim Pro — Symulacja kardiologiczna</span></span>
-        <span class="mini__g"><span data-lang="en">Medical / Simulation Medycyna / Symulacja</span><span data-lang="pl">Medical / Simulation Medycyna / Symulacja</span></span>
-      </a>
-      <a class="mini__row" href="afery/">
-        <span class="mini__t"><span data-lang="en">40 Biggest Scandals in Poland</span><span data-lang="pl">40 Największych Afer w Polsce</span></span>
-        <span class="mini__g"><span data-lang="en">Interactive Report Interaktywny raport</span><span data-lang="pl">Interactive Report Interaktywny raport</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow.pl/mondrian-malewicz/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Mondrian/Malewicz — Composition in Space</span><span data-lang="pl">Mondrian/Malewicz — Composition in Space</span></span>
-        <span class="mini__g"><span data-lang="en">Art history / Interactive 3D Historia sztuki / Interaktywne 3D</span><span data-lang="pl">Art history / Interactive 3D Historia sztuki / Interaktywne 3D</span></span>
-      </a>
-      <a class="mini__row" href="panama/">
-        <span class="mini__t"><span data-lang="en">Panama Papers Visualization</span><span data-lang="pl">Panama Papers — Wizualizacja</span></span>
-        <span class="mini__g"><span data-lang="en">Data Visualization / OSINT Wizualizacja / OSINT</span><span data-lang="pl">Data Visualization / OSINT Wizualizacja / OSINT</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow.pl/historia-animacji/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Historia Animacji — animation from 1833 to today</span><span data-lang="pl">Historia Animacji — animacja od 1833 do dziś</span></span>
-        <span class="mini__g"><span data-lang="en">Animation history / Streaming portal Historia animacji / Portal streamingowy</span><span data-lang="pl">Animation history / Streaming portal Historia animacji / Portal streamingowy</span></span>
-      </a>
-      <a class="mini__row" href="schizoanaliza/schizoanaliza-gra.html">
-        <span class="mini__t"><span data-lang="en">Schizoanalysis — Educational Game</span><span data-lang="pl">Schizoanaliza — Gra edukacyjna</span></span>
-        <span class="mini__g"><span data-lang="en">EdTech / Philosophy Edukacja / Filozofia</span><span data-lang="pl">EdTech / Philosophy Edukacja / Filozofia</span></span>
-      </a>
-      <a class="mini__row" href="klimat/">
-        <span class="mini__t"><span data-lang="en">Mapa zmian klimatu</span><span data-lang="pl">Mapa zmian klimatu</span></span>
-        <span class="mini__g"><span data-lang="en">Data · Climate · in progressDane · Klimat · w toku</span><span data-lang="pl">Data · Climate · in progressDane · Klimat · w toku</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow1.github.io/mnemo/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">MNEMO — The Art of Memory</span><span data-lang="pl">MNEMO — Sztuka pamięci</span></span>
-        <span class="mini__g"><span data-lang="en">Memory / Education / Game Pamięć / Edukacja / Gra</span><span data-lang="pl">Memory / Education / Game Pamięć / Edukacja / Gra</span></span>
-      </a>
-      <a class="mini__row" href="cambridge-analytica/">
-        <span class="mini__t"><span data-lang="en">Cambridge Analytica Timeline</span><span data-lang="pl">Cambridge Analytica — Oś czasu</span></span>
-        <span class="mini__g"><span data-lang="en">Data Investigation Śledztwo danych</span><span data-lang="pl">Data Investigation Śledztwo danych</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow.pl/polski-jazz/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Polski Jazz — a history told in records</span><span data-lang="pl">Polski Jazz — historia opowiedziana płytami</span></span>
-        <span class="mini__g"><span data-lang="en">Music history / Record catalogue Historia muzyki / Katalog płyt</span><span data-lang="pl">Music history / Record catalogue Historia muzyki / Katalog płyt</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow.pl/dobranocki/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Legendarne Dobranocki — bedtime cartoons 1980–2000</span><span data-lang="pl">Legendarne Dobranocki — bajki na dobranoc 1980–2000</span></span>
-        <span class="mini__g"><span data-lang="en">Bedtime TV heritage / Streaming portal Dobranocki / Portal streamingowy</span><span data-lang="pl">Bedtime TV heritage / Streaming portal Dobranocki / Portal streamingowy</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow1.github.io/hinton-ai-portal/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">AI Explained — Hinton Portal</span><span data-lang="pl">AI według Hintona</span></span>
-        <span class="mini__g"><span data-lang="en">Interactive Education Edukacja interaktywna</span><span data-lang="pl">Interactive Education Edukacja interaktywna</span></span>
-      </a>
-    </div>
-    <div class="projects__more"><a href="index.html#projects"><span data-lang="en">See them as case studies on the front page →</span><span data-lang="pl">Zobacz je jako realizacje na stronie głównej →</span></a></div>
-  </section>
 
-<section class="projects projects--gated" id="na-haslo" style="padding-top:0">
+<section class="projects projects--gated" id="na-haslo">
     <div class="section-label">
       <span data-lang="en">Password-protected · 2</span>
       <span data-lang="pl">Na hasło · 2</span>
