@@ -3505,72 +3505,60 @@
       </div>
       <div class="case">
         <a class="case__visual" href="zlota-liczba-kompendium/" target="_blank">
-          <div style="width:100%;height:100%;background:linear-gradient(160deg,#2a1d10 0%,#1a1208 45%,#070502 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- parchment texture -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
-              <filter id="ghykaPaper">
-                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/>
-                <feColorMatrix values="0 0 0 0 0.84  0 0 0 0 0.66  0 0 0 0 0.32  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#ghykaPaper)"/>
+          <div style="width:100%;height:100%;background:#efe4c8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- paper grain -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.09;">
+              <filter id="kompPaper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 1 0"/></filter>
+              <rect width="600" height="340" filter="url(#kompPaper)"/>
             </svg>
             <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(201,162,77,0.7);text-transform:uppercase;z-index:2;">
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(43,36,24,0.55);text-transform:uppercase;z-index:2;">
               <span>Kompendium</span>
-              <span>Ghyka · φ</span>
+              <span>Ghyka · 1931</span>
             </div>
-            <!-- golden spiral over open book with serif phi -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
-              <defs>
-                <linearGradient id="ghykaGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#f6e2a8"/>
-                  <stop offset="45%" stop-color="#c9a24d"/>
-                  <stop offset="100%" stop-color="#7a5a1e"/>
-                </linearGradient>
-                <linearGradient id="ghykaPage" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#3a2c18"/>
-                  <stop offset="100%" stop-color="#1c1409"/>
-                </linearGradient>
-              </defs>
-              <!-- open book -->
-              <g stroke="url(#ghykaGold)" stroke-width="2.5" fill="url(#ghykaPage)" stroke-linejoin="round">
-                <path d="M 180 268 C 130 238 80 234 38 248 L 38 138 C 80 124 130 128 180 158 Z"/>
-                <path d="M 180 268 C 230 238 280 234 322 248 L 322 138 C 280 124 230 128 180 158 Z"/>
+            <!-- a typeset spread: running head, drop cap, two columns of text, marginal note, footnote rule -->
+            <svg viewBox="0 0 600 340" style="position:relative;z-index:1;width:100%;height:100%;" font-family="Georgia,'Times New Roman',serif">
+              <g fill="#2b2418">
+                <text x="70" y="78" font-size="9" letter-spacing="3" fill="#7a5a1e">ROZDZIAŁ II · PROPORCJA I RYTM</text>
+                <text x="70" y="126" font-size="64" font-style="italic" fill="#2b2418">G</text>
+                <g fill="#3a3122" font-size="8.5">
+                  <text x="112" y="100">hyka rozróżnia proporcję, która jest</text>
+                  <text x="112" y="113">stosunkiem wielkości, od rytmu, który</text>
+                  <text x="112" y="126">jest ich następstwem w czasie —</text>
+                  <text x="70" y="142">stąd złoty podział traktuje jako narzędzie,</text>
+                  <text x="70" y="155">nie jako objawienie. Kompendium zbiera</text>
+                  <text x="70" y="168">źródła, tłumaczy pojęcia i oddziela to,</text>
+                  <text x="70" y="181">co u Ghyki mierzalne, od tego, co jest</text>
+                  <text x="70" y="194">poezją liczby.</text>
+                </g>
               </g>
-              <!-- spine -->
-              <line x1="180" y1="158" x2="180" y2="268" stroke="url(#ghykaGold)" stroke-width="2.5" stroke-opacity="0.8"/>
-              <!-- faint text lines on pages -->
-              <g stroke="#c9a24d" stroke-width="1" stroke-opacity="0.28">
-                <line x1="58" y1="166" x2="158" y2="186"/>
-                <line x1="58" y1="184" x2="158" y2="204"/>
-                <line x1="58" y1="202" x2="150" y2="221"/>
-                <line x1="202" y1="186" x2="302" y2="166"/>
-                <line x1="202" y1="204" x2="302" y2="184"/>
-                <line x1="210" y1="221" x2="302" y2="202"/>
+              <!-- second column: rendered as measured rules -->
+              <g stroke="#3a3122" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round">
+                <line x1="330" y1="97" x2="520" y2="97"/><line x1="330" y1="110" x2="530" y2="110"/><line x1="330" y1="123" x2="505" y2="123"/>
+                <line x1="330" y1="136" x2="528" y2="136"/><line x1="330" y1="149" x2="470" y2="149"/>
+                <line x1="330" y1="171" x2="525" y2="171"/>
+                <line x1="330" y1="184" x2="440" y2="184"/>
               </g>
-              <!-- golden logarithmic spiral rising from the book -->
-              <path d="M 180 150
-                       C 150 150 128 128 128 98
-                       C 128 56 162 24 204 24
-                       C 258 24 300 66 300 120
-                       C 300 184 248 234 184 234
-                       C 110 234 52 176 52 102"
-                    fill="none" stroke="url(#ghykaGold)" stroke-width="3.5" stroke-linecap="round"/>
-              <!-- nested golden rectangles hint -->
-              <g stroke="#c9a24d" stroke-width="1.1" stroke-opacity="0.5" fill="none">
-                <rect x="128" y="24" width="172" height="106"/>
-                <rect x="128" y="24" width="106" height="106"/>
-                <rect x="128" y="24" width="106" height="66"/>
+              <!-- figure in the second column: a golden rectangle with its square, plainly drawn -->
+              <g fill="none" stroke="#7a5a1e" stroke-width="1.2">
+                <rect x="360" y="200" width="130" height="80"/><line x1="440" y1="200" x2="440" y2="280"/>
+                <path d="M440 280 A80 80 0 0 1 360 200" stroke-dasharray="3 3" stroke-opacity="0.7"/>
               </g>
-              <!-- serif phi glyph centered on the leaf -->
-              <text x="180" y="118" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-style="italic" fill="url(#ghykaGold)">φ</text>
+              <text x="362" y="292" font-size="7.5" fill="#7a5a1e" font-style="italic">ryc. 4 — prostokąt złoty i jego kwadrat</text>
+              <!-- marginal note -->
+              <g font-size="7.5" fill="#7a5a1e" font-style="italic">
+                <text x="70" y="240">¹ M. C. Ghyka, Le Nombre d’or,</text>
+                <text x="70" y="252">Paris 1931, t. I, s. 27.</text>
+              </g>
+              <line x1="70" y1="222" x2="200" y2="222" stroke="#7a5a1e" stroke-width="1"/>
+              <!-- folio -->
+              <text x="540" y="78" text-anchor="end" font-size="8" fill="rgba(43,36,24,0.55)">27</text>
             </svg>
             <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#e6d3a6;letter-spacing:0.01em;">
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#2b2418;letter-spacing:0.01em;background:rgba(239,228,200,0.85);">
               Złota liczba — kompendium
             </div>
-          </div>
-        </a>
+          </div></a>
         <div class="case__info">
           <div class="case__tag">
             <span data-lang="en">Editorial / compendium</span>
@@ -3989,8 +3977,8 @@
             </svg>
             <!-- top label -->
             <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(196,160,108,0.7);text-transform:uppercase;z-index:2;">
-              <span>Archiwum · Archive</span>
               <span>Poezja · Poetry</span>
+              <span>Żywe wydanie · Living edition</span>
             </div>
             <!-- quill over ruled manuscript lines -->
             <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
@@ -4034,22 +4022,22 @@
             </svg>
             <!-- footer -->
             <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#dcc7a4;letter-spacing:0.01em;">
-              Archiwum Bronisława Przyłuskiego
+              Bronisław Przyłuski — poezja
             </div>
           </div>
         </a>
         <div class="case__info">
           <div class="case__tag">
-            <span data-lang="en">Literary archive</span>
-            <span data-lang="pl">Archiwum literackie</span>
+            <span data-lang="en">Poetry · living edition</span>
+            <span data-lang="pl">Poezja · żywe wydanie</span>
           </div>
           <div data-lang="en">
-            <div class="case__title">The Bronisław Przyłuski Archive</div>
-            <div class="case__desc">A digital archive of the work of the poet Bronisław Przyłuski — his poems, manuscripts and biography preserved and presented online. A literary heritage project that gathers a scattered body of writing into one place and gives it a lasting, readable home for readers and researchers alike.</div>
+            <div class="case__title">Bronisław Przyłuski — Poetry</div>
+            <div class="case__desc">A living online edition of the poetry of Bronisław Przyłuski (1905–1980): poems to be read, not files to be stored. The texts come first; the biography, the manuscripts and the émigré context stand behind them as commentary. Built to keep the work in circulation rather than in a drawer.</div>
           </div>
           <div data-lang="pl">
-            <div class="case__title">Archiwum Bronisława Przyłuskiego</div>
-            <div class="case__desc">Cyfrowe archiwum twórczości poety Bronisława Przyłuskiego — wiersze, rękopisy i biografia zachowane i udostępnione w sieci. Projekt z zakresu dziedzictwa literackiego, który zbiera rozproszony dorobek w jednym miejscu i daje mu trwały, czytelny dom — dla czytelników i badaczy.</div>
+            <div class="case__title">Bronisław Przyłuski — poezja</div>
+            <div class="case__desc">Żywe wydanie poezji Bronisława Przyłuskiego (1905–1980) w sieci: wiersze do czytania, nie pliki do przechowywania. Na pierwszym planie teksty; biografia, rękopisy i kontekst emigracyjny stoją za nimi jako komentarz. Zrobione po to, żeby twórczość krążyła, a nie leżała w szufladzie.</div>
           </div>
         </div>
       </div>
