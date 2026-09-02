@@ -1160,92 +1160,6 @@
     <h3 class="group-label"><span data-lang="en">Data, science, simulations</span><span data-lang="pl">Dane, nauka, symulacje</span></h3>
     <div class="projects__grid">
       <div class="case">
-        <a class="case__visual" href="klimat/">
-          <div style="width:100%;height:100%;background:linear-gradient(120deg,#06182a 0%,#0a2233 38%,#2a160e 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- faint grain -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
-              <filter id="climPaper">
-                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"/>
-                <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.62  0 0 0 0 0.66  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#climPaper)"/>
-            </svg>
-            <!-- top label: WIP marker -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(214,138,92,0.78);text-transform:uppercase;z-index:2;">
-              <span>Dane · 244 kraje</span>
-              <span>Klimat · Symulacja</span>
-            </div>
-            <!-- world silhouette with warming gradient + rising temperature line -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
-              <defs>
-                <linearGradient id="climWarm" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#2f9bd6"/>
-                  <stop offset="42%" stop-color="#7fb86a"/>
-                  <stop offset="72%" stop-color="#e8b54b"/>
-                  <stop offset="100%" stop-color="#d8492c"/>
-                </linearGradient>
-                <radialGradient id="climGlobe" cx="38%" cy="34%" r="72%">
-                  <stop offset="0%" stop-color="#13344a"/>
-                  <stop offset="100%" stop-color="#0a1c2a"/>
-                </radialGradient>
-              </defs>
-              <!-- globe disc -->
-              <circle cx="180" cy="170" r="122" fill="url(#climGlobe)" stroke="url(#climWarm)" stroke-width="2" stroke-opacity="0.6"/>
-              <!-- graticule -->
-              <g stroke="#5fa9cf" stroke-opacity="0.22" stroke-width="1" fill="none">
-                <ellipse cx="180" cy="170" rx="122" ry="42"/>
-                <ellipse cx="180" cy="170" rx="122" ry="84"/>
-                <ellipse cx="180" cy="170" rx="42" ry="122"/>
-                <ellipse cx="180" cy="170" rx="84" ry="122"/>
-                <line x1="58" y1="170" x2="302" y2="170"/>
-              </g>
-              <!-- stylized continent silhouettes, clipped to globe -->
-              <clipPath id="climClip"><circle cx="180" cy="170" r="122"/></clipPath>
-              <g clip-path="url(#climClip)" fill="url(#climWarm)" fill-opacity="0.92">
-                <path d="M 96 96 C 120 84 150 88 158 108 C 168 130 150 146 158 162 C 166 178 150 196 128 192 C 104 188 92 168 96 148 C 99 132 86 112 96 96 Z"/>
-                <path d="M 196 86 C 224 80 252 96 256 118 C 260 140 244 150 250 168 C 256 188 236 200 220 196 C 206 192 204 174 200 160 C 196 144 182 126 188 110 C 192 100 188 92 196 86 Z"/>
-                <path d="M 150 214 C 172 208 192 220 196 240 C 200 262 184 282 166 286 C 150 290 140 272 142 254 C 144 238 136 222 150 214 Z"/>
-                <path d="M 250 210 C 268 206 282 218 280 234 C 278 250 262 258 252 250 C 244 244 244 226 250 210 Z"/>
-              </g>
-              <!-- rising temperature line/graph across the front -->
-              <g>
-                <polyline points="44,250 92,242 132,232 172,210 208,196 246,160 286,128 320,96"
-                          fill="none" stroke="url(#climWarm)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- data nodes -->
-                <g fill="#f4ead8">
-                  <circle cx="92" cy="242" r="3.4"/>
-                  <circle cx="172" cy="210" r="3.4"/>
-                  <circle cx="246" cy="160" r="3.4"/>
-                  <circle cx="320" cy="96" r="4.6" fill="#e8542f"/>
-                </g>
-                <!-- arrowhead on the rising end -->
-                <path d="M 320 96 L 308 100 M 320 96 L 318 110" stroke="#e8542f" stroke-width="3.4" stroke-linecap="round" fill="none"/>
-              </g>
-              <!-- baseline axis -->
-              <line x1="40" y1="268" x2="324" y2="268" stroke="#5fa9cf" stroke-opacity="0.3" stroke-width="1.4"/>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d9c7ba;letter-spacing:0.01em;">
-              Mapa zmian klimatu — 1901–2025
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Data · Climate</span>
-            <span data-lang="pl">Dane · Klimat</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Mapa zmian klimatu</div>
-            <div class="case__desc">An interactive map of warming, country by country: annual temperature anomalies for 244 countries (CRU TS 4.07, 1901–2022) against the 1951–1980 mean, a time slider with playback, per-country warming stripes and the global NASA GISTEMP series 1880–2025. Computed in the browser from two JSON files — no backend.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Mapa zmian klimatu</div>
-            <div class="case__desc">Interaktywna mapa ocieplenia, kraj po kraju: roczne anomalie temperatury dla 244 krajów (CRU TS 4.07, 1901–2022) względem średniej 1951–1980, suwak czasu z odtwarzaniem, paski ocieplenia dla każdego kraju i globalna seria NASA GISTEMP 1880–2025. Liczone w przeglądarce z dwóch plików JSON — bez backendu.</div>
-          </div>
-        </div>
-      </div>
-      <div class="case">
         <a class="case__visual" href="psychedelic/" target="_blank">
           <div style="width:100%;height:100%;background:radial-gradient(130% 120% at 50% 40%,#33156a 0%,#1d0c44 50%,#080318 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint field texture -->
@@ -1260,7 +1174,69 @@
             <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(178,150,240,0.72);text-transform:uppercase;z-index:2;">
               <span>Receptors · 5-HT</span>
               <span>Brain in 3D</span>
+              <!-- N-Body Simulation -->
+      <div class="case">
+        <a class="case__visual" href="nbody/" target="_blank" rel="noopener">
+          <div style="width:100%;height:100%;background:radial-gradient(ellipse at 40% 45%, rgba(160,80,255,0.2) 0%, transparent 50%), radial-gradient(ellipse at 65% 55%, rgba(255,120,60,0.15) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(100,160,255,0.1) 0%, transparent 60%), #050510;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 100 80" style="position:absolute;width:100%;height:100%;opacity:0.7;">
+              <circle cx="20" cy="25" r="1" fill="#e8a0ff" opacity="0.8"/><circle cx="35" cy="18" r="0.7" fill="#e8a0ff" opacity="0.5"/>
+              <circle cx="50" cy="40" r="1.5" fill="#ffb060" opacity="0.7"/><circle cx="65" cy="30" r="0.8" fill="#80d0ff" opacity="0.6"/>
+              <circle cx="30" cy="50" r="0.9" fill="#90ff90" opacity="0.5"/><circle cx="75" cy="55" r="1.2" fill="#a0a0ff" opacity="0.6"/>
+              <circle cx="45" cy="60" r="0.7" fill="#ff8080" opacity="0.5"/><circle cx="58" cy="22" r="0.8" fill="#e8a0ff" opacity="0.4"/>
+              <circle cx="22" cy="65" r="1" fill="#80d0ff" opacity="0.4"/><circle cx="80" cy="40" r="0.9" fill="#ffb060" opacity="0.5"/>
+              <circle cx="40" cy="35" r="1.3" fill="#fff" opacity="0.3"/><circle cx="60" cy="50" r="0.6" fill="#90ff90" opacity="0.4"/>
+              <circle cx="50" cy="40" r="12" fill="none" stroke="rgba(232,160,255,0.15)" stroke-width="0.3"/>
+              <circle cx="50" cy="40" r="20" fill="none" stroke="rgba(128,208,255,0.1)" stroke-width="0.2"/>
+              <circle cx="50" cy="40" r="28" fill="none" stroke="rgba(160,160,255,0.06)" stroke-width="0.2"/>
+            </svg>
+            <div style="position:relative;z-index:1;text-align:center;">
+              <div style="font-family:'Space Grotesk',sans-serif;color:#e8a0ff;font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:700;letter-spacing:0.1em;line-height:1.2;text-transform:uppercase;">N-Body</div>
+              <div style="color:rgba(128,208,255,0.5);font-size:clamp(0.65rem,1.1vw,0.85rem);letter-spacing:0.2em;text-transform:uppercase;margin-top:4px;">Gravitational Simulation</div>
             </div>
+          </div>
+        </a>
+        <div class="case__info">
+          <div class="case__tag">
+            <span data-lang="en">Physics / Simulation</span>
+            <span data-lang="pl">Fizyka / Symulacja</span>
+          </div>
+          <div data-lang="en">
+            <div class="case__title">N-Body Gravitational Simulation</div>
+            <div class="case__desc">Real-time Barnes-Hut gravitational simulation running up to 28,000 particles. Six cosmic scenarios: galaxy collisions, dark matter halos, supernovae, protoplanetary disks, cosmic web formation, and chaotic triple systems.</div>
+          </div>
+          <div data-lang="pl">
+            <div class="case__title">Symulacja grawitacyjna N-Ciał</div>
+            <div class="case__desc">Symulacja grawitacyjna Barnes-Hut w czasie rzeczywistym z 28 000 cząsteczek. Sześć scenariuszy kosmicznych: zderzenia galaktyk, halo ciemnej materii, supernowe, dyski protoplanetarne, kosmiczna sieć i chaotyczny układ potrójny.</div>
+          </div>
+          <div class="case__metrics">
+            <div class="case__metric">
+              <div class="case__metric-val">28K</div>
+              <div class="case__metric-label">
+                <span data-lang="en">Particles</span>
+                <span data-lang="pl">Cząsteczek</span>
+              </div>
+            </div>
+            <div class="case__metric">
+              <div class="case__metric-val">6</div>
+              <div class="case__metric-label">
+                <span data-lang="en">Cosmic scenarios</span>
+                <span data-lang="pl">Scenariuszy</span>
+              </div>
+            </div>
+          </div>
+          <div class="case__links" data-lang="en">
+            <a href="nbody/" target="_blank" class="case__cta">
+              Launch simulation <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div class="case__links" data-lang="pl">
+            <a href="nbody/" target="_blank" class="case__cta">
+              Uruchom symulację <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
             <!-- single neuron with waveform -->
             <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
               <defs>
@@ -1735,7 +1711,7 @@
       </div>
       <div class="case">
         <a class="case__visual" href="https://bronislaw-przyluski.vercel.app/" target="_blank">
-          <div style="width:100%;height:100%;background:linear-gradient(160deg,#241a12 0%,#16100a 55%,#0b0805 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <div style="width:100%;height:100%;background:linear-gradient(160deg,#0f1c24 0%,#0a141b 55%,#060b10 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint aged-paper grain -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
               <filter id="bronPaper">
@@ -1753,17 +1729,17 @@
             <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
               <defs>
                 <linearGradient id="bronFeather" x1="20%" y1="0%" x2="80%" y2="100%">
-                  <stop offset="0%" stop-color="#e7d4b3"/>
-                  <stop offset="55%" stop-color="#b89368"/>
-                  <stop offset="100%" stop-color="#6f4f2c"/>
+                  <stop offset="0%" stop-color="#e6f3f6"/>
+                  <stop offset="55%" stop-color="#6fb3c4"/>
+                  <stop offset="100%" stop-color="#2a6d80"/>
                 </linearGradient>
                 <linearGradient id="bronInk" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#d8c19a"/>
-                  <stop offset="100%" stop-color="#8a6a3e"/>
+                  <stop offset="0%" stop-color="#cfe6ec"/>
+                  <stop offset="100%" stop-color="#3a8a9e"/>
                 </linearGradient>
               </defs>
               <!-- ruled manuscript lines -->
-              <g stroke="#c4a06c" stroke-width="2" stroke-opacity="0.4">
+              <g stroke="#8ac4d2" stroke-width="2" stroke-opacity="0.4">
                 <line x1="44" y1="214" x2="316" y2="214"/>
                 <line x1="44" y1="246" x2="316" y2="246"/>
                 <line x1="44" y1="278" x2="316" y2="278"/>
@@ -1777,20 +1753,20 @@
                 <!-- vane -->
                 <path d="M 226 40 C 250 86 250 150 214 214 C 206 178 200 150 200 150 C 196 188 196 214 200 244 C 176 196 182 120 226 40 Z" fill="url(#bronFeather)"/>
                 <!-- barb lines -->
-                <g stroke="#5e421f" stroke-width="1.4" stroke-opacity="0.45">
+                <g stroke="#1f5566" stroke-width="1.4" stroke-opacity="0.45">
                   <line x1="222" y1="70" x2="208" y2="92"/>
                   <line x1="225" y1="100" x2="206" y2="124"/>
                   <line x1="224" y1="132" x2="204" y2="158"/>
                   <line x1="220" y1="164" x2="202" y2="190"/>
                 </g>
                 <!-- nib -->
-                <path d="M 196 250 L 190 276 L 202 268 Z" fill="#3a2914"/>
+                <path d="M 196 250 L 190 276 L 202 268 Z" fill="#173a46"/>
               </g>
               <!-- ink dot just placed -->
-              <circle cx="70" cy="214" r="3.5" fill="#8a6a3e"/>
+              <circle cx="70" cy="214" r="3.5" fill="#3a8a9e"/>
             </svg>
             <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#dcc7a4;letter-spacing:0.01em;">
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d6ebf0;letter-spacing:0.01em;">
               Bronisław Przyłuski — poezja
             </div>
           </div>
@@ -2037,13 +2013,17 @@
         <span class="mini__t"><span data-lang="en">Global Oil &amp; Gas Infrastructure Atlas</span><span data-lang="pl">Globalny Atlas Infrastruktury Naftowo-Gazowej</span></span>
         <span class="mini__g"><span data-lang="en">Data Visualization / Geopolitics Wizualizacja danych / Geopolityka</span><span data-lang="pl">Data Visualization / Geopolitics Wizualizacja danych / Geopolityka</span></span>
       </a>
+      <a class="mini__row" href="habermas/">
+        <span class="mini__t"><span data-lang="en">Habermas — Educational Game</span><span data-lang="pl">Habermas — Gra edukacyjna</span></span>
+        <span class="mini__g"><span data-lang="en">EdTech / Philosophy Edukacja / Filozofia</span><span data-lang="pl">EdTech / Philosophy Edukacja / Filozofia</span></span>
+      </a>
       <a class="mini__row" href="https://futureshow.pl/kino-awangardy/" target="_blank" rel="noopener">
         <span class="mini__t"><span data-lang="en">Kino Awangardy — a century of experimental film</span><span data-lang="pl">Kino Awangardy — stulecie filmu eksperymentalnego</span></span>
         <span class="mini__g"><span data-lang="en">Film history / Streaming portal Historia filmu / Portal streamingowy</span><span data-lang="pl">Film history / Streaming portal Historia filmu / Portal streamingowy</span></span>
       </a>
-      <a class="mini__row" href="habermas/">
-        <span class="mini__t"><span data-lang="en">Habermas — Educational Game</span><span data-lang="pl">Habermas — Gra edukacyjna</span></span>
-        <span class="mini__g"><span data-lang="en">EdTech / Philosophy Edukacja / Filozofia</span><span data-lang="pl">EdTech / Philosophy Edukacja / Filozofia</span></span>
+      <a class="mini__row" href="https://futureshow1.github.io/sejm/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Sejm Symulator — Polish Parliament Power Map</span><span data-lang="pl">Sejm Symulator — mapa wpływów politycznych</span></span>
+        <span class="mini__g"><span data-lang="en">Political Database — launch preparations Baza polityczna — przygotowania do launchu</span><span data-lang="pl">Political Database — launch preparations Baza polityczna — przygotowania do launchu</span></span>
       </a>
       <a class="mini__row" href="cardiosim/">
         <span class="mini__t"><span data-lang="en">CardioSim Pro — Cardiovascular Simulation</span><span data-lang="pl">CardioSim Pro — Symulacja kardiologiczna</span></span>
@@ -2057,33 +2037,33 @@
         <span class="mini__t"><span data-lang="en">Mondrian/Malewicz — Composition in Space</span><span data-lang="pl">Mondrian/Malewicz — Composition in Space</span></span>
         <span class="mini__g"><span data-lang="en">Art history / Interactive 3D Historia sztuki / Interaktywne 3D</span><span data-lang="pl">Art history / Interactive 3D Historia sztuki / Interaktywne 3D</span></span>
       </a>
-      <a class="mini__row" href="https://futureshow1.github.io/sejm/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Sejm Symulator — Polish Parliament Power Map</span><span data-lang="pl">Sejm Symulator — mapa wpływów politycznych</span></span>
-        <span class="mini__g"><span data-lang="en">Political Database — gated demo Baza polityczna — demo za hasłem</span><span data-lang="pl">Political Database — gated demo Baza polityczna — demo za hasłem</span></span>
+      <a class="mini__row" href="panama/">
+        <span class="mini__t"><span data-lang="en">Panama Papers Visualization</span><span data-lang="pl">Panama Papers — Wizualizacja</span></span>
+        <span class="mini__g"><span data-lang="en">Data Visualization / OSINT Wizualizacja / OSINT</span><span data-lang="pl">Data Visualization / OSINT Wizualizacja / OSINT</span></span>
       </a>
       <a class="mini__row" href="https://futureshow.pl/historia-animacji/" target="_blank" rel="noopener">
         <span class="mini__t"><span data-lang="en">Historia Animacji — animation from 1833 to today</span><span data-lang="pl">Historia Animacji — animacja od 1833 do dziś</span></span>
         <span class="mini__g"><span data-lang="en">Animation history / Streaming portal Historia animacji / Portal streamingowy</span><span data-lang="pl">Animation history / Streaming portal Historia animacji / Portal streamingowy</span></span>
       </a>
-      <a class="mini__row" href="https://futureshow1.github.io/mnemo/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">MNEMO — The Art of Memory</span><span data-lang="pl">MNEMO — Sztuka pamięci</span></span>
-        <span class="mini__g"><span data-lang="en">Memory / Education / Game Pamięć / Edukacja / Gra</span><span data-lang="pl">Memory / Education / Game Pamięć / Edukacja / Gra</span></span>
-      </a>
-      <a class="mini__row" href="panama/">
-        <span class="mini__t"><span data-lang="en">Panama Papers Visualization</span><span data-lang="pl">Panama Papers — Wizualizacja</span></span>
-        <span class="mini__g"><span data-lang="en">Data Visualization / OSINT Wizualizacja / OSINT</span><span data-lang="pl">Data Visualization / OSINT Wizualizacja / OSINT</span></span>
-      </a>
-      <a class="mini__row" href="https://futureshow.pl/polski-jazz/" target="_blank" rel="noopener">
-        <span class="mini__t"><span data-lang="en">Polski Jazz — a history told in records</span><span data-lang="pl">Polski Jazz — historia opowiedziana płytami</span></span>
-        <span class="mini__g"><span data-lang="en">Music history / Record catalogue Historia muzyki / Katalog płyt</span><span data-lang="pl">Music history / Record catalogue Historia muzyki / Katalog płyt</span></span>
-      </a>
       <a class="mini__row" href="schizoanaliza/schizoanaliza-gra.html">
         <span class="mini__t"><span data-lang="en">Schizoanalysis — Educational Game</span><span data-lang="pl">Schizoanaliza — Gra edukacyjna</span></span>
         <span class="mini__g"><span data-lang="en">EdTech / Philosophy Edukacja / Filozofia</span><span data-lang="pl">EdTech / Philosophy Edukacja / Filozofia</span></span>
       </a>
+      <a class="mini__row" href="klimat/">
+        <span class="mini__t"><span data-lang="en">Mapa zmian klimatu</span><span data-lang="pl">Mapa zmian klimatu</span></span>
+        <span class="mini__g"><span data-lang="en">Data · Climate · in progressDane · Klimat · w toku</span><span data-lang="pl">Data · Climate · in progressDane · Klimat · w toku</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow1.github.io/mnemo/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">MNEMO — The Art of Memory</span><span data-lang="pl">MNEMO — Sztuka pamięci</span></span>
+        <span class="mini__g"><span data-lang="en">Memory / Education / Game Pamięć / Edukacja / Gra</span><span data-lang="pl">Memory / Education / Game Pamięć / Edukacja / Gra</span></span>
+      </a>
       <a class="mini__row" href="cambridge-analytica/">
         <span class="mini__t"><span data-lang="en">Cambridge Analytica Timeline</span><span data-lang="pl">Cambridge Analytica — Oś czasu</span></span>
         <span class="mini__g"><span data-lang="en">Data Investigation Śledztwo danych</span><span data-lang="pl">Data Investigation Śledztwo danych</span></span>
+      </a>
+      <a class="mini__row" href="https://futureshow.pl/polski-jazz/" target="_blank" rel="noopener">
+        <span class="mini__t"><span data-lang="en">Polski Jazz — a history told in records</span><span data-lang="pl">Polski Jazz — historia opowiedziana płytami</span></span>
+        <span class="mini__g"><span data-lang="en">Music history / Record catalogue Historia muzyki / Katalog płyt</span><span data-lang="pl">Music history / Record catalogue Historia muzyki / Katalog płyt</span></span>
       </a>
       <a class="mini__row" href="https://futureshow.pl/dobranocki/" target="_blank" rel="noopener">
         <span class="mini__t"><span data-lang="en">Legendarne Dobranocki — bedtime cartoons 1980–2000</span><span data-lang="pl">Legendarne Dobranocki — bajki na dobranoc 1980–2000</span></span>
@@ -2092,10 +2072,6 @@
       <a class="mini__row" href="https://futureshow1.github.io/hinton-ai-portal/" target="_blank" rel="noopener">
         <span class="mini__t"><span data-lang="en">AI Explained — Hinton Portal</span><span data-lang="pl">AI według Hintona</span></span>
         <span class="mini__g"><span data-lang="en">Interactive Education Edukacja interaktywna</span><span data-lang="pl">Interactive Education Edukacja interaktywna</span></span>
-      </a>
-      <a class="mini__row" href="nbody/">
-        <span class="mini__t"><span data-lang="en">N-Body Gravitational Simulation</span><span data-lang="pl">Symulacja grawitacyjna N-Ciał</span></span>
-        <span class="mini__g"><span data-lang="en">Physics / Simulation Fizyka / Symulacja</span><span data-lang="pl">Physics / Simulation Fizyka / Symulacja</span></span>
       </a>
     </div>
     <div class="projects__more"><a href="index.html#projects"><span data-lang="en">See them as case studies on the front page →</span><span data-lang="pl">Zobacz je jako realizacje na stronie głównej →</span></a></div>
