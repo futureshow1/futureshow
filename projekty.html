@@ -317,6 +317,9 @@
       padding: 100px 40px 120px;
     }
 
+    .projects--gated { padding-top: 40px; }
+    .projects--gated .case { opacity: 0.88; }
+    .gated-note { color: var(--text-dim); font-size: 0.92rem; max-width: 640px; margin: -8px 0 28px; line-height: 1.6; }
     .projects__more { margin-top: 28px; text-align: center; }
     .projects__more a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 10px; padding: 14px 28px; color: var(--text-dim); font-size: 0.92rem; font-weight: 600; transition: all 0.2s; text-decoration: none; }
     .projects__more a:hover { color: var(--accent); border-color: var(--border-glow); transform: translateY(-1px); }
@@ -1139,8 +1142,8 @@
   <!-- Hero -->
   <section class="projects" id="projects" style="padding-top:140px">
     <div class="section-label">
-      <span data-lang="en">All projects · 31</span>
-      <span data-lang="pl">Wszystkie projekty · 31</span>
+      <span data-lang="en">All projects · 28</span>
+      <span data-lang="pl">Wszystkie projekty · 28</span>
     </div>
     <div class="projects__grid">
       <!-- Matryca / Big Tech Files (latest) -->
@@ -3328,96 +3331,7 @@
         </div>
       </div>
       <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/psychedelic-brain-sim/v4.html" target="_blank">
-          <div style="width:100%;height:100%;background:linear-gradient(135deg,#2a0a3e 0%,#1a0b3a 40%,#06222e 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- faint shimmer texture -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08;">
-              <filter id="psychShimmer">
-                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2"/>
-                <feColorMatrix values="0 0 0 0 0.85  0 0 0 0 0.30  0 0 0 0 0.75  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#psychShimmer)"/>
-            </svg>
-            <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(230,120,210,0.75);text-transform:uppercase;z-index:2;">
-              <span>8 Substances</span>
-              <span>v4 · Latest</span>
-            </div>
-            <!-- brain in psychedelic ripples -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
-              <defs>
-                <linearGradient id="psychAura" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#ff4fd2"/>
-                  <stop offset="100%" stop-color="#1fd8c8"/>
-                </linearGradient>
-                <radialGradient id="psychBrain" cx="42%" cy="38%" r="70%">
-                  <stop offset="0%" stop-color="#ffd0f4"/>
-                  <stop offset="55%" stop-color="#e96fd0"/>
-                  <stop offset="100%" stop-color="#7a2bb0"/>
-                </radialGradient>
-              </defs>
-              <!-- concentric psychedelic ripples -->
-              <g fill="none" stroke="url(#psychAura)" stroke-linecap="round">
-                <circle cx="180" cy="180" r="168" stroke-width="1.4" stroke-opacity="0.18"/>
-                <circle cx="180" cy="180" r="144" stroke-width="1.8" stroke-opacity="0.30"/>
-                <circle cx="180" cy="180" r="120" stroke-width="2.2" stroke-opacity="0.45"/>
-                <circle cx="180" cy="180" r="98" stroke-width="2.6" stroke-opacity="0.6" stroke-dasharray="3 7"/>
-              </g>
-              <!-- brain silhouette -->
-              <g>
-                <path d="M180 84
-                  C 150 74 116 80 104 108
-                  C 78 110 66 140 82 160
-                  C 70 182 84 210 110 214
-                  C 118 240 154 250 180 238
-                  C 206 250 242 240 250 214
-                  C 276 210 290 182 278 160
-                  C 294 140 282 110 256 108
-                  C 244 80 210 74 180 84 Z"
-                  fill="url(#psychBrain)" stroke="#ffe7fb" stroke-width="2" stroke-opacity="0.5"/>
-                <!-- central fissure -->
-                <path d="M180 86 L180 240" stroke="#5a1c86" stroke-width="3" stroke-opacity="0.55" fill="none"/>
-                <!-- gyri / folds -->
-                <g stroke="#fbe2f8" stroke-width="2" fill="none" stroke-opacity="0.55" stroke-linecap="round">
-                  <path d="M150 108 C 132 120 138 142 156 144 C 138 156 146 178 162 178"/>
-                  <path d="M126 134 C 110 144 116 166 132 168"/>
-                  <path d="M210 108 C 228 120 222 142 204 144 C 222 156 214 178 198 178"/>
-                  <path d="M234 134 C 250 144 244 166 228 168"/>
-                  <path d="M150 196 C 140 210 156 222 168 216"/>
-                  <path d="M210 196 C 220 210 204 222 192 216"/>
-                </g>
-              </g>
-              <!-- glowing aura nodes -->
-              <g fill="#ffffff">
-                <circle cx="180" cy="60" r="3"/>
-                <circle cx="300" cy="180" r="2.6"/>
-                <circle cx="180" cy="300" r="3"/>
-                <circle cx="60" cy="180" r="2.6"/>
-              </g>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#f0d4ee;letter-spacing:0.01em;">
-              Psychedelic Brain Sim · v4
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">3D neuroscience / latest</span>
-            <span data-lang="pl">Neuronauka 3D / najnowsza</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Psychedelic Brain Sim — v4</div>
-            <div class="case__desc">An interactive 3D neuroscience simulation of how eight psychedelic substances act on the brain. This is v4 — the latest iteration, the most refined to date. Visual, exploratory and science-grounded: a place to see altered states rather than just read about them.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Psychedelic Brain Sim — v4</div>
-            <div class="case__desc">Interaktywna symulacja 3D pokazująca, jak osiem substancji psychodelicznych działa na mózg. To wersja v4 — najnowsza i najbardziej dopracowana iteracja. Wizualna, eksploracyjna i oparta na nauce: miejsce, w którym odmienne stany świadomości można zobaczyć, a nie tylko o nich przeczytać.</div>
-          </div>
-        </div>
-      </div>
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/psychedelic-brain-sim/" target="_blank">
+        <a class="case__visual" href="psychedelic/" target="_blank">
           <div style="width:100%;height:100%;background:radial-gradient(130% 120% at 50% 40%,#33156a 0%,#1d0c44 50%,#080318 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint field texture -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
@@ -3495,11 +3409,11 @@
           </div>
           <div data-lang="en">
             <div class="case__title">Psychedelic Brain Simulation</div>
-            <div class="case__desc">The project hub for the Psychedelic Brain Simulation — receptor activity, waves of neural activation and altered states rendered in 3D. The main entry point into the work, from which the latest iteration opens. Where the molecular and the experiential meet on screen.</div>
+            <div class="case__desc">A 3D brain under seven psychedelic and dissociative substances — dose levels, a timeline from ingestion to comedown, clickable regions, default-mode-network connectivity, sound that follows the model. Two builds on the same engine: version 3 with a built-in video recorder, version 4 with a lighter, redesigned interface. A small landing page lets you pick.</div>
           </div>
           <div data-lang="pl">
             <div class="case__title">Psychedelic Brain Simulation</div>
-            <div class="case__desc">Główny węzeł projektu Psychedelic Brain Simulation — aktywność receptorów, fale pobudzenia neuronów i odmienne stany świadomości renderowane w 3D. Główne wejście do całości, z którego otwiera się najnowsza iteracja. Tu poziom molekularny spotyka się z doświadczeniem na ekranie.</div>
+            <div class="case__desc">Trójwymiarowy mózg pod wpływem siedmiu substancji psychodelicznych i dysocjacyjnych — poziomy dawki, oś czasu od przyjęcia do zejścia, klikalne regiony, łączność sieci stanu spoczynkowego, dźwięk podążający za modelem. Dwie wersje na tym samym silniku: trzecia z wbudowanym rejestratorem wideo, czwarta z lżejszym, przeprojektowanym interfejsem. Mała strona wejściowa pozwala wybrać.</div>
           </div>
         </div>
       </div>
@@ -3797,108 +3711,6 @@
         </div>
       </div>
       <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/zem-demo/" target="_blank">
-          <div style="width:100%;height:100%;background:linear-gradient(155deg,#1b2530 0%,#0d141c 55%,#070b10 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <!-- faint brushed-metal texture -->
-            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
-              <filter id="zemSteel">
-                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.9" numOctaves="2"/>
-                <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.65  0 0 0 0 0.78  0 0 0 1 0"/>
-              </filter>
-              <rect width="600" height="340" filter="url(#zemSteel)"/>
-            </svg>
-            <!-- top label -->
-            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(150,176,201,0.7);text-transform:uppercase;z-index:2;">
-              <span>Client · Demo</span>
-              <span>Industrial · Web</span>
-            </div>
-            <!-- interlocking gears / circuit mark -->
-            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
-              <defs>
-                <linearGradient id="zemGearA" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#9fc0dc"/>
-                  <stop offset="55%" stop-color="#5d7d99"/>
-                  <stop offset="100%" stop-color="#34495c"/>
-                </linearGradient>
-                <linearGradient id="zemGearB" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#6f8aa3"/>
-                  <stop offset="100%" stop-color="#2b3a48"/>
-                </linearGradient>
-                <radialGradient id="zemCore" cx="42%" cy="38%" r="65%">
-                  <stop offset="0%" stop-color="#cfe2f1"/>
-                  <stop offset="100%" stop-color="#41576b"/>
-                </radialGradient>
-                <!-- 16-tooth gear, reusable -->
-                <g id="zemGear">
-                  <g>
-                    <rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/>
-                  </g>
-                  <g transform="rotate(22.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(45)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(67.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(90)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(112.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(135)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(157.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(180)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(202.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(225)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(247.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(270)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(292.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(315)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <g transform="rotate(337.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
-                  <circle r="100" fill="currentColor"/>
-                </g>
-              </defs>
-              <!-- circuit traces feeding the gears -->
-              <g stroke="#4a657d" stroke-width="3" fill="none" stroke-opacity="0.55" stroke-linecap="round">
-                <path d="M 14 180 L 64 180"/>
-                <path d="M 296 180 L 346 180"/>
-                <path d="M 40 40 L 40 96 L 96 96"/>
-                <path d="M 320 320 L 320 264 L 264 264"/>
-                <circle cx="14" cy="180" r="6" fill="#4a657d" stroke="none"/>
-                <circle cx="346" cy="180" r="6" fill="#4a657d" stroke="none"/>
-                <circle cx="40" cy="40" r="6" fill="#4a657d" stroke="none"/>
-                <circle cx="320" cy="320" r="6" fill="#4a657d" stroke="none"/>
-              </g>
-              <!-- large gear -->
-              <g transform="translate(132 168) scale(0.92)" color="#5d7d99">
-                <use href="#zemGear" fill="url(#zemGearA)"/>
-                <circle cx="0" cy="0" r="58" fill="#0d141c"/>
-                <circle cx="0" cy="0" r="40" fill="url(#zemCore)"/>
-              </g>
-              <!-- small meshing gear -->
-              <g transform="translate(258 110) scale(0.5)" color="#3c5060">
-                <use href="#zemGear" fill="url(#zemGearB)"/>
-                <circle cx="0" cy="0" r="58" fill="#0d141c"/>
-                <circle cx="0" cy="0" r="34" fill="#7e9bb4"/>
-              </g>
-              <!-- ZEM monogram on the core -->
-              <text x="132" y="178" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-weight="700" font-size="34" letter-spacing="2" fill="#15212c">ZEM</text>
-            </svg>
-            <!-- footer -->
-            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#c2d2e0;letter-spacing:0.01em;">
-              ZEM
-            </div>
-          </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Client demo / site</span>
-            <span data-lang="pl">Demo klienta / strona</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">ZEM</div>
-            <div class="case__desc">A demo website built for a client — a company presentation and product showcase. A clean, professional front page that puts the offer first: clear sections, confident typography and a calm industrial palette that lets the work speak. Built to load fast, read well on any screen and give a business its credible face online.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">ZEM</div>
-            <div class="case__desc">Demonstracyjna strona przygotowana dla klienta — prezentacja firmy i jej oferty. Czytelna, profesjonalna witryna, która na pierwszym miejscu stawia produkt: klarowne sekcje, pewna typografia i spokojna, przemysłowa kolorystyka, która oddaje głos samej ofercie. Szybka, dobrze czytelna na każdym ekranie, dająca firmie wiarygodną twarz w sieci.</div>
-          </div>
-        </div>
-      </div>
-      <div class="case">
         <a class="case__visual" href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(165deg,#13110d 0%,#0a0908 60%,#050504 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint paper grain -->
@@ -4108,6 +3920,121 @@
           <div data-lang="pl">
             <div class="case__title">Izabela Chamczyk — portfolio</div>
             <div class="case__desc">Strona portfolio przygotowana dla artystki współczesnej Izabeli Chamczyk, której praktyka łączy malarstwo, performans i sztukę procesu. Praca dla klienta: czysta, galeryjnie wyciszona prezentacja, która daje każdej pracy przestrzeń i pozwala niespokojnej, gestowej twórczości czytelnie wybrzmieć w sieci — oparta na obrazie, dobrze uporządkowana, zbudowana wokół jej nazwiska.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects projects--gated" id="na-haslo">
+    <div class="section-label">
+      <span data-lang="en">Password-protected · 2</span>
+      <span data-lang="pl">Na hasło · 2</span>
+    </div>
+    <p class="gated-note">
+      <span data-lang="en">Work for a client or material not meant for the open web. The link opens, but the page asks for a password.</span>
+      <span data-lang="pl">Prace dla klienta albo materiały nieprzeznaczone do otwartej sieci. Link się otwiera, ale strona prosi o hasło.</span>
+    </p>
+    <div class="projects__grid">
+      <div class="case">
+        <a class="case__visual" href="https://futureshow1.github.io/zem-demo/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(155deg,#1b2530 0%,#0d141c 55%,#070b10 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint brushed-metal texture -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
+              <filter id="zemSteel">
+                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.9" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.65  0 0 0 0 0.78  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#zemSteel)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(150,176,201,0.7);text-transform:uppercase;z-index:2;">
+              <span>Client · Demo</span>
+              <span>Industrial · Web</span>
+            </div>
+            <!-- interlocking gears / circuit mark -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="zemGearA" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#9fc0dc"/>
+                  <stop offset="55%" stop-color="#5d7d99"/>
+                  <stop offset="100%" stop-color="#34495c"/>
+                </linearGradient>
+                <linearGradient id="zemGearB" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#6f8aa3"/>
+                  <stop offset="100%" stop-color="#2b3a48"/>
+                </linearGradient>
+                <radialGradient id="zemCore" cx="42%" cy="38%" r="65%">
+                  <stop offset="0%" stop-color="#cfe2f1"/>
+                  <stop offset="100%" stop-color="#41576b"/>
+                </radialGradient>
+                <!-- 16-tooth gear, reusable -->
+                <g id="zemGear">
+                  <g>
+                    <rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/>
+                  </g>
+                  <g transform="rotate(22.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(45)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(67.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(90)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(112.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(135)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(157.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(180)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(202.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(225)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(247.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(270)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(292.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(315)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <g transform="rotate(337.5)"><rect x="-13" y="-128" width="26" height="34" rx="4" fill="currentColor"/></g>
+                  <circle r="100" fill="currentColor"/>
+                </g>
+              </defs>
+              <!-- circuit traces feeding the gears -->
+              <g stroke="#4a657d" stroke-width="3" fill="none" stroke-opacity="0.55" stroke-linecap="round">
+                <path d="M 14 180 L 64 180"/>
+                <path d="M 296 180 L 346 180"/>
+                <path d="M 40 40 L 40 96 L 96 96"/>
+                <path d="M 320 320 L 320 264 L 264 264"/>
+                <circle cx="14" cy="180" r="6" fill="#4a657d" stroke="none"/>
+                <circle cx="346" cy="180" r="6" fill="#4a657d" stroke="none"/>
+                <circle cx="40" cy="40" r="6" fill="#4a657d" stroke="none"/>
+                <circle cx="320" cy="320" r="6" fill="#4a657d" stroke="none"/>
+              </g>
+              <!-- large gear -->
+              <g transform="translate(132 168) scale(0.92)" color="#5d7d99">
+                <use href="#zemGear" fill="url(#zemGearA)"/>
+                <circle cx="0" cy="0" r="58" fill="#0d141c"/>
+                <circle cx="0" cy="0" r="40" fill="url(#zemCore)"/>
+              </g>
+              <!-- small meshing gear -->
+              <g transform="translate(258 110) scale(0.5)" color="#3c5060">
+                <use href="#zemGear" fill="url(#zemGearB)"/>
+                <circle cx="0" cy="0" r="58" fill="#0d141c"/>
+                <circle cx="0" cy="0" r="34" fill="#7e9bb4"/>
+              </g>
+              <!-- ZEM monogram on the core -->
+              <text x="132" y="178" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-weight="700" font-size="34" letter-spacing="2" fill="#15212c">ZEM</text>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#c2d2e0;letter-spacing:0.01em;">
+              ZEM
+            </div>
+          </div>
+        </a>
+        <div class="case__info">
+          <div class="case__tag">
+            <span data-lang="en">Client demo / site</span>
+            <span data-lang="pl">Demo klienta / strona</span>
+          </div>
+          <div data-lang="en">
+            <div class="case__title">ZEM</div>
+            <div class="case__desc">A demo website built for a client — a company presentation and product showcase. A clean, professional front page that puts the offer first: clear sections, confident typography and a calm industrial palette that lets the work speak. Built to load fast, read well on any screen and give a business its credible face online.</div>
+          </div>
+          <div data-lang="pl">
+            <div class="case__title">ZEM</div>
+            <div class="case__desc">Demonstracyjna strona przygotowana dla klienta — prezentacja firmy i jej oferty. Czytelna, profesjonalna witryna, która na pierwszym miejscu stawia produkt: klarowne sekcje, pewna typografia i spokojna, przemysłowa kolorystyka, która oddaje głos samej ofercie. Szybka, dobrze czytelna na każdym ekranie, dająca firmie wiarygodną twarz w sieci.</div>
           </div>
         </div>
       </div>

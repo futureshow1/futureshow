@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psychedelic Brain Simulation — wybór wersji | FutureShow</title>
+<meta name="description" content="Symulacja 3D mózgu pod wpływem substancji psychodelicznych (LSD, psylocybina, DMT, MDMA, ketamina, meskalina) — dwie wersje do wyboru: klasyczna z nagrywaniem wideo i odświeżona z lżejszym interfejsem.">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06080d;--surface:#0f1320;--border:rgba(255,255,255,.08);--glow:rgba(167,139,250,.35);--text:#e5e7eb;--dim:#8b95a7;--muted:#5b6577;--accent:#a78bfa;--accent2:#63b3ff;--white:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(167,139,250,.14),transparent 60%),radial-gradient(ellipse 50% 40% at 80% 100%,rgba(99,179,255,.10),transparent 60%),var(--bg);color:var(--text);font-family:Inter,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+[data-lang="pl"]{display:none}html[lang="pl"] [data-lang="pl"]{display:inline}html[lang="pl"] [data-lang="en"]{display:none}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 5vw}
+.back{color:var(--dim);text-decoration:none;font-size:13px;display:inline-flex;gap:8px;align-items:center}
+.back:hover{color:var(--text)}
+.lang{background:none;border:1px solid var(--border);color:var(--dim);border-radius:8px;padding:7px 13px;font-size:12px;cursor:pointer;font-family:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:40px 24px 80px}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.02em;line-height:1.05;color:var(--white)}
+h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--dim);font-size:1.05rem;line-height:1.65;max-width:680px;margin-top:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:16px;text-decoration:none;color:inherit;transition:border-color .25s,transform .25s}
+.card:hover{border-color:var(--glow);transform:translateY(-3px)}
+.tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.card h2{font-size:1.55rem;font-weight:800;color:var(--white);letter-spacing:-.01em}
+.card h2 b{color:var(--accent)}
+.card p{color:var(--dim);line-height:1.6;font-size:.95rem}
+.feats{list-style:none;display:grid;gap:8px;margin-top:4px}
+.feats li{font-size:.88rem;padding-left:20px;position:relative}
+.feats li::before{content:"→";position:absolute;left:0;color:var(--accent)}
+.feats li.no{color:var(--muted)}.feats li.no::before{content:"—";color:var(--muted)}
+.go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--white);background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:10px;padding:13px 20px;font-size:.95rem;justify-content:center}
+.card.alt .go{background:none;border:1px solid var(--glow);color:var(--text)}
+.common{margin-top:40px;border:1px dashed var(--border);border-radius:14px;padding:22px 26px;color:var(--dim);font-size:.9rem;line-height:1.65}
+.common b{color:var(--text)}
+.note{margin-top:26px;color:var(--muted);font-size:.8rem;line-height:1.6;max-width:720px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="back" href="../projekty.html">← FutureShow</a>
+  <button class="lang" id="langBtn" onclick="toggleLang()">EN</button>
+</div>
+<main class="wrap">
+  <div class="kicker">Psychedelic Neuroscience · 3D</div>
+  <h1><span data-lang="en">Brain Simulation</span><span data-lang="pl">Symulacja mózgu</span> — <span><span data-lang="en">pick a version</span><span data-lang="pl">wybierz wersję</span></span></h1>
+  <p class="lede">
+    <span data-lang="en">A 3D model of the brain under seven psychedelic and dissociative substances — LSD, psilocybin, DMT, MDMA, ketamine, mescaline, 5-MeO-DMT — with dose levels, a timeline from pre-ingestion to comedown, region-by-region detail and the shifting connectivity of the default mode network. Two builds share the same engine and data; they differ in what sits around the model.</span>
+    <span data-lang="pl">Trójwymiarowy model mózgu pod wpływem siedmiu substancji psychodelicznych i dysocjacyjnych — LSD, psylocybiny, DMT, MDMA, ketaminy, meskaliny, 5-MeO-DMT — z poziomami dawki, osią czasu od przyjęcia do zejścia, opisem każdego regionu i zmieniającą się łącznością sieci stanu spoczynkowego. Dwie wersje mają ten sam silnik i te same dane; różnią się tym, co otacza model.</span>
+  </p>
+
+  <div class="grid">
+    <a class="card" href="https://futureshow1.github.io/psychedelic-brain-sim/" target="_blank" rel="noopener">
+      <div class="tag"><span data-lang="en">Version 3 · full</span><span data-lang="pl">Wersja 3 · pełna</span></div>
+      <h2><span data-lang="en">Classic, with <b>video recording</b></span><span data-lang="pl">Klasyczna, z <b>nagrywaniem wideo</b></span></h2>
+      <p><span data-lang="en">The complete build: everything the model can do, plus a recorder that exports the animation as a video file straight from the browser.</span><span data-lang="pl">Kompletna wersja: wszystko, co potrafi model, plus rejestrator, który eksportuje animację do pliku wideo prosto z przeglądarki.</span></p>
+      <ul class="feats">
+        <li><span data-lang="en">Record video: 15 s, 30 s, 60 s, 2 min, one full cycle or until stopped</span><span data-lang="pl">Nagrywanie wideo: 15 s, 30 s, 60 s, 2 min, pełny cykl albo do zatrzymania</span></li>
+        <li><span data-lang="en">Quality presets 2.5 / 5 / 10 Mbps</span><span data-lang="pl">Jakość 2,5 / 5 / 10 Mbps</span></li>
+        <li><span data-lang="en">Denser control panel — more knobs on screen at once</span><span data-lang="pl">Gęstszy panel sterowania — więcej pokręteł naraz</span></li>
+      </ul>
+      <span class="go"><span data-lang="en">Open version 3 →</span><span data-lang="pl">Otwórz wersję 3 →</span></span>
+    </a>
+
+    <a class="card alt" href="https://futureshow1.github.io/psychedelic-brain-sim/v4.html" target="_blank" rel="noopener">
+      <div class="tag"><span data-lang="en">Version 4 · refreshed</span><span data-lang="pl">Wersja 4 · odświeżona</span></div>
+      <h2><span data-lang="en">Refreshed, <b>lighter interface</b></span><span data-lang="pl">Odświeżona, <b>lżejszy interfejs</b></span></h2>
+      <p><span data-lang="en">The same simulation with a redesigned, quieter frame: fewer panels, ornamental typography, more room for the brain itself. Best for a first look or a presentation.</span><span data-lang="pl">Ta sama symulacja w przeprojektowanej, spokojniejszej oprawie: mniej paneli, ornamentalna typografia, więcej miejsca dla samego mózgu. Najlepsza na pierwszy kontakt albo prezentację.</span></p>
+      <ul class="feats">
+        <li><span data-lang="en">Simplified layout — about a third fewer controls visible</span><span data-lang="pl">Uproszczony układ — o jedną trzecią mniej widocznych kontrolek</span></li>
+        <li><span data-lang="en">Reworked visual language of the panels</span><span data-lang="pl">Przeprojektowany język wizualny paneli</span></li>
+        <li class="no"><span data-lang="en">No video recorder</span><span data-lang="pl">Bez rejestratora wideo</span></li>
+      </ul>
+      <span class="go"><span data-lang="en">Open version 4 →</span><span data-lang="pl">Otwórz wersję 4 →</span></span>
+    </a>
+  </div>
+
+  <div class="common">
+    <b><span data-lang="en">In both:</span><span data-lang="pl">W obu:</span></b>
+    <span data-lang="en">seven substance profiles, dose levels (threshold, micro, common, strong, heavy), a play/pause timeline, compare mode for two substances side by side, clickable regions with descriptions, connectivity and default-mode-network visualisation, labels, auto-rotate, and a sound layer that follows the state of the model. Built on three.js; runs in any modern browser, nothing to install.</span>
+    <span data-lang="pl">siedem profili substancji, poziomy dawki (próg, mikro, zwykła, mocna, ciężka), oś czasu z odtwarzaniem, tryb porównania dwóch substancji obok siebie, klikalne regiony z opisami, wizualizacja łączności i sieci stanu spoczynkowego, etykiety, autoobrót oraz warstwa dźwiękowa podążająca za stanem modelu. Zbudowane na three.js; działa w każdej nowoczesnej przeglądarce, bez instalacji.</span>
+  </div>
+  <p class="note">
+    <span data-lang="en">Educational visualisation based on published neuroimaging research; it illustrates mechanisms, it does not predict individual experience and is not medical advice.</span>
+    <span data-lang="pl">Wizualizacja edukacyjna oparta na opublikowanych badaniach neuroobrazowych; ilustruje mechanizmy, nie przewiduje indywidualnego doświadczenia i nie jest poradą medyczną.</span>
+  </p>
+</main>
+<script>
+function toggleLang(){const h=document.documentElement;h.lang=h.lang==='pl'?'en':'pl';document.getElementById('langBtn').textContent=h.lang==='pl'?'EN':'PL';try{localStorage.setItem('lang',h.lang)}catch(e){}}
+(function(){let l='pl';try{l=localStorage.getItem('lang')||'pl'}catch(e){}document.documentElement.lang=l;document.getElementById('langBtn').textContent=l==='pl'?'EN':'PL';})();
+</script>
+<script data-goatcounter="https://futureshow.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
