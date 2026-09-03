@@ -1,1162 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Wszystkie projekty — FutureShow</title>
-  <!-- OG Meta -->
-  <meta property="og:title" content="FutureShow — Interactive Data Experiences">
-  <meta property="og:description" content="AI-powered interactive investigations, educational games, data visualizations and generative films. For museums, media, education and NGOs.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://futureshow.pl/">
-  <meta name="description" content="FutureShow creates AI-powered interactive investigations, educational games, data visualizations and generative films for museums, media, education and NGOs.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #06080d;
-      --bg2: #0c1018;
-      --bg3: #111827;
-      --surface: #161d2e;
-      --border: rgba(255,255,255,0.06);
-      --border-glow: rgba(99,179,255,0.2);
-      --text: #e5e7eb;
-      --text-dim: #6b7280;
-      --text-muted: #374151;
-      --accent: #63b3ff;
-      --accent2: #a78bfa;
-      --accent3: #34d399;
-      --white: #f9fafb;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* ============================================
-       Particle Canvas
-       ============================================ */
-    #particles {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* ============================================
-       Navigation
-       ============================================ */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      height: 60px;
-      background: rgba(6, 8, 13, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav__brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav__logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--white);
-    }
-
-    .nav__logo span {
-      color: var(--accent);
-    }
-
-    .nav__dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent); }
-      50% { opacity: 0.4; box-shadow: 0 0 8px var(--accent); }
-    }
-
-    .nav__right {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-
-    .nav__links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-
-    .nav__links a {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-dim);
-      letter-spacing: 0.04em;
-      transition: color 0.2s;
-    }
-
-    .nav__links a:hover {
-      color: var(--accent);
-      opacity: 1;
-    }
-
-    .nav__lang {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      color: var(--text-dim);
-      background: transparent;
-      border: 1px solid var(--border);
-      padding: 5px 12px;
-      border-radius: 4px;
-      font-family: inherit;
-      transition: all 0.2s;
-    }
-
-    .nav__lang:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .nav__hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 5px;
-    }
-
-    .nav__hamburger span {
-      width: 22px;
-      height: 1.5px;
-      background: var(--text-dim);
-      transition: 0.3s;
-    }
-
-    /* ============================================
-       Hero
-       ============================================ */
-    .hero {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 0 60px;
-    }
-
-    .hero__inner {
-      max-width: 800px;
-    }
-
-    .hero__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid rgba(99,179,255,0.2);
-      background: rgba(99,179,255,0.05);
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 32px;
-    }
-
-    .hero__badge::before {
-      content: '';
-      width: 5px; height: 5px;
-      background: var(--accent3);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    .hero h1 {
-      font-size: clamp(3rem, 6vw, 5rem);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-      color: var(--white);
-      margin-bottom: 24px;
-    }
-
-    .hero h1 .gradient {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero__sub {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--text-dim);
-      max-width: 560px;
-      margin-bottom: 40px;
-    }
-
-    .hero__stats {
-      display: flex;
-      gap: 40px;
-    }
-
-    .hero__stat {
-      text-align: left;
-    }
-
-    .hero__stat-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1;
-    }
-
-    .hero__stat-label {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 4px;
-    }
-
-    .hero__scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      animation: bob 2s ease-in-out infinite;
-    }
-
-    .hero__scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(transparent, var(--text-muted));
-    }
-
-    @keyframes bob {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
-    }
-
-    /* ============================================
-       Section label
-       ============================================ */
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ============================================
-       Projects
-       ============================================ */
-    .projects {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px 40px 120px;
-    }
-
-    .projects--gated { padding-top: 40px; }
-    .projects--gated .case { opacity: 0.88; }
-    .gated-note { color: var(--text-dim); font-size: 0.92rem; max-width: 640px; margin: -8px 0 28px; line-height: 1.6; }
-    .note-link { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(99,179,255,0.35); }
-    .note-link:hover { border-bottom-color: var(--accent); }
-    .group-label { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin: 34px 0 14px; padding-left: 2px; }
-    .group-label:first-of-type { margin-top: 10px; }
-    .projects__more { margin-top: 28px; text-align: center; }
-    .projects__more a { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 10px; padding: 14px 28px; color: var(--text-dim); font-size: 0.92rem; font-weight: 600; transition: all 0.2s; text-decoration: none; }
-    .projects__more a:hover { color: var(--accent); border-color: var(--border-glow); transform: translateY(-1px); }
-    .projects__grid {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    /* Case study card */
-    .case {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: border-color 0.35s, box-shadow 0.35s;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .case:hover {
-      border-color: var(--border-glow);
-      box-shadow: 0 0 40px rgba(99,179,255,0.06);
-      opacity: 1;
-    }
-
-    .case__visual {
-      display: block;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
-    }
-
-    .case__bg {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.5s ease;
-    }
-
-    .case:hover .case__bg {
-      transform: scale(1.04);
-    }
-
-    .case__info {
-      padding: 36px 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .case__tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-
-    .case__title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      margin-bottom: 10px;
-      line-height: 1.2;
-    }
-
-    .case__desc {
-      font-size: 0.88rem;
-      line-height: 1.7;
-      color: var(--text-dim);
-      margin-bottom: 20px;
-    }
-
-    .case__metrics {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 16px;
-    }
-
-    .case__metric {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .case__metric-val {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .case__metric-label {
-      font-size: 0.62rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .case__cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: 0.03em;
-      transition: gap 0.2s;
-    }
-
-    .case:hover .case__cta {
-      gap: 10px;
-    }
-
-    .case__cta svg {
-      width: 14px; height: 14px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-    }
-
-    /* Sub-link inside a card */
-    .case__sublink {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 4px;
-      margin-left: 12px;
-      transition: all 0.2s;
-    }
-
-    .case__sublink:hover {
-      color: var(--accent2);
-      border-color: rgba(167,139,250,0.3);
-      opacity: 1;
-    }
-
-    .case__links {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0;
-    }
-
-    /* ============================================
-       About / Process
-       ============================================ */
-    .about {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 120px;
-    }
-
-    .about__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .about__card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px;
-      transition: border-color 0.3s;
-    }
-
-    .about__card:hover {
-      border-color: var(--border-glow);
-    }
-
-    .about__icon {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      font-size: 1.1rem;
-    }
-
-    .about__card h3 {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-
-    .about__card p {
-      font-size: 0.8rem;
-      line-height: 1.6;
-      color: var(--text-dim);
-    }
-
-    /* ============================================
-       Footer
-       ============================================ */
-    .footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 30px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .footer__left {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-    }
-
-    .footer__right {
-      display: flex;
-      gap: 20px;
-    }
-
-    .footer__right a {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      transition: color 0.2s;
-    }
-
-    .footer__right a:hover {
-      color: var(--accent);
-      opacity: 1;
-    }
-
-    /* ============================================
-       Services
-       ============================================ */
-    .services {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 120px;
-    }
-    .services__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .service-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px 24px;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .service-card:hover {
-      border-color: var(--border-glow);
-      transform: translateY(-3px);
-    }
-    .service-card__icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      font-size: 1.2rem;
-    }
-    .service-card h3 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .service-card p {
-      font-size: 0.78rem;
-      line-height: 1.6;
-      color: var(--text-dim);
-    }
-    @media (max-width: 900px) {
-      .services__grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .services { padding: 0 20px 80px; }
-      .services__grid { grid-template-columns: 1fr; }
-    }
-
-    /* ============================================
-       For whom (audience)
-       ============================================ */
-    .audience {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 120px;
-    }
-    .audience__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .audience-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-      transition: border-color 0.3s;
-    }
-    .audience-card:hover {
-      border-color: var(--border-glow);
-    }
-    .audience-card__icon {
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-    }
-    .audience-card h3 {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 6px;
-    }
-    .audience-card p {
-      font-size: 0.75rem;
-      line-height: 1.6;
-      color: var(--text-dim);
-    }
-    @media (max-width: 900px) {
-      .audience__grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .audience { padding: 0 20px 80px; }
-      .audience__grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-    }
-
-    /* ============================================
-       CTA
-       ============================================ */
-    .cta-section {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 120px;
-      text-align: center;
-    }
-    .cta-box {
-      background: linear-gradient(135deg, rgba(99,179,255,0.08) 0%, rgba(167,139,250,0.08) 100%);
-      border: 1px solid rgba(99,179,255,0.15);
-      border-radius: 16px;
-      padding: 60px 40px;
-    }
-    .cta-box h2 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 12px;
-      letter-spacing: -0.02em;
-    }
-    .cta-box p {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      max-width: 520px;
-      margin: 0 auto 28px;
-      line-height: 1.7;
-    }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 700;
-      font-size: 0.9rem;
-      padding: 14px 32px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.2s;
-      letter-spacing: 0.02em;
-    }
-    .cta-btn:hover {
-      background: #8ac7ff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(99,179,255,0.25);
-    }
-    .cta-btn svg {
-      width: 16px; height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-    }
-    /* direct contact: call / write / copy */
-    .cta-actions {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .cta-btn--ghost {
-      background: transparent;
-      color: var(--white);
-      border: 1px solid rgba(99,179,255,0.35);
-      font-variant-numeric: tabular-nums;
-    }
-    .cta-btn--ghost:hover {
-      background: rgba(99,179,255,0.1);
-      border-color: var(--accent);
-      color: var(--accent);
-      box-shadow: none;
-    }
-    .cta-btn--ghost svg { fill: none; stroke: currentColor; }
-    .cta-email {
-      margin-top: 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 4px 4px 4px 14px;
-      font-size: 0.82rem;
-    }
-    .cta-email a {
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .cta-email a:hover { color: var(--accent); }
-    .cta-copy {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: none;
-      border: 0;
-      border-radius: 6px;
-      color: var(--text-dim);
-      font: inherit;
-      font-size: 0.75rem;
-      padding: 6px 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .cta-copy:hover { background: rgba(99,179,255,0.12); color: var(--accent); }
-    .cta-copy svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
-    .cta-copy__idle, .cta-copy__done { display: inline-flex; align-items: center; gap: 6px; }
-    .cta-copy .cta-copy__done { display: none; }
-    .cta-copy.is-copied { color: #4ade80; }
-    .cta-copy.is-copied .cta-copy__idle { display: none; }
-    .cta-copy.is-copied .cta-copy__done { display: inline-flex; }
-    @media (max-width: 480px) {
-      .cta-actions { flex-direction: column; align-items: stretch; }
-      .cta-actions .cta-btn { justify-content: center; }
-    }
-    /* mini contact form */
-    .cta-form {
-      max-width: 480px;
-      margin: 28px auto 0;
-      text-align: left;
-    }
-    .cta-form__lead {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    .cta-form__row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .cta-form input[type="text"] {
-      flex: 1 1 220px;
-      min-width: 0;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--white);
-      font: inherit;
-      font-size: 0.85rem;
-      padding: 12px 14px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .cta-form input[type="text"]::placeholder { color: #5a5f6b; }
-    .cta-form input[type="text"]:focus {
-      outline: none;
-      border-color: var(--accent);
-      background: rgba(99,179,255,0.06);
-    }
-    .cta-form input:user-invalid { border-color: #f87171; }
-    .cta-form__submit {
-      flex: 1 1 100%;
-      background: var(--accent);
-      color: var(--bg);
-      border: 0;
-      border-radius: 8px;
-      font: inherit;
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 12px 22px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .cta-form__submit:hover:not(:disabled) { background: #8ac7ff; }
-    .cta-form__submit:disabled { opacity: 0.55; cursor: default; }
-    .cta-form__hp {
-      position: absolute;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-    }
-    .cta-form__note {
-      font-size: 0.7rem;
-      color: #5a5f6b;
-      text-align: center;
-      margin-top: 10px;
-      line-height: 1.5;
-    }
-    .cta-form__status {
-      display: none;
-      font-size: 0.85rem;
-      text-align: center;
-      margin-top: 12px;
-      padding: 12px 14px;
-      border-radius: 8px;
-      line-height: 1.5;
-    }
-    .cta-form__status.is-ok {
-      display: block;
-      color: #4ade80;
-      background: rgba(74,222,128,0.08);
-      border: 1px solid rgba(74,222,128,0.25);
-    }
-    .cta-form__status.is-err {
-      display: block;
-      color: #4ade80;
-      background: rgba(74,222,128,0.08);
-      border: 1px solid rgba(74,222,128,0.25);
-    }
-    .cta-form.is-sent .cta-form__row,
-    .cta-form.is-sent .cta-form__note,
-    .cta-form.is-sent .cta-form__lead { display: none; }
-    @media (max-width: 480px) {
-      .cta-form__row { flex-direction: column; }
-      .cta-form__submit { width: 100%; }
-    }
-    .cta-links {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-    }
-    .cta-links a {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .cta-links a:hover { color: var(--accent); }
-    .cta-links svg {
-      width: 14px; height: 14px;
-      fill: currentColor;
-    }
-    @media (max-width: 600px) {
-      .cta-section { padding: 0 20px 80px; }
-      .cta-box { padding: 40px 20px; }
-      .cta-box h2 { font-size: 1.4rem; }
-    }
-
-    /* ============================================
-       About / Bio
-       ============================================ */
-    .bio {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 120px;
-    }
-    .bio__layout {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 40px;
-      align-items: start;
-    }
-    .bio__sidebar {
-      position: sticky;
-      top: 80px;
-    }
-    .bio__name {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-    }
-    .bio__role {
-      font-size: 0.82rem;
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 0.05em;
-      margin-bottom: 20px;
-    }
-    .bio__tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 24px;
-    }
-    .bio__tag {
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 4px;
-    }
-    .bio__links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .bio__link {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .bio__link:hover { color: var(--accent); }
-    .bio__link svg {
-      width: 14px; height: 14px;
-      fill: currentColor;
-      flex-shrink: 0;
-    }
-    .bio__main h3 {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      margin-top: 32px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .bio__main h3:first-child { margin-top: 0; }
-    .bio__text {
-      font-size: 0.9rem;
-      line-height: 1.75;
-      color: var(--text-dim);
-    }
-    .bio__highlights {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 16px;
-    }
-    .bio__highlight {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-    }
-    .bio__highlight-title {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-    .bio__highlight-desc {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
-    @media (max-width: 900px) {
-      .bio__layout {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-      .bio__sidebar { position: static; }
-      .bio__highlights { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      .bio { padding: 0 20px 80px; }
-    }
-
-    /* ============================================
-       Responsive
-       ============================================ */
-    @media (max-width: 900px) {
-      .case {
-        grid-template-columns: 1fr;
-      }
-      .case__visual {
-        aspect-ratio: 16 / 9;
-      }
-      .case__info {
-        padding: 24px;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .about__grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav { padding: 0 20px; }
-      .nav__links {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(6,8,13,0.85);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 32px;
-        z-index: 100;
-        list-style: none;
-        transition: opacity 0.3s;
-      }
-      .nav__links.open { display: flex; }
-      .nav__links.open a { font-size: 1.4rem; color: #fff; letter-spacing: 0.05em; }
-      .nav__links.open li { text-align: center; }
-      .nav__hamburger { display: flex; z-index: 101; }
-      .hero { padding: 0 24px; min-height: 90vh; }
-      .hero h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
-      .hero__stats { gap: 24px; flex-wrap: wrap; }
-      .projects { padding: 60px 20px 80px; }
-      .about { padding: 0 20px 80px; }
-      .footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
-      .hero__scroll { display: none; }
-    }
-
-    /* ============================================
-       Language
-       ============================================ */
-    [data-lang="pl"] { display: none; }
-    html[lang="pl"] [data-lang="pl"] { display: block; }
-    html[lang="pl"] [data-lang="en"] { display: none; }
-    span[data-lang="pl"], a[data-lang="pl"] { display: none; }
-    html[lang="pl"] span[data-lang="pl"], html[lang="pl"] a[data-lang="pl"] { display: inline; }
-    html[lang="pl"] span[data-lang="en"], html[lang="pl"] a[data-lang="en"] { display: none; }
-    /* flex containers */
-    div.case__links[data-lang="pl"] { display: none; }
-    html[lang="pl"] div.case__links[data-lang="pl"] { display: flex; }
-    html[lang="pl"] div.case__links[data-lang="en"] { display: none; }
-  </style>
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><script data-goatcounter="https://futureshow.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<title>Więcej projektów — FutureShow</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/wired.css">
+<meta name="description" content="Wszystkie projekty studia FutureShow, których nie ma na stronie głównej: dane i symulacje, złota liczba, kultura i archiwa, prace dla klientów.">
+<link rel="canonical" href="https://futureshow.pl/projekty.html">
 </head>
 <body>
-
-  <canvas id="particles"></canvas>
-
-  <!-- Nav -->
-  <nav class="nav">
-    <div class="nav__brand">
-      <div class="nav__dot"></div>
-      <a href="index.html" class="nav__logo">Future<span>Show</span></a>
-    </div>
-    <div class="nav__right">
-      <ul class="nav__links">
-        <li><a href="index.html#services">
-          <span data-lang="en">Services</span>
-          <span data-lang="pl">Usługi</span>
-        </a></li>
-        <li><a href="projekty.html">
-          <span data-lang="en">Projects</span>
-          <span data-lang="pl">Projekty</span>
-        </a></li>
-        <li><a href="films.html">
-          <span data-lang="en">Films</span>
-          <span data-lang="pl">Filmy</span>
-        </a></li>
-        <li><a href="index.html#about">
-          <span data-lang="en">About</span>
-          <span data-lang="pl">O mnie</span>
-        </a></li>
-        <li><a href="downloads.html">
-          <span data-lang="en">Downloads</span>
-          <span data-lang="pl">Pobierz</span>
-        </a></li>
-        <li><a href="index.html#contact">
-          <span data-lang="en">Contact</span>
-          <span data-lang="pl">Kontakt</span>
-        </a></li>
-      </ul>
-      <button class="nav__lang" onclick="toggleLang()" id="langToggle">PL</button>
-      <div class="nav__hamburger" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="projects" id="projects" style="padding-top:140px">
-    <div class="section-label">
-      <span data-lang="en">More projects · 11</span>
-      <span data-lang="pl">Więcej projektów · 11</span>
-    </div>
-    <p class="gated-note">
-      <span data-lang="en">Everything beyond the front page, grouped by theme. The 17 selected case studies live on the <a class="note-link" href="index.html#projects">front page →</a></span>
-      <span data-lang="pl">Wszystko spoza strony głównej, pogrupowane tematycznie. 17 wybranych realizacji jest na <a class="note-link" href="index.html#projects">stronie głównej →</a></span>
-    </p>
+<div class="cursor" id="cursor"></div>
+<nav class="nav">
+  <a href="index.html" class="nav__brand">FutureShow</a>
+  <ul class="nav__links">
+    <li><a href="index.html#work"><span data-lang="en">Work</span><span data-lang="pl">Prace</span></a></li>
+    <li><a href="stream/">Stream</a></li>
+    <li><a href="index.html#approach"><span data-lang="en">Approach</span><span data-lang="pl">Podejście</span></a></li>
+    <li><a href="index.html#studio">Studio</a></li>
+    <li><a href="films.html"><span data-lang="en">Films</span><span data-lang="pl">Filmy</span></a></li>
+    <li><a href="downloads.html"><span data-lang="en">Downloads</span><span data-lang="pl">Pobierz</span></a></li>
+  </ul>
+  <div class="nav__right">
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()">PL</button>
+    <a href="index.html#contact" class="nav__cta"><span data-lang="en">Start a project</span><span data-lang="pl">Zacznij projekt</span></a>
+  </div>
+</nav>
+<header class="page-head">
+  <div class="page-head__inner">
+    <div class="page-head__kicker reveal"><span data-lang="en">From the studio archive</span><span data-lang="pl">Z archiwum studia</span> · 13</div>
+    <h1 class="page-head__title reveal" style="--i:1"><span data-lang="en">More <em>from the studio.</em></span><span data-lang="pl">Więcej <em>ze studia.</em></span></h1>
+    <p class="page-head__lede reveal" style="--i:2"><span data-lang="en">Everything that did not make the front page, grouped by theme. The 17 selected case studies are <a href="index.html#work">on the front page</a>; the whole catalogue is browsable in <a href="stream/">Stream</a>.</span><span data-lang="pl">Wszystko, co nie zmieściło się na stronie głównej, pogrupowane tematycznie. 17 wybranych realizacji jest <a href="index.html#work">na stronie głównej</a>; cały katalog można przeglądać w <a href="stream/">Streamie</a>.</span></p>
+  </div>
+</header>
+<main class="page-body">
+  <div class="page-body__inner">
     <h3 class="group-label"><span data-lang="en">Data, science, simulations</span><span data-lang="pl">Dane, nauka, symulacje</span></h3>
-    <div class="projects__grid">
-      <div class="case">
-        <a class="case__visual" href="psychedelic/" target="_blank">
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="psychedelic/" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Psychedelic Brain Simulation</span><span data-lang="pl">Psychedelic Brain Simulation</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="psychedelic/" target="_blank">
           <div style="width:100%;height:100%;background:radial-gradient(130% 120% at 50% 40%,#33156a 0%,#1d0c44 50%,#080318 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint field texture -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
@@ -1226,25 +111,13 @@
               Psychedelic Brain Simulation
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">3D neuroscience</span>
-            <span data-lang="pl">Neuronauka 3D</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Psychedelic Brain Simulation</div>
-            <div class="case__desc">A 3D brain under seven psychedelic and dissociative substances — dose levels, a timeline from ingestion to comedown, clickable regions, default-mode-network connectivity, sound that follows the model. Two builds on the same engine: version 3 with a built-in video recorder, version 4 with a lighter, redesigned interface. A small landing page lets you pick.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Psychedelic Brain Simulation</div>
-            <div class="case__desc">Trójwymiarowy mózg pod wpływem siedmiu substancji psychodelicznych i dysocjacyjnych — poziomy dawki, oś czasu od przyjęcia do zejścia, klikalne regiony, łączność sieci stanu spoczynkowego, dźwięk podążający za modelem. Dwie wersje na tym samym silniku: trzecia z wbudowanym rejestratorem wideo, czwarta z lżejszym, przeprojektowanym interfejsem. Mała strona wejściowa pozwala wybrać.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A 3D brain under seven psychedelic and dissociative substances — dose levels, a timeline from ingestion to comedown, clickable regions, default-mode-network connectivity, sound that follows the…</span><span data-lang="pl">Trójwymiarowy mózg pod wpływem siedmiu substancji psychodelicznych i dysocjacyjnych — poziomy dawki, oś czasu od przyjęcia do zejścia, klikalne regiony, łączność sieci stanu spoczynkowego, dźwięk…</span></span>
+        <a href="psychedelic/" class="mini-card__foot"><span><span data-lang="en">3D neuroscience</span><span data-lang="pl">Neuronauka 3D</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-              <!-- N-Body Simulation -->
-      <div class="case">
-        <a class="case__visual" href="nbody/" target="_blank" rel="noopener">
+      <div class="mini-card reveal" style="--i:1">
+        <a href="nbody/" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">N-Body Gravitational Simulation</span><span data-lang="pl">Symulacja grawitacyjna N-Ciał</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="nbody/" target="_blank" rel="noopener">
           <div style="width:100%;height:100%;background:radial-gradient(ellipse at 40% 45%, rgba(160,80,255,0.2) 0%, transparent 50%), radial-gradient(ellipse at 65% 55%, rgba(255,120,60,0.15) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(100,160,255,0.1) 0%, transparent 60%), #050510;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <svg viewBox="0 0 100 80" style="position:absolute;width:100%;height:100%;opacity:0.7;">
               <circle cx="20" cy="25" r="1" fill="#e8a0ff" opacity="0.8"/><circle cx="35" cy="18" r="0.7" fill="#e8a0ff" opacity="0.5"/>
@@ -1262,50 +135,13 @@
               <div style="color:rgba(128,208,255,0.5);font-size:clamp(0.65rem,1.1vw,0.85rem);letter-spacing:0.2em;text-transform:uppercase;margin-top:4px;">Gravitational Simulation</div>
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Physics / Simulation</span>
-            <span data-lang="pl">Fizyka / Symulacja</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">N-Body Gravitational Simulation</div>
-            <div class="case__desc">Real-time Barnes-Hut gravitational simulation running up to 28,000 particles. Six cosmic scenarios: galaxy collisions, dark matter halos, supernovae, protoplanetary disks, cosmic web formation, and chaotic triple systems.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Symulacja grawitacyjna N-Ciał</div>
-            <div class="case__desc">Symulacja grawitacyjna Barnes-Hut w czasie rzeczywistym z 28 000 cząsteczek. Sześć scenariuszy kosmicznych: zderzenia galaktyk, halo ciemnej materii, supernowe, dyski protoplanetarne, kosmiczna sieć i chaotyczny układ potrójny.</div>
-          </div>
-          <div class="case__metrics">
-            <div class="case__metric">
-              <div class="case__metric-val">28K</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Particles</span>
-                <span data-lang="pl">Cząsteczek</span>
-              </div>
-            </div>
-            <div class="case__metric">
-              <div class="case__metric-val">6</div>
-              <div class="case__metric-label">
-                <span data-lang="en">Cosmic scenarios</span>
-                <span data-lang="pl">Scenariuszy</span>
-              </div>
-            </div>
-          </div>
-          <div class="case__links" data-lang="en">
-            <a href="nbody/" target="_blank" class="case__cta">
-              Launch simulation <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="case__links" data-lang="pl">
-            <a href="nbody/" target="_blank" class="case__cta">
-              Uruchom symulację <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">Real-time Barnes-Hut gravitational simulation running up to 28,000 particles. Six cosmic scenarios: galaxy collisions, dark matter halos, supernovae, protoplanetary disks, cosmic web formation, and…</span><span data-lang="pl">Symulacja grawitacyjna Barnes-Hut w czasie rzeczywistym z 28 000 cząsteczek. Sześć scenariuszy kosmicznych: zderzenia galaktyk, halo ciemnej materii, supernowe, dyski protoplanetarne, kosmiczna sieć…</span></span>
+        <a href="nbody/" class="mini-card__foot"><span><span data-lang="en">Physics / Simulation</span><span data-lang="pl">Fizyka / Symulacja</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/digital-cosmos/" target="_blank">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="https://futureshow1.github.io/digital-cosmos/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Digital Cosmos</span><span data-lang="pl">Digital Cosmos</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow1.github.io/digital-cosmos/" target="_blank">
           <div style="width:100%;height:100%;background:radial-gradient(120% 120% at 50% 45%,#1a153e 0%,#0c0a24 45%,#030208 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint cosmic dust texture -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
@@ -1381,24 +217,13 @@
               Digital Cosmos
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Immersive 3D / WebGL</span>
-            <span data-lang="pl">Immersyjne 3D / WebGL</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Digital Cosmos</div>
-            <div class="case__desc">An immersive cosmic experience that runs entirely in the browser, built on WebGL and custom shaders. Drift through galaxies, nebulae and deep starfields rendered in real time. A showcase of what live 3D rendering can do without a single plugin or download.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Digital Cosmos</div>
-            <div class="case__desc">Immersyjna podróż przez kosmos działająca w całości w przeglądarce, oparta na WebGL i własnych shaderach. Przepływ przez galaktyki, mgławice i głębokie pola gwiazd renderowane w czasie rzeczywistym. Pokaz tego, do czego zdolny jest żywy rendering 3D — bez wtyczek i bez pobierania.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">An immersive cosmic experience that runs entirely in the browser, built on WebGL and custom shaders. Drift through galaxies, nebulae and deep starfields rendered in real time. A showcase of what live…</span><span data-lang="pl">Immersyjna podróż przez kosmos działająca w całości w przeglądarce, oparta na WebGL i własnych shaderach. Przepływ przez galaktyki, mgławice i głębokie pola gwiazd renderowane w czasie rzeczywistym.…</span></span>
+        <a href="https://futureshow1.github.io/digital-cosmos/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Immersive 3D / WebGL</span><span data-lang="pl">Immersyjne 3D / WebGL</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/cosmos-catalogue/" target="_blank">
+      <div class="mini-card reveal" style="--i:1">
+        <a href="https://futureshow1.github.io/cosmos-catalogue/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Cosmos Catalogue</span><span data-lang="pl">Cosmos Catalogue</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow1.github.io/cosmos-catalogue/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(160deg,#16202e 0%,#0c1119 55%,#04060a 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint grid texture -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
@@ -1461,27 +286,16 @@
               Cosmos Catalogue
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">3D reference library</span>
-            <span data-lang="pl">Biblioteka technik 3D</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Cosmos Catalogue</div>
-            <div class="case__desc">A reference library of around ten interactive WebGL and 3D-technique demos — a specimen catalogue of shader and rendering effects. Each entry isolates one method so it can be studied, compared and reused. Built as a working sketchbook for real-time graphics.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Cosmos Catalogue</div>
-            <div class="case__desc">Biblioteka referencyjna około dziesięciu interaktywnych dem technik WebGL i 3D — katalog okazów efektów shaderowych i renderingu. Każdy wpis wyodrębnia jedną metodę, którą można przestudiować, porównać i wykorzystać ponownie. Zbudowany jak roboczy szkicownik grafiki czasu rzeczywistego.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A reference library of around ten interactive WebGL and 3D-technique demos — a specimen catalogue of shader and rendering effects. Each entry isolates one method so it can be studied, compared and…</span><span data-lang="pl">Biblioteka referencyjna około dziesięciu interaktywnych dem technik WebGL i 3D — katalog okazów efektów shaderowych i renderingu. Każdy wpis wyodrębnia jedną metodę, którą można przestudiować,…</span></span>
+        <a href="https://futureshow1.github.io/cosmos-catalogue/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">3D reference library</span><span data-lang="pl">Biblioteka technik 3D</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
     </div>
     <h3 class="group-label"><span data-lang="en">The Golden Number · φ</span><span data-lang="pl">Złota liczba · φ</span></h3>
-    <div class="projects__grid">
-      <div class="case">
-        <a class="case__visual" href="sectio-aurea/" target="_blank">
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="sectio-aurea/" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">SECTIO AUREA</span><span data-lang="pl">SECTIO AUREA</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="sectio-aurea/" target="_blank">
           <div style="width:100%;height:100%;background:radial-gradient(ellipse at 50% 42%,#0e0e0e 0%,#070707 55%,#020202 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint grain -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
@@ -1549,24 +363,13 @@
               SECTIO AUREA
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Interactive education / 3D</span>
-            <span data-lang="pl">Edukacja interaktywna / 3D</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">SECTIO AUREA</div>
-            <div class="case__desc">An interactive atlas of the Golden Number φ. A 3D dodecahedron navigator opens onto twelve playable chambers: slider-discovery of φ, the whirling-square spiral, the Platonic solids, a live quasicrystal shader, audio, a Penrose tiling. Throughout, mathematical rigor is kept apart from romantic numerology — the marvel without the mysticism. Fully bilingual PL/EN, and the flagship of the φ topic.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">SECTIO AUREA</div>
-            <div class="case__desc">Interaktywny atlas złotej liczby φ. Dwunastościan-nawigator 3D otwiera się na dwanaście grywalnych komnat: odkrywanie φ suwakiem, spiralę wirujących kwadratów, bryły platońskie, żywy shader kwazikryształu, dźwięk, parkietaż Penrose'a. Przez cały czas matematyczny rygor oddzielony jest od romantycznej numerologii — zachwyt bez mistyfikacji. W pełni dwujęzyczny (PL/EN), flagowy projekt tematu φ.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">An interactive atlas of the Golden Number φ. A 3D dodecahedron navigator opens onto twelve playable chambers: slider-discovery of φ, the whirling-square spiral, the Platonic solids, a live…</span><span data-lang="pl">Interaktywny atlas złotej liczby φ. Dwunastościan-nawigator 3D otwiera się na dwanaście grywalnych komnat: odkrywanie φ suwakiem, spiralę wirujących kwadratów, bryły platońskie, żywy shader…</span></span>
+        <a href="sectio-aurea/" class="mini-card__foot"><span><span data-lang="en">Interactive education / 3D</span><span data-lang="pl">Edukacja interaktywna / 3D</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-      <div class="case">
-        <a class="case__visual" href="zlota-liczba-kompendium/" target="_blank">
+      <div class="mini-card reveal" style="--i:1">
+        <a href="zlota-liczba-kompendium/" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Złota liczba — kompendium</span><span data-lang="pl">Złota liczba — kompendium</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="zlota-liczba-kompendium/" target="_blank">
           <div style="width:100%;height:100%;background:#efe4c8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- paper grain -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.09;">
@@ -1620,27 +423,16 @@
             <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#2b2418;letter-spacing:0.01em;background:rgba(239,228,200,0.85);">
               Złota liczba — kompendium
             </div>
-          </div></a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Editorial / compendium</span>
-            <span data-lang="pl">Redakcja / kompendium</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Złota liczba — kompendium</div>
-            <div class="case__desc">A static, editorial compendium of Matila C. Ghyka's „Golden Number" with annexes — the careful written groundwork that preceded the interactive SECTIO AUREA portal. Here the sources, the critique and the context are laid out in measured prose: the scholarship before the spectacle. It is the reference layer beneath the φ project — where every later claim is grounded.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Złota liczba — kompendium</div>
-            <div class="case__desc">Statyczne, redakcyjne kompendium „Złotej liczby" Matili C. Ghyki wraz z aneksami — starannie opracowany fundament tekstowy, który poprzedził interaktywny portal SECTIO AUREA. Źródła, krytyka i kontekst rozłożone są tu w wyważonej prozie: rzetelność przed widowiskiem. To warstwa referencyjna pod projektem φ, w której ugruntowana jest każda późniejsza teza.</div>
-          </div>
-        </div>
+          </div></a></div>
+        <span class="mini-card__deck"><span data-lang="en">A static, editorial compendium of Matila C. Ghyka&#x27;s „Golden Number&quot; with annexes — the careful written groundwork that preceded the interactive SECTIO AUREA portal. Here the sources, the critique and…</span><span data-lang="pl">Statyczne, redakcyjne kompendium „Złotej liczby&quot; Matili C. Ghyki wraz z aneksami — starannie opracowany fundament tekstowy, który poprzedził interaktywny portal SECTIO AUREA. Źródła, krytyka i…</span></span>
+        <a href="zlota-liczba-kompendium/" class="mini-card__foot"><span><span data-lang="en">Editorial / compendium</span><span data-lang="pl">Redakcja / kompendium</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
     </div>
     <h3 class="group-label"><span data-lang="en">Culture, editions, archives</span><span data-lang="pl">Kultura, edycje, archiwa</span></h3>
-    <div class="projects__grid">
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank">
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Jan Świdziński — Contextual Art</span><span data-lang="pl">Jan Świdziński — Sztuka kontekstualna</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(165deg,#13110d 0%,#0a0908 60%,#050504 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint paper grain -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
@@ -1689,24 +481,13 @@
               Jan Świdziński · Sztuka kontekstualna
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Cultural archive / edu-game</span>
-            <span data-lang="pl">Archiwum kultury / gra edu</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Jan Świdziński — Contextual Art</div>
-            <div class="case__desc">An archive and educational game built around one of the key ideas in Polish art theory: Jan Świdziński's „Contextual Art", which holds that a work's meaning is not fixed but is its context. A conceptual, text-driven introduction that turns an abstract proposition into something you can explore by reading, choosing and reframing — watching the same gesture change sense as its situation shifts.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Jan Świdziński — Sztuka kontekstualna</div>
-            <div class="case__desc">Archiwum i gra edukacyjna zbudowane wokół jednej z kluczowych idei polskiej teorii sztuki: „sztuki kontekstualnej" Jana Świdzińskiego, według której znaczenie dzieła nie jest dane raz na zawsze — jest nim kontekst. Konceptualne, oparte na tekście wprowadzenie, które zamienia abstrakcyjną tezę w coś, co można zwiedzać czytając, wybierając i przeramowując — patrząc, jak ten sam gest zmienia sens wraz ze zmianą sytuacji.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">An archive and educational game built around one of the key ideas in Polish art theory: Jan Świdziński&#x27;s „Contextual Art&quot;, which holds that a work&#x27;s meaning is not fixed but is its context. A…</span><span data-lang="pl">Archiwum i gra edukacyjna zbudowane wokół jednej z kluczowych idei polskiej teorii sztuki: „sztuki kontekstualnej&quot; Jana Świdzińskiego, według której znaczenie dzieła nie jest dane raz na zawsze —…</span></span>
+        <a href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Cultural archive / edu-game</span><span data-lang="pl">Archiwum kultury / gra edu</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-      <div class="case">
-        <a class="case__visual" href="https://bronislaw-przyluski.vercel.app/" target="_blank">
+      <div class="mini-card reveal" style="--i:1">
+        <a href="https://bronislaw-przyluski.vercel.app/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Bronisław Przyłuski — Poetry</span><span data-lang="pl">Bronisław Przyłuski — poezja</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://bronislaw-przyluski.vercel.app/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(160deg,#0f1c24 0%,#0a141b 55%,#060b10 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint aged-paper grain -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
@@ -1766,24 +547,13 @@
               Bronisław Przyłuski — poezja
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Poetry · living edition</span>
-            <span data-lang="pl">Poezja · żywe wydanie</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Bronisław Przyłuski — Poetry</div>
-            <div class="case__desc">A living online edition of the poetry of Bronisław Przyłuski (1905–1980): poems to be read, not files to be stored. The texts come first; the biography, the manuscripts and the émigré context stand behind them as commentary. Built to keep the work in circulation rather than in a drawer.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Bronisław Przyłuski — poezja</div>
-            <div class="case__desc">Żywe wydanie poezji Bronisława Przyłuskiego (1905–1980) w sieci: wiersze do czytania, nie pliki do przechowywania. Na pierwszym planie teksty; biografia, rękopisy i kontekst emigracyjny stoją za nimi jako komentarz. Zrobione po to, żeby twórczość krążyła, a nie leżała w szufladzie.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A living online edition of the poetry of Bronisław Przyłuski (1905–1980): poems to be read, not files to be stored. The texts come first; the biography, the manuscripts and the émigré context stand…</span><span data-lang="pl">Żywe wydanie poezji Bronisława Przyłuskiego (1905–1980) w sieci: wiersze do czytania, nie pliki do przechowywania. Na pierwszym planie teksty; biografia, rękopisy i kontekst emigracyjny stoją za nimi…</span></span>
+        <a href="https://bronislaw-przyluski.vercel.app/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Poetry · living edition</span><span data-lang="pl">Poezja · żywe wydanie</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-      <div class="case">
-        <a class="case__visual" href="switkowski/" target="_blank">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="switkowski/" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Okultyzm i magja (1939)</span><span data-lang="pl">Okultyzm i magja (1939)</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="switkowski/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(165deg,#2b2418 0%,#1c1710 48%,#080604 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- aged paper texture -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08;">
@@ -1840,24 +610,13 @@
               Okultyzm i magja (1939)
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Historical / compendium</span>
-            <span data-lang="pl">Historia / kompendium</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Okultyzm i magja (1939)</div>
-            <div class="case__desc">A compendium of Józef Świtkowski's „Okultyzm i magja w świetle parapsychologji" (1939) — a careful reworking of a historical Polish text on parapsychology and the occult. The original is preserved but framed critically: its claims situated in their era, read with a modern eye rather than taken at face value. A document of how the interwar mind reached for the unseen.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Okultyzm i magja (1939)</div>
-            <div class="case__desc">Kompendium dzieła Józefa Świtkowskiego „Okultyzm i magja w świetle parapsychologji" (1939) — staranne opracowanie historycznego polskiego tekstu o parapsychologii i okultyzmie. Oryginał zostaje zachowany, lecz ujęty krytycznie: jego tezy osadzone w swojej epoce, czytane współczesnym okiem, a nie przyjmowane bezkrytycznie. Świadectwo tego, jak międzywojenny umysł sięgał po niewidzialne.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A compendium of Józef Świtkowski&#x27;s „Okultyzm i magja w świetle parapsychologji&quot; (1939) — a careful reworking of a historical Polish text on parapsychology and the occult. The original is preserved…</span><span data-lang="pl">Kompendium dzieła Józefa Świtkowskiego „Okultyzm i magja w świetle parapsychologji&quot; (1939) — staranne opracowanie historycznego polskiego tekstu o parapsychologii i okultyzmie. Oryginał zostaje…</span></span>
+        <a href="switkowski/" class="mini-card__foot"><span><span data-lang="en">Historical / compendium</span><span data-lang="pl">Historia / kompendium</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/pokedex/" target="_blank">
+      <div class="mini-card reveal" style="--i:1">
+        <a href="https://futureshow.pl/pokedex/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Poképedia</span><span data-lang="pl">Poképedia</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow.pl/pokedex/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(180deg,#ffe0ef 0%,#d7f0ff 48%,#fff6cf 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- pastel clouds -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.75;">
@@ -1903,27 +662,16 @@
               Poképedia
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Knowledge base / for kids &amp; collectors</span>
-            <span data-lang="pl">Baza wiedzy / dla dzieci i kolekcjonerów</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Poképedia</div>
-            <div class="case__desc">A bilingual knowledge base for anyone learning the Pokémon universe from scratch: 256 Pokémon across all nine generations with artwork, stats, evolution lines and real in-game catch rates, plus 730 actual trading cards ranked from rarest to most common — the complete 1999 Base Set beside the sets played today. Around the catalogue sits the story: where Pokémon came from, every anime era and film, and above all the games played offline — how the card game actually works, leagues and tournaments, collecting, Pokémon GO and schoolyard play.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Poképedia</div>
-            <div class="case__desc">Dwujęzyczna baza wiedzy dla każdego, kto poznaje świat Pokémonów od zera: 256 Pokémonów ze wszystkich dziewięciu generacji — z grafikami, statystykami, liniami ewolucji i prawdziwymi współczynnikami łowności z gier — oraz 730 istniejących kart ułożonych od najrzadszych do najpospolitszych: komplet Base Setu z 1999 roku obok setów, w które gra się dzisiaj. Wokół katalogu opowieść: skąd wzięły się Pokémony, wszystkie ery anime i filmy, a przede wszystkim gry poza ekranem — jak naprawdę działa karcianka, ligi i turnieje, kolekcjonowanie, Pokémon GO i zabawy podwórkowe.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A bilingual knowledge base for anyone learning the Pokémon universe from scratch: 256 Pokémon across all nine generations with artwork, stats, evolution lines and real in-game catch rates, plus 730…</span><span data-lang="pl">Dwujęzyczna baza wiedzy dla każdego, kto poznaje świat Pokémonów od zera: 256 Pokémonów ze wszystkich dziewięciu generacji — z grafikami, statystykami, liniami ewolucji i prawdziwymi współczynnikami…</span></span>
+        <a href="https://futureshow.pl/pokedex/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Knowledge base / for kids &amp;amp; collectors</span><span data-lang="pl">Baza wiedzy / dla dzieci i kolekcjonerów</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
     </div>
     <h3 class="group-label"><span data-lang="en">For clients</span><span data-lang="pl">Dla klientów</span></h3>
-    <div class="projects__grid">
-      <div class="case">
-        <a class="case__visual" href="https://izabelachamczyk.com" target="_blank">
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="https://izabelachamczyk.com" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">Izabela Chamczyk — portfolio</span><span data-lang="pl">Izabela Chamczyk — portfolio</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://izabelachamczyk.com" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(150deg,#1a0b10 0%,#0c0608 55%,#060405 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint canvas grain -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
@@ -1976,38 +724,16 @@
               Izabela Chamczyk · portfolio
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Client / artist portfolio</span>
-            <span data-lang="pl">Klient / portfolio artystki</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">Izabela Chamczyk — portfolio</div>
-            <div class="case__desc">A portfolio website built for the contemporary artist Izabela Chamczyk, whose practice spans painting, performance and process-based art. Client work: a clean, gallery-quiet showcase that gives each piece room to breathe and lets a restless, gestural body of work read clearly online — image-forward, well organised and made to carry her name.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">Izabela Chamczyk — portfolio</div>
-            <div class="case__desc">Strona portfolio przygotowana dla artystki współczesnej Izabeli Chamczyk, której praktyka łączy malarstwo, performans i sztukę procesu. Praca dla klienta: czysta, galeryjnie wyciszona prezentacja, która daje każdej pracy przestrzeń i pozwala niespokojnej, gestowej twórczości czytelnie wybrzmieć w sieci — oparta na obrazie, dobrze uporządkowana, zbudowana wokół jej nazwiska.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A portfolio website built for the contemporary artist Izabela Chamczyk, whose practice spans painting, performance and process-based art. Client work: a clean, gallery-quiet showcase that gives each…</span><span data-lang="pl">Strona portfolio przygotowana dla artystki współczesnej Izabeli Chamczyk, której praktyka łączy malarstwo, performans i sztukę procesu. Praca dla klienta: czysta, galeryjnie wyciszona prezentacja,…</span></span>
+        <a href="https://izabelachamczyk.com" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Client / artist portfolio</span><span data-lang="pl">Klient / portfolio artystki</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
     </div>
-  </section>
-
-
-<section class="projects projects--gated" id="na-haslo">
-    <div class="section-label">
-      <span data-lang="en">Password-protected · 2</span>
-      <span data-lang="pl">Na hasło · 2</span>
-    </div>
-    <p class="gated-note">
-      <span data-lang="en">Work for a client or material not meant for the open web. The link opens, but the page asks for a password.</span>
-      <span data-lang="pl">Prace dla klienta albo materiały nieprzeznaczone do otwartej sieci. Link się otwiera, ale strona prosi o hasło.</span>
-    </p>
-    <div class="projects__grid">
-      <div class="case">
-        <a class="case__visual" href="https://futureshow1.github.io/zem-demo/" target="_blank">
+    <h3 class="group-label"><span data-lang="en">Password-protected · client work</span><span data-lang="pl">Na hasło · prace dla klientów</span></h3>
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="https://futureshow1.github.io/zem-demo/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">ZEM</span><span data-lang="pl">ZEM</span></span> <span class="chip red" style="margin-left:10px;vertical-align:middle"><span data-lang="en">password</span><span data-lang="pl">hasło</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow1.github.io/zem-demo/" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(155deg,#1b2530 0%,#0d141c 55%,#070b10 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- faint brushed-metal texture -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
@@ -2092,24 +818,13 @@
               ZEM
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Client demo / site</span>
-            <span data-lang="pl">Demo klienta / strona</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">ZEM</div>
-            <div class="case__desc">A demo website built for a client — a company presentation and product showcase. A clean, professional front page that puts the offer first: clear sections, confident typography and a calm industrial palette that lets the work speak. Built to load fast, read well on any screen and give a business its credible face online.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">ZEM</div>
-            <div class="case__desc">Demonstracyjna strona przygotowana dla klienta — prezentacja firmy i jej oferty. Czytelna, profesjonalna witryna, która na pierwszym miejscu stawia produkt: klarowne sekcje, pewna typografia i spokojna, przemysłowa kolorystyka, która oddaje głos samej ofercie. Szybka, dobrze czytelna na każdym ekranie, dająca firmie wiarygodną twarz w sieci.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A demo website built for a client — a company presentation and product showcase. A clean, professional front page that puts the offer first: clear sections, confident typography and a calm industrial…</span><span data-lang="pl">Demonstracyjna strona przygotowana dla klienta — prezentacja firmy i jej oferty. Czytelna, profesjonalna witryna, która na pierwszym miejscu stawia produkt: klarowne sekcje, pewna typografia i…</span></span>
+        <a href="https://futureshow1.github.io/zem-demo/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Client demo / site</span><span data-lang="pl">Demo klienta / strona</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
-      <div class="case">
-        <a class="case__visual" href="https://futureshow.pl/emfazy-archiwum/archiwum.html" target="_blank">
+      <div class="mini-card reveal" style="--i:1">
+        <a href="https://futureshow.pl/emfazy-archiwum/archiwum.html" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__title"><span data-lang="en">EMFAZY — archive</span><span data-lang="pl">EMFAZY — archiwum</span></span> <span class="chip red" style="margin-left:10px;vertical-align:middle"><span data-lang="en">password</span><span data-lang="pl">hasło</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow.pl/emfazy-archiwum/archiwum.html" target="_blank">
           <div style="width:100%;height:100%;background:linear-gradient(165deg,#241a10 0%,#16100a 55%,#0a0703 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
             <!-- aged paper texture -->
             <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.09;">
@@ -2198,320 +913,34 @@
               EMFAZY — archiwum
             </div>
           </div>
-        </a>
-        <div class="case__info">
-          <div class="case__tag">
-            <span data-lang="en">Documentary / source archive</span>
-            <span data-lang="pl">Dokument / archiwum źródeł</span>
-          </div>
-          <div data-lang="en">
-            <div class="case__title">EMFAZY — archive</div>
-            <div class="case__desc">The source archive behind the Stefański documentary: collected materials, documents and references that ground the film in evidence. Where the pitch sells the story, the archive holds the record — a research-facing companion gathering the dossiers, cards and traces of a life spent at the edges of Polish counterculture. The working room rather than the poster.</div>
-          </div>
-          <div data-lang="pl">
-            <div class="case__title">EMFAZY — archiwum</div>
-            <div class="case__desc">Archiwum źródeł stojące za dokumentem o Stefańskim: zebrane materiały, dokumenty i odniesienia, które osadzają film w faktach. Tam, gdzie pitch sprzedaje opowieść, archiwum przechowuje zapis — badawcze zaplecze gromadzące teczki, karty i ślady życia spędzonego na obrzeżach polskiej kontrkultury. Pracownia, nie plakat.</div>
-          </div>
-        </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">The source archive behind the Stefański documentary: collected materials, documents and references that ground the film in evidence. Where the pitch sells the story, the archive holds the record — a…</span><span data-lang="pl">Archiwum źródeł stojące za dokumentem o Stefańskim: zebrane materiały, dokumenty i odniesienia, które osadzają film w faktach. Tam, gdzie pitch sprzedaje opowieść, archiwum przechowuje zapis —…</span></span>
+        <a href="https://futureshow.pl/emfazy-archiwum/archiwum.html" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Documentary / source archive</span><span data-lang="pl">Dokument / archiwum źródeł</span></span><b><span data-lang="en">Open →</span><span data-lang="pl">Otwórz →</span></b></a>
       </div>
     </div>
-  </section>
+  </div>
+</main>
+<section class="banner">
+  <div class="banner__inner">
+    <div class="banner__text reveal"><span data-lang="en">Working on <em>something hard</em><br>that the public can’t yet enter?</span><span data-lang="pl">Pracujesz nad <em>czymś trudnym</em>,<br>do czego publiczność nie ma jeszcze wejścia?</span></div>
+    <a href="index.html#contact" class="btn-banner reveal" style="--i:1"><span data-lang="en">Start a project →</span><span data-lang="pl">Zacznij projekt →</span></a>
+  </div>
+</section>
+<footer class="contact contact--slim">
+  <div class="contact__cols">
+    <div><h4><span data-lang="en">Contact</span><span data-lang="pl">Kontakt</span></h4><ul><li><a href="mailto:futureshow@proton.me">futureshow@proton.me</a></li><li><a href="tel:+48787878138">+48 787 878 138</a></li><li><span data-lang="en">Warsaw / Remote · open for new projects</span><span data-lang="pl">Warszawa / zdalnie · otwarty na nowe projekty</span></li></ul></div>
+    <div><h4><span data-lang="en">Work</span><span data-lang="pl">Prace</span></h4><ul><li><a href="index.html#work"><span data-lang="en">Selected</span><span data-lang="pl">Wybrane</span></a></li><li><a href="projekty.html"><span data-lang="en">All projects</span><span data-lang="pl">Wszystkie projekty</span></a></li><li><a href="stream/">Stream</a></li><li><a href="films.html"><span data-lang="en">Films</span><span data-lang="pl">Filmy</span></a></li></ul></div>
+    <div><h4>Studio</h4><ul><li><a href="index.html#approach"><span data-lang="en">Approach</span><span data-lang="pl">Podejście</span></a></li><li><a href="index.html#studio"><span data-lang="en">About</span><span data-lang="pl">O mnie</span></a></li><li><a href="downloads.html"><span data-lang="en">Downloads</span><span data-lang="pl">Pobierz</span></a></li><li><a href="archive/index.html"><span data-lang="en">Archive</span><span data-lang="pl">Archiwum</span></a></li></ul></div>
+    <div><h4><span data-lang="en">Elsewhere</span><span data-lang="pl">Gdzie indziej</span></h4><ul><li><a href="https://github.com/futureshow1" target="_blank" rel="noopener">GitHub</a></li><li><a href="https://www.linkedin.com/in/jan-lubicz-przyluski-10460580/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://vimeo.com/janjan" target="_blank" rel="noopener">Vimeo</a></li><li><a href="jan-lubicz/" target="_blank" rel="noopener"><span data-lang="en">Personal site</span><span data-lang="pl">Strona osobista</span></a></li></ul></div>
+  </div>
+  <div class="contact__bottom">
+    <div>© 2026 FutureShow Studio · <span data-lang="en">Play with knowledge.</span><span data-lang="pl">Graj z wiedzą.</span></div>
+    <div></div>
+  </div>
 
-  <!-- CTA -->
-  <section class="cta-section" id="contact">
-    <div class="cta-box">
-      <div data-lang="en">
-        <h2>Have an idea for a project?</h2>
-        <p>Whether it's an interactive exhibit, a data investigation, an educational game, or an AI film — let's talk about how to bring it to life.</p>
-      </div>
-      <div data-lang="pl">
-        <h2>Masz pomysł na projekt?</h2>
-        <p>Niezależnie czy to interaktywna wystawa, śledztwo danych, gra edukacyjna, czy film AI — porozmawiajmy o tym, jak go zrealizować.</p>
-      </div>
-      <div class="cta-actions">
-        <a href="mailto:futureshow@proton.me" class="cta-btn">
-          <span data-lang="en">Let's talk</span>
-          <span data-lang="pl">Porozmawiajmy</span>
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="tel:+48787878138" class="cta-btn cta-btn--ghost">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          787&nbsp;878&nbsp;138
-        </a>
-      </div>
-      <div class="cta-email">
-        <a href="mailto:futureshow@proton.me">futureshow@proton.me</a>
-        <button type="button" class="cta-copy" onclick="copyEmail(this)">
-          <span class="cta-copy__idle">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke-linecap="round"/></svg>
-            <span data-lang="en">Copy</span><span data-lang="pl">Kopiuj</span>
-          </span>
-          <span class="cta-copy__done">
-            <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-lang="en">Copied</span><span data-lang="pl">Skopiowano</span>
-          </span>
-        </button>
-      </div>
-      <form class="cta-form" id="ctaForm" onsubmit="return sendContact(event)">
-        <div class="cta-form__lead">
-          <span data-lang="en">Or leave your e-mail or phone number and I'll get back to you.</span>
-          <span data-lang="pl">Albo zostaw swój e-mail lub numer telefonu — odezwę się.</span>
-        </div>
-        <input type="hidden" name="access_key" value="41c76e7b-9154-4f68-a910-e76ae4d498f4">
-        <input type="hidden" name="subject" value="FutureShow.pl — nowy kontakt ze strony">
-        <input type="hidden" name="from_name" value="futureshow.pl">
-        <div class="cta-form__hp" aria-hidden="true">
-          <label>Nie wypełniaj tego pola<input type="text" name="botcheck" tabindex="-1" autocomplete="off"></label>
-        </div>
-        <div class="cta-form__row">
-          <input type="text" name="kontakt" required maxlength="120"
-                 placeholder="jan@example.com / 600 000 000"
-                 aria-label="E-mail lub telefon">
-          <input type="text" name="temat" maxlength="200"
-                 data-ph-en="What's it about? (optional)"
-                 data-ph-pl="Czego dotyczy? (opcjonalnie)"
-                 aria-label="Czego dotyczy">
-          <button type="submit" class="cta-form__submit">
-            <span data-lang="en">Send</span>
-            <span data-lang="pl">Wyślij</span>
-          </button>
-        </div>
-        <div class="cta-form__note">
-          <span data-lang="en">Goes straight to my inbox. Used only to reply to you — nothing else.</span>
-          <span data-lang="pl">Trafia prosto na moją skrzynkę. Użyję tego wyłącznie, żeby odpisać — do niczego więcej.</span>
-        </div>
-        <div class="cta-form__status" id="ctaStatus" role="status" aria-live="polite"></div>
-      </form>
-
-      <div class="cta-links">
-        <a href="https://github.com/futureshow1" target="_blank">
-          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/jan-lubicz-przyluski-10460580/" target="_blank">
-          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://vimeo.com/janjan" target="_blank">
-          <svg viewBox="0 0 24 24"><path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197a315.065 315.065 0 003.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797l-.013.01z"/></svg>
-          Vimeo
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer__left">
-      &copy; 2026 Future<span style="color:var(--accent)">Show</span>
-    </div>
-    <div class="footer__right">
-      <a href="mailto:futureshow@proton.me">futureshow@proton.me</a>
-      <a href="archive/index.html">
-        <span data-lang="en">Archive</span>
-        <span data-lang="pl">Archiwum</span>
-      </a>
-      <a href="jan-lubicz/" target="_blank">
-        <span data-lang="en">Personal Site</span>
-        <span data-lang="pl">Strona osobista</span>
-      </a>
-    </div>
-  </footer>
-
-  <script>
-    // ====== Particle Network ======
-    (function() {
-      const canvas = document.getElementById('particles');
-      const ctx = canvas.getContext('2d');
-      let w, h, particles = [];
-      const COUNT = 60, CONNECT_DIST = 150;
-
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-      }
-
-      function init() {
-        resize();
-        particles = [];
-        for (let i = 0; i < COUNT; i++) {
-          particles.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
-            r: Math.random() * 1.5 + 0.5
-          });
-        }
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, w, h);
-        // connections
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < CONNECT_DIST) {
-              const alpha = (1 - dist / CONNECT_DIST) * 0.12;
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(99,179,255,${alpha})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          }
-        }
-        // dots
-        for (const p of particles) {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > w) p.vx *= -1;
-          if (p.y < 0 || p.y > h) p.vy *= -1;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(99,179,255,0.3)';
-          ctx.fill();
-        }
-        requestAnimationFrame(draw);
-      }
-
-      window.addEventListener('resize', resize);
-      init();
-      draw();
-    })();
-
-    // ====== Language ======
-    // ====== Mini contact form (Web3Forms) ======
-    // Until a real access key is pasted into the access_key input, the form is
-    // removed — better no form than one that silently swallows enquiries.
-    (function guardContactForm() {
-      const form = document.getElementById('ctaForm');
-      if (!form) return;
-      const key = form.querySelector('[name="access_key"]').value;
-      if (!key || key === 'WEB3FORMS_ACCESS_KEY') form.remove();
-    })();
-
-    function sendContact(e) {
-      e.preventDefault();
-      const form = e.target;
-      const btn = form.querySelector('.cta-form__submit');
-      const status = document.getElementById('ctaStatus');
-      const pl = document.documentElement.lang === 'pl';
-
-      status.className = 'cta-form__status';
-      btn.disabled = true;
-      btn.textContent = pl ? 'Wysyłam…' : 'Sending…';
-
-      // Web3Forms uses `name` as the sender label and `email` as Reply-To.
-      // The visible field accepts a phone number too, so only promote it to
-      // `email` when it actually looks like an address.
-      const fd = new FormData(form);
-      const kontakt = form.kontakt.value.trim();
-      fd.set('name', kontakt);
-      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(kontakt)) fd.set('email', kontakt);
-
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: fd
-      })
-        .then(r => r.json())
-        .then(data => {
-          if (!data.success) throw new Error(data.message || 'failed');
-          form.classList.add('is-sent');
-          status.className = 'cta-form__status is-ok';
-          status.textContent = pl
-            ? 'Dziękuję — mam Twoje dane i odezwę się najpóźniej w ciągu dwoch dni roboczych.'
-            : 'Thank you — I have your details and will get back to you within two working days.';
-        })
-        .catch(() => {
-          status.className = 'cta-form__status is-err';
-          status.textContent = pl
-            ? 'Nie udało się wysłać. Napisz na futureshow@proton.me albo zadzwoń: 787 878 138.'
-            : 'Could not send. Please write to futureshow@proton.me or call +48 787 878 138.';
-          btn.disabled = false;
-          btn.innerHTML = '<span data-lang="en">Send</span><span data-lang="pl">Wyślij</span>';
-        });
-      return false;
-    }
-
-    // ====== Copy e-mail ======
-    function copyEmail(btn) {
-      const addr = 'futureshow@proton.me';
-      const done = () => {
-        btn.classList.add('is-copied');
-        clearTimeout(btn._t);
-        btn._t = setTimeout(() => btn.classList.remove('is-copied'), 2000);
-      };
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(addr).then(done).catch(() => fallback(addr, done));
-      } else {
-        fallback(addr, done);
-      }
-      function fallback(text, ok) {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.cssText = 'position:fixed;top:-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); ok(); } catch (e) {}
-        document.body.removeChild(ta);
-      }
-    }
-
-    function syncPlaceholders() {
-      const pl = document.documentElement.lang === 'pl';
-      document.querySelectorAll('[data-ph-en]').forEach(el => {
-        el.placeholder = pl ? el.dataset.phPl : el.dataset.phEn;
-      });
-    }
-
-    function toggleLang() {
-      const html = document.documentElement;
-      const btn = document.getElementById('langToggle');
-      if (html.lang === 'en') {
-        html.lang = 'pl';
-        btn.textContent = 'EN';
-        localStorage.setItem('lang', 'pl');
-      } else {
-        html.lang = 'en';
-        btn.textContent = 'PL';
-        localStorage.setItem('lang', 'en');
-      }
-      syncPlaceholders();
-    }
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang === 'pl') {
-      document.documentElement.lang = 'pl';
-      document.getElementById('langToggle').textContent = 'EN';
-    }
-    syncPlaceholders();
-
-    // ====== Mobile menu ======
-    function toggleMenu() {
-      document.querySelector('.nav__links').classList.toggle('open');
-    }
-    // Close menu on link click
-    document.querySelectorAll('.nav__links a').forEach(a => {
-      a.addEventListener('click', () => {
-        document.querySelector('.nav__links').classList.remove('open');
-      });
-    });
-
-    // ====== Smooth scroll ======
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
-<!-- ====== HIDDEN: Projects In Progress ====== -->
+</footer>
+<script src="assets/wired.js"></script>
 <script src="cookie-consent.js"></script>
+<script data-goatcounter="https://futureshow.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
