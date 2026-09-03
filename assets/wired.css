@@ -291,8 +291,19 @@ html[lang="pl"] p[data-lang="pl"],html[lang="pl"] div[data-lang="pl"],html[lang=
 .feat__image .case__bg,.mini-card__img .case__bg{position:absolute;inset:0}
 .feat__image::after{display:none}
 /* ===== cover: naglowek nie moze wypychac kolumny ===== */
-.cover__main{grid-template-columns:minmax(0,1fr) 380px}
+@media(min-width:901px){.cover__main{grid-template-columns:minmax(0,1fr) 380px}}
 .cover__headline{font-size:clamp(3rem,9.4vw,10rem);overflow-wrap:normal}
+@media(max-width:900px){
+  .cover{min-height:auto;padding:96px 20px 90px}
+  .cover__main{grid-template-columns:1fr;gap:36px}
+  .cover__main,.cover__sidebar{min-width:0}
+  .cover__headline{font-size:clamp(2.4rem,12.5vw,4.6rem);line-height:0.9;overflow-wrap:anywhere;max-width:100%}
+  .cover__sidebar{max-width:100%}
+  .cover__deck{font-size:1.15rem}
+  .cover__stats{gap:24px;flex-wrap:wrap}
+  .cover__ticker{padding:12px 20px}
+  .nav__right{gap:8px}.nav__cta{padding:9px 12px;font-size:0.62rem;white-space:nowrap}
+}
 /* ===== statystyki w coverze ===== */
 .cover__stats{display:flex;gap:36px;margin-top:28px;padding-top:20px;border-top:1px solid rgba(250,250,247,0.2)}
 .cover__stat b{display:block;font-family:var(--display);font-size:2rem;line-height:1;color:var(--paper)}
