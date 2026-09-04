@@ -216,6 +216,11 @@ footer a{color:var(--dim)} footer a:hover{color:var(--ink)}
   .card,.card:hover{transition:none;transform:none}
   .hero-bg.on img.cur{animation:none}
 }
+.sburger{display:none;background:none;border:1px solid var(--line);color:var(--ink,#e9edf5);font-size:18px;width:36px;height:36px;border-radius:8px;cursor:pointer}
+.nav-contact-m{display:none}
+@media(max-width:760px){.sburger{display:inline-flex;align-items:center;justify-content:center}.ctc{display:none}.nav-contact-m{display:block;color:var(--cyan,#6fd6ff)}
+ #nav.open .navlinks{display:flex;flex-direction:column;position:fixed;top:56px;left:0;right:0;background:#0b0d17;border-bottom:1px solid var(--line);padding:10px 18px 14px;gap:0;z-index:60}
+ #nav.open .navlinks a{padding:12px 0;font-size:15px}}
 .hidden{display:none!important}
 </style>
 </head>
@@ -230,8 +235,10 @@ footer a{color:var(--dim)} footer a:hover{color:var(--ink)}
     <a href="#r-learn" data-i="nav_learn"></a>
     <a href="#r-hidden" data-i="nav_hidden"></a>
     <a href="#studio" data-i="nav_studio"></a>
+    <a class="nav-contact-m" href="../index.html#contact" data-i="nav_contact"></a>
   </div>
   <div class="spacer"></div>
+  <button class="sburger" id="sburger" aria-label="Menu">☰</button>
   <div class="search">◉ <input id="q" autocomplete="off"></div>
   <button class="langbtn" id="langbtn">EN</button>
   <a class="ctc" href="../index.html#contact" data-i="nav_contact"></a>
@@ -933,6 +940,8 @@ document.addEventListener("click",e=>{
   row.scrollBy({left:+arr.dataset.dir*(row.clientWidth*.8),behavior:"smooth"});return}
  if(e.target.id==="mback")closeModal();
 });
+document.getElementById('sburger').onclick=()=>document.getElementById('nav').classList.toggle('open');
+document.querySelectorAll('#nav .navlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nav').classList.remove('open')));
 document.getElementById("langbtn").onclick=()=>{
  LANG=LANG==="pl"?"en":"pl";store.set("fs-lang",LANG);store.set("lang",LANG);renderAll();};
 document.getElementById("q").addEventListener("input",e=>{

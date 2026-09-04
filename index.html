@@ -30,8 +30,10 @@
     <li><a href="#studio">Studio</a></li>
     <li><a href="films.html"><span data-lang="en">Films</span><span data-lang="pl">Filmy</span></a></li>
     <li><a href="downloads.html"><span data-lang="en">Downloads</span><span data-lang="pl">Pobierz</span></a></li>
+    <li class="nav__cta-mobile"><a href="#contact"><span data-lang="en">Start a project →</span><span data-lang="pl">Zacznij projekt →</span></a></li>
   </ul>
   <div class="nav__right">
+    <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <button class="lang-toggle" id="langToggle" onclick="toggleLang()">PL</button>
     <a href="#contact" class="nav__cta"><span data-lang="en">Start a project</span><span data-lang="pl">Zacznij projekt</span></a>
   </div>
@@ -1559,6 +1561,8 @@ function copyEmail(btn){const addr='futureshow@proton.me';const done=()=>{btn.cl
 form.addEventListener('submit',function(e){e.preventDefault();const k=form.kontakt.value.trim();if(k.length<5){st.className='cform__status is-err';st.textContent=pl()?'Wpisz e-mail albo numer telefonu.':'Please enter an e-mail or a phone number.';return}
 const btn=form.querySelector('[type=submit]');btn.disabled=true;const fd=new FormData(form);fd.set('name',k);if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(k))fd.set('email',k);
 fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Accept':'application/json'},body:fd}).then(r=>r.json()).then(d=>{if(!d.success)throw 0;st.className='cform__status is-ok';st.textContent=pl()?'Dziękujemy — mamy Twoje dane, odezwiemy się w ciągu dwóch dni roboczych.':'Thank you — we have your details and will get back to you within two working days.';form.reset()}).catch(()=>{st.className='cform__status is-err';st.textContent=pl()?'Nie udało się wysłać. Napisz na futureshow@proton.me albo zadzwoń: 787 878 138.':'Could not send. Write to futureshow@proton.me or call +48 787 878 138.'}).finally(()=>{btn.disabled=false})})})();
+// ====== menu mobilne ======
+(()=>{const n=document.querySelector('.nav'),b=document.getElementById('navBurger');if(!n||!b)return;b.addEventListener('click',()=>{const o=n.classList.toggle('open');b.setAttribute('aria-expanded',o)});n.querySelectorAll('.nav__links a').forEach(a=>a.addEventListener('click',()=>{n.classList.remove('open');b.setAttribute('aria-expanded','false')}));addEventListener('resize',()=>{if(innerWidth>900){n.classList.remove('open')}})})();
 // ====== WIP (klient) ======
 document.getElementById('wip-pass').addEventListener('input',function(){if(this.value==='Janek1'){document.getElementById('wip-links').style.display='inline-flex';this.style.display='none'}});
 </script>
