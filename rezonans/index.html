@@ -1,0 +1,1316 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dziesięć dogmatów nauki — Rupert Sheldrake i rezonans morficzny</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"><link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://futureshow.pl/rezonans/">
+
+<meta name="description" content="Sheldrake twierdzi, że nauka stoi na dziesięciu nieudowodnionych założeniach — i zamienia je w pytania. Sześć tekstów, pięć eksperymentów do rozegrania i test.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+:root{
+  --bg:#0b0c0d; --surf:#131517; --surf-2:#1a1d20; --surf-3:#22262a;
+  --line:#272b2f; --line-2:#343a3f;
+  --ink:#f1efea; --ink-2:#a5a199; --ink-3:#6e6a63;
+  --acc:#f04a28; --acc-2:#ff7a56; --acc-soft:rgba(240,74,40,.13);
+  --ease:cubic-bezier(.22,.61,.24,1);
+  --col:min(1280px,100% - clamp(24px,6vw,110px));
+  --prose:64ch;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);overflow-x:hidden;
+  font-family:"Inter",system-ui,sans-serif;font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{margin:0;font-weight:600;line-height:1.02;letter-spacing:-.035em}
+button{font-family:inherit;color:inherit;cursor:pointer;border:none;background:none;padding:0}
+a{color:inherit}
+::selection{background:var(--acc);color:#fff}
+.wrap{width:var(--col);margin-inline:auto}
+.lab{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.lab.acc{color:var(--acc)}
+
+/* ── grafika generowana ── */
+.art{display:block;width:100%;height:auto;overflow:visible}
+.art .ln{fill:none;stroke:currentColor;stroke-width:.7;opacity:.5;vector-effect:non-scaling-stroke}
+.art .ln2{fill:none;stroke:currentColor;stroke-width:1.1;vector-effect:non-scaling-stroke}
+.art .dot{fill:currentColor;stroke:none}
+.art .acc{fill:var(--acc);stroke:none}
+
+/* ── belka ── */
+#bar{position:fixed;top:0;left:0;right:0;z-index:70;padding:16px 0;pointer-events:none;transition:.35s var(--ease)}
+#bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+#bar .wrap>*{pointer-events:auto}
+#bar.solid{background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:11px 0}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.brand b{font-size:14px;font-weight:700;letter-spacing:-.02em}
+.brand span{font-size:12px;color:var(--ink-3)}
+@media(max-width:640px){.brand span{display:none}}
+.prog{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:100px;padding:7px 8px 7px 14px;
+  background:var(--surf);transition:.25s var(--ease)}
+.prog:hover{border-color:var(--acc);transform:translateY(-1px)}
+.prog .n{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.prog .r{font-size:11px;color:var(--ink-3)}
+.prog .ring{width:24px;height:24px;flex:none}
+.prog .ring circle{fill:none;stroke-width:3}
+.prog .ring .bg{stroke:var(--surf-3)}
+.prog .ring .fg{stroke:var(--acc);stroke-linecap:round;transition:stroke-dasharray .6s var(--ease)}
+
+/* ── hero ── */
+#hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:clamp(86px,11vh,106px) 0 clamp(36px,6vh,52px);position:relative}
+#hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(58% 46% at 74% 44%,rgba(240,74,40,.09),transparent 68%)}
+.hero-grid{position:relative;display:grid;gap:clamp(30px,5vw,64px);align-items:center;grid-template-columns:1fr}
+@media(min-width:980px){.hero-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)}}
+.hero-kick{margin:0 0 clamp(18px,3vh,28px);color:var(--acc)}
+.hero-kick::before{content:"";display:inline-block;width:30px;height:1px;background:var(--acc);vertical-align:middle;margin-right:12px}
+h1.hero-t{font-size:clamp(33px,5.1vw,64px);letter-spacing:-.042em;line-height:1.02;font-weight:600;max-width:15ch}
+h1.hero-t em{font-style:normal;color:var(--acc)}
+.hero-sub{font-size:clamp(16px,1.7vw,20px);color:var(--ink-2);margin:clamp(16px,2.4vh,24px) 0 0;max-width:40ch;line-height:1.45}
+.hero-sub b{color:var(--ink);font-weight:500}
+.hero-lede{font-family:"EB Garamond",Georgia,serif;font-size:clamp(16px,1.7vw,20px);line-height:1.42;color:var(--ink-2);
+  margin:clamp(16px,2.4vh,26px) 0 0;max-width:42ch;padding-left:18px;border-left:1px solid var(--line)}
+.hero-lede i{color:var(--ink);font-style:italic}
+.hero-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:clamp(22px,3.2vh,32px)}
+.chip{font-size:12px;font-weight:500;border:1px solid var(--line);border-radius:100px;padding:7px 14px;color:var(--ink-2);background:var(--surf)}
+.cue{position:absolute;left:0;bottom:20px;display:flex;align-items:center;gap:12px;color:var(--ink-3);font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase}
+.cue i{display:block;width:44px;height:1px;background:var(--ink-3);transform-origin:left;animation:cue 2.6s var(--ease) infinite}
+@keyframes cue{0%,100%{transform:scaleX(.25);opacity:.5}50%{transform:scaleX(1);opacity:1}}
+
+/* ── koło dziesięciu dogmatów ── */
+.wheel-hold{position:relative}
+.wheel{position:relative;width:min(500px,100%,48vh);margin-inline:auto;color:var(--ink)}
+.wheel svg{display:block;width:100%;height:auto;overflow:visible}
+.wheel .wr{fill:none;stroke:currentColor;stroke-width:.7;opacity:.28}
+.wheel .wm{fill:none;stroke:currentColor;stroke-width:.6;opacity:.16}
+.wheel .wa{cursor:pointer}
+.wheel .wl{stroke:currentColor;stroke-width:1;opacity:.34;transition:.3s var(--ease)}
+.wheel .wn{fill:var(--bg);stroke:currentColor;stroke-width:1.2;opacity:.5;transition:.3s var(--ease)}
+.wheel .wt{fill:var(--ink-3);font-family:"Inter",sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;
+  text-anchor:middle;dominant-baseline:middle;transition:.3s var(--ease)}
+.wheel .wa:hover .wl{opacity:.8}
+.wheel .wa:hover .wt{fill:var(--ink)}
+.wheel .wa.on .wl{stroke:var(--acc);opacity:1;stroke-width:1.6}
+.wheel .wa.on .wn{fill:var(--acc);stroke:var(--acc);opacity:1;r:6.5}
+.wheel .wa.on .wt{fill:var(--acc)}
+.wheel-mid{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.wheel-mid .num{font-size:clamp(38px,6vw,60px);font-weight:600;letter-spacing:-.05em;color:var(--acc);line-height:1}
+.wheel-cap{margin-top:clamp(14px,2vw,22px);min-height:98px}
+.wheel-cap .st{font-size:clamp(17px,1.9vw,22px);font-weight:500;letter-spacing:-.02em;line-height:1.28;transition:.4s var(--ease)}
+.wheel-cap .qu{font-family:"EB Garamond",Georgia,serif;font-style:italic;font-size:clamp(16px,1.8vw,20px);
+  color:var(--acc);line-height:1.35;margin-top:10px;padding-left:16px;border-left:1px solid var(--acc);transition:.4s var(--ease)}
+.wheel-hint{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-top:16px}
+
+/* ── sekcja dogmatów ── */
+.dsec{padding:clamp(70px,10vw,130px) 0;border-top:1px solid var(--line);background:
+  linear-gradient(180deg,var(--surf) 0%,var(--bg) 60%)}
+.ds-head{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(30px,4vw,52px)}
+.ds-head h2{font-size:clamp(30px,5vw,60px);letter-spacing:-.04em;margin-top:14px;max-width:14ch}
+.ds-head p{margin:14px 0 0;max-width:52ch;font-family:"EB Garamond",Georgia,serif;font-size:18px;line-height:1.5;color:var(--ink-2)}
+.flipall{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--acc);color:var(--acc);border-radius:100px;
+  padding:14px 24px;font-size:12.5px;font-weight:600;letter-spacing:.02em;transition:.28s var(--ease);white-space:nowrap;flex:none}
+.flipall:hover{background:var(--acc);color:#fff}
+.flipall .sw{width:30px;height:16px;border-radius:100px;border:1px solid currentColor;position:relative;flex:none}
+.flipall .sw>i{position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:currentColor;transition:.34s var(--ease)}
+body.asq .flipall .sw>i{left:16px}
+.dogmas{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.dg{position:relative;border-bottom:1px solid var(--line);display:grid;gap:6px 26px;
+  grid-template-columns:1fr;padding:22px 0;cursor:pointer;transition:background .3s var(--ease)}
+@media(min-width:760px){.dg{grid-template-columns:76px 1fr 26px;align-items:start;padding:26px 0}}
+.dg:hover{background:rgba(255,255,255,.018)}
+.dg-n{font-size:13px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums;letter-spacing:.06em;padding-top:6px;transition:.3s}
+.dg.on .dg-n,.dg:hover .dg-n{color:var(--acc)}
+.dg-body{position:relative;min-height:2.2em}
+.dg-a,.dg-q{margin:0;transition:opacity .45s var(--ease),transform .45s var(--ease),color .45s var(--ease),font-size .45s var(--ease);
+  transition-delay:calc(var(--i,0)*42ms)}
+.dg-a{font-size:clamp(19px,2.3vw,27px);font-weight:500;letter-spacing:-.028em;line-height:1.22;color:var(--ink)}
+.dg-q{position:absolute;inset:0;font-family:"EB Garamond",Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(19px,2.3vw,27px);line-height:1.22;color:var(--acc);opacity:0;transform:translateY(9px)}
+body.asq .dg-a{opacity:0;transform:translateY(-9px)}
+body.asq .dg-q{opacity:1;transform:none}
+.dg-note{margin:0;overflow:hidden;max-height:0;opacity:0;transition:.42s var(--ease);
+  font-family:"EB Garamond",Georgia,serif;font-size:17px;line-height:1.5;color:var(--ink-2);max-width:62ch}
+.dg.on .dg-note{max-height:170px;opacity:1;margin-top:14px}
+.dg-mark{display:none;width:11px;height:11px;position:relative;margin-top:12px;opacity:.4;transition:.3s}
+@media(min-width:760px){.dg-mark{display:block}}
+.dg-mark::before,.dg-mark::after{content:"";position:absolute;background:currentColor;transition:.34s var(--ease)}
+.dg-mark::before{left:0;top:5px;width:11px;height:1px}
+.dg-mark::after{left:5px;top:0;width:1px;height:11px}
+.dg.on .dg-mark{opacity:1;color:var(--acc);transform:rotate(135deg)}
+.dg:hover .dg-mark{opacity:.9}
+
+/* ── nagłówki sekcji ── */
+.shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;justify-content:space-between;
+  padding-bottom:16px;border-bottom:1px solid var(--ink-3);margin:clamp(56px,8vw,110px) 0 clamp(22px,3vw,36px)}
+.shead h2{font-size:clamp(23px,3.3vw,40px);letter-spacing:-.035em}
+.shead .meta{color:var(--ink-3);font-size:12.5px}
+
+/* ── pasmo z siatką ── */
+.band{padding:clamp(50px,8vw,110px) 0;border-top:1px solid var(--line)}
+.band-head{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;justify-content:space-between;margin-bottom:clamp(24px,3.5vw,44px)}
+.band-head h3{font-size:clamp(22px,3.2vw,38px);letter-spacing:-.035em;max-width:16ch}
+.band-head p{margin:0;max-width:46ch;font-family:"EB Garamond",Georgia,serif;font-size:17.5px;line-height:1.5;color:var(--ink-2)}
+.band-head b{color:var(--ink);font-weight:500}
+.gridfig{background:var(--surf);border:1px solid var(--line);padding:clamp(16px,3vw,36px);color:var(--ink)}
+.gridfig svg{display:block;width:100%;max-width:1020px;height:auto;margin-inline:auto}
+.gridfig .lg{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:14px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* ── karty ── */
+.cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.case{position:relative;text-align:left;display:flex;flex-direction:column;background:transparent;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:clamp(20px,2.4vw,30px);transition:background .3s var(--ease);min-height:400px}
+.case:hover{background:var(--surf)}
+.case .fig{height:clamp(150px,15vw,190px);display:grid;place-items:center;color:var(--ink);flex:none;opacity:.9;transition:.3s}
+.case:hover .fig{opacity:1}
+.case .fig .art{width:min(190px,80%);transition:transform 1.1s var(--ease),color .3s}
+.case:hover .fig .art{transform:rotate(24deg) scale(1.06);color:var(--acc)}
+.case .k{color:var(--ink-3);margin-bottom:12px;display:block}
+.case h3{font-size:clamp(21px,2.1vw,27px);letter-spacing:-.032em;margin-bottom:10px;max-width:18ch}
+.case p{margin:0;font-family:"EB Garamond",Georgia,serif;font-size:17px;line-height:1.48;color:var(--ink-2)}
+.case .go{margin-top:auto;padding-top:18px;font-size:12px;font-weight:600;color:var(--acc);
+  display:inline-flex;align-items:center;gap:7px;opacity:0;transform:translateX(-6px);transition:.32s var(--ease)}
+.case:hover .go{opacity:1;transform:none}
+.case .done{position:absolute;top:16px;right:18px;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);display:none;align-items:center;gap:6px}
+.case .done::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc)}
+.case.is-done .done{display:flex}
+.feature{grid-column:1/-1;display:flex;align-items:center;gap:clamp(24px,4vw,60px);min-height:0;flex-wrap:wrap}
+.feature .fig{height:auto;flex:none}
+.feature .fig .art{width:clamp(120px,14vw,180px)}
+.feature .ft{flex:1;min-width:260px;display:flex;flex-direction:column}
+.feature h3{max-width:22ch}.feature p{max-width:60ch}
+
+/* ── artykuł ── */
+.view{display:none}
+.view.on{display:block;animation:fade .5s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.back{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3);transition:.22s}
+.back:hover{color:var(--acc);gap:13px}
+.ahead{padding:clamp(104px,13vw,170px) 0 clamp(30px,4vw,52px);border-bottom:1px solid var(--ink-3)}
+.ahead .k{color:var(--acc);margin:clamp(22px,3vw,34px) 0 clamp(14px,2vw,20px);display:block}
+.ahead h1{font-size:clamp(34px,6.2vw,86px);letter-spacing:-.045em;line-height:.98;max-width:17ch}
+.ahead .sub{font-family:"EB Garamond",Georgia,serif;font-size:clamp(18px,2vw,24px);line-height:1.4;color:var(--ink-2);
+  margin:clamp(16px,2.4vw,24px) 0 0;max-width:44ch}
+.abody{padding:clamp(34px,5vw,70px) 0 clamp(70px,10vw,130px)}
+.alay{display:grid;gap:clamp(26px,4vw,60px);grid-template-columns:1fr}
+@media(min-width:1000px){.alay{grid-template-columns:minmax(0,1fr) 300px}}
+.prose{max-width:var(--prose);font-family:"EB Garamond",Georgia,serif;font-size:20px;line-height:1.62;color:#e2dfd9}
+.prose p{margin:0 0 20px}
+.prose p b{font-weight:500;color:var(--ink)}
+.prose>p:first-of-type::first-letter{float:left;font-family:"Inter",sans-serif;font-weight:600;font-size:62px;line-height:.84;
+  padding:5px 12px 0 0;color:var(--acc);letter-spacing:-.04em}
+.prose h3{font-family:"Inter",sans-serif;font-size:23px;font-weight:600;letter-spacing:-.03em;margin:40px 0 14px;color:var(--ink)}
+.pull{font-family:"Inter",sans-serif;font-size:clamp(21px,2.6vw,30px);font-weight:500;letter-spacing:-.032em;line-height:1.2;
+  color:var(--ink);margin:38px 0;padding-left:22px;border-left:2px solid var(--acc);max-width:24ch}
+.keys{list-style:none;padding:0;margin:26px 0;border-top:1px solid var(--line)}
+.keys li{padding:16px 0;border-bottom:1px solid var(--line);font-size:17.5px;line-height:1.5;color:var(--ink-2);
+  display:grid;grid-template-columns:1fr;gap:4px}
+@media(min-width:640px){.keys li{grid-template-columns:118px 1fr;gap:20px}}
+.keys li::before{content:attr(data-n);font-family:"Inter",sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--acc);padding-top:5px}
+.keys li b{color:var(--ink);font-weight:500}
+.note{font-family:"Inter",sans-serif;font-size:15.5px;line-height:1.5;color:var(--ink-2);background:var(--surf);
+  border:1px solid var(--line);border-left:2px solid var(--acc);padding:18px 20px;margin:28px 0;max-width:var(--prose)}
+.note b{color:var(--ink);font-weight:600}
+.plate{background:var(--surf);border:1px solid var(--line);padding:clamp(22px,3.6vw,48px);margin:0 0 34px;color:var(--ink);text-align:center}
+.plate .art{width:min(300px,72%);margin-inline:auto}
+.plate figcaption{font-family:"Inter",sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:20px}
+.aside-rail{align-self:start;position:sticky;top:88px;font-size:13.5px;color:var(--ink-3);line-height:1.7}
+.aside-rail dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+.aside-rail dt{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding-top:3px}
+.aside-rail dd{margin:0;color:var(--ink);font-size:14px}
+.aside-rail hr{border:none;border-top:1px solid var(--line);margin:16px 0}
+@media(max-width:999px){.aside-rail{position:static}}
+.nextrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:46px;padding-top:26px;border-top:1px solid var(--ink-3)}
+.pill{font-size:12.5px;font-weight:500;border:1px solid var(--line);border-radius:100px;padding:11px 19px;
+  background:var(--surf);transition:.24s var(--ease)}
+.pill:hover{border-color:var(--ink-2);transform:translateY(-2px)}
+.pill.solid{background:var(--acc);color:#fff;border-color:var(--acc)}
+.pill.solid:hover{filter:brightness(1.12)}
+
+/* ── laboratorium ── */
+.stage{background:var(--surf);border:1px solid var(--line);padding:clamp(20px,3vw,38px);margin-bottom:26px;max-width:760px}
+.readout{display:flex;flex-wrap:wrap;gap:34px;margin-bottom:14px}
+.stat .n{font-size:34px;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
+.stat .n.hot{color:var(--acc)}
+.stat .l{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:7px}
+.meter{height:4px;background:var(--surf-3);position:relative;margin:10px 0}
+.meter>i{display:block;height:100%;background:var(--acc);width:0;transition:width .55s var(--ease)}
+.tick{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--ink-3)}
+.tick.hi{background:var(--ink);width:2px}
+.scale{display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.btn{font-size:12.5px;font-weight:600;background:var(--acc);color:#fff;border-radius:100px;padding:13px 26px;transition:.24s var(--ease)}
+.btn:hover:not(:disabled){filter:brightness(1.14);transform:translateY(-2px)}
+.btn:disabled{opacity:.28;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover:not(:disabled){border-color:var(--ink-2)}
+.choice-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.choice{flex:1;min-width:140px;font-size:16px;font-weight:500;border:1px solid var(--line);background:var(--bg);
+  padding:18px;transition:.2s var(--ease);text-align:center}
+.choice:hover:not(:disabled){border-color:var(--ink-2);transform:translateY(-2px)}
+.choice:disabled{opacity:.4;cursor:not-allowed}
+.choice.right{border-color:var(--acc);background:var(--acc-soft);color:var(--acc)}
+.choice.wrong{opacity:.4}
+.log{font-family:"EB Garamond",Georgia,serif;font-size:18px;font-style:italic;color:var(--ink-2);min-height:26px;margin-top:16px}
+.log b{font-style:normal;font-weight:600;color:var(--acc)}
+.log .miss{font-style:normal;font-weight:500;color:var(--ink)}
+.mini{font-size:14.5px;line-height:1.5;color:var(--ink-2);margin-top:22px;padding-top:16px;border-top:1px solid var(--line);max-width:70ch}
+.mini b{color:var(--ink);font-weight:600}
+.person{width:120px;height:140px;margin:14px auto 4px;display:block;color:var(--ink-2)}
+.gaze-on .eyes{opacity:1!important}.gaze-on .rays{opacity:1!important}
+.callers{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:14px 0}
+.caller{width:82px;text-align:center}
+.caller .av{width:64px;height:64px;border-radius:50%;margin:0 auto 9px;display:grid;place-items:center;font-size:19px;font-weight:600;
+  border:1px solid var(--line);background:var(--bg);transition:.25s var(--ease)}
+.caller .nm{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.caller.pick .av{border-color:var(--ink-2)}
+.caller.ring .av{border-color:var(--acc);color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft);animation:rg .5s var(--ease) infinite alternate}
+@keyframes rg{to{transform:scale(1.09) rotate(-5deg)}}
+.caller.correct .av{background:var(--acc);color:#fff;border-color:var(--acc)}
+.caller button{all:unset;cursor:pointer;display:block}
+.maze{display:grid;gap:4px;width:min(320px,84vw);margin:16px auto;aspect-ratio:1}
+.cell{background:var(--surf-2);transition:.2s;cursor:pointer}
+.cell:hover{background:var(--surf-3)}
+.cell.path-hint{background:rgba(240,74,40,.16)}
+.cell.on{background:var(--acc)}
+.cell.start{box-shadow:inset 0 0 0 2px var(--ink-2)}
+.cell.goal{box-shadow:inset 0 0 0 2px var(--acc)}
+.cell.bad{background:var(--ink)}
+.gens{display:flex;gap:5px;align-items:flex-end;height:70px;margin-top:6px}
+.gens .bar{flex:1;background:var(--ink-2);border-radius:1px 1px 0 0;min-height:3px;position:relative;transition:height .55s var(--ease)}
+.gens .bar span{position:absolute;bottom:-17px;left:0;right:0;text-align:center;font-size:9px;color:var(--ink-3)}
+.gens .bar em{position:absolute;top:-16px;left:0;right:0;text-align:center;font-size:10px;font-style:normal;font-weight:600;color:var(--ink-2)}
+.jchart{width:100%;height:230px;display:block}
+.lens-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.lens{flex:1;min-width:190px;text-align:left;font-size:14.5px;line-height:1.45;color:var(--ink-2);background:var(--bg);
+  border:1px solid var(--line);padding:15px 17px;transition:.24s var(--ease)}
+.lens b{display:block;font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);margin-bottom:7px}
+.lens:hover{border-color:var(--ink-2)}
+.lens.act{border-color:var(--acc);background:var(--acc-soft)}
+.dish{width:min(300px,80vw);aspect-ratio:1;margin:16px auto;display:grid;border-radius:50%;overflow:hidden;border:1px solid var(--line);background:var(--surf-2)}
+.cx{background:transparent;transition:background .3s;cursor:pointer}
+.cx.seed{background:var(--acc)}
+.worldmap{display:flex;justify-content:center;gap:7px;flex-wrap:wrap}
+.wdot{width:8px;height:8px;border-radius:50%;background:var(--surf-3);transition:.4s}
+.wdot.lit{background:var(--acc)}
+.qcount{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.quiz-q{font-size:25px;font-weight:600;letter-spacing:-.03em;line-height:1.18;margin:10px 0 2px}
+.qopts{display:grid;gap:8px;margin:22px 0}
+.qopt{text-align:left;font-size:16.5px;border:1px solid var(--line);background:var(--bg);padding:16px 19px;transition:.18s var(--ease);line-height:1.4}
+.qopt:hover:not(:disabled){border-color:var(--ink-2);transform:translateX(5px)}
+.qopt:disabled{cursor:default}
+.qopt.right{border-color:var(--acc);background:var(--acc-soft)}
+.qopt.wrong{opacity:.4}
+.qexp{font-size:15.5px;line-height:1.5;color:var(--ink-2);margin-top:14px;padding-left:16px;border-left:2px solid var(--acc);display:none}
+.qexp.on{display:block}
+.lineage{margin:8px 0;border-top:1px solid var(--line);max-width:var(--prose)}
+.node{padding:22px 0;border-bottom:1px solid var(--line);display:grid;gap:6px;grid-template-columns:1fr}
+@media(min-width:640px){.node{grid-template-columns:88px 1fr;gap:24px}}
+.node .yr{font-size:12px;font-weight:600;color:var(--acc);padding-top:5px}
+.node h4{font-size:20px;font-weight:600;letter-spacing:-.03em;margin-bottom:6px}
+.node .who{font-weight:400;color:var(--ink-3);font-size:15px;letter-spacing:0}
+.node p{margin:0;font-family:"EB Garamond",Georgia,serif;font-size:17.5px;line-height:1.48;color:var(--ink-2)}
+.kf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.kf-cell{margin:0;padding:26px 20px 22px;transition:background .3s;text-align:center;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.kf-cell:hover{background:var(--surf)}
+.kf-cell .art{width:78%;margin-inline:auto;color:var(--ink);transition:transform 1.2s var(--ease),color .3s}
+.kf-cell:hover .art{transform:rotate(30deg);color:var(--acc)}
+.kf-cell .nm{font-size:16px;font-weight:600;letter-spacing:-.02em;margin-top:18px}
+.kf-cell .pl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:5px}
+.kf-cell .rule{font-family:"EB Garamond",Georgia,serif;font-size:15px;line-height:1.4;color:var(--ink-2);margin-top:11px}
+
+/* ── szuflada ── */
+.scrim{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.62);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.4s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;right:0;z-index:115;width:min(460px,94vw);background:var(--surf);
+  border-left:1px solid var(--line);transform:translateX(101%);transition:transform .5s var(--ease);overflow-y:auto;
+  padding:26px clamp(20px,3vw,32px) 40px}
+.drawer.on{transform:none}
+.dr-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding-bottom:18px;border-bottom:1px solid var(--ink-3);margin-bottom:22px}
+.dr-head h2{font-size:27px;letter-spacing:-.035em;margin-top:6px}
+.dr-head .sub{font-size:13px;color:var(--ink-3);margin-top:6px}
+.dr-x{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--ink-3);font-size:14px;transition:.2s;flex:none}
+.dr-x:hover{border-color:var(--acc);color:var(--acc)}
+.rankbar{height:3px;background:var(--surf-3);margin:14px 0 6px}
+.rankbar>i{display:block;height:100%;background:var(--acc);transition:width .7s var(--ease)}
+.dr-sub{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:28px 0 14px}
+.herb{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.spec{padding:12px 6px;text-align:center;opacity:.3;transition:.3s;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.spec.have{opacity:1}
+.spec .art{width:38px;margin-inline:auto;color:var(--ink)}
+.spec .nm{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:7px;line-height:1.2}
+.badges{display:grid;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.badge{display:flex;gap:13px;align-items:center;padding:13px 14px;opacity:.32;transition:.3s;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.badge.have{opacity:1}
+.badge .bi{width:9px;height:9px;border-radius:50%;background:var(--surf-3);flex:none}
+.badge.have .bi{background:var(--acc)}
+.badge .t{font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.badge .d{font-size:12.5px;color:var(--ink-3);line-height:1.3;margin-top:1px}
+.dr-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.dr-foot small{font-size:11px;color:var(--ink-3)}
+.reset{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:100px;padding:8px 14px;transition:.2s}
+.reset:hover{color:var(--acc);border-color:var(--acc)}
+
+#toasts{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:130;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.toast{font-size:12.5px;font-weight:500;background:var(--surf-3);color:var(--ink);padding:13px 20px;border-radius:100px;
+  border:1px solid var(--line);opacity:0;transform:translateY(12px);transition:.4s var(--ease);text-align:center;max-width:88vw;display:flex;gap:10px;align-items:center}
+.toast.on{opacity:1;transform:none}
+.toast b{font-weight:600}
+.toast .s{color:var(--ink-3);font-weight:400}
+.toast.big{background:var(--acc);border-color:var(--acc);color:#fff}
+.toast.big .s{color:rgba(255,255,255,.78)}
+
+footer{border-top:1px solid var(--ink-3);padding:40px 0 56px;margin-top:clamp(60px,9vw,120px)}
+footer .in{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;font-size:13px;color:var(--ink-3);line-height:1.6}
+footer .in a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+footer .in a:hover{border-color:var(--acc);color:var(--acc)}
+footer p{margin:0;max-width:40ch}
+
+.rise{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rise.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rise{opacity:1;transform:none}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media(max-width:640px){body{font-size:16px}.prose{font-size:18.5px}.case{min-height:340px}}
+</style>
+</head>
+<body>
+
+<header id="bar"><div class="wrap">
+  <a class="brand" href="#home" onclick="go('home');return false"><b>Pamięć natury</b><span>Rupert Sheldrake</span></a>
+  <button class="prog" onclick="NB.open()" title="Twoje postępy">
+    <svg class="ring" viewBox="0 0 24 24"><circle class="bg" cx="12" cy="12" r="10"/><circle class="fg" id="ringFg" cx="12" cy="12" r="10" transform="rotate(-90 12 12)" stroke-dasharray="0 63"/></svg>
+    <span class="n" id="hudGold">0</span><span class="r" id="hudRank">Amator</span>
+  </button>
+</div></header>
+
+<main>
+<section class="view on" id="home">
+  <div id="hero" class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="hero-kick lab">Rupert Sheldrake · rezonans morficzny</p>
+        <h1 class="hero-t">Dziesięć założeń, na których stoi <em>nauka</em></h1>
+        <p class="hero-sub">Sheldrake twierdzi, że <b>żadne z nich nie zostało udowodnione</b> — i zamienia każde w pytanie.</p>
+        <p class="hero-lede">Rupert Sheldrake zadał pytanie: czy prawa przyrody to w istocie wieczne dekrety? A może to po prostu <i>nawyki</i> — być może natura ma <i>pamięć</i>.</p>
+        <div class="hero-meta">
+          <span class="chip">6 tekstów</span><span class="chip">5 eksperymentów do rozegrania</span><span class="chip">test na koniec</span>
+        </div>
+      </div>
+      <div class="wheel-hold">
+        <div class="wheel" id="wheel"><div class="wheel-mid"><span class="num" id="wheelNum">01</span></div></div>
+        <div class="wheel-cap">
+          <p class="st" id="wheelSt"></p>
+          <p class="qu" id="wheelQu"></p>
+        </div>
+        <p class="wheel-hint">Kliknij ramię koła · dziesięć dogmatów</p>
+      </div>
+    </div>
+    <div class="cue"><i></i>przewiń</div>
+  </div>
+
+  <section class="dsec rise">
+    <div class="wrap">
+      <div class="ds-head">
+        <div>
+          <span class="lab acc">Sedno sprawy</span>
+          <h2>Dziesięć dogmatów</h2>
+          <p>To lista, którą Sheldrake ogłosił w książce <i>„The Science Delusion”</i> (2012). Jego zdaniem nauka przyjmuje te zdania jako oczywistości, choć są założeniami. Nie proponuje ich odrzucenia — proponuje, żeby zamienić je w pytania.</p>
+        </div>
+        <button class="flipall" id="flipAll" onclick="Dogmas.toggleAll()">
+          <span class="sw"><i></i></span><span id="flipLbl">Zamień w pytania</span>
+        </button>
+      </div>
+      <ol class="dogmas" id="dogmaList"></ol>
+      <div class="note" style="max-width:64ch;margin-top:34px"><b>Stan wiedzy:</b> to sformułowania Sheldrake’a. Wielu naukowców odpowiada, że nie są to dogmaty, lecz robocze założenia, które badania stale sprawdzają — i że część z nich (na przykład stałość praw przyrody) jest w fizyce badana od dawna, bez potrzeby odwoływania się do pamięci natury.</div>
+    </div>
+  </section>
+
+  <div class="wrap band rise">
+    <div class="band-head">
+      <h3>Skąd bierze się kształt?</h3>
+      <p>To pytanie stoi za całą hipotezą Sheldrake’a. W 1917 roku D’Arcy Thompson pokazał, że blisko spokrewnione gatunki nie różnią się częściami, lecz <b>przekształceniem całej formy</b> — jakby narysowano je na rozciągliwej siatce. Ta sama ryba, inaczej wygięta przestrzeń.</p>
+    </div>
+    <div class="gridfig" id="gridFig"></div>
+  </div>
+
+  <div class="wrap rise">
+    <div class="shead"><h2>Poznaj teorię</h2><span class="meta">sześć tekstów · od biografii po spór</span></div>
+    <div class="cases" id="readGrid"></div>
+  </div>
+
+  <div class="wrap rise">
+    <div class="shead"><h2>Rozegraj eksperymenty</h2><span class="meta">pięć gier · sprawdź hipotezy na sobie</span></div>
+    <div class="cases" id="labGrid"></div>
+  </div>
+
+  <div class="wrap rise">
+    <div class="shead"><h2>Na koniec</h2><span class="meta">galeria form i krótki test</span></div>
+    <div class="cases" id="endGrid"></div>
+  </div>
+
+  <footer class="wrap"><div class="in">
+    <p>Strona popularyzatorska o hipotezie rezonansu morficznego. Tezy sporne przedstawiono jako stanowiska Ruperta Sheldrake’a, ze wskazaniem stanu wiedzy.</p>
+    <p>Opracowanie: <a href="../sheldrake-baza-wiedzy/">baza wiedzy</a><br>Grafiki rysowane generatywnie — w duchu Haeckela i D’Arcy’ego Thompsona.</p>
+  </div></footer>
+</section>
+
+<section class="view" id="droga">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Biografia · 3 min czytania</span>
+    <h1>Kim jest Rupert Sheldrake</h1>
+    <p class="sub">Biochemik z Cambridge, który porzucił karierę w głównym nurcie nauki i zadał pytanie uznane za herezję.</p>
+  </div>
+  <div class="wrap abody"><div class="alay">
+    <div class="prose">
+      <figure class="plate" data-art="1"><figcaption>Fig. 1 — forma promienicy, rysowana regułą</figcaption></figure>
+      <p><b>Rupert Sheldrake</b> (ur. 28 czerwca 1942 w Newark-on-Trent) nie jest dyletantem — i to czyni go kłopotliwym. Doktor biochemii z Cambridge, członek Clare College, współodkrywca modelu polarnego transportu auksyn w roślinach, czyli tego, jak hormon wzrostu „wie”, w którą stronę płynąć.</p>
+      <p>A jednak już w Cambridge poczuł, że „otworzyła się przepaść” między jego zachwytem nad życiem a mechanistyczną biologią, której go uczono. Ta biologia świetnie opisywała części — milczała o tym, jak z bezkształtnej materii wyłania się <b>forma</b>.</p>
+      <p class="pull">Skąd embrion wie, w jaki kształt ma się rozwinąć? Genów to nie tłumaczy — geny kodują białka, nie kształty.</p>
+      <p>Przełom przyszedł w Indiach. Po latach pracy nad uprawami strączkowymi w instytucie ICRISAT spędził około osiemnastu miesięcy w aśramie ojca Bede Griffithsa w Tamil Nadu. Tam, na styku nauki Zachodu i kontemplacji Wschodu, napisał <b>„A New Science of Life”</b> (1981) — książkę, która wypchnęła go poza główny nurt na całe dekady.</p>
+      <ul class="keys">
+        <li data-n="Akt I"><b>Wtajemniczenie.</b> Cambridge, Harvard, stypendium Royal Society. Wchodzi do twierdzy nauki i dostaje jej klucze.</li>
+        <li data-n="Akt II"><b>Pęknięcie.</b> Rozczarowanie mechanicyzmem, Indie, aśram. Porzuca twierdzę z własnej woli.</li>
+        <li data-n="Akt III"><b>Herezja.</b> 1981 — „książka do spalenia”. Dekady na zewnątrz: psy, spojrzenia, dogmaty, usunięty wykład TED.</li>
+      </ul>
+      <div class="nextrow"><button class="pill solid" onclick="go('rezonans')">Dalej: czym jest rezonans morficzny →</button>
+        <button class="pill" onclick="go('lab-staring')">Zagraj: czy czujesz spojrzenie?</button></div>
+    </div>
+    <aside class="aside-rail"><dl>
+      <dt>Ur.</dt><dd>1942, Newark-on-Trent</dd>
+      <dt>Wykszt.</dt><dd>Cambridge, Harvard</dd>
+      <dt>Dziedzina</dt><dd>Biochemia, fizjologia roślin</dd>
+    </dl><hr>Wpływy: Goethe, Bergson, Kuhn, biologia organicystyczna. Pełny rodowód w tekście „Skąd wzięła się ta idea”.</aside>
+  </div></div>
+</section>
+
+<section class="view" id="rezonans">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Główna idea · 4 min czytania</span>
+    <h1>Czym jest rezonans morficzny</h1>
+    <p class="sub">Natura ma pamięć, a prawa przyrody są raczej utrwalonymi nawykami niż wiecznymi regułami.</p>
+  </div>
+  <div class="wrap abody"><div class="alay">
+    <div class="prose">
+      <figure class="plate" data-art="2"><figcaption>Fig. 2 — ta sama reguła, kolejne pokolenie formy</figcaption></figure>
+      <p>Zacznijmy od pytania, które Sheldrake uważa za nierozwiązane: <b>skąd rzeczy wiedzą, jaki kształt przyjąć?</b> Jego odpowiedź nazywa się przyczynowością formatywną. Formę nadają rzeczom <b>pola morficzne</b> — niewidzialne struktury organizujące, które „narzucają wzorce na skądinąd losową aktywność”. Każdy układ — kryształ, komórka, stado ptaków — ma własne pole ze zbiorową pamięcią wszystkich poprzedników.</p>
+      <p><b>Rezonans morficzny</b> to mechanizm tej pamięci: samoorganizujące się układy dziedziczą pamięć po wcześniejszych podobnych układach. Kluczowa jest <b>nielokalność</b> — wpływ przeszłości nie słabnie ani z odległością, ani z upływem czasu. Podobne dostraja się do podobnego.</p>
+      <p class="pull">Mózg jest bardziej jak odbiornik telewizyjny niż magnetowid — dostraja się do przeszłości, zamiast ją magazynować.</p>
+      <p>Stąd najgłośniejsza teza Sheldrake’a. Skoro formy utrwalają się przez powtarzanie, to <b>„prawa” przyrody nie są wiecznymi dekretami, lecz nawykami</b>, które wszechświat sam w sobie wyrobił — i które wciąż ewoluują. Im częściej coś się powtarza, tym bardziej staje się prawdopodobne.</p>
+      <h3>Co z tego wynika — trzy sprawdzalne przewidywania</h3>
+      <ul class="keys">
+        <li data-n="Przewidywanie 1"><b>Szczury.</b> Gdy szczury nauczą się sztuczki na Harvardzie, ich pobratymcy w Melbourne powinni opanowywać ją szybciej — mimo braku jakiegokolwiek połączenia.</li>
+        <li data-n="Przewidywanie 2"><b>Kryształy.</b> Nowe związki powinny łatwiej krystalizować na całym świecie, im częściej ich kryształy powstały już gdzie indziej.</li>
+        <li data-n="Przewidywanie 3"><b>Ludzie.</b> Wzorce przyswojone przez wielu powinny być łatwiejsze do przyswojenia dla następnych.</li>
+      </ul>
+      <div class="note"><b>Stan wiedzy:</b> te przewidywania <i>da się</i> sprawdzić — i na tym Sheldrake opiera obronę swojej hipotezy. Żadne z nich nie zostało jednak uznane przez naukę głównego nurtu za potwierdzone.</div>
+      <div class="nextrow"><button class="pill solid" onclick="go('umysl')">Dalej: czy umysł sięga poza mózg →</button>
+        <button class="pill" onclick="go('lab-labirynt')">Zagraj: labirynt pokoleń</button>
+        <button class="pill" onclick="go('lab-krysztaly')">Zagraj: kryształy</button></div>
+    </div>
+    <aside class="aside-rail"><dl>
+      <dt>Rok</dt><dd>1981</dd>
+      <dt>Książka</dt><dd>A New Science of Life</dd>
+      <dt>Status</dt><dd>Odrzucona przez główny nurt</dd>
+    </dl><hr>Pojęcie „pola morfogenetycznego” Sheldrake przejął od biologa Alexandra Gurwitscha (1922) — dodał do niego pamięć i nielokalność.</aside>
+  </div></div>
+</section>
+
+<section class="view" id="umysl">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Idea · 3 min czytania</span>
+    <h1>Czy umysł sięga poza mózg</h1>
+    <p class="sub">Sheldrake twierdzi, że wzrok wychodzi z oczu i „dotyka” tego, na co patrzymy — dlatego czujemy cudze spojrzenie.</p>
+  </div>
+  <div class="wrap abody"><div class="alay">
+    <div class="prose">
+      <figure class="plate" data-art="3"><figcaption>Fig. 3 — pole percepcji jako forma promienista</figcaption></figure>
+      <p>To najbardziej zaskakująca część jego systemu. Sheldrake uważa, że <b>umysł nie jest zamknięty w czaszce</b> — rozciąga się w przestrzeń przez tak zwane pola percepcji, zakorzenione w mózgu, ale sięgające tam, dokąd patrzymy.</p>
+      <p>Widzenie miałoby być procesem <b>dwukierunkowym</b>. Nie tylko światło wpada do oka; obraz jest też „rzutowany” na zewnątrz, na oglądany przedmiot. Gdy patrzysz komuś na kark, twoje pole widzenia rozciąga się, by go dotknąć.</p>
+      <p class="pull">Patrzenie jest rodzajem dotyku na odległość.</p>
+      <p>Jeśli tak jest, to <b>poczucie bycia obserwowanym</b> nie jest złudzeniem, a telepatia przestaje być zjawiskiem nadprzyrodzonym — staje się zwykłą „biologią pól”. To dlatego Sheldrake tyle uwagi poświęcił prostym testom, które każdy może wykonać w domu.</p>
+      <div class="note"><b>Stan wiedzy:</b> to koncepcja spekulatywna. Neurobiologia utożsamia umysł z aktywnością mózgu i nie znajduje potrzeby wprowadzania pól percepcji. Jako obraz jest jednak sugestywna i to ona napędza dwa eksperymenty na tej stronie.</div>
+      <div class="nextrow"><button class="pill solid" onclick="go('dogmaty')">Dalej: dziesięć dogmatów nauki →</button>
+        <button class="pill" onclick="go('lab-staring')">Zagraj: spojrzenie</button>
+        <button class="pill" onclick="go('lab-telepatia')">Zagraj: kto dzwoni</button></div>
+    </div>
+    <aside class="aside-rail"><dl>
+      <dt>Książka</dt><dd>The Sense of Being Stared At (2003)</dd>
+      <dt>Wynik</dt><dd>~55% trafień wobec 50%</dd>
+      <dt>Próby</dt><dd>ponad 30 000</dd>
+    </dl><hr>Krytycy wskazują wady losowania kolejności prób — badani mogli nieświadomie wychwycić wzorzec.</aside>
+  </div></div>
+</section>
+
+<section class="view" id="dogmaty">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Krytyka nauki · 4 min czytania</span>
+    <h1>Dziesięć dogmatów nauki</h1>
+    <p class="sub">Założenia, które nauka przyjmuje bez dowodu — i wykład, za który usunięto go z kanału TED.</p>
+  </div>
+  <div class="wrap abody">
+    <div class="prose">
+      <p>W książce <b>„The Science Delusion”</b> (2012) Sheldrake stawia rozróżnienie, które jest kluczem do całej jego pozycji: <b>czy nauka ma być systemem wiary, czy metodą badania?</b> Broni nauki jako metody. Atakuje natomiast materializm jako niekwestionowany światopogląd — założenie podawane jako udowodniona prawda, choć nigdy nie zostało udowodnione.</p>
+      <p>Sercem książki jest dziesięć „dogmatów”. Poniżej pełna lista — <b>kliknij wiersz</b>, żeby zobaczyć, o co dokładnie chodzi, albo przełącz wszystkie naraz w pytania.</p>
+    </div>
+    <div style="margin:34px 0 10px;display:flex;justify-content:flex-end">
+      <button class="flipall" onclick="Dogmas.toggleAll()"><span class="sw"><i></i></span><span>Pewniki ⇄ pytania</span></button>
+    </div>
+    <ol class="dogmas" id="dogmaList2"></ol>
+    <div class="prose" style="margin-top:40px">
+      <h3>Usunięty wykład (2013)</h3>
+      <p>Wykład Sheldrake’a z konferencji TEDxWhitechapel został <b>zdjęty z głównego kanału TED</b> po rekomendacji anonimowej rady naukowej i przeniesiony na osobną podstronę „do dyskusji”. Sheldrake nazwał postawione mu zarzuty „zniesławiającymi i fałszywymi”.</p>
+      <p>Skutek był taki sam jak przy „książce do spalenia” trzydzieści lat wcześniej: próba wyciszenia przyniosła mu <b>znacznie większy rozgłos</b> i uczyniła go bohaterem ruchu na rzecz wolności badań.</p>
+      <div class="nextrow"><button class="pill solid" onclick="go('spor')">Dalej: dlaczego nauka go odrzuca →</button>
+        <button class="pill" onclick="go('egzamin')">Sprawdź się w teście</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="spor">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Druga strona · 4 min czytania</span>
+    <h1>Dlaczego nauka go odrzuca</h1>
+    <p class="sub">„Książka do spalenia” w Nature, zarzut pseudonauki i odpowiedzi Sheldrake’a. Obie strony sporu.</p>
+  </div>
+  <div class="wrap abody"><div class="alay">
+    <div class="prose">
+      <p>We wrześniu 1981 roku <b>John Maddox</b>, redaktor naczelny prestiżowego <i>Nature</i>, zaatakował książkę <i>A New Science of Life</i> tekstem pod tytułem „A book for burning?”. Padły słowa, które przylgnęły do Sheldrake’a na zawsze: „najlepszy kandydat do spalenia od wielu lat”, „ćwiczenie z pseudonauki”. W 1994 roku w BBC Maddox dodał, że Sheldrake „przedstawia magię zamiast nauki”.</p>
+      <p class="pull">To było dokładnie jak ekskomunika papieska. Od tej chwili stałem się bardzo niebezpieczną osobą dla naukowców.</p>
+      <h3>Trzy główne zarzuty — i odpowiedzi</h3>
+      <ul class="keys">
+        <li data-n="Zarzut"><b>Nie da się tego obalić.</b> Hipoteza jest tak pojemna, że wytłumaczy każdy wynik. <br><i>Odpowiedź:</i> przewidywania są konkretne i sprawdzalne, tylko nikt nie chce ich testować.</li>
+        <li data-n="Zarzut"><b>Brak mechanizmu fizycznego.</b> Informacja miałaby się przenosić bez nośnika i bez straty energii. <br><i>Odpowiedź:</i> materializm to założenie filozoficzne, a nie wynik badań.</li>
+        <li data-n="Zarzut"><b>Nikt tego nie powtórzył.</b> Brak niezależnych replikacji, możliwy wpływ oczekiwań badacza. <br><i>Odpowiedź:</i> wokół zjawisk psi panuje w nauce tabu, więc replikacji nikt nie podejmuje.</li>
+      </ul>
+      <p>Najciekawsze jest to, co stało się przy dwóch próbach rozstrzygnięcia sporu — z psem Jaytee i z pisklętami. W obu wypadkach obie strony dostały <b>te same dane i odczytały je odwrotnie</b>. Richard Wiseman przyznał w 2009 roku: „wzorzec w moich badaniach jest taki sam jak u Ruperta… chodzi o to, jak się go interpretuje”.</p>
+      <div class="note"><b>Stan wiedzy:</b> w nauce głównego nurtu rezonans morficzny jest odrzucony — jako niepotwierdzona spekulacja lub wprost pseudonauka. Poza nią Sheldrake pozostaje wpływowy, a wyważony dialog podejmowali z nim m.in. Theodore Roszak i James Lovelock.</div>
+      <div class="nextrow"><button class="pill solid" onclick="go('rodowod')">Dalej: skąd wzięła się ta idea →</button>
+        <button class="pill" onclick="go('lab-jaytee')">Zagraj: pies, który wiedział</button></div>
+    </div>
+    <aside class="aside-rail"><dl>
+      <dt>Recenzja</dt><dd>Nature, wrzesień 1981</dd>
+      <dt>Autor</dt><dd>John Maddox</dd>
+      <dt>Skutek</dt><dd>Rozgłos zamiast wyciszenia</dd>
+    </dl><hr>Maddox przyznał później, że jego tekst był „nieroztropny” — publicyści wykorzystali go, by dowodzić, że establishment tłumi niewygodne prawdy.</aside>
+  </div></div>
+</section>
+
+<section class="view" id="rodowod">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Kontekst · 3 min czytania</span>
+    <h1>Skąd wzięła się ta idea</h1>
+    <p class="sub">Dwieście lat nauki o powstawaniu formy — od Goethego, przez Gurwitscha, po Sheldrake’a.</p>
+  </div>
+  <div class="wrap abody">
+    <div class="prose">
+      <p>Rezonans morficzny nie spadł z nieba. Sheldrake stoi na końcu długiej i całkiem poważnej tradycji — <b>morfologii</b>, czyli nauki o powstawaniu kształtu. Warto ją znać, bo pokazuje dokładnie, w którym miejscu Sheldrake odchodzi od głównego nurtu.</p>
+    </div>
+    <div class="lineage">
+      <div class="node"><div class="yr">1790</div><div><h4>Johann Wolfgang Goethe <span class="who">poeta i przyrodnik</span></h4><p>W <i>Metamorfozie roślin</i> pokazuje formę jako proces, nie stan. Wszystkie organy rośliny to przekształcony liść. Morfologia staje się osobną nauką.</p></div></div>
+      <div class="node"><div class="yr">ok. 1900</div><div><h4>Hans Driesch <span class="who">embriolog</span></h4><p>Rozdzielony zarodek jeżowca odtwarza cały organizm, a nie połowę. Driesch wnioskuje o nienaruszalnej całości i wskrzesza witalizm.</p></div></div>
+      <div class="node"><div class="yr">1917</div><div><h4>D’Arcy Thompson <span class="who">biomatematyk</span></h4><p><i>On Growth and Form</i>: kształty żywe jako wynik sił fizycznych i geometrycznych przekształceń. To jego siatki widzisz na stronie głównej.</p></div></div>
+      <div class="node"><div class="yr">1922</div><div><h4>Alexander Gurwitsch <span class="who">biolog</span></h4><p>Wprowadza pojęcie <b>pola morfogenetycznego</b> — niewidzialnego pola kierującego rozwojem. To od niego Sheldrake bierze sam termin.</p></div></div>
+      <div class="node"><div class="yr">1957</div><div><h4>Conrad H. Waddington <span class="who">genetyk</span></h4><p>„Krajobraz epigenetyczny” — rozwój jako kulka tocząca się kanałami ku gotowej formie. Pole jako metafora zostaje w głównym nurcie nauki.</p></div></div>
+      <div class="node last"><div class="yr">1981</div><div><h4>Rupert Sheldrake <span class="who">nasz bohater</span></h4><p>Robi krok dalej: pole morficzne nie tylko kieruje rozwojem, ale <b>pamięta</b> i działa <b>nielokalnie</b>. Na to nauka głównego nurtu już się nie zgodziła.</p></div></div>
+    </div>
+    <div class="prose">
+      <div class="note"><b>Sedno:</b> pojęcia „pola” i „formy” mają w biologii długą, szacowną historię. Sheldrake dokłada do nich <b>pamięć</b> i <b>nielokalność</b> — i właśnie ten jeden krok dzieli przyjętą metaforę od herezji.</div>
+      <div class="nextrow"><button class="pill solid" onclick="go('kunstformen')">Zobacz galerię form →</button>
+        <button class="pill" onclick="go('home')">← wszystkie tematy</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="kunstformen">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Galeria form · 2 min</span>
+    <h1>Formy, które rysuje reguła</h1>
+    <p class="sub">Sześć kształtów z przyrody. Każdy powstaje z jednego prostego przepisu — pod spodem podajemy jakiego.</p>
+  </div>
+  <div class="wrap abody">
+    <div class="prose" style="margin-bottom:34px">
+      <p>Ernst Haeckel w albumie <i>„Kunstformen der Natur”</i> (1904) pokazał, że najprostsze organizmy — promienice, okrzemki, meduzy — mają zdumiewająco regularne, symetryczne kształty. Dla Sheldrake’a to esencja zagadki: <b>skąd bierze się forma?</b></p>
+    </div>
+    <div class="kf-grid" id="kf-grid"></div>
+    <div class="prose" style="margin-top:34px">
+      <div class="note"><b>Uczciwie:</b> te rysunki są stylizacją generowaną przez algorytm — ilustrują ideę „formy z reguły”, a nie są wiernym odwzorowaniem konkretnych gatunków. Prawdziwa morfogeneza jest nieskończenie bogatsza.</div>
+      <div class="nextrow"><button class="pill solid" onclick="go('egzamin')">Sprawdź się w teście →</button>
+        <button class="pill" onclick="go('home')">← wszystkie tematy</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="lab-staring">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Eksperyment · 2 min</span>
+    <h1>Czy czujesz cudze spojrzenie?</h1>
+    <p class="sub">Ktoś za Twoimi plecami albo wpatruje się w Twój kark, albo nie. Zgaduj — na ślepo trafisz 50%.</p>
+  </div>
+  <div class="wrap abody"><div class="alay"><div>
+    <div class="stage">
+      <div class="readout">
+        <div class="stat"><div class="n" id="st-tr">0</div><div class="l">Próby</div></div>
+        <div class="stat"><div class="n" id="st-hit">0</div><div class="l">Trafienia</div></div>
+        <div class="stat"><div class="n hot" id="st-pct">—</div><div class="l">Twój wynik</div></div>
+      </div>
+      <div class="meter" id="st-meter"><i></i><div class="tick" style="left:50%"></div><div class="tick hi" style="left:55%"></div></div>
+      <div class="scale"><span>0%</span><span>50% przypadek</span><span>55% Sheldrake</span><span>100%</span></div>
+      <svg class="person" id="st-person" viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="1.2">
+        <ellipse cx="60" cy="118" rx="38" ry="24"/><circle cx="60" cy="50" r="28"/>
+        <path d="M40 44q20-15 40 0" opacity=".4"/>
+        <g class="eyes" style="opacity:.12;transition:.3s"><circle cx="50" cy="49" r="3.6" fill="currentColor" stroke="none"/><circle cx="70" cy="49" r="3.6" fill="currentColor" stroke="none"/></g>
+        <g class="rays" style="opacity:0;transition:.3s;stroke:var(--acc)"><path d="M50 49l-16-9M70 49l16-9M50 49l-18 3M70 49l18 3"/></g>
+      </svg>
+      <div class="log" id="st-log">Naciśnij „Nowa próba” i wyczuj, czy jesteś obserwowany.</div>
+      <div class="choice-row" id="st-choices" style="display:none">
+        <button class="choice" onclick="Staring.guess(true)">Patrzą na mnie</button>
+        <button class="choice" onclick="Staring.guess(false)">Nie patrzą</button>
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="st-go" onclick="Staring.trial()">Nowa próba</button>
+        <button class="btn ghost" onclick="Staring.reset()">Od nowa</button>
+      </div>
+      <div class="mini"><b>Jak było naprawdę:</b> w ponad 30 000 prób Sheldrake notował 54,7% trafień wobec 50% oczekiwanych losowo. Krytycy (Marks i Colwell) wskazali wadliwe losowanie kolejności — badani mogli wychwycić wzorzec. Sam odsetek jest bezsporny; sporna jest jego interpretacja.</div>
+    </div>
+    <div class="nextrow"><button class="pill" onclick="go('umysl')">← Przeczytaj: umysł poza mózgiem</button>
+      <button class="pill solid" onclick="go('lab-telepatia')">Dalej: zgadnij, kto dzwoni →</button></div>
+  </div></div></div>
+</section>
+
+<section class="view" id="lab-telepatia">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Eksperyment · 2 min</span>
+    <h1>Zgadnij, kto dzwoni</h1>
+    <p class="sub">Czworo znajomych. Kostka losuje jedno z nich — wskaż kogo, zanim odbierzesz. Przypadek daje 25%.</p>
+  </div>
+  <div class="wrap abody"><div class="alay"><div>
+    <div class="stage">
+      <div class="readout">
+        <div class="stat"><div class="n" id="tp-tr">0</div><div class="l">Próby</div></div>
+        <div class="stat"><div class="n" id="tp-hit">0</div><div class="l">Trafienia</div></div>
+        <div class="stat"><div class="n hot" id="tp-pct">—</div><div class="l">Twój wynik</div></div>
+      </div>
+      <div class="meter" id="tp-meter"><i></i><div class="tick" style="left:25%"></div><div class="tick hi" style="left:40%"></div></div>
+      <div class="scale"><span>0%</span><span>25% przypadek</span><span>40% Sheldrake</span><span>100%</span></div>
+      <div class="callers" id="tp-callers"></div>
+      <div class="log" id="tp-log">Naciśnij „Zadzwoń”, a potem wskaż, kto dzwoni.</div>
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="tp-go" onclick="Tele.ring()">Zadzwoń</button>
+        <button class="btn ghost" onclick="Tele.reset()">Od nowa</button>
+      </div>
+      <div class="mini"><b>Jak było naprawdę:</b> na 571 prób Sheldrake uzyskał 40% trafień. Co ciekawe, przy osobach bliskich wynik rósł do 54%, a przy obcych spadał do poziomu losowego. Krytycy wskazują słabe kontrole, brak pełnej ślepej próby i samodobór uczestników.</div>
+    </div>
+    <div class="nextrow"><button class="pill" onclick="go('lab-staring')">← Poprzedni eksperyment</button>
+      <button class="pill solid" onclick="go('lab-labirynt')">Dalej: labirynt pokoleń →</button></div>
+  </div></div></div>
+</section>
+
+<section class="view" id="lab-labirynt">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Eksperyment · 3 min</span>
+    <h1>Czy pamięć bywa wspólna?</h1>
+    <p class="sub">Szukaj drogi w labiryncie. Każde kolejne pokolenie znajduje ją szybciej — tak działałby rezonans morficzny.</p>
+  </div>
+  <div class="wrap abody"><div class="alay"><div>
+    <div class="stage">
+      <div class="readout">
+        <div class="stat"><div class="n" id="mz-gen">1</div><div class="l">Pokolenie</div></div>
+        <div class="stat"><div class="n" id="mz-err">0</div><div class="l">Błędy teraz</div></div>
+        <div class="stat"><div class="n hot" id="mz-mem">0%</div><div class="l">Pamięć pola</div></div>
+      </div>
+      <div class="meter" id="mz-meter"><i></i></div>
+      <div class="maze" id="mz-grid"></div>
+      <div class="log" id="mz-log">Klikaj sąsiednie pola, szukając drogi. Zły krok cofa na start.</div>
+      <div class="gens" id="mz-gens"></div>
+      <div style="margin-top:30px"><button class="btn ghost" onclick="Maze.reset()">Zupełnie od nowa</button></div>
+      <div class="mini"><b>Co to ilustruje:</b> to interaktywna wersja przewidywania o szczurach — kolejni uczący się radzą sobie szybciej, choć nic ich nie łączy. <b>Uczciwie:</b> tutaj „pamięć pola” jest zaprogramowana dla pokazania idei. W prawdziwych próbach efekt bywał nikły, a krytycy tłumaczą go wpływem oczekiwań badacza.</div>
+    </div>
+    <div class="nextrow"><button class="pill" onclick="go('rezonans')">← Przeczytaj: rezonans morficzny</button>
+      <button class="pill solid" onclick="go('lab-jaytee')">Dalej: pies, który wiedział →</button></div>
+  </div></div></div>
+</section>
+
+<section class="view" id="lab-jaytee">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Eksperyment · 2 min</span>
+    <h1>Pies, który wiedział</h1>
+    <p class="sub">Jeden wykres, dwie sprzeczne interpretacje. Zobacz, jak dwaj naukowcy widzą w tych samych danych co innego.</p>
+  </div>
+  <div class="wrap abody"><div class="alay"><div>
+    <div class="stage" style="max-width:none">
+      <p style="margin:0 0 16px;font-family:'EB Garamond',Georgia,serif;font-size:18px;line-height:1.5;color:var(--ink-2);max-width:64ch">Terier Jaytee podobno chodził do okna dokładnie wtedy, gdy jego właścicielka wyruszała do domu — o nieprzewidywalnej porze i z nieznanego psu miejsca. Poniższy wykres pokazuje, ile czasu pies spędzał przy oknie. <b>Kliknij soczewkę</b>, żeby zobaczyć te same dane oczami każdej ze stron sporu.</p>
+      <svg class="jchart" id="jt-chart" viewBox="0 0 640 230" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="lens-row">
+        <button class="lens" id="jt-lw" onclick="Jaytee.lens('w')"><b>Okiem Richarda Wisemana</b>Liczy się tylko pierwsza „wizyta przy oknie” trwająca ponad dwie minuty. Jeden sygnał, wybrany z góry — i efekt znika w szumie.</button>
+        <button class="lens" id="jt-ls" onclick="Jaytee.lens('s')"><b>Okiem Ruperta Sheldrake’a</b>Patrz na cały wzorzec zachowania. Czas przy oknie skacze dokładnie wtedy, gdy właścicielka wyrusza.</button>
+      </div>
+      <div class="log" id="jt-log">Wybierz jedną z soczewek powyżej.</div>
+      <div class="mini"><b>Sedno sprawy:</b> to nie jest historia oszusta zdemaskowanego przez naukę, lecz dwóch ludzi, którzy patrzą na ten sam wykres i widzą co innego. Wiseman przyznał w 2009 roku: „wzorzec jest taki sam… chodzi o to, jak się go interpretuje”. To najciekawsza lekcja z całej sprawy Sheldrake’a.</div>
+    </div>
+    <div class="nextrow"><button class="pill" onclick="go('spor')">← Przeczytaj: dlaczego nauka go odrzuca</button>
+      <button class="pill solid" onclick="go('lab-krysztaly')">Dalej: czy substancje się uczą →</button></div>
+  </div></div></div>
+</section>
+
+<section class="view" id="lab-krysztaly">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Eksperyment · 2 min</span>
+    <h1>Czy substancje się uczą?</h1>
+    <p class="sub">Hoduj kryształy nowego związku. Im częściej powstaną, tym łatwiej mają powstawać — tak brzmi przewidywanie.</p>
+  </div>
+  <div class="wrap abody"><div class="alay"><div>
+    <div class="stage">
+      <div class="readout">
+        <div class="stat"><div class="n" id="cr-batch">1</div><div class="l">Synteza nr</div></div>
+        <div class="stat"><div class="n hot" id="cr-ease">10%</div><div class="l">Łatwość</div></div>
+        <div class="stat"><div class="n" id="cr-fill">0%</div><div class="l">Wypełnienie</div></div>
+      </div>
+      <div class="meter" id="cr-meter"><i></i></div>
+      <div class="worldmap" id="cr-world" style="margin-top:16px"></div>
+      <div class="dish" id="cr-dish"></div>
+      <div class="log" id="cr-log">Klikaj w szalce, żeby zasiewać kryształy. Gdy zapełnisz ponad 60%, „reszta świata” zapamięta.</div>
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="cr-next" onclick="Cryst.next()" disabled>Nowa synteza →</button>
+        <button class="btn ghost" onclick="Cryst.reset()">Od nowa</button>
+      </div>
+      <div class="mini"><b>Skąd ten pomysł:</b> chemicy rzeczywiście znają zjawisko „trudnej pierwszej krystalizacji” — nowe związki bywa, że długo nie chcą się krystalizować, a potem idzie coraz łatwiej. <b>Uczciwie:</b> nauka tłumaczy to rozprzestrzenianiem się zarodków krystalizacji i rosnącą wprawą chemików, nie rezonansem.</div>
+    </div>
+    <div class="nextrow"><button class="pill" onclick="go('rezonans')">← Przeczytaj: rezonans morficzny</button>
+      <button class="pill solid" onclick="go('egzamin')">Sprawdź się w teście →</button></div>
+  </div></div></div>
+</section>
+
+<section class="view" id="egzamin">
+  <div class="wrap ahead">
+    <button class="back" onclick="go('home')">← wszystkie tematy</button>
+    <span class="k lab">Test · 3 min</span>
+    <h1>Osiem pytań na koniec</h1>
+    <p class="sub">Sprawdź, czy odróżniasz tezy Sheldrake’a od tego, co potwierdziła nauka.</p>
+  </div>
+  <div class="wrap abody"><div class="stage" id="qz-stage"></div></div>
+</section>
+</main>
+
+<div class="scrim" id="scrim" onclick="NB.close()"></div>
+<aside class="drawer" id="nbDrawer">
+  <div class="dr-head"><div><h2 id="nb-rank">Amator</h2><p class="sub" id="nb-rankline">0 okazów</p></div>
+    <button class="dr-x" onclick="NB.close()">✕</button></div>
+  <div class="rankbar"><i id="nb-bar" style="width:0"></i></div>
+  <p class="dr-sub">Zebrane formy</p>
+  <div class="herb" id="nb-herb"></div>
+  <p class="dr-sub">Osiągnięcia</p>
+  <div class="badges" id="nb-badges"></div>
+  <div class="dr-foot"><small id="nb-count">0 / 13</small><button class="reset" onclick="NB.reset()">wyzeruj</button></div>
+</aside>
+<div id="toasts"></div>
+
+<script>
+/* ══ STAN ══ */
+const KEY='sheldrake.v4';
+const RANKS=[{m:0,n:'Amator'},{m:30,n:'Zbieracz'},{m:80,n:'Obserwator'},{m:160,n:'Przyrodnik'},{m:280,n:'Morfolog'},{m:440,n:'Mistrz form'}];
+const BADGES={
+  czytelnik:{t:'Czytelnik',d:'Przeczytane wszystkie sześć tekstów'},
+  patrzacy:{t:'Obserwator',d:'Ukończona seria testu spojrzenia'},
+  telepata:{t:'Telepata',d:'Wynik powyżej przypadku w telepatii'},
+  rezonans:{t:'Rezonans',d:'Pamięć pola wyczuta w labiryncie'},
+  dwiePrawdy:{t:'Dwie prawdy',d:'Obejrzane obie soczewki sprawy Jaytee'},
+  krystalograf:{t:'Krystalograf',d:'Trzy syntezy — świat zapamiętał'},
+  pytajacy:{t:'Pytający',d:'Otwarte wszystkie dziesięć dogmatów'},
+  heretyk:{t:'Heretyk',d:'Zdany test (co najmniej 6 z 8)'},
+  komplet:{t:'Komplet',d:'Odwiedzone wszystkie strony'},
+};
+const ZONES=['droga','rezonans','umysl','dogmaty','spor','rodowod','kunstformen','lab-staring','lab-telepatia','lab-labirynt','lab-jaytee','lab-krysztaly','egzamin'];
+const READ=['droga','rezonans','umysl','dogmaty','spor','rodowod'];
+const NAMES={droga:'Biografia',rezonans:'Rezonans',umysl:'Umysł',dogmaty:'Dogmaty',spor:'Spór',rodowod:'Rodowód',
+  kunstformen:'Formy','lab-staring':'Spojrzenie','lab-telepatia':'Telepatia','lab-labirynt':'Labirynt',
+  'lab-jaytee':'Jaytee','lab-krysztaly':'Kryształy',egzamin:'Test'};
+
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+let S=load();S.gold=S.gold||0;S.ach=S.ach||{};S.zones=S.zones||{};S.read=S.read||{};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function rank(){let r=RANKS[0];for(const x of RANKS)if(S.gold>=x.m)r=x;return r;}
+function nextRank(){for(const x of RANKS)if(S.gold<x.m)return x;return null;}
+function plOkaz(n){n=Math.abs(n|0);const d=n%10,dd=n%100;
+  if(n===1)return 'okaz';
+  if(d>=2&&d<=4&&!(dd>=12&&dd<=14))return 'okazy';
+  return 'okazów';}
+function addGold(a,why){a=a|0;if(a<=0)return;S.gold+=a;save();toast('+'+a+' '+plOkaz(a),why||'');refreshHUD();}
+function award(id){if(!BADGES[id]||S.ach[id])return false;S.ach[id]=1;S.gold+=15;save();
+  toast(BADGES[id].t,BADGES[id].d,true);refreshHUD();checkAll();return true;}
+function visit(z){if(!ZONES.includes(z)||S.zones[z])return;S.zones[z]=1;save();addGold(3,'Nowa strona');checkAll();}
+function markRead(z){if(!READ.includes(z))return;if(!S.read[z]){S.read[z]=1;save();addGold(5,'Tekst przeczytany');}
+  if(READ.every(r=>S.read[r]))award('czytelnik');}
+function checkAll(){if(ZONES.every(z=>S.zones[z]))award('komplet');}
+function refreshHUD(){
+  document.getElementById('hudGold').textContent=S.gold;
+  document.getElementById('hudRank').textContent=rank().n;
+  const nx=nextRank(),r=rank(),lo=r.m,hi=nx?nx.m:r.m;
+  const f=nx?Math.min(1,(S.gold-lo)/(hi-lo)):1;
+  document.getElementById('ringFg').setAttribute('stroke-dasharray',(f*62.8).toFixed(1)+' 62.8');
+}
+function toast(t,s,big){const el=document.createElement('div');el.className='toast'+(big?' big':'');
+  el.innerHTML='<b>'+t+'</b>'+(s?'<span class="s">'+s+'</span>':'');
+  document.getElementById('toasts').appendChild(el);requestAnimationFrame(()=>el.classList.add('on'));
+  setTimeout(()=>{el.classList.remove('on');setTimeout(()=>el.remove(),450)},2700);}
+
+/* ══ FORMY GENEROWANE ══ */
+function rng(seed){let s=(seed*2654435761)>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296;}}
+function form(seed){
+  const R=rng(seed),cx=100,cy=100,rMax=88;
+  const n=7+Math.floor(R()*12),rings=2+Math.floor(R()*3);
+  const spines=R()<.66,knobs=R()<.7,mesh=R()<.75,rOut=rMax*.84;
+  let s='';
+  for(let r=1;r<=rings;r++) s+='<circle class="ln" cx="'+cx+'" cy="'+cy+'" r="'+(rOut*r/rings).toFixed(1)+'"/>';
+  for(let i=0;i<n;i++){
+    const a=(i/n)*Math.PI*2-Math.PI/2;
+    const x=cx+Math.cos(a)*rOut,y=cy+Math.sin(a)*rOut;
+    s+='<line class="ln" x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'"/>';
+    if(spines){
+      const x2=cx+Math.cos(a)*rMax,y2=cy+Math.sin(a)*rMax;
+      s+='<line class="ln2" x1="'+x.toFixed(1)+'" y1="'+y.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'"/>';
+      if(knobs) s+='<circle class="dot" cx="'+x2.toFixed(1)+'" cy="'+y2.toFixed(1)+'" r="2.2"/>';
+    }
+  }
+  if(mesh){
+    const rIn=rOut*(rings-1)/rings;
+    for(let i=0;i<n;i++){
+      const a1=(i/n)*Math.PI*2-Math.PI/2,a2=((i+1)/n)*Math.PI*2-Math.PI/2,am=(a1+a2)/2;
+      const p=(a,r)=>[(cx+Math.cos(a)*r).toFixed(1),(cy+Math.sin(a)*r).toFixed(1)];
+      const A=p(a1,rOut),B=p(am,rIn),C=p(a2,rOut);
+      s+='<path class="ln" d="M'+A[0]+' '+A[1]+' L'+B[0]+' '+B[1]+' L'+C[0]+' '+C[1]+'"/>';
+    }
+  }
+  s+='<circle class="acc" cx="'+cx+'" cy="'+cy+'" r="'+(4+R()*7).toFixed(1)+'"/>';
+  return '<svg class="art" viewBox="0 0 200 200">'+s+'</svg>';
+}
+
+/* ══ DZIESIĘĆ DOGMATÓW ══ */
+const DOGMAS=[
+  ['Wszystko jest zasadniczo mechaniczne.','Czy natura jest maszyną — czy raczej żywym organizmem?',
+   'Organizmy traktuje się jak złożone maszyny, a cały wszechświat jak wielki mechanizm. Sheldrake pyta, czy to opis rzeczywistości, czy tylko wygodna metafora z czasów rewolucji przemysłowej.'],
+  ['Cała materia jest nieświadoma.','Czy świadomość jest wyjątkiem — czy tkwi w samej naturze?',
+   'W tym ujęciu świadomość pojawia się wyłącznie w ludzkim mózgu, jako produkt uboczny. Sheldrake wskazuje, że nie mamy pojęcia, jak miałaby powstać z materii, która jej zupełnie nie ma.'],
+  ['Ilość materii i energii jest stała.','Czy wszechświat naprawdę nic nie zyskuje ani nie traci?',
+   'Z jednym wyjątkiem: w chwili Wielkiego Wybuchu wszystko miało powstać naraz. Sheldrake zwraca uwagę, że ciemna energia — dziś większość zawartości kosmosu — pojawiła się w teorii dopiero niedawno.'],
+  ['Prawa przyrody są niezmienne.','A gdyby prawa były nawykami, które ewoluują?',
+   'To dogmat, który Sheldrake atakuje najmocniej — i z którego wyrasta cały rezonans morficzny. Skoro ewoluuje wszystko inne, dlaczego akurat prawa miałyby być ustalone raz na zawsze?'],
+  ['Natura nie ma żadnego celu.','Czy w przyrodzie naprawdę nie ma żadnych dążeń?',
+   'Ewolucja bez kierunku, organizmy bez zamiaru, wszystko jako ślepy przypadek. Sheldrake zauważa, że biolodzy i tak mówią o „funkcji” serca czy oka — czyli o celu, tylnymi drzwiami.'],
+  ['Dziedziczenie jest w pełni materialne.','Czy DNA wyjaśnia kształt — czy tylko białka?',
+   'Geny kodują białka. Skąd jednak embrion wie, jaką formę przyjąć, skoro ma dokładnie ten sam zestaw genów co każda inna komórka ciała? To pytanie było zapalnikiem całej hipotezy.'],
+  ['Umysł mieści się w mózgu.','A jeśli umysł sięga poza czaszkę?',
+   'Cała aktywność umysłowa miałaby zamykać się wewnątrz głowy. Z zakwestionowania tego dogmatu biorą się dwa eksperymenty na tej stronie: poczucie bycia obserwowanym i telepatia telefoniczna.'],
+  ['Pamięć to ślady w mózgu.','Czy mózg magazynuje wspomnienia — czy się do nich dostraja?',
+   'Sheldrake powołuje się na to, że mimo dekad poszukiwań nie udało się wskazać, gdzie konkretnie zapisane jest wspomnienie. Stąd jego obraz mózgu jako odbiornika, a nie magnetowidu.'],
+  ['Telepatia jest złudzeniem.','Czy odrzucamy ją po badaniach — czy z góry?',
+   'Zjawiska psi uznaje się za niemożliwe, więc nie ma powodu ich badać — a skoro nikt ich nie bada, brakuje wyników. Sheldrake nazywa to błędnym kołem; krytycy odpowiadają, że badania były i wypadły negatywnie.'],
+  ['Tylko medycyna mechanistyczna działa.','Czy inne podejścia naprawdę nic nie wnoszą?',
+   'Terapie komplementarne miałyby działać wyłącznie przez efekt placebo. Sheldrake pyta, dlaczego sam placebo — realny, mierzalny wpływ umysłu na ciało — nie jest traktowany jako zjawisko warte badania.'],
+];
+const Dogmas={built:false,opened:{},
+  rows(){return DOGMAS.map((d,i)=>
+    '<li class="dg" style="--i:'+i+'" data-i="'+i+'" onclick="Dogmas.open('+i+')">'+
+    '<span class="dg-n">'+String(i+1).padStart(2,'0')+'</span>'+
+    '<div class="dg-body"><p class="dg-a">'+d[0]+'</p><p class="dg-q">'+d[1]+'</p>'+
+    '<p class="dg-note">'+d[2]+'</p></div><span class="dg-mark"></span></li>').join('');},
+  render(){
+    ['dogmaList','dogmaList2'].forEach(id=>{const el=document.getElementById(id);
+      if(el&&!el.dataset.built){el.dataset.built=1;el.innerHTML=this.rows();}});},
+  open(i){
+    document.querySelectorAll('.dg[data-i="'+i+'"]').forEach(el=>el.classList.toggle('on'));
+    if(!this.opened[i]){this.opened[i]=1;
+      if(Object.keys(this.opened).length===10)award('pytajacy');}},
+  toggleAll(){const on=document.body.classList.toggle('asq');
+    document.querySelectorAll('#flipLbl').forEach(l=>l.textContent=on?'Pokaż pewniki':'Zamień w pytania');
+    if(on&&!S.ach.pytajacy)toast('Pewniki stały się pytaniami','O to właśnie chodzi Sheldrake’owi');}
+};
+
+/* ══ KOŁO DOGMATÓW ══ */
+const Wheel={n:10,active:-1,timer:null,paused:false,
+  build(){
+    const cx=200,cy=200,R=150,r0=52;let s='';
+    s+='<circle class="wr" cx="200" cy="200" r="'+R+'"/><circle class="wr" cx="200" cy="200" r="'+(R*.66).toFixed(1)+'"/><circle class="wr" cx="200" cy="200" r="'+r0+'"/>';
+    for(let i=0;i<this.n;i++){
+      const a1=(i/this.n)*Math.PI*2-Math.PI/2,a2=((i+1)/this.n)*Math.PI*2-Math.PI/2,am=(a1+a2)/2;
+      const p=(a,r)=>[(cx+Math.cos(a)*r).toFixed(1),(cy+Math.sin(a)*r).toFixed(1)];
+      const A=p(a1,R),B=p(am,R*.66),C=p(a2,R);
+      s+='<path class="wm" d="M'+A[0]+' '+A[1]+' L'+B[0]+' '+B[1]+' L'+C[0]+' '+C[1]+'"/>';
+    }
+    for(let i=0;i<this.n;i++){
+      const a=(i/this.n)*Math.PI*2-Math.PI/2;
+      const p=(r)=>[(cx+Math.cos(a)*r).toFixed(1),(cy+Math.sin(a)*r).toFixed(1)];
+      const I=p(r0),O=p(R),T=p(R+26);
+      s+='<g class="wa" data-i="'+i+'" onclick="Wheel.set('+i+',true)" onmouseenter="Wheel.set('+i+',true)">'+
+         '<line class="wl" x1="'+I[0]+'" y1="'+I[1]+'" x2="'+O[0]+'" y2="'+O[1]+'"/>'+
+         '<circle class="wn" cx="'+O[0]+'" cy="'+O[1]+'" r="5"/>'+
+         '<text class="wt" x="'+T[0]+'" y="'+T[1]+'">'+String(i+1).padStart(2,'0')+'</text></g>';
+    }
+    document.getElementById('wheel').insertAdjacentHTML('afterbegin','<svg viewBox="-30 -30 460 460">'+s+'</svg>');
+    this.set(0,false);this.start();
+  },
+  set(i,manual){
+    this.active=i;
+    document.querySelectorAll('#wheel .wa').forEach(g=>g.classList.toggle('on',+g.dataset.i===i));
+    document.getElementById('wheelNum').textContent=String(i+1).padStart(2,'0');
+    document.getElementById('wheelSt').textContent=DOGMAS[i][0];
+    document.getElementById('wheelQu').textContent=DOGMAS[i][1];
+    if(manual){this.paused=true;clearInterval(this.timer);}
+  },
+  start(){clearInterval(this.timer);
+    this.timer=setInterval(()=>{if(!this.paused)this.set((this.active+1)%this.n,false);},4200);}
+};
+
+/* ══ SIATKA D'ARCY'EGO THOMPSONA ══ */
+const Grid=(function(){
+  const W=100,H=46,COLS=13,ROWS=7;
+  const FISH=[[.085,.26],[.235,.455],[.35,.28],[.51,.22],[.67,.29],[.78,.41],[.845,.50],
+              [.78,.59],[.67,.71],[.51,.78],[.35,.72],[.235,.545],[.085,.74]];
+  function T(u,v,k){
+    const bulge=Math.sin(v*Math.PI);
+    let x=u+k*.17*bulge*Math.sin(u*Math.PI);
+    let y=v+k*.30*(u-.45)*(u-.45)-k*.05;
+    const sx=1+k*.34*(v-.5);
+    x=(x-.5)*sx+.5;
+    return [x*W,y*H];
+  }
+  function poly(pts,k,cls,close){
+    const d=pts.map((p,i)=>{const q=T(p[0],p[1],k);return (i?'L':'M')+q[0].toFixed(2)+' '+q[1].toFixed(2);}).join(' ');
+    return '<path class="'+cls+'" d="'+d+(close?' Z':'')+'"/>';
+  }
+  function draw(k){
+    let s='';
+    for(let j=0;j<=ROWS;j++){const row=[];for(let i=0;i<=COLS;i++)row.push([i/COLS,j/ROWS]);s+=poly(row,k,'ln');}
+    for(let i=0;i<=COLS;i++){const col=[];for(let j=0;j<=ROWS;j++)col.push([i/COLS,j/ROWS]);s+=poly(col,k,'ln');}
+    s+=poly(FISH,k,'ln2',true);
+    const eye=T(.70,.42,k);
+    s+='<circle class="acc" cx="'+eye[0].toFixed(2)+'" cy="'+eye[1].toFixed(2)+'" r="1.1"/>';
+    return s;
+  }
+  function mount(el){
+    el.innerHTML='<svg class="art" viewBox="-2 -2 '+(W+4)+' '+(H+4)+'"><g id="gridG"></g></svg>'+
+      '<div class="lg"><span>Siatka nieodkształcona → przekształcona</span><span id="gridK">0%</span></div>';
+    const g=el.querySelector('#gridG'),lab=el.querySelector('#gridK');
+    let t=0;
+    (function loop(){t+=.006;const k=(Math.sin(t)*.5+.5);
+      g.innerHTML=draw(k);lab.textContent=Math.round(k*100)+'%';
+      requestAnimationFrame(loop);})();
+  }
+  return{mount};
+})();
+
+/* ══ ROUTER ══ */
+function go(id){
+  const v=document.getElementById(id);if(!v)return;
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  v.classList.add('on');window.scrollTo({top:0});
+  visit(id);if(READ.includes(id))markRead(id);
+  if(id==='lab-staring')Staring.enter();if(id==='lab-telepatia')Tele.enter();
+  if(id==='lab-labirynt')Maze.enter();if(id==='lab-jaytee')Jaytee.enter();
+  if(id==='lab-krysztaly')Cryst.enter();if(id==='egzamin')Quiz.enter();
+  if(id==='dogmaty')Dogmas.render();if(id==='kunstformen')Gallery.render();
+  paintCards();Reveal.scan();history.replaceState(null,'','#'+id);
+}
+window.go=go;
+addEventListener('scroll',()=>{document.getElementById('bar').classList.toggle('solid',scrollY>50)},{passive:true});
+
+const Reveal={io:null,
+  init(){this.io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');this.io.unobserve(e.target)}}),{rootMargin:'0px 0px -6% 0px',threshold:.04});this.scan();},
+  scan(){document.querySelectorAll('.rise:not(.in)').forEach(el=>{const v=el.closest('.view');if(v&&!v.classList.contains('on'))return;this.io.observe(el);})}};
+
+/* ══ KARTY ══ */
+const CARDS_R=[
+  {id:'droga',seed:11,k:'Biografia · 3 min',h:'Kim jest Rupert Sheldrake',
+   p:'Biochemik z Cambridge, który porzucił karierę w głównym nurcie nauki i zadał pytanie uznane za herezję.'},
+  {id:'rezonans',seed:23,k:'Główna idea · 4 min',h:'Czym jest rezonans morficzny',
+   p:'Jego najważniejsza hipoteza: natura ma pamięć, a prawa przyrody są raczej utrwalonymi nawykami niż wiecznymi regułami.'},
+  {id:'umysl',seed:37,k:'Idea · 3 min',h:'Czy umysł sięga poza mózg',
+   p:'Sheldrake twierdzi, że wzrok wychodzi z oczu i „dotyka” tego, na co patrzymy — dlatego czujemy cudze spojrzenie.'},
+  {id:'dogmaty',seed:41,k:'Krytyka nauki · 4 min',h:'Dziesięć dogmatów nauki',
+   p:'Pełna lista dziesięciu założeń, książka „The Science Delusion” i wykład, za który usunięto go z kanału TED.'},
+  {id:'spor',seed:53,k:'Druga strona · 4 min',h:'Dlaczego nauka go odrzuca',
+   p:'„Książka do spalenia” w Nature, zarzut pseudonauki i odpowiedzi Sheldrake’a. Obie strony sporu.'},
+  {id:'rodowod',seed:67,k:'Kontekst · 3 min',h:'Skąd wzięła się ta idea',
+   p:'Dwieście lat nauki o powstawaniu formy — od Goethego, przez Gurwitscha, po Sheldrake’a.'},
+];
+const CARDS_L=[
+  {id:'lab-staring',seed:71,k:'Eksperyment · 2 min',h:'Czy czujesz cudze spojrzenie?',
+   p:'Zgaduj, kiedy ktoś patrzy Ci w kark. Na ślepo trafisz 50% — Sheldrake notował 55%. Sprawdź siebie.'},
+  {id:'lab-telepatia',seed:83,k:'Eksperyment · 2 min',h:'Zgadnij, kto dzwoni',
+   p:'Wskaż dzwoniącego, zanim odbierzesz. Przypadek daje 25%, w badaniach Sheldrake’a wychodziło 40%.'},
+  {id:'lab-labirynt',seed:97,k:'Eksperyment · 3 min',h:'Czy pamięć bywa wspólna?',
+   p:'Szukaj drogi w labiryncie. Każde kolejne pokolenie znajduje ją szybciej — tak działałby rezonans.'},
+  {id:'lab-jaytee',seed:103,k:'Eksperyment · 2 min',h:'Pies, który wiedział',
+   p:'Jeden wykres, dwie sprzeczne interpretacje. Zobacz, jak dwaj naukowcy widzą w tych samych danych co innego.'},
+  {id:'lab-krysztaly',seed:113,k:'Eksperyment · 2 min',h:'Czy substancje się uczą?',
+   p:'Hoduj kryształy nowego związku. Im częściej powstaną, tym łatwiej mają powstawać — tak brzmi przewidywanie.'},
+];
+const CARD_G={id:'kunstformen',seed:127,k:'Galeria form · 2 min',h:'Formy, które rysuje reguła',
+  p:'Sześć kształtów z przyrody — promienice, spirala, kwiatostan — powstaje z jednego prostego przepisu. Najkrótsza odpowiedź na pytanie, skąd bierze się forma.'};
+const CARD_Q={id:'egzamin',seed:131,k:'Test · 3 min',h:'Osiem pytań na koniec',
+  p:'Sprawdź, czy odróżniasz tezy Sheldrake’a od tego, co potwierdziła nauka.'};
+const SEEDS={};[...CARDS_R,...CARDS_L,CARD_G,CARD_Q].forEach(c=>SEEDS[c.id]=c.seed);
+
+function cardEl(c,wide){
+  return '<button class="case '+(wide?'feature':'')+' '+(S.zones[c.id]?'is-done':'')+'" onclick="go(\''+c.id+'\')">'+
+    '<span class="done">przeczytane</span><span class="fig">'+form(c.seed)+'</span>'+
+    (wide?'<span class="ft">':'')+
+    '<span class="k lab">'+c.k+'</span><h3>'+c.h+'</h3><p>'+c.p+'</p>'+
+    '<span class="go">Otwórz <svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 4h12M9 1l3 3-3 3"/></svg></span>'+
+    (wide?'</span>':'')+'</button>';
+}
+function buildHome(){
+  document.getElementById('readGrid').innerHTML=CARDS_R.map(c=>cardEl(c)).join('');
+  document.getElementById('labGrid').innerHTML=CARDS_L.map(c=>cardEl(c)).join('');
+  document.getElementById('endGrid').innerHTML=cardEl(CARD_G,true)+cardEl(CARD_Q,true);
+  paintCards();
+}
+function paintCards(){[...CARDS_R,...CARDS_L,CARD_G,CARD_Q].forEach(c=>{
+  const el=document.querySelector('.case[onclick*="\''+c.id+'\'"]');if(el)el.classList.toggle('is-done',!!S.zones[c.id]);});}
+
+/* ══ SPOJRZENIE ══ */
+const Staring={s:{tr:0,hit:0},active:false,stared:false,done:false,
+  enter(){},
+  reset(){this.s={tr:0,hit:0};this.active=false;this.done=false;this.paint();
+    document.getElementById('st-log').textContent='Naciśnij „Nowa próba”.';
+    document.getElementById('st-choices').style.display='none';
+    document.getElementById('st-person').classList.remove('gaze-on');},
+  trial(){if(this.active)return;this.active=true;this.stared=Math.random()<.5;
+    document.getElementById('st-go').disabled=true;
+    document.getElementById('st-choices').style.display='flex';
+    document.querySelectorAll('#st-choices .choice').forEach(c=>{c.disabled=false;c.className='choice'});
+    document.getElementById('st-log').textContent='Skup się… czujesz spojrzenie?';
+    document.getElementById('st-person').classList.remove('gaze-on');},
+  guess(g){if(!this.active)return;this.active=false;const ok=(g===this.stared);this.s.tr++;if(ok)this.s.hit++;
+    document.querySelectorAll('#st-choices .choice').forEach(c=>c.disabled=true);
+    if(this.stared)document.getElementById('st-person').classList.add('gaze-on');
+    const log=document.getElementById('st-log');
+    if(ok){log.innerHTML='<b>Trafienie.</b> '+(this.stared?'Ktoś patrzył.':'Nikt nie patrzył.');addGold(2,'Trafiona próba');}
+    else log.innerHTML='<span class="miss">Pudło.</span> '+(this.stared?'Jednak patrzył.':'Jednak nie patrzył.');
+    this.paint();document.getElementById('st-go').disabled=false;
+    if(this.s.tr>=10&&!this.done){this.done=true;award('patrzacy');const p=Math.round(this.s.hit/this.s.tr*100);
+      setTimeout(()=>toast('Seria ukończona',p+'% trafień · Sheldrake notował 55%',true),700);}},
+  paint(){document.getElementById('st-tr').textContent=this.s.tr;document.getElementById('st-hit').textContent=this.s.hit;
+    const p=this.s.tr?Math.round(this.s.hit/this.s.tr*100):0;
+    document.getElementById('st-pct').textContent=this.s.tr?p+'%':'—';
+    document.querySelector('#st-meter>i').style.width=p+'%';}};
+
+/* ══ TELEPATIA ══ */
+const CALLERS=[{e:'M',n:'Matka',v:'Dzwoniła'},{e:'P',n:'Przyjaciel',v:'Dzwonił'},
+               {e:'D',n:'Dziadek',v:'Dzwonił'},{e:'S',n:'Siostra',v:'Dzwoniła'}];
+const Tele={s:{tr:0,hit:0},pick:-1,active:false,built:false,
+  enter(){if(!this.built){this.build();this.built=1;}},
+  build(){document.getElementById('tp-callers').innerHTML=CALLERS.map((c,i)=>
+    '<div class="caller" id="tpc-'+i+'"><button onclick="Tele.guess('+i+')"><span class="av">'+c.e+'</span><span class="nm">'+c.n+'</span></button></div>').join('');this.paint();},
+  reset(){this.s={tr:0,hit:0};this.pick=-1;this.active=false;this.clear();
+    document.getElementById('tp-log').textContent='Naciśnij „Zadzwoń”.';this.paint();},
+  clear(){document.querySelectorAll('#tp-callers .caller').forEach(c=>c.className='caller');},
+  ring(){if(this.active)return;this.active=true;this.pick=Math.floor(Math.random()*4);this.clear();
+    document.getElementById('tp-go').disabled=true;const log=document.getElementById('tp-log');
+    log.textContent='Kostka losuje…';let n=0;
+    const spin=setInterval(()=>{this.clear();document.getElementById('tpc-'+(n%4)).classList.add('pick');n++;},110);
+    setTimeout(()=>{clearInterval(spin);this.clear();document.getElementById('tpc-'+this.pick).classList.add('ring');
+      log.innerHTML='<b>Telefon dzwoni.</b> Kto to? Wskaż, zanim odbierzesz.';},1500);},
+  guess(i){if(!this.active)return;if(!document.getElementById('tpc-'+this.pick).classList.contains('ring'))return;
+    this.active=false;const ok=(i===this.pick);this.s.tr++;if(ok)this.s.hit++;this.clear();
+    document.getElementById('tpc-'+this.pick).classList.add('correct');if(!ok)document.getElementById('tpc-'+i).classList.add('pick');
+    const c=CALLERS[this.pick],log=document.getElementById('tp-log');
+    if(ok){log.innerHTML='<b>Trafienie.</b> '+c.v+' '+c.n+'.';addGold(4,'Trafiona telepatia');}
+    else log.innerHTML='<span class="miss">Pudło.</span> '+c.v+' '+c.n+'.';
+    this.paint();document.getElementById('tp-go').disabled=false;const p=this.s.hit/this.s.tr;
+    if(this.s.tr>=8&&p>.25&&!S.ach.telepata){award('telepata');setTimeout(()=>toast('Powyżej przypadku',Math.round(p*100)+'% wobec 25%',true),600);}},
+  paint(){document.getElementById('tp-tr').textContent=this.s.tr;document.getElementById('tp-hit').textContent=this.s.hit;
+    const p=this.s.tr?Math.round(this.s.hit/this.s.tr*100):0;
+    document.getElementById('tp-pct').textContent=this.s.tr?p+'%':'—';document.querySelector('#tp-meter>i').style.width=p+'%';}};
+
+/* ══ LABIRYNT ══ */
+const Maze={N:5,path:[],gen:1,pos:0,err:0,mem:0,hist:[],built:false,
+  enter(){if(!this.built){this.makePath();this.build();this.built=true;}},
+  makePath(){const N=this.N;let r=0,c=0;const p=[0];while(r<N-1||c<N-1){const o=[];if(c<N-1)o.push([r,c+1]);if(r<N-1)o.push([r+1,c]);
+    const nx=o[Math.floor(Math.random()*o.length)];r=nx[0];c=nx[1];p.push(r*N+c);}this.path=p;},
+  build(){const N=this.N,g=document.getElementById('mz-grid');g.style.gridTemplateColumns='repeat('+N+',1fr)';
+    let h='';for(let i=0;i<N*N;i++)h+='<div class="cell" id="mzc-'+i+'" onclick="Maze.click('+i+')"></div>';g.innerHTML=h;this.newGen(true);},
+  newGen(first){this.pos=0;this.err=0;if(!first)this.gen++;this.mem=Math.min(100,(this.gen-1)*22);this.render();
+    document.getElementById('mz-log').textContent=this.gen===1?'Pokolenie 1 — pole jest puste. Szukaj drogi po omacku.':'Pokolenie '+this.gen+' — pole pamięta w '+this.mem+'%. Ścieżka lekko prześwituje.';this.paint();},
+  render(){const N=this.N;for(let i=0;i<N*N;i++)document.getElementById('mzc-'+i).className='cell';
+    if(this.mem>0)this.path.forEach((idx,k)=>{if(k>0&&Math.random()*100<this.mem+8)document.getElementById('mzc-'+idx).classList.add('path-hint');});
+    document.getElementById('mzc-0').classList.add('start');document.getElementById('mzc-'+(N*N-1)).classList.add('goal');
+    for(let k=0;k<=this.pos;k++)document.getElementById('mzc-'+this.path[k]).classList.add('on');},
+  click(i){const need=this.path[this.pos+1];
+    if(i===need){this.pos++;document.getElementById('mzc-'+i).classList.add('on');if(this.pos>=this.path.length-1){this.win();return;}}
+    else if(i!==this.path[this.pos]){this.err++;const el=document.getElementById('mzc-'+i);el.classList.add('bad');setTimeout(()=>el.classList.remove('bad'),260);
+      this.pos=0;this.render();document.getElementById('mz-log').innerHTML='<span class="miss">Ślepy zaułek.</span> Powrót na start. Błędy: '+this.err;this.paint();}},
+  win(){this.hist.push({gen:this.gen,err:this.err});addGold(6,'Pokolenie '+this.gen+' u celu');
+    document.getElementById('mz-log').innerHTML='<b>Cel osiągnięty.</b> Pokolenie '+this.gen+' — błędów: '+this.err+'. Pole zapamiętało drogę…';this.paintGens();
+    if(this.gen>=3&&!S.ach.rezonans){award('rezonans');setTimeout(()=>toast('Rezonans','Kolejne pokolenia szybsze — pole pamięta.',true),600);}
+    setTimeout(()=>this.newGen(false),1100);},
+  reset(){this.gen=1;this.hist=[];this.makePath();this.newGen(true);this.paintGens();},
+  paint(){document.getElementById('mz-gen').textContent=this.gen;document.getElementById('mz-err').textContent=this.err;
+    document.getElementById('mz-mem').textContent=this.mem+'%';document.querySelector('#mz-meter>i').style.width=this.mem+'%';},
+  paintGens(){const g=document.getElementById('mz-gens');const max=Math.max(3,...this.hist.map(h=>h.err));
+    g.innerHTML=this.hist.slice(-8).map(h=>{const ht=8+(h.err/max)*100;return '<div class="bar" style="height:'+ht+'%"><em>'+h.err+'</em><span>P'+h.gen+'</span></div>';}).join('');}};
+
+/* ══ JAYTEE ══ */
+const Jaytee={data:[],built:false,seen:null,departAt:42,wisemanSignal:12,
+  enter(){if(!this.built){this.gen();this.built=true;}this.draw();},
+  gen(){const d=[];for(let i=0;i<60;i++){let b=6+Math.random()*10;if(i===12)b=34;if(i>=42)b=20+(i-42)*7+Math.random()*10;d.push(Math.min(96,b));}this.data=d;},
+  draw(sel){const svg=document.getElementById('jt-chart');const W=640,H=230,pad=34,n=this.data.length,bw=(W-pad*2)/n;let bars='';
+    this.data.forEach((v,i)=>{const h=(v/100)*(H-pad*2),x=pad+i*bw,y=H-pad-h;let fill='var(--ink-3)',op='.5';
+      if(sel==='s'&&i>=this.departAt){fill='var(--acc)';op='1';}
+      if(sel==='w'){fill=(i===this.wisemanSignal)?'var(--acc)':'var(--ink-3)';op=(i===this.wisemanSignal)?'1':'.25';}
+      bars+='<rect x="'+(x+1)+'" y="'+y+'" width="'+(bw-2)+'" height="'+h+'" fill="'+fill+'" opacity="'+op+'"/>';});
+    const dx=pad+this.departAt*bw;let ov='';
+    if(sel==='s')ov='<line x1="'+dx+'" y1="'+(pad-10)+'" x2="'+dx+'" y2="'+(H-pad)+'" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="4 3"/><text x="'+(dx+7)+'" y="'+(pad-1)+'" fill="var(--ink)" font-size="10.5" font-family="Inter" font-weight="600" letter-spacing="1.2">WŁAŚCICIELKA WYRUSZA</text>';
+    if(sel==='w'){const wx=pad+this.wisemanSignal*bw;ov='<circle cx="'+(wx+bw/2)+'" cy="'+(H-pad-(this.data[this.wisemanSignal]/100)*(H-pad*2)-10)+'" r="11" fill="none" stroke="var(--acc)" stroke-width="1.2"/><text x="'+(wx+bw/2+18)+'" y="'+(H-pad-52)+'" fill="var(--acc)" font-size="10.5" font-family="Inter" font-weight="600" letter-spacing="1.2">JEDYNY „SYGNAŁ”</text>';}
+    svg.innerHTML='<text x="'+pad+'" y="15" fill="var(--ink-3)" font-size="10" font-family="Inter" font-weight="500" letter-spacing="1.4">% CZASU PRZY OKNIE</text>'+
+      '<line x1="'+pad+'" y1="'+(H-pad)+'" x2="'+(W-pad)+'" y2="'+(H-pad)+'" stroke="var(--line)"/>'+bars+ov+
+      '<text x="'+pad+'" y="'+(H-10)+'" fill="var(--ink-3)" font-size="10" font-family="Inter" font-weight="500" letter-spacing="1.4">CZAS EKSPERYMENTU →</text>';},
+  lens(w){this.draw(w);document.getElementById('jt-lw').classList.toggle('act',w==='w');document.getElementById('jt-ls').classList.toggle('act',w==='s');
+    const log=document.getElementById('jt-log');
+    if(w==='w')log.innerHTML='<span class="miss">Okiem Wisemana:</span> liczy się tylko ten jeden, z góry wybrany moment. Cała reszta to szum — wniosek: „brak telepatii”.';
+    else log.innerHTML='<b>Okiem Sheldrake’a:</b> cały wzorzec skacze wraz z wyjściem właścicielki. Wniosek: zależność bardzo istotna statystycznie.';
+    if(!this.seen)this.seen={};this.seen[w]=1;
+    if(this.seen.w&&this.seen.s&&!S.ach.dwiePrawdy){award('dwiePrawdy');setTimeout(()=>toast('Dwie prawdy','Jeden wykres, dwie interpretacje.',true),500);}}};
+
+/* ══ KRYSZTAŁY ══ */
+const Cryst={N:12,batch:1,ease:.10,count:0,built:false,
+  enter(){if(!this.built){this.build();this.built=true;}},
+  build(){const N=this.N,d=document.getElementById('cr-dish');d.style.gridTemplateColumns='repeat('+N+',1fr)';
+    let h='';for(let i=0;i<N*N;i++)h+='<div class="cx" id="cx-'+i+'" onclick="Cryst.seed('+i+')"></div>';d.innerHTML=h;
+    document.getElementById('cr-world').innerHTML=Array.from({length:8},(_,i)=>'<div class="wdot" id="wd-'+i+'"></div>').join('');this.paint();},
+  seed(i){const el=document.getElementById('cx-'+i);if(el.classList.contains('seed'))return;el.classList.add('seed');this.count++;
+    const N=this.N,nb=[i-1,i+1,i-N,i+N].filter(j=>j>=0&&j<N*N);
+    nb.forEach(j=>{if(Math.random()<this.ease){const e2=document.getElementById('cx-'+j);if(!e2.classList.contains('seed')){e2.classList.add('seed');this.count++;}}});
+    this.paint();if(this.count/(N*N)>=.6){document.getElementById('cr-next').disabled=false;
+      document.getElementById('cr-log').innerHTML='<b>Skrystalizowało.</b> „Gdzieś na świecie” również — naciśnij „Nowa synteza”.';this.litWorld();}},
+  litWorld(){const k=Math.min(7,this.batch-1),el=document.getElementById('wd-'+k);if(el)el.classList.add('lit');},
+  next(){this.batch++;this.ease=Math.min(.85,this.ease+.22);this.count=0;
+    document.querySelectorAll('#cr-dish .cx').forEach(c=>c.className='cx');document.getElementById('cr-next').disabled=true;
+    document.getElementById('cr-log').textContent='Synteza '+this.batch+' — świat pamięta, krystalizacja idzie łatwiej ('+Math.round(this.ease*100)+'%). Zasiewaj.';
+    addGold(4,'Nowa synteza');this.paint();
+    if(this.batch>=3&&!S.ach.krystalograf){award('krystalograf');setTimeout(()=>toast('Krystalograf','Każda kolejna synteza łatwiejsza.',true),500);}},
+  reset(){this.batch=1;this.ease=.10;this.count=0;this.built=false;this.build();
+    document.querySelectorAll('#cr-world .wdot').forEach(w=>w.className='wdot');document.getElementById('cr-next').disabled=true;
+    document.getElementById('cr-log').textContent='Klikaj w szalce, żeby zasiewać kryształy.';},
+  paint(){document.getElementById('cr-batch').textContent=this.batch;document.getElementById('cr-ease').textContent=Math.round(this.ease*100)+'%';
+    document.getElementById('cr-fill').textContent=Math.round(this.count/(this.N*this.N)*100)+'%';
+    document.querySelector('#cr-meter>i').style.width=Math.round(this.ease*100)+'%';}};
+
+/* ══ GALERIA FORM ══ */
+const Gallery={built:false,
+  spiral(){let p='';for(let i=0;i<=170;i++){const a=i*.28,r=3.4*Math.pow(1.052,i);if(r>92)break;
+    p+=(i?'L':'M')+(100+r*Math.cos(a)).toFixed(1)+' '+(100+r*Math.sin(a)).toFixed(1)+' ';}
+    return '<svg class="art" viewBox="0 0 200 200"><path class="ln2" d="'+p+'"/><circle class="acc" cx="100" cy="100" r="3.4"/></svg>';},
+  floret(){let s='';const GA=Math.PI*(3-Math.sqrt(5));
+    for(let i=0;i<150;i++){const a=i*GA,r=7.2*Math.sqrt(i);if(r>90)break;
+      s+='<circle class="'+(i%13===0?'acc':'ln')+'" cx="'+(100+r*Math.cos(a)).toFixed(1)+'" cy="'+(100+r*Math.sin(a)).toFixed(1)+'" r="'+(1.6+i/150*2.6).toFixed(1)+'"/>';}
+    return '<svg class="art" viewBox="0 0 200 200">'+s+'</svg>';},
+  dendrite(){let s='';const br=(x,y,a,len,d)=>{if(d===0||len<5)return;
+    const x2=x+Math.cos(a)*len,y2=y+Math.sin(a)*len;
+    s+='<line class="'+(d>2?'ln2':'ln')+'" x1="'+x.toFixed(1)+'" y1="'+y.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'"/>';
+    br(x2,y2,a-.42,len*.72,d-1);br(x2,y2,a+.42,len*.72,d-1);};
+    for(let i=0;i<6;i++)br(100,100,(i/6)*Math.PI*2,32,4);
+    return '<svg class="art" viewBox="0 0 200 200">'+s+'<circle class="acc" cx="100" cy="100" r="4"/></svg>';},
+  render(){if(this.built)return;this.built=true;
+    const F=[
+      {n:'Promienica',pl:'Radiolaria',r:'Jeden kolec obrócony szesnaście razy wokół środka.',svg:form(23)},
+      {n:'Okrzemka',pl:'Diatoma',r:'Ta sama reguła, inna liczba powtórzeń — inny gatunek.',svg:form(59)},
+      {n:'Spirala',pl:'Spira mirabilis',r:'Promień rośnie wykładniczo: r = 3,4 × 1,052ⁿ.',svg:this.spiral()},
+      {n:'Kwiatostan',pl:'Phyllotaxis',r:'Każde nasienie obrócone o 137,5° — złoty kąt.',svg:this.floret()},
+      {n:'Rozgałęzienie',pl:'Dendrites',r:'Rekurencja: każda gałąź rodzi dwie mniejsze.',svg:this.dendrite()},
+      {n:'Kolonia',pl:'Volvox',r:'Całość powstaje z powtórzenia jednej komórki.',svg:form(151)},
+    ];
+    document.getElementById('kf-grid').innerHTML=F.map(f=>
+      '<figure class="kf-cell">'+f.svg+'<div class="nm">'+f.n+'</div><div class="pl">'+f.pl+'</div><div class="rule">'+f.r+'</div></figure>').join('');}};
+
+/* ══ TEST ══ */
+const QUIZ=[
+  {q:'Czym jest rezonans morficzny według Sheldrake’a?',o:['Falą elektromagnetyczną mózgu','Dziedziczeniem pamięci między podobnymi układami','Rodzajem energii jądrowej','Techniką medytacji'],a:1,e:'To mechanizm, przez który — jak twierdzi Sheldrake — samoorganizujące się układy dziedziczą pamięć po wcześniejszych podobnych układach, i to nielokalnie.'},
+  {q:'Jak Sheldrake reinterpretuje „prawa przyrody”?',o:['Jako złudzenia','Jako dekrety Boga','Jako nawyki, które ewoluują','Jako równania kwantowe'],a:2,e:'„Tak zwane prawa przyrody są bardziej jak nawyki” — utrwalają się przez powtarzanie i zmieniają w czasie.'},
+  {q:'Do czego Sheldrake porównuje mózg, mówiąc o pamięci?',o:['Do magnetowidu','Do odbiornika telewizyjnego','Do dysku twardego','Do biblioteki'],a:1,e:'Mózg miałby być „bardziej jak odbiornik telewizyjny niż magnetowid” — dostraja się do przeszłości, zamiast ją magazynować.'},
+  {q:'Od kogo Sheldrake przejął pojęcie „pola morfogenetycznego”?',o:['Od Karola Darwina','Od Alexandra Gurwitscha','Od Alberta Einsteina','Od Zygmunta Freuda'],a:1,e:'Gurwitsch wprowadził to pojęcie w 1922 roku. Sheldrake dodał do niego pamięć i nielokalność.'},
+  {q:'Na czym polega sedno sporu o psa Jaytee?',o:['Dane zostały sfałszowane','Te same dane odczytano na dwa sposoby','Psa nigdy nie było','Wiseman przyznał Sheldrake’owi pełną rację'],a:1,e:'Wiseman przyznał w 2009 roku: „wzorzec jest taki sam… chodzi o to, jak się go interpretuje”. Spór dotyczy odczytu, nie danych.'},
+  {q:'Co Sheldrake atakuje w książce „The Science Delusion”?',o:['Naukę jako metodę','Materializm jako niekwestionowany system wiary','Matematykę','Teorię ewolucji w całości'],a:1,e:'Rozróżnia naukę jako metodę (której broni) od materializmu jako światopoglądu przyjmowanego bez dowodu.'},
+  {q:'Jaki wynik notował Sheldrake w teście „bycia obserwowanym”?',o:['Około 50%, czyli tyle co przypadek','Około 55%','Około 90%','Około 25%'],a:1,e:'Około 55% wobec 50% oczekiwanych losowo — dokładnie 54,7% na ponad 30 000 prób. Krytycy wskazują wady losowania.'},
+  {q:'Jaki status ma rezonans morficzny w nauce głównego nurtu?',o:['Powszechnie przyjęty','Odrzucony, uznawany za pseudonaukę','Udowodniony w Nature','Nagrodzony Nagrodą Nobla'],a:1,e:'Główny nurt odrzuca go jako niepotwierdzoną spekulację. Poza nim Sheldrake pozostaje wpływowy.'},
+];
+const Quiz={i:0,score:0,answered:false,
+  enter(){this.i=0;this.score=0;this.answered=false;
+    document.getElementById('qz-stage').innerHTML='<div class="qcount" id="qz-count"></div>'+
+      '<div class="meter" style="margin:14px 0 22px"><i id="qz-prog" style="width:0"></i></div>'+
+      '<p class="quiz-q" id="qz-q"></p><div class="qopts" id="qz-opts"></div><div class="qexp" id="qz-exp"></div>'+
+      '<div style="margin-top:20px"><button class="btn" id="qz-next" onclick="Quiz.next()" style="display:none">Dalej →</button></div>';
+    this.render();},
+  render(){const q=QUIZ[this.i];this.answered=false;
+    document.getElementById('qz-count').textContent='Pytanie '+(this.i+1)+' z '+QUIZ.length;
+    document.getElementById('qz-prog').style.width=(this.i/QUIZ.length*100)+'%';
+    document.getElementById('qz-q').textContent=q.q;
+    document.getElementById('qz-opts').innerHTML=q.o.map((o,k)=>'<button class="qopt" onclick="Quiz.answer('+k+')">'+o+'</button>').join('');
+    const e=document.getElementById('qz-exp');e.className='qexp';e.textContent='';document.getElementById('qz-next').style.display='none';},
+  answer(k){if(this.answered)return;this.answered=true;const q=QUIZ[this.i];
+    document.querySelectorAll('#qz-opts .qopt').forEach((el,idx)=>{el.disabled=true;
+      if(idx===q.a)el.classList.add('right');if(idx===k&&k!==q.a)el.classList.add('wrong');});
+    if(k===q.a){this.score++;addGold(5,'Dobra odpowiedź');}
+    const e=document.getElementById('qz-exp');e.textContent=(k===q.a?'Dobrze. ':'Niedokładnie. ')+q.e;e.classList.add('on');
+    const n=document.getElementById('qz-next');n.style.display='';n.textContent=(this.i<QUIZ.length-1)?'Dalej →':'Zobacz wynik →';},
+  next(){if(this.i<QUIZ.length-1){this.i++;this.render();}else this.finish();},
+  finish(){const pass=this.score>=6;if(pass)award('heretyk');
+    document.getElementById('qz-stage').innerHTML='<div style="text-align:center;padding:26px 0">'+
+      '<div style="font-size:clamp(56px,10vw,96px);font-weight:600;letter-spacing:-.05em;line-height:1;color:'+(pass?'var(--acc)':'var(--ink)')+'">'+this.score+'<span style="color:var(--ink-3)">/'+QUIZ.length+'</span></div>'+
+      '<p style="max-width:44ch;margin:20px auto 26px;font-family:\'EB Garamond\',Georgia,serif;font-size:19px;line-height:1.5;color:var(--ink-2)">'+(pass
+        ?'Zdane. Rozumiesz, co twierdzi Sheldrake — i wiesz, gdzie kończy się jego hipoteza, a zaczyna spór z nauką.'
+        :'Blisko. Wróć do tekstów i spróbuj ponownie — do zaliczenia potrzeba sześciu poprawnych odpowiedzi.')+'</p>'+
+      '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+        '<button class="btn" onclick="Quiz.enter()">Jeszcze raz</button>'+
+        '<button class="btn ghost" onclick="go(\'home\')">← wszystkie tematy</button></div></div>';}};
+
+/* ══ POSTĘPY ══ */
+const NB={
+  open(){this.render();document.getElementById('nbDrawer').classList.add('on');document.getElementById('scrim').classList.add('on');},
+  close(){document.getElementById('nbDrawer').classList.remove('on');document.getElementById('scrim').classList.remove('on');},
+  render(){const r=rank(),nx=nextRank();
+    document.getElementById('nb-rank').textContent=r.n;
+    document.getElementById('nb-rankline').textContent=nx?S.gold+' '+plOkaz(S.gold)+' · następny stopień: '+nx.n+' ('+nx.m+')':S.gold+' '+plOkaz(S.gold)+' · najwyższy stopień';
+    const lo=r.m,hi=nx?nx.m:r.m,f=nx?Math.min(1,(S.gold-lo)/(hi-lo)):1;
+    document.getElementById('nb-bar').style.width=(f*100)+'%';
+    document.getElementById('nb-herb').innerHTML=ZONES.map(z=>{const has=S.zones[z];
+      return '<div class="spec '+(has?'have':'empty')+'">'+(has?form(SEEDS[z]||7):'<svg class="art" viewBox="0 0 200 200"><circle class="ln" cx="100" cy="100" r="60" stroke-dasharray="6 8"/></svg>')+'<div class="nm">'+(has?NAMES[z]:'—')+'</div></div>';}).join('');
+    document.getElementById('nb-badges').innerHTML=Object.entries(BADGES).map(([id,b])=>
+      '<div class="badge '+(S.ach[id]?'have':'')+'"><span class="bi"></span><div><div class="t">'+b.t+'</div><div class="d">'+b.d+'</div></div></div>').join('');
+    const have=Object.keys(BADGES).filter(id=>S.ach[id]).length,zv=ZONES.filter(z=>S.zones[z]).length;
+    document.getElementById('nb-count').textContent=zv+' z '+ZONES.length+' stron · '+have+' z '+Object.keys(BADGES).length+' osiągnięć';},
+  reset(){if(!confirm('Wyzerować cały postęp?'))return;
+    localStorage.removeItem(KEY);S={gold:0,ach:{},zones:{},read:{}};save();refreshHUD();buildHome();this.render();toast('Postęp wyzerowany','');}};
+
+/* ══ START ══ */
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+buildHome();refreshHUD();Dogmas.render();Wheel.build();
+Grid.mount(document.getElementById('gridFig'));
+document.querySelectorAll('.plate[data-art]').forEach(f=>f.insertAdjacentHTML('afterbegin',form(+f.dataset.art*29+5)));
+Reveal.init();
+addEventListener('keydown',e=>{if(e.key==='Escape')NB.close();});
+(function(){const h=location.hash.replace('#','');if(h&&document.getElementById(h))go(h);else visit('home');})();
+</script>
+<script data-goatcounter="https://futureshow.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
