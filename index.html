@@ -152,7 +152,7 @@
   <div class="features__inner">
     <div class="features__rule">
       <h2 class="features__title"><span data-lang="en">Selected work</span><span data-lang="pl">Wybrane prace</span></h2>
-      <div class="features__count"><span data-lang="en">Seventeen features · 2025–2026</span><span data-lang="pl">Siedemnaście realizacji · 2025–2026</span></div>
+      <div class="features__count"><span data-lang="en">Twenty-eight works · 2025–2026</span><span data-lang="pl">28 realizacji · 2025–2026</span></div>
     </div>
     
     <article class="feat reveal" id="work-1">
@@ -1432,6 +1432,702 @@
         <a href="cambridge-analytica/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Data Investigation</span><span data-lang="pl">Śledztwo danych</span></span><b>→</b></a>
       </div>
     </div>
+    <div class="features__rule" style="margin-top:80px">
+      <h2 class="features__title"><span data-lang="en">More from the studio</span><span data-lang="pl">Więcej ze studia</span></h2>
+      <div class="features__count">18–28</div>
+    </div>
+    <h3 class="group-label"><span data-lang="en">Data, science, simulations</span><span data-lang="pl">Dane, nauka, symulacje</span></h3>
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="psychedelic/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">18</span><span class="mini-card__title"><span data-lang="en">Psychedelic Brain Simulation</span><span data-lang="pl">Psychedelic Brain Simulation</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="psychedelic/" target="_blank">
+          <div style="width:100%;height:100%;background:radial-gradient(130% 120% at 50% 40%,#33156a 0%,#1d0c44 50%,#080318 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint field texture -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
+              <filter id="neuronField">
+                <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.62  0 0 0 0 0.45  0 0 0 0 0.92  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#neuronField)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(178,150,240,0.72);text-transform:uppercase;z-index:2;">
+              <span>Receptors · 5-HT</span>
+              <span>Brain in 3D</span>
+    </div>
+            <!-- single neuron with waveform -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <radialGradient id="neuronSoma" cx="40%" cy="38%" r="70%">
+                  <stop offset="0%" stop-color="#e6d8ff"/>
+                  <stop offset="55%" stop-color="#9a72e8"/>
+                  <stop offset="100%" stop-color="#4a2a9a"/>
+                </radialGradient>
+                <linearGradient id="neuronWave" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#7d5fe0" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#c9b6ff"/>
+                  <stop offset="100%" stop-color="#7d5fe0" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="neuronGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#8f6fe8" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#3a2080" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <!-- soft glow behind soma -->
+              <circle cx="180" cy="176" r="120" fill="url(#neuronGlow)"/>
+              <!-- dendrites -->
+              <g stroke="#b7a2f0" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-opacity="0.9">
+                <path d="M150 150 C 116 120 104 86 96 56 M126 132 C 100 120 78 122 60 110 M132 110 C 120 80 96 70 74 64"/>
+                <path d="M150 200 C 118 222 108 256 100 286 M128 214 C 100 226 80 252 66 268"/>
+                <path d="M210 150 C 244 122 262 96 280 78 M218 134 C 248 124 270 128 290 120"/>
+              </g>
+              <!-- dendrite tip nodes -->
+              <g fill="#d9ccff">
+                <circle cx="96" cy="56" r="4"/>
+                <circle cx="60" cy="110" r="3.4"/>
+                <circle cx="74" cy="64" r="3"/>
+                <circle cx="100" cy="286" r="4"/>
+                <circle cx="66" cy="268" r="3.2"/>
+                <circle cx="280" cy="78" r="3.6"/>
+                <circle cx="290" cy="120" r="3"/>
+              </g>
+              <!-- axon to synapse -->
+              <path d="M212 196 C 256 214 286 232 312 250" stroke="#b7a2f0" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <g fill="#d9ccff">
+                <circle cx="312" cy="250" r="5"/>
+                <circle cx="328" cy="262" r="2.4"/>
+                <circle cx="322" cy="276" r="2.0"/>
+              </g>
+              <!-- soma -->
+              <circle cx="180" cy="176" r="52" fill="url(#neuronSoma)" stroke="#e8def" stroke-width="2" stroke-opacity="0.4"/>
+              <circle cx="166" cy="162" r="16" fill="#c9b6ff" fill-opacity="0.55"/>
+              <!-- soft waveform across the soma -->
+              <path d="M108 176 Q 130 150 150 176 T 192 176 T 234 176 T 270 176"
+                stroke="url(#neuronWave)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d8ccf2;letter-spacing:0.01em;">
+              Psychedelic Brain Simulation
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A 3D brain under seven psychedelic and dissociative substances — dose levels, a timeline from ingestion to comedown, clickable regions, default-mode-network connectivity, sound…</span><span data-lang="pl">Trójwymiarowy mózg pod wpływem siedmiu substancji psychodelicznych i dysocjacyjnych — poziomy dawki, oś czasu od przyjęcia do zejścia, klikalne regiony, łączność sieci stanu…</span></span>
+        <a href="psychedelic/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">3D neuroscience</span><span data-lang="pl">Neuronauka 3D</span></span><b>→</b></a>
+      </div>
+      <div class="mini-card reveal" style="--i:1">
+        <a href="nbody/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">19</span><span class="mini-card__title"><span data-lang="en">N-Body Gravitational Simulation</span><span data-lang="pl">Symulacja grawitacyjna N-Ciał</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="nbody/" target="_blank" rel="noopener">
+          <div style="width:100%;height:100%;background:radial-gradient(ellipse at 40% 45%, rgba(160,80,255,0.2) 0%, transparent 50%), radial-gradient(ellipse at 65% 55%, rgba(255,120,60,0.15) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(100,160,255,0.1) 0%, transparent 60%), #050510;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 100 80" style="position:absolute;width:100%;height:100%;opacity:0.7;">
+              <circle cx="20" cy="25" r="1" fill="#e8a0ff" opacity="0.8"/><circle cx="35" cy="18" r="0.7" fill="#e8a0ff" opacity="0.5"/>
+              <circle cx="50" cy="40" r="1.5" fill="#ffb060" opacity="0.7"/><circle cx="65" cy="30" r="0.8" fill="#80d0ff" opacity="0.6"/>
+              <circle cx="30" cy="50" r="0.9" fill="#90ff90" opacity="0.5"/><circle cx="75" cy="55" r="1.2" fill="#a0a0ff" opacity="0.6"/>
+              <circle cx="45" cy="60" r="0.7" fill="#ff8080" opacity="0.5"/><circle cx="58" cy="22" r="0.8" fill="#e8a0ff" opacity="0.4"/>
+              <circle cx="22" cy="65" r="1" fill="#80d0ff" opacity="0.4"/><circle cx="80" cy="40" r="0.9" fill="#ffb060" opacity="0.5"/>
+              <circle cx="40" cy="35" r="1.3" fill="#fff" opacity="0.3"/><circle cx="60" cy="50" r="0.6" fill="#90ff90" opacity="0.4"/>
+              <circle cx="50" cy="40" r="12" fill="none" stroke="rgba(232,160,255,0.15)" stroke-width="0.3"/>
+              <circle cx="50" cy="40" r="20" fill="none" stroke="rgba(128,208,255,0.1)" stroke-width="0.2"/>
+              <circle cx="50" cy="40" r="28" fill="none" stroke="rgba(160,160,255,0.06)" stroke-width="0.2"/>
+            </svg>
+            <div style="position:relative;z-index:1;text-align:center;">
+              <div style="font-family:'Space Grotesk',sans-serif;color:#e8a0ff;font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:700;letter-spacing:0.1em;line-height:1.2;text-transform:uppercase;">N-Body</div>
+              <div style="color:rgba(128,208,255,0.5);font-size:clamp(0.65rem,1.1vw,0.85rem);letter-spacing:0.2em;text-transform:uppercase;margin-top:4px;">Gravitational Simulation</div>
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">Real-time Barnes-Hut gravitational simulation running up to 28,000 particles. Six cosmic scenarios: galaxy collisions, dark matter halos, supernovae, protoplanetary disks, cosmic…</span><span data-lang="pl">Symulacja grawitacyjna Barnes-Hut w czasie rzeczywistym z 28 000 cząsteczek. Sześć scenariuszy kosmicznych: zderzenia galaktyk, halo ciemnej materii, supernowe, dyski…</span></span>
+        <a href="nbody/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Physics / Simulation</span><span data-lang="pl">Fizyka / Symulacja</span></span><b>→</b></a>
+      </div>
+      <div class="mini-card reveal" style="--i:0">
+        <a href="https://futureshow1.github.io/digital-cosmos/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">20</span><span class="mini-card__title"><span data-lang="en">Digital Cosmos</span><span data-lang="pl">Digital Cosmos</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow1.github.io/digital-cosmos/" target="_blank">
+          <div style="width:100%;height:100%;background:radial-gradient(120% 120% at 50% 45%,#1a153e 0%,#0c0a24 45%,#030208 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint cosmic dust texture -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
+              <filter id="cosmosDust">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.60  0 0 0 0 0.95  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#cosmosDust)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(150,160,235,0.7);text-transform:uppercase;z-index:2;">
+              <span>WebGL · Shaders</span>
+              <span>Real-Time</span>
+            </div>
+            <!-- spiral galaxy -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <radialGradient id="cosmosCore" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fff6ff"/>
+                  <stop offset="25%" stop-color="#e8d4ff"/>
+                  <stop offset="60%" stop-color="#9d7ce8"/>
+                  <stop offset="100%" stop-color="#3a2d7a" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="cosmosHalo" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#6f5bd6" stop-opacity="0.55"/>
+                  <stop offset="70%" stop-color="#382a8c" stop-opacity="0.18"/>
+                  <stop offset="100%" stop-color="#1a1240" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="cosmosArm" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#cbb6ff"/>
+                  <stop offset="100%" stop-color="#5b46b8" stop-opacity="0.15"/>
+                </linearGradient>
+              </defs>
+              <!-- faint starfield -->
+              <g fill="#dfe0ff">
+                <circle cx="46" cy="60" r="1.4" opacity="0.8"/>
+                <circle cx="312" cy="48" r="1.1" opacity="0.6"/>
+                <circle cx="338" cy="150" r="1.6" opacity="0.85"/>
+                <circle cx="300" cy="300" r="1.2" opacity="0.6"/>
+                <circle cx="60" cy="296" r="1.5" opacity="0.75"/>
+                <circle cx="24" cy="176" r="1.2" opacity="0.65"/>
+                <circle cx="150" cy="26" r="1.0" opacity="0.55"/>
+                <circle cx="220" cy="332" r="1.3" opacity="0.6"/>
+                <circle cx="92" cy="120" r="0.9" opacity="0.5"/>
+                <circle cx="276" cy="220" r="1.0" opacity="0.55"/>
+              </g>
+              <!-- thin tilted orbital ring -->
+              <ellipse cx="180" cy="180" rx="150" ry="46" fill="none" stroke="#8a78d8" stroke-width="1.2" stroke-opacity="0.4" transform="rotate(-24 180 180)"/>
+              <!-- nebula halo -->
+              <circle cx="180" cy="180" r="135" fill="url(#cosmosHalo)"/>
+              <!-- spiral arms -->
+              <g fill="none" stroke="url(#cosmosArm)" stroke-linecap="round">
+                <path d="M180 180 C 210 150 250 150 278 178 C 300 200 296 244 262 262" stroke-width="9" stroke-opacity="0.7"/>
+                <path d="M180 180 C 150 210 110 210 82 182 C 60 160 64 116 98 98" stroke-width="9" stroke-opacity="0.7"/>
+                <path d="M180 180 C 198 144 238 122 282 130" stroke-width="5" stroke-opacity="0.45"/>
+                <path d="M180 180 C 162 216 122 238 78 230" stroke-width="5" stroke-opacity="0.45"/>
+              </g>
+              <!-- scattered arm stars -->
+              <g fill="#f3ecff">
+                <circle cx="250" cy="170" r="1.6"/>
+                <circle cx="272" cy="210" r="1.3"/>
+                <circle cx="110" cy="190" r="1.6"/>
+                <circle cx="92" cy="150" r="1.3"/>
+                <circle cx="232" cy="148" r="1.1"/>
+                <circle cx="128" cy="214" r="1.1"/>
+              </g>
+              <!-- bright core -->
+              <circle cx="180" cy="180" r="74" fill="url(#cosmosCore)"/>
+              <circle cx="180" cy="180" r="9" fill="#ffffff"/>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#cdc8e8;letter-spacing:0.01em;">
+              Digital Cosmos
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">An immersive cosmic experience that runs entirely in the browser, built on WebGL and custom shaders. Drift through galaxies, nebulae and deep starfields rendered in real time. A…</span><span data-lang="pl">Immersyjna podróż przez kosmos działająca w całości w przeglądarce, oparta na WebGL i własnych shaderach. Przepływ przez galaktyki, mgławice i głębokie pola gwiazd renderowane w…</span></span>
+        <a href="https://futureshow1.github.io/digital-cosmos/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Immersive 3D / WebGL</span><span data-lang="pl">Immersyjne 3D / WebGL</span></span><b>→</b></a>
+      </div>
+      <div class="mini-card reveal" style="--i:1">
+        <a href="https://futureshow1.github.io/cosmos-catalogue/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">21</span><span class="mini-card__title"><span data-lang="en">Cosmos Catalogue</span><span data-lang="pl">Cosmos Catalogue</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow1.github.io/cosmos-catalogue/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(160deg,#16202e 0%,#0c1119 55%,#04060a 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint grid texture -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
+              <filter id="catalogueNoise">
+                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.50  0 0 0 0 0.62  0 0 0 0 0.80  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#catalogueNoise)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(130,160,200,0.7);text-transform:uppercase;z-index:2;">
+              <span>Specimens · No.</span>
+              <span>3D / WebGL</span>
+            </div>
+            <!-- catalogued wireframe primitives -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="catWire" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#a9c6e8"/>
+                  <stop offset="100%" stop-color="#5d82ad"/>
+                </linearGradient>
+              </defs>
+              <g stroke="url(#catWire)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round">
+                <!-- cell frames -->
+                <g stroke="#3f5876" stroke-width="1" stroke-opacity="0.6">
+                  <rect x="40" y="40" width="120" height="120" rx="6"/>
+                  <rect x="200" y="40" width="120" height="120" rx="6"/>
+                  <rect x="40" y="200" width="120" height="120" rx="6"/>
+                  <rect x="200" y="200" width="120" height="120" rx="6"/>
+                </g>
+                <!-- cube (top-left) -->
+                <g>
+                  <path d="M74 122 L74 78 L116 62 L116 106 Z"/>
+                  <path d="M116 62 L150 78 L150 122 L116 138 Z"/>
+                  <path d="M74 78 L108 94 L150 78"/>
+                  <path d="M108 94 L116 138"/>
+                  <path d="M108 94 L108 138 L74 122"/>
+                </g>
+                <!-- sphere (top-right) -->
+                <g>
+                  <circle cx="260" cy="100" r="46"/>
+                  <ellipse cx="260" cy="100" rx="46" ry="17"/>
+                  <ellipse cx="260" cy="100" rx="17" ry="46"/>
+                </g>
+                <!-- torus (bottom-left) -->
+                <g>
+                  <ellipse cx="100" cy="260" rx="48" ry="26"/>
+                  <ellipse cx="100" cy="260" rx="22" ry="11"/>
+                  <path d="M52 260 a48 26 0 0 0 96 0" stroke-opacity="0.55"/>
+                </g>
+                <!-- icosahedron (bottom-right) -->
+                <g>
+                  <polygon points="260,216 300,246 284,296 236,296 220,246"/>
+                  <path d="M260 216 L260 260 L220 246 M260 260 L300 246 M260 260 L236 296 M260 260 L284 296"/>
+                </g>
+              </g>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#c4d2e0;letter-spacing:0.01em;">
+              Cosmos Catalogue
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A reference library of around ten interactive WebGL and 3D-technique demos — a specimen catalogue of shader and rendering effects. Each entry isolates one method so it can be…</span><span data-lang="pl">Biblioteka referencyjna około dziesięciu interaktywnych dem technik WebGL i 3D — katalog okazów efektów shaderowych i renderingu. Każdy wpis wyodrębnia jedną metodę, którą można…</span></span>
+        <a href="https://futureshow1.github.io/cosmos-catalogue/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">3D reference library</span><span data-lang="pl">Biblioteka technik 3D</span></span><b>→</b></a>
+      </div>
+    </div>
+    <h3 class="group-label"><span data-lang="en">The Golden Number · φ</span><span data-lang="pl">Złota liczba · φ</span></h3>
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="sectio-aurea/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">22</span><span class="mini-card__title"><span data-lang="en">SECTIO AUREA</span><span data-lang="pl">SECTIO AUREA</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="sectio-aurea/" target="_blank">
+          <div style="width:100%;height:100%;background:radial-gradient(ellipse at 50% 42%,#0e0e0e 0%,#070707 55%,#020202 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint grain -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
+              <filter id="sectioGrain">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.83  0 0 0 0 0.69  0 0 0 0 0.36  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#sectioGrain)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(212,175,92,0.72);text-transform:uppercase;z-index:2;">
+              <span>Atlas · 3D</span>
+              <span>φ = 1.618…</span>
+            </div>
+            <!-- golden spiral + phi + faint pentagram -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="sectioGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fff0c2"/>
+                  <stop offset="40%" stop-color="#e3c06a"/>
+                  <stop offset="78%" stop-color="#c9a24d"/>
+                  <stop offset="100%" stop-color="#8a6624"/>
+                </linearGradient>
+                <radialGradient id="sectioGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#c9a24d" stop-opacity="0.32"/>
+                  <stop offset="100%" stop-color="#c9a24d" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <!-- soft central glow -->
+              <circle cx="180" cy="180" r="150" fill="url(#sectioGlow)"/>
+              <!-- faint inscribed pentagram in a circle (the dodecahedron face) -->
+              <g stroke="#d4af5c" stroke-opacity="0.34" stroke-width="1.4" fill="none">
+                <circle cx="180" cy="180" r="138"/>
+                <polygon points="180,42 274,316 36,146 324,146 86,316"/>
+                <!-- inner pentagon -->
+                <polygon points="180,108 226,142 209,196 151,196 134,142" stroke-opacity="0.22"/>
+              </g>
+              <!-- whirling-square golden rectangles -->
+              <g stroke="#d4af5c" stroke-opacity="0.5" stroke-width="1.2" fill="none">
+                <rect x="96" y="120" width="168" height="104"/>
+                <rect x="160" y="120" width="104" height="104"/>
+                <rect x="160" y="120" width="104" height="64"/>
+                <rect x="160" y="160" width="64" height="64"/>
+              </g>
+              <!-- the golden logarithmic spiral -->
+              <path d="M 224 224
+                       C 184 224 160 200 160 160
+                       C 160 116 196 84 240 84
+                       C 296 84 340 128 340 184"
+                    fill="none" stroke="url(#sectioGold)" stroke-width="3.6" stroke-linecap="round"
+                    transform="translate(-80,-4)"/>
+              <path d="M 180 180
+                       m 0 0
+                       c -26 0 -44 -18 -44 -44
+                       c 0 -34 28 -62 62 -62
+                       c 44 0 80 36 80 80
+                       c 0 56 -46 102 -102 102
+                       c -70 0 -126 -56 -126 -126"
+                    fill="none" stroke="url(#sectioGold)" stroke-width="3.8" stroke-linecap="round"/>
+              <!-- the phi glyph, luminous, centered -->
+              <text x="180" y="214" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="120" font-style="italic" fill="url(#sectioGold)">φ</text>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#ecd9a8;letter-spacing:0.02em;">
+              SECTIO AUREA
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">An interactive atlas of the Golden Number φ. A 3D dodecahedron navigator opens onto twelve playable chambers: slider-discovery of φ, the whirling-square spiral, the Platonic…</span><span data-lang="pl">Interaktywny atlas złotej liczby φ. Dwunastościan-nawigator 3D otwiera się na dwanaście grywalnych komnat: odkrywanie φ suwakiem, spiralę wirujących kwadratów, bryły platońskie,…</span></span>
+        <a href="sectio-aurea/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Interactive education / 3D</span><span data-lang="pl">Edukacja interaktywna / 3D</span></span><b>→</b></a>
+      </div>
+      <div class="mini-card reveal" style="--i:1">
+        <a href="zlota-liczba-kompendium/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">23</span><span class="mini-card__title"><span data-lang="en">Złota liczba — kompendium</span><span data-lang="pl">Złota liczba — kompendium</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="zlota-liczba-kompendium/" target="_blank">
+          <div style="width:100%;height:100%;background:#efe4c8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- paper grain -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.09;">
+              <filter id="kompPaper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 1 0"/></filter>
+              <rect width="600" height="340" filter="url(#kompPaper)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(43,36,24,0.55);text-transform:uppercase;z-index:2;">
+              <span>Kompendium</span>
+              <span>Ghyka · 1931</span>
+            </div>
+            <!-- a typeset spread: running head, drop cap, two columns of text, marginal note, footnote rule -->
+            <svg viewBox="0 0 600 340" style="position:relative;z-index:1;width:100%;height:100%;" font-family="Georgia,'Times New Roman',serif">
+              <g fill="#2b2418">
+                <text x="70" y="78" font-size="9" letter-spacing="3" fill="#7a5a1e">ROZDZIAŁ II · PROPORCJA I RYTM</text>
+                <text x="70" y="126" font-size="64" font-style="italic" fill="#2b2418">G</text>
+                <g fill="#3a3122" font-size="8.5">
+                  <text x="112" y="100">hyka rozróżnia proporcję, która jest</text>
+                  <text x="112" y="113">stosunkiem wielkości, od rytmu, który</text>
+                  <text x="112" y="126">jest ich następstwem w czasie —</text>
+                  <text x="70" y="142">stąd złoty podział traktuje jako narzędzie,</text>
+                  <text x="70" y="155">nie jako objawienie. Kompendium zbiera</text>
+                  <text x="70" y="168">źródła, tłumaczy pojęcia i oddziela to,</text>
+                  <text x="70" y="181">co u Ghyki mierzalne, od tego, co jest</text>
+                  <text x="70" y="194">poezją liczby.</text>
+                </g>
+              </g>
+              <!-- second column: rendered as measured rules -->
+              <g stroke="#3a3122" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round">
+                <line x1="330" y1="97" x2="520" y2="97"/><line x1="330" y1="110" x2="530" y2="110"/><line x1="330" y1="123" x2="505" y2="123"/>
+                <line x1="330" y1="136" x2="528" y2="136"/><line x1="330" y1="149" x2="470" y2="149"/>
+                <line x1="330" y1="171" x2="525" y2="171"/>
+                <line x1="330" y1="184" x2="440" y2="184"/>
+              </g>
+              <!-- figure in the second column: a golden rectangle with its square, plainly drawn -->
+              <g fill="none" stroke="#7a5a1e" stroke-width="1.2">
+                <rect x="360" y="200" width="130" height="80"/><line x1="440" y1="200" x2="440" y2="280"/>
+                <path d="M440 280 A80 80 0 0 1 360 200" stroke-dasharray="3 3" stroke-opacity="0.7"/>
+              </g>
+              <text x="362" y="292" font-size="7.5" fill="#7a5a1e" font-style="italic">ryc. 4 — prostokąt złoty i jego kwadrat</text>
+              <!-- marginal note -->
+              <g font-size="7.5" fill="#7a5a1e" font-style="italic">
+                <text x="70" y="240">¹ M. C. Ghyka, Le Nombre d’or,</text>
+                <text x="70" y="252">Paris 1931, t. I, s. 27.</text>
+              </g>
+              <line x1="70" y1="222" x2="200" y2="222" stroke="#7a5a1e" stroke-width="1"/>
+              <!-- folio -->
+              <text x="540" y="78" text-anchor="end" font-size="8" fill="rgba(43,36,24,0.55)">27</text>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#2b2418;letter-spacing:0.01em;background:rgba(239,228,200,0.85);">
+              Złota liczba — kompendium
+            </div>
+          </div></a></div>
+        <span class="mini-card__deck"><span data-lang="en">A static, editorial compendium of Matila C. Ghyka&#x27;s „Golden Number&quot; with annexes — the careful written groundwork that preceded the interactive SECTIO AUREA portal. Here the…</span><span data-lang="pl">Statyczne, redakcyjne kompendium „Złotej liczby&quot; Matili C. Ghyki wraz z aneksami — starannie opracowany fundament tekstowy, który poprzedził interaktywny portal SECTIO AUREA.…</span></span>
+        <a href="zlota-liczba-kompendium/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Editorial / compendium</span><span data-lang="pl">Redakcja / kompendium</span></span><b>→</b></a>
+      </div>
+    </div>
+    <h3 class="group-label"><span data-lang="en">Culture, editions, archives</span><span data-lang="pl">Kultura, edycje, archiwa</span></h3>
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">24</span><span class="mini-card__title"><span data-lang="en">Jan Świdziński — Contextual Art</span><span data-lang="pl">Jan Świdziński — Sztuka kontekstualna</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(165deg,#13110d 0%,#0a0908 60%,#050504 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint paper grain -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
+              <filter id="swidPaper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.90  0 0 0 0 0.86  0 0 0 0 0.76  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#swidPaper)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(198,162,92,0.7);text-transform:uppercase;z-index:2;">
+              <span>Teoria · Theory</span>
+              <span>Sztuka kontekstualna</span>
+            </div>
+            <!-- bracket / frame enclosing "kontekst" + arrow square→labelled square -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="swidGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#e9cf8f"/>
+                  <stop offset="55%" stop-color="#c6a25c"/>
+                  <stop offset="100%" stop-color="#8a6c2f"/>
+                </linearGradient>
+              </defs>
+              <!-- empty square -->
+              <rect x="34" y="148" width="64" height="64" fill="none" stroke="#efe9da" stroke-width="3" stroke-opacity="0.85"/>
+              <!-- arrow: meaning derived from context -->
+              <g stroke="url(#swidGold)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="108" y1="180" x2="158" y2="180"/>
+                <polyline points="146,170 160,180 146,190"/>
+              </g>
+              <!-- labelled / filled square: the work that has gained context -->
+              <rect x="172" y="138" width="84" height="84" fill="#efe9da"/>
+              <rect x="172" y="138" width="84" height="84" fill="none" stroke="url(#swidGold)" stroke-width="2"/>
+              <text x="214" y="186" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="18" fill="#13110d">dzieło</text>
+              <!-- enclosing context brackets -->
+              <g stroke="#efe9da" stroke-width="4" fill="none" stroke-opacity="0.9" stroke-linecap="square">
+                <polyline points="44,86 24,86 24,274 44,274"/>
+                <polyline points="316,86 336,86 336,274 316,274"/>
+              </g>
+              <!-- the framing word -->
+              <text x="180" y="74" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="22" letter-spacing="6" fill="url(#swidGold)">KONTEKST</text>
+              <text x="180" y="306" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="4" fill="#efe9da" fill-opacity="0.55">= ZNACZENIE</text>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d9d2c2;letter-spacing:0.01em;">
+              Jan Świdziński · Sztuka kontekstualna
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">An archive and educational game built around one of the key ideas in Polish art theory: Jan Świdziński&#x27;s „Contextual Art&quot;, which holds that a work&#x27;s meaning is not fixed but is…</span><span data-lang="pl">Archiwum i gra edukacyjna zbudowane wokół jednej z kluczowych idei polskiej teorii sztuki: „sztuki kontekstualnej&quot; Jana Świdzińskiego, według której znaczenie dzieła nie jest dane…</span></span>
+        <a href="https://futureshow1.github.io/swidzinski-contextual-art/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Cultural archive / edu-game</span><span data-lang="pl">Archiwum kultury / gra edu</span></span><b>→</b></a>
+      </div>
+      <div class="mini-card reveal" style="--i:1">
+        <a href="https://bronislaw-przyluski.vercel.app/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">25</span><span class="mini-card__title"><span data-lang="en">Bronisław Przyłuski — Poetry</span><span data-lang="pl">Bronisław Przyłuski — poezja</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://bronislaw-przyluski.vercel.app/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(160deg,#0f1c24 0%,#0a141b 55%,#060b10 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint aged-paper grain -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
+              <filter id="bronPaper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.82  0 0 0 0 0.66  0 0 0 0 0.40  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#bronPaper)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(196,160,108,0.7);text-transform:uppercase;z-index:2;">
+              <span>Poezja · Poetry</span>
+              <span>Żywe wydanie · Living edition</span>
+            </div>
+            <!-- quill over ruled manuscript lines -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="bronFeather" x1="20%" y1="0%" x2="80%" y2="100%">
+                  <stop offset="0%" stop-color="#e6f3f6"/>
+                  <stop offset="55%" stop-color="#6fb3c4"/>
+                  <stop offset="100%" stop-color="#2a6d80"/>
+                </linearGradient>
+                <linearGradient id="bronInk" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#cfe6ec"/>
+                  <stop offset="100%" stop-color="#3a8a9e"/>
+                </linearGradient>
+              </defs>
+              <!-- ruled manuscript lines -->
+              <g stroke="#8ac4d2" stroke-width="2" stroke-opacity="0.4">
+                <line x1="44" y1="214" x2="316" y2="214"/>
+                <line x1="44" y1="246" x2="316" y2="246"/>
+                <line x1="44" y1="278" x2="316" y2="278"/>
+              </g>
+              <!-- a line of "written" verse trailing from the nib -->
+              <path d="M 70 214 q 10 -10 20 0 t 20 0 t 20 0 t 20 0 t 20 0" fill="none" stroke="url(#bronInk)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.8"/>
+              <!-- quill feather -->
+              <g transform="rotate(34 200 150)">
+                <!-- shaft -->
+                <path d="M 196 250 C 198 180 206 110 226 40" fill="none" stroke="url(#bronFeather)" stroke-width="5" stroke-linecap="round"/>
+                <!-- vane -->
+                <path d="M 226 40 C 250 86 250 150 214 214 C 206 178 200 150 200 150 C 196 188 196 214 200 244 C 176 196 182 120 226 40 Z" fill="url(#bronFeather)"/>
+                <!-- barb lines -->
+                <g stroke="#1f5566" stroke-width="1.4" stroke-opacity="0.45">
+                  <line x1="222" y1="70" x2="208" y2="92"/>
+                  <line x1="225" y1="100" x2="206" y2="124"/>
+                  <line x1="224" y1="132" x2="204" y2="158"/>
+                  <line x1="220" y1="164" x2="202" y2="190"/>
+                </g>
+                <!-- nib -->
+                <path d="M 196 250 L 190 276 L 202 268 Z" fill="#173a46"/>
+              </g>
+              <!-- ink dot just placed -->
+              <circle cx="70" cy="214" r="3.5" fill="#3a8a9e"/>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#d6ebf0;letter-spacing:0.01em;">
+              Bronisław Przyłuski — poezja
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A living online edition of the poetry of Bronisław Przyłuski (1905–1980): poems to be read, not files to be stored. The texts come first; the biography, the manuscripts and the…</span><span data-lang="pl">Żywe wydanie poezji Bronisława Przyłuskiego (1905–1980) w sieci: wiersze do czytania, nie pliki do przechowywania. Na pierwszym planie teksty; biografia, rękopisy i kontekst…</span></span>
+        <a href="https://bronislaw-przyluski.vercel.app/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Poetry · living edition</span><span data-lang="pl">Poezja · żywe wydanie</span></span><b>→</b></a>
+      </div>
+      <div class="mini-card reveal" style="--i:0">
+        <a href="switkowski/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">26</span><span class="mini-card__title"><span data-lang="en">Okultyzm i magja (1939)</span><span data-lang="pl">Okultyzm i magja (1939)</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="switkowski/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(165deg,#2b2418 0%,#1c1710 48%,#080604 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- aged paper texture -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08;">
+              <filter id="switPaper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="3"/>
+                <feColorMatrix values="0 0 0 0 0.76  0 0 0 0 0.62  0 0 0 0 0.40  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#switPaper)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(196,160,108,0.7);text-transform:uppercase;z-index:2;">
+              <span>Parapsychologja</span>
+              <span>1939</span>
+            </div>
+            <!-- alchemical / occult sigil, engraving line style -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="switInk" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#e7d3a6"/>
+                  <stop offset="55%" stop-color="#bb9763"/>
+                  <stop offset="100%" stop-color="#7c5e34"/>
+                </linearGradient>
+              </defs>
+              <!-- faint engraved year behind the sigil -->
+              <text x="180" y="208" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="118" font-style="italic" fill="#c4a06c" fill-opacity="0.08">1939</text>
+              <g fill="none" stroke="url(#switInk)" stroke-linejoin="round" stroke-linecap="round">
+                <!-- outer ring -->
+                <circle cx="180" cy="180" r="150" stroke-width="2.2"/>
+                <circle cx="180" cy="180" r="140" stroke-width="1" stroke-opacity="0.6"/>
+                <!-- tick marks around the ring (engraving feel) -->
+                <g stroke-width="1.2" stroke-opacity="0.55">
+                  <line x1="180" y1="30" x2="180" y2="44"/>
+                  <line x1="330" y1="180" x2="316" y2="180"/>
+                  <line x1="180" y1="330" x2="180" y2="316"/>
+                  <line x1="30" y1="180" x2="44" y2="180"/>
+                  <line x1="74" y1="74" x2="84" y2="84"/>
+                  <line x1="286" y1="74" x2="276" y2="84"/>
+                  <line x1="286" y1="286" x2="276" y2="276"/>
+                  <line x1="74" y1="286" x2="84" y2="276"/>
+                </g>
+                <!-- downward triangle (alchemical water) -->
+                <polygon points="180,300 56,96 304,96" stroke-width="2.2"/>
+                <!-- upward triangle (fire) faint, forming a hexagram -->
+                <polygon points="180,60 304,264 56,264" stroke-width="1.6" stroke-opacity="0.5"/>
+                <!-- central star (pentagram) -->
+                <polygon points="180,108 207,176 281,176 221,219 244,288 180,245 116,288 139,219 79,176 153,176" stroke-width="1.8"/>
+                <!-- inner circle with a dot (sol) -->
+                <circle cx="180" cy="190" r="30" stroke-width="1.6"/>
+                <circle cx="180" cy="190" r="4.5" fill="url(#switInk)" stroke="none"/>
+              </g>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#dcc6a0;letter-spacing:0.01em;">
+              Okultyzm i magja (1939)
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A compendium of Józef Świtkowski&#x27;s „Okultyzm i magja w świetle parapsychologji&quot; (1939) — a careful reworking of a historical Polish text on parapsychology and the occult. The…</span><span data-lang="pl">Kompendium dzieła Józefa Świtkowskiego „Okultyzm i magja w świetle parapsychologji&quot; (1939) — staranne opracowanie historycznego polskiego tekstu o parapsychologii i okultyzmie.…</span></span>
+        <a href="switkowski/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Historical / compendium</span><span data-lang="pl">Historia / kompendium</span></span><b>→</b></a>
+      </div>
+      <div class="mini-card reveal" style="--i:1">
+        <a href="https://futureshow.pl/pokedex/" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">27</span><span class="mini-card__title"><span data-lang="en">Poképedia</span><span data-lang="pl">Poképedia</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://futureshow.pl/pokedex/" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(180deg,#ffe0ef 0%,#d7f0ff 48%,#fff6cf 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- pastel clouds -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.75;">
+              <g fill="#ffffff">
+                <ellipse cx="92" cy="54" rx="54" ry="24"/>
+                <ellipse cx="140" cy="62" rx="66" ry="28"/>
+                <ellipse cx="486" cy="44" rx="48" ry="22"/>
+                <ellipse cx="528" cy="54" rx="62" ry="26"/>
+              </g>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(91,100,194,0.75);text-transform:uppercase;z-index:2;">
+              <span>256 Pokémon</span>
+              <span>730 kart · PL / EN</span>
+            </div>
+            <!-- poké ball -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:44%;max-width:178px;transform:translateY(-10px);">
+              <defs>
+                <linearGradient id="ppTop" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ff8fbf"/>
+                  <stop offset="100%" stop-color="#ff5f9e"/>
+                </linearGradient>
+                <linearGradient id="ppBot" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#eaf4ff"/>
+                </linearGradient>
+              </defs>
+              <circle cx="180" cy="180" r="128" fill="url(#ppBot)"/>
+              <path d="M52 180a128 128 0 0 1 256 0z" fill="url(#ppTop)"/>
+              <circle cx="180" cy="180" r="128" fill="none" stroke="#5b64c2" stroke-width="8"/>
+              <rect x="52" y="169" width="256" height="22" rx="8" fill="#5b64c2"/>
+              <circle cx="180" cy="180" r="42" fill="#ffffff" stroke="#5b64c2" stroke-width="8"/>
+              <circle cx="180" cy="180" r="19" fill="#ffd94a" stroke="#5b64c2" stroke-width="5"/>
+              <!-- sparkles -->
+              <g fill="#ffd94a" opacity="0.9">
+                <circle cx="70" cy="96" r="5"/>
+                <circle cx="296" cy="118" r="4"/>
+                <circle cx="286" cy="268" r="5"/>
+              </g>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#5b64c2;letter-spacing:0.01em;">
+              Poképedia
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A bilingual knowledge base for anyone learning the Pokémon universe from scratch: 256 Pokémon across all nine generations with artwork, stats, evolution lines and real in-game…</span><span data-lang="pl">Dwujęzyczna baza wiedzy dla każdego, kto poznaje świat Pokémonów od zera: 256 Pokémonów ze wszystkich dziewięciu generacji — z grafikami, statystykami, liniami ewolucji i…</span></span>
+        <a href="https://futureshow.pl/pokedex/" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Knowledge base / for kids &amp;amp; collectors</span><span data-lang="pl">Baza wiedzy / dla dzieci i kolekcjonerów</span></span><b>→</b></a>
+      </div>
+    </div>
+    <h3 class="group-label"><span data-lang="en">For clients</span><span data-lang="pl">Dla klientów</span></h3>
+    <div class="more-grid">
+      <div class="mini-card reveal" style="--i:0">
+        <a href="https://izabelachamczyk.com" target="_blank" rel="noopener" class="mini-card__head"><span class="mini-card__num">28</span><span class="mini-card__title"><span data-lang="en">Izabela Chamczyk — portfolio</span><span data-lang="pl">Izabela Chamczyk — portfolio</span></span></a>
+        <div class="mini-card__img"><a class="case__visual" href="https://izabelachamczyk.com" target="_blank">
+          <div style="width:100%;height:100%;background:linear-gradient(150deg,#1a0b10 0%,#0c0608 55%,#060405 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <!-- faint canvas grain -->
+            <svg viewBox="0 0 600 340" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.06;">
+              <filter id="chamCanvas">
+                <feTurbulence type="fractalNoise" baseFrequency="0.7 0.7" numOctaves="2"/>
+                <feColorMatrix values="0 0 0 0 0.85  0 0 0 0 0.55  0 0 0 0 0.58  0 0 0 1 0"/>
+              </filter>
+              <rect width="600" height="340" filter="url(#chamCanvas)"/>
+            </svg>
+            <!-- top label -->
+            <div style="position:absolute;top:22px;left:28px;right:28px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(214,108,118,0.72);text-transform:uppercase;z-index:2;">
+              <span>Klient · Client</span>
+              <span>Portfolio · Sztuka</span>
+            </div>
+            <!-- bold original gestural brushstroke crossing the frame -->
+            <svg viewBox="0 0 360 360" style="position:relative;z-index:1;width:62%;max-width:260px;">
+              <defs>
+                <linearGradient id="chamStroke" x1="6%" y1="14%" x2="94%" y2="86%">
+                  <stop offset="0%" stop-color="#ff5a6e"/>
+                  <stop offset="42%" stop-color="#c4203a"/>
+                  <stop offset="100%" stop-color="#2a0d18"/>
+                </linearGradient>
+                <linearGradient id="chamField" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#e23a52"/>
+                  <stop offset="100%" stop-color="#5a1320"/>
+                </linearGradient>
+                <filter id="chamRough">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.018 0.04" numOctaves="2" seed="7" result="n"/>
+                  <feDisplacementMap in="SourceGraphic" in2="n" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+              </defs>
+              <!-- torn color-field behind -->
+              <path d="M 70 232 L 250 196 L 264 268 L 86 300 Z" fill="url(#chamField)" opacity="0.5" filter="url(#chamRough)"/>
+              <!-- the gesture: a single sweeping stroke -->
+              <path d="M 36 92 C 120 36 168 150 232 124 C 300 96 318 196 326 240"
+                    fill="none" stroke="url(#chamStroke)" stroke-width="40" stroke-linecap="round" filter="url(#chamRough)"/>
+              <!-- dry-brush split inside the stroke -->
+              <path d="M 44 92 C 124 44 170 152 232 128 C 296 104 312 196 320 236"
+                    fill="none" stroke="#1a0b10" stroke-width="3" stroke-linecap="round" stroke-opacity="0.35" filter="url(#chamRough)"/>
+              <!-- flung droplets -->
+              <g fill="#ff5a6e" filter="url(#chamRough)">
+                <circle cx="300" cy="120" r="7"/>
+                <circle cx="322" cy="150" r="4"/>
+                <circle cx="70" cy="150" r="5"/>
+                <circle cx="52" cy="178" r="3"/>
+              </g>
+            </svg>
+            <!-- footer -->
+            <div style="position:absolute;bottom:22px;left:28px;right:28px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(0.9rem,1.3vw,1.05rem);color:#e9c2c8;letter-spacing:0.01em;">
+              Izabela Chamczyk · portfolio
+            </div>
+          </div>
+        </a></div>
+        <span class="mini-card__deck"><span data-lang="en">A portfolio website built for the contemporary artist Izabela Chamczyk, whose practice spans painting, performance and process-based art. Client work: a clean, gallery-quiet…</span><span data-lang="pl">Strona portfolio przygotowana dla artystki współczesnej Izabeli Chamczyk, której praktyka łączy malarstwo, performans i sztukę procesu. Praca dla klienta: czysta, galeryjnie…</span></span>
+        <a href="https://izabelachamczyk.com" target="_blank" rel="noopener" class="mini-card__foot"><span><span data-lang="en">Client / artist portfolio</span><span data-lang="pl">Klient / portfolio artystki</span></span><b>→</b></a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1446,24 +2142,12 @@
 <!-- ARCHIVE -->
 <section class="archive" id="archive">
   <div class="archive__inner">
-    <div class="archive__eyebrow reveal"><span data-lang="en">From the studio archive</span><span data-lang="pl">Z archiwum studia</span> · 13</div>
+    <div class="archive__eyebrow reveal"><span data-lang="en">Client work · password-protected</span><span data-lang="pl">Prace dla klientów · na hasło</span> · 2</div>
     <div class="archive__head">
-      <h2 class="archive__title reveal" style="--i:1"><span data-lang="en">More <em>from the studio.</em></span><span data-lang="pl">Więcej <em>ze studia.</em></span></h2>
-      <button class="archive__toggle reveal" style="--i:2" id="moreToggle"><span data-lang="en">Show 13 works</span><span data-lang="pl">Pokaż 13 prac</span></button>
+      <h2 class="archive__title reveal" style="--i:1"><span data-lang="en">Not for <em>the open web.</em></span><span data-lang="pl">Nie na <em>otwartą sieć.</em></span></h2>
     </div>
-    <p class="archive__sub reveal" style="--i:3"><span data-lang="en">Projects growing alongside the flagship work — labs, editions, archives, art. Two are password-protected client work.</span><span data-lang="pl">Projekty rosnące obok flagowych — laboratoria, edycje, archiwa, sztuka. Dwa to prace dla klientów, dostępne na hasło.</span> <a href="projekty.html" style="text-decoration:underline"><span data-lang="en">Browse them with visuals →</span><span data-lang="pl">Przeglądaj je z grafikami →</span></a></p>
-    <div class="archive__list" id="moreList"><ul>
-<li data-href="psychedelic/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Psychedelic Brain Simulation</span><span data-lang="pl">Psychedelic Brain Simulation</span></span><span class="tg"><span data-lang="en">3D neuroscience</span><span data-lang="pl">Neuronauka 3D</span></span><span class="ar">→</span></li>
-<li data-href="nbody/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">N-Body Gravitational Simulation</span><span data-lang="pl">Symulacja grawitacyjna N-Ciał</span></span><span class="tg"><span data-lang="en">Physics / Simulation</span><span data-lang="pl">Fizyka / Symulacja</span></span><span class="ar">→</span></li>
-<li data-href="https://futureshow1.github.io/digital-cosmos/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Digital Cosmos</span><span data-lang="pl">Digital Cosmos</span></span><span class="tg"><span data-lang="en">Immersive 3D / WebGL</span><span data-lang="pl">Immersyjne 3D / WebGL</span></span><span class="ar">→</span></li>
-<li data-href="https://futureshow1.github.io/cosmos-catalogue/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Cosmos Catalogue</span><span data-lang="pl">Cosmos Catalogue</span></span><span class="tg"><span data-lang="en">3D reference library</span><span data-lang="pl">Biblioteka technik 3D</span></span><span class="ar">→</span></li>
-<li data-href="sectio-aurea/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">SECTIO AUREA</span><span data-lang="pl">SECTIO AUREA</span></span><span class="tg"><span data-lang="en">Interactive education / 3D</span><span data-lang="pl">Edukacja interaktywna / 3D</span></span><span class="ar">→</span></li>
-<li data-href="zlota-liczba-kompendium/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Złota liczba — kompendium</span><span data-lang="pl">Złota liczba — kompendium</span></span><span class="tg"><span data-lang="en">Editorial / compendium</span><span data-lang="pl">Redakcja / kompendium</span></span><span class="ar">→</span></li>
-<li data-href="https://futureshow1.github.io/swidzinski-contextual-art/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Jan Świdziński — Contextual Art</span><span data-lang="pl">Jan Świdziński — Sztuka kontekstualna</span></span><span class="tg"><span data-lang="en">Cultural archive / edu-game</span><span data-lang="pl">Archiwum kultury / gra edu</span></span><span class="ar">→</span></li>
-<li data-href="https://bronislaw-przyluski.vercel.app/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Bronisław Przyłuski — Poetry</span><span data-lang="pl">Bronisław Przyłuski — poezja</span></span><span class="tg"><span data-lang="en">Poetry · living edition</span><span data-lang="pl">Poezja · żywe wydanie</span></span><span class="ar">→</span></li>
-<li data-href="switkowski/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Okultyzm i magja (1939)</span><span data-lang="pl">Okultyzm i magja (1939)</span></span><span class="tg"><span data-lang="en">Historical / compendium</span><span data-lang="pl">Historia / kompendium</span></span><span class="ar">→</span></li>
-<li data-href="https://futureshow.pl/pokedex/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Poképedia</span><span data-lang="pl">Poképedia</span></span><span class="tg"><span data-lang="en">Knowledge base / for kids &amp;a</span><span data-lang="pl">Baza wiedzy / dla dzieci i k</span></span><span class="ar">→</span></li>
-<li data-href="https://izabelachamczyk.com" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">Izabela Chamczyk — portfolio</span><span data-lang="pl">Izabela Chamczyk — portfolio</span></span><span class="tg"><span data-lang="en">Client / artist portfolio</span><span data-lang="pl">Klient / portfolio artystki</span></span><span class="ar">→</span></li>
+    <p class="archive__sub reveal" style="--i:2"><span data-lang="en">Two projects made for clients. The link opens, but the page asks for a password. Everything else is browsable in <a href="stream/" style="text-decoration:underline">Stream</a>.</span><span data-lang="pl">Dwa projekty zrobione dla klientów. Link się otwiera, ale strona prosi o hasło. Cała reszta jest do przeglądania w <a href="stream/" style="text-decoration:underline">Streamie</a>.</span></p>
+    <div class="archive__list open" id="moreList"><ul>
 <li data-href="https://futureshow1.github.io/zem-demo/" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">ZEM</span><span data-lang="pl">ZEM</span> <span class="beta"><span data-lang="en">password</span><span data-lang="pl">na hasło</span></span></span><span class="tg"><span data-lang="en">Client demo / site</span><span data-lang="pl">Demo klienta / strona</span></span><span class="ar">→</span></li>
 <li data-href="https://futureshow.pl/emfazy-archiwum/archiwum.html" data-target="_blank"><span class="yr">2026</span><span class="nm"><span data-lang="en">EMFAZY — archive</span><span data-lang="pl">EMFAZY — archiwum</span> <span class="beta"><span data-lang="en">password</span><span data-lang="pl">na hasło</span></span></span><span class="tg"><span data-lang="en">Documentary / source archive</span><span data-lang="pl">Dokument / archiwum źródeł</span></span><span class="ar">→</span></li>
     </ul></div>
@@ -1552,7 +2236,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',
 // ====== reveal ======
 (()=>{const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:0.05});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));addEventListener('load',()=>setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)el.classList.add('in')}),150))})();
 // ====== archiwum ======
-(()=>{const btn=document.getElementById('moreToggle'),list=document.getElementById('moreList');btn.addEventListener('click',()=>{const open=list.classList.toggle('open');btn.classList.toggle('open',open);btn.querySelectorAll('span[data-lang]').forEach(s=>{s.textContent=open?(s.dataset.lang==='pl'?'Zwiń':'Show less'):(s.dataset.lang==='pl'?'Pokaż 13 prac':'Show 13 works')})});
+(()=>{const btn=document.getElementById('moreToggle'),list=document.getElementById('moreList');if(btn)btn.addEventListener('click',()=>{const open=list.classList.toggle('open');btn.classList.toggle('open',open);btn.querySelectorAll('span[data-lang]').forEach(s=>{s.textContent=open?(s.dataset.lang==='pl'?'Zwiń':'Show less'):(s.dataset.lang==='pl'?'Pokaż 13 prac':'Show 13 works')})});
 document.querySelectorAll('li[data-href]').forEach(li=>{li.style.cursor='pointer';li.setAttribute('role','link');li.tabIndex=0;const go=()=>{li.dataset.target==='_blank'?window.open(li.dataset.href,'_blank','noopener'):location.href=li.dataset.href};li.addEventListener('click',go);li.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})})})();
 // ====== kopiowanie e-maila ======
 function copyEmail(btn){const addr='futureshow@proton.me';const done=()=>{btn.classList.add('is-copied');clearTimeout(btn._t);btn._t=setTimeout(()=>btn.classList.remove('is-copied'),2000)};if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(addr).then(done).catch(()=>fb(addr,done))}else fb(addr,done);function fb(t,ok){const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:-9999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(ta)}}
