@@ -74,9 +74,9 @@
         <span data-lang="en">Download ↓</span><span data-lang="pl">Ściągnij ↓</span>
         <small>1.4 MB · .zip</small>
       </a>
-      <a class="dl-ghost" href="mailto:futureshow@proton.me?subject=Anonimizator">
+      <button type="button" class="dl-ghost" data-ask="Anonimizator">
         <span data-lang="en">I have a question →</span><span data-lang="pl">Mam pytanie →</span>
-      </a>
+      </button>
     </aside>
   </article>
 
@@ -222,9 +222,13 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
   <form class="ntf__box" id="notifyForm" novalidate>
     <div class="ntf__kicker ntf--notify"><span data-lang="en">Launch list</span><span data-lang="pl">Lista premierowa</span></div>
     <div class="ntf__kicker ntf--gate"><span data-lang="en">Access</span><span data-lang="pl">Dostęp</span></div>
+    <div class="ntf__kicker ntf--ask"><span data-lang="en">Question</span><span data-lang="pl">Pytanie</span></div>
     <h3 class="ntf--notify"><span data-lang="en">Tell me when </span><span data-lang="pl">Daj znać, gdy </span><span class="ntfApp">FutureTalk</span><span data-lang="en"> launches</span><span data-lang="pl"> będzie gotowe</span></h3>
     <h3 class="ntf--gate"><span data-lang="en">Leave your e-mail to open </span><span data-lang="pl">Zostaw e-mail, żeby otworzyć </span><span class="ntfApp">FutureForm</span></h3>
+    <h3 class="ntf--ask"><span data-lang="en">Ask about </span><span data-lang="pl">Zapytaj o </span><span class="ntfApp">Anonimizator</span></h3>
     <p class="ntf--notify"><span data-lang="en">One e-mail at launch, nothing else. No newsletter, no tracking.</span><span data-lang="pl">Jeden e-mail przy premierze i nic więcej. Bez newslettera, bez trackingu.</span></p>
+    <p class="ntf--ask"><span data-lang="en">Write what you would like to know — we reply to the address you leave, usually within two working days.</span><span data-lang="pl">Napisz, co chcesz wiedzieć — odpowiemy na podany adres, zwykle w ciągu dwóch dni roboczych.</span></p>
+    <textarea class="ntf--ask" name="pytanie" rows="4" placeholder="…" style="width:100%;border:1px solid var(--ink);background:transparent;padding:12px 14px;font:inherit;font-size:0.95rem;margin-bottom:12px;resize:vertical"></textarea>
     <p class="ntf--gate"><span data-lang="en">The app is free. The address lets me tell you about updates and the official launch — nothing else.</span><span data-lang="pl">Aplikacja jest darmowa. Adres posłuży mi tylko do informacji o aktualizacjach i oficjalnej premierze.</span></p>
     <input type="hidden" name="access_key" value="41c76e7b-9154-4f68-a910-e76ae4d498f4">
     <input type="hidden" name="subject" id="ntfSubject" value="[LISTA] FutureTalk — zapis na premierę">
@@ -233,7 +237,7 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
     <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
     <input type="email" name="email" id="ntfEmail" required placeholder="jan@example.com" autocomplete="email">
     <div class="ntf__row">
-      <button type="submit" class="dl-btn"><span class="ntf--notify"><span data-lang="en">Add me</span><span data-lang="pl">Zapisz mnie</span></span><span class="ntf--gate"><span data-lang="en">Open the app →</span><span data-lang="pl">Otwórz aplikację →</span></span></button>
+      <button type="submit" class="dl-btn"><span class="ntf--notify"><span data-lang="en">Add me</span><span data-lang="pl">Zapisz mnie</span></span><span class="ntf--gate"><span data-lang="en">Open the app →</span><span data-lang="pl">Otwórz aplikację →</span></span><span class="ntf--ask"><span data-lang="en">Send the question →</span><span data-lang="pl">Wyślij pytanie →</span></span></button>
       <button type="button" class="ntf__x" id="ntfClose"><span data-lang="en">Close</span><span data-lang="pl">Zamknij</span></button>
     </div>
     <div class="ntf__msg" id="ntfMsg"></div>
@@ -272,12 +276,15 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
       mode = m; dlg.setAttribute('data-mode', m);
       document.querySelectorAll('.ntfApp').forEach(function (n) { n.textContent = app; });
       document.getElementById('ntfLista').value = app;
-      document.getElementById('ntfSubject').value = (m === 'gate' ? '[REJESTRACJA] ' : '[LISTA] ') + app + (m === 'gate' ? ' — dostęp do aplikacji' : ' — zapis na premierę');
+      document.getElementById('ntfSubject').value = m === 'gate' ? '[REJESTRACJA] ' + app + ' — dostęp do aplikacji' : m === 'ask' ? '[PYTANIE] ' + app + ' — pytanie ze strony' : '[LISTA] ' + app + ' — zapis na premierę';
       msg.className = 'ntf__msg'; msg.textContent = ''; form.reset();
       dlg.showModal(); setTimeout(function () { email.focus(); }, 50);
     }
     document.querySelectorAll('[data-notify]').forEach(function (b) {
       b.addEventListener('click', function () { open('notify', b.getAttribute('data-notify')); });
+    });
+    document.querySelectorAll('[data-ask]').forEach(function (b) {
+      b.addEventListener('click', function () { open('ask', b.getAttribute('data-ask')); });
     });
     // bramka: pierwsze otwarcie aplikacji wymaga e-maila; zapamietane w tej przegladarce
     document.querySelectorAll('[data-gate]').forEach(function (a) {
@@ -292,6 +299,11 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
     dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (mode === 'ask' && form.pytanie.value.trim().length < 5) {
+        msg.className = 'ntf__msg err';
+        msg.textContent = pl() ? 'Napisz, o co chcesz zapytać.' : 'Please write your question.';
+        return;
+      }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
         msg.className = 'ntf__msg err';
         msg.textContent = pl() ? 'Wpisz poprawny adres e-mail.' : 'Please enter a valid e-mail address.';
@@ -307,8 +319,11 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
             try { localStorage.setItem('fs.access.' + document.getElementById('ntfLista').value, email.value.trim()); } catch (x) {}
             msg.textContent = pl() ? 'Dziękuję — otwieram aplikację.' : 'Thank you — opening the app.';
             setTimeout(function () { dlg.close(); window.open(gateHref, '_blank', 'noopener'); }, 900);
+          } else if (mode === 'ask') {
+            msg.textContent = pl() ? 'Dziękujemy — odpowiemy na podany adres.' : 'Thank you — we will reply to your address.';
+            setTimeout(function () { dlg.close(); }, 2200);
           } else {
-            msg.textContent = pl() ? 'Zapisane. Odezwę się przy premierze.' : 'Saved. I will write when it launches.';
+            msg.textContent = pl() ? 'Zapisane. Odezwiemy się przy premierze.' : 'Saved. We will write when it launches.';
             setTimeout(function () { dlg.close(); }, 2200);
           }
         })
