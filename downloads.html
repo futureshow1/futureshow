@@ -14,20 +14,20 @@
 <body>
 <div class="cursor" id="cursor"></div>
 <nav class="nav">
-  <a href="index.html" class="nav__brand">FutureShow</a>
+  <a href="studio/" class="nav__brand">FutureShow Studio</a>
   <ul class="nav__links">
-    <li><a href="index.html#work"><span data-lang="en">Work</span><span data-lang="pl">Prace</span></a></li>
-    <li><a href="stream/">Stream</a></li>
-    <li><a href="index.html#approach"><span data-lang="en">Approach</span><span data-lang="pl">Podejście</span></a></li>
-    <li><a href="index.html#studio">Studio</a></li>
+    <li><a href="studio/#work"><span data-lang="en">Work</span><span data-lang="pl">Prace</span></a></li>
+    <li><a href="./">Stream</a></li>
+    <li><a href="studio/#approach"><span data-lang="en">Approach</span><span data-lang="pl">Podejście</span></a></li>
+    <li><a href="studio/#studio">Studio</a></li>
     <li><a href="films.html"><span data-lang="en">Films</span><span data-lang="pl">Filmy</span></a></li>
     <li><a href="downloads.html" class="on"><span data-lang="en">Downloads</span><span data-lang="pl">Pobierz</span></a></li>
-    <li class="nav__cta-mobile"><a href="index.html#contact"><span data-lang="en">Start a project →</span><span data-lang="pl">Zacznij projekt →</span></a></li>
+    <li class="nav__cta-mobile"><a href="studio/#contact"><span data-lang="en">Start a project →</span><span data-lang="pl">Zacznij projekt →</span></a></li>
   </ul>
   <div class="nav__right">
     <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <button class="lang-toggle" id="langToggle" onclick="toggleLang()">PL</button>
-    <a href="index.html#contact" class="nav__cta"><span data-lang="en">Start a project</span><span data-lang="pl">Zacznij projekt</span></a>
+    <a href="studio/#contact" class="nav__cta"><span data-lang="en">Start a project</span><span data-lang="pl">Zacznij projekt</span></a>
   </div>
 </nav>
 <main class="dl-wrap" style="padding-top:140px">
@@ -97,7 +97,7 @@
       </div>
     </div>
     <div>
-      <span class="dl-tag"><span data-lang="en">Web app · beta live</span><span data-lang="pl">Aplikacja webowa · beta online</span></span>
+      <span class="dl-tag"><span data-lang="en">Mobile version · available now · free</span><span data-lang="pl">Wersja mobilna · dostępna · za darmo</span></span>
       <h2><span data-lang="en">Future<span class="g">Talk.</span></span>
           <span data-lang="pl">Future<span class="g">Talk.</span></span></h2>
       <p class="dl-desc">
@@ -109,17 +109,15 @@
       <div class="dl-price"><span data-lang="en">Free</span><span data-lang="pl">Za darmo</span><em data-lang="en">15 lessons · no account</em><em data-lang="pl">15 lekcji · bez konta</em></div>
       <div class="dl-meta">
         <b data-lang="en">Platform</b><b data-lang="pl">Platforma</b><br>
-        <span data-lang="en">browser, phone or desktop — works offline</span><span data-lang="pl">przeglądarka, telefon lub komputer — działa offline</span><br>
+        <span data-lang="en">phone — mobile web app, works offline; open it on a phone</span><span data-lang="pl">telefon — mobilna aplikacja webowa, działa offline; otwieraj na telefonie</span><br>
         <b data-lang="en">Data</b><b data-lang="pl">Dane</b>: <span data-lang="en">progress stays on your device</span><span data-lang="pl">postęp zostaje na urządzeniu</span><br>
-        <b>Status:</b> <span data-lang="en">open beta — official launch soon</span><span data-lang="pl">otwarta beta — oficjalna premiera wkrótce</span>
+        <b>Status:</b> <span data-lang="en">available; desktop version not yet built</span><span data-lang="pl">dostępna; wersji na komputer jeszcze nie ma</span>
       </div>
       <a class="dl-btn" href="futuretalk/" target="_blank" rel="noopener" data-gate="FutureTalk">
         <span data-lang="en">Open the app →</span><span data-lang="pl">Otwórz aplikację →</span>
-        <small data-lang="en">free · works in the browser</small><small data-lang="pl">za darmo · działa w przeglądarce</small>
+        <small data-lang="en">free · mobile · works in the phone browser</small><small data-lang="pl">za darmo · mobilna · działa w przeglądarce telefonu</small>
       </a>
-      <button type="button" class="dl-ghost" data-notify="FutureTalk">
-        <span data-lang="en">Notify me at launch →</span><span data-lang="pl">Powiadom mnie o premierze →</span>
-      </button>
+
     </aside>
   </article>
 
@@ -141,7 +139,7 @@
       </div>
     </div>
     <div>
-      <span class="dl-tag"><span data-lang="en">Web app · beta live</span><span data-lang="pl">Aplikacja webowa · beta online</span></span>
+      <span class="dl-tag"><span data-lang="en">Mobile version · available now · free</span><span data-lang="pl">Wersja mobilna · dostępna · za darmo</span></span>
       <h2><span data-lang="en">Future<span class="g">Form.</span></span>
           <span data-lang="pl">Future<span class="g">Form.</span></span></h2>
       <p class="dl-desc">
@@ -160,34 +158,52 @@
       <div class="dl-price"><span data-lang="en">Free</span><span data-lang="pl">Za darmo</span><em>open source</em></div>
       <div class="dl-meta">
         <b data-lang="en">Platform</b><b data-lang="pl">Platforma</b><br>
-        <span data-lang="en">phone — mobile PWA (installs from the browser)</span><span data-lang="pl">telefon — mobilna PWA (instalacja z przeglądarki)</span><br>
+        <span data-lang="en">phone — mobile web app, installs from the browser; open it on a phone</span><span data-lang="pl">telefon — mobilna aplikacja webowa, instalacja z przeglądarki; otwieraj na telefonie</span><br>
         <b data-lang="en">Data</b><b data-lang="pl">Dane</b>: <span data-lang="en">stay on your device</span><span data-lang="pl">lokalnie na urządzeniu</span><br>
-        <b>Status:</b> <span data-lang="en">open beta — official launch soon</span><span data-lang="pl">otwarta beta — oficjalna premiera wkrótce</span>
+        <b>Status:</b> <span data-lang="en">available; desktop version not yet built</span><span data-lang="pl">dostępna; wersji na komputer jeszcze nie ma</span>
       </div>
       <a class="dl-btn" href="futureform/" target="_blank" rel="noopener" data-gate="FutureForm">
         <span data-lang="en">Open the app →</span><span data-lang="pl">Otwórz aplikację →</span>
-        <small data-lang="en">free · installs from the browser</small><small data-lang="pl">za darmo · instalacja z przeglądarki</small>
+        <small data-lang="en">free · mobile · installs from the phone browser</small><small data-lang="pl">za darmo · mobilna · instalacja z przeglądarki telefonu</small>
       </a>
-      <button type="button" class="dl-ghost" data-notify="FutureForm">
-        <span data-lang="en">Notify me at launch →</span><span data-lang="pl">Powiadom mnie o premierze →</span>
-      </button>
+
     </aside>
   </article>
   </div>
+
+  <section class="dl-card" id="pomysl" style="grid-template-columns:1fr 1fr;margin-top:64px">
+    <div>
+      <span class="dl-tag"><span data-lang="en">Your idea</span><span data-lang="pl">Twój pomysł</span></span>
+      <h2><span data-lang="en">Which app <span class="g">would you like?</span></span><span data-lang="pl">Jaką aplikację <span class="g">chciałbyś mieć?</span></span></h2>
+      <p class="dl-desc"><span data-lang="en">We give away tools that others sell. Tell us what you are missing — a trainer, a course, a converter, an archive — and if enough people want it, we build it and publish it here for free.</span><span data-lang="pl">Oddajemy za darmo narzędzia, które inni sprzedają. Napisz, czego Ci brakuje — trenera, kursu, przelicznika, archiwum — a jeśli chce tego więcej osób, zbudujemy i opublikujemy tu za darmo.</span></p>
+    </div>
+    <form class="dl-aside" id="ideaForm" novalidate style="gap:12px">
+      <input type="hidden" name="access_key" value="41c76e7b-9154-4f68-a910-e76ae4d498f4">
+      <input type="hidden" name="subject" value="[POMYSŁ] aplikacja — propozycja ze strony">
+      <input type="hidden" name="from_name" value="futureshow.pl / pomysły">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <label style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mute)"><span data-lang="en">What should it do?</span><span data-lang="pl">Co ma robić?</span></label>
+      <textarea name="pomysl" required rows="4" placeholder="…" style="width:100%;border:1px solid var(--ink);background:transparent;padding:12px 14px;font:inherit;font-size:0.95rem;resize:vertical"></textarea>
+      <label style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mute)"><span data-lang="en">E-mail (optional — to tell you when it exists)</span><span data-lang="pl">E-mail (opcjonalnie — damy znać, gdy powstanie)</span></label>
+      <input type="email" name="email" placeholder="jan@example.com" style="width:100%;border:1px solid var(--ink);background:transparent;padding:12px 14px;font:inherit;font-size:0.95rem">
+      <button type="submit" class="dl-btn"><span data-lang="en">Send the idea →</span><span data-lang="pl">Wyślij pomysł →</span></button>
+      <div class="ntf__msg" id="ideaMsg"></div>
+    </form>
+  </section>
 </main>
 
 
 <section class="banner">
   <div class="banner__inner">
     <div class="banner__text reveal"><span data-lang="en">Working on <em>something hard</em><br>that the public can’t yet enter?</span><span data-lang="pl">Pracujesz nad <em>czymś trudnym</em>,<br>do czego publiczność nie ma jeszcze wejścia?</span></div>
-    <a href="index.html#contact" class="btn-banner reveal" style="--i:1"><span data-lang="en">Start a project →</span><span data-lang="pl">Zacznij projekt →</span></a>
+    <a href="studio/#contact" class="btn-banner reveal" style="--i:1"><span data-lang="en">Start a project →</span><span data-lang="pl">Zacznij projekt →</span></a>
   </div>
 </section>
 <footer class="contact contact--slim">
   <div class="contact__cols">
     <div><h4><span data-lang="en">Contact</span><span data-lang="pl">Kontakt</span></h4><ul><li><a href="mailto:futureshow@proton.me">futureshow@proton.me</a></li><li><a href="tel:+48787878138">+48 787 878 138</a></li><li><span data-lang="en">Warsaw / Remote · open for new projects</span><span data-lang="pl">Warszawa / zdalnie · otwarty na nowe projekty</span></li></ul></div>
-    <div><h4><span data-lang="en">Work</span><span data-lang="pl">Prace</span></h4><ul><li><a href="index.html#work"><span data-lang="en">Selected</span><span data-lang="pl">Wybrane</span></a></li><li><a href="projekty.html"><span data-lang="en">All projects</span><span data-lang="pl">Wszystkie projekty</span></a></li><li><a href="stream/">Stream</a></li><li><a href="films.html"><span data-lang="en">Films</span><span data-lang="pl">Filmy</span></a></li></ul></div>
-    <div><h4>Studio</h4><ul><li><a href="index.html#approach"><span data-lang="en">Approach</span><span data-lang="pl">Podejście</span></a></li><li><a href="index.html#studio"><span data-lang="en">About</span><span data-lang="pl">O mnie</span></a></li><li><a href="downloads.html"><span data-lang="en">Downloads</span><span data-lang="pl">Pobierz</span></a></li><li><a href="archive/index.html"><span data-lang="en">Archive</span><span data-lang="pl">Archiwum</span></a></li></ul></div>
+    <div><h4><span data-lang="en">Work</span><span data-lang="pl">Prace</span></h4><ul><li><a href="studio/#work"><span data-lang="en">Selected</span><span data-lang="pl">Wybrane</span></a></li><li><a href="projekty.html"><span data-lang="en">All projects</span><span data-lang="pl">Wszystkie projekty</span></a></li><li><a href="./">Stream</a></li><li><a href="films.html"><span data-lang="en">Films</span><span data-lang="pl">Filmy</span></a></li></ul></div>
+    <div><h4>Studio</h4><ul><li><a href="studio/#approach"><span data-lang="en">Approach</span><span data-lang="pl">Podejście</span></a></li><li><a href="studio/#studio"><span data-lang="en">About</span><span data-lang="pl">O mnie</span></a></li><li><a href="downloads.html"><span data-lang="en">Downloads</span><span data-lang="pl">Pobierz</span></a></li><li><a href="archive/index.html"><span data-lang="en">Archive</span><span data-lang="pl">Archiwum</span></a></li></ul></div>
     <div><h4><span data-lang="en">Elsewhere</span><span data-lang="pl">Gdzie indziej</span></h4><ul><li><a href="https://github.com/futureshow1" target="_blank" rel="noopener">GitHub</a></li><li><a href="https://www.linkedin.com/in/jan-lubicz-przyluski-10460580/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://vimeo.com/janjan" target="_blank" rel="noopener">Vimeo</a></li><li><a href="jan-lubicz/" target="_blank" rel="noopener"><span data-lang="en">Personal site</span><span data-lang="pl">Strona osobista</span></a></li></ul></div>
   </div>
   <div class="contact__bottom">
@@ -303,6 +319,11 @@ if(sv==='pl'){document.documentElement.lang='pl';document.getElementById('langTo
         .finally(function () { btn.disabled = false; });
     });
   })();
+</script>
+<script>
+(function(){var f=document.getElementById('ideaForm'),m=document.getElementById('ideaMsg');if(!f)return;var pl=function(){return document.documentElement.lang==='pl'};
+f.addEventListener('submit',function(e){e.preventDefault();if(f.pomysl.value.trim().length<10){m.className='ntf__msg err';m.textContent=pl()?'Napisz choć zdanie, co ma robić.':'Please write at least a sentence.';return}
+var b=f.querySelector('[type=submit]');b.disabled=true;fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)}).then(function(r){return r.json()}).then(function(d){if(!d.success)throw 0;m.className='ntf__msg ok';m.textContent=pl()?'Dziękujemy — pomysł doszedł.':'Thank you — the idea is in.';f.reset()}).catch(function(){m.className='ntf__msg err';m.textContent=pl()?'Nie udało się wysłać. Napisz na futureshow@proton.me.':'Could not send. Write to futureshow@proton.me.'}).finally(function(){b.disabled=false})});})();
 </script>
 <script src="assets/wired.js"></script>
 <script src="cookie-consent.js"></script>
