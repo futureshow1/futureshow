@@ -57,8 +57,9 @@ nav.solid{background:var(--panel);backdrop-filter:blur(14px);
 
 /* ============ hero (photo slideshow, multi-image per project) ============ */
 .hero{position:relative;min-height:86vh;overflow:hidden}
-.h-track{display:flex;height:100%;min-height:86vh;
+.h-track{display:flex;height:100%;min-height:86vh;touch-action:pan-y;
   transition:transform .65s cubic-bezier(.77,0,.18,1);will-change:transform}
+.h-track.drag{transition:none}
 .h-slide{flex:0 0 100%;min-width:100%;position:relative;display:flex;
   align-items:flex-end;padding:120px 4vw 74px;min-height:86vh}
 .h-bgs{position:absolute;inset:0;overflow:hidden}
@@ -72,7 +73,13 @@ nav.solid{background:var(--panel);backdrop-filter:blur(14px);
   color:#e9edf5;font-size:26px;cursor:pointer;transition:.2s;opacity:.55}
 .h-arr:hover{opacity:1;background:rgba(5,7,12,.75)}
 .h-arr--l{left:14px}.h-arr--r{right:14px}
-@media(max-width:760px){.h-arr{display:none}}
+@media(max-width:760px){
+ .h-arr{width:38px;height:60px;font-size:22px;opacity:.5;background:rgba(5,7,12,.5)}
+ .h-arr--l{left:6px}.h-arr--r{right:6px}
+ .h-dots{right:auto;left:0;width:100%;justify-content:center;bottom:16px;gap:4px;
+   padding:10px 10px;flex-wrap:wrap;max-width:100%;box-sizing:border-box}
+ .h-dot{width:14px;height:4px}
+}
 .hero-shade{position:absolute;inset:0;background:
   linear-gradient(to right,rgba(3,4,8,.9) 0%,rgba(3,4,8,.6) 42%,rgba(3,4,8,.2) 72%,rgba(3,4,8,.45) 100%),
   linear-gradient(to top,#05070c 3%,rgba(5,7,12,.32) 34%,rgba(5,7,12,.15) 60%,rgba(5,7,12,.55) 100%)}
@@ -297,7 +304,7 @@ const GALLERY={
  swidzinski:["swidzinski-1"],
  przyluski:["przyluski-1","przyluski-2","przyluski-4","przyluski-3"],
  klimat:["klimat-2","klimat-1","klimat-3"], psychedelic:["psychedelic-1"], pokedex:["pokedex-1"],
- polskijazz:["polskijazz-2","polskijazz-1","polskijazz-3"],
+ polskijazz:["polskijazz-2","polskijazz-1"],
  futureform:["futureform-1"], futuretalk:["futuretalk-1"], chamczyk:["chamczyk-1"], zem:["zem-1"], emfazy:["emfazy-1"]
 };
 
@@ -313,7 +320,7 @@ const CREDIT={
  mnemo:{pl:"ryciny: Ars magna Llulla · Ars memoriae Fludda, 1617 (domena publiczna)",en:"plates: Llull's Ars magna · Fludd's Ars memoriae, 1617 (public domain)"},
  mondrian:{pl:"obrazy: Piet Mondrian (domena publiczna)",en:"paintings: Piet Mondrian (public domain)"},
  sheldrake:{pl:"tablice: Ernst Haeckel, „Kunstformen der Natur”, 1904 (domena publiczna) · zrzut portalu",en:"plates: Ernst Haeckel, “Kunstformen der Natur”, 1904 (public domain) · portal screenshot"},
- polskijazz:{pl:"fot. Tomasza Stańki: Dirk Neven (CC BY 2.0) · okładki płyt",en:"Tomasz Stańko photos: Dirk Neven (CC BY 2.0) · album covers"},
+ polskijazz:{pl:"fot. Tomasza Stańki: Dirk Neven (CC BY 2.0) · okładki płyt",en:"Tomasz Stańko photo: Dirk Neven (CC BY 2.0) · album covers"},
  klimat:{pl:"mapy: NASA GISS/Scientific Visualization Studio, NASA Earth Observatory (domena publiczna)",en:"maps: NASA GISS/Scientific Visualization Studio, NASA Earth Observatory (public domain)"},
  sectio:{pl:"zdjęcia: aloes spiralny, romanesco — domena publiczna · zrzuty portalu",en:"photos: spiral aloe, romanesco — public domain · portal screenshots"},
  ghykakomp:{pl:"zdjęcia: aloes spiralny, romanesco (domena publiczna) · zrzut kompendium",en:"photos: spiral aloe, romanesco (public domain) · compendium screenshot"},
@@ -868,6 +875,41 @@ function heroGo(ix){
  if(tr)tr.style.transform=`translateX(-${heroIx*100}%)`;
  document.querySelectorAll(".h-slide").forEach(b=>b.classList.toggle("act",+b.dataset.ix===heroIx));
  document.querySelectorAll(".h-dot").forEach(b=>b.classList.toggle("on",+b.dataset.goto===heroIx));}
+function heroSwipe(){
+ const tr=document.getElementById("htrack"); if(!tr||tr.dataset.swipe)return;
+ tr.dataset.swipe="1";
+ let x0=0,y0=0,dx=0,drag=false,lock=null,w=1;
+ const at=()=>-heroIx*w;
+ tr.addEventListener("touchstart",e=>{
+   if(e.touches.length!==1)return;
+   const t=e.touches[0]; x0=t.clientX; y0=t.clientY; dx=0; lock=null;
+   w=tr.getBoundingClientRect().width||1; drag=true;
+   clearInterval(heroTimer); clearInterval(heroImgTimer);
+ },{passive:true});
+ tr.addEventListener("touchmove",e=>{
+   if(!drag||e.touches.length!==1)return;
+   const t=e.touches[0]; const ax=t.clientX-x0, ay=t.clientY-y0;
+   if(lock===null){
+     if(Math.abs(ax)<6&&Math.abs(ay)<6)return;
+     lock=Math.abs(ax)>Math.abs(ay)?"x":"y";
+     if(lock==="x")tr.classList.add("drag");
+   }
+   if(lock!=="x")return;
+   dx=ax;
+   /* opor na krancach */
+   if((heroIx===0&&dx>0)||(heroIx===FEATURED.length-1&&dx<0))dx*=.35;
+   tr.style.transform=`translateX(${at()+dx}px)`;
+ },{passive:true});
+ const end=()=>{
+   if(!drag)return; drag=false; tr.classList.remove("drag");
+   const moved=lock==="x"?dx:0; dx=0;
+   if(Math.abs(moved)>Math.min(70,w*.14))heroGo(heroIx+(moved<0?1:-1));
+   else heroGo(heroIx);
+   heroAuto();
+ };
+ tr.addEventListener("touchend",end,{passive:true});
+ tr.addEventListener("touchcancel",end,{passive:true});
+}
 function heroAuto(){
  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  clearInterval(heroTimer);heroTimer=setInterval(()=>heroGo(heroIx+1),9000);
@@ -939,7 +981,7 @@ function closeModal(){document.getElementById("mback").classList.remove("open");
  try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}
 
 /* ================= wire up ================= */
-function renderAll(){renderChrome();renderHero();renderRails();heroAuto();}
+function renderAll(){renderChrome();renderHero();renderRails();heroSwipe();heroAuto();}
 renderAll();
 
 document.addEventListener("click",e=>{
